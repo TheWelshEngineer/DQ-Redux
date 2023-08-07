@@ -1,0 +1,107 @@
+package RogueLike.Main.Screens;
+
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import RogueLike.Main.Creature;
+import asciiPanel.AsciiPanel;
+
+public class LoseScreen implements Screen {
+	public Creature player;
+	public String weaponName = "None";
+	public String armorName = "None";
+	public String shieldName = "None";
+	public String ringName = "None";
+	public String ammunitionName = "None";
+	public String exportCheck = "";
+	
+	public LoseScreen(Creature player) {
+		this.player = player;
+	}
+
+    public void displayOutput(AsciiPanel terminal) {
+    	if(player.weaponName() != null) {
+    		weaponName = player.weaponName();
+    	}
+    	
+    	if(player.armorName() != null) {
+    		armorName = player.armorName();
+    	}
+    	
+    	if(player.shieldName() != null) {
+    		shieldName = player.shieldName();
+    	}
+    	
+    	
+    	if(player.ringName() != null) {
+    		ringName = player.ringName();
+    	}
+    	
+    	
+    	if(player.ammunitionName() != null) {
+    		ammunitionName = player.ammunitionName();
+    	}
+    	
+    	terminal.writeCenter("You died...", 3);
+    	terminal.writeCenter(String.format("%s", player.playerName()), 5);
+		terminal.writeCenter(player.causeOfDeath() + String.format(" on depth %d.", player.z()+1), 7);
+		terminal.writeCenter(String.format("Level %d %s | Score: %d | Max Depth Reached: %d", player.level(), player.playerClass(), player.score(), player.maxDepth()+1), 9);
+		terminal.writeCenter("-- Equipment --", 11);
+		terminal.writeCenter("Weapon: "+weaponName, 13);
+		terminal.writeCenter("Armor: "+armorName, 15);
+		terminal.writeCenter("Shield: "+shieldName, 17);
+		terminal.writeCenter("Ring: "+ringName, 19);
+		terminal.writeCenter("Ammunition: "+ammunitionName, 21);
+		terminal.writeCenter("-- [ENTER]: Restart your Adventure | [F1]: Export Scores --", 24);
+		terminal.writeCenter(exportCheck, 26);
+    }
+
+    public Screen respondToUserInput(KeyEvent key) {
+        switch(key.getKeyCode()) {
+        
+        case KeyEvent.VK_F1:
+        	String playerName = player.playerName();
+        	String localDate = java.time.LocalDate.now().toString();
+        	String desktopPath = System.getProperty("user.home") + "\\Desktop\\";
+        	String filename = String.format("%sDwarfQuest %s %s.txt", desktopPath, playerName, localDate);
+        	try {
+				File saveScores = new File(filename);
+				//System.out.println("Successfully created the file.");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+        	
+        	try {
+				FileWriter writeScores = new FileWriter(filename);
+				writeScores.write(String.format("%s", player.playerName()));
+				writeScores.write("\n" + player.causeOfDeath() + String.format(" on depth %d.", player.z()+1));
+				writeScores.write(String.format("\nLevel %d %s | Score: %d | Max Depth Reached: %d", player.level(), player.playerClass(), player.score(), player.maxDepth()+1));
+				writeScores.write("\n-- Equipment --");
+				writeScores.write("\nWeapon: "+weaponName);
+				writeScores.write("\nArmor: "+armorName);
+				writeScores.write("\nShield: "+shieldName);
+				writeScores.write("\nRing: "+ringName);
+				writeScores.write("\nAmmunition: "+ammunitionName);
+				
+				writeScores.write("");
+				writeScores.close();
+				//System.out.println("Successfully wrote to the file.");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        	
+        	exportCheck = "-- Scores Exported --";
+        	
+        	return this;
+        
+        case KeyEvent.VK_ENTER:
+        	return new StartScreen();
+        default: return this;
+        
+        
+        
+        }
+    }
+}

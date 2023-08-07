@@ -1,0 +1,34 @@
+package RogueLike.Main.AI;
+
+import RogueLike.Main.Creature;
+import RogueLike.Main.ObjectFactory;
+import RogueLike.Main.World;
+
+public class BatAI extends CreatureAI{
+
+	public BatAI(Creature creature, ObjectFactory factory, World world) {
+		super(creature, factory, world);
+	}
+	
+	public void onUpdate() {
+		if((creature.paralyzed() == true)) {
+			if((int)(Math.random()*10) < 8) {
+				creature.doAction("struggle to move!");
+				return;
+			}else {
+				creature.doAction("move with difficulty");
+			}
+		}
+		
+		if((creature.frozen() == true)) {
+			creature.doAction("struggle to move!");
+			return;
+
+		}else {
+			wander();
+			wander();
+		}
+		
+	}
+
+}
