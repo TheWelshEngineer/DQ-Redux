@@ -145,7 +145,15 @@ public class PlayScreen implements Screen{
 	        	}else {
 	        		player.moveBy( 0, 0, -1, false); inputAccepted = 1; break;
 	        	}
-	        case KeyEvent.VK_DOWN: player.moveBy( 0, 0, 1, false); inputAccepted = 1; break;
+	        case KeyEvent.VK_DOWN: 
+	        	player.moveBy( 0, 0, 1, false); inputAccepted = 1; 
+	        	if(player.z()+1 == 6 && player.hasVisitedZone2() == false) {
+	        		subscreen = new Zone2Screen();
+	        	}
+	        	if(player.z()+1 == 11 && player.hasVisitedZone3() == false) {
+	        		
+	        	}
+	        	break;
 	        
 	        case KeyEvent.VK_U: 
 	        	if(player.attributePoints() == 0 && player.skillPoints() == 0) {

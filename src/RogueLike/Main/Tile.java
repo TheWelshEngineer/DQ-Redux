@@ -27,6 +27,7 @@ public enum Tile {
 	PARALYZE_GAS((char)176, ExtraColors.paralyzed, "A cloud of paralytic gas is swirling here."),
 	CONFUSE_GAS((char)176, ExtraColors.pink, "A cloud of confusion gas is swirling here."),
 	MIXED_GAS((char)176, ExtraColors.orange, "A cloud of alchemical murk is swirling here."),
+	FUNGUS_WALL((char)177, AsciiPanel.green, "A wall of tangled cave fungus. Looks like you could chop through it."),
 	
 	
 	
@@ -87,11 +88,11 @@ public enum Tile {
 	}
 	
 	public boolean isDiggable() {
-		return this == Tile.WALL;
+		return this == Tile.WALL || this == Tile.FUNGUS_WALL;
 	}
 	
 	public boolean isWall() {
-		return this == Tile.WALL;
+		return this == Tile.WALL || this == Tile.FUNGUS_WALL;
 	}
 	
 	public boolean isDecaying() {

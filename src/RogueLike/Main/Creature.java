@@ -389,6 +389,9 @@ public class Creature implements Cloneable{
 	public void modifyBaseArmorClass(int amount) {
 		baseArmorClass += amount;
 	}
+	public void setBaseArmorClass(int value) {
+		baseArmorClass = value;
+	}
 
 	private int visionRadius;
 	public int visionRadius() {
@@ -1767,6 +1770,30 @@ public class Creature implements Cloneable{
 			default: return "Mwi ae? Sakttt Fgzai ngagi?";
 		}
 	}
+	
+	private boolean hasVisitedZone1 = false;
+	public boolean hasVisitedZone1() {
+		return hasVisitedZone1;
+	}
+	public void setHasVisitedZone1(boolean value) {
+		hasVisitedZone1 = value;
+	}
+	
+	private boolean hasVisitedZone2 = false;
+	public boolean hasVisitedZone2() {
+		return hasVisitedZone2;
+	}
+	public void setHasVisitedZone2(boolean value) {
+		hasVisitedZone2 = value;
+	}
+	
+	private boolean hasVisitedZone3 = false;
+	public boolean hasVisitedZone3() {
+		return hasVisitedZone3;
+	}
+	public void setHasVisitedZone3(boolean value) {
+		hasVisitedZone3 = value;
+	}
 
 
 	//item id max
@@ -2697,7 +2724,7 @@ public class Creature implements Cloneable{
 	}
 	//jump
 	public void gainXP(Creature other) {
-		int amount = (int)((other.maxHP() + other.baseArmorClass())*0.5*1.5);
+		int amount = (int)((other.maxHP() + other.baseArmorClass())*0.75);
 		if(other.noXP() > 0) {
 			amount = 0;
 		}
@@ -2706,6 +2733,31 @@ public class Creature implements Cloneable{
 			modifyScore(amount);
 		}
 	}
+	
+	private double scalingFactorWithDepth = 1.0;
+	public double scalingFactorWithDepth() {
+		return scalingFactorWithDepth;
+	}
+	public void setScalingFactorWithDepth(double value) {
+		scalingFactorWithDepth = value;
+	}
+	public void scaleHPWithDepth(int depth) {
+		this.setMaxHP((int) ((this.maxHP()+depth+1)*this.scalingFactorWithDepth()));
+	}
+	public void scaleManaWithDepth(int depth) {
+		this.setMaxMana((int) ((this.maxMana()+depth+1)*this.scalingFactorWithDepth()));
+	}
+	public void scaleStrengthWithDepth(int depth) {
+		this.setStrength((int) ((this.strength()+depth+1)*this.scalingFactorWithDepth()));
+	}
+	public void scaleDexterityWithDepth(int depth) {
+		this.setDexterity((int) ((this.dexterity()+depth+1)*this.scalingFactorWithDepth()));
+	}
+	public void scaleIntelligenceWithDepth(int depth) {
+		this.setIntelligence((int) ((this.intelligence()+depth+1)*this.scalingFactorWithDepth()));
+	}
+
+
 
 	private void leaveCorpse() {
 		if(noCorpse == 0) {

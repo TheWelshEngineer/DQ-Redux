@@ -314,7 +314,7 @@ public class ChooseAbilityScreen implements Screen{
 			
 		case KeyEvent.VK_ENTER: 
 			if(abilityPoints < 1) {
-				return new PlayScreen(playerClass, playerAbilities, playerName); 
+				return new Zone1Screen(playerClass, playerAbilities, playerName); 
 			}else {
 				return this;
 			}
