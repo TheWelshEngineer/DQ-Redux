@@ -694,6 +694,11 @@ public class ObjectFactory {
 		fungus.setID(1);
 		new FungusAI(fungus, this, this.world);
 		fungus.creatureTypes.add("Plant");
+		fungus.scaleHPWithDepth(depth);
+		fungus.scaleManaWithDepth(depth);	
+		fungus.scaleStrengthWithDepth(depth);	
+		fungus.scaleDexterityWithDepth(depth);	
+		fungus.scaleIntelligenceWithDepth(depth);	
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(fungus, depth);
 		}else {
@@ -712,6 +717,11 @@ public class ObjectFactory {
 		bat.modifyFlying(1);
 		bat.setSocial(true);
 		bat.creatureTypes.add("Beast");
+		bat.scaleHPWithDepth(depth);
+		bat.scaleManaWithDepth(depth);	
+		bat.scaleStrengthWithDepth(depth);	
+		bat.scaleDexterityWithDepth(depth);	
+		bat.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(bat, depth);
 		}else {
@@ -732,6 +742,11 @@ public class ObjectFactory {
 		skeleton.equip(startWeapon);
 		//
 		skeleton.creatureTypes.add("Undead");
+		skeleton.scaleHPWithDepth(depth);
+		skeleton.scaleManaWithDepth(depth);	
+		skeleton.scaleStrengthWithDepth(depth);	
+		skeleton.scaleDexterityWithDepth(depth);	
+		skeleton.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(skeleton, depth);
 		}else {
@@ -755,6 +770,11 @@ public class ObjectFactory {
 		alchemist.equip(startArmor);
 		//
 		alchemist.creatureTypes.add("Humanoid");
+		alchemist.scaleHPWithDepth(depth);
+		alchemist.scaleManaWithDepth(depth);	
+		alchemist.scaleStrengthWithDepth(depth);	
+		alchemist.scaleDexterityWithDepth(depth);	
+		alchemist.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(alchemist, depth);
 		}else {
@@ -770,6 +790,11 @@ public class ObjectFactory {
 		slime.setID(5);
 		new SlimeAI(slime, player, this, this.world);
 		slime.creatureTypes.add("Ooze");
+		slime.scaleHPWithDepth(depth);
+		slime.scaleManaWithDepth(depth);	
+		slime.scaleStrengthWithDepth(depth);	
+		slime.scaleDexterityWithDepth(depth);	
+		slime.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(slime, depth);
 		}else {
@@ -785,6 +810,11 @@ public class ObjectFactory {
 		slimeling.setID(6);
 		new SlimelingAI(slimeling, player, this, this.world);
 		slimeling.creatureTypes.add("Ooze");
+		slimeling.scaleHPWithDepth(depth);
+		slimeling.scaleManaWithDepth(depth);	
+		slimeling.scaleStrengthWithDepth(depth);	
+		slimeling.scaleDexterityWithDepth(depth);	
+		slimeling.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(slimeling, depth);
 		}else {
@@ -807,6 +837,11 @@ public class ObjectFactory {
 		ogre.equip(startArmor);
 		ogre.creatureTypes.add("Humanoid");
 		ogre.creatureTypes.add("Beast");
+		ogre.scaleHPWithDepth(depth);
+		ogre.scaleManaWithDepth(depth);	
+		ogre.scaleStrengthWithDepth(depth);	
+		ogre.scaleDexterityWithDepth(depth);	
+		ogre.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(ogre, depth);
 		}else {
@@ -828,6 +863,11 @@ public class ObjectFactory {
 		gremlin.inventory().add(startAmmo);
 		gremlin.equip(startAmmo);
 		gremlin.creatureTypes.add("Gremlin");
+		gremlin.scaleHPWithDepth(depth);
+		gremlin.scaleManaWithDepth(depth);	
+		gremlin.scaleStrengthWithDepth(depth);	
+		gremlin.scaleDexterityWithDepth(depth);	
+		gremlin.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(gremlin, depth);
 		}else {
@@ -849,6 +889,11 @@ public class ObjectFactory {
 		gremlin.inventory().add(startArmor);
 		gremlin.equip(startArmor);
 		gremlin.creatureTypes.add("Gremlin");
+		gremlin.scaleHPWithDepth(depth);
+		gremlin.scaleManaWithDepth(depth);	
+		gremlin.scaleStrengthWithDepth(depth);	
+		gremlin.scaleDexterityWithDepth(depth);	
+		gremlin.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(gremlin, depth);
 		}else {
@@ -867,6 +912,11 @@ public class ObjectFactory {
 		cloaker.changeColor(ExtraColors.invisible);
 		cloaker.creatureTypes.add("Beast");
 		cloaker.creatureTypes.add("Monstrosity");
+		cloaker.scaleHPWithDepth(depth);
+		cloaker.scaleManaWithDepth(depth);	
+		cloaker.scaleStrengthWithDepth(depth);	
+		cloaker.scaleDexterityWithDepth(depth);	
+		cloaker.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(cloaker, depth);
 		}else {
@@ -886,6 +936,11 @@ public class ObjectFactory {
 		animatedArmor.equip(startArmor);
 		animatedArmor.modifyNoCorpse(1);
 		animatedArmor.creatureTypes.add("Construct");
+		animatedArmor.scaleHPWithDepth(depth);
+		animatedArmor.scaleManaWithDepth(depth);	
+		animatedArmor.scaleStrengthWithDepth(depth);	
+		animatedArmor.scaleDexterityWithDepth(depth);	
+		animatedArmor.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(animatedArmor, depth);
 		}else {
@@ -905,6 +960,11 @@ public class ObjectFactory {
 		animatedWeapon.equip(startWeapon);
 		animatedWeapon.modifyNoCorpse(1);
 		animatedWeapon.creatureTypes.add("Construct");
+		animatedWeapon.scaleHPWithDepth(depth);
+		animatedWeapon.scaleManaWithDepth(depth);	
+		animatedWeapon.scaleStrengthWithDepth(depth);	
+		animatedWeapon.scaleDexterityWithDepth(depth);	
+		animatedWeapon.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(animatedWeapon, depth);
 		}else {
@@ -1081,6 +1141,11 @@ public class ObjectFactory {
 		}
 		mimic.inventory().add(startItem);
 		mimic.creatureTypes.add("Monstrosity");
+		mimic.scaleHPWithDepth(depth);
+		mimic.scaleManaWithDepth(depth);	
+		mimic.scaleStrengthWithDepth(depth);	
+		mimic.scaleDexterityWithDepth(depth);	
+		mimic.scaleIntelligenceWithDepth(depth);
 		mimic.hide();
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(mimic, depth);

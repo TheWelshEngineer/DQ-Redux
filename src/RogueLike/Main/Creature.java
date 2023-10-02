@@ -2742,19 +2742,19 @@ public class Creature implements Cloneable{
 		scalingFactorWithDepth = value;
 	}
 	public void scaleHPWithDepth(int depth) {
-		this.setMaxHP((int) ((this.maxHP()+depth+1)*this.scalingFactorWithDepth()));
+		this.setMaxHP((int) ((int) this.maxHP()+((depth+1)*this.scalingFactorWithDepth())));
 	}
 	public void scaleManaWithDepth(int depth) {
-		this.setMaxMana((int) ((this.maxMana()+depth+1)*this.scalingFactorWithDepth()));
+		this.setMaxMana((int) ((int) this.maxMana()+((depth+1)*this.scalingFactorWithDepth())));
 	}
 	public void scaleStrengthWithDepth(int depth) {
-		this.setStrength((int) ((this.strength()+depth+1)*this.scalingFactorWithDepth()));
+		this.setStrength((int) ((int) this.strength()+((depth+1)*this.scalingFactorWithDepth())));
 	}
 	public void scaleDexterityWithDepth(int depth) {
-		this.setDexterity((int) ((this.dexterity()+depth+1)*this.scalingFactorWithDepth()));
+		this.setDexterity((int) ((int) this.dexterity()+((depth+1)*this.scalingFactorWithDepth())));
 	}
 	public void scaleIntelligenceWithDepth(int depth) {
-		this.setIntelligence((int) ((this.intelligence()+depth+1)*this.scalingFactorWithDepth()));
+		this.setIntelligence((int) ((int) this.intelligence()+((depth+1)*this.scalingFactorWithDepth())));
 	}
 
 
