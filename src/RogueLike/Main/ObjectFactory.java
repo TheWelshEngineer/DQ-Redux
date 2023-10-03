@@ -1461,10 +1461,10 @@ public class ObjectFactory {
 	public Item newDagger(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Dagger", null);
 		item.modifyDamageDice(4);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsThrownWeapon(1);
+		item.setIsThrownWeapon(1);
 		item.modifyThrownDamageDice(4);
 		item.modifyIsFinesse(1);
 		item.setBaseGoldValue(20);
@@ -1481,8 +1481,8 @@ public class ObjectFactory {
 	public Item newClub(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Club", null);
 		item.modifyDamageDice(4);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
 		item.setBaseGoldValue(10);
 		//item.modifyIsSimple(1);
@@ -1499,10 +1499,10 @@ public class ObjectFactory {
 	public Item newGreatclub(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Greatclub", null);
 		item.modifyDamageDice(8);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsTwoHanded(1);
+		item.setIsTwoHanded(1);
 		item.setBaseGoldValue(20);
 		//item.modifyIsSimple(1);
 		//item.modifySkillRestriction(1);
@@ -1519,10 +1519,10 @@ public class ObjectFactory {
 	public Item newHandaxe(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Handaxe", null);
 		item.modifyDamageDice(6);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsThrownWeapon(1);
+		item.setIsThrownWeapon(1);
 		item.modifyThrownDamageDice(6);
 		item.setBaseGoldValue(50);
 		//item.modifyIsSimple(1);
@@ -1539,10 +1539,10 @@ public class ObjectFactory {
 	public Item newLightHammer(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Light Hammer", null);
 		item.modifyDamageDice(4);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsThrownWeapon(1);
+		item.setIsThrownWeapon(1);
 		item.modifyThrownDamageDice(4);
 		item.setBaseGoldValue(20);
 		//item.modifyIsSimple(1);
@@ -1559,8 +1559,8 @@ public class ObjectFactory {
 	public Item newMace(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Mace", null);
 		item.modifyDamageDice(6);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
 		item.setBaseGoldValue(50);
 		//item.modifyIsMartial(1);
@@ -1577,8 +1577,8 @@ public class ObjectFactory {
 	public Item newSickle(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Sickle", null);
 		item.modifyDamageDice(4);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
 		item.setBaseGoldValue(10);
 		//item.modifyIsSimple(1);
@@ -1595,10 +1595,10 @@ public class ObjectFactory {
 	public Item newStaff(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Quarterstaff", null);
 		item.modifyDamageDice(6);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsVersatile(1);
+		item.setIsVersatile(1);
 		item.modifyVersatileDamageDice(8);
 		item.setBaseGoldValue(20);
 		//item.modifyIsSimple(1);
@@ -1616,12 +1616,12 @@ public class ObjectFactory {
 	public Item newSpear(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Spear", null);
 		item.modifyDamageDice(6);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsVersatile(1);
+		item.setIsVersatile(1);
 		item.modifyVersatileDamageDice(8);
-		item.modifyIsThrownWeapon(1);
+		item.setIsThrownWeapon(1);
 		item.modifyThrownDamageDice(6);
 		item.setBaseGoldValue(10);
 		//item.modifyIsSimple(1);
@@ -1640,8 +1640,8 @@ public class ObjectFactory {
 	public Item newSword(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Shortsword", null);
 		item.modifyDamageDice(6);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
 		//item.modifyIsMartial(1);
 		item.setBaseGoldValue(100);
@@ -1658,8 +1658,8 @@ public class ObjectFactory {
 	public Item newRapier(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Rapier", null);
 		item.modifyDamageDice(8);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
 		item.modifyIsFinesse(1);
 		item.setBaseGoldValue(250);
@@ -1677,10 +1677,10 @@ public class ObjectFactory {
 	public Item newLongsword(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Longsword", null);
 		item.modifyDamageDice(8);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsVersatile(1);
+		item.setIsVersatile(1);
 		item.modifyVersatileDamageDice(10);
 		item.setBaseGoldValue(150);
 		//item.modifyIsMartial(1);
@@ -1698,10 +1698,10 @@ public class ObjectFactory {
 	public Item newBattleaxe(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Battleaxe", null);
 		item.modifyDamageDice(8);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsVersatile(1);
+		item.setIsVersatile(1);
 		item.modifyVersatileDamageDice(10);
 		item.setBaseGoldValue(100);
 		//item.modifyIsMartial(1);
@@ -1719,10 +1719,10 @@ public class ObjectFactory {
 	public Item newWarhammer(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Warhammer", null);
 		item.modifyDamageDice(8);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsVersatile(1);
+		item.setIsVersatile(1);
 		item.modifyVersatileDamageDice(10);
 		item.setBaseGoldValue(150);
 		//item.modifyIsMartial(1);
@@ -1740,10 +1740,10 @@ public class ObjectFactory {
 	public Item newGreatsword(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Greatsword", null);
 		item.modifyDamageDice(12);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsTwoHanded(1);
+		item.setIsTwoHanded(1);
 		item.setBaseGoldValue(500);
 		//item.modifyIsMartial(1);
 		//item.modifySkillRestriction(5);
@@ -1760,10 +1760,10 @@ public class ObjectFactory {
 	public Item newMaul(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Maul", null);
 		item.modifyDamageDice(12);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsTwoHanded(1);
+		item.setIsTwoHanded(1);
 		item.setBaseGoldValue(100);
 		//item.modifyIsMartial(1);
 		//item.modifySkillRestriction(4);
@@ -1780,10 +1780,10 @@ public class ObjectFactory {
 	public Item newHalberd(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Halberd", null);
 		item.modifyDamageDice(10);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsTwoHanded(1);
+		item.setIsTwoHanded(1);
 		item.setBaseGoldValue(200);
 		//item.modifyIsMartial(1);
 		//item.modifySkillRestriction(4);
@@ -1800,8 +1800,8 @@ public class ObjectFactory {
 	public Item newMorningstar(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Morningstar", null);
 		item.modifyDamageDice(8);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
 		item.setBaseGoldValue(150);
 		//item.modifyIsMartial(1);
@@ -1819,10 +1819,10 @@ public class ObjectFactory {
 	public Item newGlaive(int depth, int addToWorld) {
 		Item item = new Item(')', AsciiPanel.brightWhite, "Glaive", null);
 		item.modifyDamageDice(10);
-		item.modifyIsWeapon(1);
-		item.modifyIsMeleeWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsMeleeWeapon(1);
 		item.modifyEquippable(1);
-		item.modifyIsTwoHanded(1);
+		item.setIsTwoHanded(1);
 		item.setBaseGoldValue(200);
 		//item.modifyIsMartial(1);
 		//item.modifySkillRestriction(4);
@@ -1843,11 +1843,11 @@ public class ObjectFactory {
 		Item item = new Item('}', AsciiPanel.brightWhite, "Flintlock Pistol", null);
 		item.modifyDamageDice(1);
 		item.modifyRangedDamageDice(10);
-		item.modifyIsWeapon(1);
-		item.modifyIsRangedWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsRangedWeapon(1);
 		item.modifyUsesPowder(1);
 		item.modifyEquippable(1);
-		item.modifyIsTwoHanded(1);
+		item.setIsTwoHanded(1);
 		item.setBaseGoldValue(750);
 		//item.modifySkillRestriction(5);
 		item.setCurrentGoldValue(item.baseGoldValue());
@@ -1864,11 +1864,11 @@ public class ObjectFactory {
 		Item item = new Item('}', AsciiPanel.brightWhite, "Flintlock Caliver", null);
 		item.modifyDamageDice(1);
 		item.modifyRangedDamageDice(12);
-		item.modifyIsWeapon(1);
-		item.modifyIsRangedWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsRangedWeapon(1);
 		item.modifyUsesPowder(1);
 		item.modifyEquippable(1);
-		item.modifyIsTwoHanded(1);
+		item.setIsTwoHanded(1);
 		item.setBaseGoldValue(1000);
 		//item.modifySkillRestriction(6);
 		item.setCurrentGoldValue(item.baseGoldValue());
@@ -1885,11 +1885,11 @@ public class ObjectFactory {
 		Item item = new Item('}', AsciiPanel.brightWhite, "Shortbow", null);
 		item.modifyDamageDice(1);
 		item.modifyRangedDamageDice(6);
-		item.modifyIsWeapon(1);
-		item.modifyIsRangedWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsRangedWeapon(1);
 		item.modifyUsesArrows(1);
 		item.modifyEquippable(1);
-		item.modifyIsTwoHanded(1);
+		item.setIsTwoHanded(1);
 		item.setBaseGoldValue(250);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(29);
@@ -1905,11 +1905,11 @@ public class ObjectFactory {
 		Item item = new Item('}', AsciiPanel.brightWhite, "Longbow", null);
 		item.modifyDamageDice(1);
 		item.modifyRangedDamageDice(8);
-		item.modifyIsWeapon(1);
-		item.modifyIsRangedWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsRangedWeapon(1);
 		item.modifyUsesArrows(1);
 		item.modifyEquippable(1);
-		item.modifyIsTwoHanded(1);
+		item.setIsTwoHanded(1);
 		item.setBaseGoldValue(500);
 		//item.modifySkillRestriction(2);
 		item.setCurrentGoldValue(item.baseGoldValue());
@@ -1926,11 +1926,11 @@ public class ObjectFactory {
 		Item item = new Item('}', AsciiPanel.brightWhite, "Light Crossbow", null);
 		item.modifyDamageDice(1);
 		item.modifyRangedDamageDice(8);
-		item.modifyIsWeapon(1);
-		item.modifyIsRangedWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsRangedWeapon(1);
 		item.modifyUsesBolts(1);
 		item.modifyEquippable(1);
-		item.modifyIsTwoHanded(1);
+		item.setIsTwoHanded(1);
 		item.setBaseGoldValue(250);
 		//item.modifySkillRestriction(1);
 		item.setCurrentGoldValue(item.baseGoldValue());
@@ -1947,11 +1947,11 @@ public class ObjectFactory {
 		Item item = new Item('}', AsciiPanel.brightWhite, "Heavy Crossbow", null);
 		item.modifyDamageDice(1);
 		item.modifyRangedDamageDice(10);
-		item.modifyIsWeapon(1);
-		item.modifyIsRangedWeapon(1);
+		item.setIsWeapon(1);
+		item.setIsRangedWeapon(1);
 		item.modifyUsesBolts(1);
 		item.modifyEquippable(1);
-		item.modifyIsTwoHanded(1);
+		item.setIsTwoHanded(1);
 		item.setBaseGoldValue(500);
 		//item.modifySkillRestriction(3);
 		item.setCurrentGoldValue(item.baseGoldValue());
@@ -2817,7 +2817,7 @@ public class ObjectFactory {
 		String appearance = wandAppearances.get(0);
 		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Firebolt", appearance);
 		//item.modifyAttackValue(5);
-		item.modifyIsWeapon(1);
+		item.setIsWeapon(1);
 		item.modifyIsWand(1);
 		item.modifyEquippable(1);
 		item.addWrittenSpell(spellFactory.firebolt(player));
@@ -2838,7 +2838,7 @@ public class ObjectFactory {
 		String appearance = wandAppearances.get(1);
 		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Force", appearance);
 		//item.modifyAttackValue(5);
-		item.modifyIsWeapon(1);
+		item.setIsWeapon(1);
 		item.modifyIsWand(1);
 		item.modifyEquippable(1);
 		item.addWrittenSpell(spellFactory.repel(player));
@@ -2860,7 +2860,7 @@ public class ObjectFactory {
 		String appearance = wandAppearances.get(2);
 		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Freezing", appearance);
 		//item.modifyAttackValue(5);
-		item.modifyIsWeapon(1);
+		item.setIsWeapon(1);
 		item.modifyIsWand(1);
 		item.modifyEquippable(1);
 		item.addWrittenSpell(spellFactory.flashFreeze(player));
@@ -2884,7 +2884,7 @@ public class ObjectFactory {
 		String appearance = wandAppearances.get(3);
 		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Lightning", appearance);
 		//item.modifyAttackValue(5);
-		item.modifyIsWeapon(1);
+		item.setIsWeapon(1);
 		item.modifyIsWand(1);
 		item.modifyEquippable(1);
 		item.addWrittenSpell(spellFactory.chainLightning(player));
@@ -2906,7 +2906,7 @@ public class ObjectFactory {
 		String appearance = wandAppearances.get(4);
 		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Magic Missile", appearance);
 		//item.modifyAttackValue(5);
-		item.modifyIsWeapon(1);
+		item.setIsWeapon(1);
 		item.modifyIsWand(1);
 		item.modifyEquippable(1);
 		item.addWrittenSpell(spellFactory.magicMissile(player));
@@ -2927,7 +2927,7 @@ public class ObjectFactory {
 		String appearance = wandAppearances.get(5);
 		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Ice Wall", appearance);
 		//item.modifyAttackValue(5);
-		item.modifyIsWeapon(1);
+		item.setIsWeapon(1);
 		item.modifyIsWand(1);
 		item.modifyEquippable(1);
 		item.addWrittenSpell(spellFactory.iceWall(player));

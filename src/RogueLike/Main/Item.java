@@ -606,52 +606,52 @@ public class Item implements Cloneable{
 		curseKnown += amount;
 	}
 	
-	private int isWeapon;
-	public int isWeapon() {
+	private boolean isWeapon;
+	public boolean isWeapon() {
 		return isWeapon;
 	}
-	public void modifyIsWeapon(int amount) {
-		isWeapon += amount;
+	public void setIsWeapon(boolean value) {
+		isWeapon = value;
 	}
 	
-	private int isRangedWeapon;
-	public int isRangedWeapon() {
+	private boolean isRangedWeapon;
+	public boolean isRangedWeapon() {
 		return isRangedWeapon;
 	}
-	public void modifyIsRangedWeapon(int amount) {
-		isRangedWeapon += amount;
+	public void setIsRangedWeapon(boolean value) {
+		isRangedWeapon = value;
 	}
 	
-	private int isMeleeWeapon;
-	public int isMeleeWeapon() {
+	private boolean isMeleeWeapon;
+	public boolean isMeleeWeapon() {
 		return isMeleeWeapon;
 	}
-	public void modifyIsMeleeWeapon(int amount) {
-		isMeleeWeapon += amount;
+	public void setIsMeleeWeapon(boolean value) {
+		isMeleeWeapon = value;
 	}
 	
-	private int isThrownWeapon;
-	public int isThrownWeapon() {
+	private boolean isThrownWeapon;
+	public boolean isThrownWeapon() {
 		return isThrownWeapon;
 	}
-	public void modifyIsThrownWeapon(int amount) {
-		isThrownWeapon += amount;
+	public void setIsThrownWeapon(boolean value) {
+		isThrownWeapon = value;
 	}
 	
-	private int isTwoHanded;
-	public int isTwoHanded() {
+	private boolean isTwoHanded;
+	public boolean isTwoHanded() {
 		return isTwoHanded;
 	}
-	public void modifyIsTwoHanded(int amount) {
-		isTwoHanded += amount;
+	public void setIsTwoHanded(boolean value) {
+		isTwoHanded = value;
 	}
 	
-	private int isVersatile;
-	public int isVersatile() {
+	private boolean isVersatile;
+	public boolean isVersatile() {
 		return isVersatile;
 	}
-	public void modifyIsVersatile(int amount) {
-		isVersatile += amount;
+	public void setIsVersatile(boolean value) {
+		isVersatile = value;
 	}
 	
 	private int versatileDamageDice;
