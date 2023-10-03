@@ -342,7 +342,7 @@ public class Creature implements Cloneable{
 		int armorClassBonuses = (weapon == null ? 0 : weapon.armorClass()) + (ring == null ? 0 : ring.armorClass()) + (shield == null ? 0 : shield.armorClass());
 
 		int bonusACFromDex = dexterityModifier();
-		if(armor != null && armor.isMediumArmor() > 0) {
+		if(armor != null && armor.isMediumArmor()) {
 			if(bonusACFromDex > 2) {
 				bonusACFromDex = 2;
 			}
