@@ -45,19 +45,19 @@ public class Item implements Cloneable{
 		}
 		
 		if(this.isEnchanted() > 0) {
-			if(this.isArmor() > 0 || this.isShield() > 0) {
+			if(this.isArmor() || this.isShield() > 0) {
 				enchantmentName = String.format("%s", this.enchantedName());
 			}
-			if(this.isWeapon() > 0) {
+			if(this.isWeapon()) {
 				enchantmentName = String.format("%s", this.enchantedName());
 			}
 		}
 		
-		if(this.isArmor() > 0 || this.isShield() > 0) {
+		if(this.isArmor() || this.isShield() > 0) {
 			returnname = String.format("%s%s%s", upgradeLevel, name, enchantmentName);
 		}
 		
-		if(this.isWeapon() > 0) {
+		if(this.isWeapon()) {
 			returnname = String.format("%s%s%s", upgradeLevel, enchantmentName, name);
 		}
 		return returnname;
@@ -662,53 +662,53 @@ public class Item implements Cloneable{
 		versatileDamageDice += amount;
 	}
 	
-	private int isArmor;
-	public int isArmor() {
+	private boolean isArmor;
+	public boolean isArmor() {
 		return isArmor;
 	}
-	public void modifyIsArmor(int amount) {
-		isArmor += amount;
+	public void setIsArmor(boolean value) {
+		isArmor = value;
 	}
 	
-	private int isLightArmor;
-	public int isLightArmor() {
+	private boolean isLightArmor;
+	public boolean isLightArmor() {
 		return isLightArmor;
 	}
-	public void modifyIsLightArmor(int amount) {
-		isLightArmor += amount;
+	public void setIsLightArmor(boolean value) {
+		isLightArmor = value;
 	}
 	
-	private int isMediumArmor;
-	public int isMediumArmor() {
+	private boolean isMediumArmor;
+	public boolean isMediumArmor() {
 		return isMediumArmor;
 	}
-	public void modifyIsMediumArmor(int amount) {
-		isMediumArmor += amount;
+	public void setIsMediumArmor(boolean value) {
+		isMediumArmor = value;
 	}
 	
-	private int isHeavyArmor;
-	public int isHeavyArmor() {
+	private boolean isHeavyArmor;
+	public boolean isHeavyArmor() {
 		return isHeavyArmor;
 	}
-	public void modifyIsHeavyArmor(int amount) {
-		isHeavyArmor += amount;
+	public void setIsHeavyArmor(boolean value) {
+		isHeavyArmor = value;
 	}
 	
-	private int isTowerShield;
-	public int isTowerShield() {
+	private boolean isTowerShield;
+	public boolean isTowerShield() {
 		return isTowerShield;
 	}
-	public void modifyIsTowerShield(int amount) {
-		isTowerShield += amount;
+	public void setIsTowerShield(boolean value) {
+		isTowerShield = value;
 	}
 	
-	private int isFinesse;
-	public int isFinesse() {
+	private boolean isFinesse;
+	public boolean isFinesse() {
 		return isFinesse;
 	}
 	
-	public void modifyIsFinesse(int amount) {
-		isFinesse += amount;
+	public void setIsFinesse(boolean value) {
+		isFinesse = value;
 	}
 	
 	/*private int isSimple;
@@ -827,12 +827,12 @@ public class Item implements Cloneable{
 		intelligence += amount;
 	}
 	
-	private int isRing;
-	public int isRing() {
+	private boolean isRing;
+	public boolean isRing() {
 		return isRing;
 	}
-	public void modifyIsRing(int amount) {
-		isRing += amount;
+	public void booleanIsRing(boolean value) {
+		isRing = value;
 	}
 	
 	private int isShield;
