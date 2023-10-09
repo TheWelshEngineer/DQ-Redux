@@ -831,10 +831,10 @@ public class Item implements Cloneable{
 	public boolean isRing() {
 		return isRing;
 	}
-	public void booleanIsRing(boolean value) {
+	public void isRing(boolean value) {
 		isRing = value;
 	}
-	
+	// AMERICANO
 	private int isShield;
 	public int isShield() {
 		return isShield;

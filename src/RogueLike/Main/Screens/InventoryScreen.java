@@ -70,11 +70,11 @@ public class InventoryScreen implements Screen{
 					int x = 42;
 					terminal.write(String.format(">> %c %s", item.glyph(), player.nameOf(item)), x, z++);
 					z++;
-					if(item.isWeapon() > 0) {
+					if(item.isWeapon()) {
 						if(item.isIdentified() > 0) {
 							String damage = "";
 							Integer bonus = 0;
-							if(item.isFinesse() > 0) {
+							if(item.isFinesse()) {
 								bonus = item.upgradeLevel() + player.dexterityModifier();
 							}else {
 								bonus = item.upgradeLevel() + player.strengthModifier();
@@ -83,7 +83,7 @@ public class InventoryScreen implements Screen{
 							if(bonus >= 0) {
 								symbol = "+";
 							}
-							if(item.isVersatile() > 0) {
+							if(item.isVersatile()) {
 								damage = String.format("1d%d%s%d / 1d%d%s%d", item.damageDice(), symbol, bonus, item.versatileDamageDice(), symbol, bonus);
 							}else {
 								damage = String.format("1d%d%s%d", item.damageDice(), symbol, bonus);
@@ -174,7 +174,7 @@ public class InventoryScreen implements Screen{
 							if(bonus >= 0) {
 								symbol = "+";
 							}
-							if(item.isVersatile() > 0) {
+							if(item.isVersatile()) {
 								damage = String.format("1d%d%s%d / 1d%d%s%d (?)", item.damageDice(), symbol, bonus, item.versatileDamageDice(), symbol, bonus);
 							}else {
 								damage = String.format("1d%d%s%d (?)", item.damageDice(), symbol, bonus);
@@ -235,15 +235,15 @@ public class InventoryScreen implements Screen{
 							cursed = "Cursed, ";
 						}
 						String versatile = "";
-						if(item.isVersatile() > 0) {
+						if(item.isVersatile()) {
 							versatile = "Versatile, ";
 						}
 						String twohanded = "";
-						if(item.isTwoHanded() > 0) {
+						if(item.isTwoHanded()) {
 							twohanded = "Two-Handed, ";
 						}
 						String thrown = "";
-						if(item.isThrownWeapon() > 0) {
+						if(item.isThrownWeapon()) {
 							thrown = "Thrown, ";
 						}
 						String strength = "";
@@ -259,7 +259,7 @@ public class InventoryScreen implements Screen{
 							intelligence = "Uses Intelligence, ";
 						}
 						String ranged = "";
-						if(item.isRangedWeapon() > 0) {
+						if(item.isRangedWeapon()) {
 							ranged = "Ranged Weapon, ";
 						}
 						String flintlock = "";
@@ -292,7 +292,7 @@ public class InventoryScreen implements Screen{
 						z++;
 					}
 					
-					if(item.isArmor() > 0|| item.isShield() > 0) {
+					if(item.isArmor() || item.isShield() > 0) {
 						String armor = "";
 						if(item.isIdentified() > 0) {
 							armor = String.format("Armor Class: %d", item.armorClass()+item.upgradeLevel());
@@ -316,15 +316,15 @@ public class InventoryScreen implements Screen{
 							cursed = "Cursed, ";
 						}
 						String light = "";
-						if(item.isLightArmor() > 0) {
+						if(item.isLightArmor()) {
 							light = "Light Armor, ";
 						}
 						String medium = "";
-						if(item.isMediumArmor() > 0) {
+						if(item.isMediumArmor()) {
 							medium = "Medium Armor, ";
 						}
 						String heavy = "";
-						if(item.isHeavyArmor() > 0) {
+						if(item.isHeavyArmor()) {
 							heavy = "Heavy Armor, ";
 						}
 						String shield = "";
@@ -332,7 +332,7 @@ public class InventoryScreen implements Screen{
 							shield = "Shield, ";
 						}
 						String tower = "";
-						if(item.isTowerShield() > 0) {
+						if(item.isTowerShield()) {
 							tower = "Tower Shield, ";
 						}
 						

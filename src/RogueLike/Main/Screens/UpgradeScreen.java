@@ -20,7 +20,7 @@ public class UpgradeScreen extends InventoryBasedScreen{
 
 	@Override
 	protected boolean isAcceptable(Item item) {
-		return (item.isArmor() > 0 || item.isWeapon() > 0 || item.isShield() > 0) && (item.upgradeLevel() < 10) && (item.isWand() == 0);
+		return (item.isArmor() || item.isWeapon() || item.isShield() > 0) && (item.upgradeLevel() < 10) && (item.isWand() == 0);
 	}
 
 	@Override

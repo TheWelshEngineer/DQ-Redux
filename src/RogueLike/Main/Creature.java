@@ -347,7 +347,7 @@ public class Creature implements Cloneable{
 				bonusACFromDex = 2;
 			}
 		}
-		if(armor != null && armor.isHeavyArmor() > 0) {
+		if(armor != null && armor.isHeavyArmor()) {
 			bonusACFromDex = 0;
 		}
 
@@ -1971,7 +1971,7 @@ public class Creature implements Cloneable{
 			}else if(weapon.usesIntelligence()){
 				attackBonus = this.intelligenceModifier();
 			}
-			if(weapon.isVersatile() > 0 && shield == null) {
+			if(weapon.isVersatile() && shield == null) {
 				amount = (int)(ExtraMaths.diceRoll(weapon.damageDiceLowerBound(), weapon.versatileDamageDice()))+attackBonus+weapon.upgradeLevel();
 			}else {
 				amount = (int)(ExtraMaths.diceRoll(weapon.damageDiceLowerBound(), weapon.damageDice()))+attackBonus+weapon.upgradeLevel();
@@ -2160,7 +2160,7 @@ public class Creature implements Cloneable{
 		modifyFood(-1);
 
 		int amount = 0;
-		if(item.isThrownWeapon() > 0) {
+		if(item.isThrownWeapon()) {
 			int attackBonus = 0;
 			if(weapon.usesStrength()) {
 				attackBonus = this.strengthModifier();
@@ -2218,7 +2218,7 @@ public class Creature implements Cloneable{
 		}
 
 		int attackRoll = 0;
-		if(item.isThrownWeapon() > 0) {
+		if(item.isThrownWeapon()) {
 			if(weapon.usesDexterity()) {
 				attackRoll = this.dexterityRoll()+weapon.upgradeLevel();
 			}else if(weapon.usesStrength()) {
@@ -2251,7 +2251,7 @@ public class Creature implements Cloneable{
 				this.setLastTarget(other);
 			}
 
-			if(item.isThrownWeapon() > 0 && item.isEnchanted() > 0 && other.hp() >= 1) {
+			if(item.isThrownWeapon() && item.isEnchanted() > 0 && other.hp() >= 1) {
 				if(0 + ExtraMaths.d10() <= item.upgradeLevel()) {
 					other.addEffect(item.enchantmentEffect());
 				}else {
@@ -2507,7 +2507,7 @@ public class Creature implements Cloneable{
 		if(item.equippable() == 0) {
 			return;
 		}
-		if(item.isWeapon() == 1) {
+		if(item.isWeapon()) {
 			if(item == weapon) {
 				if(weapon.isCursed() > 0) {
 					notify("Your "+nameOf(weapon)+" is cursed! You can't let go of it!");
@@ -2520,7 +2520,7 @@ public class Creature implements Cloneable{
 					notify("Your "+nameOf(weapon)+" is cursed! You can't let go of it!");
 				}else if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
 					notify("You aren't skilled enough to use the "+nameOf(item)+".");
-				}else if(item.isTwoHanded() > 0 && shield != null){
+				}else if(item.isTwoHanded() && shield != null){
 					notify("The "+nameOf(item)+" is too unwieldy to use alongside your "+nameOf(shield)+"!");
 				}else {
 					if(item.isCursed() > 0) {
@@ -2552,7 +2552,7 @@ public class Creature implements Cloneable{
 			}
 
 		}
-		else if(item.isArmor() == 1) {
+		else if(item.isArmor()) {
 			if(item == armor) {
 				if(armor.isCursed() > 0) {
 					notify("Your "+nameOf(armor)+" is cursed! You can't take it off!");
@@ -2607,7 +2607,7 @@ public class Creature implements Cloneable{
 					notify("Your "+nameOf(shield)+" is cursed! You can't put it down!");
 				}else if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
 					notify("You aren't skilled enough to use the "+nameOf(item)+".");
-				}else if(weapon != null && weapon.isTwoHanded() > 0){
+				}else if(weapon != null && weapon.isTwoHanded()){
 					notify("The "+nameOf(item)+" is too unwieldy to use alongside your "+nameOf(weapon)+"!");
 				}else {
 					if(item.isCursed() > 0) {
@@ -2638,7 +2638,7 @@ public class Creature implements Cloneable{
 
 			}
 
-		}else if(item.isRing() == 1) {
+		}else if(item.isRing()) {
 			if(item == ring) {
 				if(ring.isCursed() > 0) {
 					notify("Your "+nameOf(ring)+" is cursed! You can't take it off!");

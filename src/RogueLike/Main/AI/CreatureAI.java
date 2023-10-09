@@ -190,7 +190,7 @@ public class CreatureAI {
 				continue;
 			}
 			
-			boolean isArmor = item.isArmor() == 1;
+			boolean isArmor = item.isArmor();
 			
 			if(item.damageDice() + item.rangedDamageDice() > currentWeaponRating || isArmor && item.armorClass() > currentArmorRating) {
 				return true;
@@ -208,7 +208,7 @@ public class CreatureAI {
 				continue;
 			}
 			
-			boolean isArmor = item.isArmor() == 1;
+			boolean isArmor = item.isArmor();
 			
 			if(item.damageDice() + item.rangedDamageDice() > currentWeaponRating || isArmor && item.armorClass() > currentArmorRating) {
 				creature.equip(item);
