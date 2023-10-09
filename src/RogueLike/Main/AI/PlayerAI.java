@@ -29,7 +29,7 @@ public class PlayerAI extends CreatureAI{
 			Item correctKey = null;
 			for(Item item : creature.inventory().getItems()) {
 				try {
-					if(item.isKey() > 0 && item.keyDepth() == z) {
+					if(item.isIronKey() && item.keyDepth() == z) {
 						correctKey = item;
 						hasCorrectKey = true;
 						break;

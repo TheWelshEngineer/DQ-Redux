@@ -263,19 +263,19 @@ public class InventoryScreen implements Screen{
 							ranged = "Ranged Weapon, ";
 						}
 						String flintlock = "";
-						if(item.usesPowder() > 0) {
+						if(item.usesPowderAmmunition()) {
 							flintlock = "Flintlock Weapon, ";
 						}
 						String arrows = "";
-						if(item.usesArrows() > 0) {
+						if(item.usesArrowAmmunition()) {
 							arrows = "Uses Arrows, ";
 						}
 						String bolts = "";
-						if(item.usesBolts() > 0) {
+						if(item.usesBoltAmmunition()) {
 							bolts = "Uses Bolts, ";
 						}
 						String powder = "";
-						if(item.usesPowder() > 0) {
+						if(item.usesPowderAmmunition()) {
 							powder = "Uses Powder, ";
 						}
 						
@@ -292,7 +292,7 @@ public class InventoryScreen implements Screen{
 						z++;
 					}
 					
-					if(item.isArmor() || item.isShield() > 0) {
+					if(item.isArmor() || item.isShield()) {
 						String armor = "";
 						if(item.isIdentified() > 0) {
 							armor = String.format("Armor Class: %d", item.armorClass()+item.upgradeLevel());
@@ -328,7 +328,7 @@ public class InventoryScreen implements Screen{
 							heavy = "Heavy Armor, ";
 						}
 						String shield = "";
-						if(item.isShield() > 0) {
+						if(item.isShield()) {
 							shield = "Shield, ";
 						}
 						String tower = "";
@@ -402,7 +402,7 @@ public class InventoryScreen implements Screen{
 					
 					
 					
-					if(item.isIdentified() > 0 || (item.foodValue() > 0 || item.isKey() > 0)) {
+					if(item.isIdentified() > 0 || (item.foodValue() > 0 || item.isIronKey())) {
 						terminal.write(String.format("Value: %s gold", item.currentGoldValue()), x, z++);
 					}else {
 						terminal.write(String.format("Value: %s gold (?)", item.baseGoldValue()), x, z++);
@@ -437,7 +437,7 @@ public class InventoryScreen implements Screen{
 					
 					terminal.write(String.format("%c %s x%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), inventory.get(i).stackAmount(), equipped, check), 5, y++);
 				}
-				if(checkIfSelected(i, check) && inventory.get(i).equippable() > 0) {
+				if(checkIfSelected(i, check) && inventory.get(i).equippable()) {
 					terminal.writeCenter("-- [X]: Equip --", 36);
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).foodValue() > 0) {
@@ -498,7 +498,7 @@ public class InventoryScreen implements Screen{
 			}
 			return null;*/
 		case KeyEvent.VK_X:
-			if(inventory.get(check).equippable() > 0) {
+			if(inventory.get(check).equippable()) {
 				player.equip(inventory.get(check));
 				return null;
 			}else {
@@ -527,7 +527,7 @@ public class InventoryScreen implements Screen{
 			
 		case KeyEvent.VK_R:
 			if(inventory.get(check).writtenSpells().size() > 0) {
-				if(inventory.get(check).isSpellbook() > 0){
+				if(inventory.get(check).isSpellbook()){
 					player.learnSpell(inventory.get(check).writtenSpells().get(0), inventory.get(check));
 					return null;
 				}else {

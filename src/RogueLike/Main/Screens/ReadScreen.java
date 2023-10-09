@@ -26,7 +26,7 @@ public class ReadScreen extends InventoryBasedScreen{
 
 	@Override
 	protected Screen use(Item item) {
-		if(item.isSpellbook() > 0){
+		if(item.isSpellbook()){
 			player.learnSpell(item.writtenSpells().get(0), item);
 			return null;
 		}else {

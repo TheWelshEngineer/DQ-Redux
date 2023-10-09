@@ -20,7 +20,7 @@ public class EnchantScreen extends InventoryBasedScreen{
 
 	@Override
 	protected boolean isAcceptable(Item item) {
-		return (item.isWeapon() || item.isArmor() || item.isShield() > 0) && item.isEnchanted() == 0;
+		return (item.isWeapon() || item.isArmor() || item.isShield()) && item.isEnchanted() == 0;
 	}
 
 	@Override

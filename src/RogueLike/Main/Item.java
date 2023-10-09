@@ -45,7 +45,7 @@ public class Item implements Cloneable{
 		}
 		
 		if(this.isEnchanted() > 0) {
-			if(this.isArmor() || this.isShield() > 0) {
+			if(this.isArmor() || this.isShield()) {
 				enchantmentName = String.format("%s", this.enchantedName());
 			}
 			if(this.isWeapon()) {
@@ -53,7 +53,7 @@ public class Item implements Cloneable{
 			}
 		}
 		
-		if(this.isArmor() || this.isShield() > 0) {
+		if(this.isArmor() || this.isShield()) {
 			returnname = String.format("%s%s%s", upgradeLevel, name, enchantmentName);
 		}
 		
@@ -831,64 +831,80 @@ public class Item implements Cloneable{
 	public boolean isRing() {
 		return isRing;
 	}
-	public void isRing(boolean value) {
+	public void setIsRing(boolean value) {
 		isRing = value;
 	}
 	// AMERICANO
-	private int isShield;
-	public int isShield() {
+	private boolean isShield;
+	public boolean isShield() {
 		return isShield;
 	}
-	public void modifyIsShield(int amount) {
-		isShield += amount;
+	public void setIsShield(boolean value) {
+		isShield = value;
 	}
 	
-	private int equippable;
-	public int equippable() {
+	private boolean equippable;
+	public boolean equippable() {
 		return equippable;
 	}
-	public void modifyEquippable(int amount) {
-		equippable += amount;
+	public void setEquippable(boolean value) {
+		equippable = value;
 	}
 	
-	private int isTrap;
-	public int isTrap() {
+	private boolean isTrap;
+	public boolean isTrap() {
 		return isTrap;
 	}
-	public void modifyIsTrap(int amount) {
-		isTrap += amount;
+	public void setIsTrap(boolean value) {
+		isTrap = value;
 	}
 	
-	private int isFound;
-	public int isFound() {
-		return isFound;
+	private boolean isTrapFound;
+	public boolean isTrapFound() {
+		return isTrapFound;
 	}
-	public void modifyIsFound(int amount) {
-		isFound += amount;
+	public void setIsTrapFound(boolean value) {
+		isTrapFound = value;
 	}
 	
-	private int isWand;
-	public int isWand() {
+	private boolean isWand;
+	public boolean isWand() {
 		return isWand;
 	}
-	public void modifyIsWand(int amount) {
-		isWand += amount;
+	public void setIsWand(boolean value) {
+		isWand = value;
 	}
 	
-	private int isSpellbook;
-	public int isSpellbook() {
+	private boolean isSpellbook;
+	public boolean isSpellbook() {
 		return isSpellbook;
 	}
-	public void modifyIsSpellbook(int amount) {
-		isSpellbook += amount;
+	public void setIsSpellbook(boolean value) {
+		isSpellbook = value;
 	}
 	
-	private int isKey;
-	public int isKey() {
-		return isKey;
+	private boolean isIronKey;
+	public boolean isIronKey() {
+		return isIronKey;
 	}
-	public void modifyIsKey(int amount) {
-		isKey += amount;
+	public void setIsIronKey(boolean value) {
+		isIronKey = value;
+	}
+	
+	private boolean isGoldKey;
+	public boolean isGoldKey() {
+		return isGoldKey;
+	}
+	public void setIsGoldKey(boolean value) {
+		isGoldKey = value;
+	}
+	
+	private boolean isCrystalKey;
+	public boolean isCrystalKey() {
+		return isCrystalKey;
+	}
+	public void setIsCrystalKey(boolean value) {
+		isCrystalKey = value;
 	}
 	
 	private int keyDepth;
@@ -899,12 +915,12 @@ public class Item implements Cloneable{
 		keyDepth = amount;
 	}
 	
-	private int isAmmunition;
-	public int isAmmunition() {
+	private boolean isAmmunition;
+	public boolean isAmmunition() {
 		return isAmmunition;
 	}
-	public void modifyIsAmmunition(int amount) {
-		isAmmunition += amount;
+	public void setIsAmmunition(boolean value) {
+		isAmmunition = value;
 	}
 	
 	private int ammunitionAmount;
@@ -915,54 +931,54 @@ public class Item implements Cloneable{
 		ammunitionAmount += amount;
 	}
 	
-	private int isArrows;
-	public int isArrows() {
-		return isArrows;
+	private boolean isArrowAmmunition;
+	public boolean isArrowAmmunition() {
+		return isArrowAmmunition;
 	}
-	public void modifyIsArrows(int amount) {
-		isArrows += amount;
-	}
-	
-	private int isBolts;
-	public int isBolts() {
-		return isBolts;
-	}
-	public void modifyIsBolts(int amount) {
-		isBolts += amount;
+	public void setIsArrowAmmunition(boolean value) {
+		isArrowAmmunition = value;
 	}
 	
-	private int isPowder;
-	public int isPowder() {
-		return isPowder;
+	private boolean isBoltAmmunition;
+	public boolean isBoltAmmunition() {
+		return isBoltAmmunition;
 	}
-	public void modifyIsPowder(int amount) {
-		isPowder += amount;
-	}
-	
-	private int usesArrows;
-	public int usesArrows() {
-		return usesArrows;
-	}
-	public void modifyUsesArrows(int amount) {
-		usesArrows += amount;
+	public void setIsBoltAmmunition(boolean value) {
+		isBoltAmmunition = value;
 	}
 	
-	private int usesBolts;
-	public int usesBolts() {
-		return usesBolts;
+	private boolean isPowderAmmuniton;
+	public boolean isPowderAmmunition() {
+		return isPowderAmmuniton;
 	}
-	public void modifyUsesBolts(int amount) {
-		usesBolts += amount;
-	}
-	
-	private int usesPowder;
-	public int usesPowder() {
-		return usesPowder;
-	}
-	public void modifyUsesPowder(int amount) {
-		usesPowder += amount;
+	public void setIsPowderAmmunition(boolean value) {
+		isPowderAmmuniton = value;
 	}
 	
+	private boolean usesArrowAmmunition;
+	public boolean usesArrowAmmunition() {
+		return usesArrowAmmunition;
+	}
+	public void setUsesArrowAmmunition(boolean value) {
+		usesArrowAmmunition = value;
+	}
+	
+	private boolean usesBoltAmmunition;
+	public boolean usesBoltAmmunition() {
+		return usesBoltAmmunition;
+	}
+	public void setUsesBoltAmmunition(boolean value) {
+		usesBoltAmmunition = value;
+	}
+	
+	private boolean usesPowderAmmunition;
+	public boolean usesPowderAmmunition() {
+		return usesPowderAmmunition;
+	}
+	public void setUsesPowderAmmunition(boolean value) {
+		usesPowderAmmunition = value;
+	}
+	//FLAT_WHITE
 	private int isScroll;
 	public int isScroll() {
 		return isScroll;

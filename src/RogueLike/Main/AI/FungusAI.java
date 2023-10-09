@@ -30,7 +30,7 @@ public class FungusAI extends CreatureAI{
 			
 		}
 		
-		if(creature.item(x,y,creature.z) != null && creature.item(x,y,creature.z).isTrap()> 0) {
+		if(creature.item(x,y,creature.z) != null && creature.item(x,y,creature.z).isTrap()) {
 			return;
 			
 		}

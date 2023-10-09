@@ -2437,7 +2437,7 @@ public class Creature implements Cloneable{
 
 	public void pickup() {
 		Item item = world.item(x, y, z);
-		if(inventory.isFull() || item == null || item.isTrap() > 0) {
+		if(inventory.isFull() || item == null || item.isTrap()) {
 			doAction("grab fruitlessly at the ground");
 		}else {
 			doAction("pick up a %s", nameOf(item));
@@ -2504,7 +2504,7 @@ public class Creature implements Cloneable{
 	}
 
 	public void equip(Item item) {
-		if(item.equippable() == 0) {
+		if(item.equippable()) {
 			return;
 		}
 		if(item.isWeapon()) {
@@ -2594,7 +2594,7 @@ public class Creature implements Cloneable{
 
 			}
 
-		}else if(item.isShield() == 1) {
+		}else if(item.isShield()) {
 			if(item == shield) {
 				if(shield.isCursed() > 0) {
 					notify("Your "+nameOf(shield)+" is cursed! You can't put it down!");
@@ -2677,7 +2677,7 @@ public class Creature implements Cloneable{
 				}
 
 			}
-		}else if(item.isAmmunition() == 1) {
+		}else if(item.isAmmunition()) {
 			if(item == ammunition) {
 				if(ammunition.isCursed() > 0) {
 					notify("Your "+nameOf(ammunition)+" is cursed! You can't take it off!");
@@ -3537,7 +3537,7 @@ public class Creature implements Cloneable{
 			search(1, true);
 		}
 		Item trap = world.item(x, y, z);
-		if(trap != null && trap.isTrap() > 0 && flying == 0 && levitating == false) {
+		if(trap != null && trap.isTrap() && flying == 0 && levitating == false) {
 			triggerTrap(trap);
 		}else {
 
@@ -3689,7 +3689,7 @@ public class Creature implements Cloneable{
 				modifyMana(amount);
 			}
 			if(item != null) {
-				if(item.isWand() > 0 && (this.nameOf(item) != item.name())) {
+				if(item.isWand() && (this.nameOf(item) != item.name())) {
 					this.learnName(item);
 				}
 				if(item.isScroll() > 0) {
@@ -3727,7 +3727,7 @@ public class Creature implements Cloneable{
 				modifyMana(amount);
 			}
 			if(item != null) {
-				if(item.isWand() > 0 && (this.nameOf(item) != item.name())) {
+				if(item.isWand() && (this.nameOf(item) != item.name())) {
 					this.learnName(item);
 				}
 				if(item.isScroll() > 0) {
@@ -3789,16 +3789,16 @@ public class Creature implements Cloneable{
 				int ny = y + oy;
 				if (ox == 0 && oy == 0 || item(nx, ny, z) != null) {
 					if(item(nx, ny, z) != null) {
-						if(item(nx, ny, z).isTrap() == 0) {
+						if(item(nx, ny, z).isTrap()) {
 							//failure++;
 						}else {
-							if(item(nx, ny, z).isFound() > 0) {
+							if(item(nx, ny, z).isTrapFound()) {
 								failure++;
 							}else {
 								if((int)(Math.random()*20) <= successChance) {
 									item(nx, ny, z).changeColor(item(nx, ny, z).defaultColor());
 									item(nx, ny, z).changeGlyph(item(nx, ny, z).defaultGlyph());
-									item(nx, ny, z).modifyIsFound(1);
+									item(nx, ny, z).setIsTrapFound(true);
 									notify("You spotted a "+item(nx, ny, z).name()+"!");
 									failure = 0;
 									success++;

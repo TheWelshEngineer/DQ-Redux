@@ -170,11 +170,11 @@ public class PlayScreen implements Screen{
 	        		player.notify("You don't have a ranged weapon equipped."); 
 	        	}else if(player.ammunition() == null) {
 	        		player.notify("You don't have any ammunition ready."); 
-	        	}else if(player.ammunition().isArrows() > 0 && player.weapon().usesArrows() == 0) {
+	        	}else if(player.ammunition().isArrowAmmunition() && player.weapon().usesArrowAmmunition()) {
 	        		player.notify("You don't have the right ammunition ready."); 
-	        	}else if(player.ammunition().isBolts() > 0 && player.weapon().usesBolts() == 0) {
+	        	}else if(player.ammunition().isBoltAmmunition() && player.weapon().usesBoltAmmunition()) {
 	        		player.notify("You don't have the right ammunition ready."); 
-	        	}else if(player.ammunition().isPowder() > 0 && player.weapon().usesPowder() == 0) {
+	        	}else if(player.ammunition().isPowderAmmunition() && player.weapon().usesPowderAmmunition()) {
 	        		player.notify("You don't have the right ammunition ready."); 
 	        	}else{
 	        		subscreen = new FireWeaponScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = 1; break;
@@ -420,10 +420,10 @@ public class PlayScreen implements Screen{
 		if(player.magicMapping() > 0) {
 			for(int x = 0; x < world.width(); x++) {
 				for(int y = 0; y < world.height(); y++) {
-					if(world.item(x, y, player.z) != null && world.item(x, y, player.z).isTrap() > 0) {
+					if(world.item(x, y, player.z) != null && world.item(x, y, player.z).isTrap()) {
 						world.item(x, y, player.z).changeColor(world.item(x, y, player.z).defaultColor());
 						world.item(x, y, player.z).changeGlyph(world.item(x, y, player.z).defaultGlyph());
-						world.item(x, y, player.z).modifyIsFound(1);
+						world.item(x, y, player.z).setIsTrapFound(true);
 					}
 					
 				}
