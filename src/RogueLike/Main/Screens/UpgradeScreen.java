@@ -27,11 +27,11 @@ public class UpgradeScreen extends InventoryBasedScreen{
 	protected Screen use(Item item) {
 		factory.upgradeItem(item, 1);
 		player.notify("Your "+player.nameOf(item)+" looks much better!");
-		if(item.isEnchanted() > 0 && item.isIdentified() > 0) {
+		if(item.isEnchanted() && item.isIdentified()) {
 			player.notify("The interaction of different types of magic");
 			player.notify("has clouded your memory of the "+player.nameOf(item)+"!");
 		}
-		item.modifyIsIdentified(-1);
+		item.setIsIdentified(false);
 		return null;
 	}
 

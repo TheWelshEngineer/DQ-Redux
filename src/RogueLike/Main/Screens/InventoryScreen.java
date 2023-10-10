@@ -71,7 +71,7 @@ public class InventoryScreen implements Screen{
 					terminal.write(String.format(">> %c %s", item.glyph(), player.nameOf(item)), x, z++);
 					z++;
 					if(item.isWeapon()) {
-						if(item.isIdentified() > 0) {
+						if(item.isIdentified()) {
 							String damage = "";
 							Integer bonus = 0;
 							if(item.isFinesse()) {
@@ -128,25 +128,25 @@ public class InventoryScreen implements Screen{
 							terminal.write(String.format("Accuracy Bonus: %s%d", symbol, attackbonus), x, z++);
 							
 							String type = "Physical";
-							if(item.dealsFire() > 0) {
+							if(item.dealsFireDamage()) {
 								type = "Fire";
 							}
-							if(item.dealsFrost() > 0) {
+							if(item.dealsFrostDamage()) {
 								type = "Frost";
 							}
-							if(item.dealsShock() > 0) {
+							if(item.dealsShockDamage()) {
 								type = "Shock";
 							}
-							if(item.dealsPoison() > 0) {
+							if(item.dealsPoisonDamage()) {
 								type = "Poison";
 							}
-							if(item.dealsAcid() > 0) {
+							if(item.dealsAcidDamage()) {
 								type = "Acid";
 							}
-							if(item.dealsMagic() > 0) {
+							if(item.dealsMagicDamage()) {
 								type = "Magic";
 							}
-							if(item.dealsChaos() > 0) {
+							if(item.dealsChaosDamage()) {
 								type = "Chaos";
 							}
 							terminal.write(String.format("Damage Type: %s", type), x, z++);
@@ -223,15 +223,15 @@ public class InventoryScreen implements Screen{
 						String traits = "";
 						String traits2 = "";
 						String enchanted = "";
-						if(item.isEnchanted() > 0 && item.isIdentified() > 0) {
+						if(item.isEnchanted() && item.isIdentified()) {
 							enchanted = "Enchanted, ";
 						}
 						String upgraded = "";
-						if(item.upgradeLevel() > 0 && item.isIdentified() > 0) {
+						if(item.upgradeLevel() > 0 && item.isIdentified()) {
 							upgraded = String.format("Upgraded (+%d), ", item.upgradeLevel());
 						}
 						String cursed = "";
-						if(item.isCursed() > 0 && item.curseKnown() > 0) {
+						if(item.isCursed() && item.isCurseKnown()) {
 							cursed = "Cursed, ";
 						}
 						String versatile = "";
@@ -294,7 +294,7 @@ public class InventoryScreen implements Screen{
 					
 					if(item.isArmor() || item.isShield()) {
 						String armor = "";
-						if(item.isIdentified() > 0) {
+						if(item.isIdentified()) {
 							armor = String.format("Armor Class: %d", item.armorClass()+item.upgradeLevel());
 						}else {
 							armor = String.format("Armor Class: %d (?)", item.armorClass());
@@ -304,15 +304,15 @@ public class InventoryScreen implements Screen{
 						String traits = "";
 						String traits2 = "";
 						String enchanted = "";
-						if(item.isEnchanted() > 0 && item.isIdentified() > 0) {
+						if(item.isEnchanted() && item.isIdentified()) {
 							enchanted = "Enchanted, ";
 						}
 						String upgraded = "";
-						if(item.upgradeLevel() > 0 && item.isIdentified() > 0) {
+						if(item.upgradeLevel() > 0 && item.isIdentified()) {
 							upgraded = String.format("Upgraded (+%d), ", item.upgradeLevel());
 						}
 						String cursed = "";
-						if(item.isCursed() > 0 && item.curseKnown() > 0) {
+						if(item.isCursed() && item.isCurseKnown()) {
 							cursed = "Cursed, ";
 						}
 						String light = "";
@@ -391,7 +391,7 @@ public class InventoryScreen implements Screen{
 					
 					if(item.quaffEffect() != null) {
 						String effect = "Unknown";
-						if(item.isIdentified() > 0) {
+						if(item.isIdentified()) {
 							effect = item.potionName();
 						}
 						terminal.write(String.format("Potion Effect: %s", effect), x, z++);
@@ -402,14 +402,14 @@ public class InventoryScreen implements Screen{
 					
 					
 					
-					if(item.isIdentified() > 0 || (item.foodValue() > 0 || item.isIronKey())) {
+					if(item.isIdentified() || (item.foodValue() > 0 || item.isIronKey())) {
 						terminal.write(String.format("Value: %s gold", item.currentGoldValue()), x, z++);
 					}else {
 						terminal.write(String.format("Value: %s gold (?)", item.baseGoldValue()), x, z++);
 					}
 					z++;
 					if(item.quaffEffect() != null) {
-						if(item.isIdentified() > 0) {
+						if(item.isIdentified()) {
 							terminal.write(item.getDescription().getPotionDescriptionBase(), x, z++);
 							terminal.write(item.getDescription().getPotionDescriptionKnown(), x, z++);
 						}else {

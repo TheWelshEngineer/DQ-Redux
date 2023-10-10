@@ -22,8 +22,8 @@ public class IdentifyScreen extends InventoryBasedScreen{
 	@Override
 	protected Screen use(Item item) {
 		player.learnName(item);
-		if(item.isCursed() > 0 && item.curseKnown() == 0) {
-			item.modifyCurseKnown(1);
+		if(item.isCursed() && !item.isCurseKnown()) {
+			item.setCurseKnown(true);
 			player.notify("The "+player.nameOf(item)+" is cursed!");
 		}
 		//item.modifyIsIdentified(1);

@@ -102,7 +102,7 @@ public class Creature implements Cloneable{
 		return playerClass;
 	}
 
-	public void modifyPlayerClass(String newClass) {
+	public void setPlayerClass(String newClass) {
 		playerClass = newClass;
 	}
 	
@@ -120,16 +120,16 @@ public class Creature implements Cloneable{
 		return playerName;
 	}
 
-	public void modifyPlayerName(String newName) {
+	public void setPlayerName(String newName) {
 		playerName = newName;
 	}
 
-	public void modifyIsDead(int amount) {
-		isDead += amount;
+	public void setIsDead(boolean value) {
+		isDead = value;
 	}
 
-	private int isDead;
-	public int isDead() {
+	private boolean isDead;
+	public boolean isDead() {
 		return isDead;
 	}
 
@@ -168,11 +168,11 @@ public class Creature implements Cloneable{
 			int amount = damage.amount();
 			int amountTemp = damage.amount();
 
-			if((damage.isPhysical() && this.resistsPhysical()) || (damage.isFire() && this.resistsFire()) || (damage.isFrost() && this.resistsFrost()) || (damage.isShock() && this.resistsShock()) || (damage.isPoison() && this.resistsPoison()) || (damage.isAcid() && this.resistsAcid()) || (damage.isMagic() && this.resistsMagic()) || (damage.isChaos() && this.resistsChaos()) ) {
+			if((damage.isPhysical() && this.resistsPhysicalDamage()) || (damage.isFire() && this.resistsFireDamage()) || (damage.isFrost() && this.resistsFrostDamage()) || (damage.isShock() && this.resistsShockDamage()) || (damage.isPoison() && this.resistsPoisonDamage()) || (damage.isAcid() && this.resistsAcidDamage()) || (damage.isMagic() && this.resistsMagicDamage()) || (damage.isChaos() && this.resistsChaosDamage()) ) {
 				amount = (int)Math.floor(amountTemp*0.5);
 			}
 
-			if((damage.isPhysical() && this.immunePhysical()) || (damage.isFire() && this.immuneFire()) || (damage.isFrost() && this.immuneFrost()) || (damage.isShock() && this.immuneShock()) || (damage.isPoison() && this.immunePoison()) || (damage.isAcid() && this.immuneAcid()) || (damage.isMagic() && this.immuneMagic()) || (damage.isChaos() && this.immuneChaos()) ) {
+			if((damage.isPhysical() && this.immunePhysicalDamage()) || (damage.isFire() && this.immuneFireDamage()) || (damage.isFrost() && this.immuneFrostDamage()) || (damage.isShock() && this.immuneShockDamage()) || (damage.isPoison() && this.immunePoisonDamage()) || (damage.isAcid() && this.immuneAcidDamage()) || (damage.isMagic() && this.immuneMagicDamage()) || (damage.isChaos() && this.immuneChaosDamage()) ) {
 				amount = 0;
 			}
 
@@ -211,8 +211,8 @@ public class Creature implements Cloneable{
 
 		if(hp > maxHP) {
 			hp = maxHP;
-		}else if(hp <= 0 && isDead == 0) {
-			modifyIsDead(1);
+		}else if(hp <= 0 && !isDead) {
+			setIsDead(true);
 			doActionWhenDead("die");
 			if(lastHit != null) {
 				lastHit.gainXP(this);
@@ -640,204 +640,476 @@ public class Creature implements Cloneable{
 		return roll;
 	}
 
-	private int resistsPhysical;
-	public boolean resistsPhysical() {
-		int returnResistsPhysical = resistsPhysical + (weapon == null ? 0 : weapon.resistsPhysical()) + (armor == null ? 0 : armor.resistsPhysical()) + (ring == null ? 0 : ring.resistsPhysical()) + (shield == null ? 0 : shield.resistsPhysical());
+	private boolean resistsPhysicalDamage;
+	public boolean resistsPhysicalDamage() {
+		boolean weaponResist = false;
+		if(weapon != null) {
+			weaponResist = weapon.resistsPhysicalDamage();
+		}
+		boolean armorResist = false;
+		if(armor != null) {
+			armorResist = armor.resistsPhysicalDamage();
+		}
+		boolean ringResist = false;
+		if(ring != null) {
+			ringResist = ring.resistsPhysicalDamage();
+		}
+		boolean shieldResist = false;
+		if(shield != null) {
+			shieldResist = shield.resistsPhysicalDamage();
+		}
+		
+		int returnResistsPhysical = (resistsPhysicalDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
 		if(returnResistsPhysical > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setResistsPhysical(int value) {
-		resistsPhysical = value;
+	public void setResistsPhysicalDamage(boolean value) {
+		resistsPhysicalDamage = value;
 	}
-	private int immunePhysical;
-	public boolean immunePhysical() {
-		int returnImmunePhysical = immunePhysical + (weapon == null ? 0 : weapon.immunePhysical()) + (armor == null ? 0 : armor.immunePhysical()) + (ring == null ? 0 : ring.immunePhysical()) + (shield == null ? 0 : shield.immunePhysical());
+	private boolean immunePhysicalDamage;
+	public boolean immunePhysicalDamage() {
+		boolean weaponImmune = false;
+		if(weapon != null) {
+			weaponImmune = weapon.immunePhysicalDamage();
+		}
+		boolean armorImmune = false;
+		if(armor != null) {
+			armorImmune = armor.immunePhysicalDamage();
+		}
+		boolean ringImmune = false;
+		if(ring != null) {
+			ringImmune = ring.immunePhysicalDamage();
+		}
+		boolean shieldImmune = false;
+		if(shield != null) {
+			shieldImmune = shield.immunePhysicalDamage();
+		}
+		
+		int returnImmunePhysical = (immunePhysicalDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
 		if(returnImmunePhysical > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setImmunePhysical(int value) {
-		immunePhysical = value;
+	public void setImmunePhysicalDamage(boolean value) {
+		immunePhysicalDamage = value;
 	}
 
-	private int resistsFire;
-	public boolean resistsFire() {
-		int returnResistsFire = resistsFire + (weapon == null ? 0 : weapon.resistsFire()) + (armor == null ? 0 : armor.resistsFire()) + (ring == null ? 0 : ring.resistsFire()) + (shield == null ? 0 : shield.resistsFire());
+	private boolean resistsFireDamage;
+	public boolean resistsFireDamage() {
+		boolean weaponResist = false;
+		if(weapon != null) {
+			weaponResist = weapon.resistsFireDamage();
+		}
+		boolean armorResist = false;
+		if(armor != null) {
+			armorResist = armor.resistsFireDamage();
+		}
+		boolean ringResist = false;
+		if(ring != null) {
+			ringResist = ring.resistsFireDamage();
+		}
+		boolean shieldResist = false;
+		if(shield != null) {
+			shieldResist = shield.resistsFireDamage();
+		}
+		
+		int returnResistsFire = (resistsFireDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
 		if(returnResistsFire > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setResistsFire(int value) {
-		resistsFire = value;
+	public void setResistsFireDamage(boolean value) {
+		resistsFireDamage = value;
 	}
-	private int immuneFire;
-	public boolean immuneFire() {
-		int returnImmuneFire = immuneFire + (weapon == null ? 0 : weapon.immuneFire()) + (armor == null ? 0 : armor.immuneFire()) + (ring == null ? 0 : ring.immuneFire()) + (shield == null ? 0 : shield.immuneFire());
+	private boolean immuneFireDamage;
+	public boolean immuneFireDamage() {
+		boolean weaponImmune = false;
+		if(weapon != null) {
+			weaponImmune = weapon.immuneFireDamage();
+		}
+		boolean armorImmune = false;
+		if(armor != null) {
+			armorImmune = armor.immuneFireDamage();
+		}
+		boolean ringImmune = false;
+		if(ring != null) {
+			ringImmune = ring.immuneFireDamage();
+		}
+		boolean shieldImmune = false;
+		if(shield != null) {
+			shieldImmune = shield.immuneFireDamage();
+		}
+		
+		int returnImmuneFire = (immuneFireDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
 		if(returnImmuneFire > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setImmuneFire(int value) {
-		immuneFire = value;
+	public void setImmuneFireDamage(boolean value) {
+		immuneFireDamage = value;
 	}
 
-	private int resistsFrost;
-	public boolean resistsFrost() {
-		int returnResistsFrost = resistsFrost + (weapon == null ? 0 : weapon.resistsFrost()) + (armor == null ? 0 : armor.resistsFrost()) + (ring == null ? 0 : ring.resistsFrost()) + (shield == null ? 0 : shield.resistsFrost());
+	private boolean resistsFrostDamage;
+	public boolean resistsFrostDamage() {
+		boolean weaponResist = false;
+		if(weapon != null) {
+			weaponResist = weapon.resistsFrostDamage();
+		}
+		boolean armorResist = false;
+		if(armor != null) {
+			armorResist = armor.resistsFrostDamage();
+		}
+		boolean ringResist = false;
+		if(ring != null) {
+			ringResist = ring.resistsFrostDamage();
+		}
+		boolean shieldResist = false;
+		if(shield != null) {
+			shieldResist = shield.resistsFrostDamage();
+		}
+		
+		int returnResistsFrost = (resistsFrostDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
 		if(returnResistsFrost > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setResistsFrost(int value) {
-		resistsFrost = value;
+	public void setResistsFrostDamage(boolean value) {
+		resistsFrostDamage = value;
 	}
-	private int immuneFrost;
-	public boolean immuneFrost() {
-		int returnImmuneFrost = immuneFrost + (weapon == null ? 0 : weapon.immuneFrost()) + (armor == null ? 0 : armor.immuneFrost()) + (ring == null ? 0 : ring.immuneFrost()) + (shield == null ? 0 : shield.immuneFrost());
+	private boolean immuneFrostDamage;
+	public boolean immuneFrostDamage() {
+		boolean weaponImmune = false;
+		if(weapon != null) {
+			weaponImmune = weapon.immuneFrostDamage();
+		}
+		boolean armorImmune = false;
+		if(armor != null) {
+			armorImmune = armor.immuneFrostDamage();
+		}
+		boolean ringImmune = false;
+		if(ring != null) {
+			ringImmune = ring.immuneFrostDamage();
+		}
+		boolean shieldImmune = false;
+		if(shield != null) {
+			shieldImmune = shield.immuneFrostDamage();
+		}
+		
+		int returnImmuneFrost = (immuneFrostDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
 		if(returnImmuneFrost > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setImmuneFrost(int value) {
-		immuneFrost = value;
+	public void setImmuneFrostDamage(boolean value) {
+		immuneFrostDamage = value;
 	}
 
-	private int resistsShock;
-	public boolean resistsShock() {
-		int returnResistsShock = resistsShock + (weapon == null ? 0 : weapon.resistsShock()) + (armor == null ? 0 : armor.resistsShock()) + (ring == null ? 0 : ring.resistsShock()) + (shield == null ? 0 : shield.resistsShock());
+	private boolean resistsShockDamage;
+	public boolean resistsShockDamage() {
+		boolean weaponResist = false;
+		if(weapon != null) {
+			weaponResist = weapon.resistsShockDamage();
+		}
+		boolean armorResist = false;
+		if(armor != null) {
+			armorResist = armor.resistsShockDamage();
+		}
+		boolean ringResist = false;
+		if(ring != null) {
+			ringResist = ring.resistsShockDamage();
+		}
+		boolean shieldResist = false;
+		if(shield != null) {
+			shieldResist = shield.resistsShockDamage();
+		}
+		
+		int returnResistsShock = (resistsShockDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
 		if(returnResistsShock > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setResistsShock(int value) {
-		resistsShock = value;
+	public void setResistsShockDamage(boolean value) {
+		resistsShockDamage = value;
 	}
-	private int immuneShock;
-	public boolean immuneShock() {
-		int returnImmuneShock = immuneShock + (weapon == null ? 0 : weapon.immuneShock()) + (armor == null ? 0 : armor.immuneShock()) + (ring == null ? 0 : ring.immuneShock()) + (shield == null ? 0 : shield.immuneShock());
+	private boolean immuneShockDamage;
+	public boolean immuneShockDamage() {
+		boolean weaponImmune = false;
+		if(weapon != null) {
+			weaponImmune = weapon.immuneShockDamage();
+		}
+		boolean armorImmune = false;
+		if(armor != null) {
+			armorImmune = armor.immuneShockDamage();
+		}
+		boolean ringImmune = false;
+		if(ring != null) {
+			ringImmune = ring.immuneShockDamage();
+		}
+		boolean shieldImmune = false;
+		if(shield != null) {
+			shieldImmune = shield.immuneShockDamage();
+		}
+		
+		int returnImmuneShock = (immuneShockDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
 		if(returnImmuneShock > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setImmuneShock(int value) {
-		immuneShock = value;
+	public void setImmuneShockDamage(boolean value) {
+		immuneShockDamage = value;
 	}
 
-	private int resistsPoison;
-	public boolean resistsPoison() {
-		int returnResistsPoison = resistsPoison + (weapon == null ? 0 : weapon.resistsPoison()) + (armor == null ? 0 : armor.resistsPoison()) + (ring == null ? 0 : ring.resistsPoison()) + (shield == null ? 0 : shield.resistsPoison());
+	private boolean resistsPoisonDamage;
+	public boolean resistsPoisonDamage() {
+		boolean weaponResist = false;
+		if(weapon != null) {
+			weaponResist = weapon.resistsPoisonDamage();
+		}
+		boolean armorResist = false;
+		if(armor != null) {
+			armorResist = armor.resistsPoisonDamage();
+		}
+		boolean ringResist = false;
+		if(ring != null) {
+			ringResist = ring.resistsPoisonDamage();
+		}
+		boolean shieldResist = false;
+		if(shield != null) {
+			shieldResist = shield.resistsPoisonDamage();
+		}
+		
+		int returnResistsPoison = (resistsPoisonDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
 		if(returnResistsPoison > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setResistsPoison(int value) {
-		resistsPoison = value;
+	public void setResistsPoisonDamage(boolean value) {
+		resistsPoisonDamage = value;
 	}
-	private int immunePoison;
-	public boolean immunePoison() {
-		int returnImmunePoison = immunePoison + (weapon == null ? 0 : weapon.immunePoison()) + (armor == null ? 0 : armor.immunePoison()) + (ring == null ? 0 : ring.immunePoison()) + (shield == null ? 0 : shield.immunePoison());
+	private boolean immunePoisonDamage;
+	public boolean immunePoisonDamage() {
+		boolean weaponImmune = false;
+		if(weapon != null) {
+			weaponImmune = weapon.immunePoisonDamage();
+		}
+		boolean armorImmune = false;
+		if(armor != null) {
+			armorImmune = armor.immunePoisonDamage();
+		}
+		boolean ringImmune = false;
+		if(ring != null) {
+			ringImmune = ring.immunePoisonDamage();
+		}
+		boolean shieldImmune = false;
+		if(shield != null) {
+			shieldImmune = shield.immunePoisonDamage();
+		}
+		
+		int returnImmunePoison = (immunePoisonDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
 		if(returnImmunePoison > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setImmunePoison(int value) {
-		immunePoison = value;
+	public void setImmunePoisonDamage(boolean value) {
+		immunePoisonDamage = value;
 	}
 
-	private int resistsAcid;
-	public boolean resistsAcid() {
-		int returnResistsAcid = resistsAcid + (weapon == null ? 0 : weapon.resistsAcid()) + (armor == null ? 0 : armor.resistsAcid()) + (ring == null ? 0 : ring.resistsAcid()) + (shield == null ? 0 : shield.resistsAcid());
+	private boolean resistsAcidDamage;
+	public boolean resistsAcidDamage() {
+		boolean weaponResist = false;
+		if(weapon != null) {
+			weaponResist = weapon.resistsAcidDamage();
+		}
+		boolean armorResist = false;
+		if(armor != null) {
+			armorResist = armor.resistsAcidDamage();
+		}
+		boolean ringResist = false;
+		if(ring != null) {
+			ringResist = ring.resistsAcidDamage();
+		}
+		boolean shieldResist = false;
+		if(shield != null) {
+			shieldResist = shield.resistsAcidDamage();
+		}
+		
+		int returnResistsAcid = (resistsAcidDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
 		if(returnResistsAcid > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setResistsAcid(int value) {
-		resistsAcid = value;
+	public void setResistsAcidDamage(boolean value) {
+		resistsAcidDamage = value;
 	}
-	private int immuneAcid;
-	public boolean immuneAcid() {
-		int returnImmuneAcid = immuneAcid + (weapon == null ? 0 : weapon.immuneAcid()) + (armor == null ? 0 : armor.immuneAcid()) + (ring == null ? 0 : ring.immuneAcid()) + (shield == null ? 0 : shield.immuneAcid());
+	private boolean immuneAcidDamage;
+	public boolean immuneAcidDamage() {
+		boolean weaponImmune = false;
+		if(weapon != null) {
+			weaponImmune = weapon.immuneAcidDamage();
+		}
+		boolean armorImmune = false;
+		if(armor != null) {
+			armorImmune = armor.immuneAcidDamage();
+		}
+		boolean ringImmune = false;
+		if(ring != null) {
+			ringImmune = ring.immuneAcidDamage();
+		}
+		boolean shieldImmune = false;
+		if(shield != null) {
+			shieldImmune = shield.immuneAcidDamage();
+		}
+		
+		int returnImmuneAcid = (immuneAcidDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
 		if(returnImmuneAcid > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setImmuneAcid(int value) {
-		immuneAcid = value;
+	public void setImmuneAcidDamage(boolean value) {
+		immuneAcidDamage = value;
 	}
 
-	private int resistsMagic;
-	public boolean resistsMagic() {
-		int returnResistsMagic = resistsMagic + (weapon == null ? 0 : weapon.resistsMagic()) + (armor == null ? 0 : armor.resistsMagic()) + (ring == null ? 0 : ring.resistsMagic()) + (shield == null ? 0 : shield.resistsMagic());
+	private boolean resistsMagicDamage;
+	public boolean resistsMagicDamage() {
+		boolean weaponResist = false;
+		if(weapon != null) {
+			weaponResist = weapon.resistsMagicDamage();
+		}
+		boolean armorResist = false;
+		if(armor != null) {
+			armorResist = armor.resistsMagicDamage();
+		}
+		boolean ringResist = false;
+		if(ring != null) {
+			ringResist = ring.resistsMagicDamage();
+		}
+		boolean shieldResist = false;
+		if(shield != null) {
+			shieldResist = shield.resistsMagicDamage();
+		}
+		
+		int returnResistsMagic = (resistsMagicDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
 		if(returnResistsMagic > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setResistsMagic(int value) {
-		resistsMagic = value;
+	public void setResistsMagicDamage(boolean value) {
+		resistsMagicDamage = value;
 	}
-	private int immuneMagic;
-	public boolean immuneMagic() {
-		int returnImmuneMagic = immuneMagic + (weapon == null ? 0 : weapon.immuneMagic()) + (armor == null ? 0 : armor.immuneMagic()) + (ring == null ? 0 : ring.immuneMagic()) + (shield == null ? 0 : shield.immuneMagic());
+	private boolean immuneMagicDamage;
+	public boolean immuneMagicDamage() {
+		boolean weaponImmune = false;
+		if(weapon != null) {
+			weaponImmune = weapon.immuneMagicDamage();
+		}
+		boolean armorImmune = false;
+		if(armor != null) {
+			armorImmune = armor.immuneMagicDamage();
+		}
+		boolean ringImmune = false;
+		if(ring != null) {
+			ringImmune = ring.immuneMagicDamage();
+		}
+		boolean shieldImmune = false;
+		if(shield != null) {
+			shieldImmune = shield.immuneMagicDamage();
+		}
+		
+		int returnImmuneMagic = (immuneMagicDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
 		if(returnImmuneMagic > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setImmuneMagic(int value) {
-		immuneMagic = value;
+	public void setImmuneMagicDamage(boolean value) {
+		immuneMagicDamage = value;
 	}
 
-	private int resistsChaos;
-	public boolean resistsChaos() {
-		int returnResistsChaos = resistsChaos + (weapon == null ? 0 : weapon.resistsChaos()) + (armor == null ? 0 : armor.resistsChaos()) + (ring == null ? 0 : ring.resistsChaos()) + (shield == null ? 0 : shield.resistsChaos());
+	private boolean resistsChaosDamage;
+	public boolean resistsChaosDamage() {
+		boolean weaponResist = false;
+		if(weapon != null) {
+			weaponResist = weapon.resistsChaosDamage();
+		}
+		boolean armorResist = false;
+		if(armor != null) {
+			armorResist = armor.resistsChaosDamage();
+		}
+		boolean ringResist = false;
+		if(ring != null) {
+			ringResist = ring.resistsChaosDamage();
+		}
+		boolean shieldResist = false;
+		if(shield != null) {
+			shieldResist = shield.resistsChaosDamage();
+		}
+		
+		int returnResistsChaos = (resistsChaosDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
 		if(returnResistsChaos > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setResistsChaos(int value) {
-		resistsChaos = value;
+	public void setResistsChaosDamage(boolean value) {
+		resistsChaosDamage = value;
 	}
-	private int immuneChaos;
-	public boolean immuneChaos() {
-		int returnImmuneChaos = immuneChaos + (weapon == null ? 0 : weapon.immuneChaos()) + (armor == null ? 0 : armor.immuneChaos()) + (ring == null ? 0 : ring.immuneChaos()) + (shield == null ? 0 : shield.immuneChaos());
+	private boolean immuneChaosDamage;
+	public boolean immuneChaosDamage() {
+		boolean weaponImmune = false;
+		if(weapon != null) {
+			weaponImmune = weapon.immuneChaosDamage();
+		}
+		boolean armorImmune = false;
+		if(armor != null) {
+			armorImmune = armor.immuneChaosDamage();
+		}
+		boolean ringImmune = false;
+		if(ring != null) {
+			ringImmune = ring.immuneChaosDamage();
+		}
+		boolean shieldImmune = false;
+		if(shield != null) {
+			shieldImmune = shield.immuneChaosDamage();
+		}
+		
+		int returnImmuneChaos = (immuneChaosDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
 		if(returnImmuneChaos > 0) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public void setImmuneChaos(int value) {
-		immuneChaos = value;
+	public void setImmuneChaosDamage(boolean value) {
+		immuneChaosDamage = value;
 	}
 
 
@@ -1009,9 +1281,26 @@ public class Creature implements Cloneable{
 		return ExtraMaths.d20()+skillAlchemancy;
 	}*/
 
-	private int dealsFire;
-	public boolean dealsFire() {
-		int returnDealsFire = dealsFire + (weapon == null ? 0 : weapon.dealsFire()) + (armor == null ? 0 : armor.dealsFire()) + (ring == null ? 0 : ring.dealsFire()) + (shield == null ? 0 : shield.dealsFire());
+	private boolean dealsFireDamage;
+	public boolean dealsFireDamage() {
+		boolean weaponDeals = false;
+		if(weapon != null) {
+			weaponDeals = weapon.dealsFireDamage();
+		}
+		boolean armorDeals = false;
+		if(armor != null) {
+			armorDeals = armor.dealsFireDamage();
+		}
+		boolean ringDeals = false;
+		if(ring != null) {
+			ringDeals = ring.dealsFireDamage();
+		}
+		boolean shieldDeals = false;
+		if(shield != null) {
+			shieldDeals = shield.dealsFireDamage();
+		}
+		
+		int returnDealsFire = (dealsFireDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
 		if(returnDealsFire > 0) {
 			return true;
 		}else {
@@ -1019,9 +1308,26 @@ public class Creature implements Cloneable{
 		}
 	}
 
-	private int dealsFrost;
-	public boolean dealsFrost() {
-		int returnDealsFrost = dealsFrost + (weapon == null ? 0 : weapon.dealsFrost()) + (armor == null ? 0 : armor.dealsFrost()) + (ring == null ? 0 : ring.dealsFrost()) + (shield == null ? 0 : shield.dealsFrost());
+	private boolean dealsFrostDamage;
+	public boolean dealsFrostDamage() {
+		boolean weaponDeals = false;
+		if(weapon != null) {
+			weaponDeals = weapon.dealsFrostDamage();
+		}
+		boolean armorDeals = false;
+		if(armor != null) {
+			armorDeals = armor.dealsFrostDamage();
+		}
+		boolean ringDeals = false;
+		if(ring != null) {
+			ringDeals = ring.dealsFrostDamage();
+		}
+		boolean shieldDeals = false;
+		if(shield != null) {
+			shieldDeals = shield.dealsFrostDamage();
+		}
+		
+		int returnDealsFrost = (dealsFrostDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
 		if(returnDealsFrost > 0) {
 			return true;
 		}else {
@@ -1029,9 +1335,26 @@ public class Creature implements Cloneable{
 		}
 	}
 
-	private int dealsShock;
-	public boolean dealsShock() {
-		int returnDealsShock = dealsShock + (weapon == null ? 0 : weapon.dealsShock()) + (armor == null ? 0 : armor.dealsShock()) + (ring == null ? 0 : ring.dealsShock()) + (shield == null ? 0 : shield.dealsShock());
+	private boolean dealsShockDamage;
+	public boolean dealsShockDamage() {
+		boolean weaponDeals = false;
+		if(weapon != null) {
+			weaponDeals = weapon.dealsShockDamage();
+		}
+		boolean armorDeals = false;
+		if(armor != null) {
+			armorDeals = armor.dealsShockDamage();
+		}
+		boolean ringDeals = false;
+		if(ring != null) {
+			ringDeals = ring.dealsShockDamage();
+		}
+		boolean shieldDeals = false;
+		if(shield != null) {
+			shieldDeals = shield.dealsShockDamage();
+		}
+		
+		int returnDealsShock = (dealsShockDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
 		if(returnDealsShock > 0) {
 			return true;
 		}else {
@@ -1039,9 +1362,26 @@ public class Creature implements Cloneable{
 		}
 	}
 
-	private int dealsPoison;
-	public boolean dealsPoison() {
-		int returnDealsPoison = dealsPoison + (weapon == null ? 0 : weapon.dealsPoison()) + (armor == null ? 0 : armor.dealsPoison()) + (ring == null ? 0 : ring.dealsPoison()) + (shield == null ? 0 : shield.dealsPoison());
+	private boolean dealsPoisonDamage;
+	public boolean dealsPoisonDamage() {
+		boolean weaponDeals = false;
+		if(weapon != null) {
+			weaponDeals = weapon.dealsPoisonDamage();
+		}
+		boolean armorDeals = false;
+		if(armor != null) {
+			armorDeals = armor.dealsPoisonDamage();
+		}
+		boolean ringDeals = false;
+		if(ring != null) {
+			ringDeals = ring.dealsPoisonDamage();
+		}
+		boolean shieldDeals = false;
+		if(shield != null) {
+			shieldDeals = shield.dealsPoisonDamage();
+		}
+		
+		int returnDealsPoison = (dealsPoisonDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
 		if(returnDealsPoison > 0) {
 			return true;
 		}else {
@@ -1049,9 +1389,26 @@ public class Creature implements Cloneable{
 		}
 	}
 
-	private int dealsAcid;
-	public boolean dealsAcid() {
-		int returnDealsAcid = dealsAcid + (weapon == null ? 0 : weapon.dealsAcid()) + (armor == null ? 0 : armor.dealsAcid()) + (ring == null ? 0 : ring.dealsAcid()) + (shield == null ? 0 : shield.dealsAcid());
+	private boolean dealsAcidDamage;
+	public boolean dealsAcidDamage() {
+		boolean weaponDeals = false;
+		if(weapon != null) {
+			weaponDeals = weapon.dealsAcidDamage();
+		}
+		boolean armorDeals = false;
+		if(armor != null) {
+			armorDeals = armor.dealsAcidDamage();
+		}
+		boolean ringDeals = false;
+		if(ring != null) {
+			ringDeals = ring.dealsAcidDamage();
+		}
+		boolean shieldDeals = false;
+		if(shield != null) {
+			shieldDeals = shield.dealsAcidDamage();
+		}
+		
+		int returnDealsAcid = (dealsAcidDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
 		if(returnDealsAcid > 0) {
 			return true;
 		}else {
@@ -1059,9 +1416,26 @@ public class Creature implements Cloneable{
 		}
 	}
 
-	private int dealsMagic;
-	public boolean dealsMagic() {
-		int returnDealsMagic = dealsMagic + (weapon == null ? 0 : weapon.dealsMagic()) + (armor == null ? 0 : armor.dealsMagic()) + (ring == null ? 0 : ring.dealsMagic()) + (shield == null ? 0 : shield.dealsMagic());
+	private boolean dealsMagicDamage;
+	public boolean dealsMagicDamage() {
+		boolean weaponDeals = false;
+		if(weapon != null) {
+			weaponDeals = weapon.dealsMagicDamage();
+		}
+		boolean armorDeals = false;
+		if(armor != null) {
+			armorDeals = armor.dealsMagicDamage();
+		}
+		boolean ringDeals = false;
+		if(ring != null) {
+			ringDeals = ring.dealsMagicDamage();
+		}
+		boolean shieldDeals = false;
+		if(shield != null) {
+			shieldDeals = shield.dealsMagicDamage();
+		}
+		
+		int returnDealsMagic = (dealsMagicDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
 		if(returnDealsMagic > 0) {
 			return true;
 		}else {
@@ -1069,9 +1443,26 @@ public class Creature implements Cloneable{
 		}
 	}
 
-	private int dealsChaos;
-	public boolean dealsChaos() {
-		int returnDealsChaos = dealsChaos + (weapon == null ? 0 : weapon.dealsChaos()) + (armor == null ? 0 : armor.dealsChaos()) + (ring == null ? 0 : ring.dealsChaos()) + (shield == null ? 0 : shield.dealsChaos());
+	private boolean dealsChaosDamage;
+	public boolean dealsChaosDamage() {
+		boolean weaponDeals = false;
+		if(weapon != null) {
+			weaponDeals = weapon.dealsChaosDamage();
+		}
+		boolean armorDeals = false;
+		if(armor != null) {
+			armorDeals = armor.dealsChaosDamage();
+		}
+		boolean ringDeals = false;
+		if(ring != null) {
+			ringDeals = ring.dealsChaosDamage();
+		}
+		boolean shieldDeals = false;
+		if(shield != null) {
+			shieldDeals = shield.dealsChaosDamage();
+		}
+		
+		int returnDealsChaos = (dealsChaosDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
 		if(returnDealsChaos > 0) {
 			return true;
 		}else {
@@ -1853,12 +2244,12 @@ public class Creature implements Cloneable{
 
 	public void learnName(Item item) {
 		notify("The "+item.appearance()+" is a "+item.name()+"!");
-		item.modifyIsIdentified(1);
+		item.setIsIdentified(true);
 		ai.setName(item, item.name());
 	}
 
 	public void learnNameQuiet(Item item) {
-		item.modifyIsIdentified(1);
+		item.setIsIdentified(true);
 		ai.setName(item, item.name());
 	}
 
@@ -1987,19 +2378,19 @@ public class Creature implements Cloneable{
 		Damage damage = new Damage(amount, false, false);
 		if(this.isPlayer()) {
 			if(weapon != null) {
-				if(weapon.dealsFire() > 0 && weapon != null) {
+				if(weapon.dealsFireDamage() && weapon != null) {
 					damage.setFire(true);
-				}else if(weapon.dealsFrost() > 0 && weapon != null) {
+				}else if(weapon.dealsFrostDamage() && weapon != null) {
 					damage.setFrost(true);
-				}else if(weapon.dealsShock() > 0 && weapon != null) {
+				}else if(weapon.dealsShockDamage() && weapon != null) {
 					damage.setShock(true);
-				}else if(weapon.dealsPoison() > 0 && weapon != null) {
+				}else if(weapon.dealsPoisonDamage() && weapon != null) {
 					damage.setPoison(true);
-				}else if(weapon.dealsAcid() > 0 && weapon != null) {
+				}else if(weapon.dealsAcidDamage() && weapon != null) {
 					damage.setAcid(true);
-				}else if(weapon.dealsMagic() > 0 && weapon != null) {
+				}else if(weapon.dealsMagicDamage() && weapon != null) {
 					damage.setMagic(true);
-				}else if(weapon.dealsChaos() > 0 && weapon != null) {
+				}else if(weapon.dealsChaosDamage() && weapon != null) {
 					damage.setChaos(true);
 				}else {
 					damage.setPhysical(true);
@@ -2008,19 +2399,19 @@ public class Creature implements Cloneable{
 				damage.setPhysical(true);
 			}
 		}else {
-			if(this.dealsFire()) {
+			if(this.dealsFireDamage()) {
 				damage.setFire(true);
-			}else if(this.dealsFrost()) {
+			}else if(this.dealsFrostDamage()) {
 				damage.setFrost(true);
-			}else if(this.dealsShock()) {
+			}else if(this.dealsShockDamage()) {
 				damage.setShock(true);
-			}else if(this.dealsPoison()) {
+			}else if(this.dealsPoisonDamage()) {
 				damage.setPoison(true);
-			}else if(this.dealsAcid()) {
+			}else if(this.dealsAcidDamage()) {
 				damage.setAcid(true);
-			}else if(this.dealsMagic()) {
+			}else if(this.dealsMagicDamage()) {
 				damage.setMagic(true);
-			}else if(this.dealsChaos()) {
+			}else if(this.dealsChaosDamage()) {
 				damage.setChaos(true);
 			}else {
 				damage.setPhysical(true);
@@ -2073,7 +2464,7 @@ public class Creature implements Cloneable{
 				this.setLastTarget(other);
 			}
 
-			if(weapon != null && weapon.isEnchanted() > 0 && other.hp() >= 1) {
+			if(weapon != null && weapon.isEnchanted() && other.hp() >= 1) {
 				if(0 + ExtraMaths.d10() <= weapon.upgradeLevel()) {
 					other.addEffect(weapon.enchantmentEffect());
 				}else {
@@ -2083,14 +2474,14 @@ public class Creature implements Cloneable{
 			}
 
 			//temp
-			if(other.armor() != null && other.armor().isEnchanted() > 0 && other.hp() >= 1) {
+			if(other.armor() != null && other.armor().isEnchanted() && other.hp() >= 1) {
 				if(0 + ExtraMaths.d10() <= other.armor().upgradeLevel()) {
 					other.addEffect(other.armor().enchantmentEffect());
 				}else {
 
 				}
 			}
-			if(other.shield() != null && other.shield().isEnchanted() > 0 && other.hp() >= 1) {
+			if(other.shield() != null && other.shield().isEnchanted() && other.hp() >= 1) {
 				if(0 + ExtraMaths.d10() <= other.shield().upgradeLevel()) {
 					other.addEffect(other.shield().enchantmentEffect());
 				}else {
@@ -2135,7 +2526,7 @@ public class Creature implements Cloneable{
 		wy = end.y;
 
 		Creature c = creature(wx, wy, wz);
-		if(item.isCursed() > 0 && (item == weapon || item == armor || item == shield || item == ring || item == ammunition)) {
+		if(item.isCursed() && (item == weapon || item == armor || item == shield || item == ring || item == ammunition)) {
 			notify("Your "+nameOf(item)+" is cursed! You can't let go of it!");
 		}else {
 			Item item2 = (Item) item.clone();
@@ -2180,37 +2571,37 @@ public class Creature implements Cloneable{
 
 		Damage damage = new Damage(amount, false, false);
 		if(this.isPlayer()) {
-			if(item.dealsFire() > 0 && weapon != null) {
+			if(item.dealsFireDamage() && weapon != null) {
 				damage.setFire(true);
-			}else if(item.dealsFrost() > 0 && weapon != null) {
+			}else if(item.dealsFrostDamage() && weapon != null) {
 				damage.setFrost(true);
-			}else if(item.dealsShock() > 0 && weapon != null) {
+			}else if(item.dealsShockDamage() && weapon != null) {
 				damage.setShock(true);
-			}else if(item.dealsPoison() > 0 && weapon != null) {
+			}else if(item.dealsPoisonDamage() && weapon != null) {
 				damage.setPoison(true);
-			}else if(item.dealsAcid() > 0 && weapon != null) {
+			}else if(item.dealsAcidDamage() && weapon != null) {
 				damage.setAcid(true);
-			}else if(item.dealsMagic() > 0 && weapon != null) {
+			}else if(item.dealsMagicDamage() && weapon != null) {
 				damage.setMagic(true);
-			}else if(item.dealsChaos() > 0 && weapon != null) {
+			}else if(item.dealsChaosDamage() && weapon != null) {
 				damage.setChaos(true);
 			}else {
 				damage.setPhysical(true);
 			}
 		}else {
-			if(this.dealsFire()) {
+			if(this.dealsFireDamage()) {
 				damage.setFire(true);
-			}else if(this.dealsFrost()) {
+			}else if(this.dealsFrostDamage()) {
 				damage.setFrost(true);
-			}else if(this.dealsShock()) {
+			}else if(this.dealsShockDamage()) {
 				damage.setShock(true);
-			}else if(this.dealsPoison()) {
+			}else if(this.dealsPoisonDamage()) {
 				damage.setPoison(true);
-			}else if(this.dealsAcid()) {
+			}else if(this.dealsAcidDamage()) {
 				damage.setAcid(true);
-			}else if(this.dealsMagic()) {
+			}else if(this.dealsMagicDamage()) {
 				damage.setMagic(true);
-			}else if(this.dealsChaos()) {
+			}else if(this.dealsChaosDamage()) {
 				damage.setChaos(true);
 			}else {
 				damage.setPhysical(true);
@@ -2251,7 +2642,7 @@ public class Creature implements Cloneable{
 				this.setLastTarget(other);
 			}
 
-			if(item.isThrownWeapon() && item.isEnchanted() > 0 && other.hp() >= 1) {
+			if(item.isThrownWeapon() && item.isEnchanted() && other.hp() >= 1) {
 				if(0 + ExtraMaths.d10() <= item.upgradeLevel()) {
 					other.addEffect(item.enchantmentEffect());
 				}else {
@@ -2261,14 +2652,14 @@ public class Creature implements Cloneable{
 			}
 
 			//temp
-			if(other.armor() != null && other.armor().isEnchanted() > 0 && other.hp() >= 1) {
+			if(other.armor() != null && other.armor().isEnchanted() && other.hp() >= 1) {
 				if(0 + ExtraMaths.d10() <= other.armor().upgradeLevel()) {
 					other.addEffect(other.armor().enchantmentEffect());
 				}else {
 
 				}
 			}
-			if(other.shield() != null && other.shield().isEnchanted() > 0 && other.hp() >= 1) {
+			if(other.shield() != null && other.shield().isEnchanted() && other.hp() >= 1) {
 				if(0 + ExtraMaths.d10() <= other.shield().upgradeLevel()) {
 					other.addEffect(other.shield().enchantmentEffect());
 				}else {
@@ -2330,37 +2721,37 @@ public class Creature implements Cloneable{
 
 		Damage damage = new Damage(amount, false, false);
 		if(this.isPlayer()) {
-			if(weapon.dealsFire() > 0 && weapon != null) {
+			if(weapon.dealsFireDamage() && weapon != null) {
 				damage.setFire(true);
-			}else if(weapon.dealsFrost() > 0 && weapon != null) {
+			}else if(weapon.dealsFrostDamage() && weapon != null) {
 				damage.setFrost(true);
-			}else if(weapon.dealsShock() > 0 && weapon != null) {
+			}else if(weapon.dealsShockDamage() && weapon != null) {
 				damage.setShock(true);
-			}else if(weapon.dealsPoison() > 0 && weapon != null) {
+			}else if(weapon.dealsPoisonDamage() && weapon != null) {
 				damage.setPoison(true);
-			}else if(weapon.dealsAcid() > 0 && weapon != null) {
+			}else if(weapon.dealsAcidDamage() && weapon != null) {
 				damage.setAcid(true);
-			}else if(weapon.dealsMagic() > 0 && weapon != null) {
+			}else if(weapon.dealsMagicDamage() && weapon != null) {
 				damage.setMagic(true);
-			}else if(weapon.dealsChaos() > 0 && weapon != null) {
+			}else if(weapon.dealsChaosDamage() && weapon != null) {
 				damage.setChaos(true);
 			}else {
 				damage.setPhysical(true);
 			}
 		}else {
-			if(this.dealsFire()) {
+			if(this.dealsFireDamage()) {
 				damage.setFire(true);
-			}else if(this.dealsFrost()) {
+			}else if(this.dealsFrostDamage()) {
 				damage.setFrost(true);
-			}else if(this.dealsShock()) {
+			}else if(this.dealsShockDamage()) {
 				damage.setShock(true);
-			}else if(this.dealsPoison()) {
+			}else if(this.dealsPoisonDamage()) {
 				damage.setPoison(true);
-			}else if(this.dealsAcid()) {
+			}else if(this.dealsAcidDamage()) {
 				damage.setAcid(true);
-			}else if(this.dealsMagic()) {
+			}else if(this.dealsMagicDamage()) {
 				damage.setMagic(true);
-			}else if(this.dealsChaos()) {
+			}else if(this.dealsChaosDamage()) {
 				damage.setChaos(true);
 			}else {
 				damage.setPhysical(true);
@@ -2391,7 +2782,7 @@ public class Creature implements Cloneable{
 				this.setLastTarget(other);
 			}
 
-			if(weapon != null && weapon.isEnchanted() > 0 && other.hp() >= 1) {
+			if(weapon != null && weapon.isEnchanted() && other.hp() >= 1) {
 				if(0 + ExtraMaths.d10() <= weapon.upgradeLevel()) {
 					other.addEffect(weapon.enchantmentEffect());
 				}else {
@@ -2400,14 +2791,14 @@ public class Creature implements Cloneable{
 
 			}
 
-			if(other.armor() != null && other.armor().isEnchanted() > 0 && other.hp() >= 1) {
+			if(other.armor() != null && other.armor().isEnchanted() && other.hp() >= 1) {
 				if(0 + ExtraMaths.d20() <= other.armor().upgradeLevel()) {
 					other.addEffect(other.armor().enchantmentEffect());
 				}else {
 
 				}
 			}
-			if(other.shield() != null && other.shield().isEnchanted() > 0 && other.hp() >= 1) {
+			if(other.shield() != null && other.shield().isEnchanted() && other.hp() >= 1) {
 				if(0 + ExtraMaths.d10() <= other.shield().upgradeLevel()) {
 					other.addEffect(other.shield().enchantmentEffect());
 				}else {
@@ -2443,7 +2834,7 @@ public class Creature implements Cloneable{
 			doAction("pick up a %s", nameOf(item));
 			world.remove(x, y, z);
 			if(nameOf(item) == item.name()) {
-				item.modifyIsIdentified(1);
+				item.setIsIdentified(true);
 			}
 			inventory.add(item);
 			stackItems();
@@ -2451,10 +2842,10 @@ public class Creature implements Cloneable{
 	}
 
 	public void drop(Item item){
-		if((item == weapon || item == armor || item == shield || item == ring || item == ammunition) && item.isCursed() > 0) {
+		if((item == weapon || item == armor || item == shield || item == ring || item == ammunition) && item.isCursed()) {
 			notify("The "+nameOf(item)+" is cursed! You can't let go of it!");
 		}else if (world.addAtEmptySpace(item, x, y, z)){
-			if(isDead > 0) {
+			if(isDead) {
 				doActionWhenDead("drop a " + nameOf(item));
 			}
 			doAction("drop a " + nameOf(item));
@@ -2509,28 +2900,28 @@ public class Creature implements Cloneable{
 		}
 		if(item.isWeapon()) {
 			if(item == weapon) {
-				if(weapon.isCursed() > 0) {
+				if(weapon.isCursed()) {
 					notify("Your "+nameOf(weapon)+" is cursed! You can't let go of it!");
 				}else {
 					unequip(weapon);
 				}
 
 			}else {
-				if(weapon != null && weapon.isCursed() > 0) {
+				if(weapon != null && weapon.isCursed()) {
 					notify("Your "+nameOf(weapon)+" is cursed! You can't let go of it!");
 				}else if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
 					notify("You aren't skilled enough to use the "+nameOf(item)+".");
 				}else if(item.isTwoHanded() && shield != null){
 					notify("The "+nameOf(item)+" is too unwieldy to use alongside your "+nameOf(shield)+"!");
 				}else {
-					if(item.isCursed() > 0) {
-						if(item.curseKnown() > 0) {
+					if(item.isCursed()) {
+						if(item.isCurseKnown()) {
 							notify("The "+nameOf(item)+" is cursed!");
 							notify("It's probably best not to equip it.");
 						}else if(this.intelligenceRoll() > 15) {
 							notify("Your senses warn you of a foul magic lurking within the "+nameOf(item)+".");
 							notify("The "+nameOf(item)+" is cursed!");
-							item.modifyCurseKnown(1);
+							item.setCurseKnown(true);
 						}else {
 							unequip(weapon);
 							doAction("wield a "+nameOf(item));
@@ -2538,7 +2929,7 @@ public class Creature implements Cloneable{
 							weaponName = item.name();
 							notify("As you wield the "+nameOf(item)+", a foul magic grips you!");
 							notify("The "+nameOf(item)+" is cursed!");
-							item.modifyCurseKnown(1);
+							item.setCurseKnown(true);
 						}
 					}else {
 						unequip(weapon);
@@ -2554,26 +2945,26 @@ public class Creature implements Cloneable{
 		}
 		else if(item.isArmor()) {
 			if(item == armor) {
-				if(armor.isCursed() > 0) {
+				if(armor.isCursed()) {
 					notify("Your "+nameOf(armor)+" is cursed! You can't take it off!");
 				}else {
 					unequip(armor);
 				}
 
 			}else {
-				if(armor != null && armor.isCursed() > 0) {
+				if(armor != null && armor.isCursed()) {
 					notify("Your "+nameOf(armor)+" is cursed! You can't take it off!");
 				}else if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
 					notify("You aren't skilled enough to use the "+nameOf(item)+".");
 				}else {
-					if(item.isCursed() > 0) {
-						if(item.curseKnown() > 0) {
+					if(item.isCursed()) {
+						if(item.isCurseKnown()) {
 							notify("The "+nameOf(item)+" is cursed!");
 							notify("It's probably best not to equip it.");
 						}else if(this.intelligenceRoll() > 15) {
 							notify("Your senses warn you of a foul magic lurking within the "+nameOf(item)+".");
 							notify("The "+nameOf(item)+" is cursed!");
-							item.modifyCurseKnown(1);
+							item.setCurseKnown(true);
 						}else {
 							unequip(armor);
 							doAction("put on a "+nameOf(item));
@@ -2581,7 +2972,7 @@ public class Creature implements Cloneable{
 							armorName = item.name();
 							notify("As you put on the "+nameOf(item)+", a foul magic grips you!");
 							notify("The "+nameOf(item)+" is cursed!");
-							item.modifyCurseKnown(1);
+							item.setCurseKnown(true);
 						}
 					}else {
 						unequip(armor);
@@ -2596,28 +2987,28 @@ public class Creature implements Cloneable{
 
 		}else if(item.isShield()) {
 			if(item == shield) {
-				if(shield.isCursed() > 0) {
+				if(shield.isCursed()) {
 					notify("Your "+nameOf(shield)+" is cursed! You can't put it down!");
 				}else {
 					unequip(shield);
 				}
 
 			}else {
-				if(shield != null && shield.isCursed() > 0) {
+				if(shield != null && shield.isCursed()) {
 					notify("Your "+nameOf(shield)+" is cursed! You can't put it down!");
 				}else if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
 					notify("You aren't skilled enough to use the "+nameOf(item)+".");
 				}else if(weapon != null && weapon.isTwoHanded()){
 					notify("The "+nameOf(item)+" is too unwieldy to use alongside your "+nameOf(weapon)+"!");
 				}else {
-					if(item.isCursed() > 0) {
-						if(item.curseKnown() > 0) {
+					if(item.isCursed()) {
+						if(item.isCurseKnown()) {
 							notify("The "+nameOf(item)+" is cursed!");
 							notify("It's probably best not to equip it.");
 						}else if(this.intelligenceRoll() > 15) {
 							notify("Your senses warn you of a foul magic lurking within the "+nameOf(item)+".");
 							notify("The "+nameOf(item)+" is cursed!");
-							item.modifyCurseKnown(1);
+							item.setCurseKnown(true);
 						}else {
 							unequip(shield);
 							doAction("ready a "+nameOf(item));
@@ -2625,7 +3016,7 @@ public class Creature implements Cloneable{
 							shieldName = item.name();
 							notify("As you ready the "+nameOf(item)+", a foul magic grips you!");
 							notify("The "+nameOf(item)+" is cursed!");
-							item.modifyCurseKnown(1);
+							item.setCurseKnown(true);
 						}
 					}else {
 						unequip(shield);
@@ -2640,24 +3031,24 @@ public class Creature implements Cloneable{
 
 		}else if(item.isRing()) {
 			if(item == ring) {
-				if(ring.isCursed() > 0) {
+				if(ring.isCursed()) {
 					notify("Your "+nameOf(ring)+" is cursed! You can't take it off!");
 				}else {
 					unequip(ring);
 				}
 
 			}else {
-				if(ring != null && ring.isCursed() > 0) {
+				if(ring != null && ring.isCursed()) {
 					notify("Your "+nameOf(ring)+" is cursed! You can't take it off!");
 				}else {
-					if(item.isCursed() > 0) {
-						if(item.curseKnown() > 0) {
+					if(item.isCursed()) {
+						if(item.isCurseKnown()) {
 							notify("The "+nameOf(item)+" is cursed!");
 							notify("It's probably best not to equip it.");
 						}else if(this.intelligenceRoll() > 15) {
 							notify("Your senses warn you of a foul magic lurking within the "+nameOf(item)+".");
 							notify("The "+nameOf(item)+" is cursed!");
-							item.modifyCurseKnown(1);
+							item.setCurseKnown(true);
 						}else {
 							unequip(ring);
 							doAction("put on a "+nameOf(item));
@@ -2665,7 +3056,7 @@ public class Creature implements Cloneable{
 							ringName = item.name();
 							notify("As you put on the "+nameOf(item)+", a foul magic grips you!");
 							notify("The "+nameOf(item)+" is cursed!");
-							item.modifyCurseKnown(1);
+							item.setCurseKnown(true);
 						}
 					}else {
 						unequip(ring);
@@ -2679,24 +3070,24 @@ public class Creature implements Cloneable{
 			}
 		}else if(item.isAmmunition()) {
 			if(item == ammunition) {
-				if(ammunition.isCursed() > 0) {
+				if(ammunition.isCursed()) {
 					notify("Your "+nameOf(ammunition)+" is cursed! You can't take it off!");
 				}else {
 					unequip(ammunition);
 				}
 
 			}else {
-				if(ammunition != null && ammunition.isCursed() > 0) {
+				if(ammunition != null && ammunition.isCursed()) {
 					notify("Your "+nameOf(ammunition)+" is cursed! You can't put it down!");
 				}else {
-					if(item.isCursed() > 0) {
-						if(item.curseKnown() > 0) {
+					if(item.isCursed()) {
+						if(item.isCurseKnown()) {
 							notify("The "+nameOf(item)+" is cursed!");
 							notify("It's probably best not to equip it.");
 						}else if(this.intelligenceRoll() > 15) {
 							notify("Your senses warn you of a foul magic lurking within the "+nameOf(item)+".");
 							notify("The "+nameOf(item)+" is cursed!");
-							item.modifyCurseKnown(1);
+							item.setCurseKnown(true);
 						}else {
 							unequip(ammunition);
 							doAction("ready a "+nameOf(item));
@@ -2704,7 +3095,7 @@ public class Creature implements Cloneable{
 							ammunitionName = item.name();
 							notify("As you ready the "+nameOf(item)+", a foul magic grips you!");
 							notify("The "+nameOf(item)+" is cursed!");
-							item.modifyCurseKnown(1);
+							item.setCurseKnown(true);
 						}
 					}else {
 						unequip(ammunition);
@@ -2763,7 +3154,7 @@ public class Creature implements Cloneable{
 		if(noCorpse == 0) {
 			Item corpse = new Item('%', defaultColor, name + " corpse", null);
 			corpse.modifyFoodValue(maxHP * 10);
-			corpse.modifyIsStackable(1);
+			corpse.setIsStackable(true);
 			corpse.setID(maxItemIndex()+1+this.id());
 			world.addAtEmptySpace(corpse, x, y, z);
 		}
@@ -3417,23 +3808,23 @@ public class Creature implements Cloneable{
 
 
 	public void applyCurses() {
-		if(weapon != null && weapon.isCursed() > 0 && ExtraMaths.diceRoll(1, 15) > 14) {
+		if(weapon != null && weapon.isCursed() && ExtraMaths.diceRoll(1, 15) > 14) {
 			this.notify("The curse within your weapon takes hold!");
 			this.addEffect(weapon.curseEffect());
 		}
-		if(armor != null && armor.isCursed() > 0 && ExtraMaths.diceRoll(1, 15) > 14) {
+		if(armor != null && armor.isCursed() && ExtraMaths.diceRoll(1, 15) > 14) {
 			this.notify("The curse within your armour takes hold!");
 			this.addEffect(armor.curseEffect());
 		}
-		if(shield != null && shield.isCursed() > 0 && ExtraMaths.diceRoll(1, 15) > 14) {
+		if(shield != null && shield.isCursed() && ExtraMaths.diceRoll(1, 15) > 14) {
 			this.notify("The curse within your shield takes hold!");
 			this.addEffect(shield.curseEffect());
 		}
-		if(ring != null && ring.isCursed() > 0 && ExtraMaths.diceRoll(1, 15) > 14) {
+		if(ring != null && ring.isCursed() && ExtraMaths.diceRoll(1, 15) > 14) {
 			this.notify("The curse within your ring takes hold!");
 			this.addEffect(ring.curseEffect());
 		}
-		if(ammunition != null && ammunition.isCursed() > 0 && ExtraMaths.diceRoll(1, 15) > 14) {
+		if(ammunition != null && ammunition.isCursed() && ExtraMaths.diceRoll(1, 15) > 14) {
 			this.notify("The curse within your ammunition takes hold!");
 			this.addEffect(ammunition.curseEffect());
 		}
@@ -3447,7 +3838,7 @@ public class Creature implements Cloneable{
 
 			for(Item item : inventory().getItems()) {
 				try {
-					if(item.isStackable() > 0 && item.id() == i) {
+					if(item.isStackable() && item.id() == i) {
 						//effect.end(this);
 						stacked.add(item);
 					}
@@ -3594,7 +3985,7 @@ public class Creature implements Cloneable{
 	}
 
 	public void doAction(String message, Object ... params) {
-		if(isDead == 0) {
+		if(!isDead) {
 			for(Creature other : getCreaturesWhoSeeMe()) {
 				if(other == this) {
 					other.notify("You " + message + ".", params);
@@ -3692,7 +4083,7 @@ public class Creature implements Cloneable{
 				if(item.isWand() && (this.nameOf(item) != item.name())) {
 					this.learnName(item);
 				}
-				if(item.isScroll() > 0) {
+				if(item.isScroll()) {
 					if(this.nameOf(item) != item.name()) {
 						this.learnName(item);
 					}
@@ -3730,7 +4121,7 @@ public class Creature implements Cloneable{
 				if(item.isWand() && (this.nameOf(item) != item.name())) {
 					this.learnName(item);
 				}
-				if(item.isScroll() > 0) {
+				if(item.isScroll()) {
 					if(this.nameOf(item) != item.name()) {
 						this.learnName(item);
 					}

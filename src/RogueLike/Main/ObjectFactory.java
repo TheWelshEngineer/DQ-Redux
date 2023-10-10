@@ -242,15 +242,15 @@ public class ObjectFactory {
 	}
 	
 	public void enchantItem(Item item, Effect enchantment) {
-		item.modifyIsEnchanted(1);
+		item.setIsEnchanted(true);
 		item.setEnchantmentEffect(enchantment);
 		item.setEnchantedName(item.enchantmentEffect().enchantmentName());
 		if(enchantment.enchantmentName() == "Blazing ") {
-			item.modifyDealsFire(1);
+			item.setDealsFireDamage(true);
 		}else if(enchantment.enchantmentName() == "Freezing ") {
-			item.modifyDealsFrost(1);
+			item.setDealsFrostDamage(true);
 		}else if(enchantment.enchantmentName() == "Shocking ") {
-			item.modifyDealsShock(1);
+			item.setDealsShockDamage(true);
 		}else {
 			
 		}
@@ -258,16 +258,16 @@ public class ObjectFactory {
 	}
 	
 	public void randomEnchantWeapon(Item item) {
-		item.modifyIsEnchanted(1);
+		item.setIsEnchanted(true);
 		Effect enchantment = randomMeleeEnchantment();
 		item.setEnchantmentEffect(enchantment);
 		item.setEnchantedName(item.enchantmentEffect().enchantmentName());
 		if(enchantment.enchantmentName() == "Blazing ") {
-			item.modifyDealsFire(1);
+			item.setDealsFireDamage(true);
 		}else if(enchantment.enchantmentName() == "Freezing ") {
-			item.modifyDealsFrost(1);
+			item.setDealsFrostDamage(true);
 		}else if(enchantment.enchantmentName() == "Shocking ") {
-			item.modifyDealsShock(1);
+			item.setDealsShockDamage(true);
 		}else {
 			
 		}
@@ -275,16 +275,16 @@ public class ObjectFactory {
 	}
 	
 	public void randomEnchantArmor(Item item) {
-		item.modifyIsEnchanted(1);
+		item.setIsEnchanted(true);
 		Effect enchantment = randomArmorEnchantment();
 		item.setEnchantmentEffect(enchantment);
 		item.setEnchantedName(item.enchantmentEffect().enchantmentName());
 		if(enchantment.enchantmentName() == " of Magma Ward") {
-			item.modifyResistsFire(1);
+			item.setResistsFireDamage(true);
 		}else if(enchantment.enchantmentName() == " of Chill Ward") {
-			item.modifyResistsFrost(1);
+			item.setResistsFrostDamage(true);
 		}else if(enchantment.enchantmentName() == " of Arc Ward") {
-			item.modifyResistsShock(1);
+			item.setResistsShockDamage(true);
 		}else {
 			
 		}
@@ -292,7 +292,7 @@ public class ObjectFactory {
 	}
 	
 	public void curseItem(Item item) {
-		item.modifyIsCursed(1);
+		item.setIsCursed(true);
 		item.setCurseEffect(randomCurse());
 	}
 	
@@ -301,7 +301,7 @@ public class ObjectFactory {
 		Creature player = new Creature(world, "player", '@', ExtraColors.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
 		player.setID(0);
 		new PlayerAI(player, messages, fov, this, this.world);
-		player.modifyPlayerName(playerName);
+		player.setPlayerName(playerName);
 		//player.modifyPlayerSpecies(playerSpecies);
 		player.setStrength(startingStats.get(0));
 		player.setDexterity(startingStats.get(1));
@@ -382,7 +382,7 @@ public class ObjectFactory {
 		}*/
 		
 		if(playerClass == "Warrior") {
-			player.modifyPlayerClass(playerClass);
+			player.setPlayerClass(playerClass);
 			
 			/*player.featbook().add(featFactory.warriorTraining());
 			player.featbook().add(featFactory.simpleWeapons());
@@ -407,7 +407,7 @@ public class ObjectFactory {
 			player.setManaScaleAmount(player.manaScaleLow());
 			
 		}else if(playerClass == "Rogue") {
-			player.modifyPlayerClass(playerClass);
+			player.setPlayerClass(playerClass);
 			/*player.featbook().add(featFactory.rogueTraining());
 			player.featbook().add(featFactory.finesseWeapons());
 			player.featbook().add(featFactory.rangedWeapons());
@@ -431,7 +431,7 @@ public class ObjectFactory {
 			player.setManaScaleAmount(player.manaScaleLow());
 			
 		}else if(playerClass == "Wizard") {
-			player.modifyPlayerClass(playerClass);
+			player.setPlayerClass(playerClass);
 			
 			/*player.featbook().add(featFactory.wizardTraining());
 			player.featbook().add(featFactory.evocation());
@@ -451,7 +451,7 @@ public class ObjectFactory {
 			player.setManaScaleAmount(player.manaScaleHigh());
 			
 		}else if(playerClass == "Alchemist") {
-			player.modifyPlayerClass(playerClass);
+			player.setPlayerClass(playerClass);
 			
 			/*player.featbook().add(featFactory.alchemistTraining());
 			player.featbook().add(featFactory.simpleWeapons());
@@ -474,7 +474,7 @@ public class ObjectFactory {
 			player.setManaScaleAmount(player.manaScaleMedium());
 			
 		}else if(playerClass == "Barbarian") {
-			player.modifyPlayerClass(playerClass);
+			player.setPlayerClass(playerClass);
 			
 			/*player.featbook().add(featFactory.barbarianTraining());
 			player.featbook().add(featFactory.simpleWeapons());
@@ -499,7 +499,7 @@ public class ObjectFactory {
 			player.setManaScaleAmount(player.manaScaleLow());
 			
 		}else if(playerClass == "Witch") {
-			player.modifyPlayerClass(playerClass);
+			player.setPlayerClass(playerClass);
 			
 			/*player.featbook().add(featFactory.witchTraining());
 			player.featbook().add(featFactory.cryomancy());
@@ -519,7 +519,7 @@ public class ObjectFactory {
 			player.setManaScaleAmount(player.manaScaleHigh());
 			
 		}else if(playerClass == "Evoker") {
-			player.modifyPlayerClass(playerClass);
+			player.setPlayerClass(playerClass);
 			
 			/*player.featbook().add(featFactory.evokerTraining());
 			player.featbook().add(featFactory.simpleWeapons());
@@ -544,7 +544,7 @@ public class ObjectFactory {
 			player.setManaScaleAmount(player.manaScaleMedium());
 			
 		}else if(playerClass == "Sorcerer") {
-			player.modifyPlayerClass(playerClass);
+			player.setPlayerClass(playerClass);
 			
 			/*player.featbook().add(featFactory.sorcererTraining());
 			player.featbook().add(featFactory.simpleWeapons());
@@ -564,7 +564,7 @@ public class ObjectFactory {
 			player.setManaScaleAmount(player.manaScaleHigh());
 			
 		}else if(playerClass == "Ranger") {
-			player.modifyPlayerClass(playerClass);
+			player.setPlayerClass(playerClass);
 			
 			/*player.featbook().add(featFactory.rangerTraining());
 			player.featbook().add(featFactory.simpleWeapons());
@@ -1161,7 +1161,7 @@ public class ObjectFactory {
 		Creature icewall = new Creature(world, "Ice Wall", (char)177, ExtraColors.water, 15, 10, 16, 16, 1, 1, 1, 20);
 		icewall.setID(14);
 		new ChestAI(icewall, this, this.world);
-		icewall.setImmuneFrost(1);
+		icewall.setImmuneFrostDamage(true);
 		icewall.modifyNoCorpse(1);
 		icewall.modifyNoXP(1);
 		icewall.creatureTypes.add("Elemental");
@@ -1222,7 +1222,7 @@ public class ObjectFactory {
 	
 	public Item newRock(int depth, int addToWorld) {
 		Item rock = new Item(',', AsciiPanel.yellow, "Rock", "Rock");
-		rock.modifyIsStackable(1);
+		rock.setIsStackable(true);
 		rock.setID(0);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(rock, depth);
@@ -1236,7 +1236,7 @@ public class ObjectFactory {
 	public Item newRations(int depth, int addToWorld) {
 		Item item = new Item((char)233, ExtraColors.paper, "Ration of Food", "Ration of Food");
 		item.modifyFoodValue(300);
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(5);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(1);
@@ -1251,7 +1251,7 @@ public class ObjectFactory {
 	public Item newPasty(int depth, int addToWorld) {
 		Item item = new Item((char)233, ExtraColors.paper, "Dwarven Pasty", "Dwarven Pasty");
 		item.modifyFoodValue(600);
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(15);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(2);
@@ -1298,7 +1298,7 @@ public class ObjectFactory {
 		item.modifyAmmunitionAmount(10);
 		item.setIsArrowAmmunition(true);
 		item.setEquippable(true);
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.modifyStackAmount(ExtraMaths.d12());
 		item.setID(5);
 		if(addToWorld > 0) {
@@ -1315,7 +1315,7 @@ public class ObjectFactory {
 		item.modifyAmmunitionAmount(10);
 		item.setIsBoltAmmunition(true);
 		item.setEquippable(true);
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.modifyStackAmount(ExtraMaths.d8());
 		item.setID(6);
 		if(addToWorld > 0) {
@@ -1332,8 +1332,8 @@ public class ObjectFactory {
 		item.modifyAmmunitionAmount(10);
 		item.setIsPowderAmmunition(true);
 		item.setEquippable(true);
-		item.modifyIsStackable(1);
-		item.modifyStackAmount(ExtraMaths.d4());
+		item.setIsStackable(true);
+		item.modifyStackAmount(ExtraMaths.d6());
 		item.setID(7);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(item, depth);
@@ -2303,7 +2303,7 @@ public class ObjectFactory {
 		String appearance = ringAppearances.get(2);
 		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Fire Resistance", appearance);
 		item.modifySaveBonusFire(5);
-		item.modifyResistsFire(1);
+		item.setResistsFireDamage(true);
 		item.setIsRing(true);
 		item.setEquippable(true);
 		item.setBaseGoldValue(250);
@@ -2321,7 +2321,7 @@ public class ObjectFactory {
 		String appearance = ringAppearances.get(3);
 		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Frost Resistance", appearance);
 		item.modifySaveBonusFrost(5);
-		item.modifyResistsFrost(1);
+		item.setResistsFrostDamage(true);
 		item.setIsRing(true);
 		item.setEquippable(true);
 		item.setBaseGoldValue(250);
@@ -2339,7 +2339,7 @@ public class ObjectFactory {
 		String appearance = ringAppearances.get(4);
 		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Shock Resistance", appearance);
 		item.modifySaveBonusShock(5);
-		item.modifyResistsShock(1);
+		item.setResistsShockDamage(true);
 		item.setIsRing(true);
 		item.setEquippable(true);
 		item.setBaseGoldValue(250);
@@ -2357,7 +2357,7 @@ public class ObjectFactory {
 		String appearance = ringAppearances.get(5);
 		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Poison Resistance", appearance);
 		item.modifySaveBonusPoison(5);
-		item.modifyResistsPoison(1);
+		item.setResistsPoisonDamage(true);
 		item.setIsRing(true);
 		item.setEquippable(true);
 		item.setBaseGoldValue(250);
@@ -2377,9 +2377,9 @@ public class ObjectFactory {
 		item.modifySaveBonusFire(2);
 		item.modifySaveBonusFrost(2);
 		item.modifySaveBonusShock(2);
-		item.modifyResistsFire(1);
-		item.modifyResistsFrost(1);
-		item.modifyResistsShock(1);
+		item.setResistsFireDamage(true);
+		item.setResistsFrostDamage(true);
+		item.setResistsShockDamage(true);
 		item.setIsRing(true);
 		item.setEquippable(true);
 		item.setBaseGoldValue(250);
@@ -2452,7 +2452,7 @@ public class ObjectFactory {
 		Item item = new Item((char)13, description.getColor(), "Potion of Healing", appearance);
 		item.setQuaffEffect(effectFactory.maxHealth());
 		item.setPotionName("Healing");
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
@@ -2472,7 +2472,7 @@ public class ObjectFactory {
 		Item item = new Item((char)13, description.getColor(), "Potion of Mana", appearance);
 		item.setQuaffEffect(effectFactory.maxMana());
 		item.setPotionName("Mana Restoration");
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
@@ -2492,7 +2492,7 @@ public class ObjectFactory {
 		Item item = new Item((char)13, description.getColor(), "Potion of Poison", appearance);
 		item.setQuaffEffect(effectFactory.poisoned());
 		item.setPotionName("Poison");
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
@@ -2512,7 +2512,7 @@ public class ObjectFactory {
 		Item item = new Item((char)13, description.getColor(), "Potion of Giant Strength", appearance);
 		item.setQuaffEffect(effectFactory.giantStrength());
 		item.setPotionName("Giant Strength");
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
@@ -2532,7 +2532,7 @@ public class ObjectFactory {
 		Item item = new Item((char)13, description.getColor(), "Potion of Invisibility", appearance);
 		item.setQuaffEffect(effectFactory.invisible());
 		item.setPotionName("Invisibility");
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
@@ -2552,7 +2552,7 @@ public class ObjectFactory {
 		Item item = new Item((char)13, description.getColor(), "Potion of Paralysis", appearance);
 		item.setQuaffEffect(effectFactory.paralyzed());
 		item.setPotionName("Paralysis");
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
@@ -2572,7 +2572,7 @@ public class ObjectFactory {
 		Item item = new Item((char)13, description.getColor(), "Potion of Caustic Gas", appearance);
 		item.setQuaffEffect(effectFactory.causticVapour());
 		item.setPotionName("Caustic Cloud");
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
@@ -2592,7 +2592,7 @@ public class ObjectFactory {
 		Item item = new Item((char)13, description.getColor(), "Potion of Restoration", appearance);
 		item.setQuaffEffect(effectFactory.restoration());
 		item.setPotionName("Restoration");
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
@@ -2612,7 +2612,7 @@ public class ObjectFactory {
 		Item item = new Item((char)13, description.getColor(), "Potion of Mind Vision", appearance);
 		item.setQuaffEffect(effectFactory.mindVision());
 		item.setPotionName("Mind Vision");
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
@@ -2636,7 +2636,7 @@ public class ObjectFactory {
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setID(67);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(item, depth);
@@ -2656,7 +2656,7 @@ public class ObjectFactory {
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setID(68);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(item, depth);
@@ -2673,7 +2673,7 @@ public class ObjectFactory {
 		Item item = new Item((char)13, description.getColor(), "Potion of Levitation", appearance);
 		item.setQuaffEffect(effectFactory.levitating());
 		item.setPotionName("Levitation");
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(100);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setDescription(description);
@@ -2692,9 +2692,9 @@ public class ObjectFactory {
 	public Item newScrollOfMagicMapping(int depth, Creature player, int addToWorld) {
 		String appearance = scrollAppearances.get(0);
 		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Magic Mapping", appearance);
-		item.modifyIsScroll(1);								//2
+		item.setIsScroll(true);								//2
 		item.addWrittenSpell(spellFactory.magicMappingScroll(player));
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(150);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(70);
@@ -2709,9 +2709,9 @@ public class ObjectFactory {
 	public Item newScrollOfIdentify(int depth, Creature player, int addToWorld) {
 		String appearance = scrollAppearances.get(1);
 		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Identify", appearance);
-		item.modifyIsScroll(1);
+		item.setIsScroll(true);
 		item.addWrittenSpell(spellFactory.identifyScroll(player));
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(150);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(71);
@@ -2726,9 +2726,9 @@ public class ObjectFactory {
 	public Item newScrollOfSummonMonsters(int depth, Creature player, int addToWorld) {
 		String appearance = scrollAppearances.get(2);
 		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Summon Monsters", appearance);
-		item.modifyIsScroll(1);
+		item.setIsScroll(true);
 		item.addWrittenSpell(spellFactory.summonMonstersScroll(player));
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(150);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(72);
@@ -2744,9 +2744,9 @@ public class ObjectFactory {
 	public Item newScrollOfUpgrade(int depth, Creature player, int addToWorld) {
 		String appearance = scrollAppearances.get(3);
 		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Upgrade", appearance);
-		item.modifyIsScroll(1);
+		item.setIsScroll(true);
 		item.addWrittenSpell(spellFactory.upgradeScroll(player));
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(150);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(73);
@@ -2761,9 +2761,9 @@ public class ObjectFactory {
 	public Item newScrollOfRemoveCurse(int depth, Creature player, int addToWorld) {
 		String appearance = scrollAppearances.get(4);
 		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Remove Curse", appearance);
-		item.modifyIsScroll(1);
+		item.setIsScroll(true);
 		item.addWrittenSpell(spellFactory.removeCurseScroll(player));
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(150);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(74);
@@ -2778,9 +2778,9 @@ public class ObjectFactory {
 	public Item newScrollOfEnchantment(int depth, Creature player, int addToWorld) {
 		String appearance = scrollAppearances.get(5);
 		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Enchantment", appearance);
-		item.modifyIsScroll(1);
+		item.setIsScroll(true);
 		item.addWrittenSpell(spellFactory.enchantScroll(player));
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(150);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(75);
@@ -2795,9 +2795,9 @@ public class ObjectFactory {
 	public Item newScrollOfConfusion(int depth, Creature player, int addToWorld) {
 		String appearance = scrollAppearances.get(6);
 		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Confusion", appearance);
-		item.modifyIsScroll(1);
+		item.setIsScroll(true);
 		item.addWrittenSpell(spellFactory.confuseScroll(player));
-		item.modifyIsStackable(1);
+		item.setIsStackable(true);
 		item.setBaseGoldValue(150);
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(76);
@@ -2822,7 +2822,7 @@ public class ObjectFactory {
 		item.setBaseGoldValue(250);
 		//item.modifyIsPyromancy(1);
 		item.setCurrentGoldValue(item.baseGoldValue());
-		item.modifyIsStackable(1);
+		//item.setIsStackable(1);
 		item.setID(78);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(item, depth);
@@ -2838,7 +2838,7 @@ public class ObjectFactory {
 		//item.modifyAttackValue(5);
 		item.setIsWand(true);
 		item.addWrittenSpell(spellFactory.repel(player));
-		item.modifyIsStackable(1);
+		//item.setIsStackable(1);
 		item.setBaseGoldValue(250);
 		//item.modifyIsEvocation(1);
 		//item.modifySkillRestriction(1);
@@ -2858,7 +2858,7 @@ public class ObjectFactory {
 		//item.modifyAttackValue(5);
 		item.setIsWand(true);
 		item.addWrittenSpell(spellFactory.flashFreeze(player));
-		item.modifyIsStackable(1);
+		//item.setIsStackable(1);
 		item.setBaseGoldValue(250);
 		//item.modifyIsCryomancy(1);
 		//item.modifySkillRestriction(2);
@@ -2880,7 +2880,7 @@ public class ObjectFactory {
 		//item.modifyAttackValue(5);
 		item.setIsWand(true);
 		item.addWrittenSpell(spellFactory.chainLightning(player));
-		item.modifyIsStackable(1);
+		//item.setIsStackable(1);
 		item.setBaseGoldValue(250);
 		//item.modifyIsElectromancy(1);
 		//item.modifySkillRestriction(3);
@@ -2900,7 +2900,7 @@ public class ObjectFactory {
 		//item.modifyAttackValue(5);
 		item.setIsWand(true);
 		item.addWrittenSpell(spellFactory.magicMissile(player));
-		item.modifyIsStackable(1);
+		//item.setIsStackable(1);
 		item.setBaseGoldValue(250);
 		//item.modifyIsEvocation(1);
 		item.setCurrentGoldValue(item.baseGoldValue());
@@ -2919,7 +2919,7 @@ public class ObjectFactory {
 		//item.modifyAttackValue(5);
 		item.setIsWand(true);
 		item.addWrittenSpell(spellFactory.iceWall(player));
-		item.modifyIsStackable(1);
+		//item.setIsStackable(1);
 		item.setBaseGoldValue(250);
 		//item.modifyIsCryomancy(1);
 		//item.modifySkillRestriction(3);
@@ -2937,7 +2937,7 @@ public class ObjectFactory {
 		String appearance = bookAppearances.get(5);
 		Item item = new Item((char)8, bookColors.get(appearance), "Book of Firebolt", appearance);
 		item.addWrittenSpell(spellFactory.firebolt(player));
-		item.modifyIsStackable(1);
+		//item.setIsStackable(1);
 		item.setBaseGoldValue(250);
 		//item.modifyIsPyromancy(1);
 		//item.modifySkillRestriction(1);

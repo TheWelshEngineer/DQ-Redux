@@ -44,7 +44,7 @@ public class Item implements Cloneable{
 			upgradeLevel = String.format("+%d ", this.upgradeLevel());
 		}
 		
-		if(this.isEnchanted() > 0) {
+		if(this.isEnchanted()) {
 			if(this.isArmor() || this.isShield()) {
 				enchantmentName = String.format("%s", this.enchantedName());
 			}
@@ -120,13 +120,13 @@ public class Item implements Cloneable{
 		id = amount;
 	}
 	
-	private int isStackable;
-	public int isStackable() {
+	private boolean isStackable;
+	public boolean isStackable() {
 		return isStackable;
 	}
 	
-	public void modifyIsStackable(int amount) {
-		isStackable += amount;
+	public void setIsStackable(boolean value) {
+		isStackable = value;
 	}
 	
 	private int stackAmount;
@@ -247,60 +247,60 @@ public class Item implements Cloneable{
 		rangedDamageDice = amount;
 	}
 	
-	private int dealsFire;
-	public int dealsFire() {
-		return dealsFire;
+	private boolean dealsFireDamage;
+	public boolean dealsFireDamage() {
+		return dealsFireDamage;
 	}
-	public void modifyDealsFire(int amount) {
-		dealsFire += amount;
-	}
-	
-	private int dealsFrost;
-	public int dealsFrost() {
-		return dealsFrost;
-	}
-	public void modifyDealsFrost(int amount) {
-		dealsFrost += amount;
+	public void setDealsFireDamage(boolean value) {
+		dealsFireDamage = value;
 	}
 	
-	private int dealsShock;
-	public int dealsShock() {
-		return dealsShock;
+	private boolean dealsFrostDamage;
+	public boolean dealsFrostDamage() {
+		return dealsFrostDamage;
 	}
-	public void modifyDealsShock(int amount) {
-		dealsShock += amount;
-	}
-	
-	private int dealsPoison;
-	public int dealsPoison() {
-		return dealsPoison;
-	}
-	public void modifyDealsPoison(int amount) {
-		dealsPoison += amount;
+	public void setDealsFrostDamage(boolean value) {
+		dealsFrostDamage = value;
 	}
 	
-	private int dealsAcid;
-	public int dealsAcid() {
-		return dealsAcid;
+	private boolean dealsShockDamage;
+	public boolean dealsShockDamage() {
+		return dealsShockDamage;
 	}
-	public void modifyDealsAcid(int amount) {
-		dealsAcid += amount;
-	}
-	
-	private int dealsMagic;
-	public int dealsMagic() {
-		return dealsMagic;
-	}
-	public void modifyDealsMagic(int amount) {
-		dealsMagic += amount;
+	public void setDealsShockDamage(boolean value) {
+		dealsShockDamage = value;
 	}
 	
-	private int dealsChaos;
-	public int dealsChaos() {
-		return dealsChaos;
+	private boolean dealsPoisonDamage;
+	public boolean dealsPoisonDamage() {
+		return dealsPoisonDamage;
 	}
-	public void modifyDealsChaos(int amount) {
-		dealsChaos += amount;
+	public void setDealsPoisonDamage(boolean value) {
+		dealsPoisonDamage = value;
+	}
+	
+	private boolean dealsAcidDamage;
+	public boolean dealsAcidDamage() {
+		return dealsAcidDamage;
+	}
+	public void setDealsAcidDamage(boolean value) {
+		dealsAcidDamage = value;
+	}
+	
+	private boolean dealsMagicDamage;
+	public boolean dealsMagicDamage() {
+		return dealsMagicDamage;
+	}
+	public void setDealsMagicDamage(boolean value) {
+		dealsMagicDamage = value;
+	}
+	
+	private boolean dealsChaosDamage;
+	public boolean dealsChaosDamage() {
+		return dealsChaosDamage;
+	}
+	public void setDealsChaosDamage(boolean value) {
+		dealsChaosDamage = value;
 	}
 	
 	/*private double defenseValue;
@@ -415,124 +415,124 @@ public class Item implements Cloneable{
 		saveBonusChaos += amount;
 	}
 	
-	private int resistsPhysical;
-	public int resistsPhysical() {
-		return resistsPhysical;
+	private boolean resistsPhysicalDamage;
+	public boolean resistsPhysicalDamage() {
+		return resistsPhysicalDamage;
 	}
-	public void modifyResistsPhysical(int amount) {
-		resistsPhysical += amount;
+	public void setResistsPhysicalDamage(boolean value) {
+		resistsPhysicalDamage = value;
 	}
-	private int immunePhysical;
-	public int immunePhysical() {
-		return immunePhysical;
+	private boolean immunePhysicalDamage;
+	public boolean immunePhysicalDamage() {
+		return immunePhysicalDamage;
 	}
-	public void modifyImmunePhysical(int amount) {
-		immunePhysical += amount;
-	}
-	
-	private int resistsFire;
-	public int resistsFire() {
-		return resistsFire;
-	}
-	public void modifyResistsFire(int amount) {
-		resistsFire += amount;
-	}
-	private int immuneFire;
-	public int immuneFire() {
-		return immuneFire;
-	}
-	public void modifyImmuneFire(int amount) {
-		immuneFire += amount;
+	public void setImmunePhysicalDamage(boolean value) {
+		immunePhysicalDamage = value;
 	}
 	
-	private int resistsFrost;
-	public int resistsFrost() {
-		return resistsFrost;
+	private boolean resistsFireDamage;
+	public boolean resistsFireDamage() {
+		return resistsFireDamage;
 	}
-	public void modifyResistsFrost(int amount) {
-		resistsFrost += amount;
+	public void setResistsFireDamage(boolean value) {
+		resistsFireDamage = value;
 	}
-	private int immuneFrost;
-	public int immuneFrost() {
-		return immuneFrost;
+	private boolean immuneFireDamage;
+	public boolean immuneFireDamage() {
+		return immuneFireDamage;
 	}
-	public void modifyImmuneFrost(int amount) {
-		immuneFrost += amount;
-	}
-	
-	private int resistsShock;
-	public int resistsShock() {
-		return resistsShock;
-	}
-	public void modifyResistsShock(int amount) {
-		resistsShock += amount;
-	}
-	private int immuneShock;
-	public int immuneShock() {
-		return immuneShock;
-	}
-	public void modifyImmuneShock(int amount) {
-		immuneShock += amount;
+	public void setImmuneFireDamage(boolean value) {
+		immuneFireDamage = value;
 	}
 	
-	private int resistsPoison;
-	public int resistsPoison() {
-		return resistsPoison;
+	private boolean resistsFrostDamage;
+	public boolean resistsFrostDamage() {
+		return resistsFrostDamage;
 	}
-	public void modifyResistsPoison(int amount) {
-		resistsPoison += amount;
+	public void setResistsFrostDamage(boolean value) {
+		resistsFrostDamage = value;
 	}
-	private int immunePoison;
-	public int immunePoison() {
-		return immunePoison;
+	private boolean immuneFrostDamage;
+	public boolean immuneFrostDamage() {
+		return immuneFrostDamage;
 	}
-	public void modifyImmunePoison(int amount) {
-		immunePoison += amount;
-	}
-	
-	private int resistsAcid;
-	public int resistsAcid() {
-		return resistsAcid;
-	}
-	public void modifyResistsAcid(int amount) {
-		resistsAcid += amount;
-	}
-	private int immuneAcid;
-	public int immuneAcid() {
-		return immuneAcid;
-	}
-	public void modifyImmuneAcid(int amount) {
-		immuneAcid += amount;
+	public void setImmuneFrostDamage(boolean value) {
+		immuneFrostDamage = value;
 	}
 	
-	private int resistsMagic;
-	public int resistsMagic() {
-		return resistsMagic;
+	private boolean resistsShockDamage;
+	public boolean resistsShockDamage() {
+		return resistsShockDamage;
 	}
-	public void modifyResistsMagic(int amount) {
-		resistsMagic += amount;
+	public void setResistsShockDamage(boolean value) {
+		resistsShockDamage = value;
 	}
-	private int immuneMagic;
-	public int immuneMagic() {
-		return immuneMagic;
+	private boolean immuneShockDamage;
+	public boolean immuneShockDamage() {
+		return immuneShockDamage;
 	}
-	public void modifyImmuneMagic(int amount) {
-		immuneMagic += amount;
+	public void setImmuneShockDamage(boolean value) {
+		immuneShockDamage = value;
 	}
 	
-	private int resistsChaos;
-	public int resistsChaos() {
-		return resistsChaos;
+	private boolean resistsPoisonDamage;
+	public boolean resistsPoisonDamage() {
+		return resistsPoisonDamage;
 	}
-	public void modifyResistsChaos(int amount) {
-		resistsChaos += amount;
+	public void setResistsPoisonDamage(boolean value) {
+		resistsPoisonDamage = value;
 	}
-	private int immuneChaos;
-	public int immuneChaos() {
-		return immuneChaos;
+	private boolean immunePoisonDamage;
+	public boolean immunePoisonDamage() {
+		return immunePoisonDamage;
 	}
-	public void modifyImmuneChaos(int amount) {
-		immuneChaos += amount;
+	public void setImmunePoisonDamage(boolean value) {
+		immunePoisonDamage = value;
+	}
+	
+	private boolean resistsAcidDamage;
+	public boolean resistsAcidDamage() {
+		return resistsAcidDamage;
+	}
+	public void setResistsAcidDamage(boolean value) {
+		resistsAcidDamage = value;
+	}
+	private boolean immuneAcidDamage;
+	public boolean immuneAcidDamage() {
+		return immuneAcidDamage;
+	}
+	public void setImmuneAcidDamage(boolean value) {
+		immuneAcidDamage = value;
+	}
+	
+	private boolean resistsMagicDamage;
+	public boolean resistsMagicDamage() {
+		return resistsMagicDamage;
+	}
+	public void setResistsMagicDamage(boolean value) {
+		resistsMagicDamage = value;
+	}
+	private boolean immuneMagicDamage;
+	public boolean immuneMagicDamage() {
+		return immuneMagicDamage;
+	}
+	public void setImmuneMagicDamage(boolean value) {
+		immuneMagicDamage = value;
+	}
+	
+	private boolean resistsChaosDamage;
+	public boolean resistsChaosDamage() {
+		return resistsChaosDamage;
+	}
+	public void setResistsChaosDamage(boolean value) {
+		resistsChaosDamage = value;
+	}
+	private boolean immuneChaosDamage;
+	public boolean immuneChaosDamage() {
+		return immuneChaosDamage;
+	}
+	public void setImmuneChaosDamage(boolean value) {
+		immuneChaosDamage = value;
 	}
 	
 	private Effect quaffEffect;
@@ -564,13 +564,13 @@ public class Item implements Cloneable{
 		this.curseEffect = (Effect) effect.clone();
 	}
 	
-	private int isEnchanted;
-	public int isEnchanted() {
+	private boolean isEnchanted;
+	public boolean isEnchanted() {
 		return isEnchanted;
 	}
 	
-	public void modifyIsEnchanted(int amount) {
-		isEnchanted += amount;
+	public void setIsEnchanted(boolean value) {
+		isEnchanted = value;
 	}
 	
 	private List<Spell> writtenSpells;
@@ -582,28 +582,28 @@ public class Item implements Cloneable{
 		writtenSpells.add(spell);
 	}
 	
-	private int isDegraded;
-	public int isDegraded() {
+	private boolean isDegraded;
+	public boolean isDegraded() {
 		return isDegraded;
 	}
-	public void modifyIsDegraded(int amount) {
-		isDegraded += amount;
+	public void setIsDegraded(boolean value) {
+		isDegraded = value;
 	}
 	
-	private int isCursed;
-	public int isCursed() {
+	private boolean isCursed;
+	public boolean isCursed() {
 		return isCursed;
 	}
-	public void modifyIsCursed(int amount) {
-		isCursed += amount;
+	public void setIsCursed(boolean value) {
+		isCursed = value;
 	}
 	
-	private int curseKnown;
-	public int curseKnown() {
-		return curseKnown;
+	private boolean isCurseKnown;
+	public boolean isCurseKnown() {
+		return isCurseKnown;
 	}
-	public void modifyCurseKnown(int amount) {
-		curseKnown += amount;
+	public void setCurseKnown(boolean value) {
+		isCurseKnown = value;
 	}
 	
 	private boolean isWeapon;
@@ -979,20 +979,20 @@ public class Item implements Cloneable{
 		usesPowderAmmunition = value;
 	}
 	//FLAT_WHITE
-	private int isScroll;
-	public int isScroll() {
+	private boolean isScroll;
+	public boolean isScroll() {
 		return isScroll;
 	}
-	public void modifyIsScroll(int amount) {
-		isScroll += amount;
+	public void setIsScroll(boolean value) {
+		isScroll = value;
 	}
 	
-	private int isIdentified;
-	public int isIdentified() {
+	private boolean isIdentified;
+	public boolean isIdentified() {
 		return isIdentified;
 	}
-	public void modifyIsIdentified(int amount) {
-		isIdentified += amount;
+	public void setIsIdentified(boolean value) {
+		isIdentified = value;
 	}
 	
 	private int upgradeLevel;

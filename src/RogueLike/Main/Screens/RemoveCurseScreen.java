@@ -16,13 +16,13 @@ public class RemoveCurseScreen extends InventoryBasedScreen{
 
 	@Override
 	protected boolean isAcceptable(Item item) {
-		return item.isCursed() > 0 && item.curseKnown() > 0;
+		return item.isCursed() && item.isCurseKnown();
 	}
 
 	@Override
 	protected Screen use(Item item) {
-		item.modifyIsCursed(-1);
-		item.modifyCurseKnown(-1);
+		item.setIsCursed(false);
+		item.setCurseKnown(false);
 		player.notify("The foul magic of the "+player.nameOf(item)+" vanishes!");
 		return null;
 	}

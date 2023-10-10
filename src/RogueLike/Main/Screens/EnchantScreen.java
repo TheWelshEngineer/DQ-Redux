@@ -20,12 +20,12 @@ public class EnchantScreen extends InventoryBasedScreen{
 
 	@Override
 	protected boolean isAcceptable(Item item) {
-		return (item.isWeapon() || item.isArmor() || item.isShield()) && item.isEnchanted() == 0;
+		return (item.isWeapon() || item.isArmor() || item.isShield()) && !item.isEnchanted();
 	}
 
 	@Override
 	protected Screen use(Item item) {
-		item.modifyIsEnchanted(1);
+		item.setIsEnchanted(true);
 		item.modifyCurrentGoldValue(item.baseGoldValue());
 		if(item.isWeapon()) {
 			factory.randomEnchantWeapon(item);
