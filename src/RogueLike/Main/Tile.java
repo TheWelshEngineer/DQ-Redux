@@ -6,7 +6,7 @@ import asciiPanel.AsciiPanel;
 
 public enum Tile {
 	FLOOR((char)250, AsciiPanel.yellow /*new Color(255,255,255)*/, "A rocky cave floor."),
-	WALL((char)177, /*AsciiPanel.yellow*/ new Color(84,70,56), "A rocky cave wall. Looks breakable."),
+	WALL((char)177, /*AsciiPanel.yellow*/ new Color(84,70,57), "A rocky cave wall. Looks breakable."),
 	BOUNDS('x', AsciiPanel.brightBlack, "Beyond the edge of the world."),
 	STAIRS_UP((char)30, AsciiPanel.white, "A rough stone staircase that goes up."),
 	STAIRS_DOWN((char)31, AsciiPanel.white, "A rough stone staircase that goes down."),
