@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import RogueLike.Main.Items.Item;
+
 public class World {
 	private Tile[][][] tiles;
 	//
@@ -256,7 +258,7 @@ public class World {
 			y = (int)(Math.random() * height);
 		} 
 		//!tile(x,y,depth).isGround()
-		while (tile(x,y,depth).noItems() || tile(x,y,depth).isStairs() || creature(x,y,depth) != null || item(x,y,depth) != null || tile(x,y,depth).isPit() || tile(x,y,depth).isBars());
+		while (tile(x,y,depth).noItems() || creature(x,y,depth) != null || item(x,y,depth) != null);
 		
 		items[x][y][depth] = item;
 	}

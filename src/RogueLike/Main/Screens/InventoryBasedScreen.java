@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import RogueLike.Main.Creature;
-import RogueLike.Main.Item;
+import RogueLike.Main.Items.Item;
 import asciiPanel.AsciiPanel;
 
 

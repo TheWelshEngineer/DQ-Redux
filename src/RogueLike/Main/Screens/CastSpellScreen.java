@@ -1,8 +1,8 @@
 package RogueLike.Main.Screens;
 
 import RogueLike.Main.Creature;
-import RogueLike.Main.Item;
 import RogueLike.Main.Spell;
+import RogueLike.Main.Items.Item;
 
 public class CastSpellScreen extends TargetBasedScreen{
 	private Spell spell;

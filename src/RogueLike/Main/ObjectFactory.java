@@ -20,6 +20,8 @@ import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AI.SkeletonAI;
 import RogueLike.Main.AI.SlimeAI;
 import RogueLike.Main.AI.SlimelingAI;
+import RogueLike.Main.Items.Item;
+import RogueLike.Main.Items.Potion;
 import asciiPanel.AsciiPanel;
 
 public class ObjectFactory {
@@ -596,52 +598,10 @@ public class ObjectFactory {
 		
 		player.inventory().add(newRations(0, 0));
 		//temp
-		player.inventory().add(newPotionOfOvergrowth(0, 0));
-		player.inventory().add(newPotionOfOvergrowth(0, 0));
-		player.inventory().add(newPotionOfOvergrowth(0, 0));
-		player.inventory().add(newSpear(0, 0));
-		player.inventory().add(newBow(0, 0));
-		
-		//player.featbook().add(featFactory.simpleWeapons());
-		//player.featbook().add(featFactory.pyromancy());
-		//player.featbook().add(featFactory.simpleFire());
-		//player.featbook().add(featFactory.simpleFire());
-		player.inventory().add(newPotionOfCausticGas(0, 0));
-		player.inventory().add(newPotionOfCausticGas(0, 0));
-		player.inventory().add(newScrollOfIdentify(0, player, 0));
-		player.inventory().add(newScrollOfIdentify(0, player, 0));
-		player.inventory().add(newScrollOfIdentify(0, player, 0));
-		player.inventory().add(newScrollOfIdentify(0, player, 0));
-		player.inventory().add(newScrollOfIdentify(0, player, 0));
-		//player.inventory().add(newScrollOfMagicMapping(0, player, 0));
-		player.inventory().add(newFireboltBook(0, player, 0));
-		player.inventory().add(newArrows(0, 0));
-		player.inventory().add(newBolts(0, 0));
-		player.inventory().add(newPowder(0, 0));
-		//player.inventory().add(newDagger(0, 0));
-		
-		Item tempitem = newDagger(0, 0);
-		curseItem(tempitem);
-		enchantItem(tempitem, newShockWeaponEnchantment());
-		upgradeItem(tempitem, 2);
-		//player.learnNameQuiet(tempitem);
-		player.inventory().add(tempitem);
-		Item tempitem2 = newCannon(0, 0);
-		curseItem(tempitem2);
-		enchantItem(tempitem2, newFireWeaponEnchantment());
-		upgradeItem(tempitem2, 3);
-		player.inventory().add(tempitem2);
-		Item tempitem3 = newPlateArmor(0, 0);
-		curseItem(tempitem3);
-		enchantItem(tempitem3, newFrostArmorEnchantment());
-		upgradeItem(tempitem3, 1);
-		player.inventory().add(tempitem3);
-		Item tempitem4 = newTowerShield(0, 0);
-		curseItem(tempitem4);
-		enchantItem(tempitem4, newBounceArmorEnchantment());
-		upgradeItem(tempitem4, 2);
-		player.inventory().add(tempitem4);
-		//player.inventory().add(newFireboltBook(0, player, 0));
+		//
+		player.inventory().add(newPotionOfHealing(0, 0));
+		player.inventory().add(newPotionOfHealing(0, 0));
+		player.inventory().add(newPotionOfHealing(0, 0));
 		//
 		//player.spellbook().add(spellFactory.test(player));
 
@@ -1348,7 +1308,7 @@ public class ObjectFactory {
 		Item item = new Item('#', ExtraColors.orange, "Fire Trap", "Fire Trap");
 		item.setIsTrap(true);
 		item.modifyThrownDamageDice(-1);
-		item.changeColor(ExtraColors.trap);
+		item.setColor(ExtraColors.trap);
 		item.changeGlyph((char)250);
 		item.setQuaffEffect(effectFactory.fireball());
 		if(addToWorld > 0) {
@@ -1364,7 +1324,7 @@ public class ObjectFactory {
 		Item item = new Item('#', ExtraColors.water, "Frostbite Trap", "Frostbite Trap");
 		item.setIsTrap(true);
 		item.modifyThrownDamageDice(-1);
-		item.changeColor(ExtraColors.trap);
+		item.setColor(ExtraColors.trap);
 		item.changeGlyph((char)250);
 		item.setQuaffEffect(effectFactory.frozen());
 		if(addToWorld > 0) {
@@ -1380,7 +1340,7 @@ public class ObjectFactory {
 		Item item = new Item('#', ExtraColors.brightCyan, "Lightning Trap", "Lightning Trap");
 		item.setIsTrap(true);
 		item.modifyThrownDamageDice(-1);
-		item.changeColor(ExtraColors.trap);
+		item.setColor(ExtraColors.trap);
 		item.changeGlyph((char)250);
 		item.setQuaffEffect(effectFactory.electrified());
 		if(addToWorld > 0) {
@@ -1396,7 +1356,7 @@ public class ObjectFactory {
 		Item item = new Item('#', ExtraColors.pink, "Blink Trap", "Blink Trap");
 		item.setIsTrap(true);
 		item.modifyThrownDamageDice(-1);
-		item.changeColor(ExtraColors.trap);
+		item.setColor(ExtraColors.trap);
 		item.changeGlyph((char)250);
 		item.setQuaffEffect(effectFactory.blink());
 		if(addToWorld > 0) {
@@ -1412,7 +1372,7 @@ public class ObjectFactory {
 		Item item = new Item('#', ExtraColors.brightWhite, "Summoning Trap", "Summoning Trap");
 		item.setIsTrap(true);
 		item.modifyThrownDamageDice(-1);
-		item.changeColor(ExtraColors.trap);
+		item.setColor(ExtraColors.trap);
 		item.changeGlyph((char)250);
 		item.setQuaffEffect(new Effect(1, null, 0, null) {
 			public void start(Creature creature){
@@ -2445,7 +2405,18 @@ public class ObjectFactory {
 	}
 	
 	//potions
+	
 	public Item newPotionOfHealing(int depth, int addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Healing", 0, "Healing", effectFactory.maxHealth(), 100, 58);
+		if(addToWorld > 0) {
+			world.addAtEmptyLocation(item, depth);
+		}else {
+			
+		}
+		return item;
+	}
+	
+	/*public Item newPotionOfHealing(int depth, int addToWorld) {
 		String appearance = potionAppearances.get(0);
 		Description description = potionColors.get(appearance);
 		description.setPotionEffectName("healing");
@@ -2463,7 +2434,7 @@ public class ObjectFactory {
 			
 		}
 		return item;
-	}
+	}*/
 	
 	public Item newPotionOfMana(int depth, int addToWorld) {
 		String appearance = potionAppearances.get(1);

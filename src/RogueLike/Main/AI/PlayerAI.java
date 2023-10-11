@@ -4,10 +4,10 @@ import java.util.List;
 
 import RogueLike.Main.Creature;
 import RogueLike.Main.FieldOfView;
-import RogueLike.Main.Item;
 import RogueLike.Main.ObjectFactory;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
+import RogueLike.Main.Items.Item;
 
 public class PlayerAI extends CreatureAI{
 	

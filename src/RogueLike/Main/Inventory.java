@@ -2,6 +2,8 @@ package RogueLike.Main;
 
 import java.util.ArrayList;
 
+import RogueLike.Main.Items.Item;
+
 public class Inventory {
 	
 	private ArrayList<Item> items;

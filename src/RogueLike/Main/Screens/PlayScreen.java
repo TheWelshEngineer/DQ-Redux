@@ -8,11 +8,11 @@ import java.util.List;
 import RogueLike.Main.Creature;
 import RogueLike.Main.Effect;
 import RogueLike.Main.FieldOfView;
-import RogueLike.Main.Item;
 import RogueLike.Main.ObjectFactory;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
+import RogueLike.Main.Items.Item;
 import asciiPanel.AsciiPanel;
 
 public class PlayScreen implements Screen{
@@ -138,7 +138,7 @@ public class PlayScreen implements Screen{
 	        case KeyEvent.VK_1: player.modifyXP(1000000000);
 	        //
 	        case KeyEvent.VK_G: player.pickup(); inputAccepted = 1; break;
-	        case KeyEvent.VK_S: player.search(20, false); inputAccepted = 1; break;
+	        case KeyEvent.VK_S: player.search(12, false); inputAccepted = 1; break;
 	        case KeyEvent.VK_UP: 
 	        	if(userIsTryingToExit()) {
 	        		return userExits();
@@ -421,7 +421,7 @@ public class PlayScreen implements Screen{
 			for(int x = 0; x < world.width(); x++) {
 				for(int y = 0; y < world.height(); y++) {
 					if(world.item(x, y, player.z) != null && world.item(x, y, player.z).isTrap()) {
-						world.item(x, y, player.z).changeColor(world.item(x, y, player.z).defaultColor());
+						world.item(x, y, player.z).setColor(world.item(x, y, player.z).defaultColor());
 						world.item(x, y, player.z).changeGlyph(world.item(x, y, player.z).defaultGlyph());
 						world.item(x, y, player.z).setIsTrapFound(true);
 					}

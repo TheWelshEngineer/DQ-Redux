@@ -1,7 +1,7 @@
 package RogueLike.Main.Screens;
 
 import RogueLike.Main.Creature;
-import RogueLike.Main.Item;
+import RogueLike.Main.Items.Item;
 
 public class ExamineScreen extends InventoryBasedScreen{
 

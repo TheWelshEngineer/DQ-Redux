@@ -1,8 +1,12 @@
-package RogueLike.Main;
+package RogueLike.Main.Items;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import RogueLike.Main.Description;
+import RogueLike.Main.Effect;
+import RogueLike.Main.Spell;
 
 public class Item implements Cloneable{
 	
@@ -30,7 +34,7 @@ public class Item implements Cloneable{
 		return defaultColor;
 	}
 	
-	public void changeColor(Color newColor) {
+	public void setColor(Color newColor) {
 		color = newColor;
 	}
 	
@@ -98,7 +102,7 @@ public class Item implements Cloneable{
 		return appearance;
 	}
 	
-	public void changeAppearance(String newAppearance) {
+	public void setAppearance(String newAppearance) {
 		appearance = newAppearance;
 	}
 	
@@ -843,12 +847,28 @@ public class Item implements Cloneable{
 		isShield = value;
 	}
 	
+	private boolean isPotion;
+	public boolean isPotion() {
+		return isPotion;
+	}
+	public void setIsPotion(boolean value) {
+		isPotion = value;
+	}
+	
 	private boolean equippable;
 	public boolean equippable() {
 		return equippable;
 	}
 	public void setEquippable(boolean value) {
 		equippable = value;
+	}
+	
+	private boolean quickslottable = false;
+	public boolean quickslottable() {
+		return isWand() || isScroll() || isPotion();
+	}
+	public void setQuickslottable(boolean value) {
+		quickslottable = value;
 	}
 	
 	private boolean isTrap;

@@ -7,8 +7,8 @@ import RogueLike.Main.Creature;
 import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Spell;
+import RogueLike.Main.Items.Item;
 import RogueLike.Main.Inventory;
-import RogueLike.Main.Item;
 import asciiPanel.AsciiPanel;
 
 public class InventoryScreen implements Screen{
@@ -65,10 +65,12 @@ public class InventoryScreen implements Screen{
 						equipped = " (equipped)";
 					}
 					
-					terminal.write(String.format(">> %c %s x%d%s", item.glyph(), player.nameOf(item), item.stackAmount(), equipped, check), 5, y++);
+					terminal.write(String.format(">> %c %s x%d%s", item.glyph(), player.nameOf(item), item.stackAmount(), equipped, check), 5, y);
+					terminal.write(String.format("%c", item.glyph()), 8, y++, item.color());
 					int z = 3;
 					int x = 42;
-					terminal.write(String.format(">> %c %s", item.glyph(), player.nameOf(item)), x, z++);
+					terminal.write(String.format(">> %c %s", item.glyph(), player.nameOf(item)), x, z);
+					terminal.write(String.format("%c", item.glyph()), x+3, z++, item.color());
 					z++;
 					if(item.isWeapon()) {
 						if(item.isIdentified()) {
@@ -435,7 +437,8 @@ public class InventoryScreen implements Screen{
 						equipped = " (equipped)";
 					}
 					
-					terminal.write(String.format("%c %s x%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), inventory.get(i).stackAmount(), equipped, check), 5, y++);
+					terminal.write(String.format("%c %s x%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), inventory.get(i).stackAmount(), equipped, check), 5, y);
+					terminal.write(String.format("%c", inventory.get(i).glyph()), 5, y++, inventory.get(i).color());
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).equippable()) {
 					terminal.writeCenter("-- [X]: Equip --", 36);

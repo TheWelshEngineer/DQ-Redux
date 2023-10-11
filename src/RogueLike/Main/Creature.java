@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.AI.CreatureAI;
+import RogueLike.Main.Items.Item;
 
 public class Creature implements Cloneable{
 
@@ -3925,7 +3926,7 @@ public class Creature implements Cloneable{
 
 		}
 		if(isPlayer() == true) {
-			search(1, true);
+			search(18, true);
 		}
 		Item trap = world.item(x, y, z);
 		if(trap != null && trap.isTrap() && flying == 0 && levitating == false) {
@@ -4180,23 +4181,19 @@ public class Creature implements Cloneable{
 				int ny = y + oy;
 				if (ox == 0 && oy == 0 || item(nx, ny, z) != null) {
 					if(item(nx, ny, z) != null) {
-						if(item(nx, ny, z).isTrap()) {
-							//failure++;
-						}else {
-							if(item(nx, ny, z).isTrapFound()) {
-								failure++;
+						if(item(nx, ny, z).isTrap() && !item(nx, ny, z).isTrapFound()) {
+							if(this.dexterityRoll() >= successChance) {
+								item(nx, ny, z).setColor(item(nx, ny, z).defaultColor());
+								item(nx, ny, z).changeGlyph(item(nx, ny, z).defaultGlyph());
+								item(nx, ny, z).setIsTrapFound(true);
+								notify("You spotted a "+item(nx, ny, z).name()+"!");
+								failure = 0;
+								success++;
 							}else {
-								if((int)(Math.random()*20) <= successChance) {
-									item(nx, ny, z).changeColor(item(nx, ny, z).defaultColor());
-									item(nx, ny, z).changeGlyph(item(nx, ny, z).defaultGlyph());
-									item(nx, ny, z).setIsTrapFound(true);
-									notify("You spotted a "+item(nx, ny, z).name()+"!");
-									failure = 0;
-									success++;
-								}else {
-									failure++;
-								}
+								failure++;
 							}
+						}else {
+							
 						}
 					}else {
 						failure++;

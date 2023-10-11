@@ -5,8 +5,8 @@ import java.awt.Color;
 import asciiPanel.AsciiPanel;
 
 public enum Tile {
-	FLOOR((char)250, AsciiPanel.yellow /*new Color(255,255,255)*/, "A rocky cave floor."),
-	WALL((char)177, /*AsciiPanel.yellow*/ new Color(84,70,57), "A rocky cave wall. Looks breakable."),
+	FLOOR((char)250, /*AsciiPanel.yellow*/ new Color(173, 146, 125), "A rocky cave floor."),
+	WALL((char)177, /*AsciiPanel.yellow*/ new Color(173, 146, 125), "A rocky cave wall. Looks breakable."),
 	BOUNDS('x', AsciiPanel.brightBlack, "Beyond the edge of the world."),
 	STAIRS_UP((char)30, AsciiPanel.white, "A rough stone staircase that goes up."),
 	STAIRS_DOWN((char)31, AsciiPanel.white, "A rough stone staircase that goes down."),
@@ -22,7 +22,7 @@ public enum Tile {
 	GRASS_TALL((char)176, AsciiPanel.green, "Tall, thick grass blocks your view."),
 	FIRE('^', ExtraColors.orange, "A small fire rages here."),
 	CLOUDS((char)176, AsciiPanel.white, "Dense clouds crackle with lightning here."),
-	PIT('_', ExtraColors.invisible, "A deep chasm opens here. You can't see the bottom..."),
+	PIT('_', ExtraColors.invisible, "A deep chasm opens here. You can't see the bottom.."),
 	ACID_GAS((char)176, ExtraColors.apple, "A cloud of caustic gas is swirling here."),
 	PARALYZE_GAS((char)176, ExtraColors.paralyzed, "A cloud of paralytic gas is swirling here."),
 	CONFUSE_GAS((char)176, ExtraColors.pink, "A cloud of confusion gas is swirling here."),
