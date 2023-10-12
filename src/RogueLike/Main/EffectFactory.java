@@ -134,8 +134,8 @@ public class EffectFactory {
 		return firebolt;
 	}
 	
-	public Effect causticVapour() {
-		Effect causticVapour = new Effect(1, null, 0, null) {
+	public Effect causticVapor() {
+		Effect causticVapor = new Effect(1, null, 0, null) {
 			public void start(Creature creature){
                 for (int ox = -2; ox < 3; ox++){
                     for (int oy = -2; oy < 3; oy++){
@@ -153,7 +153,7 @@ public class EffectFactory {
                 }
             }
 		};
-		return causticVapour;
+		return causticVapor;
 	}
 	
 	public Effect mindVision() {

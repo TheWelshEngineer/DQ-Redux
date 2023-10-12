@@ -31,7 +31,7 @@ public class AlchemistAI extends CreatureAI{
 
 		}else {
 			if(!creature.inventory().isFull() && (int)(Math.round(Math.random()*10)) < 2 && brewcount < 3) {
-				creature.inventory().add(factory.randomNegativePotion(0, 0));
+				creature.inventory().add(factory.randomNegativePotion(0, false));
 				creature.doAction("brew a potion");
 				brewcount++;
 			}else if(canThrowAt(player) && player.invisible() == false) {

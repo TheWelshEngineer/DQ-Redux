@@ -2896,7 +2896,7 @@ public class Creature implements Cloneable{
 	}
 
 	public void equip(Item item) {
-		if(item.equippable()) {
+		if(!item.equippable()) {
 			return;
 		}
 		if(item.isWeapon()) {

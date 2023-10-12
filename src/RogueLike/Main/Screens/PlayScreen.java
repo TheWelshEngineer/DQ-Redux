@@ -338,7 +338,7 @@ public class PlayScreen implements Screen{
 				factory.randomFood(z, 1);
 			}
 			for(int j = 0; j < 4; j++) {
-				factory.randomPotion(z, 1);
+				factory.randomPotion(z, true);
 			}
 			for(int k = 0; k < 1; k++) {
 				factory.randomArmor(z, 1);

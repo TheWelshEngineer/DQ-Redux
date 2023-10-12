@@ -107,18 +107,18 @@ public class ObjectFactory {
 	
 	public void setUpPotionIndex() {
 		potionIndex = new ArrayList<Item>();
-		potionIndex.add(newPotionOfPoison(0, 0));
-		potionIndex.add(newPotionOfGiantStrength(0, 0));
-		potionIndex.add(newPotionOfMana(0, 0));
-		potionIndex.add(newPotionOfInvisibility(0, 0));
-		potionIndex.add(newPotionOfParalysis(0, 0));
-		potionIndex.add(newPotionOfCausticGas(0, 0));
-		potionIndex.add(newPotionOfHealing(0, 0));
-		potionIndex.add(newPotionOfRestoration(0, 0));
-		potionIndex.add(newPotionOfMindVision(0, 0));
-		potionIndex.add(newPotionOfOvergrowth(0, 0));
-		potionIndex.add(newPotionOfLiquidFlame(0, 0));
-		potionIndex.add(newPotionOfLevitation(0, 0));
+		potionIndex.add(newPotionOfPoison(0, false));
+		potionIndex.add(newPotionOfGiantStrength(0, false));
+		potionIndex.add(newPotionOfMana(0, false));
+		potionIndex.add(newPotionOfInvisibility(0, false));
+		potionIndex.add(newPotionOfParalysis(0, false));
+		potionIndex.add(newPotionOfCausticGas(0, false));
+		potionIndex.add(newPotionOfHealing(0, false));
+		potionIndex.add(newPotionOfRestoration(0, false));
+		potionIndex.add(newPotionOfMindVision(0, false));
+		potionIndex.add(newPotionOfOvergrowth(0, false));
+		potionIndex.add(newPotionOfLiquidFlame(0, false));
+		potionIndex.add(newPotionOfLevitation(0, false));
 		
 		Collections.shuffle(potionIndex);
 	}
@@ -424,7 +424,7 @@ public class ObjectFactory {
 			player.learnNameQuiet(startArmorRogue);
 			player.inventory().add(startArmorRogue);
 			player.equip(startArmorRogue);
-			Item startItemRogue = newPotionOfInvisibility(0, 0);
+			Item startItemRogue = newPotionOfInvisibility(0, false);
 			player.learnNameQuiet(startItemRogue);
 			player.inventory().add(startItemRogue);
 			
@@ -468,7 +468,7 @@ public class ObjectFactory {
 			player.learnNameQuiet(startArmorAlchemist);
 			player.inventory().add(startArmorAlchemist);
 			player.equip(startArmorAlchemist);
-			Item startItemAlchemist = newPotionOfPoison(0, 0);
+			Item startItemAlchemist = newPotionOfPoison(0, false);
 			player.learnNameQuiet(startItemAlchemist);
 			player.inventory().add(startItemAlchemist);
 
@@ -599,9 +599,9 @@ public class ObjectFactory {
 		player.inventory().add(newRations(0, 0));
 		//temp
 		//
-		player.inventory().add(newPotionOfHealing(0, 0));
-		player.inventory().add(newPotionOfHealing(0, 0));
-		player.inventory().add(newPotionOfHealing(0, 0));
+		//player.inventory().add(newPotionOfHealing(0, 0));
+		//player.inventory().add(newPotionOfHealing(0, 0));
+		//player.inventory().add(newPotionOfHealing(0, 0));
 		//
 		//player.spellbook().add(spellFactory.test(player));
 
@@ -938,7 +938,7 @@ public class ObjectFactory {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature potionChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(potionChest, this, this.world);
-		Item startPotion = randomPotion(0, 0);
+		Item startPotion = randomPotion(0, false);
 		potionChest.inventory().add(startPotion);
 		potionChest.modifyIsContainer(true);
 		potionChest.modifyNoCorpse(1);
@@ -2406,9 +2406,9 @@ public class ObjectFactory {
 	
 	//potions
 	
-	public Item newPotionOfHealing(int depth, int addToWorld) {
+	public Item newPotionOfHealing(int depth, boolean addToWorld) {
 		Item item = new Potion(this, (char)13, "Potion of Healing", 0, "Healing", effectFactory.maxHealth(), 100, 58);
-		if(addToWorld > 0) {
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2416,39 +2416,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	/*public Item newPotionOfHealing(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(0);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("healing");
-		Item item = new Item((char)13, description.getColor(), "Potion of Healing", appearance);
-		item.setQuaffEffect(effectFactory.maxHealth());
-		item.setPotionName("Healing");
-		item.setIsStackable(true);
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setID(58);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(item, depth);
-		}else {
-			
-		}
-		return item;
-	}*/
-	
-	public Item newPotionOfMana(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(1);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("mana");
-		Item item = new Item((char)13, description.getColor(), "Potion of Mana", appearance);
-		item.setQuaffEffect(effectFactory.maxMana());
-		item.setPotionName("Mana Restoration");
-		item.setIsStackable(true);
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setID(59);
-		if(addToWorld > 0) {
+	public Item newPotionOfMana(int depth, boolean addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Mana", 1, "Mana Restoration", effectFactory.maxMana(), 100, 59);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2456,19 +2426,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newPotionOfPoison(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(2);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("poison");
-		Item item = new Item((char)13, description.getColor(), "Potion of Poison", appearance);
-		item.setQuaffEffect(effectFactory.poisoned());
-		item.setPotionName("Poison");
-		item.setIsStackable(true);
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setID(60);
-		if(addToWorld > 0) {
+	public Item newPotionOfPoison(int depth, boolean addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Poison", 2, "Poison", effectFactory.poisoned(), 100, 60);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2476,19 +2436,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newPotionOfGiantStrength(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(3);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("giant strength");
-		Item item = new Item((char)13, description.getColor(), "Potion of Giant Strength", appearance);
-		item.setQuaffEffect(effectFactory.giantStrength());
-		item.setPotionName("Giant Strength");
-		item.setIsStackable(true);
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setID(61);
-		if(addToWorld > 0) {
+	public Item newPotionOfGiantStrength(int depth, boolean addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Giant Strength", 3, "Giant Strength", effectFactory.giantStrength(), 100, 61);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2496,19 +2446,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newPotionOfInvisibility(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(4);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("invisibility");
-		Item item = new Item((char)13, description.getColor(), "Potion of Invisibility", appearance);
-		item.setQuaffEffect(effectFactory.invisible());
-		item.setPotionName("Invisibility");
-		item.setIsStackable(true);
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setID(62);
-		if(addToWorld > 0) {
+	public Item newPotionOfInvisibility(int depth, boolean addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Invisibility", 4, "Invisibility", effectFactory.invisible(), 100, 62);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2516,19 +2456,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newPotionOfParalysis(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(5);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("paralysis");
-		Item item = new Item((char)13, description.getColor(), "Potion of Paralysis", appearance);
-		item.setQuaffEffect(effectFactory.paralyzed());
-		item.setPotionName("Paralysis");
-		item.setIsStackable(true);
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setID(63);
-		if(addToWorld > 0) {
+	public Item newPotionOfParalysis(int depth, boolean addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Paralysis", 5, "Paralysis", effectFactory.paralyzed(), 100, 63);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2536,19 +2466,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newPotionOfCausticGas(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(6);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("caustic gas");
-		Item item = new Item((char)13, description.getColor(), "Potion of Caustic Gas", appearance);
-		item.setQuaffEffect(effectFactory.causticVapour());
-		item.setPotionName("Caustic Cloud");
-		item.setIsStackable(true);
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setID(64);
-		if(addToWorld > 0) {
+	public Item newPotionOfCausticGas(int depth, boolean addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Caustic Gas", 6, "Caustic Cloud", effectFactory.causticVapor(), 100, 64);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2556,19 +2476,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newPotionOfRestoration(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(7);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("restoration");
-		Item item = new Item((char)13, description.getColor(), "Potion of Restoration", appearance);
-		item.setQuaffEffect(effectFactory.restoration());
-		item.setPotionName("Restoration");
-		item.setIsStackable(true);
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setID(65);
-		if(addToWorld > 0) {
+	public Item newPotionOfRestoration(int depth, boolean addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Restoration", 7, "Restoration", effectFactory.restoration(), 100, 65);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2576,20 +2486,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newPotionOfMindVision(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(8);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("mind vision");
-		Item item = new Item((char)13, description.getColor(), "Potion of Mind Vision", appearance);
-		item.setQuaffEffect(effectFactory.mindVision());
-		item.setPotionName("Mind Vision");
-		item.setIsStackable(true);
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setID(66);
-		item.quaffEffect().setDuration(20);
-		if(addToWorld > 0) {
+	public Item newPotionOfMindVision(int depth, boolean addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Mind Vision", 8, "Mind Vision", effectFactory.mindVision(), 100, 66);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2597,19 +2496,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newPotionOfOvergrowth(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(9);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("overgrowth");
-		Item item = new Item((char)13, description.getColor(), "Potion of Overgrowth", appearance);
-		item.setQuaffEffect(effectFactory.overgrow());
-		item.setPotionName("Overgrowth");
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setIsStackable(true);
-		item.setID(67);
-		if(addToWorld > 0) {
+	public Item newPotionOfOvergrowth(int depth, boolean addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Overgrowth", 9, "Overgrowth", effectFactory.overgrow(), 100, 67);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2617,19 +2506,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newPotionOfLiquidFlame(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(10);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("combustion");
-		Item item = new Item((char)13, description.getColor(), "Potion of Combustion", appearance);
-		item.setQuaffEffect(effectFactory.fireball());
-		item.setPotionName("Combustion Cloud");
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setIsStackable(true);
-		item.setID(68);
-		if(addToWorld > 0) {
+	public Item newPotionOfLiquidFlame(int depth, boolean addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Combustion", 10, "Combustion Cloud", effectFactory.fireball(), 100, 68);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2637,20 +2516,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newPotionOfLevitation(int depth, int addToWorld) {
-		String appearance = potionAppearances.get(11);
-		Description description = potionColors.get(appearance);
-		description.setPotionEffectName("levitation");
-		Item item = new Item((char)13, description.getColor(), "Potion of Levitation", appearance);
-		item.setQuaffEffect(effectFactory.levitating());
-		item.setPotionName("Levitation");
-		item.setIsStackable(true);
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setDescription(description);
-		item.setID(69);
-		item.quaffEffect().setDuration(12);
-		if(addToWorld > 0) {
+	public Item newPotionOfLevitation(int depth, boolean addToWorld) {
+		Item item = new Potion(this, (char)13, "Potion of Levitation", 11, "Levitation", effectFactory.levitating(), 100, 69);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -3325,9 +3193,9 @@ public class ObjectFactory {
 					if(creature.item(creature.x()+1, creature.y(), creature.z()) != null) {
 						creature.world().remove(creature.x()+1, creature.y(), creature.z());
 					}
-					creature.world().addAtEmptySpace(randomPotion(creature.z(), 0), creature.x()+1, creature.y()-1, creature.z());
-					creature.world().addAtEmptySpace(randomPositivePotion(creature.z(), 0), creature.x(), creature.y()-1, creature.z());
-					creature.world().addAtEmptySpace(randomPotion(creature.z(), 0), creature.x()-1, creature.y()-1, creature.z());
+					creature.world().addAtEmptySpace(randomPotion(creature.z(), false), creature.x()+1, creature.y()-1, creature.z());
+					creature.world().addAtEmptySpace(randomPositivePotion(creature.z(), false), creature.x(), creature.y()-1, creature.z());
+					creature.world().addAtEmptySpace(randomPotion(creature.z(), false), creature.x()-1, creature.y()-1, creature.z());
 					newIronKey(creature.z(), 1);
 				}
 
@@ -4103,7 +3971,7 @@ public class ObjectFactory {
 	
 	public Item randomMagicItem(int depth, Creature player, int addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
-		case 1: return randomPositivePotion(depth, addToWorld);
+		//case 1: return randomPositivePotion(depth, addToWorld);
 		case 2: return randomScroll(depth, player, addToWorld);
 		case 3: return randomWand(depth, player, addToWorld);
 		case 4: return randomRing(depth, addToWorld);
@@ -4193,7 +4061,7 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomPotion(int depth, int addToWorld) {
+	public Item randomPotion(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 12)) {
 		case 1: return newPotionOfPoison(depth, addToWorld);
 		case 2: return newPotionOfGiantStrength(depth, addToWorld);
@@ -4211,7 +4079,7 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomPositivePotion(int depth, int addToWorld) {
+	public Item randomPositivePotion(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 7)) {
 		case 1: return newPotionOfGiantStrength(depth, addToWorld);
 		case 2: return newPotionOfMana(depth, addToWorld);
@@ -4224,7 +4092,7 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomNegativePotion(int depth, int addToWorld) {
+	public Item randomNegativePotion(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 5)) {
 		case 1: return newPotionOfPoison(depth, addToWorld);
 		case 2: return newPotionOfParalysis(depth, addToWorld);
@@ -4235,7 +4103,7 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item selectPotion(int depth, int addToWorld, int potionIndex) {
+	public Item selectPotion(int depth,boolean addToWorld, int potionIndex) {
 		switch(potionIndex) {
 		case 1: return newPotionOfPoison(depth, addToWorld);
 		case 2: return newPotionOfGiantStrength(depth, addToWorld);
