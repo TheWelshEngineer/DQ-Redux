@@ -22,7 +22,7 @@ public enum Tile {
 	GRASS_TALL((char)176, AsciiPanel.green, "Tall, thick grass blocks your view."),
 	FIRE('^', ExtraColors.orange, "A small fire rages here."),
 	CLOUDS((char)176, AsciiPanel.white, "Dense clouds crackle with lightning here."),
-	PIT((char)254, ExtraColors.invisible, "A deep chasm opens here. You can't see the bottom.."),
+	PIT((char)220, ExtraColors.invisible, "A deep chasm opens here. You can't see the bottom.."),
 	ACID_GAS((char)176, ExtraColors.apple, "A cloud of caustic gas is swirling here."),
 	PARALYZE_GAS((char)176, ExtraColors.paralyzed, "A cloud of paralytic gas is swirling here."),
 	CONFUSE_GAS((char)176, ExtraColors.pink, "A cloud of confusion gas is swirling here."),
