@@ -2244,7 +2244,7 @@ public class Creature implements Cloneable{
 	}
 
 	public void learnName(Item item) {
-		notify("The "+item.appearance()+" is a "+item.name()+"!");
+		notify("The "+item.getAppearance()+" is a "+item.name()+"!");
 		item.setIsIdentified(true);
 		ai.setName(item, item.name());
 	}

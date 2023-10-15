@@ -22,7 +22,7 @@ public class IndexRingScreen implements Screen{
 		terminal.writeCenter("== Index: Rings ==", 1);	
 		int y = 3;
 		for(int i = 0; i < 10; i++) {
-			String ringColor = factory.ringIndex.get(i).appearance();
+			String ringColor = factory.ringIndex.get(i).getAppearance();
 			String ringName = "???";
 			if(player.nameOf(factory.ringIndex.get(i)) == factory.ringIndex.get(i).name()) {
 				ringName = factory.ringIndex.get(i).name();

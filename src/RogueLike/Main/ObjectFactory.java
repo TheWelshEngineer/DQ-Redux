@@ -22,6 +22,7 @@ import RogueLike.Main.AI.SlimeAI;
 import RogueLike.Main.AI.SlimelingAI;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Items.Potion;
+import RogueLike.Main.Items.Scroll;
 import asciiPanel.AsciiPanel;
 
 public class ObjectFactory {
@@ -203,7 +204,7 @@ public class ObjectFactory {
 	public void setUpScrollIndex(Creature player) {
 		scrollIndex = new ArrayList<Item>();
 		scrollIndex.add(newScrollOfIdentify(0, player, 0));
-		scrollIndex.add(newScrollOfMagicMapping(0, player, 0));
+		scrollIndex.add(newScrollOfMagicMapping(0, player, false));
 		scrollIndex.add(newScrollOfSummonMonsters(0, player, 0));
 		scrollIndex.add(newScrollOfUpgrade(0, player, 0));
 		scrollIndex.add(newScrollOfRemoveCurse(0, player, 0));
@@ -599,7 +600,9 @@ public class ObjectFactory {
 		player.inventory().add(newRations(0, 0));
 		//temp
 		//
-		//player.inventory().add(newPotionOfHealing(0, 0));
+		player.inventory().add(newScrollOfMagicMapping(0, player, false));
+		player.inventory().add(newScrollOfMagicMapping(0, player, false));
+		player.inventory().add(newScrollOfMagicMapping(0, player, false));
 		//player.inventory().add(newPotionOfHealing(0, 0));
 		//player.inventory().add(newPotionOfHealing(0, 0));
 		//
@@ -2527,23 +2530,29 @@ public class ObjectFactory {
 	}
 	
 	//scrolls
-
-	public Item newScrollOfMagicMapping(int depth, Creature player, int addToWorld) {
-		String appearance = scrollAppearances.get(0);
-		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Magic Mapping", appearance);
-		item.setIsScroll(true);								//2
-		item.addWrittenSpell(spellFactory.magicMappingScroll(player));
-		item.setIsStackable(true);
-		item.setBaseGoldValue(150);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(70);
-		if(addToWorld > 0) {
+	
+	public Item newScrollOfMagicMapping(int depth, Creature player, boolean addToWorld) {
+		Item item = new Scroll(this, (char)247, "Scroll of Magic Mapping", 0, spellFactory.magicMappingScroll(player), 150, 70);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
 		return item;
 	}
+
+	/*
+	 * public Item newScrollOfMagicMapping(int depth, Creature player, int
+	 * addToWorld) { String appearance = scrollAppearances.get(0); Item item = new
+	 * Item((char)247, ExtraColors.paper, "Scroll of Magic Mapping", appearance);
+	 * item.setIsScroll(true); //2
+	 * item.addWrittenSpell(spellFactory.magicMappingScroll(player));
+	 * item.setIsStackable(true); item.setBaseGoldValue(150);
+	 * item.setCurrentGoldValue(item.baseGoldValue()); item.setID(70); if(addToWorld
+	 * > 0) { world.addAtEmptyLocation(item, depth); }else {
+	 * 
+	 * } return item; }
+	 */
 	
 	public Item newScrollOfIdentify(int depth, Creature player, int addToWorld) {
 		String appearance = scrollAppearances.get(1);
@@ -4038,7 +4047,7 @@ public class ObjectFactory {
 	public Item randomScroll(int depth, Creature player, int addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 7)) {
 		case 1: return newScrollOfIdentify(depth, player, addToWorld);
-		case 2: return newScrollOfMagicMapping(depth, player, addToWorld);
+		//case 2: return newScrollOfMagicMapping(depth, player, addToWorld);
 		case 3: return newScrollOfSummonMonsters(depth, player, addToWorld);
 		case 4: return newScrollOfUpgrade(depth, player, addToWorld);
 		case 5: return newScrollOfRemoveCurse(depth, player, addToWorld);
@@ -4051,7 +4060,7 @@ public class ObjectFactory {
 	public Item selectScroll(int depth, Creature player, int addToWorld, int scrollIndex) {
 		switch(scrollIndex) {
 		case 1: return newScrollOfIdentify(depth, player, addToWorld);
-		case 2: return newScrollOfMagicMapping(depth, player, addToWorld);
+		//case 2: return newScrollOfMagicMapping(depth, player, addToWorld);
 		case 3: return newScrollOfSummonMonsters(depth, player, addToWorld);
 		case 4: return newScrollOfUpgrade(depth, player, addToWorld);
 		case 5: return newScrollOfRemoveCurse(depth, player, addToWorld);

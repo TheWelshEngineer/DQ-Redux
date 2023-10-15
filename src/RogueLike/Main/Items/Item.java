@@ -95,7 +95,7 @@ public class Item implements Cloneable{
 	}
 	
 	private String appearance;
-	public String appearance() {
+	public String getAppearance() {
 		if(appearance == null) {
 			return name;
 		}

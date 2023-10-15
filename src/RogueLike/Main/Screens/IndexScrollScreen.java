@@ -22,7 +22,7 @@ public class IndexScrollScreen implements Screen{
 		terminal.writeCenter("== Index: Scrolls ==", 1);	
 		int y = 3;
 		for(int i = 0; i < 7; i++) {
-			String scrollColor = factory.scrollIndex.get(i).appearance();
+			String scrollColor = factory.scrollIndex.get(i).getAppearance();
 			String scrollName = "???";
 			if(player.nameOf(factory.scrollIndex.get(i)) == factory.scrollIndex.get(i).name()) {
 				scrollName = factory.scrollIndex.get(i).name();

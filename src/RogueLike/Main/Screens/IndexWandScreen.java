@@ -22,7 +22,7 @@ public class IndexWandScreen implements Screen{
 		terminal.writeCenter("== Index: Wands ==", 1);	
 		int y = 3;
 		for(int i = 0; i < 6; i++) {
-			String wandColor = factory.wandIndex.get(i).appearance();
+			String wandColor = factory.wandIndex.get(i).getAppearance();
 			String wandName = "???";
 			if(player.nameOf(factory.wandIndex.get(i)) == factory.wandIndex.get(i).name()) {
 				wandName = factory.wandIndex.get(i).name();

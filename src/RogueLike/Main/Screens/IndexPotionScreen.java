@@ -22,7 +22,7 @@ public class IndexPotionScreen implements Screen{
 		terminal.writeCenter("== Index: Potions ==", 1);	
 		int y = 3;
 		for(int i = 0; i < 12; i++) {
-			String potionColor = factory.potionIndex.get(i).appearance();
+			String potionColor = factory.potionIndex.get(i).getAppearance();
 			String potionName = "???";
 			if(player.nameOf(factory.potionIndex.get(i)) == factory.potionIndex.get(i).name()) {
 				potionName = factory.potionIndex.get(i).name();

@@ -23,7 +23,7 @@ public class Potion extends Item{
 	public Potion(ObjectFactory factory, char glyph, String name, int appearance, String inventoryStatusEffectName, Effect statusEffect, int goldValue, int id) {
 		super(glyph, AsciiPanel.white, name, null);
 		this.setAppearance(factory.potionAppearances.get(appearance));
-		Description description = factory.potionColors.get(this.appearance());
+		Description description = factory.potionColors.get(this.getAppearance());
 		description.setPotionEffectName(inventoryStatusEffectName.toLowerCase());
 		this.setDescription(description);
 		this.setPotionName(inventoryStatusEffectName);

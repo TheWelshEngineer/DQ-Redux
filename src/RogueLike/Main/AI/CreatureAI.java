@@ -33,7 +33,7 @@ public class CreatureAI {
 	
 	public String getName(Item item) {
 		String name = itemNames.get(item.name());
-		return name == null ? item.appearance() : name;
+		return name == null ? item.getAppearance() : name;
 	}
 	
 	public void setName(Item item, String name) {
