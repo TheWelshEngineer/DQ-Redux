@@ -203,13 +203,13 @@ public class ObjectFactory {
 	
 	public void setUpScrollIndex(Creature player) {
 		scrollIndex = new ArrayList<Item>();
-		scrollIndex.add(newScrollOfIdentify(0, player, 0));
+		scrollIndex.add(newScrollOfIdentify(0, player, false));
 		scrollIndex.add(newScrollOfMagicMapping(0, player, false));
-		scrollIndex.add(newScrollOfSummonMonsters(0, player, 0));
-		scrollIndex.add(newScrollOfUpgrade(0, player, 0));
-		scrollIndex.add(newScrollOfRemoveCurse(0, player, 0));
-		scrollIndex.add(newScrollOfEnchantment(0, player, 0));
-		scrollIndex.add(newScrollOfConfusion(0, player, 0));
+		scrollIndex.add(newScrollOfSummonMonsters(0, player, false));
+		scrollIndex.add(newScrollOfUpgrade(0, player, false));
+		scrollIndex.add(newScrollOfRemoveCurse(0, player, false));
+		scrollIndex.add(newScrollOfEnchantment(0, player, false));
+		scrollIndex.add(newScrollOfConfusion(0, player, false));
 		
 		Collections.shuffle(scrollIndex);
 	}
@@ -600,9 +600,9 @@ public class ObjectFactory {
 		player.inventory().add(newRations(0, 0));
 		//temp
 		//
-		player.inventory().add(newScrollOfMagicMapping(0, player, false));
-		player.inventory().add(newScrollOfMagicMapping(0, player, false));
-		player.inventory().add(newScrollOfMagicMapping(0, player, false));
+		//player.inventory().add(newScrollOfMagicMapping(0, player, false));
+		//player.inventory().add(newScrollOfMagicMapping(0, player, false));
+		//player.inventory().add(newScrollOfMagicMapping(0, player, false));
 		//player.inventory().add(newPotionOfHealing(0, 0));
 		//player.inventory().add(newPotionOfHealing(0, 0));
 		//
@@ -1060,7 +1060,7 @@ public class ObjectFactory {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature scrollChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(scrollChest, this, this.world);
-		Item startScroll = randomScroll(0, player, 0);
+		Item startScroll = randomScroll(0, player, false);
 		scrollChest.inventory().add(startScroll);
 		scrollChest.modifyIsContainer(true);
 		scrollChest.modifyNoCorpse(1);
@@ -2540,30 +2540,10 @@ public class ObjectFactory {
 		}
 		return item;
 	}
-
-	/*
-	 * public Item newScrollOfMagicMapping(int depth, Creature player, int
-	 * addToWorld) { String appearance = scrollAppearances.get(0); Item item = new
-	 * Item((char)247, ExtraColors.paper, "Scroll of Magic Mapping", appearance);
-	 * item.setIsScroll(true); //2
-	 * item.addWrittenSpell(spellFactory.magicMappingScroll(player));
-	 * item.setIsStackable(true); item.setBaseGoldValue(150);
-	 * item.setCurrentGoldValue(item.baseGoldValue()); item.setID(70); if(addToWorld
-	 * > 0) { world.addAtEmptyLocation(item, depth); }else {
-	 * 
-	 * } return item; }
-	 */
 	
-	public Item newScrollOfIdentify(int depth, Creature player, int addToWorld) {
-		String appearance = scrollAppearances.get(1);
-		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Identify", appearance);
-		item.setIsScroll(true);
-		item.addWrittenSpell(spellFactory.identifyScroll(player));
-		item.setIsStackable(true);
-		item.setBaseGoldValue(150);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(71);
-		if(addToWorld > 0) {
+	public Item newScrollOfIdentify(int depth, Creature player, boolean addToWorld) {
+		Item item = new Scroll(this, (char)247, "Scroll of Identify", 1, spellFactory.identifyScroll(player), 150, 71);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2571,34 +2551,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newScrollOfSummonMonsters(int depth, Creature player, int addToWorld) {
-		String appearance = scrollAppearances.get(2);
-		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Summon Monsters", appearance);
-		item.setIsScroll(true);
-		item.addWrittenSpell(spellFactory.summonMonstersScroll(player));
-		item.setIsStackable(true);
-		item.setBaseGoldValue(150);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(72);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(item, depth);
-		}else {
-			
-		}
-		return item;
-		
-	}
-	
-	public Item newScrollOfUpgrade(int depth, Creature player, int addToWorld) {
-		String appearance = scrollAppearances.get(3);
-		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Upgrade", appearance);
-		item.setIsScroll(true);
-		item.addWrittenSpell(spellFactory.upgradeScroll(player));
-		item.setIsStackable(true);
-		item.setBaseGoldValue(150);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(73);
-		if(addToWorld > 0) {
+	public Item newScrollOfSummonMonsters(int depth, Creature player, boolean addToWorld) {
+		Item item = new Scroll(this, (char)247, "Scroll of Summon Monsters", 2, spellFactory.summonMonstersScroll(player), 150, 72);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2606,16 +2561,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newScrollOfRemoveCurse(int depth, Creature player, int addToWorld) {
-		String appearance = scrollAppearances.get(4);
-		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Remove Curse", appearance);
-		item.setIsScroll(true);
-		item.addWrittenSpell(spellFactory.removeCurseScroll(player));
-		item.setIsStackable(true);
-		item.setBaseGoldValue(150);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(74);
-		if(addToWorld > 0) {
+	public Item newScrollOfUpgrade(int depth, Creature player, boolean addToWorld) {
+		Item item = new Scroll(this, (char)247, "Scroll of Upgrade", 3, spellFactory.upgradeScroll(player), 150, 73);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2623,16 +2571,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newScrollOfEnchantment(int depth, Creature player, int addToWorld) {
-		String appearance = scrollAppearances.get(5);
-		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Enchantment", appearance);
-		item.setIsScroll(true);
-		item.addWrittenSpell(spellFactory.enchantScroll(player));
-		item.setIsStackable(true);
-		item.setBaseGoldValue(150);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(75);
-		if(addToWorld > 0) {
+	public Item newScrollOfRemoveCurse(int depth, Creature player, boolean addToWorld) {
+		Item item = new Scroll(this, (char)247, "Scroll of Remove Curse", 4, spellFactory.removeCurseScroll(player), 150, 74);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2640,16 +2581,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newScrollOfConfusion(int depth, Creature player, int addToWorld) {
-		String appearance = scrollAppearances.get(6);
-		Item item = new Item((char)247, ExtraColors.paper, "Scroll of Confusion", appearance);
-		item.setIsScroll(true);
-		item.addWrittenSpell(spellFactory.confuseScroll(player));
-		item.setIsStackable(true);
-		item.setBaseGoldValue(150);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(76);
-		if(addToWorld > 0) {
+	public Item newScrollOfEnchantment(int depth, Creature player, boolean addToWorld) {
+		Item item = new Scroll(this, (char)247, "Scroll of Enchantment", 5, spellFactory.magicMappingScroll(player), 150, 75);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -2657,7 +2591,15 @@ public class ObjectFactory {
 		return item;
 	}
 	
-
+	public Item newScrollOfConfusion(int depth, Creature player, boolean addToWorld) {
+		Item item = new Scroll(this, (char)247, "Scroll of Confusion", 0, spellFactory.confuseScroll(player), 150, 70);
+		if(addToWorld) {
+			world.addAtEmptyLocation(item, depth);
+		}else {
+			
+		}
+		return item;
+	}
 	
 	//wands
 	
@@ -3006,7 +2948,7 @@ public class ObjectFactory {
             		 if(creature.item(creature.x(), creature.y(), creature.z()) != null) {
                 		 creature.world().remove(creature.x(), creature.y(), creature.z());
                 	 }
-            		 creature.world().addAtEmptySpace(randomMagicItem(creature.z(), player, 0), creature.x(), creature.y(), creature.z());
+            		 creature.world().addAtEmptySpace(randomMagicItem(creature.z(), player, false), creature.x(), creature.y(), creature.z());
                  }
                 world.remove(creature); 
             }
@@ -3978,13 +3920,13 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomMagicItem(int depth, Creature player, int addToWorld) {
+	public Item randomMagicItem(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
-		//case 1: return randomPositivePotion(depth, addToWorld);
+		case 1: return randomPositivePotion(depth, addToWorld);
 		case 2: return randomScroll(depth, player, addToWorld);
-		case 3: return randomWand(depth, player, addToWorld);
-		case 4: return randomRing(depth, addToWorld);
-		default: return randomRing(depth, addToWorld);
+		//case 3: return randomWand(depth, player, addToWorld);
+		//case 4: return randomRing(depth, addToWorld);
+		default: return randomPositivePotion(depth, addToWorld);
 		}
 	}
 	
@@ -4044,10 +3986,10 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomScroll(int depth, Creature player, int addToWorld) {
+	public Item randomScroll(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 7)) {
 		case 1: return newScrollOfIdentify(depth, player, addToWorld);
-		//case 2: return newScrollOfMagicMapping(depth, player, addToWorld);
+		case 2: return newScrollOfMagicMapping(depth, player, addToWorld);
 		case 3: return newScrollOfSummonMonsters(depth, player, addToWorld);
 		case 4: return newScrollOfUpgrade(depth, player, addToWorld);
 		case 5: return newScrollOfRemoveCurse(depth, player, addToWorld);
@@ -4057,10 +3999,10 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item selectScroll(int depth, Creature player, int addToWorld, int scrollIndex) {
+	public Item selectScroll(int depth, Creature player, boolean addToWorld, int scrollIndex) {
 		switch(scrollIndex) {
 		case 1: return newScrollOfIdentify(depth, player, addToWorld);
-		//case 2: return newScrollOfMagicMapping(depth, player, addToWorld);
+		case 2: return newScrollOfMagicMapping(depth, player, addToWorld);
 		case 3: return newScrollOfSummonMonsters(depth, player, addToWorld);
 		case 4: return newScrollOfUpgrade(depth, player, addToWorld);
 		case 5: return newScrollOfRemoveCurse(depth, player, addToWorld);

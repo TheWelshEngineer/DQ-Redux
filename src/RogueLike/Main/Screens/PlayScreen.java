@@ -353,7 +353,7 @@ public class PlayScreen implements Screen{
 				factory.randomRing(z, 1);
 			}
 			for(int l = 0; l < 1; l++) {
-				factory.randomScroll(z, player, 1);
+				factory.randomScroll(z, player, true);
 			}
 		}
 		factory.newVictoryItem(world.depth()-1, 1);
