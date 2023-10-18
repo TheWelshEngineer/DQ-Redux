@@ -15,7 +15,7 @@ public class StartScreen implements Screen{
 		terminal.writeCenter("| |__| |\\ V  V / (_| | |  | | | |__| | |_| |  __/\\__ \\ |_ ", y++);
 		terminal.writeCenter("|_____/  \\_/\\_/ \\__,_|_|  |_|  \\___\\_\\\\__,_|\\___||___/\\__|", y++);
 		terminal.writeCenter("", y++);
-		terminal.writeCenter("+|=|+ Realm of the Nightmare Queen +|=|+", y++);
+		terminal.writeCenter("+|=|+ Magic and Madness in the Caves of Chaos! +|=|+", y++);
 		terminal.writeCenter("", y++);
 		terminal.writeCenter("                                   /////                                       ", y++);
 		terminal.writeCenter("                                   /////                                       ", y++);
@@ -51,7 +51,7 @@ public class StartScreen implements Screen{
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
-		terminal.writeCenter("-- beta v16202022 -- Press [ENTER] to Start --", 45);
+		terminal.writeCenter("-- beta v18102023 -- Press [ENTER] to Start --", 45);
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {

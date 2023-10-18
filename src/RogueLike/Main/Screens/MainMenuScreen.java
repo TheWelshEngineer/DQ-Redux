@@ -53,10 +53,9 @@ public class MainMenuScreen implements Screen{
 		terminal.writeCenter("| |  | \\ \\ /\\ / / _` | '__|  _| |  | | | | |/ _ \\/ __| __|", y++);
 		terminal.writeCenter("| |__| |\\ V  V / (_| | |  | | | |__| | |_| |  __/\\__ \\ |_ ", y++);
 		terminal.writeCenter("|_____/  \\_/\\_/ \\__,_|_|  |_|  \\___\\_\\\\__,_|\\___||___/\\__|", y++);
-		terminal.writeCenter("", y+=2);
-		terminal.writeCenter("+|=|+ Realm of the Nightmare Queen +|=|+", y++);
-		terminal.writeCenter("", y++);
-		terminal.writeCenter("== Main Menu ==", y++);
+		y++;
+		terminal.writeCenter("+|=|+ Magic and Madness in the Caves of Chaos! +|=|+", y++);
+		terminal.writeCenter("== Main Menu ==", y+=2);
 		terminal.write(String.format("%c  New Game  %c", startLeft, startRight), 52, y+=2);
 		terminal.write(String.format("%c  Help      %c", helpLeft, helpRight), 52, y+=2);
 		terminal.write(String.format("%c  Credits   %c", creditsLeft, creditsRight), 52, y+=2);
