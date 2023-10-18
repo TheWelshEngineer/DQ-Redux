@@ -13,6 +13,7 @@ import asciiPanel.AsciiPanel;
 
 public class InventoryScreen implements Screen{
 	
+	protected PlayScreen playScreen;
 	protected Creature player;
 	protected List<Effect> effects;
 	protected Inventory inventory;
@@ -27,7 +28,8 @@ public class InventoryScreen implements Screen{
 	public int itemsPerPage = 30;
 	public int pageNumber = 1;
 	
-	public InventoryScreen(Creature player, int sx, int sy) {
+	public InventoryScreen(PlayScreen playScreen, Creature player, int sx, int sy) {
+		this.playScreen = playScreen;
 		this.player = player;
 		this.effects = player.effects();
 		this.inventory= player.inventory();
@@ -503,6 +505,7 @@ public class InventoryScreen implements Screen{
 		case KeyEvent.VK_X:
 			if(inventory.get(check).equippable()) {
 				player.equip(inventory.get(check));
+				playScreen.setInputAccepted(true);
 				return null;
 			}else {
 				return this;
@@ -510,11 +513,13 @@ public class InventoryScreen implements Screen{
 		
 		case KeyEvent.VK_D:
 			player.drop(inventory.get(check));
+			playScreen.setInputAccepted(true);
 			return null;
 			
 		case KeyEvent.VK_E:
 			if(inventory.get(check).foodValue() > 0) {
 				player.eat(inventory.get(check));
+				playScreen.setInputAccepted(true);
 				return null;
 			}else {
 				return this;
@@ -523,6 +528,7 @@ public class InventoryScreen implements Screen{
 		case KeyEvent.VK_Q:
 			if(inventory.get(check).quaffEffect() != null) {
 				player.quaff(inventory.get(check));
+				playScreen.setInputAccepted(true);
 				return null;
 			}else {
 				return this;
@@ -532,12 +538,14 @@ public class InventoryScreen implements Screen{
 			if(inventory.get(check).writtenSpells().size() > 0) {
 				if(inventory.get(check).isSpellbook()){
 					player.learnSpell(inventory.get(check).writtenSpells().get(0), inventory.get(check));
+					playScreen.setInputAccepted(true);
 					return null;
 				}else {
 					if(inventory.get(check).writtenSpells().size() == 1 && !inventory.get(check).writtenSpells().get(0).isSelfCast()) {
 						return new CastSpellScreen(player, "Cast spell at?", sx, sy, inventory.get(check).writtenSpells().get(0), inventory.get(check));
 					}else if(inventory.get(check).writtenSpells().size() == 1 && inventory.get(check).writtenSpells().get(0).isSelfCast()){
 						player.castSpell(inventory.get(check).writtenSpells().get(0), player.x(), player.y(), inventory.get(check));
+						playScreen.setInputAccepted(true);
 						return null;
 					}else {
 						return new ReadSpellScreen(player, sx, sy, inventory.get(check));

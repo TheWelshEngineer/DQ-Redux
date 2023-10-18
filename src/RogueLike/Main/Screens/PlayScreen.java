@@ -17,7 +17,10 @@ import asciiPanel.AsciiPanel;
 
 public class PlayScreen implements Screen{
 	
-	private int inputAccepted = 0;
+	private boolean inputAccepted = false;
+	public void setInputAccepted(boolean value) {
+		inputAccepted = value;
+	}
 
 	public void displayOutput(AsciiPanel terminal) {
 		//terminal.write("fun", 1, 1);
@@ -105,48 +108,48 @@ public class PlayScreen implements Screen{
 			
 			//
 			switch(key.getKeyCode()) {
-			//case KeyEvent.VK_ESCAPE: return new LoseScreen();
-			//case KeyEvent.VK_ENTER: return new WinScreen();
-	        case KeyEvent.VK_NUMPAD4: player.moveBy(-1, 0, 0, false); inputAccepted = 1; break;
-	        case KeyEvent.VK_NUMPAD6: player.moveBy( 1, 0, 0, false); inputAccepted = 1; break;
-	        case KeyEvent.VK_NUMPAD8: player.moveBy( 0,-1, 0, false); inputAccepted = 1; break;
-	        case KeyEvent.VK_NUMPAD2: player.moveBy( 0, 1, 0, false); inputAccepted = 1; break;
-	        case KeyEvent.VK_NUMPAD7: player.moveBy(-1,-1, 0, false); inputAccepted = 1 ;break;
-	        case KeyEvent.VK_NUMPAD9: player.moveBy( 1,-1, 0, false); inputAccepted = 1 ;break;
-	        case KeyEvent.VK_NUMPAD1: player.moveBy(-1, 1, 0, false); inputAccepted = 1 ;break;
-	        case KeyEvent.VK_NUMPAD3: player.moveBy( 1, 1, 0, false); inputAccepted = 1 ;break;
-	        case KeyEvent.VK_NUMPAD5: player.idle(); inputAccepted = 1 ;break; //.idle();
-	        case KeyEvent.VK_D: subscreen = new DropScreen(player); inputAccepted = 1; break;
-	        case KeyEvent.VK_E: subscreen = new EatScreen(player); inputAccepted = 1; break;
-	        case KeyEvent.VK_W: subscreen = new EquipScreen(player); inputAccepted = 1; break;
+			// Movement Controls
+	        case KeyEvent.VK_NUMPAD4: player.moveBy(-1, 0, 0, false); inputAccepted = true; break;
+	        case KeyEvent.VK_NUMPAD6: player.moveBy( 1, 0, 0, false); inputAccepted = true; break;
+	        case KeyEvent.VK_NUMPAD8: player.moveBy( 0,-1, 0, false); inputAccepted = true; break;
+	        case KeyEvent.VK_NUMPAD2: player.moveBy( 0, 1, 0, false); inputAccepted = true; break;
+	        case KeyEvent.VK_NUMPAD7: player.moveBy(-1,-1, 0, false); inputAccepted = true; break;
+	        case KeyEvent.VK_NUMPAD9: player.moveBy( 1,-1, 0, false); inputAccepted = true; break;
+	        case KeyEvent.VK_NUMPAD1: player.moveBy(-1, 1, 0, false); inputAccepted = true; break;
+	        case KeyEvent.VK_NUMPAD3: player.moveBy( 1, 1, 0, false); inputAccepted = true; break;
+	        case KeyEvent.VK_NUMPAD5: player.idle(); inputAccepted = true; break;
+	        //
+	        case KeyEvent.VK_D: subscreen = new DropScreen(player); inputAccepted = true; break;
+	        case KeyEvent.VK_E: subscreen = new EatScreen(player); inputAccepted = true; break;
+	        case KeyEvent.VK_W: subscreen = new EquipScreen(player); inputAccepted = true; break;
 	        case KeyEvent.VK_H: subscreen = new HelpScreen(false); break;
 	        case KeyEvent.VK_C: subscreen = new StatsScreen(player); break;
 	        case KeyEvent.VK_I: subscreen = new IndexPotionScreen(player, player.factory()); break;
 	        case KeyEvent.VK_X: subscreen = new ExamineScreen(player); break;
 	        case KeyEvent.VK_L: subscreen = new LookScreen(player, "Looking", player.x - getScrollX(), player.y - getScrollY()); break;
-	        case KeyEvent.VK_T: subscreen = new ThrowScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = 1; break;
-	        case KeyEvent.VK_Q: subscreen = new QuaffScreen(player); inputAccepted = 1; break;
-	        case KeyEvent.VK_R: subscreen = new ReadScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = 1; break;
+	        case KeyEvent.VK_T: subscreen = new ThrowScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeyEvent.VK_Q: subscreen = new QuaffScreen(player); inputAccepted = true; break;
+	        case KeyEvent.VK_R: subscreen = new ReadScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
 	        //
-	        case KeyEvent.VK_A: subscreen = new SpellbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = 1; break;
+	        case KeyEvent.VK_A: subscreen = new SpellbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = true; break;
 	        //
 	        //case KeyEvent.VK_M: subscreen = new FeatbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = 1; break;
 	        //
-	        case KeyEvent.VK_B: subscreen = new InventoryScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = 1; break;
+	        case KeyEvent.VK_B: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); /*inputAccepted = 1;*/ break;
 	        //
 	        //
 	        case KeyEvent.VK_1: player.modifyXP(1000000000);
 	        //
-	        case KeyEvent.VK_G: player.pickup(); inputAccepted = 1; break;
-	        case KeyEvent.VK_S: player.search(12, false); inputAccepted = 1; break;
+	        case KeyEvent.VK_G: player.pickup(); inputAccepted = true; break;
+	        case KeyEvent.VK_S: player.search(12, false); inputAccepted = true; break;
 	        case KeyEvent.VK_UP: 
 	        	if(userIsTryingToExit()) {
 	        		return userExits();
 	        	}else {
-	        		player.moveBy( 0, 0, -1, false); inputAccepted = 1; break;
+	        		player.moveBy( 0, 0, -1, false); inputAccepted = true; break;
 	        	}
 	        case KeyEvent.VK_DOWN: 
-	        	player.moveBy( 0, 0, 1, false); inputAccepted = 1; 
+	        	player.moveBy( 0, 0, 1, false); inputAccepted = true; 
 	        	if(player.z()+1 == 6 && player.hasVisitedZone2() == false) {
 	        		subscreen = new Zone2Screen();
 	        	}
@@ -170,14 +173,14 @@ public class PlayScreen implements Screen{
 	        		player.notify("You don't have a ranged weapon equipped."); 
 	        	}else if(player.ammunition() == null) {
 	        		player.notify("You don't have any ammunition ready."); 
-	        	}else if(player.ammunition().isArrowAmmunition() && player.weapon().usesArrowAmmunition()) {
+	        	}else if(player.ammunition().isArrowAmmunition() && !player.weapon().usesArrowAmmunition()) {
 	        		player.notify("You don't have the right ammunition ready."); 
-	        	}else if(player.ammunition().isBoltAmmunition() && player.weapon().usesBoltAmmunition()) {
+	        	}else if(player.ammunition().isBoltAmmunition() && !player.weapon().usesBoltAmmunition()) {
 	        		player.notify("You don't have the right ammunition ready."); 
-	        	}else if(player.ammunition().isPowderAmmunition() && player.weapon().usesPowderAmmunition()) {
+	        	}else if(player.ammunition().isPowderAmmunition() && !player.weapon().usesPowderAmmunition()) {
 	        		player.notify("You don't have the right ammunition ready."); 
 	        	}else{
-	        		subscreen = new FireWeaponScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = 1; break;
+	        		subscreen = new FireWeaponScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
 	        	}
 	        
 			}
@@ -196,28 +199,28 @@ public class PlayScreen implements Screen{
 		if (player.identify() > 0) {
 			subscreen = new IdentifyScreen(player);
 			player.modifyIdentify(-1);
-			inputAccepted = 1;
+			inputAccepted = true;
 		}
 		
 		if (player.upgrade() > 0) {
 			subscreen = new UpgradeScreen(player, player.factory());
 			player.modifyUpgrade(-1);
-			inputAccepted = 1;
+			inputAccepted = true;
 		}
 		
 		if (player.removeCurse() > 0) {
 			subscreen = new RemoveCurseScreen(player);
 			player.modifyRemoveCurse(-1);
-			inputAccepted = 1;
+			inputAccepted = true;
 		}
 		
 		if (player.enchant() > 0) {
 			subscreen = new EnchantScreen(player, player.factory());
 			player.modifyEnchant(-1);
-			inputAccepted = 1;
+			inputAccepted = true;
 		}
 		
-		if(subscreen == null && inputAccepted == 1) {
+		if(subscreen == null && inputAccepted) {
 			//world.update();
 			world.updateOnCurrentFloor(player);
 			//temp
@@ -225,7 +228,7 @@ public class PlayScreen implements Screen{
 			for(Creature creature : world.creatures) {
 				creature.stackEffects();
 			}
-			inputAccepted = 0;
+			inputAccepted = false;
 			//
 			/*System.out.print("\n");
 			System.out.print(player.x());
@@ -350,7 +353,7 @@ public class PlayScreen implements Screen{
 				factory.randomWeapon(z, 1);
 			}
 			for(int l = 0; l < 1; l++) {
-				factory.randomRing(z, 1);
+				factory.randomRing(z, true);
 			}
 			for(int l = 0; l < 1; l++) {
 				factory.randomScroll(z, player, true);
@@ -401,7 +404,7 @@ public class PlayScreen implements Screen{
 			if(y > 47) {
 				y = 47;
 			}
-			terminal.writeCenter(messages.get(i), y);
+			terminal.write(messages.get(i), 3, y);
 			
 		}
 		messages.clear();

@@ -22,6 +22,7 @@ import RogueLike.Main.AI.SlimeAI;
 import RogueLike.Main.AI.SlimelingAI;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Items.Potion;
+import RogueLike.Main.Items.Ring;
 import RogueLike.Main.Items.Scroll;
 import RogueLike.Main.Items.Wand;
 import asciiPanel.AsciiPanel;
@@ -172,16 +173,16 @@ public class ObjectFactory {
 	
 	public void setUpRingIndex(Creature player) {
 		ringIndex = new ArrayList<Item>();
-		ringIndex.add(newStrengthRing(0, 0));
-		ringIndex.add(newFireDefenseRing(0, 0));
-		ringIndex.add(newIceDefenseRing(0, 0));
-		ringIndex.add(newShockDefenseRing(0, 0));
-		ringIndex.add(newElementDefenseRing(0, 0));
-		ringIndex.add(newVisionRing(0, 0));
-		ringIndex.add(newDefenseRing(0, 0));
-		ringIndex.add(newPoisonDefenseRing(0, 0));
-		ringIndex.add(newDexterityRing(0, 0));
-		ringIndex.add(newIntelligenceRing(0, 0));
+		ringIndex.add(newStrengthRing(0, false));
+		ringIndex.add(newFireDefenseRing(0, false));
+		ringIndex.add(newIceDefenseRing(0, false));
+		ringIndex.add(newShockDefenseRing(0, false));
+		ringIndex.add(newElementDefenseRing(0, false));
+		ringIndex.add(newVisionRing(0, false));
+		ringIndex.add(newDefenseRing(0, false));
+		ringIndex.add(newPoisonDefenseRing(0, false));
+		ringIndex.add(newDexterityRing(0, false));
+		ringIndex.add(newIntelligenceRing(0, false));
 		
 		Collections.shuffle(ringIndex);
 	}
@@ -608,7 +609,7 @@ public class ObjectFactory {
 		//player.inventory().add(newPotionOfHealing(0, 0));
 		//
 		//player.spellbook().add(spellFactory.test(player));
-		//player.inventory().add(newIceWallWand(0, player, false));
+		//player.inventory().add(newStrengthRing(0, false));
 
 		/*player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
 		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
@@ -1045,7 +1046,7 @@ public class ObjectFactory {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature ringChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(ringChest, this, this.world);
-		Item startRing = randomRing(0, 0);
+		Item startRing = randomRing(0, false);
 		ringChest.inventory().add(startRing);
 		ringChest.modifyIsContainer(true);
 		ringChest.modifyNoCorpse(1);
@@ -2230,184 +2231,117 @@ public class ObjectFactory {
 	}
 	
 	//rings
-	public Item newStrengthRing(int depth, int addToWorld) {
-		String appearance = ringAppearances.get(0);
-		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Strength", appearance);
+	/*
+	 * public Item newStrengthRing(int depth, int addToWorld) { String appearance =
+	 * ringAppearances.get(0); Item item = new Item((char)9,
+	 * ringColors.get(appearance), "Ring of Strength", appearance);
+	 * item.modifyStrength(2); item.setIsRing(true); item.setEquippable(true);
+	 * item.setBaseGoldValue(250); item.setCurrentGoldValue(item.baseGoldValue());
+	 * item.setID(48); if(addToWorld > 0) { world.addAtEmptyLocation(item, depth);
+	 * }else {
+	 * 
+	 * } return item; }
+	 */
+	
+	public Item newStrengthRing(int depth, boolean addToWorld) {
+		Item item = new Ring(this, (char)9, "Ring of Strength", 0, 250, 48);
 		item.modifyStrength(2);
-		item.setIsRing(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(250);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(48);
-		if(addToWorld > 0) {
+		if(addToWorld) { 
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
 	
-	public Item newDefenseRing(int depth, int addToWorld) {
-		String appearance = ringAppearances.get(1);
-		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Shielding", appearance);
+	public Item newDefenseRing(int depth, boolean addToWorld) {
+		Item item = new Ring(this, (char)9, "Ring of Shielding", 1, 250, 49);
 		item.modifyArmorClass(2);
-		item.setIsRing(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(250);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(49);
-		if(addToWorld > 0) {
+		if(addToWorld) { 
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
 	
-	public Item newFireDefenseRing(int depth, int addToWorld) {
-		String appearance = ringAppearances.get(2);
-		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Fire Resistance", appearance);
+	public Item newFireDefenseRing(int depth, boolean addToWorld) {
+		Item item = new Ring(this, (char)9, "Ring of Fire Resistance", 2, 250, 50);
 		item.modifySaveBonusFire(5);
 		item.setResistsFireDamage(true);
-		item.setIsRing(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(250);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(50);
-		if(addToWorld > 0) {
+		if(addToWorld) { 
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
 	
-	public Item newIceDefenseRing(int depth, int addToWorld) {
-		String appearance = ringAppearances.get(3);
-		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Frost Resistance", appearance);
+	public Item newIceDefenseRing(int depth, boolean addToWorld) {
+		Item item = new Ring(this, (char)9, "Ring of Frost Resistance", 3, 250, 51);
 		item.modifySaveBonusFrost(5);
 		item.setResistsFrostDamage(true);
-		item.setIsRing(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(250);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(51);
-		if(addToWorld > 0) {
+		if(addToWorld) { 
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
 	
-	public Item newShockDefenseRing(int depth, int addToWorld) {
-		String appearance = ringAppearances.get(4);
-		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Shock Resistance", appearance);
+	public Item newShockDefenseRing(int depth, boolean addToWorld) {
+		Item item = new Ring(this, (char)9, "Ring of Shock Resistance", 4, 250, 52);
 		item.modifySaveBonusShock(5);
 		item.setResistsShockDamage(true);
-		item.setIsRing(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(250);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(52);
-		if(addToWorld > 0) {
+		if(addToWorld) { 
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
 	
-	public Item newPoisonDefenseRing(int depth, int addToWorld) {
-		String appearance = ringAppearances.get(5);
-		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Poison Resistance", appearance);
+	public Item newPoisonDefenseRing(int depth, boolean addToWorld) {
+		Item item = new Ring(this, (char)9, "Ring of Poison Resistance", 5, 250, 53);
 		item.modifySaveBonusPoison(5);
 		item.setResistsPoisonDamage(true);
-		item.setIsRing(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(250);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(53);
-		if(addToWorld > 0) {
+		if(addToWorld) { 
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
 	
-	public Item newElementDefenseRing(int depth, int addToWorld) {
-		String appearance = ringAppearances.get(6);
-		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Elemental Resistance", appearance);
-		item.modifySaveBonusFire(2);
-		item.modifySaveBonusFrost(2);
-		item.modifySaveBonusShock(2);
+	public Item newElementDefenseRing(int depth, boolean addToWorld) {
+		Item item = new Ring(this, (char)9, "Ring of Elemental Resistance", 6, 250, 54);
+		item.modifySaveBonusFire(5);
+		item.modifySaveBonusFrost(5);
+		item.modifySaveBonusShock(5);
 		item.setResistsFireDamage(true);
 		item.setResistsFrostDamage(true);
 		item.setResistsShockDamage(true);
-		item.setIsRing(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(250);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(54);
-		if(addToWorld > 0) {
+		if(addToWorld) { 
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
 	
-	public Item newVisionRing(int depth, int addToWorld) {
-		String appearance = ringAppearances.get(7);
-		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Awareness", appearance);
+	public Item newVisionRing(int depth, boolean addToWorld) {
+		Item item = new Ring(this, (char)9, "Ring of Awareness", 7, 250, 55);
 		item.modifyVisionRadius(4);
-		item.setIsRing(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(250);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(55);
-		if(addToWorld > 0) {
+		if(addToWorld) { 
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
 	
-	public Item newDexterityRing(int depth, int addToWorld) {
-		String appearance = ringAppearances.get(8);
-		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Dexterity", appearance);
+	public Item newDexterityRing(int depth, boolean addToWorld) {
+		Item item = new Ring(this, (char)9, "Ring of Dexterity", 8, 250, 56);
 		item.modifyDexterity(2);
-		item.setIsRing(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(250);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(56);
-		if(addToWorld > 0) {
+		if(addToWorld) { 
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
-        return item;
+		return item;
 	}
 	
-	public Item newIntelligenceRing(int depth, int addToWorld) {
-		String appearance = ringAppearances.get(9);
-		Item item = new Item((char)9, ringColors.get(appearance), "Ring of Intelligence", appearance);
+	public Item newIntelligenceRing(int depth, boolean addToWorld) {
+		Item item = new Ring(this, (char)9, "Ring of Intelligence", 9, 250, 57);
 		item.modifyIntelligence(2);
-		item.setIsRing(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(250);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(57);
-		if(addToWorld > 0) {
+		if(addToWorld) { 
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
-        return item;
+		return item;
 	}
+	
 	
 	//potions
 	
@@ -2415,8 +2349,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Healing", 0, "Healing", effectFactory.maxHealth(), 100, 58);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2425,8 +2357,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Mana", 1, "Mana Restoration", effectFactory.maxMana(), 100, 59);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2435,8 +2365,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Poison", 2, "Poison", effectFactory.poisoned(), 100, 60);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2445,8 +2373,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Giant Strength", 3, "Giant Strength", effectFactory.giantStrength(), 100, 61);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2455,8 +2381,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Invisibility", 4, "Invisibility", effectFactory.invisible(), 100, 62);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2465,8 +2389,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Paralysis", 5, "Paralysis", effectFactory.paralyzed(), 100, 63);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2475,8 +2397,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Caustic Gas", 6, "Caustic Cloud", effectFactory.causticVapor(), 100, 64);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2485,8 +2405,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Restoration", 7, "Restoration", effectFactory.restoration(), 100, 65);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2495,8 +2413,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Mind Vision", 8, "Mind Vision", effectFactory.mindVision(), 100, 66);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2505,8 +2421,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Overgrowth", 9, "Overgrowth", effectFactory.overgrow(), 100, 67);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2515,8 +2429,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Combustion", 10, "Combustion Cloud", effectFactory.fireball(), 100, 68);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2525,8 +2437,6 @@ public class ObjectFactory {
 		Item item = new Potion(this, (char)13, "Potion of Levitation", 11, "Levitation", effectFactory.levitating(), 100, 69);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2537,8 +2447,6 @@ public class ObjectFactory {
 		Item item = new Scroll(this, (char)247, "Scroll of Magic Mapping", 0, spellFactory.magicMappingScroll(player), 150, 70);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2547,8 +2455,6 @@ public class ObjectFactory {
 		Item item = new Scroll(this, (char)247, "Scroll of Identify", 1, spellFactory.identifyScroll(player), 150, 71);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2557,8 +2463,6 @@ public class ObjectFactory {
 		Item item = new Scroll(this, (char)247, "Scroll of Summon Monsters", 2, spellFactory.summonMonstersScroll(player), 150, 72);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2567,8 +2471,6 @@ public class ObjectFactory {
 		Item item = new Scroll(this, (char)247, "Scroll of Upgrade", 3, spellFactory.upgradeScroll(player), 150, 73);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2577,8 +2479,6 @@ public class ObjectFactory {
 		Item item = new Scroll(this, (char)247, "Scroll of Remove Curse", 4, spellFactory.removeCurseScroll(player), 150, 74);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2587,8 +2487,6 @@ public class ObjectFactory {
 		Item item = new Scroll(this, (char)247, "Scroll of Enchantment", 5, spellFactory.magicMappingScroll(player), 150, 75);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -2597,8 +2495,6 @@ public class ObjectFactory {
 		Item item = new Scroll(this, (char)247, "Scroll of Confusion", 0, spellFactory.confuseScroll(player), 150, 70);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
-		}else {
-			
 		}
 		return item;
 	}
@@ -3918,9 +3814,9 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomRing(int depth, int addToWorld) {
+	public Item randomRing(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		case 1: return newStrengthRing(depth, addToWorld);
+		//case 1: return newStrengthRing(depth, addToWorld);
 		case 2: return newFireDefenseRing(depth, addToWorld);
 		case 3: return newIceDefenseRing(depth, addToWorld);
 		case 4: return newShockDefenseRing(depth, addToWorld);
@@ -3934,9 +3830,9 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item selectRing(int depth, int addToWorld, int ringIndex) {
+	public Item selectRing(int depth, boolean addToWorld, int ringIndex) {
 		switch(ringIndex) {
-		case 1: return newStrengthRing(depth, addToWorld);
+		//case 1: return newStrengthRing(depth, addToWorld);
 		case 2: return newFireDefenseRing(depth, addToWorld);
 		case 3: return newIceDefenseRing(depth, addToWorld);
 		case 4: return newShockDefenseRing(depth, addToWorld);
