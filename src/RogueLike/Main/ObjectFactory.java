@@ -23,6 +23,7 @@ import RogueLike.Main.AI.SlimelingAI;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Items.Potion;
 import RogueLike.Main.Items.Scroll;
+import RogueLike.Main.Items.Wand;
 import asciiPanel.AsciiPanel;
 
 public class ObjectFactory {
@@ -131,7 +132,7 @@ public class ObjectFactory {
 		wandColors.put("Thorn Wand", ExtraColors.red);
 		wandColors.put("Beech Wand", ExtraColors.brown);
 		wandColors.put("Cherry Wand", ExtraColors.pink);
-		wandColors.put("Willow Wand", ExtraColors.pink);
+		wandColors.put("Willow Wand", ExtraColors.water);
 		wandColors.put("Maple Wand", ExtraColors.orange);
 		wandColors.put("Birch Wand", AsciiPanel.white);
 		wandColors.put("Rowan Wand", ExtraColors.apple);
@@ -142,12 +143,12 @@ public class ObjectFactory {
 	
 	public void setUpWandIndex(Creature player) {
 		wandIndex = new ArrayList<Item>();
-		wandIndex.add(newForceWand(0, player, 0));
-		wandIndex.add(newFreezingWand(0, player, 0));
-		wandIndex.add(newLightningWand(0, player, 0));
-		wandIndex.add(newFireboltWand(0, player, 0));
-		wandIndex.add(newMissileWand(0, player, 0));
-		wandIndex.add(newIceWallWand(0, player, 0));
+		wandIndex.add(newForceWand(0, player, false));
+		wandIndex.add(newFreezingWand(0, player, false));
+		wandIndex.add(newLightningWand(0, player, false));
+		wandIndex.add(newFireboltWand(0, player, false));
+		wandIndex.add(newMissileWand(0, player, false));
+		wandIndex.add(newIceWallWand(0, player, false));
 		
 		Collections.shuffle(wandIndex);
 	}
@@ -607,6 +608,7 @@ public class ObjectFactory {
 		//player.inventory().add(newPotionOfHealing(0, 0));
 		//
 		//player.spellbook().add(spellFactory.test(player));
+		//player.inventory().add(newIceWallWand(0, player, false));
 
 		/*player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
 		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
@@ -1077,7 +1079,7 @@ public class ObjectFactory {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature wandChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(wandChest, this, this.world);
-		Item startWand = randomWand(0, player, 0);
+		Item startWand = randomWand(0, player, false);
 		wandChest.inventory().add(startWand);
 		wandChest.modifyIsContainer(true);
 		wandChest.modifyNoCorpse(1);
@@ -2603,125 +2605,87 @@ public class ObjectFactory {
 	
 	//wands
 	
-	public Item newFireboltWand(int depth, Creature player, int addToWorld) {
-		String appearance = wandAppearances.get(0);
-		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Firebolt", appearance);
-		//item.modifyAttackValue(5);
-		item.setIsWand(true);
-		item.addWrittenSpell(spellFactory.firebolt(player));
-		item.setBaseGoldValue(250);
-		//item.modifyIsPyromancy(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		//item.setIsStackable(1);
-		item.setID(78);
-		if(addToWorld > 0) {
+	/*
+	 * public Item newFireboltWand(int depth, Creature player, int addToWorld) {
+	 * String appearance = wandAppearances.get(0); Item item = new Item((char)33,
+	 * wandColors.get(appearance), "Wand of Firebolt", appearance);
+	 * //item.modifyAttackValue(5); item.setIsWand(true);
+	 * item.addWrittenSpell(spellFactory.firebolt(player));
+	 * item.setBaseGoldValue(250); //item.modifyIsPyromancy(1);
+	 * item.setCurrentGoldValue(item.baseGoldValue()); //item.setIsStackable(1);
+	 * item.setID(78); if(addToWorld > 0) { world.addAtEmptyLocation(item, depth);
+	 * }else {
+	 * 
+	 * } return item; }
+	 */
+	
+	public Item newFireboltWand(int depth, Creature player, boolean addToWorld) {
+		Item item = new Wand(this, (char)33, "Wand of Firebolt", 0, spellFactory.firebolt(player), 250, 78);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
-		}
-        return item;
-	}
-	
-	public Item newForceWand(int depth, Creature player, int addToWorld) {
-		String appearance = wandAppearances.get(1);
-		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Force", appearance);
-		//item.modifyAttackValue(5);
-		item.setIsWand(true);
-		item.addWrittenSpell(spellFactory.repel(player));
-		//item.setIsStackable(1);
-		item.setBaseGoldValue(250);
-		//item.modifyIsEvocation(1);
-		//item.modifySkillRestriction(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(79);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(item, depth);
-		}else {
-			
-		}
-        return item;
-	}
-	
-	public Item newFreezingWand(int depth, Creature player, int addToWorld) {
-		String appearance = wandAppearances.get(2);
-		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Freezing", appearance);
-		//item.modifyAttackValue(5);
-		item.setIsWand(true);
-		item.addWrittenSpell(spellFactory.flashFreeze(player));
-		//item.setIsStackable(1);
-		item.setBaseGoldValue(250);
-		//item.modifyIsCryomancy(1);
-		//item.modifySkillRestriction(2);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(80);
-		item.writtenSpells().get(0).makeEffectNegative();
-		item.writtenSpells().get(0).makeEffectFrozen();
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(item, depth);
-		}else {
-			
-		}
-        return item;
-	}
-	
-	public Item newLightningWand(int depth, Creature player, int addToWorld) {
-		String appearance = wandAppearances.get(3);
-		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Lightning", appearance);
-		//item.modifyAttackValue(5);
-		item.setIsWand(true);
-		item.addWrittenSpell(spellFactory.chainLightning(player));
-		//item.setIsStackable(1);
-		item.setBaseGoldValue(250);
-		//item.modifyIsElectromancy(1);
-		//item.modifySkillRestriction(3);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(81);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(item, depth);
-		}else {
-			
-		}
-        return item;
-	}
-	
-	public Item newMissileWand(int depth, Creature player, int addToWorld) {
-		String appearance = wandAppearances.get(4);
-		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Magic Missile", appearance);
-		//item.modifyAttackValue(5);
-		item.setIsWand(true);
-		item.addWrittenSpell(spellFactory.magicMissile(player));
-		//item.setIsStackable(1);
-		item.setBaseGoldValue(250);
-		//item.modifyIsEvocation(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(82);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(item, depth);
-		}else {
-			
-		}
-        return item;
-	}
-	
-	public Item newIceWallWand(int depth, Creature player, int addToWorld) {
-		String appearance = wandAppearances.get(5);
-		Item item = new Item((char)33, wandColors.get(appearance), "Wand of Ice Wall", appearance);
-		//item.modifyAttackValue(5);
-		item.setIsWand(true);
-		item.addWrittenSpell(spellFactory.iceWall(player));
-		//item.setIsStackable(1);
-		item.setBaseGoldValue(250);
-		//item.modifyIsCryomancy(1);
-		//item.modifySkillRestriction(3);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(83);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(item, depth);
-		}else {
-
 		}
 		return item;
+		
 	}
+	
+	public Item newForceWand(int depth, Creature player, boolean addToWorld) {
+		Item item = new Wand(this, (char)33, "Wand of Force Blast", 1, spellFactory.repel(player), 250, 79);
+		if(addToWorld) {
+			world.addAtEmptyLocation(item, depth);
+		}else {
+			
+		}
+		return item;
+		
+	}
+	
+	public Item newFreezingWand(int depth, Creature player, boolean addToWorld) {
+		Item item = new Wand(this, (char)33, "Wand of Flash Freeze", 2, spellFactory.flashFreeze(player), 250, 80);
+		if(addToWorld) {
+			world.addAtEmptyLocation(item, depth);
+		}else {
+			
+		}
+		return item;
+		
+	}
+	
+	public Item newLightningWand(int depth, Creature player, boolean addToWorld) {
+		Item item = new Wand(this, (char)33, "Wand of Chain Lightning", 3, spellFactory.chainLightning(player), 250, 81);
+		if(addToWorld) {
+			world.addAtEmptyLocation(item, depth);
+		}else {
+			
+		}
+		return item;
+		
+	}
+	
+	public Item newMissileWand(int depth, Creature player, boolean addToWorld) {
+		Item item = new Wand(this, (char)33, "Wand of Magic Missile", 4, spellFactory.magicMissile(player), 250, 82);
+		if(addToWorld) {
+			world.addAtEmptyLocation(item, depth);
+		}else {
+			
+		}
+		return item;
+		
+	}
+	
+	public Item newIceWallWand(int depth, Creature player, boolean addToWorld) {
+		Item item = new Wand(this, (char)33, "Wand of Ice Wall", 5, spellFactory.iceWall(player), 250, 83);
+		if(addToWorld) {
+			world.addAtEmptyLocation(item, depth);
+		}else {
+			
+		}
+		return item;
+		
+	}
+	
+
 	
 	public Item newFireboltBook(int depth, Creature player, int addToWorld) {
 		String appearance = bookAppearances.get(5);
@@ -3930,7 +3894,7 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomWand(int depth, Creature player, int addToWorld) {
+	public Item randomWand(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 6)) {
 		case 1: return newForceWand(depth, player, addToWorld);
 		case 2: return newFreezingWand(depth, player, addToWorld);
@@ -3938,11 +3902,11 @@ public class ObjectFactory {
 		case 4: return newFireboltWand(depth, player, addToWorld);
 		case 5: return newMissileWand(depth, player, addToWorld);
 		case 6: return newIceWallWand(depth, player, addToWorld);
-		default: return newFireboltWand(depth, player, addToWorld);
+		default: return newMissileWand(depth, player, addToWorld);
 		}
 	}
 	
-	public Item selectWand(int depth, Creature player, int addToWorld, int wandIndex) {
+	public Item selectWand(int depth, Creature player, boolean addToWorld, int wandIndex) {
 		switch(wandIndex) {
 		case 1: return newForceWand(depth, player, addToWorld);
 		case 2: return newFreezingWand(depth, player, addToWorld);
@@ -3950,7 +3914,7 @@ public class ObjectFactory {
 		case 4: return newFireboltWand(depth, player, addToWorld);
 		case 5: return newMissileWand(depth, player, addToWorld);
 		case 6: return newIceWallWand(depth, player, addToWorld);
-		default: return newFireboltWand(depth, player, addToWorld);
+		default: return newMissileWand(depth, player, addToWorld);
 		}
 	}
 	

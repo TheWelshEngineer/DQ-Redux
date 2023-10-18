@@ -4,7 +4,7 @@ import RogueLike.Main.ObjectFactory;
 import RogueLike.Main.Spell;
 import asciiPanel.AsciiPanel;
 
-public class Scroll extends Item{
+public class Wand extends Item{
 	
 	/**
 	 * 
@@ -17,15 +17,14 @@ public class Scroll extends Item{
 	 * @param goldValue The base value in gold of the Scroll.
 	 * @param id The unique identifying integer of the item.
 	 */
-	public Scroll(ObjectFactory factory, char glyph, String name, int appearance, Spell spell, int goldValue, int id) {
+	public Wand(ObjectFactory factory, char glyph, String name, int appearance, Spell spell, int goldValue, int id) {
 		super(glyph, AsciiPanel.white, name, null);
-		this.setAppearance(factory.scrollAppearances.get(appearance));
+		this.setAppearance(factory.wandAppearances.get(appearance));
 		this.addWrittenSpell(spell);
-		this.setColor(factory.scrollColors.get(this.getAppearance()));
+		this.setColor(factory.wandColors.get(this.getAppearance()));
 		this.setBaseGoldValue(goldValue);
 		this.setCurrentGoldValue(this.baseGoldValue());
-		this.setIsStackable(true);
-		this.setIsScroll(true);
+		this.setIsWand(true);
 		this.setQuickslottable(true);
 		this.setID(id);
 	}
