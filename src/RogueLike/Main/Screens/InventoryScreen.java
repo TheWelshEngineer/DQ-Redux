@@ -7,6 +7,7 @@ import RogueLike.Main.Creature;
 import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Spell;
+import RogueLike.Main.Items.Dice;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Inventory;
 import asciiPanel.AsciiPanel;
@@ -88,11 +89,11 @@ public class InventoryScreen implements Screen{
 								symbol = "+";
 							}
 							if(item.isVersatile()) {
-								damage = String.format("1d%d%s%d / 1d%d%s%d", item.damageDice(), symbol, bonus, item.versatileDamageDice(), symbol, bonus);
+								damage = String.format("%s%s%d / %s%s%d", item.damageDice().toString(), symbol, bonus, item.versatileDamageDice().toString(), symbol, bonus);
 							}else {
-								damage = String.format("1d%d%s%d", item.damageDice(), symbol, bonus);
+								damage = String.format("%s%s%d", item.damageDice().toString(), symbol, bonus);
 							}
-							if(item.damageDice() == 1) {
+							if(item.damageDice() == Dice.d1) {
 								Integer amount = bonus+1;
 								if(amount < 1) {
 									amount = 1;
@@ -100,16 +101,16 @@ public class InventoryScreen implements Screen{
 								damage = String.format("%d", amount);
 							}
 							terminal.write(String.format("Damage: %s", damage), x, z++);
-							if(item.thrownDamageDice() > 1) {
-								damage = String.format("1d%d%s%d", item.thrownDamageDice(), symbol, bonus);
+							if(item.thrownDamageDice() != null && item.thrownDamageDice() != Dice.d1) {
+								damage = String.format("%s%s%d", item.thrownDamageDice().toString(), symbol, bonus);
 								terminal.write(String.format("Thrown Damage: %s", damage), x, z++);
 							}
-							if(item.rangedDamageDice() > 0) {
+							if(item.rangedDamageDice() != null) {
 								bonus = item.upgradeLevel() + player.dexterityModifier();
 								if(bonus >= 0) {
 									symbol = "+";
 								}
-								damage = String.format("1d%d%s%d", item.rangedDamageDice(), symbol, bonus);
+								damage = String.format("%s%s%d", item.rangedDamageDice().toString(), symbol, bonus);
 								terminal.write(String.format("Ranged Damage: %s", damage), x, z++);
 							}
 							Integer attackbonus = 0;
@@ -179,11 +180,11 @@ public class InventoryScreen implements Screen{
 								symbol = "+";
 							}
 							if(item.isVersatile()) {
-								damage = String.format("1d%d%s%d / 1d%d%s%d (?)", item.damageDice(), symbol, bonus, item.versatileDamageDice(), symbol, bonus);
+								damage = String.format("%s%s%d / %s%s%d (?)", item.damageDice().toString(), symbol, bonus, item.versatileDamageDice().toString(), symbol, bonus);
 							}else {
-								damage = String.format("1d%d%s%d (?)", item.damageDice(), symbol, bonus);
+								damage = String.format("%s%s%d (?)", item.damageDice().toString(), symbol, bonus);
 							}
-							if(item.damageDice() == 1) {
+							if(item.damageDice() == Dice.d1) {
 								Integer amount = bonus+1;
 								if(amount < 1) {
 									amount = 1;
@@ -191,16 +192,16 @@ public class InventoryScreen implements Screen{
 								damage = String.format("%d (?)", amount);
 							}
 							terminal.write(String.format("Damage: %s", damage), x, z++);
-							if(item.thrownDamageDice() > 1) {
-								damage = String.format("1d%d%s%d (?)", item.thrownDamageDice(), symbol, bonus);
+							if(item.thrownDamageDice() != null && item.thrownDamageDice() != Dice.d1) {
+								damage = String.format("%s%s%d (?)", item.thrownDamageDice().toString(), symbol, bonus);
 								terminal.write(String.format("Thrown Damage: %s", damage), x, z++);
 							}
-							if(item.rangedDamageDice() > 0) {
+							if(item.rangedDamageDice() != null) {
 								bonus = player.dexterityModifier();
 								if(bonus >= 0) {
 									symbol = "+";
 								}
-								damage = String.format("1d%d%s%d (?)", item.rangedDamageDice(), symbol, bonus);
+								damage = String.format("%s%s%d (?)", item.rangedDamageDice().toString(), symbol, bonus);
 								terminal.write(String.format("Ranged Damage: %s", damage), x, z++);
 							}
 							Integer attackbonus = 0;

@@ -169,7 +169,7 @@ public class PlayScreen implements Screen{
 	        	
 	        
 	        case KeyEvent.VK_F: 
-	        	if(player.weapon() == null || player.weapon().rangedDamageDice() == 0) {
+	        	if(player.weapon() == null || player.weapon().rangedDamageDice() == null) {
 	        		player.notify("You don't have a ranged weapon equipped."); 
 	        	}else if(player.ammunition() == null) {
 	        		player.notify("You don't have any ammunition ready."); 

@@ -199,56 +199,56 @@ public class Item implements Cloneable{
 		attackValue = amount;
 	}*/
 	
-	private int damageDiceLowerBound = 1;
-	public int damageDiceLowerBound() {
-		return damageDiceLowerBound;
-	}
+//	private int damageDiceLowerBound = 1;
+//	public int damageDiceLowerBound() {
+//		return damageDiceLowerBound;
+//	}
+//	
+//	public void modifyDamageDiceLowerBound(int amount) {
+//		damageDiceLowerBound += amount;
+//	}
+//	
+//	public void setDamageDiceLowerBound(int amount) {
+//		damageDiceLowerBound = amount;
+//	}
 	
-	public void modifyDamageDiceLowerBound(int amount) {
-		damageDiceLowerBound += amount;
-	}
-	
-	public void setDamageDiceLowerBound(int amount) {
-		damageDiceLowerBound = amount;
-	}
-	
-	private int damageDice;
-	public int damageDice() {
+	private Dice damageDice;
+	public Dice damageDice() {
 		return damageDice;
 	}
 	
-	public void modifyDamageDice(int amount) {
-		damageDice += amount;
+//	public void modifyDamageDice(int amount) {
+//		damageDice += amount;
+//	}
+	
+	public void setDamageDice(Dice dice) {
+		damageDice = dice;
 	}
 	
-	public void setDamageDice(int amount) {
-		damageDice = amount;
-	}
-	
-	private int thrownDamageDice;
-	public int thrownDamageDice() {
+	private Dice thrownDamageDice;
+	public Dice thrownDamageDice() {
 		return thrownDamageDice;
 	}
 	
-	public void modifyThrownDamageDice(int amount) {
-		thrownDamageDice += amount-1;
+//	public void modifyThrownDamageDice(int amount) {
+//		thrownDamageDice += amount-1;
+//	}
+	
+	public void setThrownDamageDice(Dice dice) {
+		thrownDamageDice = dice;
 	}
 	
-	public void setThrownDamageDice(int amount) {
-		thrownDamageDice = amount;
-	}
-	
-	private int rangedDamageDice;
-	public int rangedDamageDice() {
+	private Dice rangedDamageDice;
+	public Dice rangedDamageDice() {
 		return rangedDamageDice;
 	}
+//	
+//	public void modifyRangedDamageDice(int amount) {
+//		rangedDamageDice += amount;
+//	}
 	
-	public void modifyRangedDamageDice(int amount) {
-		rangedDamageDice += amount;
-	}
-	
-	public void setRangedDamageDice(int amount) {
-		rangedDamageDice = amount;
+	public void setRangedDamageDice(Dice dice) {
+		rangedDamageDice = dice;
 	}
 	
 	private boolean dealsFireDamage;
@@ -658,12 +658,12 @@ public class Item implements Cloneable{
 		isVersatile = value;
 	}
 	
-	private int versatileDamageDice;
-	public int versatileDamageDice() {
+	private Dice versatileDamageDice;
+	public Dice versatileDamageDice() {
 		return versatileDamageDice;
 	}
-	public void modifyVersatileDamageDice(int amount) {
-		versatileDamageDice += amount;
+	public void setVersatileDamageDice(Dice dice) {
+		versatileDamageDice = dice;
 	}
 	
 	private boolean isArmor;
@@ -1079,15 +1079,17 @@ public class Item implements Cloneable{
 	
 	public String details() {
 		String details = "";
-		details += "   Value: "+currentGoldValue+" Gold";
-		if(damageDice != 0) {
-			details += "   Damage: "+damageDice;
+		if(currentGoldValue > 0) {
+			details += "   Value: "+currentGoldValue+" Gold";
 		}
-		if(rangedDamageDice != 0) {
-			details += "   Ranged Damage: "+rangedDamageDice;
+		if(damageDice != null) {
+			details += "   Damage: "+damageDice.toString();
 		}
-		if(thrownDamageDice != 0) {
-			details += "   Thrown Damage: "+thrownDamageDice;
+		if(rangedDamageDice != null) {
+			details += "   Ranged Damage: "+rangedDamageDice.toString();
+		}
+		if(thrownDamageDice != null && thrownDamageDice != Dice.d1) {
+			details += "   Thrown Damage: "+thrownDamageDice.toString();
 		}
 		if(armorClass != 0) {
 			details += "   Armor Class: "+armorClass;
@@ -1120,7 +1122,7 @@ public class Item implements Cloneable{
 		this.defaultName = name;
 		this.upgradeName = "";
 		this.enchantedName = "";
-		this.thrownDamageDice = 1;
+		this.thrownDamageDice = Dice.d1;
 		this.writtenSpells = new ArrayList<Spell>();
 		this.appearance = appearance;
 		this.stackAmount = 1;

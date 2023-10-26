@@ -156,7 +156,7 @@ public class CreatureAI {
 	}
 	
 	protected boolean canRangedWeaponAttack(Creature other) {
-		return creature.weapon() != null && creature.weapon().rangedDamageDice() > 0 && creature.canSee(other.x, other.y, other.z);
+		return creature.weapon() != null && creature.weapon().rangedDamageDice() != null && creature.canSee(other.x, other.y, other.z);
 	}
 	
 	protected boolean canThrowAt(Creature other) {
@@ -169,7 +169,7 @@ public class CreatureAI {
 			if(item == null || creature.weapon() == item || creature.armor() == item || creature.shield() == item || creature.ring() == item) {
 				continue;
 			}
-			if(toThrow == null || item.thrownDamageDice() > toThrow.damageDice()) {
+			if(toThrow == null || item.thrownDamageDice().toInt() > toThrow.damageDice().toInt()) {
 				toThrow = item;
 			}
 			
@@ -182,7 +182,7 @@ public class CreatureAI {
 	}
 	
 	protected boolean canUseBetterEquipment() {
-		int currentWeaponRating = creature.weapon() == null ? 0 : creature.weapon().damageDice() + creature.weapon().rangedDamageDice();
+		int currentWeaponRating = creature.weapon() == null ? 0 : creature.weapon().damageDice().toInt() + creature.weapon().rangedDamageDice().toInt();
 		int currentArmorRating = creature.armor() == null ? 0 : creature.armor().armorClass();
 		
 		for(Item item : creature.inventory().getItems()) {
@@ -192,7 +192,7 @@ public class CreatureAI {
 			
 			boolean isArmor = item.isArmor();
 			
-			if(item.damageDice() + item.rangedDamageDice() > currentWeaponRating || isArmor && item.armorClass() > currentArmorRating) {
+			if(item.damageDice().toInt() + item.rangedDamageDice().toInt() > currentWeaponRating || isArmor && item.armorClass() > currentArmorRating) {
 				return true;
 			}
 		}
@@ -200,7 +200,7 @@ public class CreatureAI {
 	}
 	
 	protected void useBetterEquipment() {
-		int currentWeaponRating = creature.weapon() == null ? 0 : creature.weapon().damageDice() + creature.weapon().rangedDamageDice();
+		int currentWeaponRating = creature.weapon() == null ? 0 : creature.weapon().damageDice().toInt() + creature.weapon().rangedDamageDice().toInt();
 		double currentArmorRating = creature.armor() == null ? 0 : creature.armor().armorClass();
 		
 		for(Item item : creature.inventory().getItems()) {
@@ -210,7 +210,7 @@ public class CreatureAI {
 			
 			boolean isArmor = item.isArmor();
 			
-			if(item.damageDice() + item.rangedDamageDice() > currentWeaponRating || isArmor && item.armorClass() > currentArmorRating) {
+			if(item.damageDice().toInt() + item.rangedDamageDice().toInt() > currentWeaponRating || isArmor && item.armorClass() > currentArmorRating) {
 				creature.equip(item);
 			}
 		}

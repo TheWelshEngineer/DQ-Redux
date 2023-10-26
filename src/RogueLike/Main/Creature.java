@@ -2364,9 +2364,9 @@ public class Creature implements Cloneable{
 				attackBonus = this.intelligenceModifier();
 			}
 			if(weapon.isVersatile() && shield == null) {
-				amount = (int)(ExtraMaths.diceRoll(weapon.damageDiceLowerBound(), weapon.versatileDamageDice()))+attackBonus+weapon.upgradeLevel();
+				amount = (int)(weapon.versatileDamageDice().roll())+attackBonus+weapon.upgradeLevel();
 			}else {
-				amount = (int)(ExtraMaths.diceRoll(weapon.damageDiceLowerBound(), weapon.damageDice()))+attackBonus+weapon.upgradeLevel();
+				amount = (int)(weapon.damageDice().roll())+attackBonus+weapon.upgradeLevel();
 			}
 		}else {
 			amount = 1+strengthModifier();
@@ -2561,7 +2561,7 @@ public class Creature implements Cloneable{
 			}else if(weapon.usesIntelligence()){
 				attackBonus = this.intelligenceModifier();
 			}
-			amount = (int)(ExtraMaths.diceRoll(weapon.damageDiceLowerBound(), weapon.thrownDamageDice()))+attackBonus+weapon.upgradeLevel();
+			amount = (int)(weapon.thrownDamageDice().roll())+attackBonus+weapon.upgradeLevel();
 		}else {
 			amount = 1+strengthModifier();
 		}
@@ -2700,7 +2700,7 @@ public class Creature implements Cloneable{
 			}else if(weapon.usesIntelligence()){
 				attackBonus = this.intelligenceModifier();
 			}
-			amount = (int)(ExtraMaths.diceRoll(weapon.damageDiceLowerBound(), weapon.rangedDamageDice()))+attackBonus+weapon.upgradeLevel();
+			amount = (int)(weapon.rangedDamageDice().roll())+attackBonus+weapon.upgradeLevel();
 		}else {
 			amount = 1+this.dexterityModifier();
 		}
