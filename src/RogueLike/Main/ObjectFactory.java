@@ -20,6 +20,7 @@ import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AI.SkeletonAI;
 import RogueLike.Main.AI.SlimeAI;
 import RogueLike.Main.AI.SlimelingAI;
+import RogueLike.Main.Items.BasicMeleeWeapon;
 import RogueLike.Main.Items.Dice;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Items.Potion;
@@ -444,7 +445,7 @@ public class ObjectFactory {
 			player.featbook().add(featFactory.pyromancy());
 			player.featbook().add(featFactory.cryomancy());*/
 			
-			Item startWeaponWizard = newClub(0, 0);
+			Item startWeaponWizard = newClub(0, false);
 			player.learnNameQuiet(startWeaponWizard);
 			player.inventory().add(startWeaponWizard);
 			player.equip(startWeaponWizard);
@@ -1308,17 +1309,10 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newClub(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Club", null);
-		item.setDamageDice(Dice.d4);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(10);
-		//item.modifyIsSimple(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(9);
-		if(addToWorld > 0) {
+	public Item newClub(int depth, boolean addToWorld) {
+		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Club", null, Dice.d4, 10, 9);
+		//simple
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1386,39 +1380,25 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newMace(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Mace", null);
-		item.setDamageDice(Dice.d6);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(50);
-		//item.modifyIsMartial(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(13);
-		if(addToWorld > 0) {
+	public Item newMace(int depth, boolean addToWorld) {
+		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Mace", null, Dice.d6, 50, 13);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//martial
 		return item;
 	}
 	
-	public Item newSickle(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Sickle", null);
-		item.setDamageDice(Dice.d4);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(10);
-		//item.modifyIsSimple(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(14);
-		if(addToWorld > 0) {
+	public Item newSickle(int depth, boolean addToWorld) {
+		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Sickle", null, Dice.d4, 10, 14);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//simple
 		return item;
 	}
 	
@@ -1468,20 +1448,13 @@ public class ObjectFactory {
 	
 	//martial weapons
 	public Item newSword(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Shortsword", null);
-		item.setDamageDice(Dice.d6);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		//item.modifyIsMartial(1);
-		item.setBaseGoldValue(100);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(17);
+		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Shortsword", null, Dice.d6, 100, 17);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//martial
 		return item;
 	}
 	
@@ -1628,21 +1601,13 @@ public class ObjectFactory {
 	}
 	
 	public Item newMorningstar(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Morningstar", null);
-		item.setDamageDice(Dice.d8);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(150);
-		//item.modifyIsMartial(1);
-		//item.modifySkillRestriction(3);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(25);
+		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Morningstar", null, Dice.d8, 150, 25);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//martial
 		return item;
 	}
 	
@@ -3494,12 +3459,12 @@ public class ObjectFactory {
 	public Item randomWeapon(int depth, int addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 24)) {
 		case 1: return newDagger(depth, addToWorld);
-		case 2: return newClub(depth, addToWorld);
+		//case 2: return newClub(depth, addToWorld);
 		case 3: return newGreatclub(depth, addToWorld);
 		case 4: return newHandaxe(depth, addToWorld);
 		case 5: return newLightHammer(depth, addToWorld);
-		case 6: return newMace(depth, addToWorld);
-		case 7: return newSickle(depth, addToWorld);
+		//case 6: return newMace(depth, addToWorld);
+		//case 7: return newSickle(depth, addToWorld);
 		case 8: return newStaff(depth, addToWorld);
 		case 9: return newSpear(depth, addToWorld);
 		case 10: return newSword(depth, addToWorld);
@@ -3524,12 +3489,12 @@ public class ObjectFactory {
 	public Item randomMeleeWeapon(int depth, int addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 19)) {
 		case 1: return newDagger(depth, addToWorld);
-		case 2: return newClub(depth, addToWorld);
+		//case 2: return newClub(depth, addToWorld);
 		case 3: return newGreatclub(depth, addToWorld);
 		case 4: return newHandaxe(depth, addToWorld);
 		case 5: return newLightHammer(depth, addToWorld);
-		case 6: return newMace(depth, addToWorld);
-		case 7: return newSickle(depth, addToWorld);
+		//case 6: return newMace(depth, addToWorld);
+		//case 7: return newSickle(depth, addToWorld);
 		case 8: return newStaff(depth, addToWorld);
 		case 9: return newSpear(depth, addToWorld);
 		case 10: return newSword(depth, addToWorld);
