@@ -20,12 +20,23 @@ import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AI.SkeletonAI;
 import RogueLike.Main.AI.SlimeAI;
 import RogueLike.Main.AI.SlimelingAI;
+import RogueLike.Main.Items.ArrowsRangedWeapon;
+import RogueLike.Main.Items.BasicFinesseWeapon;
 import RogueLike.Main.Items.BasicMeleeWeapon;
+import RogueLike.Main.Items.BasicThrownWeapon;
+import RogueLike.Main.Items.BoltsRangedWeapon;
 import RogueLike.Main.Items.Dice;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Items.Potion;
+import RogueLike.Main.Items.PowderRangedWeapon;
 import RogueLike.Main.Items.Ring;
 import RogueLike.Main.Items.Scroll;
+import RogueLike.Main.Items.ThrownFinesseWeapon;
+import RogueLike.Main.Items.ThrownVersatileWeapon;
+import RogueLike.Main.Items.TwoHandedFinesseWeapon;
+import RogueLike.Main.Items.TwoHandedMeleeWeapon;
+import RogueLike.Main.Items.VersatileFinesseWeapon;
+import RogueLike.Main.Items.VersatileMeleeWeapon;
 import RogueLike.Main.Items.Wand;
 import asciiPanel.AsciiPanel;
 
@@ -397,7 +408,7 @@ public class ObjectFactory {
 			player.featbook().add(featFactory.lightArmor());
 			player.featbook().add(featFactory.mediumArmor());*/
 			
-			Item startWeaponWarrior = newLongsword(0, 0);
+			Item startWeaponWarrior = newLongsword(0, false);
 			player.learnNameQuiet(startWeaponWarrior);
 			player.inventory().add(startWeaponWarrior);
 			player.equip(startWeaponWarrior);
@@ -421,7 +432,7 @@ public class ObjectFactory {
 			player.featbook().add(featFactory.lightArmor());
 			player.featbook().add(featFactory.stealth());*/
 			
-			Item startWeaponRogue = newDagger(0, 0);
+			Item startWeaponRogue = newDagger(0, false);
 			player.learnNameQuiet(startWeaponRogue);
 			player.inventory().add(startWeaponRogue);
 			player.equip(startWeaponRogue);
@@ -466,10 +477,10 @@ public class ObjectFactory {
 	
 		
 		player.inventory().add(newRations(0, 0));
-		player.inventory().add(newDagger(0, 0));
-		player.inventory().add(newBow(0, 0));
-		player.inventory().add(newSpear(0, 0));
-		player.inventory().add(newWarhammer(0, 0));
+		player.inventory().add(newDagger(0, false));
+		player.inventory().add(newBow(0, false));
+		player.inventory().add(newSpear(0, false));
+		player.inventory().add(newWarhammer(0, false));
 		//temp
 		//
 		//player.inventory().add(newScrollOfMagicMapping(0, player, false));
@@ -573,7 +584,7 @@ public class ObjectFactory {
 		skeleton.setID(3);
 		new SkeletonAI(skeleton, player, this, this.world);
 		//
-		Item startWeapon = newSword(0, 0);
+		Item startWeapon = newSword(0, false);
 		skeleton.inventory().add(startWeapon);
 		skeleton.equip(startWeapon);
 		//
@@ -598,7 +609,7 @@ public class ObjectFactory {
 		alchemist.setID(4);
 		new AlchemistAI(alchemist, player, this, this.world);
 		//
-		Item startWeapon = newDagger(0, 0);
+		Item startWeapon = newDagger(0, false);
 		Item startArmor = newLeatherArmor(0, 0);
 		alchemist.inventory().add(startWeapon);
 		alchemist.inventory().add(startArmor);
@@ -665,7 +676,7 @@ public class ObjectFactory {
 		Creature ogre = new Creature(world, "Ogre", 'O', AsciiPanel.brightGreen, 40, 20, 10, 16, 12, 7, 8, 20);
 		ogre.setID(7);
 		new OgreAI(ogre, player, this, this.world);
-		Item startWeapon = newGreatsword(0, 0);
+		Item startWeapon = newMaul(0, false);
 		Item startArmor = newHideArmor(0, 0);
 		ogre.inventory().add(startWeapon);
 		ogre.inventory().add(startArmor);
@@ -692,7 +703,7 @@ public class ObjectFactory {
 		Creature gremlin = new Creature(world, "Gremlin", 'g', ExtraColors.cobalt, 17, 10, 10, 8, 14, 10, 8, 20);
 		gremlin.setID(8);
 		new GremlinAI(gremlin, player, this, this.world);
-		Item startWeapon = newBow(0, 0);
+		Item startWeapon = newBow(0, false);
 		gremlin.inventory().add(startWeapon);
 		gremlin.equip(startWeapon);
 		Item startAmmo = newArrows(0, 0);
@@ -718,7 +729,7 @@ public class ObjectFactory {
 		Creature gremlin = new Creature(world, "Gremlin Skirmisher", 'g', ExtraColors.cobalt, 17, 10, 10, 8, 14, 10, 8, 20);
 		gremlin.setID(9);
 		new GremlinSkirmisherAI(gremlin, player, this, this.world);
-		Item startWeapon = newSword(0, 0);
+		Item startWeapon = newSword(0, false);
 		gremlin.inventory().add(startWeapon);
 		gremlin.equip(startWeapon);
 		Item startArmor = newLeatherArmor(0, 0);
@@ -791,7 +802,7 @@ public class ObjectFactory {
 		Creature animatedWeapon = new Creature(world, "Animated Weapon", ')', ExtraColors.lilac, 35, 10, 18, 14, 11, 1, 8, 20);
 		animatedWeapon.setID(12);
 		new SkeletonAI(animatedWeapon, player, this, this.world);
-		Item startWeapon = randomMeleeWeapon(0, 0);
+		Item startWeapon = randomMeleeWeapon(0, true);
 		animatedWeapon.inventory().add(startWeapon);
 		animatedWeapon.equip(startWeapon);
 		animatedWeapon.modifyNoCorpse(1);
@@ -865,7 +876,7 @@ public class ObjectFactory {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature weaponChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(weaponChest, this, this.world);
-		Item startWeapon = randomWeapon(0, 0);
+		Item startWeapon = randomWeapon(0, true);
 		weaponChest.inventory().add(startWeapon);
 		weaponChest.modifyIsContainer(true);
 		weaponChest.modifyNoCorpse(1);
@@ -968,7 +979,7 @@ public class ObjectFactory {
 		Creature mimic = new Creature(world, "Mimic", (char)127, ExtraColors.apple, 60, 10, 12, 17, 12, 5, 8, 20);
 		mimic.setID(13);
 		new MimicAI(mimic, player, this, this.world);
-		Item startItem = randomMimicDrop(0, 0);
+		Item startItem = randomMimicDrop(0, true);
 		if(ExtraMaths.d10() < 4) {
 			upgradeItem(startItem, ExtraMaths.d4());
 		}
@@ -1289,19 +1300,9 @@ public class ObjectFactory {
 	}
 	
 	//weapons
-	public Item newDagger(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Dagger", null);
-		item.setDamageDice(Dice.d4);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsThrownWeapon(true);
-		item.setThrownDamageDice(Dice.d4);
-		item.setIsFinesse(true);
-		item.setBaseGoldValue(20);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(8);
-		if(addToWorld > 0) {
+	public Item newDagger(int depth, boolean addToWorld) {
+		Item item = new ThrownFinesseWeapon(')', AsciiPanel.brightWhite, "Dagger", null, Dice.d4, Dice.d4, 20, 8);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1320,19 +1321,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newGreatclub(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Greatclub", null);
-		item.setDamageDice(Dice.d8);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsTwoHanded(true);
-		item.setBaseGoldValue(20);
-		//item.modifyIsSimple(1);
-		//item.modifySkillRestriction(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(10);
-		if(addToWorld > 0) {
+	public Item newGreatclub(int depth, boolean addToWorld) {
+		Item item = new TwoHandedMeleeWeapon(')', AsciiPanel.brightWhite, "Greatclub", null, Dice.d8, 20, 10);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1340,43 +1331,25 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newHandaxe(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Handaxe", null);
-		item.setDamageDice(Dice.d6);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsThrownWeapon(true);
-		item.setThrownDamageDice(Dice.d6);
-		item.setBaseGoldValue(50);
-		//item.modifyIsSimple(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(11);
-		if(addToWorld > 0) {
+	public Item newHandaxe(int depth, boolean addToWorld) {
+		Item item = new BasicThrownWeapon(')', AsciiPanel.brightWhite, "Handaxe", null, Dice.d6, Dice.d6, 50, 11);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//simple
 		return item;
 	}
 	
-	public Item newLightHammer(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Light Hammer", null);
-		item.setDamageDice(Dice.d4);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsThrownWeapon(true);
-		item.setThrownDamageDice(Dice.d4);
-		item.setBaseGoldValue(20);
-		//item.modifyIsSimple(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(12);
-		if(addToWorld > 0) {
+	public Item newLightHammer(int depth, boolean addToWorld) {
+		Item item = new BasicThrownWeapon(')', AsciiPanel.brightWhite, "Light Hammer", null, Dice.d4, Dice.d4, 20, 12);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//simple
 		return item;
 	}
 	
@@ -1402,54 +1375,32 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newStaff(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Quarterstaff", null);
-		item.setDamageDice(Dice.d6);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsVersatile(true);
-		item.setVersatileDamageDice(Dice.d8);
-		item.setBaseGoldValue(20);
-		//item.modifyIsSimple(1);
-		//item.modifySkillRestriction(2);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(15);
-		if(addToWorld > 0) {
+	public Item newStaff(int depth, boolean addToWorld) {
+		Item item = new VersatileMeleeWeapon(')', AsciiPanel.brightWhite, "Quarterstaff", null, Dice.d6, Dice.d8, 20, 15);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//simple
 		return item;
 	}
 	
-	public Item newSpear(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Spear", null);
-		item.setDamageDice(Dice.d6);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsVersatile(true);
-		item.setVersatileDamageDice(Dice.d8);
-		item.setIsThrownWeapon(true);
-		item.setThrownDamageDice(Dice.d6);
-		item.setBaseGoldValue(10);
-		//item.modifyIsSimple(1);
-		//item.modifySkillRestriction(3);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(16);
-		if(addToWorld > 0) {
+	public Item newSpear(int depth, boolean addToWorld) {
+		Item item = new ThrownVersatileWeapon(')', AsciiPanel.brightWhite, "Spear", null, Dice.d6, Dice.d8, Dice.d6, 10, 16);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//simple
 		return item;
 	}
 	
 	//martial weapons
-	public Item newSword(int depth, int addToWorld) {
+	public Item newSword(int depth, boolean addToWorld) {
 		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Shortsword", null, Dice.d6, 100, 17);
-		if(addToWorld > 0) {
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1458,18 +1409,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newRapier(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Rapier", null);
-		item.setDamageDice(Dice.d8);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsFinesse(true);
-		item.setBaseGoldValue(250);
-		//item.modifySkillRestriction(3);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(18);
-		if(addToWorld > 0) {
+	public Item newRapier(int depth, boolean addToWorld) {
+		Item item = new BasicFinesseWeapon(')', AsciiPanel.brightWhite, "Rapier", null, Dice.d8, 250, 18);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1477,132 +1419,75 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newLongsword(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Longsword", null);
-		item.setDamageDice(Dice.d8);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsVersatile(true);
-		item.setVersatileDamageDice(Dice.d10);
-		item.setBaseGoldValue(150);
-		//item.modifyIsMartial(1);
-		//item.modifySkillRestriction(3);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(19);
-		if(addToWorld > 0) {
+	public Item newLongsword(int depth, boolean addToWorld) {
+		Item item = new VersatileMeleeWeapon(')', AsciiPanel.brightWhite, "Longsword", null, Dice.d8, Dice.d10, 150, 19);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//martial
 		return item;
 	}
 	
-	public Item newBattleaxe(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Battleaxe", null);
-		item.setDamageDice(Dice.d8);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsVersatile(true);
-		item.setVersatileDamageDice(Dice.d10);
-		item.setBaseGoldValue(100);
-		//item.modifyIsMartial(1);
-		//item.modifySkillRestriction(4);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(20);
-		if(addToWorld > 0) {
+	public Item newBattleaxe(int depth, boolean addToWorld) {
+		Item item = new VersatileMeleeWeapon(')', AsciiPanel.brightWhite, "Battleaxe", null, Dice.d8, Dice.d10, 100, 20);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//martial
 		return item;
 	}
 	
-	public Item newWarhammer(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Warhammer", null);
-		item.setDamageDice(Dice.d8);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsVersatile(true);
-		item.setVersatileDamageDice(Dice.d10);
-		item.setBaseGoldValue(150);
-		//item.modifyIsMartial(1);
-		//item.modifySkillRestriction(4);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(21);
-		if(addToWorld > 0) {
+	public Item newWarhammer(int depth, boolean addToWorld) {
+		Item item = new VersatileMeleeWeapon(')', AsciiPanel.brightWhite, "Warhammer", null, Dice.d8, Dice.d10, 150, 21);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//martial
 		return item;
 	}
 	
-	public Item newGreatsword(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Greatsword", null);
-		item.setDamageDice(Dice.d12);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsTwoHanded(true);
-		item.setBaseGoldValue(500);
-		//item.modifyIsMartial(1);
-		//item.modifySkillRestriction(5);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(22);
-		if(addToWorld > 0) {
+	public Item newGreatsword(int depth, boolean addToWorld) {
+		Item item = new TwoHandedMeleeWeapon(')', AsciiPanel.brightWhite, "Greatsword", null, Dice.d12, 500, 22);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//martial
 		return item;
 	}
 	
-	public Item newMaul(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Maul", null);
-		item.setDamageDice(Dice.d12);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsTwoHanded(true);
-		item.setBaseGoldValue(100);
-		//item.modifyIsMartial(1);
-		//item.modifySkillRestriction(4);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(23);
-		if(addToWorld > 0) {
+	public Item newMaul(int depth, boolean addToWorld) {
+		Item item = new TwoHandedMeleeWeapon(')', AsciiPanel.brightWhite, "Maul", null, Dice.d12, 100, 23);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//martial
 		return item;
 	}
 	
-	public Item newHalberd(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Halberd", null);
-		item.setDamageDice(Dice.d10);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsTwoHanded(true);
-		item.setBaseGoldValue(200);
-		//item.modifyIsMartial(1);
-		//item.modifySkillRestriction(4);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(24);
-		if(addToWorld > 0) {
+	public Item newHalberd(int depth, boolean addToWorld) {
+		Item item = new TwoHandedMeleeWeapon(')', AsciiPanel.brightWhite, "Halberd", null, Dice.d10, 200, 24);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//martial
 		return item;
 	}
 	
-	public Item newMorningstar(int depth, int addToWorld) {
+	public Item newMorningstar(int depth, boolean addToWorld) {
 		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Morningstar", null, Dice.d8, 150, 25);
-		if(addToWorld > 0) {
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1611,19 +1496,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newGlaive(int depth, int addToWorld) {
-		Item item = new Item(')', AsciiPanel.brightWhite, "Glaive", null);
-		item.setDamageDice(Dice.d10);
-		item.setIsWeapon(true);
-		item.setIsMeleeWeapon(true);
-		item.setEquippable(true);
-		item.setIsTwoHanded(true);
-		item.setBaseGoldValue(200);
-		//item.modifyIsMartial(1);
-		//item.modifySkillRestriction(4);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(26);
-		if(addToWorld > 0) {
+	public Item newGlaive(int depth, boolean addToWorld) {
+		Item item = new TwoHandedFinesseWeapon(')', AsciiPanel.brightWhite, "Glaive", null, Dice.d10, 200, 26);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1634,19 +1509,18 @@ public class ObjectFactory {
 	
 	
 	//ranged weapons
-	public Item newPistol(int depth, int addToWorld) {
-		Item item = new Item('}', AsciiPanel.brightWhite, "Flintlock Pistol", null);
-		item.setDamageDice(Dice.d1);
-		item.setRangedDamageDice(Dice.d10);
-		item.setIsWeapon(true);
-		item.setIsRangedWeapon(true);
-		item.setUsesPowderAmmunition(true);
-		item.setEquippable(true);
-		item.setIsTwoHanded(true);
-		item.setBaseGoldValue(750);
-		//item.modifySkillRestriction(5);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(27);
+	public Item newPistol(int depth, boolean addToWorld) {
+		Item item = new PowderRangedWeapon('}', AsciiPanel.brightWhite, "Flintlock Pistol", null, Dice.d10, 750, 27);
+		if(addToWorld) {
+			world.addAtEmptyLocation(item, depth);
+		}else {
+			
+		}
+		return item;
+	}
+	
+	public Item newCaliver(int depth, int addToWorld) {
+		Item item = new PowderRangedWeapon('}', AsciiPanel.brightWhite, "Flintlock Caliver", null, Dice.d12, 1000, 28);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
@@ -1655,20 +1529,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newCannon(int depth, int addToWorld) {
-		Item item = new Item('}', AsciiPanel.brightWhite, "Flintlock Caliver", null);
-		item.setDamageDice(Dice.d1);
-		item.setRangedDamageDice(Dice.d12);
-		item.setIsWeapon(true);
-		item.setIsRangedWeapon(true);
-		item.setUsesPowderAmmunition(true);
-		item.setEquippable(true);
-		item.setIsTwoHanded(true);
-		item.setBaseGoldValue(1000);
-		//item.modifySkillRestriction(6);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(28);
-		if(addToWorld > 0) {
+	public Item newBow(int depth, boolean addToWorld) {
+		Item item = new ArrowsRangedWeapon('}', AsciiPanel.brightWhite, "Shortbow", null, Dice.d6, 250, 29);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1676,19 +1539,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newBow(int depth, int addToWorld) {
-		Item item = new Item('}', AsciiPanel.brightWhite, "Shortbow", null);
-		item.setDamageDice(Dice.d1);
-		item.setRangedDamageDice(Dice.d6);
-		item.setIsWeapon(true);
-		item.setIsRangedWeapon(true);
-		item.setUsesArrowAmmunition(true);
-		item.setEquippable(true);
-		item.setIsTwoHanded(true);
-		item.setBaseGoldValue(250);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(29);
-		if(addToWorld > 0) {
+	public Item newLongbow(int depth, boolean addToWorld) {
+		Item item = new ArrowsRangedWeapon('}', AsciiPanel.brightWhite, "Longbow", null, Dice.d8, 500, 30);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1696,20 +1549,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newLongbow(int depth, int addToWorld) {
-		Item item = new Item('}', AsciiPanel.brightWhite, "Longbow", null);
-		item.setDamageDice(Dice.d1);
-		item.setRangedDamageDice(Dice.d8);
-		item.setIsWeapon(true);
-		item.setIsRangedWeapon(true);
-		item.setUsesArrowAmmunition(true);
-		item.setEquippable(true);
-		item.setIsTwoHanded(true);
-		item.setBaseGoldValue(500);
-		//item.modifySkillRestriction(2);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(30);
-		if(addToWorld > 0) {
+	public Item newCrossbow(int depth, boolean addToWorld) {
+		Item item = new BoltsRangedWeapon('}', AsciiPanel.brightWhite, "Light Crossbow", null, Dice.d8, 250, 31);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1717,20 +1559,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newCrossbow(int depth, int addToWorld) {
-		Item item = new Item('}', AsciiPanel.brightWhite, "Light Crossbow", null);
-		item.setDamageDice(Dice.d1);
-		item.setRangedDamageDice(Dice.d8);
-		item.setIsWeapon(true);
-		item.setIsRangedWeapon(true);
-		item.setUsesBoltAmmunition(true);
-		item.setEquippable(true);
-		item.setIsTwoHanded(true);
-		item.setBaseGoldValue(250);
-		//item.modifySkillRestriction(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(31);
-		if(addToWorld > 0) {
+	public Item newHeavyCrossbow(int depth, boolean addToWorld) {
+		Item item = new BoltsRangedWeapon('}', AsciiPanel.brightWhite, "Heavy Crossbow", null, Dice.d10, 500, 32);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1738,24 +1569,25 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newHeavyCrossbow(int depth, int addToWorld) {
-		Item item = new Item('}', AsciiPanel.brightWhite, "Heavy Crossbow", null);
-		item.setDamageDice(Dice.d1);
-		item.setRangedDamageDice(Dice.d10);
-		item.setIsWeapon(true);
-		item.setIsRangedWeapon(true);
-		item.setUsesBoltAmmunition(true);
-		item.setEquippable(true);
-		item.setIsTwoHanded(true);
-		item.setBaseGoldValue(500);
-		//item.modifySkillRestriction(3);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(32);
-		if(addToWorld > 0) {
+	public Item newFalchion(int depth, boolean addToWorld) {
+		Item item = new VersatileFinesseWeapon(')', AsciiPanel.brightWhite, "Falchion", null, Dice.d8, Dice.d10, 150, 85);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
+		//simple
+		return item;
+	}
+	
+	public Item newPairedBlades(int depth, boolean addToWorld) {
+		Item item = new TwoHandedFinesseWeapon(')', AsciiPanel.brightWhite, "Paired Blades", null, Dice.d12, 200, 86);
+		if(addToWorld) {
+			world.addAtEmptyLocation(item, depth);
+		}else {
+			
+		}
+		//simple
 		return item;
 	}
 	
@@ -3456,15 +3288,15 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomWeapon(int depth, int addToWorld) {
+	public Item randomWeapon(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 24)) {
 		case 1: return newDagger(depth, addToWorld);
-		//case 2: return newClub(depth, addToWorld);
+		case 2: return newClub(depth, addToWorld);
 		case 3: return newGreatclub(depth, addToWorld);
 		case 4: return newHandaxe(depth, addToWorld);
 		case 5: return newLightHammer(depth, addToWorld);
-		//case 6: return newMace(depth, addToWorld);
-		//case 7: return newSickle(depth, addToWorld);
+		case 6: return newMace(depth, addToWorld);
+		case 7: return newSickle(depth, addToWorld);
 		case 8: return newStaff(depth, addToWorld);
 		case 9: return newSpear(depth, addToWorld);
 		case 10: return newSword(depth, addToWorld);
@@ -3486,15 +3318,15 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomMeleeWeapon(int depth, int addToWorld) {
+	public Item randomMeleeWeapon(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 19)) {
 		case 1: return newDagger(depth, addToWorld);
-		//case 2: return newClub(depth, addToWorld);
+		case 2: return newClub(depth, addToWorld);
 		case 3: return newGreatclub(depth, addToWorld);
 		case 4: return newHandaxe(depth, addToWorld);
 		case 5: return newLightHammer(depth, addToWorld);
-		//case 6: return newMace(depth, addToWorld);
-		//case 7: return newSickle(depth, addToWorld);
+		case 6: return newMace(depth, addToWorld);
+		case 7: return newSickle(depth, addToWorld);
 		case 8: return newStaff(depth, addToWorld);
 		case 9: return newSpear(depth, addToWorld);
 		case 10: return newSword(depth, addToWorld);
@@ -3538,11 +3370,11 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomMimicDrop(int depth, int addToWorld) {
+	public Item randomMimicDrop(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 3)) {
 		case 1: return randomWeapon(depth, addToWorld);
-		case 2: return randomArmor(depth, addToWorld);
-		case 3: return randomShield(depth, addToWorld);
+		//case 2: return randomArmor(depth, addToWorld);
+		//case 3: return randomShield(depth, addToWorld);
 		default: return randomWeapon(depth, addToWorld);
 		}
 	}

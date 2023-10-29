@@ -325,7 +325,7 @@ public class ChooseAbilityScreen implements Screen{
 	}
 	
 	public String randomFirstName() {
-		switch(ExtraMaths.diceRoll(1, 60)) {
+		switch(ExtraMaths.diceRoll(1, 61)) {
 		case 1: return "Elwyn";
 		case 2: return "Cranog";
 		case 3: return "Rhain";
@@ -386,6 +386,7 @@ public class ChooseAbilityScreen implements Screen{
 		case 58: return "Arn";
 		case 59: return "Maria";
 		case 60: return "Maeve";
+		case 61: return "Violet";
 		default: return "Elwyn";
 		}
 	}
