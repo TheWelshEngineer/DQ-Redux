@@ -481,6 +481,8 @@ public class ObjectFactory {
 		player.inventory().add(newBow(0, false));
 		player.inventory().add(newSpear(0, false));
 		player.inventory().add(newWarhammer(0, false));
+		player.inventory().add(newFalchion(0, false));
+		player.inventory().add(newPairedBlades(0, false));
 		//temp
 		//
 		//player.inventory().add(newScrollOfMagicMapping(0, player, false));
