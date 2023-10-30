@@ -57,23 +57,23 @@ public class Spell {
 	}
 	
 	public void makeEffectElectrified() {
-		effect.modifyIsElectrified(1);
+		effect.setIsElectrified(true);
 	}
 	
 	public void makeEffectParalysis() {
-		effect.modifyIsParalysis(1);
+		effect.setIsParalysis(true);
 	}
 	
 	public void makeEffectCorrosion() {
-		effect.modifyIsCorrosion(1);
+		effect.setIsCorrosion(true);
 	}
 	
 	public void makeEffectPoison() {
-		effect.modifyIsPoison(1);
+		effect.setIsPoison(true);
 	}
 	
 	public void makeEffectConfused() {
-		effect.modifyIsConfused(1);
+		effect.setIsConfused(true);
 	}
 	
 	public Spell(String name, int id, int manaCost, Creature caster, Effect effect, boolean selfCast, boolean tileCast) {

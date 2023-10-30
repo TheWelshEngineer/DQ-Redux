@@ -3235,7 +3235,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isParalysis() > 0) {
+			if(effect.isParalysis()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3247,7 +3247,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isParalysis() > 0) {
+			if(effect.isParalysis()) {
 				stacked.add(effect);
 			}
 		}
@@ -3264,7 +3264,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isCorrosion() > 0) {
+			if(effect.isCorrosion()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3276,7 +3276,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isCorrosion() > 0) {
+			if(effect.isCorrosion()) {
 				stacked.add(effect);
 			}
 		}
@@ -3351,7 +3351,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isElectrified() > 0) {
+			if(effect.isElectrified()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3363,7 +3363,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isElectrified() > 0) {
+			if(effect.isElectrified()) {
 				stacked.add(effect);
 			}
 		}
@@ -3380,7 +3380,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isPoison() > 0) {
+			if(effect.isPoison()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3392,7 +3392,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isPoison() > 0) {
+			if(effect.isPoison()) {
 				stacked.add(effect);
 			}
 		}
@@ -3409,7 +3409,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isInvisible() > 0) {
+			if(effect.isInvisible()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3421,7 +3421,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isInvisible() > 0) {
+			if(effect.isInvisible()) {
 				stacked.add(effect);
 			}
 		}
@@ -3438,7 +3438,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isGiantStrength() > 0) {
+			if(effect.isGiantStrength()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3450,7 +3450,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isGiantStrength() > 0) {
+			if(effect.isGiantStrength()) {
 				stacked.add(effect);
 			}
 		}
@@ -3467,7 +3467,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isBeastForm() > 0) {
+			if(effect.isBeastForm()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3479,7 +3479,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isBeastForm() > 0) {
+			if(effect.isBeastForm()) {
 				stacked.add(effect);
 			}
 		}
@@ -3496,7 +3496,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isMindVision() > 0) {
+			if(effect.isMindVision()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3508,7 +3508,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isMindVision() > 0) {
+			if(effect.isMindVision()) {
 				stacked.add(effect);
 			}
 		}
@@ -3525,7 +3525,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isArcWard() > 0) {
+			if(effect.isArcWard()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3537,7 +3537,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isArcWard() > 0) {
+			if(effect.isArcWard()) {
 				stacked.add(effect);
 			}
 		}
@@ -3554,7 +3554,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isMagmaWard() > 0) {
+			if(effect.isMagmaWard()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3566,7 +3566,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isMagmaWard() > 0) {
+			if(effect.isMagmaWard()) {
 				stacked.add(effect);
 			}
 		}
@@ -3583,7 +3583,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isChillWard() > 0) {
+			if(effect.isChillWard()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3595,7 +3595,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isChillWard() > 0) {
+			if(effect.isChillWard()) {
 				stacked.add(effect);
 			}
 		}
@@ -3612,7 +3612,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isConfused() > 0) {
+			if(effect.isConfused()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3624,7 +3624,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isConfused() > 0) {
+			if(effect.isConfused()) {
 				stacked.add(effect);
 			}
 		}
@@ -3641,7 +3641,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isLevitating() > 0) {
+			if(effect.isLevitating()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3653,7 +3653,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isLevitating() > 0) {
+			if(effect.isLevitating()) {
 				stacked.add(effect);
 			}
 		}
@@ -3670,7 +3670,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isDevoured() > 0) {
+			if(effect.isDevoured()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3682,7 +3682,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isDevoured() > 0) {
+			if(effect.isDevoured()) {
 				stacked.add(effect);
 			}
 		}
@@ -3699,7 +3699,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isBlinded() > 0) {
+			if(effect.isBlinded()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3711,7 +3711,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isBlinded() > 0) {
+			if(effect.isBlinded()) {
 				stacked.add(effect);
 			}
 		}

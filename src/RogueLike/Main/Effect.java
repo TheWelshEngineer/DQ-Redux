@@ -84,148 +84,148 @@ public class Effect implements Cloneable{
 		isFrozen = value;
 	}
 	
-	protected int isElectrified;
-	public int isElectrified() {
+	protected boolean isElectrified;
+	public boolean isElectrified() {
 		return isElectrified;
 	}
 	
-	public void modifyIsElectrified(int amount) {
-		isElectrified += amount;
+	public void setIsElectrified(boolean value) {
+		isElectrified = value;
 	}
 	
-	protected int isParalysis;
-	public int isParalysis() {
+	protected boolean isParalysis;
+	public boolean isParalysis() {
 		return isParalysis;
 	}
 	
-	public void modifyIsParalysis(int amount) {
-		isParalysis += amount;
+	public void setIsParalysis(boolean value) {
+		isParalysis = value;
 	}
 	
-	protected int isCorrosion;
-	public int isCorrosion() {
+	protected boolean isCorrosion;
+	public boolean isCorrosion() {
 		return isCorrosion;
 	}
 	
-	public void modifyIsCorrosion(int amount) {
-		isCorrosion += amount;
+	public void setIsCorrosion(boolean value) {
+		isCorrosion = value;
 	}
 	
-	protected int isPoison;
-	public int isPoison() {
+	protected boolean isPoison;
+	public boolean isPoison() {
 		return isPoison;
 	}
 	
-	public void modifyIsPoison(int amount) {
-		isPoison += amount;
+	public void setIsPoison(boolean value) {
+		isPoison = value;
 	}
 	
-	protected int isInvisible;
-	public int isInvisible() {
+	protected boolean isInvisible;
+	public boolean isInvisible() {
 		return isInvisible;
 	}
 	
-	public void modifyIsInvisible(int amount) {
-		isInvisible += amount;
+	public void setIsInvisible(boolean value) {
+		isInvisible = value;
 	}
 	
-	protected int isGiantStrength;
-	public int isGiantStrength() {
+	protected boolean isGiantStrength;
+	public boolean isGiantStrength() {
 		return isGiantStrength;
 	}
 	
-	public void modifyIsGiantStrength(int amount) {
-		isGiantStrength += amount;
+	public void setIsGiantStrength(boolean value) {
+		isGiantStrength = value;
 	}
 	
-	protected int isBeastForm;
-	public int isBeastForm() {
+	protected boolean isBeastForm;
+	public boolean isBeastForm() {
 		return isBeastForm;
 	}
 	
-	public void modifyIsBeastForm(int amount) {
-		isBeastForm += amount;
+	public void setIsBeastForm(boolean value) {
+		isBeastForm = value;
 	}
 	
-	protected int isMindVision;
-	public int isMindVision() {
+	protected boolean isMindVision;
+	public boolean isMindVision() {
 		return isMindVision;
 	}
 	
-	public void modifyIsMindVision(int amount) {
-		isMindVision += amount;
+	public void setIsMindVision(boolean value) {
+		isMindVision = value;
 	}
 	
-	protected int isArcWard;
-	public int isArcWard() {
+	protected boolean isArcWard;
+	public boolean isArcWard() {
 		return isArcWard;
 	}
 	
-	public void modifyIsArcWard(int amount) {
-		isArcWard += amount;
+	public void setIsArcWard(boolean value) {
+		isArcWard = value;
 	}
 	
-	protected int isMagmaWard;
-	public int isMagmaWard() {
+	protected boolean isMagmaWard;
+	public boolean isMagmaWard() {
 		return isMagmaWard;
 	}
 	
-	public void modifyIsMagmaWard(int amount) {
-		isMagmaWard += amount;
+	public void setIsMagmaWard(boolean value) {
+		isMagmaWard = value;
 	}
 	
-	protected int isChillWard;
-	public int isChillWard() {
+	protected boolean isChillWard;
+	public boolean isChillWard() {
 		return isChillWard;
 	}
 	
-	public void modifyIsChillWard(int amount) {
-		isChillWard += amount;
+	public void setIsChillWard(boolean value) {
+		isChillWard = value;
 	}
 	
-	protected int isTruesight;
-	public int isTruesight() {
+	protected boolean isTruesight;
+	public boolean isTruesight() {
 		return isTruesight;
 	}
 	
-	public void modifyIsTruesight(int amount) {
-		isTruesight += amount;
+	public void setIsTruesight(boolean value) {
+		isTruesight = value;
 	}
 	
-	protected int isConfused;
-	public int isConfused() {
+	protected boolean isConfused;
+	public boolean isConfused() {
 		return isConfused;
 	}
 	
-	public void modifyIsConfused(int amount) {
-		isConfused += amount;
+	public void setIsConfused(boolean value) {
+		isConfused = value;
 	}
 	
-	protected int isLevitating;
-	public int isLevitating() {
+	protected boolean isLevitating;
+	public boolean isLevitating() {
 		return isLevitating;
 	}
 	
-	public void modifyIsLevitating(int amount) {
-		isLevitating += amount;
+	public void setIsLevitating(boolean value) {
+		isLevitating = value;
 	}
 	
-	protected int isDevoured;
-	public int isDevoured() {
+	protected boolean isDevoured;
+	public boolean isDevoured() {
 		return isDevoured;
 	}
 	
-	public void modifyIsDevoured(int amount) {
-		isDevoured += amount;
+	public void setIsDevoured(boolean value) {
+		isDevoured = value;
 	}
 	
-	protected int isBlinded;
-	public int isBlinded() {
+	protected boolean isBlinded;
+	public boolean isBlinded() {
 		return isBlinded;
 	}
 	
-	public void modifyIsBlinded(int amount) {
-		isBlinded += amount;
+	public void setIsBlinded(boolean value) {
+		isBlinded = value;
 	}
 	
 	private Creature other;

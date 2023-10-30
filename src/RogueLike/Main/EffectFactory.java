@@ -63,7 +63,7 @@ public class EffectFactory {
 
 			}
 		};
-		poisoned.modifyIsPoison(1);
+		poisoned.setIsPoison(true);
 		poisoned.setIsNegative(true);
 		return poisoned;
 	}
@@ -79,7 +79,7 @@ public class EffectFactory {
 				creature.doAction("return to normal strength");
 			}
 		};
-		giantStrength.modifyIsGiantStrength(1);
+		giantStrength.setIsGiantStrength(true);
 		return giantStrength;
 	}
 	
@@ -94,7 +94,7 @@ public class EffectFactory {
 				creature.doAction("return to a normal appearance");
 			}
 		};
-		beastForm.modifyIsBeastForm(1);
+		beastForm.setIsBeastForm(true);
 		return beastForm;
 	}
 	
@@ -123,7 +123,7 @@ public class EffectFactory {
 			}
         };
         corroded.setIsNegative(true);
-		corroded.modifyIsCorrosion(1);
+		corroded.setIsCorrosion(true);
 		return corroded;
 	}
 	
@@ -170,7 +170,7 @@ public class EffectFactory {
                 creature.setHasMindVision(false);
             }
         };
-        mindVision.modifyIsMindVision(1);
+        mindVision.setIsMindVision(true);
         return mindVision;
 	}
 	
@@ -199,7 +199,7 @@ public class EffectFactory {
 			}
 		};
 		blinded.setIsNegative(true);
-		blinded.modifyIsBlinded(1);
+		blinded.setIsBlinded(true);
 		return blinded;
 	}
 	
@@ -214,7 +214,7 @@ public class EffectFactory {
                 creature.setIsLevitating(false);
             }
         };
-		levitating.modifyIsLevitating(1);
+		levitating.setIsLevitating(true);
 		return levitating;
 	}
 	
@@ -240,7 +240,7 @@ public class EffectFactory {
 			}
 		};
 		devoured.setIsNegative(true);
-		devoured.modifyIsDevoured(1);
+		devoured.setIsDevoured(true);
 		return devoured;
 	}
 	
@@ -282,7 +282,7 @@ public class EffectFactory {
 			}
 		};
 		confused.setIsNegative(true);
-		confused.modifyIsConfused(1);
+		confused.setIsConfused(true);
 		return confused;
 	}
 	
@@ -380,7 +380,7 @@ public class EffectFactory {
 				creature.doAction("feel the freezing winds fade away");
 			}
         };
-        chillWard.modifyIsChillWard(1);
+        chillWard.setIsChillWard(true);
 		return chillWard;
 	}
 	
@@ -413,7 +413,7 @@ public class EffectFactory {
 				creature.doAction("feel the flaming shield burn out");
 			}
         };
-        magmaWard.modifyIsMagmaWard(1);
+        magmaWard.setIsMagmaWard(true);
 		return magmaWard;
 	}
 	
@@ -506,7 +506,7 @@ public class EffectFactory {
 				creature.doAction("feel the lightning shroud dissipate");
 			}
         };
-        arcWard.modifyIsArcWard(1);
+        arcWard.setIsArcWard(true);
 		return arcWard;
 	}
 	
@@ -530,7 +530,7 @@ public class EffectFactory {
 				
 			}
 		};
-		invisible.modifyIsInvisible(1);
+		invisible.setIsInvisible(true);
 		return invisible;
 	}
 	
@@ -548,7 +548,7 @@ public class EffectFactory {
 			}
 		};
 		paralyzed.setIsNegative(true);
-		paralyzed.modifyIsParalysis(1);
+		paralyzed.setIsParalysis(true);
 		return paralyzed;
 	}
 	
@@ -663,7 +663,7 @@ public class EffectFactory {
 				}
 			}};
 		electrified.setIsNegative(true);
-		electrified.modifyIsElectrified(1);
+		electrified.setIsElectrified(true);
 		return electrified;
 	}
 	
