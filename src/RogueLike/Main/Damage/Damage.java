@@ -1,5 +1,8 @@
 package RogueLike.Main.Damage;
 
+import RogueLike.Main.Effect;
+import RogueLike.Main.EffectFactory;
+
 public class Damage {
 	
 	public static String physical = "Physical";
@@ -17,6 +20,22 @@ public class Damage {
 	}
 	public void setTypeString(String value) {
 		typeString = value;
+	}
+	
+	private Effect statusEffect;
+	public Effect statusEffect() {
+		return statusEffect;
+	}
+	public void setStatusEffect(Effect effect) {
+		statusEffect = effect;
+	}
+	
+	private EffectFactory effectFactory;
+	public EffectFactory effectFactory() {
+		return effectFactory;
+	}
+	public void setEffectFactory(EffectFactory factory) {
+		effectFactory = factory;
 	}
 	
 	private int amount;
@@ -73,11 +92,12 @@ public class Damage {
 		return (typeString.equals(Damage.chaos));
 	}
 	
-	public Damage(int value, boolean healing, boolean silent, String type) {
+	public Damage(int value, boolean healing, boolean silent, String type, EffectFactory factory) {
 		amount = value;
 		isHealing = healing;
 		isSilent = silent;
-		this.typeString = type;
+		typeString = type;
+		effectFactory = factory;
 	}
 	
 
