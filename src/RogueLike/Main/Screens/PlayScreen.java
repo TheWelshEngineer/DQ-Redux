@@ -50,7 +50,7 @@ public class PlayScreen implements Screen{
         			y2 = 46;
         		}
         		char effectIcon = (char)30;
-        		if(effect.isNegative() > 0) {
+        		if(effect.isNegative()) {
         			effectIcon = (char)31;
         		}
         		terminal.write(String.format("%c %s (%d)", effectIcon, effect.name(), effect.duration()), 95, y2);

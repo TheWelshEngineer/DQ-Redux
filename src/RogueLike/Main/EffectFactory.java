@@ -16,7 +16,7 @@ public class EffectFactory {
 	}
 	
 	public Effect maxHealth() {
-		Effect maxHealth = new Effect(1, null, 0, null) {
+		Effect maxHealth = new Effect(1, null, false, null) {
 			public void start(Creature creature) {
 				if(creature.hp() == creature.maxHP()) {
 					return;
@@ -30,7 +30,7 @@ public class EffectFactory {
 	}
 	
 	public Effect maxMana() {
-		Effect maxMana = new Effect(1, null, 0, null) {
+		Effect maxMana = new Effect(1, null, false, null) {
 			public void start(Creature creature) {
 				if(creature.mana() == creature.maxMana()) {
 					return;
@@ -44,7 +44,7 @@ public class EffectFactory {
 	}
 	
 	public Effect poisoned() {
-		Effect poisoned = new Effect(10, "Poisoned", 1, null) { //10
+		Effect poisoned = new Effect(10, "Poisoned", true, null) { //10
 			public void start(Creature creature) {
 				creature.doAction("look unwell");
 				creature.setIsPoisoned(true);
@@ -52,7 +52,7 @@ public class EffectFactory {
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new Damage(ExtraMaths.diceRoll(1, 3), false, false, Damage.poison, getThis());
+				Damage damage = new Damage(Dice.d4.roll(), false, false, Damage.poison, getThis());
 				creature.modifyHP(damage, "Killed by poison");
 			}
 			public void end(Creature creature) {
@@ -64,12 +64,12 @@ public class EffectFactory {
 			}
 		};
 		poisoned.modifyIsPoison(1);
-		poisoned.modifyIsNegative(1);
+		poisoned.setIsNegative(true);
 		return poisoned;
 	}
 	
 	public Effect giantStrength() {
-		Effect giantStrength = new Effect(15, "Giant Strength", 0, null) {
+		Effect giantStrength = new Effect(15, "Giant Strength", false, null) {
 			public void start(Creature creature) {
 				creature.setHasGiantStrength(true);
 				creature.doAction("swell with power");
@@ -84,7 +84,7 @@ public class EffectFactory {
 	}
 	
 	public Effect beastForm() {
-		Effect beastForm = new Effect(15, "Beast Form", 0, null) {
+		Effect beastForm = new Effect(15, "Beast Form", false, null) {
 			public void start(Creature creature) {
 				creature.setHasBeastForm(true);
 				creature.doAction("appear more bestial");
@@ -99,7 +99,7 @@ public class EffectFactory {
 	}
 	
 	public Effect corroded() {
-		Effect corroded = new Effect(5, "Corroded", 1, null) {
+		Effect corroded = new Effect(5, "Corroded", true, null) {
         	public void start(Creature creature) {
         		creature.setIsCorroded(true);
         		//creature.modifyDefenseValue(-6);
@@ -122,13 +122,13 @@ public class EffectFactory {
 				
 			}
         };
-        corroded.modifyIsNegative(1);
+        corroded.setIsNegative(true);
 		corroded.modifyIsCorrosion(1);
 		return corroded;
 	}
 	
 	public Effect firebolt(Creature reference) {
-		Effect firebolt = new Effect(1, "Firebolt", 0, null) {
+		Effect firebolt = new Effect(1, "Firebolt", true, null) {
         	public void start(Creature creature) {
         		creature.notify("The firebolt splashes over your body!");
         		Damage damage = new Damage(Dice.d8.roll()+reference.intelligenceModifier(), false, false, Damage.fire, getThis());
@@ -139,7 +139,7 @@ public class EffectFactory {
 	}
 	
 	public Effect causticVapor() {
-		Effect causticVapor = new Effect(1, null, 0, null) {
+		Effect causticVapor = new Effect(1, null, true, null) {
 			public void start(Creature creature){
                 for (int ox = -2; ox < 3; ox++){
                     for (int oy = -2; oy < 3; oy++){
@@ -161,7 +161,7 @@ public class EffectFactory {
 	}
 	
 	public Effect mindVision() {
-		Effect mindVision = new Effect(5, "Mind Vision", 0, null){
+		Effect mindVision = new Effect(5, "Mind Vision", false, null){
             public void start(Creature creature){
                 creature.doAction("look far off into the distance");
                 creature.setHasMindVision(true);
@@ -175,7 +175,7 @@ public class EffectFactory {
 	}
 	
 	public Effect restoration() {
-		Effect restoration = new Effect(1, null, 0, null) {
+		Effect restoration = new Effect(1, null, false, null) {
 			public void start(Creature creature) {
 				creature.doAction("look refreshed");
 				creature.cureNegativeEffects();
@@ -185,7 +185,7 @@ public class EffectFactory {
 	}
 	
 	public Effect blinded() {
-		Effect blinded = new Effect(5, "Blinded", 0, null) {
+		Effect blinded = new Effect(5, "Blinded", true, null) {
 			public void start(Creature creature) {
 				creature.doAction("become blinded!");
 				creature.setIsBlinded(true);
@@ -198,13 +198,13 @@ public class EffectFactory {
 
 			}
 		};
-		blinded.modifyIsNegative(1);
+		blinded.setIsNegative(true);
 		blinded.modifyIsBlinded(1);
 		return blinded;
 	}
 	
 	public Effect levitating() {
-		Effect levitating = new Effect(5, "Levitating", 0, null){
+		Effect levitating = new Effect(5, "Levitating", false, null){
             public void start(Creature creature){
                 creature.doAction("float into the air!");
                 creature.setIsLevitating(true);
@@ -219,7 +219,7 @@ public class EffectFactory {
 	}
 	
 	public Effect devoured() {
-		Effect devoured = new Effect(5, "Devoured", 1, null) {
+		Effect devoured = new Effect(5, "Devoured", true, null) {
 			public void start(Creature creature) {
 				creature.doAction("writhe in agony");
 				creature.setIsDevoured(true);
@@ -239,13 +239,13 @@ public class EffectFactory {
 
 			}
 		};
-		devoured.modifyIsNegative(1);
+		devoured.setIsNegative(true);
 		devoured.modifyIsDevoured(1);
 		return devoured;
 	}
 	
 	public Effect updateTest(Creature reference) {
-		Effect test = new Effect(25, "Test", 0, null) {
+		Effect test = new Effect(25, "Test", false, null) {
 			public void start(Creature creature) {
 				creature.doAction(String.format("%d %d", reference.x(), reference.y()));
 			}
@@ -262,7 +262,7 @@ public class EffectFactory {
 	}
 	
 	public Effect confused() {
-		Effect confused = new Effect(5, "Confused", 0, null) {
+		Effect confused = new Effect(5, "Confused", true, null) {
 			public void start(Creature creature) {
 				creature.doAction("become confused!");
 				creature.setIsConfused(true);
@@ -281,13 +281,13 @@ public class EffectFactory {
 
 			}
 		};
-		confused.modifyIsNegative(1);
+		confused.setIsNegative(true);
 		confused.modifyIsConfused(1);
 		return confused;
 	}
 	
 	public Effect bounce() {
-		Effect bounce = new Effect(7, null, 0, null){
+		Effect bounce = new Effect(7, null, false, null){
 			public void start(Creature creature){
 				creature.doAction("let out a wave of force!");
 
@@ -353,7 +353,7 @@ public class EffectFactory {
 	}
 	
 	public Effect frostWard() {
-		Effect chillWard = new Effect(5, "Frost Ward", 0, null){
+		Effect chillWard = new Effect(5, "Frost Ward", false, null){
 			public void start(Creature creature){
 				creature.setHasChillWard(true);
 				creature.doAction("become wreathed in freezing air!");
@@ -385,7 +385,7 @@ public class EffectFactory {
 	}
 	
 	public Effect magmaWard() {
-		Effect magmaWard = new Effect(5, "Magma Ward", 0, null){
+		Effect magmaWard = new Effect(5, "Magma Ward", false, null){
 			public void start(Creature creature){
 				creature.setHasMagmaWard(true);
 				creature.doAction("become shielded by flames!");
@@ -418,7 +418,7 @@ public class EffectFactory {
 	}
 	
 	public Effect fireball() {
-		Effect fireball = new Effect(1, null, 0, null) {
+		Effect fireball = new Effect(1, null, true, null) {
 			public void start(Creature creature){
                 for (int ox = -2; ox < 3; ox++){
                     for (int oy = -2; oy < 3; oy++){
@@ -446,7 +446,7 @@ public class EffectFactory {
 	}
 	
 	public Effect overgrow() {
-		Effect overgrow = new Effect(1, null, 0, null){
+		Effect overgrow = new Effect(1, null, true, null){
 			public void start(Creature creature) {
 				
 				for (int ox = -2; ox < 3; ox++){
@@ -471,7 +471,7 @@ public class EffectFactory {
 	}
 	
 	public Effect arcWard() {
-		Effect arcWard = new Effect(5, "Arc Ward", 0, null){
+		Effect arcWard = new Effect(5, "Arc Ward", false, null){
 			public void start(Creature creature){
 				creature.setHasArcWard(true);
 				creature.doAction("become shrouded in lightning!");
@@ -511,7 +511,7 @@ public class EffectFactory {
 	}
 	
 	public Effect invisible() {
-		Effect invisible = new Effect(5, "Invisible", 0, null) {
+		Effect invisible = new Effect(5, "Invisible", false, null) {
 			public void start(Creature creature) {
 				creature.setIsInvisible(true);
 				creature.changeColor(ExtraColors.invisible);
@@ -535,7 +535,7 @@ public class EffectFactory {
 	}
 	
 	public Effect paralyzed() {
-		Effect paralyzed = new Effect(5, "Paralyzed", 1, null) {
+		Effect paralyzed = new Effect(5, "Paralyzed", true, null) {
 			public void start(Creature creature) {
 				creature.setIsParalyzed(true);
 				creature.doAction("seize up!");
@@ -547,13 +547,13 @@ public class EffectFactory {
 				}
 			}
 		};
-		paralyzed.modifyIsNegative(1);
+		paralyzed.setIsNegative(true);
 		paralyzed.modifyIsParalysis(1);
 		return paralyzed;
 	}
 	
 	public Effect blink() {
-		Effect blink = new Effect(8, null, 0, null) {
+		Effect blink = new Effect(8, null, false, null) {
 			public void start(Creature creature){
 	            creature.doAction("fade out");
 	            
@@ -577,7 +577,7 @@ public class EffectFactory {
 	}
 	
 	public Effect pitFall() {
-		Effect pit = new Effect(8, null, 0, null) {
+		Effect pit = new Effect(8, null, true, null) {
 			public void start(Creature creature){
 	            creature.doAction("fall into a pit!");
 	            
@@ -605,14 +605,14 @@ public class EffectFactory {
 	            creature.overrideZ(creature.z+1);
 	            
 	            
-	            creature.doAction("fade in");
+	            creature.doAction("hit the ground");
 	        }
 		};
 		return pit;
 	}
 	
 	public Effect frozen() {
-		Effect frozen = new Effect(5, "Frozen", 1, null){
+		Effect frozen = new Effect(5, "Frozen", true, null){
 			public void start(Creature creature) {
 				
 				double tempAmount = (ExtraMaths.d8());
@@ -634,13 +634,13 @@ public class EffectFactory {
 					creature.doAction("defrost");
 				}
 			}};
-		frozen.modifyIsNegative(1);
-		frozen.modifyIsFrozen(1);
+		frozen.setIsNegative(true);
+		frozen.setIsFrozen(true);
 		return frozen;
 	}
 	
 	public Effect electrified() {
-		Effect electrified = new Effect(5, "Electrified", 1, null) {
+		Effect electrified = new Effect(5, "Electrified", true, null) {
 			public void start(Creature creature) {
 				
 				double tempAmount = (ExtraMaths.d4());
@@ -662,13 +662,13 @@ public class EffectFactory {
 					creature.doAction("recover from a shock");
 				}
 			}};
-		electrified.modifyIsNegative(1);
+		electrified.setIsNegative(true);
 		electrified.modifyIsElectrified(1);
 		return electrified;
 	}
 	
 	public Effect ignited() {
-		Effect ignited = new Effect(5, "Ignited", 1, null) {
+		Effect ignited = new Effect(5, "Ignited", true, null) {
 			public void start(Creature creature) {
 				creature.doAction("burst into flames!");
 				creature.setIsIgnited(true);
@@ -676,24 +676,24 @@ public class EffectFactory {
 			public void update(Creature creature) {
 				super.update(creature);
 				creature.doAction("burn up!");
-				Damage damage = new Damage(ExtraMaths.diceRoll(1, 3), false, false, Damage.fire, getThis());
+				Damage damage = new Damage(Dice.d4.roll(), false, false, Damage.fire, getThis());
 				creature.modifyHP(damage, "Killed by fire magic");
 			}
 			public void end(Creature creature) {
 				creature.setIsIgnited(false);
 				if(creature.isIgnited() == false) {
-					creature.doAction("stop burning");
+					creature.doAction("put the flames out");
 				}
 
 			}};
-		ignited.modifyIsNegative(1);
-		ignited.modifyIsIgnited(1);
+		ignited.setIsNegative(true);
+		ignited.setIsIgnited(true);
 		return ignited;
 		
 	}
 	
 	public Effect magicMissile(Creature player) {
-		Effect missile = new Effect(1, null, 0, player){
+		Effect missile = new Effect(1, null, true, player){
 			public void start(Creature creature) {
 				//int amount = Math.max(0, 7-creature.defenseValue());
 				
@@ -716,7 +716,7 @@ public class EffectFactory {
 	}
 	
 	public Effect iceWall(Creature player) {
-		Effect wall = new Effect(1, null, 0, player){
+		Effect wall = new Effect(1, null, false, player){
 			public void start(Creature creature) {
 				player.notify("You summon a wall of ice!");
 				Creature iceWall = objectFactory.newIceWall(0, player, 0);
@@ -936,7 +936,7 @@ public class EffectFactory {
 	}
 
 	public Effect chainLightning(Creature player) {
-		Effect lightning = new Effect(7, null, 0, player){
+		Effect lightning = new Effect(7, null, true, player){
 			public void start(Creature creature){
 				int playerDC = player.intelligenceSaveDC();
 				int creatureSave = creature.shockSave();
@@ -987,7 +987,7 @@ public class EffectFactory {
 	}
 
 	public Effect flashFreeze(Creature player) {
-		Effect freeze = new Effect(1, null, 0, player) {
+		Effect freeze = new Effect(1, null, true, player) {
 			public void start(Creature creature) {
 				
 				int savingThrow = creature.frostSave();
@@ -1003,7 +1003,7 @@ public class EffectFactory {
 	}
 	
 	public Effect repelWand(Creature player) {
-		Effect repel = new Effect(1, null, 0, player){
+		Effect repel = new Effect(1, null, true, player){
 			public void start(Creature creature) {
 				int px = player.x();
 				int py = player.y();
@@ -1063,7 +1063,7 @@ public class EffectFactory {
 	}
 
 	public Effect enchantScroll() {
-		Effect enchant = new Effect(0, null, 0, null) {
+		Effect enchant = new Effect(0, null, false, null) {
 			public void start(Creature creature) {
 				creature.setIsReadingEnchantment(true);
 			}
@@ -1072,7 +1072,7 @@ public class EffectFactory {
 	}
 	
 	public Effect removeCurseScroll() {
-		Effect remove = new Effect(0, null, 0, null) {
+		Effect remove = new Effect(0, null, false, null) {
 			public void start(Creature creature) {
 				creature.setIsReadingRemoveCurse(true);
 			}
@@ -1081,7 +1081,7 @@ public class EffectFactory {
 	}
 	
 	public Effect upgradeScroll() {
-		Effect upgrade = new Effect(0, null, 0, null) {
+		Effect upgrade = new Effect(0, null, false, null) {
 			public void start(Creature creature) {
 				creature.setIsReadingUpgrade(true);
 			}
@@ -1090,7 +1090,7 @@ public class EffectFactory {
 	}
 	
 	public Effect summonMonstersScroll(Creature player) {
-		Effect summon = new Effect(1, null, 0, null) {
+		Effect summon = new Effect(1, null, false, null) {
 			public void start(Creature creature){
                 for (int ox = -1; ox < 2; ox++){
                     for (int oy = -1; oy < 2; oy++){
@@ -1131,7 +1131,7 @@ public class EffectFactory {
 	}
 
 	public Effect identifyScroll() {
-		Effect identify = new Effect(0, null, 0, null) {
+		Effect identify = new Effect(0, null, false, null) {
 			public void start(Creature creature) {
 				creature.setIsReadingIdentify(true);
 			}
@@ -1140,7 +1140,7 @@ public class EffectFactory {
 	}
 	
 	public Effect magicMappingScroll() {
-		Effect map = new Effect(2, null, 0, null) {
+		Effect map = new Effect(2, null, false, null) {
 			public void start(Creature creature) {
 				creature.setIsReadingMagicMapping(true);
 			}

@@ -45,7 +45,7 @@ public class StatsScreen implements Screen{
         			turns = "turns";
         		}
         		char effectIcon = (char)30;
-        		if(effect.isNegative() > 0) {
+        		if(effect.isNegative()) {
         			effectIcon = (char)31;
         		}
         		terminal.writeCenter(String.format("%c %s: %3d %s remaining", effectIcon, effect.name(), effect.duration(), turns), y++);

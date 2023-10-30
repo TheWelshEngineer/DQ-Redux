@@ -45,15 +45,15 @@ public class Spell {
 	}
 	
 	public void makeEffectNegative() {
-		effect.modifyIsNegative(1);
+		effect.setIsNegative(true);
 	}
 	
 	public void makeEffectIgnited() {
-		effect.modifyIsIgnited(1);
+		effect.setIsIgnited(true);
 	}
 	
 	public void makeEffectFrozen() {
-		effect.modifyIsFrozen(1);
+		effect.setIsFrozen(true);
 	}
 	
 	public void makeEffectElectrified() {

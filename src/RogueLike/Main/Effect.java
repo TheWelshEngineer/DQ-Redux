@@ -57,31 +57,31 @@ public class Effect implements Cloneable{
 		return duration < 1;
 	}
 	
-	protected int isNegative;
-	public int isNegative() {
+	protected boolean isNegative;
+	public boolean isNegative() {
 		return isNegative;
 	}
 	
-	public void modifyIsNegative(int amount) {
-		isNegative += amount;
+	public void setIsNegative(boolean value) {
+		isNegative = value;
 	}
 	
-	protected int isIgnited;
-	public int isIgnited() {
+	protected boolean isIgnited;
+	public boolean isIgnited() {
 		return isIgnited;
 	}
 	
-	public void modifyIsIgnited(int amount) {
-		isIgnited += amount;
+	public void setIsIgnited(boolean value) {
+		isIgnited = value;
 	}
 	
-	protected int isFrozen;
-	public int isFrozen() {
+	protected boolean isFrozen; //TODO continue converting int to boolean
+	public boolean isFrozen() {
 		return isFrozen;
 	}
 	
-	public void modifyIsFrozen(int amount) {
-		isFrozen += amount;
+	public void setIsFrozen(boolean value) {
+		isFrozen = value;
 	}
 	
 	protected int isElectrified;
@@ -233,7 +233,7 @@ public class Effect implements Cloneable{
 		return other;
 	}
 	
-	public Effect(int duration, String name, int negative, Creature other) {
+	public Effect(int duration, String name, boolean negative, Creature other) {
 		this.duration = duration;
 		this.durationBase = duration;
 		this.name = name;

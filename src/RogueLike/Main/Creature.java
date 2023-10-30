@@ -3223,7 +3223,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isNegative() > 0) {
+			if(effect.isNegative()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3293,7 +3293,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isFrozen() > 0) {
+			if(effect.isFrozen()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3305,7 +3305,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isFrozen() > 0) {
+			if(effect.isFrozen()) {
 				stacked.add(effect);
 			}
 		}
@@ -3322,7 +3322,7 @@ public class Creature implements Cloneable{
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isIgnited() > 0) {
+			if(effect.isIgnited()) {
 				effect.end(this);
 				cured.add(effect);
 			}
@@ -3334,7 +3334,7 @@ public class Creature implements Cloneable{
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isIgnited() > 0) {
+			if(effect.isIgnited()) {
 				stacked.add(effect);
 			}
 		}
