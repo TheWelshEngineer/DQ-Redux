@@ -4,8 +4,8 @@ import RogueLike.Main.EffectFactory;
 
 public class AcidDamage extends Damage{
 
-	public AcidDamage(int value, boolean healing, boolean silent, EffectFactory factory) {
-		super(value, healing, silent, Damage.acid, factory);
+	public AcidDamage(int value, boolean silent, EffectFactory factory) {
+		super(value, false, silent, Damage.acid, factory);
 		this.setStatusEffect(factory.corroded());
 	}
 

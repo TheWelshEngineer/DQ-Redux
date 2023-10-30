@@ -4,8 +4,8 @@ import RogueLike.Main.EffectFactory;
 
 public class PoisonDamage extends Damage{
 
-	public PoisonDamage(int value, boolean healing, boolean silent, EffectFactory factory) {
-		super(value, healing, silent, Damage.poison, factory);
+	public PoisonDamage(int value, boolean silent, EffectFactory factory) {
+		super(value, false, silent, Damage.poison, factory);
 		this.setStatusEffect(factory.poisoned());
 	}
 
