@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.AI.CreatureAI;
+import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Items.Item;
 
 public class Creature implements Cloneable{
@@ -1538,7 +1539,7 @@ public class Creature implements Cloneable{
 			xp = 0;
 			doAction("advance to level %d", level);
 			ai.onGainLevel();
-			Damage levelUpHealth = new Damage(level*2, true, false);
+			Damage levelUpHealth = new Damage(level*2, true, false, null);
 			modifyHP(levelUpHealth, "");
 		}
 	}
@@ -2376,46 +2377,46 @@ public class Creature implements Cloneable{
 			amount = 1;
 		}
 
-		Damage damage = new Damage(amount, false, false);
+		Damage damage = new Damage(amount, false, false, Damage.physical);
 		if(this.isPlayer()) {
 			if(weapon != null) {
 				if(weapon.dealsFireDamage() && weapon != null) {
-					damage.setFire(true);
+					damage.setTypeString(Damage.fire);
 				}else if(weapon.dealsFrostDamage() && weapon != null) {
-					damage.setFrost(true);
+					damage.setTypeString(Damage.frost);
 				}else if(weapon.dealsShockDamage() && weapon != null) {
-					damage.setShock(true);
+					damage.setTypeString(Damage.shock);
 				}else if(weapon.dealsPoisonDamage() && weapon != null) {
-					damage.setPoison(true);
+					damage.setTypeString(Damage.poison);
 				}else if(weapon.dealsAcidDamage() && weapon != null) {
-					damage.setAcid(true);
+					damage.setTypeString(Damage.acid);
 				}else if(weapon.dealsMagicDamage() && weapon != null) {
-					damage.setMagic(true);
+					damage.setTypeString(Damage.magic);
 				}else if(weapon.dealsChaosDamage() && weapon != null) {
-					damage.setChaos(true);
+					damage.setTypeString(Damage.chaos);
 				}else {
-					damage.setPhysical(true);
+					damage.setTypeString(Damage.physical);
 				}
 			}else {
-				damage.setPhysical(true);
+				damage.setTypeString(Damage.physical);
 			}
 		}else {
 			if(this.dealsFireDamage()) {
-				damage.setFire(true);
+				damage.setTypeString(Damage.fire);
 			}else if(this.dealsFrostDamage()) {
-				damage.setFrost(true);
+				damage.setTypeString(Damage.frost);
 			}else if(this.dealsShockDamage()) {
-				damage.setShock(true);
+				damage.setTypeString(Damage.shock);
 			}else if(this.dealsPoisonDamage()) {
-				damage.setPoison(true);
+				damage.setTypeString(Damage.poison);
 			}else if(this.dealsAcidDamage()) {
-				damage.setAcid(true);
+				damage.setTypeString(Damage.acid);
 			}else if(this.dealsMagicDamage()) {
-				damage.setMagic(true);
+				damage.setTypeString(Damage.magic);
 			}else if(this.dealsChaosDamage()) {
-				damage.setChaos(true);
+				damage.setTypeString(Damage.chaos);
 			}else {
-				damage.setPhysical(true);
+				damage.setTypeString(Damage.physical);
 			}
 		}
 
@@ -2570,42 +2571,42 @@ public class Creature implements Cloneable{
 			amount = 1;
 		}
 
-		Damage damage = new Damage(amount, false, false);
+		Damage damage = new Damage(amount, false, false, Damage.physical);
 		if(this.isPlayer()) {
 			if(item.dealsFireDamage() && weapon != null) {
-				damage.setFire(true);
+				damage.setTypeString(Damage.fire);
 			}else if(item.dealsFrostDamage() && weapon != null) {
-				damage.setFrost(true);
+				damage.setTypeString(Damage.frost);
 			}else if(item.dealsShockDamage() && weapon != null) {
-				damage.setShock(true);
+				damage.setTypeString(Damage.shock);
 			}else if(item.dealsPoisonDamage() && weapon != null) {
-				damage.setPoison(true);
+				damage.setTypeString(Damage.poison);
 			}else if(item.dealsAcidDamage() && weapon != null) {
-				damage.setAcid(true);
+				damage.setTypeString(Damage.acid);
 			}else if(item.dealsMagicDamage() && weapon != null) {
-				damage.setMagic(true);
+				damage.setTypeString(Damage.magic);
 			}else if(item.dealsChaosDamage() && weapon != null) {
-				damage.setChaos(true);
+				damage.setTypeString(Damage.chaos);
 			}else {
-				damage.setPhysical(true);
+				damage.setTypeString(Damage.physical);
 			}
 		}else {
 			if(this.dealsFireDamage()) {
-				damage.setFire(true);
+				damage.setTypeString(Damage.fire);
 			}else if(this.dealsFrostDamage()) {
-				damage.setFrost(true);
+				damage.setTypeString(Damage.frost);
 			}else if(this.dealsShockDamage()) {
-				damage.setShock(true);
+				damage.setTypeString(Damage.shock);
 			}else if(this.dealsPoisonDamage()) {
-				damage.setPoison(true);
+				damage.setTypeString(Damage.poison);
 			}else if(this.dealsAcidDamage()) {
-				damage.setAcid(true);
+				damage.setTypeString(Damage.acid);
 			}else if(this.dealsMagicDamage()) {
-				damage.setMagic(true);
+				damage.setTypeString(Damage.magic);
 			}else if(this.dealsChaosDamage()) {
-				damage.setChaos(true);
+				damage.setTypeString(Damage.chaos);
 			}else {
-				damage.setPhysical(true);
+				damage.setTypeString(Damage.physical);
 			}
 		}
 
@@ -2720,42 +2721,42 @@ public class Creature implements Cloneable{
 			amount = 1;
 		}
 
-		Damage damage = new Damage(amount, false, false);
+		Damage damage = new Damage(amount, false, false, Damage.physical);
 		if(this.isPlayer()) {
 			if(weapon.dealsFireDamage() && weapon != null) {
-				damage.setFire(true);
+				damage.setTypeString(Damage.fire);
 			}else if(weapon.dealsFrostDamage() && weapon != null) {
-				damage.setFrost(true);
+				damage.setTypeString(Damage.frost);
 			}else if(weapon.dealsShockDamage() && weapon != null) {
-				damage.setShock(true);
+				damage.setTypeString(Damage.shock);
 			}else if(weapon.dealsPoisonDamage() && weapon != null) {
-				damage.setPoison(true);
+				damage.setTypeString(Damage.poison);
 			}else if(weapon.dealsAcidDamage() && weapon != null) {
-				damage.setAcid(true);
+				damage.setTypeString(Damage.acid);
 			}else if(weapon.dealsMagicDamage() && weapon != null) {
-				damage.setMagic(true);
+				damage.setTypeString(Damage.magic);
 			}else if(weapon.dealsChaosDamage() && weapon != null) {
-				damage.setChaos(true);
+				damage.setTypeString(Damage.chaos);
 			}else {
-				damage.setPhysical(true);
+				damage.setTypeString(Damage.physical);
 			}
 		}else {
 			if(this.dealsFireDamage()) {
-				damage.setFire(true);
+				damage.setTypeString(Damage.fire);
 			}else if(this.dealsFrostDamage()) {
-				damage.setFrost(true);
+				damage.setTypeString(Damage.frost);
 			}else if(this.dealsShockDamage()) {
-				damage.setShock(true);
+				damage.setTypeString(Damage.shock);
 			}else if(this.dealsPoisonDamage()) {
-				damage.setPoison(true);
+				damage.setTypeString(Damage.poison);
 			}else if(this.dealsAcidDamage()) {
-				damage.setAcid(true);
+				damage.setTypeString(Damage.acid);
 			}else if(this.dealsMagicDamage()) {
-				damage.setMagic(true);
+				damage.setTypeString(Damage.magic);
 			}else if(this.dealsChaosDamage()) {
-				damage.setChaos(true);
+				damage.setTypeString(Damage.chaos);
 			}else {
-				damage.setPhysical(true);
+				damage.setTypeString(Damage.physical);
 			}
 		}
 
@@ -3735,13 +3736,13 @@ public class Creature implements Cloneable{
 			//maxFood = maxFood + food / 2;
 			food = maxFood;
 			notify("You can't believe you can eat that much!");
-			Damage damage = new Damage(2, false, false);
+			Damage damage = new Damage(2, false, false, Damage.physical);
 			modifyHP(damage, "Killed by overeating");
 
 		}else if(food < 0 && isPlayer()) {
 			notify("You are starving!");
 			food = 0;
-			Damage damage = new Damage((int)(maxHP / 10), false, false);
+			Damage damage = new Damage((int)(maxHP / 10), false, false, Damage.physical);
 			modifyHP(damage, "Starved to death");
 		}
 
@@ -3938,7 +3939,7 @@ public class Creature implements Cloneable{
 		regenHPCooldown -= 1;
 		if(regenHPCooldown <= 0) {
 			int regen = (int)Math.ceil(this.maxHP()*this.healthRegenPercentage());
-			Damage amount = new Damage(regen, true, true);
+			Damage amount = new Damage(regen, true, true, null);
 			modifyHP(amount, "");
 			modifyFood(-1);
 			regenHPCooldown = 3;
@@ -3949,7 +3950,7 @@ public class Creature implements Cloneable{
 		regenManaCooldown -= 1;
 		if(regenManaCooldown <= 0) {
 			int regen = (int)Math.ceil(this.maxHP()*this.manaRegenPercentage());
-			Damage amount = new Damage(regen, true, true);
+			Damage amount = new Damage(regen, true, true, null);
 			modifyMana(amount);
 			regenManaCooldown = 3;
 		}
@@ -4054,7 +4055,7 @@ public class Creature implements Cloneable{
 			if(other != null) {
 				doAction("point and mutter at nothing in particular...");
 				if(spell.manaCost() > 0) {
-					Damage amount = new Damage(spell.manaCost(), false, false);
+					Damage amount = new Damage(spell.manaCost(), false, false, null);
 					modifyMana(amount);
 				}
 				return;
@@ -4074,7 +4075,7 @@ public class Creature implements Cloneable{
 			//
 			//other.setLastHit(this);
 			if(spell.manaCost() > 0) {
-				Damage amount = new Damage(spell.manaCost(), false, false);
+				Damage amount = new Damage(spell.manaCost(), false, false, null);
 				modifyMana(amount);
 			}
 			if(item != null) {
@@ -4097,7 +4098,7 @@ public class Creature implements Cloneable{
 			if(other == null || other.isContainer() == true || other.isDisguised() == true) {
 				doAction("point and mutter at nothing in particular...");
 				if(spell.manaCost() > 0) {
-					Damage amount = new Damage(spell.manaCost(), false, false);
+					Damage amount = new Damage(spell.manaCost(), false, false, null);
 					modifyMana(amount);
 				}
 				return;
@@ -4112,7 +4113,7 @@ public class Creature implements Cloneable{
 			other.addEffect(spell.effect());
 			//other.setLastHit(this);
 			if(spell.manaCost() > 0) {
-				Damage amount = new Damage(spell.manaCost(), false, false);
+				Damage amount = new Damage(spell.manaCost(), false, false, null);
 				modifyMana(amount);
 			}
 			if(item != null) {

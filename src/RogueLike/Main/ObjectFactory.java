@@ -23,6 +23,7 @@ import RogueLike.Main.AI.SlimelingAI;
 import RogueLike.Main.Items.ArrowsRangedWeapon;
 import RogueLike.Main.Items.BasicFinesseWeapon;
 import RogueLike.Main.Items.BasicMeleeWeapon;
+import RogueLike.Main.Items.BasicShield;
 import RogueLike.Main.Items.BasicThrownWeapon;
 import RogueLike.Main.Items.BoltsRangedWeapon;
 import RogueLike.Main.Items.Dice;
@@ -36,6 +37,7 @@ import RogueLike.Main.Items.Ring;
 import RogueLike.Main.Items.Scroll;
 import RogueLike.Main.Items.ThrownFinesseWeapon;
 import RogueLike.Main.Items.ThrownVersatileWeapon;
+import RogueLike.Main.Items.TowerShield;
 import RogueLike.Main.Items.TwoHandedFinesseWeapon;
 import RogueLike.Main.Items.TwoHandedMeleeWeapon;
 import RogueLike.Main.Items.VersatileFinesseWeapon;
@@ -419,7 +421,7 @@ public class ObjectFactory {
 			player.learnNameQuiet(startArmorWarrior);
 			player.inventory().add(startArmorWarrior);
 			player.equip(startArmorWarrior);
-			Item startShieldWarrior = newKiteShield(0, 0);
+			Item startShieldWarrior = newKiteShield(0, false);
 			player.learnNameQuiet(startShieldWarrior);
 			player.inventory().add(startShieldWarrior);
 			player.equip(startShieldWarrior);
@@ -893,7 +895,7 @@ public class ObjectFactory {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature shieldChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(shieldChest, this, this.world);
-		Item startShield = randomShield(0, 0);
+		Item startShield = randomShield(0, false);
 		shieldChest.inventory().add(startShield);
 		shieldChest.modifyIsContainer(true);
 		shieldChest.setHasNoCorpse(true);
@@ -1696,18 +1698,9 @@ public class ObjectFactory {
 	}
 	
 	//shields
-	public Item newRoundShield(int depth, int addToWorld) {
-		Item item = new Item((char)232, AsciiPanel.brightWhite, "Round Shield", null);
-		//item.modifyDefenseValue(0.15);
-		item.setIsShield(true);
-		item.setIsLightArmor(true);
-		item.modifyArmorClass(2);
-		item.setEquippable(true);
-		item.setBaseGoldValue(100);
-		//item.modifyIsFortitude(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(45);
-		if(addToWorld > 0) {
+	public Item newRoundShield(int depth, boolean addToWorld) {
+		Item item = new BasicShield((char)232, AsciiPanel.brightWhite, "Round Shield", null, 2, 100, 45);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1715,19 +1708,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newKiteShield(int depth, int addToWorld) {
-		Item item = new Item((char)232, AsciiPanel.brightWhite, "Kite Shield", null);
-		//item.modifyDefenseValue(0.3);
-		item.setIsShield(true);
-		item.setIsMediumArmor(true);
-		item.modifyArmorClass(3);
-		item.setEquippable(true);
-		item.setBaseGoldValue(200);
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(3);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(46);
-		if(addToWorld > 0) {
+	public Item newKiteShield(int depth, boolean addToWorld) {
+		Item item = new BasicShield((char)232, AsciiPanel.brightWhite, "Kite Shield", null, 3, 200, 46);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1735,20 +1718,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newTowerShield(int depth, int addToWorld) {
-		Item item = new Item((char)232, AsciiPanel.brightWhite, "Tower Shield", null);
-		//item.modifyDefenseValue(0.45);
-		item.setIsShield(true);
-		item.setIsHeavyArmor(true);
-		item.setIsTowerShield(true);
-		item.modifyArmorClass(4);
-		item.setEquippable(true);
-		item.setBaseGoldValue(400);
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(6);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(47);
-		if(addToWorld > 0) {
+	public Item newTowerShield(int depth, boolean addToWorld) {
+		Item item = new TowerShield((char)232, AsciiPanel.brightWhite, "Tower Shield", null, 4, 400, 47);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -3154,7 +3126,7 @@ public class ObjectFactory {
 	}
 	
 	public Item randomWeapon(int depth, boolean addToWorld) {
-		switch(ExtraMaths.diceRoll(1, 24)) {
+		switch(ExtraMaths.diceRoll(1, 26)) {
 		case 1: return newDagger(depth, addToWorld);
 		case 2: return newClub(depth, addToWorld);
 		case 3: return newGreatclub(depth, addToWorld);
@@ -3179,12 +3151,14 @@ public class ObjectFactory {
 		case 22: return newLongbow(depth, addToWorld);
 		case 23: return newCrossbow(depth, addToWorld);
 		case 24: return newHeavyCrossbow(depth, addToWorld);
+		case 25: return newFalchion(depth, addToWorld);
+		case 26: return newPairedBlades(depth, addToWorld);
 		default: return newDagger(depth, addToWorld);
 		}
 	}
 	
 	public Item randomMeleeWeapon(int depth, boolean addToWorld) {
-		switch(ExtraMaths.diceRoll(1, 19)) {
+		switch(ExtraMaths.diceRoll(1, 21)) {
 		case 1: return newDagger(depth, addToWorld);
 		case 2: return newClub(depth, addToWorld);
 		case 3: return newGreatclub(depth, addToWorld);
@@ -3204,6 +3178,8 @@ public class ObjectFactory {
 		case 17: return newHalberd(depth, addToWorld);
 		case 18: return newMorningstar(depth, addToWorld);
 		case 19: return newGlaive(depth, addToWorld);
+		case 20: return newFalchion(depth, addToWorld);
+		case 21: return newPairedBlades(depth, addToWorld);
 		default: return newDagger(depth, addToWorld);
 		}
 	}
@@ -3226,7 +3202,7 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomShield(int depth, int addToWorld) {
+	public Item randomShield(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 3)) {
 		case 1: return newRoundShield(depth, addToWorld);
 		case 2: return newTowerShield(depth, addToWorld);
@@ -3238,8 +3214,8 @@ public class ObjectFactory {
 	public Item randomMimicDrop(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 3)) {
 		case 1: return randomWeapon(depth, addToWorld);
-		//case 2: return randomArmor(depth, addToWorld);
-		//case 3: return randomShield(depth, addToWorld);
+		case 2: return randomArmor(depth, addToWorld);
+		case 3: return randomShield(depth, addToWorld);
 		default: return randomWeapon(depth, addToWorld);
 		}
 	}
@@ -3310,8 +3286,8 @@ public class ObjectFactory {
 		switch(ExtraMaths.diceRoll(1, 4)) {
 		case 1: return randomPositivePotion(depth, addToWorld);
 		case 2: return randomScroll(depth, player, addToWorld);
-		//case 3: return randomWand(depth, player, addToWorld);
-		//case 4: return randomRing(depth, addToWorld);
+		case 3: return randomWand(depth, player, addToWorld);
+		case 4: return randomRing(depth, addToWorld);
 		default: return randomPositivePotion(depth, addToWorld);
 		}
 	}
@@ -3342,7 +3318,7 @@ public class ObjectFactory {
 	
 	public Item randomRing(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		//case 1: return newStrengthRing(depth, addToWorld);
+		case 1: return newStrengthRing(depth, addToWorld);
 		case 2: return newFireDefenseRing(depth, addToWorld);
 		case 3: return newIceDefenseRing(depth, addToWorld);
 		case 4: return newShockDefenseRing(depth, addToWorld);
@@ -3358,7 +3334,7 @@ public class ObjectFactory {
 	
 	public Item selectRing(int depth, boolean addToWorld, int ringIndex) {
 		switch(ringIndex) {
-		//case 1: return newStrengthRing(depth, addToWorld);
+		case 1: return newStrengthRing(depth, addToWorld);
 		case 2: return newFireDefenseRing(depth, addToWorld);
 		case 3: return newIceDefenseRing(depth, addToWorld);
 		case 4: return newShockDefenseRing(depth, addToWorld);

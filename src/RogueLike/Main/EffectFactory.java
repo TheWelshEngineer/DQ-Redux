@@ -1,5 +1,8 @@
 package RogueLike.Main;
 
+import RogueLike.Main.Damage.Damage;
+import RogueLike.Main.Items.Dice;
+
 public class EffectFactory {
 	
 	public ObjectFactory objectFactory;
@@ -14,7 +17,7 @@ public class EffectFactory {
 				if(creature.hp() == creature.maxHP()) {
 					return;
 				}
-				Damage damage = new Damage((creature.maxHP() - creature.hp()), true, false);
+				Damage damage = new Damage((creature.maxHP() - creature.hp()), true, false, null);
 				creature.modifyHP(damage, "");
 				//creature.doAction("look healthier");
 			}
@@ -28,7 +31,7 @@ public class EffectFactory {
 				if(creature.mana() == creature.maxMana()) {
 					return;
 				}
-				Damage damage = new Damage((creature.maxMana() - creature.mana()), true, false);
+				Damage damage = new Damage((creature.maxMana() - creature.mana()), true, false, null);
 				creature.modifyMana(damage);
 				creature.doAction("look energised");
 			}
@@ -45,8 +48,7 @@ public class EffectFactory {
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new Damage(ExtraMaths.diceRoll(1, 3), false, false);
-				damage.setPoison(true);
+				Damage damage = new Damage(ExtraMaths.diceRoll(1, 3), false, false, Damage.poison);
 				creature.modifyHP(damage, "Killed by poison");
 			}
 			public void end(Creature creature) {
@@ -102,8 +104,7 @@ public class EffectFactory {
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new Damage(ExtraMaths.diceRoll(1, 3), false, false);
-				damage.setAcid(true);
+				Damage damage = new Damage(ExtraMaths.diceRoll(1, 3), false, false, Damage.acid);
 				creature.modifyHP(damage, "Killed by caustic gas");
 				creature.notify("The vapour burns you!");	
 			}
@@ -126,8 +127,7 @@ public class EffectFactory {
 		Effect firebolt = new Effect(1, "Firebolt", 0, null) {
         	public void start(Creature creature) {
         		creature.notify("The firebolt splashes over your body!");
-        		Damage damage = new Damage(8+reference.intelligenceModifier(), false, false);
-				damage.setFire(true);
+        		Damage damage = new Damage(Dice.d8.roll()+reference.intelligenceModifier(), false, false, Damage.fire);
 				creature.modifyHP(damage, "Killed by fire magic");
 			}
         };
@@ -222,10 +222,9 @@ public class EffectFactory {
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new Damage(ExtraMaths.diceRoll(1, 3), false, false);
-				damage.setChaos(true);
+				Damage damage = new Damage(ExtraMaths.diceRoll(1, 3), false, false, Damage.chaos);
 				creature.modifyHP(damage, "Killed by a devouring curse");
-				Damage damage2 = new Damage(ExtraMaths.diceRoll(1, 3), false, false);
+				Damage damage2 = new Damage(ExtraMaths.diceRoll(1, 3), false, false, null);
 				creature.modifyMana(damage2);
 			}
 			public void end(Creature creature) {
@@ -491,8 +490,7 @@ public class EffectFactory {
         				
                         target.doAction("get a shock!");
                         target.setLastHit(creature);
-                        Damage damage = new Damage(amountChain, false, false);
-                        damage.setShock(true);
+                        Damage damage = new Damage(amountChain, false, false, Damage.shock);
         				target.modifyHP(damage, "Killed by lightning magic");
         				target.modifyMana(damage);
 
@@ -621,8 +619,7 @@ public class EffectFactory {
 				
 				creature.setIsFrozen(true);
 				creature.doAction("freeze solid!");
-				Damage damage = new Damage(amount, false, false);
-				damage.setFrost(true);
+				Damage damage = new Damage(amount, false, false, Damage.frost);
 				creature.modifyHP(damage, "Killed by icy magic");
 
 			}
@@ -647,13 +644,12 @@ public class EffectFactory {
 				
 				creature.setIsShocked(true);
 				creature.doAction("get a shock!");
-				Damage damage = new Damage(amount, false, false);
-				damage.setShock(true);
+				Damage damage = new Damage(amount, false, false, Damage.shock);
 				creature.modifyHP(damage, "Killed by shocking magic");
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new Damage(1, false, false);
+				Damage damage = new Damage(1, false, false, null);
 				creature.modifyMana(damage);
 			}
 			public void end(Creature creature) {
@@ -676,8 +672,7 @@ public class EffectFactory {
 			public void update(Creature creature) {
 				super.update(creature);
 				creature.doAction("burn up!");
-				Damage damage = new Damage(ExtraMaths.diceRoll(1, 3), false, false);
-				damage.setFire(true);
+				Damage damage = new Damage(ExtraMaths.diceRoll(1, 3), false, false, Damage.fire);
 				creature.modifyHP(damage, "Killed by fire magic");
 			}
 			public void end(Creature creature) {
@@ -704,7 +699,7 @@ public class EffectFactory {
 				if(attackRoll >= creature.armorClass()) {
 					creature.doAction("get hit with magic missiles!");
 					creature.setLastHit(player);
-					Damage damage = new Damage(amount, false, false);
+					Damage damage = new Damage(amount, false, false, Damage.magic);
 					creature.modifyHP(damage, "Killed by magic");
 				}else {
 					creature.doAction("resist the spell!");
@@ -957,8 +952,7 @@ public class EffectFactory {
 				}
 				creature.doAction("get a shock!");
 				creature.setLastHit(player);
-				Damage damage = new Damage(amount, false, false);
-				damage.setShock(true);
+				Damage damage = new Damage(amount, false, false, Damage.shock);
 				creature.modifyHP(damage, "Killed by lightning magic");
 				
 				if(saved == false) {
@@ -977,8 +971,7 @@ public class EffectFactory {
 	        				
 	                        target.doAction("get a shock!");
 	                        target.setLastHit(player);
-	                        Damage damageChain = new Damage(amountChain, false, false);
-	                        damage.setShock(true);
+	                        Damage damageChain = new Damage(amountChain, false, false, Damage.shock);
 	        				target.modifyHP(damageChain, "Killed by lightning magic");
 	
 	                    }
@@ -1017,8 +1010,7 @@ public class EffectFactory {
 					
 					double tempAmount = (ExtraMaths.diceRoll(1, 15));
 					int amount = (int) Math.round(tempAmount);
-					Damage damage = new Damage(amount, false, false);
-					damage.setPhysical(true);
+					Damage damage = new Damage(amount, false, false, Damage.physical);
 					creature.doAction("get crushed!");
 					creature.modifyHP(damage, "Killed by kinetic energy");
 				}else {

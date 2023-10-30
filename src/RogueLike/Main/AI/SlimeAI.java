@@ -1,9 +1,9 @@
 package RogueLike.Main.AI;
 
 import RogueLike.Main.Creature;
-import RogueLike.Main.Damage;
 import RogueLike.Main.ObjectFactory;
 import RogueLike.Main.World;
+import RogueLike.Main.Damage.Damage;
 
 public class SlimeAI extends CreatureAI{
 	private Creature player;
@@ -66,7 +66,7 @@ public class SlimeAI extends CreatureAI{
                     }
                 }
                 creature.doAction("split into slimelings!");
-                Damage damage = new Damage(creature.hp(), false, true);
+                Damage damage = new Damage(creature.hp(), false, true, Damage.physical);
                 creature.modifyHP(damage, "");
 	            
 			}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
