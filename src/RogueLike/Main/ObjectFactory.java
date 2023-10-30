@@ -26,7 +26,10 @@ import RogueLike.Main.Items.BasicMeleeWeapon;
 import RogueLike.Main.Items.BasicThrownWeapon;
 import RogueLike.Main.Items.BoltsRangedWeapon;
 import RogueLike.Main.Items.Dice;
+import RogueLike.Main.Items.HeavyArmor;
 import RogueLike.Main.Items.Item;
+import RogueLike.Main.Items.LightArmor;
+import RogueLike.Main.Items.MediumArmor;
 import RogueLike.Main.Items.Potion;
 import RogueLike.Main.Items.PowderRangedWeapon;
 import RogueLike.Main.Items.Ring;
@@ -412,7 +415,7 @@ public class ObjectFactory {
 			player.learnNameQuiet(startWeaponWarrior);
 			player.inventory().add(startWeaponWarrior);
 			player.equip(startWeaponWarrior);
-			Item startArmorWarrior = newChainmailArmor(0, 0);
+			Item startArmorWarrior = newChainmailArmor(0, false);
 			player.learnNameQuiet(startArmorWarrior);
 			player.inventory().add(startArmorWarrior);
 			player.equip(startArmorWarrior);
@@ -436,7 +439,7 @@ public class ObjectFactory {
 			player.learnNameQuiet(startWeaponRogue);
 			player.inventory().add(startWeaponRogue);
 			player.equip(startWeaponRogue);
-			Item startArmorRogue = newPaddedArmor(0, 0);
+			Item startArmorRogue = newPaddedArmor(0, false);
 			player.learnNameQuiet(startArmorRogue);
 			player.inventory().add(startArmorRogue);
 			player.equip(startArmorRogue);
@@ -460,11 +463,11 @@ public class ObjectFactory {
 			player.learnNameQuiet(startWeaponWizard);
 			player.inventory().add(startWeaponWizard);
 			player.equip(startWeaponWizard);
-			Item startArmorWizard = newPaddedArmor(0, 0);
+			Item startArmorWizard = newPaddedArmor(0, false);
 			player.learnNameQuiet(startArmorWizard);
 			player.inventory().add(startArmorWizard);
 			player.equip(startArmorWizard);
-			Item startWandMage = newMissileWand(0, player, true);
+			Item startWandMage = newMissileWand(0, player, false);
 			player.learnNameQuiet(startWandMage);
 			player.inventory().add(startWandMage);
 
@@ -590,7 +593,7 @@ public class ObjectFactory {
 		new AlchemistAI(alchemist, player, this, this.world);
 		//
 		Item startWeapon = newDagger(0, false);
-		Item startArmor = newLeatherArmor(0, 0);
+		Item startArmor = newLeatherArmor(0, false);
 		alchemist.inventory().add(startWeapon);
 		alchemist.inventory().add(startArmor);
 		alchemist.equip(startWeapon);
@@ -657,7 +660,7 @@ public class ObjectFactory {
 		ogre.setID(7);
 		new OgreAI(ogre, player, this, this.world);
 		Item startWeapon = newMaul(0, false);
-		Item startArmor = newHideArmor(0, 0);
+		Item startArmor = newHideArmor(0, false);
 		ogre.inventory().add(startWeapon);
 		ogre.inventory().add(startArmor);
 		ogre.equip(startWeapon);
@@ -712,7 +715,7 @@ public class ObjectFactory {
 		Item startWeapon = newSword(0, false);
 		gremlin.inventory().add(startWeapon);
 		gremlin.equip(startWeapon);
-		Item startArmor = newLeatherArmor(0, 0);
+		Item startArmor = newLeatherArmor(0, false);
 		gremlin.inventory().add(startArmor);
 		gremlin.equip(startArmor);
 		gremlin.creatureTypes.add("Gremlin");
@@ -758,7 +761,7 @@ public class ObjectFactory {
 		Creature animatedArmor = new Creature(world, "Animated Armor", (char)203, ExtraColors.lilac, 35, 10, 18, 14, 11, 1, 8, 20);
 		animatedArmor.setID(11);
 		new SkeletonAI(animatedArmor, player, this, this.world);
-		Item startArmor = randomArmor(0, 0);
+		Item startArmor = randomArmor(0, false);
 		animatedArmor.inventory().add(startArmor);
 		animatedArmor.equip(startArmor);
 		animatedArmor.setHasNoCorpse(true);
@@ -873,7 +876,7 @@ public class ObjectFactory {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature armorChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(armorChest, this, this.world);
-		Item startArmor = randomArmor(0, 0);
+		Item startArmor = randomArmor(0, false);
 		armorChest.inventory().add(startArmor);
 		armorChest.modifyIsContainer(true);
 		armorChest.setHasNoCorpse(true);
@@ -1572,18 +1575,9 @@ public class ObjectFactory {
 	}
 	
 	//armor
-	public Item newPaddedArmor(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Padded Armor", null);
-		//item.modifyDefenseValue(0.1);
-		item.setIsArmor(true);
-		item.modifyArmorClass(11);
-		item.setIsLightArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(50);
-		//item.modifyIsFortitude(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(33);
-		if(addToWorld > 0) {
+	public Item newPaddedArmor(int depth, boolean addToWorld) {
+		Item item = new LightArmor((char)203, AsciiPanel.brightWhite, "Padded Armor", null, 11, 50, 33);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1591,18 +1585,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newLeatherArmor(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Leather Armor", null);
-		//item.modifyDefenseValue(0.2);
-		item.setIsArmor(true);
-		item.modifyArmorClass(11);
-		item.setIsLightArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(100);
-		//item.modifyIsFortitude(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(34);
-		if(addToWorld > 0) {
+	public Item newLeatherArmor(int depth, boolean addToWorld) {
+		Item item = new LightArmor((char)203, AsciiPanel.brightWhite, "Leather Armor", null, 11, 100, 34);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1610,19 +1595,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newStuddedLeatherArmor(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Studded Leather Armor", null);
-		//item.modifyDefenseValue(0.2);
-		item.setIsArmor(true);
-		item.modifyArmorClass(12);
-		item.setIsLightArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(450);
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(2);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(35);
-		if(addToWorld > 0) {
+	public Item newStuddedLeatherArmor(int depth, boolean addToWorld) {
+		Item item = new LightArmor((char)203, AsciiPanel.brightWhite, "Studded Leather Armor", null, 12, 450, 35);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1630,19 +1605,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newHideArmor(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Hide Armor", null);
-		//item.modifyDefenseValue(0.2);
-		item.setIsArmor(true);
-		item.modifyArmorClass(12);
-		item.setIsMediumArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(100);
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(1);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(36);
-		if(addToWorld > 0) {
+	public Item newHideArmor(int depth, boolean addToWorld) {
+		Item item = new MediumArmor((char)203, AsciiPanel.brightWhite, "Hide Armor", null, 12, 100, 36);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1650,19 +1615,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newChainmailArmor(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Chainmail Tunic", null);
-		//item.modifyDefenseValue(0.3);
-		item.setIsArmor(true);
-		item.modifyArmorClass(13);
-		item.setIsMediumArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(500);
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(3);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(37);
-		if(addToWorld > 0) {
+	public Item newChainmailArmor(int depth, boolean addToWorld) {
+		Item item = new MediumArmor((char)203, AsciiPanel.brightWhite, "Chainmail Tunic", null, 13, 500, 37);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1670,19 +1625,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newScaleArmor(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Scale Mail", null);
-		//item.modifyDefenseValue(0.4);
-		item.setIsArmor(true);
-		item.modifyArmorClass(14);
-		item.setIsMediumArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(500);
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(4);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(38);
-		if(addToWorld > 0) {
+	public Item newScaleArmor(int depth, boolean addToWorld) {
+		Item item = new MediumArmor((char)203, AsciiPanel.brightWhite, "Scale Mail", null, 14, 500, 38);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1690,19 +1635,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newBreastplate(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Breastplate", null);
-		//item.modifyDefenseValue(0.4);
-		item.setIsArmor(true);
-		item.modifyArmorClass(14);
-		item.setIsMediumArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(800);
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(4);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(39);
-		if(addToWorld > 0) {
+	public Item newBreastplate(int depth, boolean addToWorld) {
+		Item item = new MediumArmor((char)203, AsciiPanel.brightWhite, "Breastplate", null, 14, 800, 39);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1710,19 +1645,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newHalfPlate(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Half-plate Armor", null);
-		//item.modifyDefenseValue(0.4);
-		item.setIsArmor(true);
-		item.modifyArmorClass(15);
-		item.setIsMediumArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(1500);
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(5);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(40);
-		if(addToWorld > 0) {
+	public Item newHalfPlate(int depth, boolean addToWorld) {
+		Item item = new MediumArmor((char)203, AsciiPanel.brightWhite, "Half-Plate Armor", null, 15, 1500, 40);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1730,39 +1655,19 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newPlateArmor(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Plate Armor", null);
-		//item.modifyDefenseValue(0.5);
-		item.setIsArmor(true);
-		item.modifyArmorClass(18);
-		item.setIsHeavyArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(3000);
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(8);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(41);
-		if(addToWorld > 0) {
+	public Item newPlateArmor(int depth, boolean addToWorld) {
+		Item item = new HeavyArmor((char)203, AsciiPanel.brightWhite, "Plate Armor", null, 18, 3000, 41);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
 		}
 		return item;
 	}
-	//adjust elemental damage on traps/wands, merchants
-	public Item newRingMail(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Ringmail Armor", null);
-		//item.modifyDefenseValue(0.5);
-		item.setIsArmor(true);
-		item.modifyArmorClass(14);
-		item.setIsHeavyArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(300);
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(3);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(42);
-		if(addToWorld > 0) {
+	//TODO adjust elemental damage on traps/wands, merchants
+	public Item newRingMail(int depth, boolean addToWorld) {
+		Item item = new HeavyArmor((char)203, AsciiPanel.brightWhite, "Ringmail Armor", null, 14, 300, 42);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1770,19 +1675,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newChainArmor(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Chainmail Armor", null);
-		//item.modifyDefenseValue(0.5);
-		item.setIsArmor(true);
-		item.modifyArmorClass(16);
-		item.setIsHeavyArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(750);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(5);
-		item.setID(43);
-		if(addToWorld > 0) {
+	public Item newChainArmor(int depth, boolean addToWorld) {
+		Item item = new HeavyArmor((char)203, AsciiPanel.brightWhite, "Chainmail Armor", null, 16, 750, 43);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -1790,19 +1685,9 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newSplintArmor(int depth, int addToWorld) {
-		Item item = new Item((char)203, AsciiPanel.brightWhite, "Splint Armor", null);
-		//item.modifyDefenseValue(0.5);
-		item.setIsArmor(true);
-		item.modifyArmorClass(17);
-		item.setIsHeavyArmor(true);
-		item.setEquippable(true);
-		item.setBaseGoldValue(1200);
-		item.setCurrentGoldValue(item.baseGoldValue());
-		//item.modifyIsFortitude(1);
-		//item.modifySkillRestriction(7);
-		item.setID(44);
-		if(addToWorld > 0) {
+	public Item newSplintArmor(int depth, boolean addToWorld) {
+		Item item = new HeavyArmor((char)203, AsciiPanel.brightWhite, "Splint Armor", null, 17, 1200, 44);
+		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
 			
@@ -3323,7 +3208,7 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomArmor(int depth, int addToWorld) {
+	public Item randomArmor(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 12)) {
 		case 1: return newPaddedArmor(depth, addToWorld);
 		case 2: return newLeatherArmor(depth, addToWorld);
