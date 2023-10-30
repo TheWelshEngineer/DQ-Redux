@@ -11,7 +11,7 @@ public class BatAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if((creature.paralyzed() == true)) {
+		if((creature.isParalyzed() == true)) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -20,7 +20,7 @@ public class BatAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.frozen() == true)) {
+		if((creature.isFrozen() == true)) {
 			creature.doAction("struggle to move!");
 			return;
 

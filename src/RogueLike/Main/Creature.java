@@ -366,10 +366,10 @@ public class Creature implements Cloneable{
 			returnArmorClass += shield.upgradeLevel();
 		}
 
-		if(giantStrength() == true) {
+		if(hasGiantStrength() == true) {
 			returnArmorClass += 4;
 		}
-		if(corroded() == true) {
+		if(isCorroded() == true) {
 			returnArmorClass -= 2;
 		}
 		if(returnArmorClass < 0) {
@@ -397,10 +397,10 @@ public class Creature implements Cloneable{
 	private int visionRadius;
 	public int visionRadius() {
 		int returnVisionRadius = visionRadius + (weapon == null ? 0 : weapon.visionRadius()) + (armor == null ? 0 : armor.visionRadius()) + (ring == null ? 0 : ring.visionRadius()) + (shield == null ? 0 : shield.visionRadius());
-		if(blinded() == true) {
+		if(isBlinded() == true) {
 			returnVisionRadius = 2;
 		}
-		if(beastForm() == true) {
+		if(hasBeastForm() == true) {
 			returnVisionRadius += 4;
 		}
 		return returnVisionRadius; 
@@ -413,7 +413,7 @@ public class Creature implements Cloneable{
 	private int strength;
 	public int strength() {
 		int returnStrength = strength + (weapon == null ? 0 : weapon.strength()) + (armor == null ? 0 : armor.strength()) + (ring == null ? 0 : ring.strength()) + (shield == null ? 0 : shield.strength());
-		if(giantStrength() == true) {
+		if(hasGiantStrength() == true) {
 			returnStrength += 4;
 		}
 		//strength = returnStrength;
@@ -445,7 +445,7 @@ public class Creature implements Cloneable{
 	public int dexterity() {
 		int returnDexterity = dexterity + (weapon == null ? 0 : weapon.dexterity()) + (armor == null ? 0 : armor.dexterity()) + (ring == null ? 0 : ring.dexterity()) + (shield == null ? 0 : shield.dexterity());
 		//dexterity = returnDexterity;
-		if(beastForm() == true) {
+		if(hasBeastForm() == true) {
 			returnDexterity += 4;
 		}
 		return returnDexterity; 
@@ -518,7 +518,7 @@ public class Creature implements Cloneable{
 	private int saveBonusFire;
 	public int saveBonusFire() {
 		int returnSaveBonusFire = saveBonusFire + (weapon == null ? 0 : weapon.saveBonusFire()) + (armor == null ? 0 : armor.saveBonusFire()) + (ring == null ? 0 : ring.saveBonusFire()) + (shield == null ? 0 : shield.saveBonusFire());
-		if(magmaWard() == true) {
+		if(hasMagmaWard() == true) {
 			returnSaveBonusFire += 5;
 		}
 		return returnSaveBonusFire;
@@ -536,7 +536,7 @@ public class Creature implements Cloneable{
 	private int saveBonusFrost;
 	public int saveBonusFrost() {
 		int returnSaveBonusFrost = saveBonusFrost + (weapon == null ? 0 : weapon.saveBonusFrost()) + (armor == null ? 0 : armor.saveBonusFrost()) + (ring == null ? 0 : ring.saveBonusFrost()) + (shield == null ? 0 : shield.saveBonusFrost());
-		if(chillWard() == true) {
+		if(hasChillWard() == true) {
 			returnSaveBonusFrost += 5;
 		}
 		return returnSaveBonusFrost;
@@ -554,7 +554,7 @@ public class Creature implements Cloneable{
 	private int saveBonusShock;
 	public int saveBonusShock() {
 		int returnSaveBonusShock = saveBonusShock + (weapon == null ? 0 : weapon.saveBonusShock()) + (armor == null ? 0 : armor.saveBonusShock()) + (ring == null ? 0 : ring.saveBonusShock()) + (shield == null ? 0 : shield.saveBonusShock());
-		if(arcWard() == true) {
+		if(hasArcWard() == true) {
 			returnSaveBonusShock += 5;
 		}
 		return returnSaveBonusShock;
@@ -1776,180 +1776,180 @@ public class Creature implements Cloneable{
 		return effects;
 	}
 
-	private boolean mindVision;
-	public boolean mindVision() {
-		return mindVision;
+	private boolean hasMindVision;
+	public boolean hasMindVision() {
+		return hasMindVision;
 	}
-	public void modifyMindVision(boolean value) {
-		mindVision = value;
+	public void setHasMindVision(boolean value) {
+		hasMindVision = value;
 	}
 
-	private boolean giantStrength;
-	public boolean giantStrength() {
-		return giantStrength;
+	private boolean hasGiantStrength;
+	public boolean hasGiantStrength() {
+		return hasGiantStrength;
 	}
-	public void modifyGiantStrength(boolean value) {
-		giantStrength = value;
+	public void setHasGiantStrength(boolean value) {
+		hasGiantStrength = value;
 	}
 	
-	private boolean beastForm;
-	public boolean beastForm() {
-		return beastForm;
+	private boolean hasBeastForm;
+	public boolean hasBeastForm() {
+		return hasBeastForm;
 	}
-	public void modifyBeastForm(boolean value) {
-		beastForm = value;
-	}
-
-	private boolean magmaWard;
-	public boolean magmaWard() {
-		return magmaWard;
-	}
-	public void modifyMagmaWard(boolean value) {
-		magmaWard = value;
+	public void setHasBeastForm(boolean value) {
+		hasBeastForm = value;
 	}
 
-	private boolean arcWard;
-	public boolean arcWard() {
-		return arcWard;
+	private boolean hasMagmaWard;
+	public boolean hasMagmaWard() {
+		return hasMagmaWard;
 	}
-	public void modifyArcWard(boolean value) {
-		arcWard = value;
-	}
-
-	private boolean chillWard;
-	public boolean chillWard() {
-		return chillWard;
-	}
-	public void modifyChillWard(boolean value) {
-		chillWard = value;
+	public void setHasMagmaWard(boolean value) {
+		hasMagmaWard = value;
 	}
 
-	private boolean invisible;
-	public boolean invisible() {
-		return invisible;
+	private boolean hasArcWard;
+	public boolean hasArcWard() {
+		return hasArcWard;
 	}
-	public void modifyInvisible(boolean value) {
-		invisible = value;
+	public void setHasArcWard(boolean value) {
+		hasArcWard = value;
 	}
 
-	private int stayVisible;
-	public int stayVisible() {
+	private boolean hasChillWard;
+	public boolean hasChillWard() {
+		return hasChillWard;
+	}
+	public void setHasChillWard(boolean value) {
+		hasChillWard = value;
+	}
+
+	private boolean isInvisible;
+	public boolean isInvisible() {
+		return isInvisible;
+	}
+	public void setIsInvisible(boolean value) {
+		isInvisible = value;
+	}
+
+	private boolean stayVisible;
+	public boolean stayVisible() {
 		return stayVisible;
 	}
-	public void modifyStayVisible(int amount) {
-		stayVisible += amount;
+	public void modifyStayVisible(boolean value) {
+		stayVisible = value;
 	}
 
-	private int flying;
-	public int flying() {
-		return flying;
+	private boolean isFlying;
+	public boolean isFlying() {
+		return isFlying;
 	}
-	public void modifyFlying(int amount) {
-		flying += amount;
-	}
-
-	private boolean frozen;
-	public boolean frozen() {
-		return frozen;
-	}
-	public void modifyFrozen(boolean value) {
-		frozen = value;
+	public void setIsFlying(boolean value) {
+		isFlying = value;
 	}
 
-	private boolean paralyzed;
-	public boolean paralyzed() {
-		return paralyzed;
+	private boolean isFrozen;
+	public boolean isFrozen() {
+		return isFrozen;
 	}
-	public void modifyParalyzed(boolean value) {
-		paralyzed = value;
-	}
-
-	private boolean corroded;
-	public boolean corroded() {
-		return corroded;
-	}
-	public void modifyCorroded(boolean value) {
-		corroded = value;
+	public void setIsFrozen(boolean value) {
+		isFrozen = value;
 	}
 
-	private boolean shocked;
-	public boolean shocked() {
-		return shocked;
+	private boolean isParalyzed;
+	public boolean isParalyzed() {
+		return isParalyzed;
 	}
-	public void modifyShocked(boolean value) {
-		shocked = value;
-	}
-
-	private boolean poisoned;
-	public boolean poisoned() {
-		return poisoned;
-	}
-	public void modifyPoisoned(boolean value) {
-		poisoned = value;
+	public void setIsParalyzed(boolean value) {
+		isParalyzed = value;
 	}
 
-	private boolean ignited;
-	public boolean ignited() {
-		return ignited;
+	private boolean isCorroded;
+	public boolean isCorroded() {
+		return isCorroded;
 	}
-	public void modifyIgnited(boolean value) {
-		ignited = value;
-	}
-
-	private boolean asleep;
-	public boolean asleep() {
-		return asleep;
-	}
-	public void modifyAsleep(boolean value) {
-		asleep = value;
+	public void setIsCorroded(boolean value) {
+		isCorroded = value;
 	}
 
-	private boolean truesight;
-	public boolean truesight() {
-		return truesight;
+	private boolean isShocked;
+	public boolean isShocked() {
+		return isShocked;
 	}
-	public void modifyTruesight(boolean value) {
-		truesight = value;
-	}
-
-	private boolean confused;
-	public boolean confused() {
-		return confused;
-	}
-	public void modifyConfused(boolean value) {
-		confused = value;
+	public void setIsShocked(boolean value) {
+		isShocked = value;
 	}
 
-	private boolean levitating;
-	public boolean levitating() {
-		return levitating;
+	private boolean isPoisoned;
+	public boolean isPoisoned() {
+		return isPoisoned;
 	}
-	public void modifyLevitating(boolean value) {
-		levitating = value;
-	}
-
-	private boolean devoured;
-	public boolean devoured() {
-		return devoured;
-	}
-	public void modifyDevoured(boolean value) {
-		devoured = value;
+	public void setIsPoisoned(boolean value) {
+		isPoisoned = value;
 	}
 
-	private boolean blinded;
-	public boolean blinded() {
-		return blinded;
+	private boolean isIgnited;
+	public boolean isIgnited() {
+		return isIgnited;
 	}
-	public void modifyBlinded(boolean value) {
-		blinded = value;
+	public void setIsIgnited(boolean value) {
+		isIgnited = value;
 	}
 
-	private boolean disguised;
-	public boolean disguised() {
-		return disguised;
+	private boolean isAsleep;
+	public boolean isAsleep() {
+		return isAsleep;
 	}
-	public void modifyDisguised(boolean value) {
-		disguised = value;
+	public void setIsAsleep(boolean value) {
+		isAsleep = value;
+	}
+
+	private boolean hasTruesight;
+	public boolean hasTruesight() {
+		return hasTruesight;
+	}
+	public void setHasTruesight(boolean value) {
+		hasTruesight = value;
+	}
+
+	private boolean isConfused;
+	public boolean isConfused() {
+		return isConfused;
+	}
+	public void setIsConfused(boolean value) {
+		isConfused = value;
+	}
+
+	private boolean isLevitating;
+	public boolean isLevitating() {
+		return isLevitating;
+	}
+	public void setIsLevitating(boolean value) {
+		isLevitating = value;
+	}
+
+	private boolean isDevoured;
+	public boolean isDevoured() {
+		return isDevoured;
+	}
+	public void setIsDevoured(boolean value) {
+		isDevoured = value;
+	}
+
+	private boolean isBlinded;
+	public boolean isBlinded() {
+		return isBlinded;
+	}
+	public void setIsBlinded(boolean value) {
+		isBlinded = value;
+	}
+
+	private boolean isDisguised;
+	public boolean isDisguised() {
+		return isDisguised;
+	}
+	public void setIsDisguised(boolean value) {
+		isDisguised = value;
 	}
 
 	private boolean isContainer;
@@ -1985,67 +1985,67 @@ public class Creature implements Cloneable{
 		score += amount;
 	}
 
-	private int magicMapping;
-	public int magicMapping() {
-		return magicMapping;
+	private boolean isReadingMagicMapping;
+	public boolean isReadingMagicMapping() {
+		return isReadingMagicMapping;
 	}
 
-	public void modifyMagicMapping(int amount) {
-		magicMapping += amount;
+	public void setIsReadingMagicMapping(boolean value) {
+		isReadingMagicMapping = value;
 	}
 
-	private int identify;
-	public int identify() {
-		return identify;
+	private boolean isReadingIdentify;
+	public boolean isReadingIdentify() {
+		return isReadingIdentify;
 	}
 
-	public void modifyIdentify(int amount) {
-		identify += amount;
+	public void setIsReadingIdentify(boolean value) {
+		isReadingIdentify = value;
 	}
 
-	private int upgrade;
-	public int upgrade() {
-		return upgrade;
+	private boolean isReadingUpgrade;
+	public boolean isReadingUpgrade() {
+		return isReadingUpgrade;
 	}
 
-	public void modifyUpgrade(int amount) {
-		upgrade += amount;
+	public void setIsReadingUpgrade(boolean value) {
+		isReadingUpgrade = value;
 	}
 
-	private int removeCurse;
-	public int removeCurse() {
-		return removeCurse;
+	private boolean isReadingRemoveCurse;
+	public boolean isReadingRemoveCurse() {
+		return isReadingRemoveCurse;
 	}
 
-	public void modifyRemoveCurse(int amount) {
-		removeCurse += amount;
+	public void setIsReadingRemoveCurse(boolean value) {
+		isReadingRemoveCurse = value;
 	}
 
-	private int enchant;
-	public int enchant() {
-		return enchant;
+	private boolean isReadingEnchantment;
+	public boolean isReadingEnchantment() {
+		return isReadingEnchantment;
 	}
 
-	public void modifyEnchant(int amount) {
-		enchant += amount;
+	public void setIsReadingEnchantment(boolean value) {
+		isReadingEnchantment = value;
 	}
 
-	private int noCorpse;
-	public int noCorpse() {
-		return noCorpse;
+	private boolean hasNoCorpse;
+	public boolean hasNoCorpse() {
+		return hasNoCorpse;
 	}
 
-	public void modifyNoCorpse(int amount) {
-		noCorpse += amount;
+	public void setHasNoCorpse(boolean value) {
+		hasNoCorpse = value;
 	}
 
-	private int noXP;
-	public int noXP() {
-		return noXP;
+	private boolean hasNoXP;
+	public boolean hasNoXP() {
+		return hasNoXP;
 	}
 
-	public void modifyNoXP(int amount) {
-		noXP += amount;
+	public void setHasNoXP(boolean value) {
+		hasNoXP = value;
 	}
 
 	private int attributePoints;
@@ -2190,7 +2190,7 @@ public class Creature implements Cloneable{
 
 	//item id max
 	public int maxItemIndex() {
-		return 83;
+		return 86;
 	}
 
 	public Creature(World world, String name, char glyph, Color color, int maxHP, int maxMana, int armorclass, int strength, int dexterity, int intelligence, int visionRadius, int inventorySize) {
@@ -2220,10 +2220,10 @@ public class Creature implements Cloneable{
 		this.effects = new ArrayList<Effect>();
 		this.score = 0;
 		this.maxDepth = z;
-		this.mindVision = false;
-		this.flying = 0;
-		this.frozen = false;
-		this.paralyzed = false;
+		this.hasMindVision = false;
+		this.isFlying = false;
+		this.isFrozen = false;
+		this.isParalyzed = false;
 		this.strength = strength;
 		this.dexterity = dexterity;
 		this.intelligence = intelligence;
@@ -2269,7 +2269,7 @@ public class Creature implements Cloneable{
 		//if(mx == 0 && my == 0 && mz == 0) {
 		//return;
 		//}
-		if((paralyzed == true) && isPlayer()) {
+		if((isParalyzed == true) && isPlayer()) {
 			if((int)(Math.random()*10) < 8) {
 				doAction("struggle to move!");
 				return;
@@ -2278,13 +2278,13 @@ public class Creature implements Cloneable{
 			}
 		}
 
-		if((frozen == true) && isPlayer()) {
+		if((isFrozen == true) && isPlayer()) {
 			doAction("struggle to move!");
 			return;
 
 		}
 
-		if(confused == true) {
+		if(isConfused == true) {
 			mx = ExtraMaths.diceRoll(-1, 1);
 			my = ExtraMaths.diceRoll(-1, 1);
 		}
@@ -2331,24 +2331,24 @@ public class Creature implements Cloneable{
 	}
 
 	public void reveal() {
-		modifyDisguised(false);
+		setIsDisguised(false);
 		changeName(defaultName());
 		changeColor(defaultColor());
 		doAction("reveal itself!");
 	}
 
 	public void hide() {
-		modifyDisguised(true);
+		setIsDisguised(true);
 		changeName("Chest");
 		changeColor(ExtraColors.mimic);
 	}
 
 	public void sleep() {
-		modifyAsleep(true);
+		setIsAsleep(true);
 	}
 
 	public void wakeup() {
-		modifyAsleep(false);
+		setIsAsleep(false);
 	}
 
 	public void attack(Creature other) {
@@ -2441,11 +2441,11 @@ public class Creature implements Cloneable{
 			attackRoll = this.strengthRoll();
 		}
 
-		if(this.invisible() == true) {
+		if(this.isInvisible() == true) {
 			attackRoll += 5;
 		}
 
-		if(other.invisible() == true) {
+		if(other.isInvisible() == true) {
 			attackRoll -= 5;
 		}
 
@@ -2490,11 +2490,11 @@ public class Creature implements Cloneable{
 				}
 			}
 
-			if(other.asleep() == true) {
-				other.modifyAsleep(false);
+			if(other.isAsleep() == true) {
+				other.setIsAsleep(false);
 				other.doAction("wake up");
 			}
-			if(other.disguised() == true) {
+			if(other.isDisguised() == true) {
 				other.reveal();
 			}
 		}else {
@@ -2502,7 +2502,7 @@ public class Creature implements Cloneable{
 		}
 
 
-		if(this.invisible() == true) {
+		if(this.isInvisible() == true) {
 			this.cureInvisible();
 		}
 
@@ -2533,7 +2533,7 @@ public class Creature implements Cloneable{
 			Item item2 = (Item) item.clone();
 			item.modifyStackAmount(-1);
 			item2.setStackAmount(1);
-			if(c != null && c.isContainer() == false && c.disguised() == false) {
+			if(c != null && c.isContainer() == false && c.isDisguised() == false) {
 				throwAttack(item2, c);
 			}else {
 				doAction("throw a %s", nameOf(item2));
@@ -2624,11 +2624,11 @@ public class Creature implements Cloneable{
 			attackRoll = this.strengthRoll();
 		}
 
-		if(this.invisible() == true) {
+		if(this.isInvisible() == true) {
 			attackRoll += 5;
 		}
 
-		if(other.invisible() == true) {
+		if(other.isInvisible() == true) {
 			attackRoll -= 5;
 		}
 
@@ -2667,18 +2667,18 @@ public class Creature implements Cloneable{
 
 				}
 			}
-			if(other.asleep() == true) {
-				other.modifyAsleep(false);
+			if(other.isAsleep() == true) {
+				other.setIsAsleep(false);
 				other.doAction("wake up");
 			}
-			if(other.disguised() == true) {
+			if(other.isDisguised() == true) {
 				other.reveal();
 			}
 		}else {
 			doAction("fail to hit the %s", other.name);
 		}
 
-		if(this.invisible() == true) {
+		if(this.isInvisible() == true) {
 			this.cureInvisible();
 		}
 
@@ -2759,11 +2759,11 @@ public class Creature implements Cloneable{
 			}
 		}
 
-		if(this.invisible() == true) {
+		if(this.isInvisible() == true) {
 			attackRoll += 5;
 		}
 
-		if(other.invisible() == true) {
+		if(other.isInvisible() == true) {
 			attackRoll -= 5;
 		}
 		if(this.isPlayer()) {
@@ -2806,11 +2806,11 @@ public class Creature implements Cloneable{
 
 				}
 			}
-			if(other.asleep() == true) {
-				other.modifyAsleep(false);
+			if(other.isAsleep() == true) {
+				other.setIsAsleep(false);
 				other.doAction("wake up");
 			}
-			if(other.disguised() == true) {
+			if(other.isDisguised() == true) {
 				other.reveal();
 			}
 		}else {
@@ -2818,7 +2818,7 @@ public class Creature implements Cloneable{
 		}
 
 
-		if(this.invisible() == true) {
+		if(this.isInvisible() == true) {
 			this.cureInvisible();
 		}
 
@@ -3117,7 +3117,7 @@ public class Creature implements Cloneable{
 	//jump
 	public void gainXP(Creature other) {
 		int amount = (int)((other.maxHP() + other.baseArmorClass())*0.75);
-		if(other.noXP() > 0) {
+		if(other.hasNoXP()) {
 			amount = 0;
 		}
 		if(amount > 0) {
@@ -3152,7 +3152,7 @@ public class Creature implements Cloneable{
 
 
 	private void leaveCorpse() {
-		if(noCorpse == 0) {
+		if(!hasNoCorpse) {
 			Item corpse = new Item('%', defaultColor, name + " corpse", null);
 			corpse.modifyFoodValue(maxHP * 10);
 			corpse.setIsStackable(true);
@@ -3724,7 +3724,7 @@ public class Creature implements Cloneable{
 	}
 
 	public void updateInvisibility() {
-		if(invisible() == false && color == ExtraColors.invisible) {
+		if(isInvisible() == false && color == ExtraColors.invisible) {
 			changeColor(defaultColor);
 		}
 	}
@@ -3772,14 +3772,14 @@ public class Creature implements Cloneable{
 	}
 	
 	public void stepInPit() {
-		if(realTile(this.x(), this.y(), this.z()) == Tile.PIT && this.flying() == 0 && this.levitating() == false) {
+		if(realTile(this.x(), this.y(), this.z()) == Tile.PIT && !this.isFlying() && !this.isLevitating()) {
 			Effect fall = this.ai.factory.effectFactory.pitFall();
 			addEffect(fall);
 		}
 	}
 	
 	public void stepInFire() {
-		if(realSubtile(this.x(), this.y(), this.z()) == Tile.FIRE && this.flying() == 0 && this.levitating() == false && (ExtraMaths.d10() > 4)) {
+		if(realSubtile(this.x(), this.y(), this.z()) == Tile.FIRE && !this.isFlying() && !this.isLevitating() && (ExtraMaths.d10() > 4)) {
 			Effect fire = this.ai.factory.effectFactory.ignited();
 			addEffect(fire);
 		}
@@ -3844,7 +3844,6 @@ public class Creature implements Cloneable{
 						stacked.add(item);
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					//e.printStackTrace();
 				}
 			}
@@ -3869,7 +3868,6 @@ public class Creature implements Cloneable{
 					getRidOf(inventory.get(i));
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				//e.printStackTrace();
 			}
 		}
@@ -3882,7 +3880,6 @@ public class Creature implements Cloneable{
 					getRidOf(item);
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				//e.printStackTrace();
 			}
 		}*/
@@ -3929,7 +3926,7 @@ public class Creature implements Cloneable{
 			search(18, true);
 		}
 		Item trap = world.item(x, y, z);
-		if(trap != null && trap.isTrap() && flying == 0 && levitating == false) {
+		if(trap != null && trap.isTrap() && !isFlying && !isLevitating) {
 			triggerTrap(trap);
 		}else {
 
@@ -4092,12 +4089,12 @@ public class Creature implements Cloneable{
 					item.modifyStackAmount(-1);
 				}
 			}
-			if(this.invisible() == true) {
+			if(this.isInvisible() == true) {
 				this.cureInvisible();
 			}
 
 		}else {
-			if(other == null || other.isContainer() == true || other.disguised() == true) {
+			if(other == null || other.isContainer() == true || other.isDisguised() == true) {
 				doAction("point and mutter at nothing in particular...");
 				if(spell.manaCost() > 0) {
 					Damage amount = new Damage(spell.manaCost(), false, false);
@@ -4130,7 +4127,7 @@ public class Creature implements Cloneable{
 					item.modifyStackAmount(-1);
 				}
 			}
-			if(this.invisible() == true) {
+			if(this.isInvisible() == true) {
 				this.cureInvisible();
 			}
 		}
@@ -4212,7 +4209,7 @@ public class Creature implements Cloneable{
 
 	public boolean canSee(int wx, int wy, int wz) {
 		//return (mindVision > 0 && world.creature(wx, wy, wz) !=null || ai.canSee(wx, wy, wz));
-		if(mindVision == true && world.creature(wx, wy, wz) !=null) {
+		if(hasMindVision == true && world.creature(wx, wy, wz) !=null) {
 			return true;
 		}
 		else {
@@ -4255,7 +4252,6 @@ public class Creature implements Cloneable{
 			try {
 				return world.item(wx, wy, wz);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				return null;
 				//e.printStackTrace();
 			}

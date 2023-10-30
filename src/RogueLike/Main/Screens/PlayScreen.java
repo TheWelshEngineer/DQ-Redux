@@ -196,27 +196,27 @@ public class PlayScreen implements Screen{
 			
 		//}
 		
-		if (player.identify() > 0) {
+		if (player.isReadingIdentify()) {
 			subscreen = new IdentifyScreen(player);
-			player.modifyIdentify(-1);
+			player.setIsReadingIdentify(false);
 			inputAccepted = true;
 		}
 		
-		if (player.upgrade() > 0) {
+		if (player.isReadingUpgrade()) {
 			subscreen = new UpgradeScreen(player, player.factory());
-			player.modifyUpgrade(-1);
+			player.setIsReadingUpgrade(false);
 			inputAccepted = true;
 		}
 		
-		if (player.removeCurse() > 0) {
+		if (player.isReadingRemoveCurse()) {
 			subscreen = new RemoveCurseScreen(player);
-			player.modifyRemoveCurse(-1);
+			player.setIsReadingRemoveCurse(false);
 			inputAccepted = true;
 		}
 		
-		if (player.enchant() > 0) {
+		if (player.isReadingEnchantment()) {
 			subscreen = new EnchantScreen(player, player.factory());
-			player.modifyEnchant(-1);
+			player.setIsReadingEnchantment(false);
 			inputAccepted = true;
 		}
 		
@@ -412,15 +412,15 @@ public class PlayScreen implements Screen{
 	}
 	//player.x
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
-		if(player.magicMapping() > 0) {
+		if(player.isReadingMagicMapping()) {
 			fov.updateMagicMapping(player.x, player.y, player.z, 1000);
-		}else if(player.levitating() == true) {
+		}else if(player.isLevitating() == true) {
 			fov.updateLevitating(player.x, player.y, player.z, player.visionRadius());
 		}else{
 			fov.update(player.x, player.y, player.z, player.visionRadius());
 		}
 		
-		if(player.magicMapping() > 0) {
+		if(player.isReadingMagicMapping()) {
 			for(int x = 0; x < world.width(); x++) {
 				for(int y = 0; y < world.height(); y++) {
 					if(world.item(x, y, player.z) != null && world.item(x, y, player.z).isTrap()) {

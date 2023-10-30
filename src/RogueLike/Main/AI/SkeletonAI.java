@@ -16,7 +16,7 @@ public class SkeletonAI extends CreatureAI{
 		if(Math.random() < 0.2) {
 			return;
 		}
-		if((creature.paralyzed() == true)) {
+		if((creature.isParalyzed() == true)) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -25,12 +25,12 @@ public class SkeletonAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.frozen() == true)) {
+		if((creature.isFrozen() == true)) {
 			creature.doAction("struggle to move!");
 			return;
 
 		}else {
-			if(creature.canSee(player.x, player.y, player.z) && player.invisible() == false) {
+			if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
 				hunt(player);
 			}else {
 				wander();

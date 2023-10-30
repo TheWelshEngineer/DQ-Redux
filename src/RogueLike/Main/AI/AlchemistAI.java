@@ -16,7 +16,7 @@ public class AlchemistAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if((creature.paralyzed() == true)) {
+		if((creature.isParalyzed() == true)) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -25,7 +25,7 @@ public class AlchemistAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.frozen() == true)) {
+		if((creature.isFrozen() == true)) {
 			creature.doAction("struggle to move!");
 			return;
 
@@ -34,9 +34,9 @@ public class AlchemistAI extends CreatureAI{
 				creature.inventory().add(factory.randomNegativePotion(0, false));
 				creature.doAction("brew a potion");
 				brewcount++;
-			}else if(canThrowAt(player) && player.invisible() == false) {
+			}else if(canThrowAt(player) && player.isInvisible() == false) {
 				creature.throwItem(getWeaponToThrow(), player.x, player.y, player.z);
-			}else if(creature.canSee(player.x, player.y, player.z) && player.invisible() == false) {
+			}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
 				hunt(player);
 			}else {
 				wander();

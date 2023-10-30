@@ -14,7 +14,7 @@ public class GremlinSkirmisherAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if((creature.paralyzed() == true)) {
+		if((creature.isParalyzed() == true)) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -23,12 +23,12 @@ public class GremlinSkirmisherAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.frozen() == true)) {
+		if((creature.isFrozen() == true)) {
 			creature.doAction("struggle to move!");
 			return;
 
 		}else {
-			if(creature.canSee(player.x, player.y, player.z) && player.invisible() == false) {
+			if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
 				hunt(player);
 				hunt(player);
 			}else {

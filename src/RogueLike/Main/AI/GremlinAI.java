@@ -16,7 +16,7 @@ public class GremlinAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if((creature.paralyzed() == true)) {
+		if((creature.isParalyzed() == true)) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -25,15 +25,15 @@ public class GremlinAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.frozen() == true)) {
+		if((creature.isFrozen() == true)) {
 			creature.doAction("struggle to move!");
 			return;
 
 		}else {
-			if(canRangedWeaponAttack(player) && player.invisible() == false && (int)(Math.random()*10) < 6 && arrowsLeft > 0) {
+			if(canRangedWeaponAttack(player) && player.isInvisible() == false && (int)(Math.random()*10) < 6 && arrowsLeft > 0) {
 				creature.rangedWeaponAttack(player);
 				arrowsLeft -= 1;
-			}else if(creature.canSee(player.x, player.y, player.z) && player.invisible() == false) {
+			}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
 				hunt(player);
 			}else {
 				wander();

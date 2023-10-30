@@ -22,12 +22,12 @@ public class SlimeAI extends CreatureAI{
 			wander();
 		}
 		
-		if((creature.frozen() == true)) {
+		if((creature.isFrozen() == true)) {
 			creature.doAction("struggle to move!");
 			return;
 
 		}else {
-			if((creature.paralyzed() == true)) {
+			if((creature.isParalyzed() == true)) {
 				creature.cureParalysis();
 				creature.doAction("break free of paralysis!");
 			}
@@ -69,7 +69,7 @@ public class SlimeAI extends CreatureAI{
                 Damage damage = new Damage(creature.hp(), false, true);
                 creature.modifyHP(damage, "");
 	            
-			}else if(creature.canSee(player.x, player.y, player.z) && player.invisible() == false) {
+			}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
 				hunt(player);
 			}else {
 				wander();

@@ -25,7 +25,7 @@ public class FireWeaponScreen extends TargetBasedScreen{
 	public void selectWorldCoordinate(int x, int y, int screenX, int screenY) {
 		Creature other = player.creature(x, y, player.z);
 		
-		if(other == null || other.isContainer() == true || other.disguised() == true) {
+		if(other == null || other.isContainer() == true || other.isDisguised() == true) {
 			player.notify("There's nothing there to attack.");
 		}else {
 			player.rangedWeaponAttack(other);

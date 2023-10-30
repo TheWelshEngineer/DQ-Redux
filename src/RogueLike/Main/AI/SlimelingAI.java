@@ -16,16 +16,16 @@ public class SlimelingAI extends CreatureAI{
 	
 	public void onUpdate() {
 		
-		if((creature.frozen() == true)) {
+		if((creature.isFrozen() == true)) {
 			creature.doAction("struggle to move!");
 			return;
 
 		}else {
-			if((creature.paralyzed() == true)) {
+			if((creature.isParalyzed() == true)) {
 				creature.cureParalysis();
 				creature.doAction("break free of paralysis!");
 			}
-			if(creature.canSee(player.x, player.y, player.z) && player.invisible() == false) {
+			if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
 				hunt(player);
 			}else {
 				wander();

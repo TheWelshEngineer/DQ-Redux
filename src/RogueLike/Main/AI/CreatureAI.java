@@ -43,7 +43,7 @@ public class CreatureAI {
 	public void onEnter(int x, int y, int z, Tile tile) {
 		//fixed
 		if((tile.isOpen() && !tile.isBars()) || (tile.isStairs() && !tile.isBars())) {
-			if(tile == Tile.PIT && (!creature.levitating() && creature.flying() == 0)) {
+			if(tile == Tile.PIT && (!creature.isLevitating() && !creature.isFlying())) {
 				
 			}else {
 				creature.x = x;

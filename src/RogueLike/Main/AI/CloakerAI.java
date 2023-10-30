@@ -15,7 +15,7 @@ public class CloakerAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if((creature.paralyzed() == true)) {
+		if((creature.isParalyzed() == true)) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -24,22 +24,22 @@ public class CloakerAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.frozen() == true)) {
+		if((creature.isFrozen() == true)) {
 			creature.doAction("struggle to move!");
 			return;
 
 		}else {
 			if(creature.hp() < ((int)creature.maxHP() / 2)) {
-				creature.modifyInvisible(false);
+				creature.setIsInvisible(false);
 				creature.changeColor(creature.defaultColor());
 				creature.doAction("become visible");
 			}
 		
-			if(creature.invisible() == false && creature.hp() >= ((int)creature.maxHP() / 2)) {
-				creature.modifyInvisible(true);
+			if(creature.isInvisible() == false && creature.hp() >= ((int)creature.maxHP() / 2)) {
+				creature.setIsInvisible(true);
 				creature.changeColor(ExtraColors.invisible);
 				creature.doAction("become transparent");
-			}else if(creature.canSee(player.x, player.y, player.z) && player.invisible() == false) {
+			}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
 				hunt(player);
 			}else {
 				wander();

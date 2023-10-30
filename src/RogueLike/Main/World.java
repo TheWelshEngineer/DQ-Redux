@@ -133,7 +133,6 @@ public class World {
 		try {
 			tiles[x][y][z] = tile;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			//e.printStackTrace();
 		}
 	}
@@ -161,7 +160,6 @@ public class World {
 				subtiles[x][y][z] = null;
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			//e.printStackTrace();
 		}
 	}
@@ -192,7 +190,6 @@ public class World {
 			
 			//gastiles[x][y][z] = tile;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			//e.printStackTrace();
 		}
 	}

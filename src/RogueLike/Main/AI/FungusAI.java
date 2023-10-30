@@ -14,7 +14,7 @@ public class FungusAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if(creature.paralyzed() == false && creature.frozen() == false) {
+		if(creature.isParalyzed() == false && creature.isFrozen() == false) {
 			if(spreadcount < 3 && Math.random() < 0.0025) {
 				spread();
 			}

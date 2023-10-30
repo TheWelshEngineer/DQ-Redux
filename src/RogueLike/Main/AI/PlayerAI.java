@@ -37,7 +37,6 @@ public class PlayerAI extends CreatureAI{
 						
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					//e.printStackTrace();
 				}
 			}

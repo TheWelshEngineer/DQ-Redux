@@ -477,6 +477,7 @@ public class ObjectFactory {
 	
 		
 		player.inventory().add(newRations(0, 0));
+		//
 		player.inventory().add(newDagger(0, false));
 		player.inventory().add(newBow(0, false));
 		player.inventory().add(newSpear(0, false));
@@ -495,29 +496,6 @@ public class ObjectFactory {
 		//player.inventory().add(newStrengthRing(0, false));
 
 		/*player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newFireboltWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newFireboltWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newFireboltWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newFireboltWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newFireboltWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newFireboltWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newFireboltWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
 		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
 		player.spellbook().add(newFireboltWand(0, player, 0).writtenSpells().get(0));
 		player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
@@ -563,7 +541,7 @@ public class ObjectFactory {
 		Creature bat = new Creature(world, "Bat", 'b', AsciiPanel.magenta, 8, 1, 12, 2, 15, 2, 6, 20);
 		bat.setID(2);
 		new BatAI(bat, this, this.world);
-		bat.modifyFlying(1);
+		bat.setIsFlying(true);
 		bat.setSocial(true);
 		bat.creatureTypes.add("Beast");
 		bat.scaleHPWithDepth(depth);
@@ -757,7 +735,7 @@ public class ObjectFactory {
 		Creature cloaker = new Creature(world, "Cloaker", 'c', AsciiPanel.brightBlack, 22, 10, 11, 16, 12, 2, 8, 20);
 		cloaker.setID(10);
 		new CloakerAI(cloaker, player, this, this.world);
-		cloaker.modifyInvisible(true);
+		cloaker.setIsInvisible(true);
 		cloaker.changeColor(ExtraColors.invisible);
 		cloaker.creatureTypes.add("Beast");
 		cloaker.creatureTypes.add("Monstrosity");
@@ -783,7 +761,7 @@ public class ObjectFactory {
 		Item startArmor = randomArmor(0, 0);
 		animatedArmor.inventory().add(startArmor);
 		animatedArmor.equip(startArmor);
-		animatedArmor.modifyNoCorpse(1);
+		animatedArmor.setHasNoCorpse(true);
 		animatedArmor.creatureTypes.add("Construct");
 		animatedArmor.scaleHPWithDepth(depth);
 		animatedArmor.scaleManaWithDepth(depth);	
@@ -807,7 +785,7 @@ public class ObjectFactory {
 		Item startWeapon = randomMeleeWeapon(0, true);
 		animatedWeapon.inventory().add(startWeapon);
 		animatedWeapon.equip(startWeapon);
-		animatedWeapon.modifyNoCorpse(1);
+		animatedWeapon.setHasNoCorpse(true);
 		animatedWeapon.creatureTypes.add("Construct");
 		animatedWeapon.scaleHPWithDepth(depth);
 		animatedWeapon.scaleManaWithDepth(depth);	
@@ -830,7 +808,7 @@ public class ObjectFactory {
 		Item startPotion = randomPotion(0, false);
 		potionChest.inventory().add(startPotion);
 		potionChest.modifyIsContainer(true);
-		potionChest.modifyNoCorpse(1);
+		potionChest.setHasNoCorpse(true);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(potionChest, depth);
 		}else {
@@ -847,7 +825,7 @@ public class ObjectFactory {
 		Item startFood = randomFood(0, 0);
 		foodChest.inventory().add(startFood);
 		foodChest.modifyIsContainer(true);
-		foodChest.modifyNoCorpse(1);
+		foodChest.setHasNoCorpse(true);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(foodChest, depth);
 		}else {
@@ -864,7 +842,7 @@ public class ObjectFactory {
 		Item startAmmo = randomAmmo(0, 0);
 		ammoChest.inventory().add(startAmmo);
 		ammoChest.modifyIsContainer(true);
-		ammoChest.modifyNoCorpse(1);
+		ammoChest.setHasNoCorpse(true);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(ammoChest, depth);
 		}else {
@@ -881,7 +859,7 @@ public class ObjectFactory {
 		Item startWeapon = randomWeapon(0, true);
 		weaponChest.inventory().add(startWeapon);
 		weaponChest.modifyIsContainer(true);
-		weaponChest.modifyNoCorpse(1);
+		weaponChest.setHasNoCorpse(true);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(weaponChest, depth);
 		}else {
@@ -898,7 +876,7 @@ public class ObjectFactory {
 		Item startArmor = randomArmor(0, 0);
 		armorChest.inventory().add(startArmor);
 		armorChest.modifyIsContainer(true);
-		armorChest.modifyNoCorpse(1);
+		armorChest.setHasNoCorpse(true);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(armorChest, depth);
 		}else {
@@ -915,7 +893,7 @@ public class ObjectFactory {
 		Item startShield = randomShield(0, 0);
 		shieldChest.inventory().add(startShield);
 		shieldChest.modifyIsContainer(true);
-		shieldChest.modifyNoCorpse(1);
+		shieldChest.setHasNoCorpse(true);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(shieldChest, depth);
 		}else {
@@ -932,7 +910,7 @@ public class ObjectFactory {
 		Item startRing = randomRing(0, false);
 		ringChest.inventory().add(startRing);
 		ringChest.modifyIsContainer(true);
-		ringChest.modifyNoCorpse(1);
+		ringChest.setHasNoCorpse(true);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(ringChest, depth);
 		}else {
@@ -949,7 +927,7 @@ public class ObjectFactory {
 		Item startScroll = randomScroll(0, player, false);
 		scrollChest.inventory().add(startScroll);
 		scrollChest.modifyIsContainer(true);
-		scrollChest.modifyNoCorpse(1);
+		scrollChest.setHasNoCorpse(true);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(scrollChest, depth);
 		}else {
@@ -966,7 +944,7 @@ public class ObjectFactory {
 		Item startWand = randomWand(0, player, false);
 		wandChest.inventory().add(startWand);
 		wandChest.modifyIsContainer(true);
-		wandChest.modifyNoCorpse(1);
+		wandChest.setHasNoCorpse(true);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(wandChest, depth);
 		}else {
@@ -1011,8 +989,8 @@ public class ObjectFactory {
 		icewall.setID(14);
 		new ChestAI(icewall, this, this.world);
 		icewall.setImmuneFrostDamage(true);
-		icewall.modifyNoCorpse(1);
-		icewall.modifyNoXP(1);
+		icewall.setHasNoCorpse(true);
+		icewall.setHasNoXP(true);
 		icewall.creatureTypes.add("Elemental");
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(icewall, depth);
@@ -1045,10 +1023,10 @@ public class ObjectFactory {
 		// world, glyph, color, max health, base attack, base defense, vision range, name, inventory size (max 20), max mana, fire defense, ice defense, shock defense
 		Creature marker = new Creature(world, " ", 'T', ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(marker, this, this.world);
-		marker.modifyFlying(1);
+		marker.setIsFlying(true);
 		marker.modifyIsTileSpell(true);
-		marker.modifyNoCorpse(1);
-		marker.modifyNoXP(1);
+		marker.setHasNoCorpse(true);
+		marker.setHasNoXP(true);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(marker, depth);
 			//marker.addEffect(randomStructure(player));

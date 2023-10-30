@@ -40,7 +40,7 @@ public class EffectFactory {
 		Effect poisoned = new Effect(10, "Poisoned", 1, null) { //10
 			public void start(Creature creature) {
 				creature.doAction("look unwell");
-				creature.modifyPoisoned(true);
+				creature.setIsPoisoned(true);
 				//creature.learnName(item);
 			}
 			public void update(Creature creature) {
@@ -50,8 +50,8 @@ public class EffectFactory {
 				creature.modifyHP(damage, "Killed by poison");
 			}
 			public void end(Creature creature) {
-				creature.modifyPoisoned(false);
-				if(creature.poisoned() == false) {
+				creature.setIsPoisoned(false);
+				if(creature.isPoisoned() == false) {
 					creature.doAction("recover from poison");
 				}
 
@@ -65,11 +65,11 @@ public class EffectFactory {
 	public Effect giantStrength() {
 		Effect giantStrength = new Effect(15, "Giant Strength", 0, null) {
 			public void start(Creature creature) {
-				creature.modifyGiantStrength(true);
+				creature.setHasGiantStrength(true);
 				creature.doAction("swell with power");
 			}
 			public void end(Creature creature) {
-				creature.modifyGiantStrength(false);
+				creature.setHasGiantStrength(false);
 				creature.doAction("return to normal strength");
 			}
 		};
@@ -80,11 +80,11 @@ public class EffectFactory {
 	public Effect beastForm() {
 		Effect beastForm = new Effect(15, "Beast Form", 0, null) {
 			public void start(Creature creature) {
-				creature.modifyBeastForm(true);
+				creature.setHasBeastForm(true);
 				creature.doAction("appear more bestial");
 			}
 			public void end(Creature creature) {
-				creature.modifyBeastForm(false);
+				creature.setHasBeastForm(false);
 				creature.doAction("return to a normal appearance");
 			}
 		};
@@ -95,7 +95,7 @@ public class EffectFactory {
 	public Effect corroded() {
 		Effect corroded = new Effect(5, "Corroded", 1, null) {
         	public void start(Creature creature) {
-        		creature.modifyCorroded(true);
+        		creature.setIsCorroded(true);
         		//creature.modifyDefenseValue(-6);
 				creature.doAction("get coated in caustic vapour");
 				//creature.learnName(item);
@@ -108,9 +108,9 @@ public class EffectFactory {
 				creature.notify("The vapour burns you!");	
 			}
 			public void end(Creature creature) {
-				creature.modifyCorroded(false);
+				creature.setIsCorroded(false);
 				//creature.modifyDefenseValue(6);
-				if(creature.corroded() == false) {
+				if(creature.isCorroded() == false) {
     				creature.doAction("recover from the corrosion");
 				}
 				
@@ -160,10 +160,10 @@ public class EffectFactory {
 		Effect mindVision = new Effect(5, "Mind Vision", 0, null){
             public void start(Creature creature){
                 creature.doAction("look far off into the distance");
-                creature.modifyMindVision(true);
+                creature.setHasMindVision(true);
             }
             public void end(Creature creature){
-                creature.modifyMindVision(false);
+                creature.setHasMindVision(false);
             }
         };
         mindVision.modifyIsMindVision(1);
@@ -184,11 +184,11 @@ public class EffectFactory {
 		Effect blinded = new Effect(5, "Blinded", 0, null) {
 			public void start(Creature creature) {
 				creature.doAction("become blinded!");
-				creature.modifyBlinded(true);
+				creature.setIsBlinded(true);
 			}
 			public void end(Creature creature) {
-				creature.modifyBlinded(false);
-				if(creature.blinded() == false) {
+				creature.setIsBlinded(false);
+				if(creature.isBlinded() == false) {
 					creature.doAction("return to seeing normally");
 				}
 
@@ -203,11 +203,11 @@ public class EffectFactory {
 		Effect levitating = new Effect(5, "Levitating", 0, null){
             public void start(Creature creature){
                 creature.doAction("float into the air!");
-                creature.modifyLevitating(true);
+                creature.setIsLevitating(true);
             }
             public void end(Creature creature){
             	creature.doAction("float back down to the floor");
-                creature.modifyLevitating(false);
+                creature.setIsLevitating(false);
             }
         };
 		levitating.modifyIsLevitating(1);
@@ -218,7 +218,7 @@ public class EffectFactory {
 		Effect devoured = new Effect(5, "Devoured", 1, null) {
 			public void start(Creature creature) {
 				creature.doAction("writhe in agony");
-				creature.modifyDevoured(true);
+				creature.setIsDevoured(true);
 			}
 			public void update(Creature creature) {
 				super.update(creature);
@@ -229,8 +229,8 @@ public class EffectFactory {
 				creature.modifyMana(damage2);
 			}
 			public void end(Creature creature) {
-				creature.modifyDevoured(false);
-				if(creature.devoured() == false) {
+				creature.setIsDevoured(false);
+				if(creature.isDevoured() == false) {
 					creature.doAction("escape a devouring curse");
 				}
 
@@ -262,7 +262,7 @@ public class EffectFactory {
 		Effect confused = new Effect(5, "Confused", 0, null) {
 			public void start(Creature creature) {
 				creature.doAction("become confused!");
-				creature.modifyConfused(true);
+				creature.setIsConfused(true);
 			}
 			public void update(Creature creature) {
 				super.update(creature);
@@ -271,8 +271,8 @@ public class EffectFactory {
 				
 			}
 			public void end(Creature creature) {
-				creature.modifyConfused(false);
-				if(creature.confused() == false) {
+				creature.setIsConfused(false);
+				if(creature.isConfused() == false) {
 					creature.doAction("stop being confused");
 				}
 
@@ -352,7 +352,7 @@ public class EffectFactory {
 	public Effect frostWard() {
 		Effect chillWard = new Effect(5, "Frost Ward", 0, null){
 			public void start(Creature creature){
-				creature.modifyChillWard(true);
+				creature.setHasChillWard(true);
 				creature.doAction("become wreathed in freezing air!");
 
                 for (int ox = -1; ox < 2; ox++){
@@ -373,7 +373,7 @@ public class EffectFactory {
                 }
             }
 			public void end(Creature creature) {
-				creature.modifyChillWard(false);
+				creature.setHasChillWard(false);
 				creature.doAction("feel the freezing winds fade away");
 			}
         };
@@ -384,7 +384,7 @@ public class EffectFactory {
 	public Effect magmaWard() {
 		Effect magmaWard = new Effect(5, "Magma Ward", 0, null){
 			public void start(Creature creature){
-				creature.modifyMagmaWard(true);
+				creature.setHasMagmaWard(true);
 				creature.doAction("become shielded by flames!");
 
                 for (int ox = -1; ox < 2; ox++){
@@ -406,7 +406,7 @@ public class EffectFactory {
                 }
             }
 			public void end(Creature creature) {
-				creature.modifyMagmaWard(false);
+				creature.setHasMagmaWard(false);
 				creature.doAction("feel the flaming shield burn out");
 			}
         };
@@ -470,7 +470,7 @@ public class EffectFactory {
 	public Effect arcWard() {
 		Effect arcWard = new Effect(5, "Arc Ward", 0, null){
 			public void start(Creature creature){
-				creature.modifyArcWard(true);
+				creature.setHasArcWard(true);
 				creature.doAction("become shrouded in lightning!");
 
                 for (int ox = -1; ox < 2; ox++){
@@ -500,7 +500,7 @@ public class EffectFactory {
                 }
             }
 			public void end(Creature creature) {
-				creature.modifyArcWard(false);
+				creature.setHasArcWard(false);
 				creature.doAction("feel the lightning shroud dissipate");
 			}
         };
@@ -511,7 +511,7 @@ public class EffectFactory {
 	public Effect invisible() {
 		Effect invisible = new Effect(5, "Invisible", 0, null) {
 			public void start(Creature creature) {
-				creature.modifyInvisible(true);
+				creature.setIsInvisible(true);
 				creature.changeColor(ExtraColors.invisible);
 				creature.doAction("become transparent");
 			}
@@ -520,8 +520,8 @@ public class EffectFactory {
 				creature.changeColor(ExtraColors.invisible);
 			}
 			public void end(Creature creature) {
-				creature.modifyInvisible(false);
-				if(creature.invisible() == false) {
+				creature.setIsInvisible(false);
+				if(creature.isInvisible() == false) {
 					creature.changeColor(creature.defaultColor());
 					creature.doAction("become visible");
 				}
@@ -535,12 +535,12 @@ public class EffectFactory {
 	public Effect paralyzed() {
 		Effect paralyzed = new Effect(5, "Paralyzed", 1, null) {
 			public void start(Creature creature) {
-				creature.modifyParalyzed(true);
+				creature.setIsParalyzed(true);
 				creature.doAction("seize up!");
 			}
 			public void end(Creature creature) {
-				creature.modifyParalyzed(false);
-				if(creature.paralyzed() == false) {
+				creature.setIsParalyzed(false);
+				if(creature.isParalyzed() == false) {
 					creature.doAction("become mobile again");
 				}
 			}
@@ -619,7 +619,7 @@ public class EffectFactory {
 					amount = 1;
 				}
 				
-				creature.modifyFrozen(true);
+				creature.setIsFrozen(true);
 				creature.doAction("freeze solid!");
 				Damage damage = new Damage(amount, false, false);
 				damage.setFrost(true);
@@ -628,8 +628,8 @@ public class EffectFactory {
 			}
 			
 			public void end(Creature creature) {
-				creature.modifyFrozen(false);
-				if(creature.frozen() == false) {
+				creature.setIsFrozen(false);
+				if(creature.isFrozen() == false) {
 					creature.doAction("defrost");
 				}
 			}};
@@ -645,7 +645,7 @@ public class EffectFactory {
 				double tempAmount = (ExtraMaths.d4());
 				int amount = (int) Math.round(tempAmount);
 				
-				creature.modifyShocked(true);
+				creature.setIsShocked(true);
 				creature.doAction("get a shock!");
 				Damage damage = new Damage(amount, false, false);
 				damage.setShock(true);
@@ -657,8 +657,8 @@ public class EffectFactory {
 				creature.modifyMana(damage);
 			}
 			public void end(Creature creature) {
-				creature.modifyShocked(false);
-				if(creature.shocked() == false) {
+				creature.setIsShocked(false);
+				if(creature.isShocked() == false) {
 					creature.doAction("recover from a shock");
 				}
 			}};
@@ -671,7 +671,7 @@ public class EffectFactory {
 		Effect ignited = new Effect(5, "Ignited", 1, null) {
 			public void start(Creature creature) {
 				creature.doAction("burst into flames!");
-				creature.modifyIgnited(true);
+				creature.setIsIgnited(true);
 			}
 			public void update(Creature creature) {
 				super.update(creature);
@@ -681,8 +681,8 @@ public class EffectFactory {
 				creature.modifyHP(damage, "Killed by fire magic");
 			}
 			public void end(Creature creature) {
-				creature.modifyIgnited(false);
-				if(creature.ignited() == false) {
+				creature.setIsIgnited(false);
+				if(creature.isIgnited() == false) {
 					creature.doAction("stop burning");
 				}
 
@@ -1069,7 +1069,7 @@ public class EffectFactory {
 	public Effect enchantScroll() {
 		Effect enchant = new Effect(0, null, 0, null) {
 			public void start(Creature creature) {
-				creature.modifyEnchant(1);
+				creature.setIsReadingEnchantment(true);
 			}
 		};
 		return enchant;
@@ -1078,7 +1078,7 @@ public class EffectFactory {
 	public Effect removeCurseScroll() {
 		Effect remove = new Effect(0, null, 0, null) {
 			public void start(Creature creature) {
-				creature.modifyRemoveCurse(1);
+				creature.setIsReadingRemoveCurse(true);
 			}
 		};
 		return remove;
@@ -1087,7 +1087,7 @@ public class EffectFactory {
 	public Effect upgradeScroll() {
 		Effect upgrade = new Effect(0, null, 0, null) {
 			public void start(Creature creature) {
-				creature.modifyUpgrade(1);
+				creature.setIsReadingUpgrade(true);
 			}
 		};
 		return upgrade;
@@ -1137,7 +1137,7 @@ public class EffectFactory {
 	public Effect identifyScroll() {
 		Effect identify = new Effect(0, null, 0, null) {
 			public void start(Creature creature) {
-				creature.modifyIdentify(1);
+				creature.setIsReadingIdentify(true);
 			}
 		};
 		return identify;
@@ -1146,10 +1146,10 @@ public class EffectFactory {
 	public Effect magicMappingScroll() {
 		Effect map = new Effect(2, null, 0, null) {
 			public void start(Creature creature) {
-				creature.modifyMagicMapping(1);
+				creature.setIsReadingMagicMapping(true);
 			}
 			public void end(Creature creature) {
-				creature.modifyMagicMapping(-1);
+				creature.setIsReadingMagicMapping(false);
 
 			}
 		};
