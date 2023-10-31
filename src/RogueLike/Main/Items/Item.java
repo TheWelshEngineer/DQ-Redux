@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.Description;
+import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Spell;
 

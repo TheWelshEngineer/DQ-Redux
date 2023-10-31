@@ -178,22 +178,22 @@ public class Creature implements Cloneable{
 				amount = 0;
 			}
 
-			String type = "";
-			if(damage.isFire()) {
-				type = "fire ";
-			}else if(damage.isFrost()) {
-				type = "frost ";
-			}else if(damage.isShock()) {
-				type = "shock ";
-			}else if(damage.isPoison()) {
-				type = "poison ";
-			}else if(damage.isAcid()) {
-				type = "acid ";
-			}else if(damage.isMagic()) {
-				type = "magic ";
-			}else if(damage.isChaos()) {
-				type = "chaos ";
-			}
+//			String type = "";
+//			if(damage.isFire()) {
+//				type = "fire ";
+//			}else if(damage.isFrost()) {
+//				type = "frost ";
+//			}else if(damage.isShock()) {
+//				type = "shock ";
+//			}else if(damage.isPoison()) {
+//				type = "poison ";
+//			}else if(damage.isAcid()) {
+//				type = "acid ";
+//			}else if(damage.isMagic()) {
+//				type = "magic ";
+//			}else if(damage.isChaos()) {
+//				type = "chaos ";
+//			}
 
 			hp -= amount;
 			if(amount > 0) {
@@ -201,9 +201,9 @@ public class Creature implements Cloneable{
 			}
 			if(!damage.isSilent()) {
 				if(this.isPlayer()) {
-					this.notify("You take %d %sdamage.", amount, type);
+					this.notify("You take %d %s damage.", amount, damage.typeString().toLowerCase());
 				}else {
-					this.doAction("take %d %sdamage", amount, type);
+					this.doAction("take %d %s damage", amount, damage.typeString().toLowerCase());
 				}
 			}
 

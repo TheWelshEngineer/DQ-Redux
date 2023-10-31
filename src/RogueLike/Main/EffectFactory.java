@@ -1,7 +1,6 @@
 package RogueLike.Main;
 
 import RogueLike.Main.Damage.Damage;
-import RogueLike.Main.Items.Dice;
 
 public class EffectFactory {
 	

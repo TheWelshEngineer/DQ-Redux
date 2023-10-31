@@ -2,6 +2,8 @@ package RogueLike.Main.Items;
 
 import java.awt.Color;
 
+import RogueLike.Main.Dice;
+
 public class PowderRangedWeapon extends BasicRangedWeapon{
 
 	public PowderRangedWeapon(char glyph, Color color, String name, String appearance, Dice damageDice, int goldValue, int id) {

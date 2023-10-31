@@ -2,6 +2,8 @@ package RogueLike.Main.Items;
 
 import java.awt.Color;
 
+import RogueLike.Main.Dice;
+
 public class BasicRangedWeapon extends Item{
 	
 	/**

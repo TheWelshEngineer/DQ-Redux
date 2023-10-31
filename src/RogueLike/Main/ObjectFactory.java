@@ -26,7 +26,6 @@ import RogueLike.Main.Items.BasicMeleeWeapon;
 import RogueLike.Main.Items.BasicShield;
 import RogueLike.Main.Items.BasicThrownWeapon;
 import RogueLike.Main.Items.BoltsRangedWeapon;
-import RogueLike.Main.Items.Dice;
 import RogueLike.Main.Items.HeavyArmor;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Items.LightArmor;
@@ -489,6 +488,7 @@ public class ObjectFactory {
 		player.inventory().add(newWarhammer(0, false));
 		player.inventory().add(newFalchion(0, false));
 		player.inventory().add(newPairedBlades(0, false));
+		player.inventory().add(newPotionOfLiquidFlame(0, false));
 		//temp
 		//
 		//player.inventory().add(newScrollOfMagicMapping(0, player, false));

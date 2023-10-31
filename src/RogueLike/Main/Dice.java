@@ -1,6 +1,4 @@
-package RogueLike.Main.Items;
-
-import RogueLike.Main.ExtraMaths;
+package RogueLike.Main;
 
 public class Dice {
 	
