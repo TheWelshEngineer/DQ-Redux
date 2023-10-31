@@ -170,30 +170,13 @@ public class Creature implements Cloneable{
 			int amount = damage.amount();
 			int amountTemp = damage.amount();
 
-			if((damage.isPhysical() && this.resistsPhysicalDamage()) || (damage.isFire() && this.resistsFireDamage()) || (damage.isFrost() && this.resistsFrostDamage()) || (damage.isShock() && this.resistsShockDamage()) || (damage.isPoison() && this.resistsPoisonDamage()) || (damage.isAcid() && this.resistsAcidDamage()) || (damage.isMagic() && this.resistsMagicDamage()) || (damage.isChaos() && this.resistsChaosDamage()) ) {
+			if((this.resistances()).contains(damage.typeString())){
 				amount = (int)Math.floor(amountTemp*0.5);
 			}
 
-			if((damage.isPhysical() && this.immunePhysicalDamage()) || (damage.isFire() && this.immuneFireDamage()) || (damage.isFrost() && this.immuneFrostDamage()) || (damage.isShock() && this.immuneShockDamage()) || (damage.isPoison() && this.immunePoisonDamage()) || (damage.isAcid() && this.immuneAcidDamage()) || (damage.isMagic() && this.immuneMagicDamage()) || (damage.isChaos() && this.immuneChaosDamage()) ) {
+			if((this.imunites()).contains(damage.typeString())){
 				amount = 0;
 			}
-
-//			String type = "";
-//			if(damage.isFire()) {
-//				type = "fire ";
-//			}else if(damage.isFrost()) {
-//				type = "frost ";
-//			}else if(damage.isShock()) {
-//				type = "shock ";
-//			}else if(damage.isPoison()) {
-//				type = "poison ";
-//			}else if(damage.isAcid()) {
-//				type = "acid ";
-//			}else if(damage.isMagic()) {
-//				type = "magic ";
-//			}else if(damage.isChaos()) {
-//				type = "chaos ";
-//			}
 
 			hp -= amount;
 			if(amount > 0) {
@@ -641,7 +624,7 @@ public class Creature implements Cloneable{
 		int roll = (ExtraMaths.d20())+saveBonusMagic();
 		return roll;
 	}
-
+	
 	private boolean resistsPhysicalDamage;
 	public boolean resistsPhysicalDamage() {
 		boolean weaponResist = false;
@@ -1114,6 +1097,63 @@ public class Creature implements Cloneable{
 		immuneChaosDamage = value;
 	}
 
+	public ArrayList<String> resistances(){
+		ArrayList<String> resistances = new ArrayList<String>();	
+		if (resistsPhysicalDamage() == true){
+			resistances.add(Damage.physical);
+		}
+		else if(resistsFireDamage() == true){
+			resistances.add(Damage.fire);
+		}
+		else if(resistsFrostDamage() == true){
+			resistances.add(Damage.frost);
+		}
+		else if (resistsShockDamage() == true){
+			resistances.add(Damage.shock);
+		}
+		else if (resistsPoisonDamage() == true){
+			resistances.add(Damage.poison);
+		}
+		else if (resistsAcidDamage() == true){
+			resistances.add(Damage.acid);
+		}
+		else if (resistsMagicDamage() == true){
+			resistances.add(Damage.magic);
+		}
+		else if (resistsChaosDamage() == true){
+			resistances.add(Damage.chaos);
+		}
+		return resistances;
+	}
+
+	public ArrayList<String> imunites(){
+		ArrayList<String> imunites = new ArrayList<String>();	
+		if (resistsPhysicalDamage() == true){
+			imunites.add(Damage.physical);
+		}
+		else if(immunePhysicalDamage() == true){
+			imunites.add(Damage.fire);
+		}
+		else if(immuneFrostDamage() == true){
+			imunites.add(Damage.frost);
+		}
+		else if (immuneFrostDamage() == true){
+			imunites.add(Damage.shock);
+		}
+		else if (immunePoisonDamage() == true){
+			imunites.add(Damage.poison);
+		}
+		else if (immuneAcidDamage() == true){
+			imunites.add(Damage.acid);
+		}
+		else if (immuneChaosDamage() == true){
+			imunites.add(Damage.magic);
+		}
+		else if (immuneChaosDamage() == true){
+			imunites.add(Damage.chaos);
+		}
+		return imunites;
+	}
 
 	/*private int skillSimpleWeapons;
 	public int skillSimpleWeapons() {
