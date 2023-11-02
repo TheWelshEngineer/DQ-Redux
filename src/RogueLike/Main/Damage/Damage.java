@@ -59,6 +59,12 @@ public class Damage {
 		return isSilent;
 	}
 	
+	private boolean applyStatus;
+	public boolean canApplyStatus() {
+		return applyStatus;
+	}
+	
+	
 
 	public boolean isPhysical() {
 		return (typeString.equals(Damage.physical));
@@ -92,12 +98,13 @@ public class Damage {
 		return (typeString.equals(Damage.chaos));
 	}
 	
-	public Damage(int value, boolean healing, boolean silent, String type, EffectFactory factory) {
+	public Damage(int value, boolean healing, boolean silent, String type, EffectFactory factory, boolean applyStatus) {
 		amount = value;
 		isHealing = healing;
 		isSilent = silent;
 		typeString = type;
 		effectFactory = factory;
+		this.applyStatus = applyStatus;
 	}
 	
 

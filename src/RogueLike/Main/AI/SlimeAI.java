@@ -66,7 +66,7 @@ public class SlimeAI extends CreatureAI{
                     }
                 }
                 creature.doAction("split into slimelings!");
-                Damage damage = new Damage(creature.hp(), false, true, Damage.physical, factory.effectFactory);
+                Damage damage = new Damage(creature.hp(), false, true, Damage.physical, factory.effectFactory, false);
                 creature.modifyHP(damage, "");
 	            
 			}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {

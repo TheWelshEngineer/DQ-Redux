@@ -4,8 +4,8 @@ import RogueLike.Main.Factories.EffectFactory;
 
 public class ChaosDamage extends Damage{
 
-	public ChaosDamage(int value, boolean silent, EffectFactory factory) {
-		super(value, false, silent, Damage.chaos, factory);
+	public ChaosDamage(int value, boolean silent, EffectFactory factory, boolean status) {
+		super(value, false, silent, Damage.chaos, factory, status);
 		this.setStatusEffect(factory.devoured());
 	}
 
