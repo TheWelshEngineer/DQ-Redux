@@ -8,6 +8,7 @@ import RogueLike.Main.Description;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Spell;
+import RogueLike.Main.Enchantments.Enchantment;
 
 public class Item implements Cloneable{
 	
@@ -44,26 +45,31 @@ public class Item implements Cloneable{
 		String returnname = name;
 		String upgradeLevel = "";
 		String enchantmentName = "";
+		String curseName = "";
 		
 		if(this.upgradeLevel() > 0) {
 			upgradeLevel = String.format("+%d ", this.upgradeLevel());
 		}
 		
-		if(this.isEnchanted()) {
+		if(this.enchantment() != null) {
 			if(this.isArmor() || this.isShield()) {
-				enchantmentName = String.format("%s", this.enchantedName());
+				enchantmentName = String.format(" %s", this.enchantment().name());
 			}
 			if(this.isWeapon()) {
-				enchantmentName = String.format("%s", this.enchantedName());
+				enchantmentName = String.format("%s ", this.enchantment().name());
 			}
+		}
+		
+		if(this.curse() != null) {
+			curseName = String.format("%s ", this.curse().name());
 		}
 		
 		if(this.isArmor() || this.isShield()) {
-			returnname = String.format("%s%s%s", upgradeLevel, name, enchantmentName);
+			returnname = String.format("%s%s%s%s", upgradeLevel, curseName, name, enchantmentName);
 		}
 		
 		if(this.isWeapon()) {
-			returnname = String.format("%s%s%s", upgradeLevel, enchantmentName, name);
+			returnname = String.format("%s%s%s%s", upgradeLevel, curseName, enchantmentName, name);
 		}
 		return returnname;
 	}
@@ -549,33 +555,51 @@ public class Item implements Cloneable{
 		this.quaffEffect = effect;
 	}
 	
-	public Effect enchantmentEffect;
-	public Effect enchantmentEffect() {
-		return (Effect) enchantmentEffect.clone();
+//	public Effect enchantmentEffect;
+//	public Effect enchantmentEffect() {
+//		return (Effect) enchantmentEffect.clone();
+//	}
+//	
+//	public void setEnchantmentEffect(Effect effect) {
+//		//this.enchantmentEffect = effect;
+//		this.enchantmentEffect = (Effect) effect.clone();
+//	}
+//	
+//	public Effect curseEffect;
+//	public Effect curseEffect() {
+//		return (Effect) curseEffect.clone();
+//	}
+//	
+//	public void setCurseEffect(Effect effect) {
+//		//this.enchantmentEffect = effect;
+//		this.curseEffect = (Effect) effect.clone();
+//	}
+//	
+//	
+//	
+//	private boolean isEnchanted;
+//	public boolean isEnchanted() {
+//		return isEnchanted;
+//	}
+//	
+//	public void setIsEnchanted(boolean value) {
+//		isEnchanted = value;
+//	}
+	
+	private Enchantment enchantment;
+	public Enchantment enchantment() {
+		return enchantment;
+	}
+	public void setEnchantment(Enchantment enchantment) {
+		this.enchantment = enchantment;
 	}
 	
-	public void setEnchantmentEffect(Effect effect) {
-		//this.enchantmentEffect = effect;
-		this.enchantmentEffect = (Effect) effect.clone();
+	private Enchantment curse;
+	public Enchantment curse() {
+		return curse;
 	}
-	
-	public Effect curseEffect;
-	public Effect curseEffect() {
-		return (Effect) curseEffect.clone();
-	}
-	
-	public void setCurseEffect(Effect effect) {
-		//this.enchantmentEffect = effect;
-		this.curseEffect = (Effect) effect.clone();
-	}
-	
-	private boolean isEnchanted;
-	public boolean isEnchanted() {
-		return isEnchanted;
-	}
-	
-	public void setIsEnchanted(boolean value) {
-		isEnchanted = value;
+	public void setCurse(Enchantment curse) {
+		this.curse = curse;
 	}
 	
 	private List<Spell> writtenSpells;
@@ -587,21 +611,13 @@ public class Item implements Cloneable{
 		writtenSpells.add(spell);
 	}
 	
-	private boolean isDegraded;
-	public boolean isDegraded() {
-		return isDegraded;
-	}
-	public void setIsDegraded(boolean value) {
-		isDegraded = value;
-	}
-	
-	private boolean isCursed;
-	public boolean isCursed() {
-		return isCursed;
-	}
-	public void setIsCursed(boolean value) {
-		isCursed = value;
-	}
+//	private boolean isDegraded;
+//	public boolean isDegraded() {
+//		return isDegraded;
+//	}
+//	public void setIsDegraded(boolean value) {
+//		isDegraded = value;
+//	}
 	
 	private boolean isCurseKnown;
 	public boolean isCurseKnown() {

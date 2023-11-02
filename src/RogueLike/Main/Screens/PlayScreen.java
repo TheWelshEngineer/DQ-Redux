@@ -8,10 +8,10 @@ import java.util.List;
 import RogueLike.Main.Creature;
 import RogueLike.Main.Effect;
 import RogueLike.Main.FieldOfView;
-import RogueLike.Main.ObjectFactory;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
+import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 import asciiPanel.AsciiPanel;
 

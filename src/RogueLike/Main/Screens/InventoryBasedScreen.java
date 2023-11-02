@@ -56,7 +56,7 @@ public abstract class InventoryBasedScreen implements Screen{
 				itemCount = String.format(" x%d", item.stackAmount());
 			}
 			String line = letters.charAt(i) + " - " + item.glyph() + " " + player.nameOf(item) + itemCount;
-			if(item.isEnchanted()) {
+			if(item.enchantment() != null) {
 				line += " (enchanted)";
 			}
 			if(item.isCurseKnown()) {

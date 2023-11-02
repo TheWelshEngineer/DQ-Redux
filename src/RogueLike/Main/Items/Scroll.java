@@ -1,7 +1,7 @@
 package RogueLike.Main.Items;
 
-import RogueLike.Main.ObjectFactory;
 import RogueLike.Main.Spell;
+import RogueLike.Main.Factories.ObjectFactory;
 import asciiPanel.AsciiPanel;
 
 public class Scroll extends Item{

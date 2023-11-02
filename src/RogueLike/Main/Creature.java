@@ -6,6 +6,7 @@ import java.util.List;
 
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Damage.Damage;
+import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 
 public class Creature implements Cloneable{
@@ -2466,28 +2467,19 @@ public class Creature implements Cloneable{
 				this.setLastTarget(other);
 			}
 
-			if(weapon != null && weapon.isEnchanted() && other.hp() >= 1) {
-				if(0 + ExtraMaths.d10() <= weapon.upgradeLevel()) {
-					other.addEffect(weapon.enchantmentEffect());
-				}else {
-
-				}
-
-			}
-
-			//temp
-			if(other.armor() != null && other.armor().isEnchanted() && other.hp() >= 1) {
-				if(0 + ExtraMaths.d10() <= other.armor().upgradeLevel()) {
-					other.addEffect(other.armor().enchantmentEffect());
-				}else {
-
+			if(weapon != null && weapon.enchantment() != null && other.hp() >= 1) {
+				if(weapon.enchantment().checkActivation(weapon.upgradeLevel()*this.intelligenceModifier())) {
+					weapon.enchantment().applyToCreature(other);
 				}
 			}
-			if(other.shield() != null && other.shield().isEnchanted() && other.hp() >= 1) {
-				if(0 + ExtraMaths.d10() <= other.shield().upgradeLevel()) {
-					other.addEffect(other.shield().enchantmentEffect());
-				}else {
-
+			if(other.armor() != null && other.armor().enchantment() != null && other.hp() >= 1) {
+				if(other.armor().enchantment().checkActivation(other.armor().upgradeLevel()*other.intelligenceModifier())) {
+					other.armor().enchantment().applyToCreature(other);
+				}
+			}
+			if(other.shield() != null && other.shield().enchantment() != null && other.hp() >= 1) {
+				if(other.shield().enchantment().checkActivation(other.shield().upgradeLevel()*other.intelligenceModifier())) {
+					other.shield().enchantment().applyToCreature(other);
 				}
 			}
 
@@ -2528,7 +2520,7 @@ public class Creature implements Cloneable{
 		wy = end.y;
 
 		Creature c = creature(wx, wy, wz);
-		if(item.isCursed() && (item == weapon || item == armor || item == shield || item == ring || item == ammunition)) {
+		if(item.curse() != null && (item == weapon || item == armor || item == shield || item == ring || item == ammunition)) {
 			notify("Your "+nameOf(item)+" is cursed! You can't let go of it!");
 		}else {
 			Item item2 = (Item) item.clone();
@@ -2644,28 +2636,19 @@ public class Creature implements Cloneable{
 				this.setLastTarget(other);
 			}
 
-			if(item.isThrownWeapon() && item.isEnchanted() && other.hp() >= 1) {
-				if(0 + ExtraMaths.d10() <= item.upgradeLevel()) {
-					other.addEffect(item.enchantmentEffect());
-				}else {
-
-				}
-
-			}
-
-			//temp
-			if(other.armor() != null && other.armor().isEnchanted() && other.hp() >= 1) {
-				if(0 + ExtraMaths.d10() <= other.armor().upgradeLevel()) {
-					other.addEffect(other.armor().enchantmentEffect());
-				}else {
-
+			if(item.isThrownWeapon() && item.enchantment() != null && other.hp() >= 1) {
+				if(item.enchantment().checkActivation(item.upgradeLevel()*this.intelligenceModifier())) {
+					item.enchantment().applyToCreature(other);
 				}
 			}
-			if(other.shield() != null && other.shield().isEnchanted() && other.hp() >= 1) {
-				if(0 + ExtraMaths.d10() <= other.shield().upgradeLevel()) {
-					other.addEffect(other.shield().enchantmentEffect());
-				}else {
-
+			if(other.armor() != null && other.armor().enchantment() != null && other.hp() >= 1) {
+				if(other.armor().enchantment().checkActivation(other.armor().upgradeLevel()*other.intelligenceModifier())) {
+					other.armor().enchantment().applyToCreature(other);
+				}
+			}
+			if(other.shield() != null && other.shield().enchantment() != null && other.hp() >= 1) {
+				if(other.shield().enchantment().checkActivation(other.shield().upgradeLevel()*other.intelligenceModifier())) {
+					other.shield().enchantment().applyToCreature(other);
 				}
 			}
 			if(other.isAsleep() == true) {
@@ -2784,27 +2767,19 @@ public class Creature implements Cloneable{
 				this.setLastTarget(other);
 			}
 
-			if(weapon != null && weapon.isEnchanted() && other.hp() >= 1) {
-				if(0 + ExtraMaths.d10() <= weapon.upgradeLevel()) {
-					other.addEffect(weapon.enchantmentEffect());
-				}else {
-
-				}
-
-			}
-
-			if(other.armor() != null && other.armor().isEnchanted() && other.hp() >= 1) {
-				if(0 + ExtraMaths.d20() <= other.armor().upgradeLevel()) {
-					other.addEffect(other.armor().enchantmentEffect());
-				}else {
-
+			if(weapon != null && weapon.enchantment() != null && other.hp() >= 1) {
+				if(weapon.enchantment().checkActivation(weapon.upgradeLevel()*this.intelligenceModifier())) {
+					weapon.enchantment().applyToCreature(other);
 				}
 			}
-			if(other.shield() != null && other.shield().isEnchanted() && other.hp() >= 1) {
-				if(0 + ExtraMaths.d10() <= other.shield().upgradeLevel()) {
-					other.addEffect(other.shield().enchantmentEffect());
-				}else {
-
+			if(other.armor() != null && other.armor().enchantment() != null && other.hp() >= 1) {
+				if(other.armor().enchantment().checkActivation(other.armor().upgradeLevel()*other.intelligenceModifier())) {
+					other.armor().enchantment().applyToCreature(other);
+				}
+			}
+			if(other.shield() != null && other.shield().enchantment() != null && other.hp() >= 1) {
+				if(other.shield().enchantment().checkActivation(other.shield().upgradeLevel()*other.intelligenceModifier())) {
+					other.shield().enchantment().applyToCreature(other);
 				}
 			}
 			if(other.isAsleep() == true) {
@@ -2844,7 +2819,7 @@ public class Creature implements Cloneable{
 	}
 
 	public void drop(Item item){
-		if((item == weapon || item == armor || item == shield || item == ring || item == ammunition) && item.isCursed()) {
+		if((item == weapon || item == armor || item == shield || item == ring || item == ammunition) && item.curse() != null) {
 			notify("The "+nameOf(item)+" is cursed! You can't let go of it!");
 		}else if (world.addAtEmptySpace(item, x, y, z)){
 			if(isDead) {
@@ -2902,21 +2877,21 @@ public class Creature implements Cloneable{
 		}
 		if(item.isWeapon()) {
 			if(item == weapon) {
-				if(weapon.isCursed()) {
+				if(weapon.curse() != null) {
 					notify("Your "+nameOf(weapon)+" is cursed! You can't let go of it!");
 				}else {
 					unequip(weapon);
 				}
 
 			}else {
-				if(weapon != null && weapon.isCursed()) {
+				if(weapon != null && weapon.curse() != null) {
 					notify("Your "+nameOf(weapon)+" is cursed! You can't let go of it!");
 				}else if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
 					notify("You aren't skilled enough to use the "+nameOf(item)+".");
 				}else if(item.isTwoHanded() && shield != null){
 					notify("The "+nameOf(item)+" is too unwieldy to use alongside your "+nameOf(shield)+"!");
 				}else {
-					if(item.isCursed()) {
+					if(item.curse() != null) {
 						if(item.isCurseKnown()) {
 							notify("The "+nameOf(item)+" is cursed!");
 							notify("It's probably best not to equip it.");
@@ -2947,19 +2922,19 @@ public class Creature implements Cloneable{
 		}
 		else if(item.isArmor()) {
 			if(item == armor) {
-				if(armor.isCursed()) {
+				if(armor.curse() != null) {
 					notify("Your "+nameOf(armor)+" is cursed! You can't take it off!");
 				}else {
 					unequip(armor);
 				}
 
 			}else {
-				if(armor != null && armor.isCursed()) {
+				if(armor != null && armor.curse() != null) {
 					notify("Your "+nameOf(armor)+" is cursed! You can't take it off!");
 				}else if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
 					notify("You aren't skilled enough to use the "+nameOf(item)+".");
 				}else {
-					if(item.isCursed()) {
+					if(item.curse() != null) {
 						if(item.isCurseKnown()) {
 							notify("The "+nameOf(item)+" is cursed!");
 							notify("It's probably best not to equip it.");
@@ -2989,21 +2964,21 @@ public class Creature implements Cloneable{
 
 		}else if(item.isShield()) {
 			if(item == shield) {
-				if(shield.isCursed()) {
+				if(shield.curse() != null) {
 					notify("Your "+nameOf(shield)+" is cursed! You can't put it down!");
 				}else {
 					unequip(shield);
 				}
 
 			}else {
-				if(shield != null && shield.isCursed()) {
+				if(shield != null && shield.curse() != null) {
 					notify("Your "+nameOf(shield)+" is cursed! You can't put it down!");
 				}else if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
 					notify("You aren't skilled enough to use the "+nameOf(item)+".");
 				}else if(weapon != null && weapon.isTwoHanded()){
 					notify("The "+nameOf(item)+" is too unwieldy to use alongside your "+nameOf(weapon)+"!");
 				}else {
-					if(item.isCursed()) {
+					if(item.curse() != null) {
 						if(item.isCurseKnown()) {
 							notify("The "+nameOf(item)+" is cursed!");
 							notify("It's probably best not to equip it.");
@@ -3033,17 +3008,17 @@ public class Creature implements Cloneable{
 
 		}else if(item.isRing()) {
 			if(item == ring) {
-				if(ring.isCursed()) {
+				if(ring.curse() != null) {
 					notify("Your "+nameOf(ring)+" is cursed! You can't take it off!");
 				}else {
 					unequip(ring);
 				}
 
 			}else {
-				if(ring != null && ring.isCursed()) {
+				if(ring != null && ring.curse() != null) {
 					notify("Your "+nameOf(ring)+" is cursed! You can't take it off!");
 				}else {
-					if(item.isCursed()) {
+					if(item.curse() != null) {
 						if(item.isCurseKnown()) {
 							notify("The "+nameOf(item)+" is cursed!");
 							notify("It's probably best not to equip it.");
@@ -3072,17 +3047,17 @@ public class Creature implements Cloneable{
 			}
 		}else if(item.isAmmunition()) {
 			if(item == ammunition) {
-				if(ammunition.isCursed()) {
+				if(ammunition.curse() != null) {
 					notify("Your "+nameOf(ammunition)+" is cursed! You can't take it off!");
 				}else {
 					unequip(ammunition);
 				}
 
 			}else {
-				if(ammunition != null && ammunition.isCursed()) {
+				if(ammunition != null && ammunition.curse() != null) {
 					notify("Your "+nameOf(ammunition)+" is cursed! You can't put it down!");
 				}else {
-					if(item.isCursed()) {
+					if(item.curse() != null) {
 						if(item.isCurseKnown()) {
 							notify("The "+nameOf(item)+" is cursed!");
 							notify("It's probably best not to equip it.");
@@ -3810,27 +3785,30 @@ public class Creature implements Cloneable{
 
 
 	public void applyCurses() {
-		if(weapon != null && weapon.isCursed() && ExtraMaths.diceRoll(1, 15) > 14) {
-			this.notify("The curse within your weapon takes hold!");
-			this.addEffect(weapon.curseEffect());
+		if(weapon != null && weapon.curse() != null) {
+			if(weapon.curse().checkActivation(-(weapon.upgradeLevel()*this.intelligenceModifier()))) {
+				this.notify("The curse within your weapon takes hold!");
+				weapon.curse().applyToCreature(this);
+			}
 		}
-		if(armor != null && armor.isCursed() && ExtraMaths.diceRoll(1, 15) > 14) {
-			this.notify("The curse within your armour takes hold!");
-			this.addEffect(armor.curseEffect());
+		if(armor != null && armor.curse() != null) {
+			if(armor.curse().checkActivation(-(armor.upgradeLevel()*this.intelligenceModifier()))) {
+				this.notify("The curse within your armor takes hold!");
+				armor.curse().applyToCreature(this);
+			}
 		}
-		if(shield != null && shield.isCursed() && ExtraMaths.diceRoll(1, 15) > 14) {
-			this.notify("The curse within your shield takes hold!");
-			this.addEffect(shield.curseEffect());
+		if(shield != null && shield.curse() != null) {
+			if(shield.curse().checkActivation(-(shield.upgradeLevel()*this.intelligenceModifier()))) {
+				this.notify("The curse within your shield takes hold!");
+				shield.curse().applyToCreature(this);
+			}
 		}
-		if(ring != null && ring.isCursed() && ExtraMaths.diceRoll(1, 15) > 14) {
-			this.notify("The curse within your ring takes hold!");
-			this.addEffect(ring.curseEffect());
+		if(ring != null && ring.curse() != null) {
+			if(ring.curse().checkActivation(-(ring.upgradeLevel()*this.intelligenceModifier()))) {
+				this.notify("The curse within your ring takes hold!");
+				ring.curse().applyToCreature(this);
+			}
 		}
-		if(ammunition != null && ammunition.isCursed() && ExtraMaths.diceRoll(1, 15) > 14) {
-			this.notify("The curse within your ammunition takes hold!");
-			this.addEffect(ammunition.curseEffect());
-		}
-
 	}
 	//jump
 	public void stackItems() {

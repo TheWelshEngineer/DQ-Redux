@@ -2,8 +2,8 @@ package RogueLike.Main.AI;
 
 import RogueLike.Main.Creature;
 import RogueLike.Main.ExtraColors;
-import RogueLike.Main.ObjectFactory;
 import RogueLike.Main.World;
+import RogueLike.Main.Factories.ObjectFactory;
 
 public class CloakerAI extends CreatureAI{
 	private Creature player;

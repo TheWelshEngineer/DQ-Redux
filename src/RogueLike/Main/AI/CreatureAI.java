@@ -8,11 +8,11 @@ import RogueLike.Main.Creature;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.LevelUpController;
 import RogueLike.Main.Line;
-import RogueLike.Main.ObjectFactory;
 import RogueLike.Main.Path;
 import RogueLike.Main.Point;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
+import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 
 public class CreatureAI {

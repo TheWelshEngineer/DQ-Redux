@@ -1,9 +1,9 @@
 package RogueLike.Main.AI;
 
 import RogueLike.Main.Creature;
-import RogueLike.Main.ObjectFactory;
 import RogueLike.Main.World;
 import RogueLike.Main.Damage.Damage;
+import RogueLike.Main.Factories.ObjectFactory;
 
 public class SlimeAI extends CreatureAI{
 	private Creature player;

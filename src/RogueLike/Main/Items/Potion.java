@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import RogueLike.Main.Description;
 import RogueLike.Main.Effect;
-import RogueLike.Main.ObjectFactory;
+import RogueLike.Main.Factories.ObjectFactory;
 import asciiPanel.AsciiPanel;
 
 public class Potion extends Item{
