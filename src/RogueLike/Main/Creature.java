@@ -2,6 +2,7 @@ package RogueLike.Main;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import RogueLike.Main.AI.CreatureAI;
@@ -174,7 +175,7 @@ public class Creature implements Cloneable{
 				amount = (int)Math.floor(amountTemp*0.5);
 			}
 
-			if((this.imunites()).contains(damage.typeString())){
+			if((this.imumnities()).contains(damage.typeString())){
 				amount = 0;
 			}
 
@@ -625,531 +626,338 @@ public class Creature implements Cloneable{
 		return roll;
 	}
 	
+
+	public ArrayList<Item> getequipmentArrayList(){
+		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList.add(weapon);
+		equipmentArrayList.add(armor);
+		equipmentArrayList.add(ring);
+		equipmentArrayList.add(shield);
+
+		return equipmentArrayList;
+	}
+
 	private boolean resistsPhysicalDamage;
 	public boolean resistsPhysicalDamage() {
-		boolean weaponResist = false;
-		if(weapon != null) {
-			weaponResist = weapon.resistsPhysicalDamage();
-		}
-		boolean armorResist = false;
-		if(armor != null) {
-			armorResist = armor.resistsPhysicalDamage();
-		}
-		boolean ringResist = false;
-		if(ring != null) {
-			ringResist = ring.resistsPhysicalDamage();
-		}
-		boolean shieldResist = false;
-		if(shield != null) {
-			shieldResist = shield.resistsPhysicalDamage();
-		}
+		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnResistsPhysical = (resistsPhysicalDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
-		if(returnResistsPhysical > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.resistsPhysicalDamage())){
+				return true;
+			}
 		}
+		return resistsPhysicalDamage;
 	}
+
 	public void setResistsPhysicalDamage(boolean value) {
 		resistsPhysicalDamage = value;
 	}
+
 	private boolean immunePhysicalDamage;
 	public boolean immunePhysicalDamage() {
-		boolean weaponImmune = false;
-		if(weapon != null) {
-			weaponImmune = weapon.immunePhysicalDamage();
-		}
-		boolean armorImmune = false;
-		if(armor != null) {
-			armorImmune = armor.immunePhysicalDamage();
-		}
-		boolean ringImmune = false;
-		if(ring != null) {
-			ringImmune = ring.immunePhysicalDamage();
-		}
-		boolean shieldImmune = false;
-		if(shield != null) {
-			shieldImmune = shield.immunePhysicalDamage();
-		}
+		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnImmunePhysical = (immunePhysicalDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
-		if(returnImmunePhysical > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.immunePhysicalDamage())){
+				return true;
+			}
 		}
+		return immunePhysicalDamage;
 	}
+
 	public void setImmunePhysicalDamage(boolean value) {
 		immunePhysicalDamage = value;
 	}
 
 	private boolean resistsFireDamage;
 	public boolean resistsFireDamage() {
-		boolean weaponResist = false;
-		if(weapon != null) {
-			weaponResist = weapon.resistsFireDamage();
-		}
-		boolean armorResist = false;
-		if(armor != null) {
-			armorResist = armor.resistsFireDamage();
-		}
-		boolean ringResist = false;
-		if(ring != null) {
-			ringResist = ring.resistsFireDamage();
-		}
-		boolean shieldResist = false;
-		if(shield != null) {
-			shieldResist = shield.resistsFireDamage();
-		}
+		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnResistsFire = (resistsFireDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
-		if(returnResistsFire > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.resistsFireDamage())){
+				return true;
+			}
 		}
+		return resistsFireDamage;
 	}
+
 	public void setResistsFireDamage(boolean value) {
 		resistsFireDamage = value;
 	}
+	
 	private boolean immuneFireDamage;
 	public boolean immuneFireDamage() {
-		boolean weaponImmune = false;
-		if(weapon != null) {
-			weaponImmune = weapon.immuneFireDamage();
-		}
-		boolean armorImmune = false;
-		if(armor != null) {
-			armorImmune = armor.immuneFireDamage();
-		}
-		boolean ringImmune = false;
-		if(ring != null) {
-			ringImmune = ring.immuneFireDamage();
-		}
-		boolean shieldImmune = false;
-		if(shield != null) {
-			shieldImmune = shield.immuneFireDamage();
-		}
+		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnImmuneFire = (immuneFireDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
-		if(returnImmuneFire > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.immuneFireDamage())){
+				return true;
+			}
 		}
+		return immuneFireDamage;
 	}
+
 	public void setImmuneFireDamage(boolean value) {
 		immuneFireDamage = value;
 	}
 
 	private boolean resistsFrostDamage;
 	public boolean resistsFrostDamage() {
-		boolean weaponResist = false;
-		if(weapon != null) {
-			weaponResist = weapon.resistsFrostDamage();
-		}
-		boolean armorResist = false;
-		if(armor != null) {
-			armorResist = armor.resistsFrostDamage();
-		}
-		boolean ringResist = false;
-		if(ring != null) {
-			ringResist = ring.resistsFrostDamage();
-		}
-		boolean shieldResist = false;
-		if(shield != null) {
-			shieldResist = shield.resistsFrostDamage();
-		}
+		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnResistsFrost = (resistsFrostDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
-		if(returnResistsFrost > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.resistsFrostDamage())){
+				return true;
+			}
 		}
+		return resistsFrostDamage;
 	}
+
 	public void setResistsFrostDamage(boolean value) {
 		resistsFrostDamage = value;
 	}
 	private boolean immuneFrostDamage;
 	public boolean immuneFrostDamage() {
-		boolean weaponImmune = false;
-		if(weapon != null) {
-			weaponImmune = weapon.immuneFrostDamage();
-		}
-		boolean armorImmune = false;
-		if(armor != null) {
-			armorImmune = armor.immuneFrostDamage();
-		}
-		boolean ringImmune = false;
-		if(ring != null) {
-			ringImmune = ring.immuneFrostDamage();
-		}
-		boolean shieldImmune = false;
-		if(shield != null) {
-			shieldImmune = shield.immuneFrostDamage();
-		}
+		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnImmuneFrost = (immuneFrostDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
-		if(returnImmuneFrost > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.immuneFrostDamage())){
+				return true;
+			}
 		}
+		return immuneFrostDamage;
 	}
+
 	public void setImmuneFrostDamage(boolean value) {
 		immuneFrostDamage = value;
 	}
 
 	private boolean resistsShockDamage;
 	public boolean resistsShockDamage() {
-		boolean weaponResist = false;
-		if(weapon != null) {
-			weaponResist = weapon.resistsShockDamage();
-		}
-		boolean armorResist = false;
-		if(armor != null) {
-			armorResist = armor.resistsShockDamage();
-		}
-		boolean ringResist = false;
-		if(ring != null) {
-			ringResist = ring.resistsShockDamage();
-		}
-		boolean shieldResist = false;
-		if(shield != null) {
-			shieldResist = shield.resistsShockDamage();
-		}
+		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnResistsShock = (resistsShockDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
-		if(returnResistsShock > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.resistsShockDamage())){
+				return true;
+			}
 		}
+		return resistsShockDamage;
 	}
+
 	public void setResistsShockDamage(boolean value) {
 		resistsShockDamage = value;
 	}
 	private boolean immuneShockDamage;
 	public boolean immuneShockDamage() {
-		boolean weaponImmune = false;
-		if(weapon != null) {
-			weaponImmune = weapon.immuneShockDamage();
-		}
-		boolean armorImmune = false;
-		if(armor != null) {
-			armorImmune = armor.immuneShockDamage();
-		}
-		boolean ringImmune = false;
-		if(ring != null) {
-			ringImmune = ring.immuneShockDamage();
-		}
-		boolean shieldImmune = false;
-		if(shield != null) {
-			shieldImmune = shield.immuneShockDamage();
-		}
+		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnImmuneShock = (immuneShockDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
-		if(returnImmuneShock > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.immuneShockDamage())){
+				return true;
+			}
 		}
+		return immuneShockDamage;
 	}
+
 	public void setImmuneShockDamage(boolean value) {
 		immuneShockDamage = value;
 	}
 
 	private boolean resistsPoisonDamage;
 	public boolean resistsPoisonDamage() {
-		boolean weaponResist = false;
-		if(weapon != null) {
-			weaponResist = weapon.resistsPoisonDamage();
-		}
-		boolean armorResist = false;
-		if(armor != null) {
-			armorResist = armor.resistsPoisonDamage();
-		}
-		boolean ringResist = false;
-		if(ring != null) {
-			ringResist = ring.resistsPoisonDamage();
-		}
-		boolean shieldResist = false;
-		if(shield != null) {
-			shieldResist = shield.resistsPoisonDamage();
-		}
+		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnResistsPoison = (resistsPoisonDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
-		if(returnResistsPoison > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.resistsPoisonDamage())){
+				return true;
+			}
 		}
+		return resistsPoisonDamage;
 	}
+
 	public void setResistsPoisonDamage(boolean value) {
 		resistsPoisonDamage = value;
 	}
 	private boolean immunePoisonDamage;
 	public boolean immunePoisonDamage() {
-		boolean weaponImmune = false;
-		if(weapon != null) {
-			weaponImmune = weapon.immunePoisonDamage();
-		}
-		boolean armorImmune = false;
-		if(armor != null) {
-			armorImmune = armor.immunePoisonDamage();
-		}
-		boolean ringImmune = false;
-		if(ring != null) {
-			ringImmune = ring.immunePoisonDamage();
-		}
-		boolean shieldImmune = false;
-		if(shield != null) {
-			shieldImmune = shield.immunePoisonDamage();
-		}
+		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnImmunePoison = (immunePoisonDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
-		if(returnImmunePoison > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.immunePoisonDamage())){
+				return true;
+			}
 		}
+		return immunePoisonDamage;
 	}
+
 	public void setImmunePoisonDamage(boolean value) {
 		immunePoisonDamage = value;
 	}
 
 	private boolean resistsAcidDamage;
 	public boolean resistsAcidDamage() {
-		boolean weaponResist = false;
-		if(weapon != null) {
-			weaponResist = weapon.resistsAcidDamage();
-		}
-		boolean armorResist = false;
-		if(armor != null) {
-			armorResist = armor.resistsAcidDamage();
-		}
-		boolean ringResist = false;
-		if(ring != null) {
-			ringResist = ring.resistsAcidDamage();
-		}
-		boolean shieldResist = false;
-		if(shield != null) {
-			shieldResist = shield.resistsAcidDamage();
-		}
+			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnResistsAcid = (resistsAcidDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
-		if(returnResistsAcid > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.resistsAcidDamage())){
+				return true;
+			}
 		}
+		return resistsAcidDamage;
 	}
+
 	public void setResistsAcidDamage(boolean value) {
 		resistsAcidDamage = value;
 	}
+
 	private boolean immuneAcidDamage;
 	public boolean immuneAcidDamage() {
-		boolean weaponImmune = false;
-		if(weapon != null) {
-			weaponImmune = weapon.immuneAcidDamage();
-		}
-		boolean armorImmune = false;
-		if(armor != null) {
-			armorImmune = armor.immuneAcidDamage();
-		}
-		boolean ringImmune = false;
-		if(ring != null) {
-			ringImmune = ring.immuneAcidDamage();
-		}
-		boolean shieldImmune = false;
-		if(shield != null) {
-			shieldImmune = shield.immuneAcidDamage();
-		}
+			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnImmuneAcid = (immuneAcidDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
-		if(returnImmuneAcid > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.immuneAcidDamage())){
+				return true;
+			}
 		}
+		return immuneAcidDamage;
 	}
+
 	public void setImmuneAcidDamage(boolean value) {
 		immuneAcidDamage = value;
 	}
 
 	private boolean resistsMagicDamage;
 	public boolean resistsMagicDamage() {
-		boolean weaponResist = false;
-		if(weapon != null) {
-			weaponResist = weapon.resistsMagicDamage();
-		}
-		boolean armorResist = false;
-		if(armor != null) {
-			armorResist = armor.resistsMagicDamage();
-		}
-		boolean ringResist = false;
-		if(ring != null) {
-			ringResist = ring.resistsMagicDamage();
-		}
-		boolean shieldResist = false;
-		if(shield != null) {
-			shieldResist = shield.resistsMagicDamage();
-		}
+			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnResistsMagic = (resistsMagicDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
-		if(returnResistsMagic > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.resistsMagicDamage())){
+				return true;
+			}
 		}
+		return resistsMagicDamage;
 	}
+
 	public void setResistsMagicDamage(boolean value) {
 		resistsMagicDamage = value;
 	}
+	
 	private boolean immuneMagicDamage;
 	public boolean immuneMagicDamage() {
-		boolean weaponImmune = false;
-		if(weapon != null) {
-			weaponImmune = weapon.immuneMagicDamage();
-		}
-		boolean armorImmune = false;
-		if(armor != null) {
-			armorImmune = armor.immuneMagicDamage();
-		}
-		boolean ringImmune = false;
-		if(ring != null) {
-			ringImmune = ring.immuneMagicDamage();
-		}
-		boolean shieldImmune = false;
-		if(shield != null) {
-			shieldImmune = shield.immuneMagicDamage();
-		}
+			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnImmuneMagic = (immuneMagicDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
-		if(returnImmuneMagic > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.immuneMagicDamage())){
+				return true;
+			}
 		}
+		return immuneMagicDamage;
 	}
+
 	public void setImmuneMagicDamage(boolean value) {
 		immuneMagicDamage = value;
 	}
 
 	private boolean resistsChaosDamage;
 	public boolean resistsChaosDamage() {
-		boolean weaponResist = false;
-		if(weapon != null) {
-			weaponResist = weapon.resistsChaosDamage();
-		}
-		boolean armorResist = false;
-		if(armor != null) {
-			armorResist = armor.resistsChaosDamage();
-		}
-		boolean ringResist = false;
-		if(ring != null) {
-			ringResist = ring.resistsChaosDamage();
-		}
-		boolean shieldResist = false;
-		if(shield != null) {
-			shieldResist = shield.resistsChaosDamage();
-		}
+			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnResistsChaos = (resistsChaosDamage ? 1 : 0) + (weaponResist ? 1 : 0) + (armorResist ? 1 : 0) + (ringResist ? 1 : 0) + (shieldResist ? 1 : 0);
-		if(returnResistsChaos > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.resistsChaosDamage())){
+				return true;
+			}
 		}
+		return resistsChaosDamage;
 	}
+
 	public void setResistsChaosDamage(boolean value) {
 		resistsChaosDamage = value;
 	}
 	private boolean immuneChaosDamage;
 	public boolean immuneChaosDamage() {
-		boolean weaponImmune = false;
-		if(weapon != null) {
-			weaponImmune = weapon.immuneChaosDamage();
-		}
-		boolean armorImmune = false;
-		if(armor != null) {
-			armorImmune = armor.immuneChaosDamage();
-		}
-		boolean ringImmune = false;
-		if(ring != null) {
-			ringImmune = ring.immuneChaosDamage();
-		}
-		boolean shieldImmune = false;
-		if(shield != null) {
-			shieldImmune = shield.immuneChaosDamage();
-		}
+			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
+		equipmentArrayList = this.getequipmentArrayList();
 		
-		int returnImmuneChaos = (immuneChaosDamage ? 1 : 0) + (weaponImmune ? 1 : 0) + (armorImmune ? 1 : 0) + (ringImmune ? 1 : 0) + (shieldImmune ? 1 : 0);
-		if(returnImmuneChaos > 0) {
-			return true;
-		}else {
-			return false;
+		for (Item equipment: equipmentArrayList){
+			if ((equipment != null) && (equipment.immuneChaosDamage())){
+				return true;
+			}
 		}
+		return immuneChaosDamage;
 	}
+
 	public void setImmuneChaosDamage(boolean value) {
 		immuneChaosDamage = value;
 	}
 
 	public ArrayList<String> resistances(){
 		ArrayList<String> resistances = new ArrayList<String>();	
-		if (resistsPhysicalDamage() == true){
+		if (resistsPhysicalDamage()){
 			resistances.add(Damage.physical);
 		}
-		else if(resistsFireDamage() == true){
+		if(resistsFireDamage()){
 			resistances.add(Damage.fire);
 		}
-		else if(resistsFrostDamage() == true){
+		if(resistsFrostDamage()){
 			resistances.add(Damage.frost);
 		}
-		else if (resistsShockDamage() == true){
+		if (resistsShockDamage()){
 			resistances.add(Damage.shock);
 		}
-		else if (resistsPoisonDamage() == true){
+		if (resistsPoisonDamage()){
 			resistances.add(Damage.poison);
 		}
-		else if (resistsAcidDamage() == true){
+		if (resistsAcidDamage()){
 			resistances.add(Damage.acid);
 		}
-		else if (resistsMagicDamage() == true){
+		if (resistsMagicDamage()){
 			resistances.add(Damage.magic);
 		}
-		else if (resistsChaosDamage() == true){
+		if (resistsChaosDamage()){
 			resistances.add(Damage.chaos);
 		}
 		return resistances;
 	}
 
-	public ArrayList<String> imunites(){
+	public ArrayList<String> imumnities(){
 		ArrayList<String> imunites = new ArrayList<String>();	
-		if (resistsPhysicalDamage() == true){
+		if (resistsPhysicalDamage()){
 			imunites.add(Damage.physical);
 		}
-		else if(immunePhysicalDamage() == true){
+		if(immunePhysicalDamage()){
 			imunites.add(Damage.fire);
 		}
-		else if(immuneFrostDamage() == true){
+		if(immuneFrostDamage()){
 			imunites.add(Damage.frost);
 		}
-		else if (immuneFrostDamage() == true){
+		if (immuneFrostDamage()){
 			imunites.add(Damage.shock);
 		}
-		else if (immunePoisonDamage() == true){
+		if (immunePoisonDamage()){
 			imunites.add(Damage.poison);
 		}
-		else if (immuneAcidDamage() == true){
+		if (immuneAcidDamage()){
 			imunites.add(Damage.acid);
 		}
-		else if (immuneChaosDamage() == true){
+		if (immuneChaosDamage()){
 			imunites.add(Damage.magic);
 		}
-		else if (immuneChaosDamage() == true){
+		if (immuneChaosDamage()){
 			imunites.add(Damage.chaos);
 		}
 		return imunites;
