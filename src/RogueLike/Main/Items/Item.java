@@ -83,24 +83,6 @@ public class Item implements Cloneable{
 		return defaultName;
 	}
 	
-	private String enchantedName;
-	public String enchantedName() {
-		return enchantedName;
-	}
-	
-	public void setEnchantedName(String newName) {
-		enchantedName = newName;
-	}
-	
-	private String upgradeName;
-	public String upgradeName() {
-		return upgradeName;
-	}
-	
-	public void setUpgradeName(String newName) {
-		upgradeName = newName;
-	}
-	
 	private String appearance;
 	public String getAppearance() {
 		if(appearance == null) {
@@ -1015,7 +997,6 @@ public class Item implements Cloneable{
 	public void setUsesPowderAmmunition(boolean value) {
 		usesPowderAmmunition = value;
 	}
-	//FLAT_WHITE
 	private boolean isScroll;
 	public boolean isScroll() {
 		return isScroll;
@@ -1111,15 +1092,6 @@ public class Item implements Cloneable{
 		if(armorClass != 0) {
 			details += "   Armor Class: "+armorClass;
 		}
-		/*if(fireDefenseValue != 0) {
-			details += "   Fire Resistance: "+fireDefenseValue;
-		}
-		if(iceDefenseValue != 0) {
-			details += "   Frost Resistance: "+iceDefenseValue;
-		}
-		if(shockDefenseValue != 0) {
-			details += "   Shock Resistance: "+shockDefenseValue;
-		}*/
 		if(foodValue != 0) {
 			details += "   Food: "+foodValue;
 		}
@@ -1137,8 +1109,6 @@ public class Item implements Cloneable{
 		this.defaultColor = color;
 		this.name = name;
 		this.defaultName = name;
-		this.upgradeName = "";
-		this.enchantedName = "";
 		this.thrownDamageDice = Dice.d1;
 		this.writtenSpells = new ArrayList<Spell>();
 		this.appearance = appearance;
