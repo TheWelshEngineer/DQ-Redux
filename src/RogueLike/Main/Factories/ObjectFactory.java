@@ -37,6 +37,7 @@ import RogueLike.Main.Items.BasicShield;
 import RogueLike.Main.Items.BasicThrownWeapon;
 import RogueLike.Main.Items.BoltsRangedWeapon;
 import RogueLike.Main.Items.HeavyArmor;
+import RogueLike.Main.Items.IronKey;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Items.LightArmor;
 import RogueLike.Main.Items.MediumArmor;
@@ -1070,17 +1071,10 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newIronKey(int depth, int addToWorld) {
-		Item key = new Item((char)157, AsciiPanel.white, "Iron Key", null);
-		key.setIsIronKey(true);
-		key.setKeyDepth(depth);
-		//key.modifyIsStackable(1);
-		key.setID(3);
-		key.changeName(String.format("Iron Key (from Depth %d)", depth+1));
-		if(addToWorld > 0) {
+	public Item newIronKey(int depth, boolean addToWorld) {
+		Item key = new IronKey((char)157, AsciiPanel.white, "Iron Key", null, depth, 3);
+		if(addToWorld) {
 			world.addAtEmptyLocation(key, depth);
-		}else {
-			
 		}
 		return key;
 		
@@ -2198,7 +2192,7 @@ public class ObjectFactory {
             		 creature.world().changeTile(creature.x()+1, creature.y(), creature.z(), Tile.BARS_VERTICAL);
             		 creature.world().changeTile(creature.x(), creature.y()-1, creature.z(), Tile.BARS_HORIZONTAL);
             		 creature.world().changeTile(creature.x(), creature.y()+1, creature.z(), Tile.BARS_DOOR);
-            		 newIronKey(creature.z(), 1);
+            		 newIronKey(creature.z(), true);
             		 if(creature.item(creature.x(), creature.y(), creature.z()) != null) {
                 		 creature.world().remove(creature.x(), creature.y(), creature.z());
                 	 }
@@ -2401,7 +2395,7 @@ public class ObjectFactory {
 					creature.world().addAtEmptySpace(randomPotion(creature.z(), false), creature.x()+1, creature.y()-1, creature.z());
 					creature.world().addAtEmptySpace(randomPositivePotion(creature.z(), false), creature.x(), creature.y()-1, creature.z());
 					creature.world().addAtEmptySpace(randomPotion(creature.z(), false), creature.x()-1, creature.y()-1, creature.z());
-					newIronKey(creature.z(), 1);
+					newIronKey(creature.z(), true);
 				}
 
 			}

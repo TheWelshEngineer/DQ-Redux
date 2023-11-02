@@ -5,7 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.AI.CreatureAI;
+import RogueLike.Main.Damage.AcidDamage;
+import RogueLike.Main.Damage.ChaosDamage;
 import RogueLike.Main.Damage.Damage;
+import RogueLike.Main.Damage.FireDamage;
+import RogueLike.Main.Damage.FrostDamage;
+import RogueLike.Main.Damage.MagicDamage;
+import RogueLike.Main.Damage.PhysicalDamage;
+import RogueLike.Main.Damage.PoisonDamage;
+import RogueLike.Main.Damage.ShockDamage;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 
@@ -170,6 +178,7 @@ public class Creature implements Cloneable{
 		}else {
 			int amount = damage.amount();
 			int amountTemp = damage.amount();
+			boolean applyStatus = true;
 
 			if((this.resistances()).contains(damage.typeString())){
 				amount = (int)Math.floor(amountTemp*0.5);
@@ -177,6 +186,7 @@ public class Creature implements Cloneable{
 
 			if((this.imumnities()).contains(damage.typeString())){
 				amount = 0;
+				applyStatus = false;
 			}
 
 			hp -= amount;
@@ -189,6 +199,10 @@ public class Creature implements Cloneable{
 				}else {
 					this.doAction("take %d %s damage", amount, damage.typeString().toLowerCase());
 				}
+			}
+			
+			if(applyStatus && Dice.d10.roll() == 1 && damage.statusEffect() != null) {
+				this.effects().add(damage.statusEffect());
 			}
 
 		}
@@ -2417,57 +2431,7 @@ public class Creature implements Cloneable{
 		if(amount < 1) {
 			amount = 1;
 		}
-
-		Damage damage = new Damage(amount, false, false, Damage.physical, factory().effectFactory);
-		if(this.isPlayer()) {
-			if(weapon != null) {
-				if(weapon.dealsFireDamage() && weapon != null) {
-					damage.setTypeString(Damage.fire);
-				}else if(weapon.dealsFrostDamage() && weapon != null) {
-					damage.setTypeString(Damage.frost);
-				}else if(weapon.dealsShockDamage() && weapon != null) {
-					damage.setTypeString(Damage.shock);
-				}else if(weapon.dealsPoisonDamage() && weapon != null) {
-					damage.setTypeString(Damage.poison);
-				}else if(weapon.dealsAcidDamage() && weapon != null) {
-					damage.setTypeString(Damage.acid);
-				}else if(weapon.dealsMagicDamage() && weapon != null) {
-					damage.setTypeString(Damage.magic);
-				}else if(weapon.dealsChaosDamage() && weapon != null) {
-					damage.setTypeString(Damage.chaos);
-				}else {
-					damage.setTypeString(Damage.physical);
-				}
-			}else {
-				damage.setTypeString(Damage.physical);
-			}
-		}else {
-			if(this.dealsFireDamage()) {
-				damage.setTypeString(Damage.fire);
-			}else if(this.dealsFrostDamage()) {
-				damage.setTypeString(Damage.frost);
-			}else if(this.dealsShockDamage()) {
-				damage.setTypeString(Damage.shock);
-			}else if(this.dealsPoisonDamage()) {
-				damage.setTypeString(Damage.poison);
-			}else if(this.dealsAcidDamage()) {
-				damage.setTypeString(Damage.acid);
-			}else if(this.dealsMagicDamage()) {
-				damage.setTypeString(Damage.magic);
-			}else if(this.dealsChaosDamage()) {
-				damage.setTypeString(Damage.chaos);
-			}else {
-				damage.setTypeString(Damage.physical);
-			}
-		}
-
-
-
-
-
-		modifyFood(-5);
-
-
+		
 		int attackRoll = 0;
 		if(weapon != null) {
 			if(weapon.usesDexterity()) {
@@ -2490,6 +2454,80 @@ public class Creature implements Cloneable{
 		if(other.isInvisible() == true) {
 			attackRoll -= 5;
 		}
+		
+		if(attackRoll >= 20) {
+			amount *= 2;
+		}
+		
+		Damage damage = new Damage(amount, false, false, Damage.physical, factory().effectFactory);
+		if(this.isPlayer()) {
+			if(weapon != null) {
+				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
+					damage = new FireDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
+					damage = new FrostDamage(amount, false, factory().effectFactory);
+				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
+					damage = new ShockDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
+					damage = new PoisonDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
+					damage = new AcidDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
+					damage = new MagicDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
+					damage = new ChaosDamage(amount, false, factory().effectFactory);
+				}else {
+					damage = new PhysicalDamage(amount, false, factory().effectFactory);
+				}
+			}
+		}else {
+			if(weapon != null) {
+				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
+					damage = new FireDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
+					damage = new FrostDamage(amount, false, factory().effectFactory);
+				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
+					damage = new ShockDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
+					damage = new PoisonDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
+					damage = new AcidDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
+					damage = new MagicDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
+					damage = new ChaosDamage(amount, false, factory().effectFactory);
+				}else {
+					damage = new PhysicalDamage(amount, false, factory().effectFactory);
+				}
+			}else {
+				if(this.dealsFireDamage()) {
+					damage = new FireDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsFrostDamage()) {
+					damage = new FrostDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsShockDamage()) {
+					damage = new ShockDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsPoisonDamage()) {
+					damage = new PoisonDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsAcidDamage()) {
+					damage = new AcidDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsMagicDamage()) {
+					damage = new MagicDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsChaosDamage()) {
+					damage = new ChaosDamage(amount, false, factory().effectFactory);
+				}else {
+					damage = new PhysicalDamage(amount, false, factory().effectFactory);
+				}
+			}
+		}
+
+
+
+
+
+		modifyFood(-5);
+
+
+		
 
 		if(attackRoll >= other.armorClass()) {
 			//doAction("attack the %s for %d damage", other.name, damage.amount());
@@ -2605,40 +2643,62 @@ public class Creature implements Cloneable{
 
 		Damage damage = new Damage(amount, false, false, Damage.physical, factory().effectFactory);
 		if(this.isPlayer()) {
-			if(item.dealsFireDamage() && weapon != null) {
-				damage.setTypeString(Damage.fire);
-			}else if(item.dealsFrostDamage() && weapon != null) {
-				damage.setTypeString(Damage.frost);
-			}else if(item.dealsShockDamage() && weapon != null) {
-				damage.setTypeString(Damage.shock);
-			}else if(item.dealsPoisonDamage() && weapon != null) {
-				damage.setTypeString(Damage.poison);
-			}else if(item.dealsAcidDamage() && weapon != null) {
-				damage.setTypeString(Damage.acid);
-			}else if(item.dealsMagicDamage() && weapon != null) {
-				damage.setTypeString(Damage.magic);
-			}else if(item.dealsChaosDamage() && weapon != null) {
-				damage.setTypeString(Damage.chaos);
-			}else {
-				damage.setTypeString(Damage.physical);
+			if(weapon != null) {
+				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
+					damage = new FireDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
+					damage = new FrostDamage(amount, false, factory().effectFactory);
+				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
+					damage = new ShockDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
+					damage = new PoisonDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
+					damage = new AcidDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
+					damage = new MagicDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
+					damage = new ChaosDamage(amount, false, factory().effectFactory);
+				}else {
+					damage = new PhysicalDamage(amount, false, factory().effectFactory);
+				}
 			}
 		}else {
-			if(this.dealsFireDamage()) {
-				damage.setTypeString(Damage.fire);
-			}else if(this.dealsFrostDamage()) {
-				damage.setTypeString(Damage.frost);
-			}else if(this.dealsShockDamage()) {
-				damage.setTypeString(Damage.shock);
-			}else if(this.dealsPoisonDamage()) {
-				damage.setTypeString(Damage.poison);
-			}else if(this.dealsAcidDamage()) {
-				damage.setTypeString(Damage.acid);
-			}else if(this.dealsMagicDamage()) {
-				damage.setTypeString(Damage.magic);
-			}else if(this.dealsChaosDamage()) {
-				damage.setTypeString(Damage.chaos);
+			if(weapon != null) {
+				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
+					damage = new FireDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
+					damage = new FrostDamage(amount, false, factory().effectFactory);
+				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
+					damage = new ShockDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
+					damage = new PoisonDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
+					damage = new AcidDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
+					damage = new MagicDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
+					damage = new ChaosDamage(amount, false, factory().effectFactory);
+				}else {
+					damage = new PhysicalDamage(amount, false, factory().effectFactory);
+				}
 			}else {
-				damage.setTypeString(Damage.physical);
+				if(this.dealsFireDamage()) {
+					damage = new FireDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsFrostDamage()) {
+					damage = new FrostDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsShockDamage()) {
+					damage = new ShockDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsPoisonDamage()) {
+					damage = new PoisonDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsAcidDamage()) {
+					damage = new AcidDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsMagicDamage()) {
+					damage = new MagicDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsChaosDamage()) {
+					damage = new ChaosDamage(amount, false, factory().effectFactory);
+				}else {
+					damage = new PhysicalDamage(amount, false, factory().effectFactory);
+				}
 			}
 		}
 
@@ -2743,43 +2803,69 @@ public class Creature implements Cloneable{
 		if(amount < 1) {
 			amount = 1;
 		}
+		
+		if(attackRoll >= 20) {
+			amount *= 2;
+		}
 
 		Damage damage = new Damage(amount, false, false, Damage.physical, factory().effectFactory);
 		if(this.isPlayer()) {
-			if(weapon.dealsFireDamage() && weapon != null) {
-				damage.setTypeString(Damage.fire);
-			}else if(weapon.dealsFrostDamage() && weapon != null) {
-				damage.setTypeString(Damage.frost);
-			}else if(weapon.dealsShockDamage() && weapon != null) {
-				damage.setTypeString(Damage.shock);
-			}else if(weapon.dealsPoisonDamage() && weapon != null) {
-				damage.setTypeString(Damage.poison);
-			}else if(weapon.dealsAcidDamage() && weapon != null) {
-				damage.setTypeString(Damage.acid);
-			}else if(weapon.dealsMagicDamage() && weapon != null) {
-				damage.setTypeString(Damage.magic);
-			}else if(weapon.dealsChaosDamage() && weapon != null) {
-				damage.setTypeString(Damage.chaos);
-			}else {
-				damage.setTypeString(Damage.physical);
+			if(weapon != null) {
+				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
+					damage = new FireDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
+					damage = new FrostDamage(amount, false, factory().effectFactory);
+				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
+					damage = new ShockDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
+					damage = new PoisonDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
+					damage = new AcidDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
+					damage = new MagicDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
+					damage = new ChaosDamage(amount, false, factory().effectFactory);
+				}else {
+					damage = new PhysicalDamage(amount, false, factory().effectFactory);
+				}
 			}
 		}else {
-			if(this.dealsFireDamage()) {
-				damage.setTypeString(Damage.fire);
-			}else if(this.dealsFrostDamage()) {
-				damage.setTypeString(Damage.frost);
-			}else if(this.dealsShockDamage()) {
-				damage.setTypeString(Damage.shock);
-			}else if(this.dealsPoisonDamage()) {
-				damage.setTypeString(Damage.poison);
-			}else if(this.dealsAcidDamage()) {
-				damage.setTypeString(Damage.acid);
-			}else if(this.dealsMagicDamage()) {
-				damage.setTypeString(Damage.magic);
-			}else if(this.dealsChaosDamage()) {
-				damage.setTypeString(Damage.chaos);
+			if(weapon != null) {
+				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
+					damage = new FireDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
+					damage = new FrostDamage(amount, false, factory().effectFactory);
+				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
+					damage = new ShockDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
+					damage = new PoisonDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
+					damage = new AcidDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
+					damage = new MagicDamage(amount, false, factory().effectFactory);
+				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
+					damage = new ChaosDamage(amount, false, factory().effectFactory);
+				}else {
+					damage = new PhysicalDamage(amount, false, factory().effectFactory);
+				}
 			}else {
-				damage.setTypeString(Damage.physical);
+				if(this.dealsFireDamage()) {
+					damage = new FireDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsFrostDamage()) {
+					damage = new FrostDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsShockDamage()) {
+					damage = new ShockDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsPoisonDamage()) {
+					damage = new PoisonDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsAcidDamage()) {
+					damage = new AcidDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsMagicDamage()) {
+					damage = new MagicDamage(amount, false, factory().effectFactory);
+				}else if(this.dealsChaosDamage()) {
+					damage = new ChaosDamage(amount, false, factory().effectFactory);
+				}else {
+					damage = new PhysicalDamage(amount, false, factory().effectFactory);
+				}
 			}
 		}
 
