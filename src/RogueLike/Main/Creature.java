@@ -175,7 +175,7 @@ public class Creature implements Cloneable{
 				amount = (int)Math.floor(amountTemp*0.5);
 			}
 
-			if((this.imunites()).contains(damage.typeString())){
+			if((this.imumnities()).contains(damage.typeString())){
 				amount = 0;
 			}
 
@@ -1127,7 +1127,7 @@ public class Creature implements Cloneable{
 		return resistances;
 	}
 
-	public ArrayList<String> imunites(){
+	public ArrayList<String> imumnities(){
 		ArrayList<String> imunites = new ArrayList<String>();	
 		if (resistsPhysicalDamage() == true){
 			imunites.add(Damage.physical);
