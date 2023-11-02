@@ -1,5 +1,11 @@
-package RogueLike.Main;
+package RogueLike.Main.Factories;
 
+import RogueLike.Main.Creature;
+import RogueLike.Main.Dice;
+import RogueLike.Main.Effect;
+import RogueLike.Main.ExtraColors;
+import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.Tile;
 import RogueLike.Main.Damage.Damage;
 
 public class EffectFactory {
@@ -351,8 +357,8 @@ public class EffectFactory {
 		return bounce;
 	}
 	
-	public Effect frostWard() {
-		Effect chillWard = new Effect(5, "Frost Ward", false, null){
+	public Effect chillWard() {
+		Effect chillWard = new Effect(5, "Chill Ward", false, null){
 			public void start(Creature creature){
 				creature.setHasChillWard(true);
 				creature.doAction("become wreathed in freezing air!");

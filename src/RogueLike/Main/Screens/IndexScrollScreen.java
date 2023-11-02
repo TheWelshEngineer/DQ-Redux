@@ -3,7 +3,7 @@ package RogueLike.Main.Screens;
 import java.awt.event.KeyEvent;
 
 import RogueLike.Main.Creature;
-import RogueLike.Main.ObjectFactory;
+import RogueLike.Main.Factories.ObjectFactory;
 import asciiPanel.AsciiPanel;
 
 public class IndexScrollScreen implements Screen{

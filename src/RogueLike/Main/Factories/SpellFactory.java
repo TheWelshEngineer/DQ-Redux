@@ -1,4 +1,8 @@
-package RogueLike.Main;
+package RogueLike.Main.Factories;
+
+import RogueLike.Main.Creature;
+import RogueLike.Main.Effect;
+import RogueLike.Main.Spell;
 
 public class SpellFactory {
 	
@@ -79,7 +83,7 @@ public class SpellFactory {
 	}
 	
 	public Spell frostWard(Creature player) {
-		Effect temp = effectFactory.frostWard();
+		Effect temp = effectFactory.chillWard();
 		temp.setDuration(12);
 		Spell frostWard = new Spell("frost ward", 14, 8, player, temp, true, false);
 		return frostWard;

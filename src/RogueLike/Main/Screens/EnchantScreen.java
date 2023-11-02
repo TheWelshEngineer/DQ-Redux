@@ -1,7 +1,7 @@
 package RogueLike.Main.Screens;
 
 import RogueLike.Main.Creature;
-import RogueLike.Main.ObjectFactory;
+import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 
 public class EnchantScreen extends InventoryBasedScreen{
@@ -20,13 +20,11 @@ public class EnchantScreen extends InventoryBasedScreen{
 
 	@Override
 	protected boolean isAcceptable(Item item) {
-		return (item.isWeapon() || item.isArmor() || item.isShield()) && !item.isEnchanted();
+		return (item.isWeapon() || item.isArmor() || item.isShield()) && item.enchantment() == null;
 	}
 
 	@Override
 	protected Screen use(Item item) {
-		item.setIsEnchanted(true);
-		item.modifyCurrentGoldValue(item.baseGoldValue());
 		if(item.isWeapon()) {
 			factory.randomEnchantWeapon(item);
 		}else {

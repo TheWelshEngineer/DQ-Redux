@@ -1,7 +1,7 @@
 package RogueLike.Main.Damage;
 
 import RogueLike.Main.Effect;
-import RogueLike.Main.EffectFactory;
+import RogueLike.Main.Factories.EffectFactory;
 
 public class Damage {
 	

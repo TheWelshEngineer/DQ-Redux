@@ -1,4 +1,6 @@
-package RogueLike.Main;
+package RogueLike.Main.Factories;
+
+import RogueLike.Main.Feat;
 
 public class FeatFactory {
 		

@@ -228,7 +228,7 @@ public class InventoryScreen implements Screen{
 						String traits = "";
 						String traits2 = "";
 						String enchanted = "";
-						if(item.isEnchanted() && item.isIdentified()) {
+						if(item.enchantment() != null && item.isIdentified()) {
 							enchanted = "Enchanted, ";
 						}
 						String upgraded = "";
@@ -236,7 +236,7 @@ public class InventoryScreen implements Screen{
 							upgraded = String.format("Upgraded (+%d), ", item.upgradeLevel());
 						}
 						String cursed = "";
-						if(item.isCursed() && item.isCurseKnown()) {
+						if(item.curse() != null && item.isCurseKnown()) {
 							cursed = "Cursed, ";
 						}
 						String versatile = "";
@@ -309,7 +309,7 @@ public class InventoryScreen implements Screen{
 						String traits = "";
 						String traits2 = "";
 						String enchanted = "";
-						if(item.isEnchanted() && item.isIdentified()) {
+						if(item.enchantment() != null && item.isIdentified()) {
 							enchanted = "Enchanted, ";
 						}
 						String upgraded = "";
@@ -317,7 +317,7 @@ public class InventoryScreen implements Screen{
 							upgraded = String.format("Upgraded (+%d), ", item.upgradeLevel());
 						}
 						String cursed = "";
-						if(item.isCursed() && item.isCurseKnown()) {
+						if(item.curse() != null && item.isCurseKnown()) {
 							cursed = "Cursed, ";
 						}
 						String light = "";

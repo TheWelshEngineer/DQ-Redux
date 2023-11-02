@@ -1,4 +1,4 @@
-package RogueLike.Main;
+package RogueLike.Main.Factories;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -7,6 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import RogueLike.Main.Creature;
+import RogueLike.Main.Description;
+import RogueLike.Main.Dice;
+import RogueLike.Main.Effect;
+import RogueLike.Main.ExtraColors;
+import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.FieldOfView;
+import RogueLike.Main.Tile;
+import RogueLike.Main.World;
 import RogueLike.Main.AI.AlchemistAI;
 import RogueLike.Main.AI.BatAI;
 import RogueLike.Main.AI.ChestAI;
@@ -20,6 +29,7 @@ import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AI.SkeletonAI;
 import RogueLike.Main.AI.SlimeAI;
 import RogueLike.Main.AI.SlimelingAI;
+import RogueLike.Main.Enchantments.Enchantment;
 import RogueLike.Main.Items.ArrowsRangedWeapon;
 import RogueLike.Main.Items.BasicFinesseWeapon;
 import RogueLike.Main.Items.BasicMeleeWeapon;
@@ -72,6 +82,7 @@ public class ObjectFactory {
 	public EffectFactory effectFactory = new EffectFactory(this);
 	public SpellFactory spellFactory = new SpellFactory(effectFactory);
 	public FeatFactory featFactory = new FeatFactory();
+	public EnchantmentFactory enchantmentFactory = new EnchantmentFactory(effectFactory);
 	
 	public ObjectFactory(World world) {
 		this.world = world;
@@ -263,59 +274,23 @@ public class ObjectFactory {
 		
 	}
 	
-	public void enchantItem(Item item, Effect enchantment) {
-		item.setIsEnchanted(true);
-		item.setEnchantmentEffect(enchantment);
-		item.setEnchantedName(item.enchantmentEffect().enchantmentName());
-		if(enchantment.enchantmentName() == "Blazing ") {
-			item.setDealsFireDamage(true);
-		}else if(enchantment.enchantmentName() == "Freezing ") {
-			item.setDealsFrostDamage(true);
-		}else if(enchantment.enchantmentName() == "Shocking ") {
-			item.setDealsShockDamage(true);
-		}else {
-			
-		}
+	public void enchantItem(Item item, Enchantment enchantment) {
+		item.setEnchantment(enchantment);
 		item.modifyCurrentGoldValue(item.baseGoldValue());
 	}
 	
 	public void randomEnchantWeapon(Item item) {
-		item.setIsEnchanted(true);
-		Effect enchantment = randomMeleeEnchantment();
-		item.setEnchantmentEffect(enchantment);
-		item.setEnchantedName(item.enchantmentEffect().enchantmentName());
-		if(enchantment.enchantmentName() == "Blazing ") {
-			item.setDealsFireDamage(true);
-		}else if(enchantment.enchantmentName() == "Freezing ") {
-			item.setDealsFrostDamage(true);
-		}else if(enchantment.enchantmentName() == "Shocking ") {
-			item.setDealsShockDamage(true);
-		}else {
-			
-		}
+		item.setEnchantment(enchantmentFactory.randomWeaponEnchantment());
 		item.modifyCurrentGoldValue(item.baseGoldValue());
 	}
 	
 	public void randomEnchantArmor(Item item) {
-		item.setIsEnchanted(true);
-		Effect enchantment = randomArmorEnchantment();
-		item.setEnchantmentEffect(enchantment);
-		item.setEnchantedName(item.enchantmentEffect().enchantmentName());
-		if(enchantment.enchantmentName() == " of Magma Ward") {
-			item.setResistsFireDamage(true);
-		}else if(enchantment.enchantmentName() == " of Chill Ward") {
-			item.setResistsFrostDamage(true);
-		}else if(enchantment.enchantmentName() == " of Arc Ward") {
-			item.setResistsShockDamage(true);
-		}else {
-			
-		}
+		item.setEnchantment(enchantmentFactory.randomArmorEnchantment());
 		item.modifyCurrentGoldValue(item.baseGoldValue());
 	}
 	
 	public void curseItem(Item item) {
-		item.setIsCursed(true);
-		item.setCurseEffect(randomCurse());
+		item.setCurse(enchantmentFactory.randomCurse());
 	}
 	
 	public Creature newPlayer(List<String> messages, FieldOfView fov, String playerClass, List<Integer> startingStats, /*List<Integer> startingSkills,*/ String playerName/*, String playerSpecies*/) {
@@ -844,7 +819,7 @@ public class ObjectFactory {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature ammoChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(ammoChest, this, this.world);
-		Item startAmmo = randomAmmo(0, 0);
+		Item startAmmo = randomAmmunition(0, 0);
 		ammoChest.inventory().add(startAmmo);
 		ammoChest.modifyIsContainer(true);
 		ammoChest.setHasNoCorpse(true);
@@ -2100,85 +2075,6 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	//enchantments
-	public Effect newFireWeaponEnchantment() {
-		Effect enchantment = effectFactory.ignited();
-		enchantment.setDuration(8);
-		enchantment.setEnchantmentName("Blazing ");
-		return enchantment;
-	}
-	
-	public Effect newFrostWeaponEnchantment() {
-		Effect enchantment = effectFactory.frozen();
-		enchantment.setEnchantmentName("Freezing ");
-		return enchantment;
-        
-	}
-	
-	public Effect newShockWeaponEnchantment() {
-		Effect enchantment = effectFactory.electrified();
-		enchantment.setEnchantmentName("Shocking ");
-		return enchantment;
-	}
-	
-	public Effect newStunWeaponEnchantment() {
-		Effect enchantment = effectFactory.paralyzed();
-		enchantment.setEnchantmentName("Stunning ");
-		return enchantment;
-	}
-	
-	public Effect newBlinkWeaponEnchantment() {
-		Effect enchantment = effectFactory.blink();
-		enchantment.setEnchantmentName("Shifting ");
-		return enchantment;
-	}
-	
-	public Effect newShockArmorEnchantment() {
-		Effect enchantment = effectFactory.arcWard();
-		enchantment.setEnchantmentName(" of Arc Ward");
-		return enchantment;
-	}
-	
-	public Effect newStealthArmorEnchantment() {
-		Effect enchantment = effectFactory.invisible();
-		enchantment.setEnchantmentName(" of Transparency");
-		return enchantment;
-	}
-	
-	public Effect newFireArmorEnchantment() {
-		Effect enchantment = effectFactory.magmaWard();
-		enchantment.setEnchantmentName(" of Magma Ward");
-		return enchantment;
-	}
-	
-	public Effect newFrostArmorEnchantment() {
-		Effect enchantment = effectFactory.frostWard();
-		enchantment.setEnchantmentName(" of Chill Ward");
-		return enchantment;
-	}
-	
-	public Effect newBounceArmorEnchantment() {
-		Effect enchantment = effectFactory.bounce();
-		enchantment.setEnchantmentName(" of Force");
-		return enchantment;
-	}
-	
-	//curses
-	public Effect manaCurse() {
-		Effect curse = effectFactory.devoured();
-		return curse;
-	}
-	
-	public Effect confuseCurse() {
-		Effect curse = effectFactory.confused();
-		return curse;
-	}
-	
-	public Effect blindCurse() {
-		Effect curse = effectFactory.blinded();
-		return curse;
-	}
-	
 	//structures
 	
 	public Effect generateSmallCell(Creature player) {
@@ -3220,37 +3116,6 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Effect randomMeleeEnchantment() {
-		switch(ExtraMaths.diceRoll(1, 5)) {
-		case 1: return newFireWeaponEnchantment();
-		case 2: return newBlinkWeaponEnchantment();
-		case 3: return newFrostWeaponEnchantment();
-		case 4: return newShockWeaponEnchantment();
-		case 5: return newStunWeaponEnchantment();
-		default: return newFireWeaponEnchantment();
-		}
-	}
-	
-	public Effect randomArmorEnchantment() {
-		switch(ExtraMaths.diceRoll(1, 5)) {
-		case 1: return newShockArmorEnchantment();
-		case 2: return newFireArmorEnchantment();
-		case 3: return newFrostArmorEnchantment();
-		case 4: return newBounceArmorEnchantment();
-		case 5: return newStealthArmorEnchantment();
-		default: return newShockArmorEnchantment();
-		}
-	}
-	
-	public Effect randomCurse() {
-		switch(ExtraMaths.diceRoll(1, 3)) {
-		case 1: return manaCurse();
-		case 2: return confuseCurse();
-		case 3: return blindCurse();
-		default: return manaCurse();
-		}
-	}
-	
 	public Item randomTrap(int depth, int addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 5)) {
 		case 1: return newShockTrap(depth, addToWorld);
@@ -3262,7 +3127,7 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomAmmo(int depth, int addToWorld) {
+	public Item randomAmmunition(int depth, int addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 3)) {
 		case 1: return newArrows(depth, addToWorld);
 		case 2: return newBolts(depth, addToWorld);
