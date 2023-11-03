@@ -1098,7 +1098,7 @@ public class ObjectFactory {
 		item.setIsAmmunition(true);
 		item.modifyAmmunitionAmount(10);
 		item.setIsArrowAmmunition(true);
-		item.setEquippable(true);
+		item.setIsEquippable(true);
 		item.setIsStackable(true);
 		item.modifyStackAmount(ExtraMaths.d12());
 		item.setID(5);
@@ -1115,7 +1115,7 @@ public class ObjectFactory {
 		item.setIsAmmunition(true);
 		item.modifyAmmunitionAmount(10);
 		item.setIsBoltAmmunition(true);
-		item.setEquippable(true);
+		item.setIsEquippable(true);
 		item.setIsStackable(true);
 		item.modifyStackAmount(ExtraMaths.d8());
 		item.setID(6);
@@ -1132,7 +1132,7 @@ public class ObjectFactory {
 		item.setIsAmmunition(true);
 		item.modifyAmmunitionAmount(10);
 		item.setIsPowderAmmunition(true);
-		item.setEquippable(true);
+		item.setIsEquippable(true);
 		item.setIsStackable(true);
 		item.modifyStackAmount(ExtraMaths.d6());
 		item.setID(7);

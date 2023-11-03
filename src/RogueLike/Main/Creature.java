@@ -1793,6 +1793,31 @@ public class Creature implements Cloneable{
 	public String ammunitionName() {
 		return ammunitionName;
 	}
+	
+	private Item quickslot_1;
+	public Item quickslot_1() {
+		return quickslot_1;
+	}
+	private Item quickslot_2;
+	public Item quickslot_2() {
+		return quickslot_2;
+	}
+	private Item quickslot_3;
+	public Item quickslot_3() {
+		return quickslot_3;
+	}
+	private Item quickslot_4;
+	public Item quickslot_4() {
+		return quickslot_4;
+	}
+	private Item quickslot_5;
+	public Item quickslot_5() {
+		return quickslot_5;
+	}
+	private Item quickslot_6;
+	public Item quickslot_6() {
+		return quickslot_6;
+	}
 
 	public String healthAsString() {
 		if(hp >= (maxHP*0.75)) {
@@ -2998,7 +3023,7 @@ public class Creature implements Cloneable{
 	}
 
 	public void equip(Item item) {
-		if(!item.equippable()) {
+		if(!item.isEquippable()) {
 			return;
 		}
 		if(item.isWeapon()) {
@@ -3210,6 +3235,69 @@ public class Creature implements Cloneable{
 				}
 
 			}
+		}
+	}
+	//TODO
+	public void equipToQuickslot(Item item, int slot) {
+		if(!item.isQuickslottable()) {
+			return;
+		}
+		switch(slot) {
+		case 1:
+			if(quickslot_1() != null) {
+				quickslot_1().removeQuickslotsFromMemory();
+				item.setIsInQuickslot1();
+				quickslot_1 = item;
+			}else {
+				item.setIsInQuickslot1();
+				quickslot_1 = item;
+			}
+		case 2:
+			if(quickslot_2() != null) {
+				quickslot_2().removeQuickslotsFromMemory();
+				item.setIsInQuickslot2();
+				quickslot_2 = item;
+			}else {
+				item.setIsInQuickslot2();
+				quickslot_2 = item;
+			}
+		case 3:
+			if(quickslot_3() != null) {
+				quickslot_3().removeQuickslotsFromMemory();
+				item.setIsInQuickslot3();
+				quickslot_3 = item;
+			}else {
+				item.setIsInQuickslot3();
+				quickslot_3 = item;
+			}
+		case 4:
+			if(quickslot_4() != null) {
+				quickslot_4().removeQuickslotsFromMemory();
+				item.setIsInQuickslot4();
+				quickslot_4 = item;
+			}else {
+				item.setIsInQuickslot4();
+				quickslot_4 = item;
+			}
+		case 5:
+			if(quickslot_5() != null) {
+				quickslot_5().removeQuickslotsFromMemory();
+				item.setIsInQuickslot5();
+				quickslot_5 = item;
+			}else {
+				item.setIsInQuickslot5();
+				quickslot_5 = item;
+			}
+		case 6:
+			if(quickslot_6() != null) {
+				quickslot_6().removeQuickslotsFromMemory();
+				item.setIsInQuickslot6();
+				quickslot_6 = item;
+			}else {
+				item.setIsInQuickslot6();
+				quickslot_6 = item;
+			}
+		default: return;
 		}
 	}
 

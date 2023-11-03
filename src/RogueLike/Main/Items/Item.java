@@ -109,8 +109,8 @@ public class Item implements Cloneable{
 		return id;
 	}
 	
-	public void setID(int amount) {
-		id = amount;
+	public void setID(int value) {
+		id = value;
 	}
 	
 	private boolean isStackable;
@@ -854,20 +854,103 @@ public class Item implements Cloneable{
 		isPotion = value;
 	}
 	
-	private boolean equippable;
-	public boolean equippable() {
-		return equippable;
+	private boolean isEquippable;
+	public boolean isEquippable() {
+		return isEquippable;
 	}
-	public void setEquippable(boolean value) {
-		equippable = value;
+	public void setIsEquippable(boolean value) {
+		isEquippable = value;
 	}
 	
-	private boolean quickslottable = false;
-	public boolean quickslottable() {
-		return isWand() || isScroll() || isPotion();
+	private boolean isQuickslottable = false;
+	public boolean isQuickslottable() {
+		return isQuickslottable || isWand() || isScroll() || isPotion() || isThrownWeapon();
 	}
 	public void setQuickslottable(boolean value) {
-		quickslottable = value;
+		isQuickslottable = value;
+	}
+	
+	private boolean isInQuickslot1;
+	private boolean isInQuickslot2;
+	private boolean isInQuickslot3;
+	private boolean isInQuickslot4;
+	private boolean isInQuickslot5;
+	private boolean isInQuickslot6;
+	
+	public boolean isInQuickslot1() {
+		return isInQuickslot1;
+	}
+	public void setIsInQuickslot1() {
+		isInQuickslot1 = true;
+		isInQuickslot2 = false;
+		isInQuickslot3 = false;
+		isInQuickslot4 = false;
+		isInQuickslot5 = false;
+		isInQuickslot6 = false;
+	}
+	public boolean isInQuickslot2() {
+		return isInQuickslot2;
+	}
+	public void setIsInQuickslot2() {
+		isInQuickslot1 = false;
+		isInQuickslot2 = true;
+		isInQuickslot3 = false;
+		isInQuickslot4 = false;
+		isInQuickslot5 = false;
+		isInQuickslot6 = false;
+	}
+	public boolean isInQuickslot3() {
+		return isInQuickslot3;
+	}
+	public void setIsInQuickslot3() {
+		isInQuickslot1 = false;
+		isInQuickslot2 = false;
+		isInQuickslot3 = true;
+		isInQuickslot4 = false;
+		isInQuickslot5 = false;
+		isInQuickslot6 = false;
+	}
+	public boolean isInQuickslot4() {
+		return isInQuickslot4;
+	}
+	public void setIsInQuickslot4() {
+		isInQuickslot1 = false;
+		isInQuickslot2 = false;
+		isInQuickslot3 = false;
+		isInQuickslot4 = true;
+		isInQuickslot5 = false;
+		isInQuickslot6 = false;
+	}
+	public boolean isInQuickslot5() {
+		return isInQuickslot5;
+	}
+	public void setIsInQuickslot5() {
+		isInQuickslot1 = false;
+		isInQuickslot2 = false;
+		isInQuickslot3 = false;
+		isInQuickslot4 = false;
+		isInQuickslot5 = true;
+		isInQuickslot6 = false;
+	}
+	public boolean isInQuickslot6() {
+		return isInQuickslot6;
+	}
+	public void setIsInQuickslot6() {
+		isInQuickslot1 = false;
+		isInQuickslot2 = false;
+		isInQuickslot3 = false;
+		isInQuickslot4 = false;
+		isInQuickslot5 = false;
+		isInQuickslot6 = true;
+	}
+	
+	public void removeQuickslotsFromMemory() {
+		isInQuickslot1 = false;
+		isInQuickslot2 = false;
+		isInQuickslot3 = false;
+		isInQuickslot4 = false;
+		isInQuickslot5 = false;
+		isInQuickslot6 = false;
 	}
 	
 	private boolean isTrap;

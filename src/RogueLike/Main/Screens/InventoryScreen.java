@@ -443,7 +443,7 @@ public class InventoryScreen implements Screen{
 					terminal.write(String.format("%c %s x%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), inventory.get(i).stackAmount(), equipped, check), 5, y);
 					terminal.write(String.format("%c", inventory.get(i).glyph()), 5, y++, inventory.get(i).color());
 				}
-				if(checkIfSelected(i, check) && inventory.get(i).equippable()) {
+				if(checkIfSelected(i, check) && inventory.get(i).isEquippable()) {
 					terminal.writeCenter("-- [X]: Equip --", 36);
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).foodValue() > 0) {
@@ -504,7 +504,7 @@ public class InventoryScreen implements Screen{
 			}
 			return null;*/
 		case KeyEvent.VK_X:
-			if(inventory.get(check).equippable()) {
+			if(inventory.get(check).isEquippable()) {
 				player.equip(inventory.get(check));
 				playScreen.setInputAccepted(true);
 				return null;
