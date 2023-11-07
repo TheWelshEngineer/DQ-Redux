@@ -23,7 +23,7 @@ public class Ring extends Item{
 		this.setColor(factory.ringColors.get(this.getAppearance()));
 		this.setBaseGoldValue(goldValue);
 		this.setCurrentGoldValue(this.baseGoldValue());
-		this.setEquippable(true);
+		this.setIsEquippable(true);
 		this.setIsRing(true);
 		this.setID(id);
 	}

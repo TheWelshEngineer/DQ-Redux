@@ -52,7 +52,7 @@ public class SpellbookScreen implements Screen{
 		terminal.writeCenter("== Spells ==", 1);	
 		int y = 3;
 		//
-		pageNumber = ExtraMaths.spellbookPageNumber(check);
+		pageNumber = ExtraMaths.scrollingScreenPageNumber(check);
 		//
 		for(int i = (spellsPerPage*(pageNumber-1)); i < spellsPerPage*pageNumber; i++) {
 			//System.out.println(String.format("i = %d", i));

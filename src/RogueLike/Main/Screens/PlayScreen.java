@@ -138,7 +138,12 @@ public class PlayScreen implements Screen{
 	        case KeyEvent.VK_B: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); /*inputAccepted = 1;*/ break;
 	        //
 	        //
-	        case KeyEvent.VK_1: player.modifyXP(1000000000);
+	        case KeyEvent.VK_1: subscreen = player.useItemFromQuickslot(1, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeyEvent.VK_2: subscreen = player.useItemFromQuickslot(2, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeyEvent.VK_3: subscreen = player.useItemFromQuickslot(3, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeyEvent.VK_4: subscreen = player.useItemFromQuickslot(4, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeyEvent.VK_5: subscreen = player.useItemFromQuickslot(5, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeyEvent.VK_6: subscreen = player.useItemFromQuickslot(6, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
 	        //
 	        case KeyEvent.VK_G: player.pickup(); inputAccepted = true; break;
 	        case KeyEvent.VK_S: player.search(12, false); inputAccepted = true; break;

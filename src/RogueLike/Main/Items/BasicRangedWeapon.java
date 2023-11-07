@@ -22,7 +22,7 @@ public class BasicRangedWeapon extends Item{
 		this.setIsWeapon(true);
 		this.setIsRangedWeapon(true);
 		this.setIsTwoHanded(true);
-		this.setEquippable(true);
+		this.setIsEquippable(true);
 		this.setBaseGoldValue(goldValue);
 		this.setCurrentGoldValue(this.baseGoldValue());
 		this.setID(id);	

@@ -8,7 +8,7 @@ public class BasicArmor extends Item{
 		super(glyph, color, name, appearance);
 		this.setIsArmor(true);
 		this.modifyArmorClass(armorClass);
-		this.setEquippable(true);
+		this.setIsEquippable(true);
 		this.setBaseGoldValue(goldValue);
 		this.setCurrentGoldValue(this.baseGoldValue());
 		this.setID(id);

@@ -54,7 +54,7 @@ public class InventoryScreen implements Screen{
 		terminal.writeCenter("== Inventory ==", 1);	
 		int y = 3;
 		//
-		pageNumber = ExtraMaths.spellbookPageNumber(check);
+		pageNumber = ExtraMaths.scrollingScreenPageNumber(check);
 		//
 		for(int i = (itemsPerPage*(pageNumber-1)); i < itemsPerPage*pageNumber; i++) {
 			//System.out.println(String.format("i = %d", i));
@@ -67,6 +67,26 @@ public class InventoryScreen implements Screen{
 					if(item == player.weapon() || item == player.armor() || item == player.shield() || item == player.ring() || item == player.ammunition()) {
 						equipped = " (equipped)";
 					}
+					
+					if(inventory.get(i) == player.quickslot_1()) {
+						equipped = " (quickslot 1)";
+					}
+					if(inventory.get(i) == player.quickslot_2()) {
+						equipped = " (quickslot 2)";
+					}
+					if(inventory.get(i) == player.quickslot_3()) {
+						equipped = " (quickslot 3)";
+					}
+					if(inventory.get(i) == player.quickslot_4()) {
+						equipped = " (quickslot 4)";
+					}
+					if(inventory.get(i) == player.quickslot_5()) {
+						equipped = " (quickslot 5)";
+					}
+					if(inventory.get(i) == player.quickslot_6()) {
+						equipped = " (quickslot 6)";
+					}
+
 					
 					terminal.write(String.format(">> %c %s x%d%s", item.glyph(), player.nameOf(item), item.stackAmount(), equipped, check), 5, y);
 					terminal.write(String.format("%c", item.glyph()), 8, y++, item.color());
@@ -440,10 +460,30 @@ public class InventoryScreen implements Screen{
 						equipped = " (equipped)";
 					}
 					
+					if(inventory.get(i) == player.quickslot_1()) {
+						equipped = " (quickslot 1)";
+					}
+					if(inventory.get(i) == player.quickslot_2()) {
+						equipped = " (quickslot 2)";
+					}
+					if(inventory.get(i) == player.quickslot_3()) {
+						equipped = " (quickslot 3)";
+					}
+					if(inventory.get(i) == player.quickslot_4()) {
+						equipped = " (quickslot 4)";
+					}
+					if(inventory.get(i) == player.quickslot_5()) {
+						equipped = " (quickslot 5)";
+					}
+					if(inventory.get(i) == player.quickslot_6()) {
+						equipped = " (quickslot 6)";
+					}
+					
+					
 					terminal.write(String.format("%c %s x%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), inventory.get(i).stackAmount(), equipped, check), 5, y);
 					terminal.write(String.format("%c", inventory.get(i).glyph()), 5, y++, inventory.get(i).color());
 				}
-				if(checkIfSelected(i, check) && inventory.get(i).equippable()) {
+				if(checkIfSelected(i, check) && inventory.get(i).isEquippable()) {
 					terminal.writeCenter("-- [X]: Equip --", 36);
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).foodValue() > 0) {
@@ -456,13 +496,18 @@ public class InventoryScreen implements Screen{
 					terminal.writeCenter("-- [R]: Read --", 36);
 				}
 				
+				if(checkIfSelected(i, check) && inventory.get(i).isQuickslottable()) {
+					terminal.writeCenter("-- [1-6]: Equip to quickslot 1-6 | [D]: Drop | [T]: Throw --", 38);
+				}else {
+					terminal.writeCenter("-- [D]: Drop | [T]: Throw --", 38);
+				}
 				
 				
 			}
 		}
 		//
-
-		terminal.writeCenter("-- [D]: Drop --", 38);
+		
+		
         terminal.writeCenter("-- [UP / DOWN]: Move Selection | [ESCAPE]: Cancel --", 40);
 		
 	}
@@ -504,7 +549,7 @@ public class InventoryScreen implements Screen{
 			}
 			return null;*/
 		case KeyEvent.VK_X:
-			if(inventory.get(check).equippable()) {
+			if(inventory.get(check).isEquippable()) {
 				player.equip(inventory.get(check));
 				playScreen.setInputAccepted(true);
 				return null;
@@ -531,6 +576,54 @@ public class InventoryScreen implements Screen{
 				player.quaff(inventory.get(check));
 				playScreen.setInputAccepted(true);
 				return null;
+			}else {
+				return this;
+			}
+			
+		case KeyEvent.VK_1:
+			if(inventory.get(check).isQuickslottable()) {
+				player.equipToQuickslot(inventory.get(check), 1);
+				return this;
+			}else {
+				return this;
+			}
+			
+		case KeyEvent.VK_2:
+			if(inventory.get(check).isQuickslottable()) {
+				player.equipToQuickslot(inventory.get(check), 2);
+				return this;
+			}else {
+				return this;
+			}
+			
+		case KeyEvent.VK_3:
+			if(inventory.get(check).isQuickslottable()) {
+				player.equipToQuickslot(inventory.get(check), 3);
+				return this;
+			}else {
+				return this;
+			}
+			
+		case KeyEvent.VK_4:
+			if(inventory.get(check).isQuickslottable()) {
+				player.equipToQuickslot(inventory.get(check), 4);
+				return this;
+			}else {
+				return this;
+			}
+			
+		case KeyEvent.VK_5:
+			if(inventory.get(check).isQuickslottable()) {
+				player.equipToQuickslot(inventory.get(check), 5);
+				return this;
+			}else {
+				return this;
+			}
+			
+		case KeyEvent.VK_6:
+			if(inventory.get(check).isQuickslottable()) {
+				player.equipToQuickslot(inventory.get(check), 6);
+				return this;
 			}else {
 				return this;
 			}

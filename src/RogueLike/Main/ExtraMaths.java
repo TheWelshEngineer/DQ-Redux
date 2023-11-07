@@ -81,7 +81,7 @@ public class ExtraMaths {
 		return diceRoll;
 	}
 	
-	public static int spellbookPageNumber(int input) {
+	public static int scrollingScreenPageNumber(int input) {
 		int temp = input%30;
 		int process = 30-temp;
 		int returnValue = (input+process)/30;

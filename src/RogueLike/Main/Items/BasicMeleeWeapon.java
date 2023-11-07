@@ -20,7 +20,7 @@ public class BasicMeleeWeapon extends Item{
 		this.setDamageDice(damageDice);
 		this.setIsWeapon(true);
 		this.setIsMeleeWeapon(true);
-		this.setEquippable(true);
+		this.setIsEquippable(true);
 		this.setBaseGoldValue(goldValue);
 		this.setCurrentGoldValue(this.baseGoldValue());
 		this.setID(id);	}
