@@ -51,18 +51,25 @@ public class Item implements Cloneable{
 			upgradeLevel = String.format("+%d ", this.upgradeLevel());
 		}
 		
-		if(this.enchantment() != null) {
-			if(this.isArmor() || this.isShield()) {
-				enchantmentName = String.format(" %s", this.enchantment().name());
-			}
-			if(this.isWeapon()) {
-				enchantmentName = String.format("%s ", this.enchantment().name());
-			}
-		}
-		
 		if(this.curse() != null) {
 			curseName = String.format("%s ", this.curse().name());
 		}
+		
+		if(this.enchantment() != null) {
+			if(this.isArmor() || this.isShield()) {
+				enchantmentName = String.format("%c%s", (char)255, this.enchantment().name());
+			}
+			if(this.isWeapon()) {
+				if(this.curse() != null) {
+					enchantmentName = String.format("%s%c", this.enchantment().name(), (char)255);
+				}else {
+					enchantmentName = String.format("%s ", this.enchantment().name());
+				}
+				
+			}
+		}
+		
+		
 		
 		if(this.isArmor() || this.isShield()) {
 			returnname = String.format("%s%s%s%s", upgradeLevel, curseName, name, enchantmentName);

@@ -460,7 +460,22 @@ public class ObjectFactory {
 		//
 		player.inventory().add(newDagger(0, false));
 		player.inventory().add(newBow(0, false));
-		player.inventory().add(newSpear(0, false));
+		//
+		Item spear = newPairedBlades(0, false);
+		//
+		this.randomEnchantWeapon(spear);
+		this.curseItem(spear);
+		this.upgradeItem(spear, 3);
+		player.inventory().add(spear);
+		//
+		//
+		Item armor = newChainArmor(0, false);
+		//
+		this.randomEnchantArmor(armor);
+		this.curseItem(armor);
+		this.upgradeItem(armor, 3);
+		player.inventory().add(armor);
+		//
 		player.inventory().add(newWarhammer(0, false));
 		player.inventory().add(newFalchion(0, false));
 		player.inventory().add(newPairedBlades(0, false));

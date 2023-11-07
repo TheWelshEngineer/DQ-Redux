@@ -1,6 +1,7 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.Creature;
@@ -66,30 +67,66 @@ public class InventoryScreen implements Screen{
 					String equipped = "";
 					if(item == player.weapon() || item == player.armor() || item == player.shield() || item == player.ring() || item == player.ammunition()) {
 						equipped = " (equipped)";
-					}
-					
-					if(inventory.get(i) == player.quickslot_1()) {
-						equipped = " (quickslot 1)";
-					}
-					if(inventory.get(i) == player.quickslot_2()) {
-						equipped = " (quickslot 2)";
-					}
-					if(inventory.get(i) == player.quickslot_3()) {
-						equipped = " (quickslot 3)";
-					}
-					if(inventory.get(i) == player.quickslot_4()) {
-						equipped = " (quickslot 4)";
-					}
-					if(inventory.get(i) == player.quickslot_5()) {
-						equipped = " (quickslot 5)";
-					}
-					if(inventory.get(i) == player.quickslot_6()) {
-						equipped = " (quickslot 6)";
-					}
+						if(inventory.get(i) == player.quickslot_1()) {
+							equipped = " (equipped - QS1)";
+						}
+						if(inventory.get(i) == player.quickslot_2()) {
+							equipped = " (equipped - QS2)";
+						}
+						if(inventory.get(i) == player.quickslot_3()) {
+							equipped = " (equipped - QS3)";
+						}
+						if(inventory.get(i) == player.quickslot_4()) {
+							equipped = " (equipped - QS4)";
+						}
+						if(inventory.get(i) == player.quickslot_5()) {
+							equipped = " (equipped - QS5)";
+						}
+						if(inventory.get(i) == player.quickslot_6()) {
+							equipped = " (equipped - QS6)";
+						}
 
+					}else {
+						if(inventory.get(i) == player.quickslot_1()) {
+							equipped = " (quickslot 1)";
+						}
+						if(inventory.get(i) == player.quickslot_2()) {
+							equipped = " (quickslot 2)";
+						}
+						if(inventory.get(i) == player.quickslot_3()) {
+							equipped = " (quickslot 3)";
+						}
+						if(inventory.get(i) == player.quickslot_4()) {
+							equipped = " (quickslot 4)";
+						}
+						if(inventory.get(i) == player.quickslot_5()) {
+							equipped = " (quickslot 5)";
+						}
+						if(inventory.get(i) == player.quickslot_6()) {
+							equipped = " (quickslot 6)";
+						}
+
+					}
 					
-					terminal.write(String.format(">> %c %s x%d%s", item.glyph(), player.nameOf(item), item.stackAmount(), equipped, check), 5, y);
-					terminal.write(String.format("%c", item.glyph()), 8, y++, item.color());
+					//TODO
+					String itemDetails = String.format(">> %c %s x%d%s", item.glyph(), player.nameOf(item), item.stackAmount(), equipped, check);
+					if(item.enchantment() != null && item.curse() == null && item.isWeapon() && item.isIdentified()) {
+						itemDetails = String.format(">> %c %s%cx%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), (char)255, inventory.get(i).stackAmount(), equipped, check);
+					}
+					CharSequence nonBreakingSpace = (CharSequence)(String.format("%c", (char)255));
+					if(itemDetails.contains(nonBreakingSpace)) {
+						String[] detailsList = itemDetails.split(String.format("%c", (char)255));
+						terminal.write(detailsList[0], 5, y);
+						terminal.write(String.format("%c", item.glyph()), 8, y++, item.color());
+						terminal.write(String.format("     %s", detailsList[1]), 5, y);
+						y++;
+					}else {
+						terminal.write(itemDetails, 5, y);
+						terminal.write(String.format("%c", item.glyph()), 8, y++, item.color());
+					}
+					
+					//terminal.write(itemDetails, 5, y);
+					//terminal.write(String.format("%c", item.glyph()), 8, y++, item.color());
 					int z = 3;
 					int x = 42;
 					terminal.write(String.format(">> %c %s", item.glyph(), player.nameOf(item)), x, z);
@@ -458,30 +495,63 @@ public class InventoryScreen implements Screen{
 					String equipped = "";
 					if(inventory.get(i) == player.weapon() || inventory.get(i) == player.armor() || inventory.get(i) == player.shield() || inventory.get(i) == player.ring() || inventory.get(i) == player.ammunition()) {
 						equipped = " (equipped)";
+						if(inventory.get(i) == player.quickslot_1()) {
+							equipped = " (equipped - QS1)";
+						}
+						if(inventory.get(i) == player.quickslot_2()) {
+							equipped = " (equipped - QS2)";
+						}
+						if(inventory.get(i) == player.quickslot_3()) {
+							equipped = " (equipped - QS3)";
+						}
+						if(inventory.get(i) == player.quickslot_4()) {
+							equipped = " (equipped - QS4)";
+						}
+						if(inventory.get(i) == player.quickslot_5()) {
+							equipped = " (equipped - QS5)";
+						}
+						if(inventory.get(i) == player.quickslot_6()) {
+							equipped = " (equipped - QS6)";
+						}
+
+					}else {
+						if(inventory.get(i) == player.quickslot_1()) {
+							equipped = " (quickslot 1)";
+						}
+						if(inventory.get(i) == player.quickslot_2()) {
+							equipped = " (quickslot 2)";
+						}
+						if(inventory.get(i) == player.quickslot_3()) {
+							equipped = " (quickslot 3)";
+						}
+						if(inventory.get(i) == player.quickslot_4()) {
+							equipped = " (quickslot 4)";
+						}
+						if(inventory.get(i) == player.quickslot_5()) {
+							equipped = " (quickslot 5)";
+						}
+						if(inventory.get(i) == player.quickslot_6()) {
+							equipped = " (quickslot 6)";
+						}
+
 					}
 					
-					if(inventory.get(i) == player.quickslot_1()) {
-						equipped = " (quickslot 1)";
-					}
-					if(inventory.get(i) == player.quickslot_2()) {
-						equipped = " (quickslot 2)";
-					}
-					if(inventory.get(i) == player.quickslot_3()) {
-						equipped = " (quickslot 3)";
-					}
-					if(inventory.get(i) == player.quickslot_4()) {
-						equipped = " (quickslot 4)";
-					}
-					if(inventory.get(i) == player.quickslot_5()) {
-						equipped = " (quickslot 5)";
-					}
-					if(inventory.get(i) == player.quickslot_6()) {
-						equipped = " (quickslot 6)";
-					}
 					
-					
-					terminal.write(String.format("%c %s x%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), inventory.get(i).stackAmount(), equipped, check), 5, y);
-					terminal.write(String.format("%c", inventory.get(i).glyph()), 5, y++, inventory.get(i).color());
+					String itemDetails = String.format("%c %s x%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), inventory.get(i).stackAmount(), equipped, check);
+					if(inventory.get(i).enchantment() != null && inventory.get(i).curse() == null && inventory.get(i).isWeapon() && inventory.get(i).isIdentified()) {
+						itemDetails = String.format("%c %s%cx%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), (char)255, inventory.get(i).stackAmount(), equipped, check);
+					}
+					CharSequence nonBreakingSpace = (CharSequence)(String.format("%c", (char)255));
+					if(itemDetails.contains(nonBreakingSpace)) {
+						String[] detailsList = itemDetails.split(String.format("%c", (char)255));
+						terminal.write(detailsList[0], 5, y);
+						terminal.write(String.format("%c", inventory.get(i).glyph()), 5, y++, inventory.get(i).color());
+						terminal.write(String.format("  %s", detailsList[1]), 5, y);
+						y++;
+					}else {
+						terminal.write(itemDetails, 5, y);
+						terminal.write(String.format("%c", inventory.get(i).glyph()), 5, y++, inventory.get(i).color());
+					}
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).isEquippable()) {
 					terminal.writeCenter("-- [X]: Equip --", 36);
