@@ -16,6 +16,10 @@ import RogueLike.Main.Damage.PoisonDamage;
 import RogueLike.Main.Damage.ShockDamage;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
+import RogueLike.Main.Screens.CastSpellScreen;
+import RogueLike.Main.Screens.ReadSpellScreen;
+import RogueLike.Main.Screens.Screen;
+import RogueLike.Main.Screens.ThrowAtScreen;
 
 public class Creature implements Cloneable{
 
@@ -2621,13 +2625,28 @@ public class Creature implements Cloneable{
 
 		wx = end.x;
 		wy = end.y;
-
+		//TODO
 		Creature c = creature(wx, wy, wz);
-		if(item.curse() != null && (item == weapon || item == armor || item == shield || item == ring || item == ammunition)) {
+		if(item.curse() != null && (item == weapon || item == armor || item == shield || item == ring || item == ammunition || item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
 			notify("Your "+nameOf(item)+" is cursed! You can't let go of it!");
 		}else {
 			Item item2 = (Item) item.clone();
 			item.modifyStackAmount(-1);
+			if(item.stackAmount() <= 0 && (item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
+				if(item == quickslot_1) {
+					quickslot_1 = null;
+				}else if(item == quickslot_2) {
+					quickslot_2 = null;
+				}else if(item == quickslot_3) {
+					quickslot_3 = null;
+				}else if(item == quickslot_4) {
+					quickslot_4 = null;
+				}else if(item == quickslot_5) {
+					quickslot_5 = null;
+				}else if(item == quickslot_6) {
+					quickslot_6 = null;
+				}
+			}
 			item2.setStackAmount(1);
 			if(c != null && c.isContainer() == false && c.isDisguised() == false) {
 				throwAttack(item2, c);
@@ -2966,11 +2985,50 @@ public class Creature implements Cloneable{
 			}
 			inventory.add(item);
 			stackItems();
+			if(item.isInQuickslot1() || item.isInQuickslot2() || item.isInQuickslot3() || item.isInQuickslot4() || item.isInQuickslot5() || item.isInQuickslot6()) {
+				if(item.isInQuickslot1()) {
+					if(quickslot_1 == null) {
+						this.equipToQuickslot(item, 1);
+					}else {
+						item.removeQuickslotsFromMemory();
+					}
+				}else if(item.isInQuickslot2()) {
+					if(quickslot_2 == null) {
+						this.equipToQuickslot(item, 2);
+					}else {
+						item.removeQuickslotsFromMemory();
+					}
+				}else if(item.isInQuickslot3()) {
+					if(quickslot_3 == null) {
+						this.equipToQuickslot(item, 3);
+					}else {
+						item.removeQuickslotsFromMemory();
+					}
+				}else if(item.isInQuickslot4()) {
+					if(quickslot_4 == null) {
+						this.equipToQuickslot(item, 4);
+					}else {
+						item.removeQuickslotsFromMemory();
+					}
+				}else if(item.isInQuickslot5()) {
+					if(quickslot_5 == null) {
+						this.equipToQuickslot(item, 5);
+					}else {
+						item.removeQuickslotsFromMemory();
+					}
+				}else if(item.isInQuickslot6()) {
+					if(quickslot_6 == null) {
+						this.equipToQuickslot(item, 6);
+					}else {
+						item.removeQuickslotsFromMemory();
+					}
+				}
+			}
 		}
 	}
 
 	public void drop(Item item){
-		if((item == weapon || item == armor || item == shield || item == ring || item == ammunition) && item.curse() != null) {
+		if((item == weapon || item == armor || item == shield || item == ring || item == ammunition || item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6) && item.curse() != null) {
 			notify("The "+nameOf(item)+" is cursed! You can't let go of it!");
 		}else if (world.addAtEmptySpace(item, x, y, z)){
 			if(isDead) {
@@ -3242,62 +3300,284 @@ public class Creature implements Cloneable{
 		if(!item.isQuickslottable()) {
 			return;
 		}
+		item.removeQuickslotsFromMemory();
+		if(item == quickslot_1 && slot != 1) {
+			quickslot_1 = null;
+		}else if(item == quickslot_2 && slot != 2) {
+			quickslot_2 = null;
+		}else if(item == quickslot_3 && slot != 3) {
+			quickslot_3 = null;
+		}else if(item == quickslot_4 && slot != 4) {
+			quickslot_4 = null;
+		}else if(item == quickslot_5 && slot != 5) {
+			quickslot_5 = null;
+		}else if(item == quickslot_6 && slot != 6) {
+			quickslot_6 = null;
+		}
 		switch(slot) {
 		case 1:
-			if(quickslot_1() != null) {
+			if(item == quickslot_1()) {
+				item.removeQuickslotsFromMemory();
+				quickslot_1 = null;
+				return;
+			}else if(quickslot_1() != null) {
 				quickslot_1().removeQuickslotsFromMemory();
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot1();
 				quickslot_1 = item;
+				return;
 			}else {
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot1();
 				quickslot_1 = item;
+				return;
 			}
+			
 		case 2:
-			if(quickslot_2() != null) {
+			if(item == quickslot_2()) {
+				item.removeQuickslotsFromMemory();
+				quickslot_2 = null;
+				return;
+			}if(quickslot_2() != null) {
 				quickslot_2().removeQuickslotsFromMemory();
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot2();
 				quickslot_2 = item;
+				return;
 			}else {
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot2();
 				quickslot_2 = item;
+				return;
 			}
 		case 3:
-			if(quickslot_3() != null) {
+			if(item == quickslot_3()) {
+				item.removeQuickslotsFromMemory();
+				quickslot_3 = null;
+				return;
+			}if(quickslot_3() != null) {
 				quickslot_3().removeQuickslotsFromMemory();
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot3();
 				quickslot_3 = item;
+				return;
 			}else {
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot3();
 				quickslot_3 = item;
+				return;
 			}
 		case 4:
-			if(quickslot_4() != null) {
+			if(item == quickslot_4()) {
+				item.removeQuickslotsFromMemory();
+				quickslot_4 = null;
+				return;
+			}if(quickslot_4() != null) {
 				quickslot_4().removeQuickslotsFromMemory();
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot4();
 				quickslot_4 = item;
+				return;
 			}else {
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot4();
 				quickslot_4 = item;
+				return;
 			}
 		case 5:
-			if(quickslot_5() != null) {
+			if(item == quickslot_5()) {
+				item.removeQuickslotsFromMemory();
+				quickslot_5 = null;
+				return;
+			}if(quickslot_5() != null) {
 				quickslot_5().removeQuickslotsFromMemory();
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot5();
 				quickslot_5 = item;
+				return;
 			}else {
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot5();
 				quickslot_5 = item;
+				return;
 			}
 		case 6:
-			if(quickslot_6() != null) {
+			if(item == quickslot_6()) {
+				item.removeQuickslotsFromMemory();
+				quickslot_6 = null;
+				return;
+			}if(quickslot_6() != null) {
 				quickslot_6().removeQuickslotsFromMemory();
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot6();
 				quickslot_6 = item;
+				return;
 			}else {
+				item.removeQuickslotsFromMemory();
 				item.setIsInQuickslot6();
 				quickslot_6 = item;
+				return;
 			}
 		default: return;
+		}
+	}
+	
+	public Screen useItemFromQuickslot(int slot, int sx, int sy) {
+		switch(slot) {
+		case 1: 
+			if(quickslot_1() == null) {
+				return null;
+			}
+			if(quickslot_1().isThrownWeapon()) {
+				return new ThrowAtScreen(this, sx, sy, quickslot_1());
+			}else if(quickslot_1().isPotion()) {
+				if(quickslot_1().isNegativePotion() && quickslot_1().isIdentified()) {
+					return new ThrowAtScreen(this, sx, sy, quickslot_1());
+				}else {
+					this.quaff(quickslot_1());
+					return null;
+				}
+			}else if(quickslot_1().isWand() || quickslot_1().isScroll()) {
+				if(quickslot_1().writtenSpells().size() == 1 && !quickslot_1().writtenSpells().get(0).isSelfCast()) {
+					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_1().writtenSpells().get(0), quickslot_1());
+				}else if(quickslot_1().writtenSpells().size() == 1 && quickslot_1().writtenSpells().get(0).isSelfCast()){
+					this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
+					return null;
+				}else {
+					return new ReadSpellScreen(this, sx, sy, quickslot_1());
+				}
+			}else {
+				return null;
+			}
+		case 2: 
+			if(quickslot_2() == null) {
+				return null;
+			}
+			if(quickslot_2().isThrownWeapon()) {
+				return new ThrowAtScreen(this, sx, sy, quickslot_2());
+			}else if(quickslot_2().isPotion()) {
+				if(quickslot_2().isNegativePotion() && quickslot_2().isIdentified()) {
+					return new ThrowAtScreen(this, sx, sy, quickslot_2());
+				}else {
+					this.quaff(quickslot_2());
+					return null;
+				}
+			}else if(quickslot_2().isWand() || quickslot_2().isScroll()) {
+				if(quickslot_2().writtenSpells().size() == 1 && !quickslot_2().writtenSpells().get(0).isSelfCast()) {
+					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_2().writtenSpells().get(0), quickslot_2());
+				}else if(quickslot_2().writtenSpells().size() == 1 && quickslot_2().writtenSpells().get(0).isSelfCast()){
+					this.castSpell(quickslot_2().writtenSpells().get(0), this.x(), this.y(), quickslot_2());
+					return null;
+				}else {
+					return new ReadSpellScreen(this, sx, sy, quickslot_2());
+				}
+			}else {
+				return null;
+			}
+		case 3: 
+			if(quickslot_3() == null) {
+				return null;
+			}
+			if(quickslot_3().isThrownWeapon()) {
+				return new ThrowAtScreen(this, sx, sy, quickslot_3());
+			}else if(quickslot_3().isPotion()) {
+				if(quickslot_3().isNegativePotion() && quickslot_3().isIdentified()) {
+					return new ThrowAtScreen(this, sx, sy, quickslot_3());
+				}else {
+					this.quaff(quickslot_3());
+					return null;
+				}
+			}else if(quickslot_3().isWand() || quickslot_3().isScroll()) {
+				if(quickslot_3().writtenSpells().size() == 1 && !quickslot_3().writtenSpells().get(0).isSelfCast()) {
+					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_3().writtenSpells().get(0), quickslot_3());
+				}else if(quickslot_3().writtenSpells().size() == 1 && quickslot_3().writtenSpells().get(0).isSelfCast()){
+					this.castSpell(quickslot_3().writtenSpells().get(0), this.x(), this.y(), quickslot_3());
+					return null;
+				}else {
+					return new ReadSpellScreen(this, sx, sy, quickslot_3());
+				}
+			}else {
+				return null;
+			}
+		case 4: 
+			if(quickslot_4() == null) {
+				return null;
+			}
+			if(quickslot_4().isThrownWeapon()) {
+				return new ThrowAtScreen(this, sx, sy, quickslot_4());
+			}else if(quickslot_4().isPotion()) {
+				if(quickslot_4().isNegativePotion() && quickslot_4().isIdentified()) {
+					return new ThrowAtScreen(this, sx, sy, quickslot_4());
+				}else {
+					this.quaff(quickslot_4());
+					return null;
+				}
+			}else if(quickslot_4().isWand() || quickslot_4().isScroll()) {
+				if(quickslot_4().writtenSpells().size() == 1 && !quickslot_4().writtenSpells().get(0).isSelfCast()) {
+					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_4().writtenSpells().get(0), quickslot_4());
+				}else if(quickslot_4().writtenSpells().size() == 1 && quickslot_4().writtenSpells().get(0).isSelfCast()){
+					this.castSpell(quickslot_4().writtenSpells().get(0), this.x(), this.y(), quickslot_4());
+					return null;
+				}else {
+					return new ReadSpellScreen(this, sx, sy, quickslot_4());
+				}
+			}else {
+				return null;
+			}
+		case 5: 
+			if(quickslot_5() == null) {
+				return null;
+			}
+			if(quickslot_5().isThrownWeapon()) {
+				return new ThrowAtScreen(this, sx, sy, quickslot_5());
+			}else if(quickslot_5().isPotion()) {
+				if(quickslot_5().isNegativePotion() && quickslot_5().isIdentified()) {
+					return new ThrowAtScreen(this, sx, sy, quickslot_5());
+				}else {
+					this.quaff(quickslot_5());
+					return null;
+				}
+			}else if(quickslot_5().isWand() || quickslot_5().isScroll()) {
+				if(quickslot_5().writtenSpells().size() == 1 && !quickslot_5().writtenSpells().get(0).isSelfCast()) {
+					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_5().writtenSpells().get(0), quickslot_5());
+				}else if(quickslot_5().writtenSpells().size() == 1 && quickslot_5().writtenSpells().get(0).isSelfCast()){
+					this.castSpell(quickslot_5().writtenSpells().get(0), this.x(), this.y(), quickslot_5());
+					return null;
+				}else {
+					return new ReadSpellScreen(this, sx, sy, quickslot_5());
+				}
+			}else {
+				return null;
+			}
+		case 6: 
+			if(quickslot_6() == null) {
+				return null;
+			}
+			if(quickslot_6().isThrownWeapon()) {
+				return new ThrowAtScreen(this, sx, sy, quickslot_6());
+			}else if(quickslot_6().isPotion()) {
+				if(quickslot_6().isNegativePotion() && quickslot_6().isIdentified()) {
+					return new ThrowAtScreen(this, sx, sy, quickslot_6());
+				}else {
+					this.quaff(quickslot_6());
+					return null;
+				}
+			}else if(quickslot_6().isWand() || quickslot_6().isScroll()) {
+				if(quickslot_6().writtenSpells().size() == 1 && !quickslot_6().writtenSpells().get(0).isSelfCast()) {
+					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_6().writtenSpells().get(0), quickslot_6());
+				}else if(quickslot_6().writtenSpells().size() == 1 && quickslot_6().writtenSpells().get(0).isSelfCast()){
+					this.castSpell(quickslot_6().writtenSpells().get(0), this.x(), this.y(), quickslot_6());
+					return null;
+				}else {
+					return new ReadSpellScreen(this, sx, sy, quickslot_6());
+				}
+			}else {
+				return null;
+			}
+			
+			//TODO update throw, quaff, and read to empty the quickslot, update get to automatically return items to their relevant quickslots
+		
+		default: return null;
 		}
 	}
 
@@ -3376,7 +3656,7 @@ public class Creature implements Cloneable{
 		doAction("eat a "+nameOf(item));
 		consume(item);
 	}
-
+//TODO consume
 	private void consume(Item item) {
 		if(item.foodValue() < 0) {
 			notify("Gross!");
@@ -3384,6 +3664,21 @@ public class Creature implements Cloneable{
 		addEffect(item.quaffEffect());
 		modifyFood(item.foodValue());
 		item.modifyStackAmount(-1);
+		if(item.stackAmount() <= 0 && (item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
+			if(item == quickslot_1) {
+				quickslot_1 = null;
+			}else if(item == quickslot_2) {
+				quickslot_2 = null;
+			}else if(item == quickslot_3) {
+				quickslot_3 = null;
+			}else if(item == quickslot_4) {
+				quickslot_4 = null;
+			}else if(item == quickslot_5) {
+				quickslot_5 = null;
+			}else if(item == quickslot_6) {
+				quickslot_6 = null;
+			}
+		}
 		//getRidOf(item);
 	}
 
@@ -4280,6 +4575,21 @@ public class Creature implements Cloneable{
 					}
 					notify("The magic of the "+nameOf(item)+" fades away!");
 					item.modifyStackAmount(-1);
+					if(item.stackAmount() <= 0 && (item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
+						if(item == quickslot_1) {
+							quickslot_1 = null;
+						}else if(item == quickslot_2) {
+							quickslot_2 = null;
+						}else if(item == quickslot_3) {
+							quickslot_3 = null;
+						}else if(item == quickslot_4) {
+							quickslot_4 = null;
+						}else if(item == quickslot_5) {
+							quickslot_5 = null;
+						}else if(item == quickslot_6) {
+							quickslot_6 = null;
+						}
+					}
 				}
 			}
 			if(this.isInvisible() == true) {
@@ -4318,6 +4628,21 @@ public class Creature implements Cloneable{
 					}
 					notify("The magic of the "+nameOf(item)+" fades away!");
 					item.modifyStackAmount(-1);
+					if(item.stackAmount() <= 0 && (item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
+						if(item == quickslot_1) {
+							quickslot_1 = null;
+						}else if(item == quickslot_2) {
+							quickslot_2 = null;
+						}else if(item == quickslot_3) {
+							quickslot_3 = null;
+						}else if(item == quickslot_4) {
+							quickslot_4 = null;
+						}else if(item == quickslot_5) {
+							quickslot_5 = null;
+						}else if(item == quickslot_6) {
+							quickslot_6 = null;
+						}
+					}
 				}
 			}
 			if(this.isInvisible() == true) {
@@ -4342,6 +4667,21 @@ public class Creature implements Cloneable{
 				}
 				this.notify("The magic of the "+this.nameOf(item)+" fades away!");
 				item.modifyStackAmount(-1);
+				if(item.stackAmount() <= 0 && (item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
+					if(item == quickslot_1) {
+						quickslot_1 = null;
+					}else if(item == quickslot_2) {
+						quickslot_2 = null;
+					}else if(item == quickslot_3) {
+						quickslot_3 = null;
+					}else if(item == quickslot_4) {
+						quickslot_4 = null;
+					}else if(item == quickslot_5) {
+						quickslot_5 = null;
+					}else if(item == quickslot_6) {
+						quickslot_6 = null;
+					}
+				}
 			}
 			
 		}

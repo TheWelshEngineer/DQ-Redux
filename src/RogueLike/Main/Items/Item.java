@@ -854,6 +854,14 @@ public class Item implements Cloneable{
 		isPotion = value;
 	}
 	
+	private boolean isNegativePotion;
+	public boolean isNegativePotion() {
+		return isNegativePotion;
+	}
+	public void setIsNegativePotion(boolean value) {
+		isNegativePotion = value;
+	}
+	
 	private boolean isEquippable;
 	public boolean isEquippable() {
 		return isEquippable;

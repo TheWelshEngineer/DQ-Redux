@@ -465,6 +465,17 @@ public class ObjectFactory {
 		player.inventory().add(newFalchion(0, false));
 		player.inventory().add(newPairedBlades(0, false));
 		player.inventory().add(newPotionOfLiquidFlame(0, false));
+		player.inventory().add(newPotionOfLiquidFlame(0, false));
+		player.inventory().add(newPotionOfLiquidFlame(0, false));
+		player.inventory().add(newPotionOfHealing(0, false));
+		player.inventory().add(newPotionOfHealing(0, false));
+		player.inventory().add(newPotionOfHealing(0, false));
+		player.inventory().add(newScrollOfIdentify(0, player, false));
+		player.inventory().add(newScrollOfIdentify(0, player, false));
+		player.inventory().add(newMissileWand(0, player, false));
+		player.inventory().add(newScrollOfMagicMapping(0, player, false));
+		player.inventory().add(newScrollOfMagicMapping(0, player, false));
+		player.inventory().add(newScrollOfMagicMapping(0, player, false));
 		//temp
 		//
 		//player.inventory().add(newScrollOfMagicMapping(0, player, false));
@@ -1813,7 +1824,7 @@ public class ObjectFactory {
 	//potions
 	
 	public Item newPotionOfHealing(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Healing", 0, "Healing", effectFactory.maxHealth(), 100, 58);
+		Item item = new Potion(this, (char)13, "Potion of Healing", 0, "Healing", effectFactory.maxHealth(), false, 100, 58);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}
@@ -1821,7 +1832,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newPotionOfMana(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Mana", 1, "Mana Restoration", effectFactory.maxMana(), 100, 59);
+		Item item = new Potion(this, (char)13, "Potion of Mana", 1, "Mana Restoration", effectFactory.maxMana(), false, 100, 59);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}
@@ -1829,7 +1840,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newPotionOfPoison(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Poison", 2, "Poison", effectFactory.poisoned(), 100, 60);
+		Item item = new Potion(this, (char)13, "Potion of Poison", 2, "Poison", effectFactory.poisoned(), true, 100, 60);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}
@@ -1837,7 +1848,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newPotionOfGiantStrength(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Giant Strength", 3, "Giant Strength", effectFactory.giantStrength(), 100, 61);
+		Item item = new Potion(this, (char)13, "Potion of Giant Strength", 3, "Giant Strength", effectFactory.giantStrength(), false, 100, 61);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}
@@ -1845,7 +1856,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newPotionOfInvisibility(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Invisibility", 4, "Invisibility", effectFactory.invisible(), 100, 62);
+		Item item = new Potion(this, (char)13, "Potion of Invisibility", 4, "Invisibility", effectFactory.invisible(), false, 100, 62);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}
@@ -1853,7 +1864,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newPotionOfParalysis(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Paralysis", 5, "Paralysis", effectFactory.paralyzed(), 100, 63);
+		Item item = new Potion(this, (char)13, "Potion of Paralysis", 5, "Paralysis", effectFactory.paralyzed(), true, 100, 63);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}
@@ -1861,7 +1872,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newPotionOfCausticGas(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Caustic Gas", 6, "Caustic Cloud", effectFactory.causticVapor(), 100, 64);
+		Item item = new Potion(this, (char)13, "Potion of Caustic Gas", 6, "Caustic Cloud", effectFactory.causticVapor(), true, 100, 64);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}
@@ -1869,7 +1880,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newPotionOfRestoration(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Restoration", 7, "Restoration", effectFactory.restoration(), 100, 65);
+		Item item = new Potion(this, (char)13, "Potion of Restoration", 7, "Restoration", effectFactory.restoration(), false, 100, 65);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}
@@ -1877,7 +1888,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newPotionOfMindVision(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Mind Vision", 8, "Mind Vision", effectFactory.mindVision(), 100, 66);
+		Item item = new Potion(this, (char)13, "Potion of Mind Vision", 8, "Mind Vision", effectFactory.mindVision(), false, 100, 66);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}
@@ -1885,7 +1896,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newPotionOfOvergrowth(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Overgrowth", 9, "Overgrowth", effectFactory.overgrow(), 100, 67);
+		Item item = new Potion(this, (char)13, "Potion of Overgrowth", 9, "Overgrowth", effectFactory.overgrow(), true, 100, 67);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}
@@ -1893,7 +1904,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newPotionOfLiquidFlame(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Combustion", 10, "Combustion Cloud", effectFactory.fireball(), 100, 68);
+		Item item = new Potion(this, (char)13, "Potion of Combustion", 10, "Combustion Cloud", effectFactory.fireball(), true, 100, 68);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}
@@ -1901,7 +1912,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newPotionOfLevitation(int depth, boolean addToWorld) {
-		Item item = new Potion(this, (char)13, "Potion of Levitation", 11, "Levitation", effectFactory.levitating(), 100, 69);
+		Item item = new Potion(this, (char)13, "Potion of Levitation", 11, "Levitation", effectFactory.levitating(), false, 100, 69);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}

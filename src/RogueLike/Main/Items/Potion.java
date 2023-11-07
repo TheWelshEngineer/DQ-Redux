@@ -9,6 +9,8 @@ import asciiPanel.AsciiPanel;
 
 public class Potion extends Item{
 	
+	
+	
 	/**
 	 * 
 	 * @param factory The ObjectFactory from which to reference the Potion's appearances.
@@ -20,7 +22,7 @@ public class Potion extends Item{
 	 * @param goldValue The base value in gold of the Potion.
 	 * @param id The unique identifying integer of the item.
 	 */
-	public Potion(ObjectFactory factory, char glyph, String name, int appearance, String inventoryStatusEffectName, Effect statusEffect, int goldValue, int id) {
+	public Potion(ObjectFactory factory, char glyph, String name, int appearance, String inventoryStatusEffectName, Effect statusEffect, boolean negative, int goldValue, int id) {
 		super(glyph, AsciiPanel.white, name, null);
 		this.setAppearance(factory.potionAppearances.get(appearance));
 		Description description = factory.potionColors.get(this.getAppearance());
@@ -34,6 +36,7 @@ public class Potion extends Item{
 		this.setIsStackable(true);
 		this.setIsPotion(true);
 		this.setQuickslottable(true);
+		this.setIsNegativePotion(negative);
 		this.setID(id);
 	}
 	
