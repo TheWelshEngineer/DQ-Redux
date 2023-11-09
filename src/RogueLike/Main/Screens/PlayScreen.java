@@ -123,7 +123,7 @@ public class PlayScreen implements Screen{
 	        case KeyEvent.VK_E: subscreen = new EatScreen(player); inputAccepted = true; break;
 	        case KeyEvent.VK_W: subscreen = new EquipScreen(player); inputAccepted = true; break;
 	        case KeyEvent.VK_H: subscreen = new HelpScreen(false); break;
-	        case KeyEvent.VK_C: subscreen = new StatsScreen(player); break;
+	        case KeyEvent.VK_C: subscreen = new CharacterSheetScreen(player); break;
 	        case KeyEvent.VK_I: subscreen = new IndexPotionScreen(player, player.factory()); break;
 	        case KeyEvent.VK_X: subscreen = new ExamineScreen(player); break;
 	        case KeyEvent.VK_L: subscreen = new LookScreen(player, "Looking", player.x - getScrollX(), player.y - getScrollY()); break;

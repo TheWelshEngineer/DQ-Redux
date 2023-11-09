@@ -461,10 +461,10 @@ public class ObjectFactory {
 		player.inventory().add(newDagger(0, false));
 		player.inventory().add(newBow(0, false));
 		//
-		Item spear = newPairedBlades(0, false);
+		Item spear = newGreatclub(0, false);
 		//
 		this.randomEnchantWeapon(spear);
-		this.curseItem(spear);
+		//this.curseItem(spear);
 		this.upgradeItem(spear, 3);
 		player.inventory().add(spear);
 		//
@@ -491,6 +491,7 @@ public class ObjectFactory {
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
+		player.inventory().add(newPotionOfParalysis(0, false));
 		//temp
 		//
 		//player.inventory().add(newScrollOfMagicMapping(0, player, false));

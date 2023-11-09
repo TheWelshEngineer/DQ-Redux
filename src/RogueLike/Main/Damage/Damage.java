@@ -24,10 +24,10 @@ public class Damage {
 	
 	private Effect statusEffect;
 	public Effect statusEffect() {
-		return statusEffect;
+		return (Effect) statusEffect.clone();
 	}
 	public void setStatusEffect(Effect effect) {
-		statusEffect = effect;
+		statusEffect = (Effect) effect.clone();
 	}
 	
 	private EffectFactory effectFactory;

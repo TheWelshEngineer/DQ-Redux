@@ -7,12 +7,12 @@ import RogueLike.Main.Creature;
 import RogueLike.Main.Effect;
 import asciiPanel.AsciiPanel;
 
-public class StatsScreen implements Screen{
+public class CharacterSheetScreen implements Screen{
 	
 	protected Creature player;
 	protected List<Effect> effects;
 	
-	public StatsScreen(Creature player) {
+	public CharacterSheetScreen(Creature player) {
 		this.player = player;
 		this.effects = player.effects();
 	}
@@ -28,6 +28,7 @@ public class StatsScreen implements Screen{
         terminal.writeCenter(String.format("Health: %3d/%d", player.hp(), player.maxHP()), y++);
         terminal.writeCenter(String.format("Mana: %3d/%d", player.mana(), player.maxMana()), y++);
         terminal.writeCenter(String.format("Hunger: %3d/%d", player.food(), player.maxFood()), y++);
+        terminal.writeCenter(String.format("Proficiency Bonus: %s", player.proficiencyBonus()), y++);
         terminal.writeCenter(String.format("Armor Class: %2d", player.armorClass()), y++);
         terminal.writeCenter(String.format("Strength: %2d%2s%d%s", player.strength(), "(", player.strengthModifier(), ")"), y++);
         terminal.writeCenter(String.format("Dexterity: %2d%2s%d%s", player.dexterity(), "(", player.dexterityModifier(), ")"), y++);

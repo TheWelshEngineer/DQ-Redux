@@ -207,7 +207,7 @@ public class Creature implements Cloneable{
 			}
 			
 			if(applyStatus && damage.canApplyStatus() && Dice.d10.roll() == 1 && damage.statusEffect() != null) {
-				this.effects().add(damage.statusEffect());
+				this.addEffect((Effect) damage.statusEffect().clone());
 			}
 
 		}
@@ -1967,14 +1967,14 @@ public class Creature implements Cloneable{
 		skillPoints = amount;
 	}
 
-	private int proficiencyBonus;
+	//private int proficiencyBonus;
 	public int proficiencyBonus() {
-		return proficiencyBonus;
+		return (int)1+(int)Math.ceil(level*0.25);
 	}
 
-	public void modifyProficiencyBonus(int amount) {
-		proficiencyBonus += amount;
-	}
+//	public void modifyProficiencyBonus(int amount) {
+//		proficiencyBonus += amount;
+//	}
 
 	public int strengthSaveDC() {
 		return 8+proficiencyBonus()+strengthModifier();
@@ -2120,7 +2120,7 @@ public class Creature implements Cloneable{
 		this.strength = strength;
 		this.dexterity = dexterity;
 		this.intelligence = intelligence;
-		this.proficiencyBonus = 2;
+		//this.proficiencyBonus = 2;
 		this.hpScaleAmount = hpScaleMedium();
 		this.manaScaleAmount = manaScaleMedium();
 	}

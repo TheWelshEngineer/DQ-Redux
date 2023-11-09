@@ -9,6 +9,7 @@ import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Spell;
+import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Inventory;
 import asciiPanel.AsciiPanel;
@@ -110,7 +111,7 @@ public class InventoryScreen implements Screen{
 					
 					//TODO
 					String itemDetails = String.format(">> %c %s x%d%s", item.glyph(), player.nameOf(item), item.stackAmount(), equipped, check);
-					if(item.enchantment() != null && item.curse() == null && item.isWeapon() && item.isIdentified()) {
+					if(item.enchantment() != null && item.curse() == null && item.isWeapon() && item.isIdentified() && (item.defaultName().length() > 8) && item == player.weapon()) {
 						itemDetails = String.format(">> %c %s%cx%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), (char)255, inventory.get(i).stackAmount(), equipped, check);
 					}
 					CharSequence nonBreakingSpace = (CharSequence)(String.format("%c", (char)255));
@@ -190,25 +191,25 @@ public class InventoryScreen implements Screen{
 							terminal.write(String.format("Accuracy Bonus: %s%d", symbol, attackbonus), x, z++);
 							
 							String type = "Physical";
-							if(item.dealsFireDamage()) {
+							if(item.dealsFireDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.fire))) {
 								type = "Fire";
 							}
-							if(item.dealsFrostDamage()) {
+							if(item.dealsFrostDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.frost))) {
 								type = "Frost";
 							}
-							if(item.dealsShockDamage()) {
+							if(item.dealsShockDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.shock))) {
 								type = "Shock";
 							}
-							if(item.dealsPoisonDamage()) {
+							if(item.dealsPoisonDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.poison))) {
 								type = "Poison";
 							}
-							if(item.dealsAcidDamage()) {
+							if(item.dealsAcidDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.acid))) {
 								type = "Acid";
 							}
-							if(item.dealsMagicDamage()) {
+							if(item.dealsMagicDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.magic))) {
 								type = "Magic";
 							}
-							if(item.dealsChaosDamage()) {
+							if(item.dealsChaosDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.chaos))) {
 								type = "Chaos";
 							}
 							terminal.write(String.format("Damage Type: %s", type), x, z++);
@@ -538,7 +539,7 @@ public class InventoryScreen implements Screen{
 					
 					
 					String itemDetails = String.format("%c %s x%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), inventory.get(i).stackAmount(), equipped, check);
-					if(inventory.get(i).enchantment() != null && inventory.get(i).curse() == null && inventory.get(i).isWeapon() && inventory.get(i).isIdentified()) {
+					if(inventory.get(i).enchantment() != null && inventory.get(i).curse() == null && inventory.get(i).isWeapon() && inventory.get(i).isIdentified() && (inventory.get(i).defaultName().length() > 8) && inventory.get(i) == player.weapon()) {
 						itemDetails = String.format("%c %s%cx%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), (char)255, inventory.get(i).stackAmount(), equipped, check);
 					}
 					CharSequence nonBreakingSpace = (CharSequence)(String.format("%c", (char)255));
