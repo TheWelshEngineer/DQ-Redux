@@ -1,18 +1,17 @@
-/*package RogueLike.Main.Screens;
+package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.List;
 
+import RogueLike.Main.Skill;
 import asciiPanel.AsciiPanel;
 
 public class ChooseSkillScreen implements Screen{
 	
 	public String playerClass;
 	public String playerName;
-	public String playerSpecies;
 	public List<Integer> playerAbilities;
-	public List<Integer> playerSkills = new ArrayList<Integer>();
+	public Skill[] playerSkills = Skill.defaultSkillArray();
 	
 	public int skillPoints = 2;
 	public void modifyPoints(int amount) {
@@ -24,2384 +23,416 @@ public class ChooseSkillScreen implements Screen{
 		check = value;
 	}
 	
-	public int playerSimpleWeapons = 0;
-	public void modifySimpleWeapons(int amount) {
-		playerSimpleWeapons += amount;
-	}
-	public int playerMartialWeapons = 0;
-	public void modifyMartialWeapons(int amount) {
-		playerMartialWeapons += amount;
-	}
-	public int playerFinesseWeapons = 0;
-	public void modifyFinesseWeapons(int amount) {
-		playerFinesseWeapons += amount;
-	}
-	public int playerRangedWeapons = 0;
-	public void modifyRangedWeapons(int amount) {
-		playerRangedWeapons += amount;
-	}
-	public int playerFortitude = 0;
-	public void modifyFortitude(int amount) {
-		playerFortitude += amount;
-	}
-	public int playerPerception = 0;
-	public void modifyPerception(int amount) {
-		playerPerception += amount;
-	}
-	public int playerStealth = 0;
-	public void modifyStealth(int amount) {
-		playerStealth += amount;
-	}
-	public int playerEvocation = 0;
-	public void modifyEvocation(int amount) {
-		playerEvocation += amount;
-	}
-	public int playerPyromancy = 0;
-	public void modifyPyromancy(int amount) {
-		playerPyromancy += amount;
-	}
-	public int playerCryomancy = 0;
-	public void modifyCryomancy(int amount) {
-		playerCryomancy += amount;
-	}
-	public int playerElectromancy = 0;
-	public void modifyElectromancy(int amount) {
-		playerElectromancy += amount;
-	}
-	public int playerAlchemancy = 0;
-	public void modifyAlchemancy(int amount) {
-		playerAlchemancy += amount;
-	}
+	public boolean playerSimpleWeapons = false;
+	public boolean playerMartialWeapons = false;
+	public boolean playerArmorTraining = false;
+	public boolean playerFortitude = false;
+	public boolean playerFinesseWeapons = false;
+	public boolean playerRangedWeapons = false;
+	public boolean playerStealth = false;
+	public boolean playerPerception = false;
+	public boolean playerEvocation = false;
+	public boolean playerPyromancy = false;
+	public boolean playerCryomancy = false;
+	public boolean playerElectromancy = false;
+	public boolean playerAlchemancy = false;
 	
-	public int playerSimpleWeaponsDefault = 0;
-	public int playerMartialWeaponsDefault = 0;
-	public int playerFinesseWeaponsDefault = 0;
-	public int playerRangedWeaponsDefault = 0;
-	public int playerFortitudeDefault = 0;
-	public int playerPerceptionDefault = 0;
-	public int playerStealthDefault = 0;
-	public int playerEvocationDefault = 0;
-	public int playerPyromancyDefault = 0;
-	public int playerCryomancyDefault = 0;
-	public int playerElectromancyDefault = 0;
-	public int playerAlchemancyDefault = 0;
-	
-	public ChooseSkillScreen(String playerClass, List<Integer> playerAbilities, String playerName, String playerSpecies) {
+	public ChooseSkillScreen(String playerClass, List<Integer> playerAbilities, String playerName) {
 		this.playerClass = playerClass;
 		this.playerAbilities = playerAbilities;
 		this.playerName = playerName;
-		this.playerSpecies = playerSpecies;
 		
 		if(playerClass == "Warrior") {
-			playerMartialWeaponsDefault = 1;
-			playerFortitudeDefault = 1;
+			playerMartialWeapons = true;
+			playerSkills[1].modifyLevel(1, false);
+			playerArmorTraining = true;
+			playerSkills[2].modifyLevel(1, false);
+			martialUp = ' ';
+			armorUp = ' ';
 		}else if(playerClass == "Rogue") {
-			playerFinesseWeaponsDefault = 1;
-			playerStealthDefault = 1;
-		}else if(playerClass == "Wizard") {
-			playerEvocationDefault = 1;
-			playerPerceptionDefault = 1;
-		}else if(playerClass == "Barbarian") {
-			playerSimpleWeaponsDefault = 1;
-			playerMartialWeaponsDefault = 1;
-		}else if(playerClass == "Evoker") {
-			playerEvocationDefault = 1;
-			playerMartialWeaponsDefault = 1;
-		}else if(playerClass == "Ranger") {
-			playerRangedWeaponsDefault = 1;
-			playerPerceptionDefault = 1;
-		}else if(playerClass == "Alchemist") {
-			playerAlchemancyDefault = 1;
-			playerPerceptionDefault = 1;
-		}else if(playerClass == "Witch") {
-			playerCryomancyDefault = 1;
-			playerElectromancyDefault = 1;
-		}else if(playerClass == "Sorcerer") {
-			playerSimpleWeaponsDefault = 1;
-			playerPyromancyDefault = 1;
+			playerFinesseWeapons = true;
+			playerSkills[4].modifyLevel(1, false);
+			playerStealth = true;
+			playerSkills[6].modifyLevel(1, false);
+			finesseUp = ' ';
+			stealthUp = ' ';
+		}else if(playerClass == "Mage") {
+			playerEvocation = true;
+			playerSkills[8].modifyLevel(1, false);
+			playerPerception = true;
+			playerSkills[7].modifyLevel(1, false);
+			evocationUp = ' ';
+			perceptionUp = ' ';
 		}
+		updateMarkers(check);
 		
-		if(playerSpecies == "Human") {
-			modifyPoints(2);
-		}
-		
-		playerSimpleWeapons = playerSimpleWeaponsDefault;
-		playerMartialWeapons = playerMartialWeaponsDefault;
-		playerFinesseWeapons = playerFinesseWeaponsDefault;
-		playerRangedWeapons = playerRangedWeaponsDefault;
-		playerFortitude = playerFortitudeDefault;
-		playerPerception = playerPerceptionDefault;
-		playerStealth = playerStealthDefault;
-		playerEvocation = playerEvocationDefault;
-		playerPyromancy = playerPyromancyDefault;
-		playerCryomancy = playerCryomancyDefault;
-		playerElectromancy = playerElectromancyDefault;
-		playerAlchemancy = playerAlchemancyDefault;
-		
-		playerSkills.add(playerSimpleWeapons);
-		playerSkills.add(playerMartialWeapons);
-		playerSkills.add(playerFinesseWeapons);
-		playerSkills.add(playerRangedWeapons);
-		playerSkills.add(playerFortitude);
-		playerSkills.add(playerPerception);
-		playerSkills.add(playerStealth);
-		playerSkills.add(playerEvocation);
-		playerSkills.add(playerPyromancy);
-		playerSkills.add(playerCryomancy);
-		playerSkills.add(playerElectromancy);
-		playerSkills.add(playerAlchemancy);
 
 		
 	}
+	
+	public char borderVertical = 186;
+	public char borderHorizontal = 205;
+	public char borderCorner = 206;
+	public char borderCornerNW = 201;
+	public char borderCornerNE = 187;
+	public char borderCornerSW = 200;
+	public char borderCornerSE = 188;
 	
 	public char simpleLeft = '>';
 	public char simpleRight = '<';
 	public char martialLeft = '>';
 	public char martialRight = '<';
+	public char armorLeft = '>';
+	public char armorRight = '<';
+	public char fortitudeLeft = '>';
+	public char fortitudeRight = '<';
 	public char finesseLeft = '>';
 	public char finesseRight = '<';
 	public char rangedLeft = '>';
 	public char rangedRight = '<';
-	public char fortitudeLeft = '>';
-	public char fortitudeRight = '<';
-	public char percepLeft = '>';
-	public char percepRight = '<';
 	public char stealthLeft = '>';
 	public char stealthRight = '<';
-	public char evoLeft = '>';
-	public char evoRight = '<';
-	public char pyroLeft = '>';
-	public char pyroRight = '<';
-	public char cryoLeft = '>';
-	public char cryoRight = '<';
-	public char electroLeft = '>';
-	public char electroRight = '<';
-	public char alchLeft = '>';
-	public char alchRight = '<';
+	public char perceptionLeft = '>';
+	public char perceptionRight = '<';
+	public char evocationLeft = '>';
+	public char evocationRight = '<';
+	public char pyromancyLeft = '>';
+	public char pyromancyRight = '<';
+	public char cryomancyLeft = '>';
+	public char cryomancyRight = '<';
+	public char electromancyLeft = '>';
+	public char electromancyRight = '<';
+	public char alchemancyLeft = '>';
+	public char alchemancyRight = '<';
+	
+	public void updateSimpleMarker(int check) {
+		switch(check) {
+		case 0: simpleLeft = '>'; simpleRight = '<'; break;
+		default: simpleLeft = ' '; simpleRight = ' '; break;
+		}
+	}
+	public void updateMartialMarker(int check) {
+		switch(check) {
+		case 1: martialLeft = '>'; martialRight = '<'; break;
+		default: martialLeft = ' '; martialRight = ' '; break;
+		}
+	}
+	public void updateArmorMarker(int check) {
+		switch(check) {
+		case 2: armorLeft = '>'; armorRight = '<'; break;
+		default: armorLeft = ' '; armorRight = ' '; break;
+		}
+	}
+	public void updateFortitudeMarker(int check) {
+		switch(check) {
+		case 3: fortitudeLeft = '>'; fortitudeRight = '<'; break;
+		default: fortitudeLeft = ' '; fortitudeRight = ' '; break;
+		}
+	}
+	public void updateFinesseMarker(int check) {
+		switch(check) {
+		case 4: finesseLeft = '>'; finesseRight = '<'; break;
+		default: finesseLeft = ' '; finesseRight = ' '; break;
+		}
+	}
+	public void updateRangedMarker(int check) {
+		switch(check) {
+		case 5: rangedLeft = '>'; rangedRight = '<'; break;
+		default: rangedLeft = ' '; rangedRight = ' '; break;
+		}
+	}
+	public void updateStealthMarker(int check) {
+		switch(check) {
+		case 6: stealthLeft = '>'; stealthRight = '<'; break;
+		default: stealthLeft = ' '; stealthRight = ' '; break;
+		}
+	}
+	public void updatePerceptionMarker(int check) {
+		switch(check) {
+		case 7: perceptionLeft = '>'; perceptionRight = '<'; break;
+		default: perceptionLeft = ' '; perceptionRight = ' '; break;
+		}
+	}
+	public void updateEvocationMarker(int check) {
+		switch(check) {
+		case 8: evocationLeft = '>'; evocationRight = '<'; break;
+		default: evocationLeft = ' '; evocationRight = ' '; break;
+		}
+	}
+	public void updatePyromancyMarker(int check) {
+		switch(check) {
+		case 9: pyromancyLeft = '>'; pyromancyRight = '<'; break;
+		default: pyromancyLeft = ' '; pyromancyRight = ' '; break;
+		}
+	}
+	public void updateCryomancyMarker(int check) {
+		switch(check) {
+		case 10: cryomancyLeft = '>'; cryomancyRight = '<'; break;
+		default: cryomancyLeft = ' '; cryomancyRight = ' '; break;
+		}
+	}
+	public void updateElectromancyMarker(int check) {
+		switch(check) {
+		case 11: electromancyLeft = '>'; electromancyRight = '<'; break;
+		default: electromancyLeft = ' '; electromancyRight = ' '; break;
+		}
+	}
+	public void updateAlchemancyMarker(int check) {
+		switch(check) {
+		case 12: alchemancyLeft = '>'; alchemancyRight = '<'; break;
+		default: alchemancyLeft = ' '; alchemancyRight = ' '; break;
+		}
+	}
+
+
+
+
 	
 	public char simpleUp = '+';
-	public char simpleDown = '-';
+	public char simpleDown = ' ';
 	public char martialUp = '+';
-	public char martialDown = '-';
-	public char finesseUp = '+';
-	public char finesseDown = '-';
-	public char rangedUp = '+';
-	public char rangedDown = '-';
+	public char martialDown = ' ';
+	public char armorUp = '+';
+	public char armorDown = ' ';
 	public char fortitudeUp = '+';
-	public char fortitudeDown = '-';
-	public char percepUp = '+';
-	public char percepDown = '-';
+	public char fortitudeDown = ' ';
+	public char finesseUp = '+';
+	public char finesseDown = ' ';
+	public char rangedUp = '+';
+	public char rangedDown = ' ';
 	public char stealthUp = '+';
-	public char stealthDown = '-';
-	public char evoUp = '+';
-	public char evoDown = '-';
-	public char pyroUp = '+';
-	public char pyroDown = '-';
-	public char cryoUp = '+';
-	public char cryoDown = '-';
-	public char electroUp = '+';
-	public char electroDown = '-';
-	public char alchUp = '+';
-	public char alchDown = '-';
+	public char stealthDown = ' ';
+	public char perceptionUp = '+';
+	public char perceptionDown = ' ';
+	public char evocationUp = '+';
+	public char evocationDown = ' ';
+	public char pyromancyUp = '+';
+	public char pyromancyDown = ' ';
+	public char cryomancyUp = '+';
+	public char cryomancyDown = ' ';
+	public char electromancyUp = '+';
+	public char electromancyDown = ' ';
+	public char alchemancyUp = '+';
+	public char alchemancyDown = ' ';
 	
-	public void changeMarkers(int check) {
-		if(check == 0) {
-			simpleLeft = '>';
-			simpleRight = '<';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
-		}else if(check == 1) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = '>';
-			martialRight = '<';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
-		}else if(check == 2) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = '>';
-			finesseRight = '<';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
-		}else if(check == 3) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = '>';
-			rangedRight = '<';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
-		}else if(check == 4) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = '>';
-			fortitudeRight = '<';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
-		}else if(check == 5) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = '>';
-			percepRight = '<';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
-		}else if(check == 6) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = '>';
-			stealthRight = '<';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
-		}else if(check == 7) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = '>';
-			evoRight = '<';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
-		}else if(check == 8) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = '>';
-			pyroRight = '<';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
-		}else if(check == 9) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = '>';
-			cryoRight = '<';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
-		}else if(check == 10) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = '>';
-			electroRight = '<';
-			alchLeft = ' ';
-			alchRight = ' ';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
-		}else if(check == 11) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = '>';
-			alchRight = '<';
-			if(playerSimpleWeapons == playerSimpleWeaponsDefault && skillPoints > 0) {
-				simpleUp = '+';
-				simpleDown = ' ';
-			}else if(skillPoints == 0 && playerSimpleWeapons > playerSimpleWeaponsDefault) {
-				simpleUp = ' ';
-				simpleDown = '-';
-			}else if(skillPoints == 0) {
-				simpleUp = ' ';
-				simpleDown = ' ';
-			}else {
-				simpleUp = '+';
-				simpleDown = '-';
-			}
-			if(playerMartialWeapons == playerMartialWeaponsDefault && skillPoints > 0) {
-				martialUp = '+';
-				martialDown = ' ';
-			}else if(skillPoints == 0 && playerMartialWeapons > playerMartialWeaponsDefault) {
-				martialUp = ' ';
-				martialDown = '-';
-			}else if(skillPoints == 0) {
-				martialUp = ' ';
-				martialDown = ' ';
-			}else {
-				martialUp = '+';
-				martialDown = '-';
-			}
-			if(playerFinesseWeapons == playerFinesseWeaponsDefault && skillPoints > 0) {
-				finesseUp = '+';
-				finesseDown = ' ';
-			}else if(skillPoints == 0 && playerFinesseWeapons > playerFinesseWeaponsDefault) {
-				finesseUp = ' ';
-				finesseDown = '-';
-			}else if(skillPoints == 0) {
-				finesseUp = ' ';
-				finesseDown = ' ';
-			}else {
-				finesseUp = '+';
-				finesseDown = '-';
-			}
-			if(playerRangedWeapons == playerRangedWeaponsDefault && skillPoints > 0) {
-				rangedUp = '+';
-				rangedDown = ' ';
-			}else if(skillPoints == 0 && playerRangedWeapons > playerRangedWeaponsDefault) {
-				rangedUp = ' ';
-				rangedDown = '-';
-			}else if(skillPoints == 0) {
-				rangedUp = ' ';
-				rangedDown = ' ';
-			}else {
-				rangedUp = '+';
-				rangedDown = '-';
-			}
-			if(playerFortitude == playerFortitudeDefault && skillPoints > 0) {
-				fortitudeUp = '+';
-				fortitudeDown = ' ';
-			}else if(skillPoints == 0 && playerFortitude > playerFortitudeDefault) {
-				fortitudeUp = ' ';
-				fortitudeDown = '-';
-			}else if(skillPoints == 0) {
-				fortitudeUp = ' ';
-				fortitudeDown = ' ';
-			}else {
-				fortitudeUp = '+';
-				fortitudeDown = '-';
-			}
-			if(playerPerception == playerPerceptionDefault && skillPoints > 0) {
-				percepUp = '+';
-				percepDown = ' ';
-			}else if(skillPoints == 0 && playerPerception > playerPerceptionDefault) {
-				percepUp = ' ';
-				percepDown = '-';
-			}else if(skillPoints == 0) {
-				percepUp = ' ';
-				percepDown = ' ';
-			}else {
-				percepUp = '+';
-				percepDown = '-';
-			}
-			if(playerStealth == playerStealthDefault && skillPoints > 0) {
-				stealthUp = '+';
-				stealthDown = ' ';
-			}else if(skillPoints == 0 && playerStealth > playerStealthDefault) {
-				stealthUp = ' ';
-				stealthDown = '-';
-			}else if(skillPoints == 0) {
-				stealthUp = ' ';
-				stealthDown = ' ';
-			}else {
-				stealthUp = '+';
-				stealthDown = '-';
-			}
-			if(playerEvocation == playerEvocationDefault && skillPoints > 0) {
-				evoUp = '+';
-				evoDown = ' ';
-			}else if(skillPoints == 0 && playerEvocation > playerEvocationDefault) {
-				evoUp = ' ';
-				evoDown = '-';
-			}else if(skillPoints == 0) {
-				evoUp = ' ';
-				evoDown = ' ';
-			}else {
-				evoUp = '+';
-				evoDown = '-';
-			}
-			if(playerPyromancy == playerPyromancyDefault && skillPoints > 0) {
-				pyroUp = '+';
-				pyroDown = ' ';
-			}else if(skillPoints == 0 && playerPyromancy > playerPyromancyDefault) {
-				pyroUp = ' ';
-				pyroDown = '-';
-			}else if(skillPoints == 0) {
-				pyroUp = ' ';
-				pyroDown = ' ';
-			}else {
-				pyroUp = '+';
-				pyroDown = '-';
-			}
-			if(playerCryomancy == playerCryomancyDefault && skillPoints > 0) {
-				cryoUp = '+';
-				cryoDown = ' ';
-			}else if(skillPoints == 0 && playerCryomancy > playerCryomancyDefault) {
-				cryoUp = ' ';
-				cryoDown = '-';
-			}else if(skillPoints == 0) {
-				cryoUp = ' ';
-				cryoDown = ' ';
-			}else {
-				cryoUp = '+';
-				cryoDown = '-';
-			}
-			if(playerElectromancy == playerElectromancyDefault && skillPoints > 0) {
-				electroUp = '+';
-				electroDown = ' ';
-			}else if(skillPoints == 0 && playerElectromancy > playerElectromancyDefault) {
-				electroUp = ' ';
-				electroDown = '-';
-			}else if(skillPoints == 0) {
-				electroUp = ' ';
-				electroDown = ' ';
-			}else {
-				electroUp = '+';
-				electroDown = '-';
-			}
-			if(playerAlchemancy == playerAlchemancyDefault && skillPoints > 0) {
-				alchUp = '+';
-				alchDown = ' ';
-			}else if(skillPoints == 0 && playerAlchemancy > playerAlchemancyDefault) {
-				alchUp = ' ';
-				alchDown = '-';
-			}else if(skillPoints == 0) {
-				alchUp = ' ';
-				alchDown = ' ';
-			}else {
-				alchUp = '+';
-				alchDown = '-';
-			}
+	public void updateMarkers(int check) {
+		updateSimpleMarker(check);
+		updateMartialMarker(check);
+		updateArmorMarker(check);
+		updateFortitudeMarker(check);
+		updateFinesseMarker(check);
+		updateRangedMarker(check);
+		updateStealthMarker(check);
+		updatePerceptionMarker(check);
+		updateEvocationMarker(check);
+		updatePyromancyMarker(check);
+		updateCryomancyMarker(check);
+		updateElectromancyMarker(check);
+		updateAlchemancyMarker(check);
+		switch(check) {
+		case 0: if(playerSimpleWeapons == false && skillPoints > 0) {
+					simpleUp = '+';
+					simpleDown = ' ';
+				}else if(playerSimpleWeapons == true) {
+					simpleUp = ' ';
+					simpleDown = '-';
+				}else if(skillPoints == 0) {
+					simpleUp = ' ';
+					simpleDown = ' ';
+				}else {
+					simpleUp = '+';
+					simpleDown = '-';
+				}break;
+		case 1: if(playerMartialWeapons == false && skillPoints > 0 && playerClass != "Warrior") {
+					martialUp = '+';
+					martialDown = ' ';
+				}else if(playerMartialWeapons == true && playerClass != "Warrior") {
+					martialUp = ' ';
+					martialDown = '-';
+				}else if(skillPoints == 0 || playerClass == "Warrior") {
+					martialUp = ' ';
+					martialDown = ' ';
+				}else {
+					martialUp = '+';
+					martialDown = '-';
+				}break;
+		case 2: if(playerArmorTraining == false && skillPoints > 0 && playerClass != "Warrior") {
+					armorUp = '+';
+					armorDown = ' ';
+				}else if(playerArmorTraining == true && playerClass != "Warrior") {
+					armorUp = ' ';
+					armorDown = '-';
+				}else if(skillPoints == 0 || playerClass == "Warrior") {
+					armorUp = ' ';
+					armorDown = ' ';
+				}else {
+					armorUp = '+';
+					armorDown = '-';
+				}break;
+		case 3: if(playerFortitude == false && skillPoints > 0) {
+					fortitudeUp = '+';
+					fortitudeDown = ' ';
+				}else if(playerFortitude == true) {
+					fortitudeUp = ' ';
+					fortitudeDown = '-';
+				}else if(skillPoints == 0) {
+					fortitudeUp = ' ';
+					fortitudeDown = ' ';
+				}else {
+					fortitudeUp = '+';
+					fortitudeDown = '-';
+				}break;
+		case 4: if(playerFinesseWeapons == false && skillPoints > 0 && playerClass != "Rogue") {
+					finesseUp = '+';
+					finesseDown = ' ';
+				}else if(playerFinesseWeapons == true && playerClass != "Rogue") {
+					finesseUp = ' ';
+					finesseDown = '-';
+				}else if(skillPoints == 0 || playerClass == "Rogue") {
+					finesseUp = ' ';
+					finesseDown = ' ';
+				}else {
+					finesseUp = '+';
+					finesseDown = '-';
+				}break;
+		case 5: if(playerRangedWeapons == false && skillPoints > 0) {
+					rangedUp = '+';
+					rangedDown = ' ';
+				}else if(playerRangedWeapons == true) {
+					rangedUp = ' ';
+					rangedDown = '-';
+				}else if(skillPoints == 0) {
+					rangedUp = ' ';
+					rangedDown = ' ';
+				}else {
+					rangedUp = '+';
+					rangedDown = '-';
+				}break;
+		case 6: if(playerStealth == false && skillPoints > 0 && playerClass != "Rogue") {
+					stealthUp = '+';
+					stealthDown = ' ';
+				}else if(playerStealth == true && playerClass != "Rogue") {
+					stealthUp = ' ';
+					stealthDown = '-';
+				}else if(skillPoints == 0 || playerClass == "Rogue") {
+					stealthUp = ' ';
+					stealthDown = ' ';
+				}else {
+					stealthUp = '+';
+					stealthDown = '-';
+				}break;
+		case 7: if(playerPerception == false && skillPoints > 0 && playerClass != "Mage") {
+					perceptionUp = '+';
+					perceptionDown = ' ';
+				}else if(playerPerception == true && playerClass != "Mage") {
+					perceptionUp = ' ';
+					perceptionDown = '-';
+				}else if(skillPoints == 0 || playerClass == "Mage") {
+					perceptionUp = ' ';
+					perceptionDown = ' ';
+				}else {
+					perceptionUp = '+';
+					perceptionDown = '-';
+				}break;
+		case 8: if(playerEvocation == false && skillPoints > 0 && playerClass != "Mage") {
+					evocationUp = '+';
+					evocationDown = ' ';
+				}else if(playerEvocation == true && playerClass != "Mage") {
+					evocationUp = ' ';
+					evocationDown = '-';
+				}else if(skillPoints == 0 || playerClass == "Mage") {
+					evocationUp = ' ';
+					evocationDown = ' ';
+				}else {
+					evocationUp = '+';
+					evocationDown = '-';
+				}break;
+		case 9: if(playerPyromancy == false && skillPoints > 0) {
+					pyromancyUp = '+';
+					pyromancyDown = ' ';
+				}else if(playerPyromancy == true) {
+					pyromancyUp = ' ';
+					pyromancyDown = '-';
+				}else if(skillPoints == 0) {
+					pyromancyUp = ' ';
+					pyromancyDown = ' ';
+				}else {
+					pyromancyUp = '+';
+					pyromancyDown = '-';
+				}break;
+		case 10: if(playerCryomancy == false && skillPoints > 0) {
+					cryomancyUp = '+';
+					cryomancyDown = ' ';
+				}else if(playerCryomancy == true) {
+					cryomancyUp = ' ';
+					cryomancyDown = '-';
+				}else if(skillPoints == 0) {
+					cryomancyUp = ' ';
+					cryomancyDown = ' ';
+				}else {
+					cryomancyUp = '+';
+					cryomancyDown = '-';
+				}break;
+		case 11: if(playerElectromancy == false && skillPoints > 0) {
+					electromancyUp = '+';
+					electromancyDown = ' ';
+				}else if(playerElectromancy == true) {
+					electromancyUp = ' ';
+					electromancyDown = '-';
+				}else if(skillPoints == 0) {
+					electromancyUp = ' ';
+					electromancyDown = ' ';
+				}else {
+					electromancyUp = '+';
+					electromancyDown = '-';
+				}break;
+		case 12: if(playerAlchemancy == false && skillPoints > 0) {
+					alchemancyUp = '+';
+					alchemancyDown = ' ';
+				}else if(playerAlchemancy == true) {
+					alchemancyUp = ' ';
+					alchemancyDown = '-';
+				}else if(skillPoints == 0) {
+					alchemancyUp = ' ';
+					alchemancyDown = ' ';
+				}else {
+					alchemancyUp = '+';
+					alchemancyDown = '-';
+				}break;
 		}
+	}
+	
+	private char booleanToChar(boolean value) {
+		if(value) {
+			return (char)251;
+		}
+		return 'X';
 	}
 
 	
 
 	public void displayOutput(AsciiPanel terminal) {
-		changeMarkers(check);
+		updateMarkers(check);
 		terminal.clear();
 		terminal.writeCenter("== Select your starting Skills ==", 1);	
 		int y = 3;
 		
-		terminal.writeCenter(String.format("-- Points remaining: %d --", skillPoints), y);
-		
-		terminal.writeCenter(String.format("%c %c Simple Weapons ( %d ) %c %c", simpleDown, simpleLeft, playerSimpleWeapons, simpleRight, simpleUp), y+=3);
-		terminal.writeCenter(String.format("%c %c Martial Weapons ( %d ) %c %c", martialDown, martialLeft, playerMartialWeapons, martialRight, martialUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Finesse Weapons ( %d ) %c %c", finesseDown, finesseLeft, playerFinesseWeapons, finesseRight, finesseUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Ranged Weapons ( %d ) %c %c", rangedDown, rangedLeft, playerRangedWeapons, rangedRight, rangedUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Fortitude ( %d ) %c %c", fortitudeDown, fortitudeLeft, playerFortitude, fortitudeRight, fortitudeUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Perception ( %d ) %c %c", percepDown, percepLeft, playerPerception, percepRight, percepUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Stealth ( %d ) %c %c", stealthDown, stealthLeft, playerStealth, stealthRight, stealthUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Evocation ( %d ) %c %c", evoDown, evoLeft, playerEvocation, evoRight, evoUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Pyromancy ( %d ) %c %c", pyroDown, pyroLeft, playerPyromancy, pyroRight, pyroUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Cryomancy ( %d ) %c %c", cryoDown, cryoLeft, playerCryomancy, cryoRight, cryoUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Electromancy ( %d ) %c %c", electroDown, electroLeft, playerElectromancy, electroRight, electroUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Alchemancy ( %d ) %c %c", alchDown, alchLeft, playerAlchemancy, alchRight, alchUp), y+=2);
+		terminal.writeCenter(String.format("-- Choices remaining: %d --", skillPoints), y++);
+		terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerNW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerNE), 4, y++);
+		terminal.write(String.format("%c %c Simple Weapons I  ( %c ) %c %c", borderVertical, simpleLeft, booleanToChar(playerSimpleWeapons), simpleRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Martial Weapons I ( %c ) %c %c", borderVertical, martialLeft, booleanToChar(playerMartialWeapons), martialRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Armor Training I  ( %c ) %c %c", borderVertical, armorLeft, booleanToChar(playerArmorTraining), armorRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Fortitude I       ( %c ) %c %c", borderVertical, fortitudeLeft, booleanToChar(playerFortitude), fortitudeRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Finesse Weapons I ( %c ) %c %c", borderVertical, finesseLeft, booleanToChar(playerFinesseWeapons), finesseRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Ranged Weapons I  ( %c ) %c %c", borderVertical, rangedLeft, booleanToChar(playerRangedWeapons), rangedRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Stealth I         ( %c ) %c %c", borderVertical, stealthLeft, booleanToChar(playerStealth), stealthRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Perception I      ( %c ) %c %c", borderVertical, perceptionLeft, booleanToChar(playerPerception), perceptionRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Evocation I       ( %c ) %c %c", borderVertical, evocationLeft, booleanToChar(playerEvocation), evocationRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Pyromancy I       ( %c ) %c %c", borderVertical, pyromancyLeft, booleanToChar(playerPyromancy), pyromancyRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Cryomancy I       ( %c ) %c %c", borderVertical, cryomancyLeft, booleanToChar(playerCryomancy), cryomancyRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Electromancy I    ( %c ) %c %c", borderVertical, electromancyLeft, booleanToChar(playerElectromancy), electromancyRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Alchemancy I      ( %c ) %c %c", borderVertical, alchemancyLeft, booleanToChar(playerAlchemancy), alchemancyRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 4, y++);
 		
 		if(check == 0) {
 			terminal.writeCenter("Simple Weapons represents your skill with simple weapons", y+=5);
@@ -2468,7 +499,7 @@ public class ChooseSkillScreen implements Screen{
 		if(skillPoints < 1) {
 			terminal.writeCenter("-- [ENTER]: Confirm and Continue --", 38);
 		}
-		terminal.writeCenter("-- [UP / DOWN]: Move Selection | [LEFT / RIGHT]: Increase/Decrease Skill --", 40);
+		terminal.writeCenter("-- [UP / DOWN]: Move Selection | [LEFT / RIGHT]: Select/Deselect Skill --", 40);
 		terminal.writeCenter("-- [ESCAPE]: Return to Ability Score Selection --", 42);
 	}
 	
@@ -2476,7 +507,7 @@ public class ChooseSkillScreen implements Screen{
 		switch(key.getKeyCode()) {
 		case KeyEvent.VK_UP:
 			if(check == 0) {
-				check = 11;
+				check = 12;
 			}else if(check == 1) {
 				check = 0;
 			}else if(check == 2) {
@@ -2499,7 +530,10 @@ public class ChooseSkillScreen implements Screen{
 				check = 9;
 			}else if(check == 11) {
 				check = 10;
+			}else if(check == 12) {
+				check = 11;
 			}
+			updateMarkers(check);
 			return this;
 			
 		case KeyEvent.VK_DOWN:
@@ -2526,173 +560,187 @@ public class ChooseSkillScreen implements Screen{
 			}else if(check == 10) {
 				check = 11;
 			}else if(check == 11) {
+				check = 12;
+			}else if(check == 12) {
 				check = 0;
-			}
+			}updateMarkers(check);
 			return this;
 		
 		case KeyEvent.VK_RIGHT:
 			if(check == 0) {
-				if(skillPoints > 0) {
-					modifySimpleWeapons(1); 
+				if(skillPoints > 0 && !playerSimpleWeapons) {
+					playerSkills[0].modifyLevel(1, false);
+					playerSimpleWeapons = true;
 					modifyPoints(-1); 
 				}
-				playerSkills.set(0, playerSimpleWeapons); 
 			}else if(check == 1) {
-				if(skillPoints > 0) {
-					modifyMartialWeapons(1); 
+				if(skillPoints > 0 && playerClass != "Warrior" && !playerMartialWeapons) {
+					playerSkills[1].modifyLevel(1, false);
+					playerMartialWeapons = true;
 					modifyPoints(-1); 
 				}
-				playerSkills.set(1, playerMartialWeapons); 
 			}else if(check == 2) {
-				if(skillPoints > 0) {
-					modifyFinesseWeapons(1); 
-					modifyPoints(-1); 
+				if(skillPoints > 0 && playerClass != "Warrior" && !playerArmorTraining) {
+					playerSkills[2].modifyLevel(1, false);
+					playerArmorTraining = true;
+					modifyPoints(-1); //TODO
 				}
-				playerSkills.set(2, playerFinesseWeapons); 
 			}else if(check == 3) {
-				if(skillPoints > 0) {
-					modifyRangedWeapons(1); 
-					modifyPoints(-1); 
+				if(skillPoints > 0 && !playerFortitude) {
+					playerSkills[3].modifyLevel(1, false);
+					playerFortitude = true;
+					modifyPoints(-1);
 				}
-				playerSkills.set(3, playerRangedWeapons); 
 			}else if(check == 4) {
-				if(skillPoints > 0) {
-					modifyFortitude(1); 
-					modifyPoints(-1); 
+				if(skillPoints > 0 && playerClass != "Rogue" && !playerFinesseWeapons) {
+					playerSkills[4].modifyLevel(1, false);
+					playerFinesseWeapons = true;
+					modifyPoints(-1);
 				}
-				playerSkills.set(4, playerFortitude); 
 			}else if(check == 5) {
-				if(skillPoints > 0) {
-					modifyPerception(1); 
-					modifyPoints(-1); 
-				}
-				playerSkills.set(5, playerPerception); 
+				if(skillPoints > 0 && !playerRangedWeapons) {
+					playerSkills[5].modifyLevel(1, false);
+					playerRangedWeapons = true;
+					modifyPoints(-1);
+				} 
 			}else if(check == 6) {
-				if(skillPoints > 0) {
-					modifyStealth(1); 
-					modifyPoints(-1); 
+				if(skillPoints > 0 && playerClass != "Rogue" && !playerStealth) {
+					playerSkills[6].modifyLevel(1, false);
+					playerStealth = true;
+					modifyPoints(-1);
 				}
-				playerSkills.set(6, playerStealth); 
 			}else if(check == 7) {
-				if(skillPoints > 0) {
-					modifyEvocation(1); 
-					modifyPoints(-1); 
-				}
-				playerSkills.set(7, playerEvocation); 
+				if(skillPoints > 0 && playerClass != "Mage" && !playerPerception) {
+					playerSkills[7].modifyLevel(1, false);
+					playerPerception = true;
+					modifyPoints(-1);
+				} 
 			}else if(check == 8) {
-				if(skillPoints > 0) {
-					modifyPyromancy(1); 
-					modifyPoints(-1); 
+				if(skillPoints > 0 && playerClass != "Mage" && !playerEvocation) {
+					playerSkills[8].modifyLevel(1, false);
+					playerEvocation = true;
+					modifyPoints(-1);
 				}
-				playerSkills.set(8, playerPyromancy); 
 			}else if(check == 9) {
-				if(skillPoints > 0) {
-					modifyCryomancy(1); 
-					modifyPoints(-1); 
+				if(skillPoints > 0 && !playerPyromancy) {
+					playerSkills[9].modifyLevel(1, false);
+					playerPyromancy = true;
+					modifyPoints(-1);
 				}
-				playerSkills.set(9, playerCryomancy); 
 			}else if(check == 10) {
-				if(skillPoints > 0) {
-					modifyElectromancy(1); 
-					modifyPoints(-1); 
+				if(skillPoints > 0 && !playerCryomancy) {
+					playerSkills[10].modifyLevel(1, false);
+					playerCryomancy = true;
+					modifyPoints(-1);
 				}
-				playerSkills.set(10, playerElectromancy); 
 			}else if(check == 11) {
-				if(skillPoints > 0) {
-					modifyAlchemancy(1); 
-					modifyPoints(-1); 
+				if(skillPoints > 0 && !playerElectromancy) {
+					playerSkills[11].modifyLevel(1, false);
+					playerElectromancy = true;
+					modifyPoints(-1);
 				}
-				playerSkills.set(11, playerAlchemancy); 
-			}	
+			}else if(check == 12) {
+				if(skillPoints > 0 && !playerAlchemancy) {
+					playerSkills[12].modifyLevel(1, false);
+					playerAlchemancy = true;
+					modifyPoints(-1);
+				}
+			}
+			updateMarkers(check);
 			return this;
 			
 		case KeyEvent.VK_LEFT:
 			if(check == 0) {
-				if(playerSimpleWeapons > playerSimpleWeaponsDefault) {
-					modifySimpleWeapons(-1); 
+				if(playerSimpleWeapons) {
+					playerSimpleWeapons = false;
+					playerSkills[0].modifyLevel(1, true);
 					modifyPoints(1); 
 				}
-				playerSkills.set(0, playerSimpleWeapons); 
 			}else if(check == 1) {
-				if(playerMartialWeapons > playerMartialWeaponsDefault) {
-					modifyMartialWeapons(-1); 
-					modifyPoints(1); 
+				if(playerMartialWeapons && playerClass != "Warrior") {
+					playerMartialWeapons = false;
+					playerSkills[1].modifyLevel(1, true);
+					modifyPoints(1); //TODO
 				}
-				playerSkills.set(1, playerMartialWeapons); 
 			}else if(check == 2) {
-				if(playerFinesseWeapons > playerFinesseWeaponsDefault) {
-					modifyFinesseWeapons(-1); 
-					modifyPoints(1); 
+				if(playerArmorTraining && playerClass != "Warrior") {
+					playerArmorTraining = false;
+					playerSkills[2].modifyLevel(1, true);
+					modifyPoints(1); //TODO
 				}
-				playerSkills.set(2, playerFinesseWeapons); 
 			}else if(check == 3) {
-				if(playerRangedWeapons > playerRangedWeaponsDefault) {
-					modifyRangedWeapons(-1); 
+				if(playerFortitude) {
+					playerFortitude = false;
+					playerSkills[3].modifyLevel(1, true);
 					modifyPoints(1); 
 				}
-				playerSkills.set(3, playerRangedWeapons); 
 			}else if(check == 4) {
-				if(playerFortitude > playerFortitudeDefault) {
-					modifyFortitude(-1); 
-					modifyPoints(1); 
-				}
-				playerSkills.set(4, playerFortitude); 
+				if(playerFinesseWeapons && playerClass != "Rogue") {
+					playerFinesseWeapons = false;
+					playerSkills[4].modifyLevel(1, true);
+					modifyPoints(1);
+				} 
 			}else if(check == 5) {
-				if(playerPerception > playerPerceptionDefault) {
-					modifyPerception(-1); 
+				if(playerRangedWeapons) {
+					playerRangedWeapons = false;
+					playerSkills[5].modifyLevel(1, true);
 					modifyPoints(1); 
-				}
-				playerSkills.set(5, playerPerception); 
+				} 
 			}else if(check == 6) {
-				if(playerStealth > playerStealthDefault) {
-					modifyStealth(-1); 
-					modifyPoints(1); 
-				}
-				playerSkills.set(6, playerEvocation); 
+				if(playerStealth && playerClass != "Rogue") {
+					playerStealth = false;
+					playerSkills[6].modifyLevel(1, true);
+					modifyPoints(1);
+				} 
 			}else if(check == 7) {
-				if(playerEvocation > playerEvocationDefault) {
-					modifyEvocation(-1); 
+				if(playerPerception && playerClass != "Mage") {
+					playerPerception = false;
+					playerSkills[7].modifyLevel(1, true);
 					modifyPoints(1); 
-				}
-				playerSkills.set(7, playerEvocation); 
+				}  
 			}else if(check == 8) {
-				if(playerPyromancy > playerPyromancyDefault) {
-					modifyPyromancy(-1); 
+				if(playerEvocation && playerClass != "Mage") {
+					playerEvocation = false;
+					playerSkills[8].modifyLevel(1, true);
 					modifyPoints(1); 
 				}
-				playerSkills.set(8, playerPyromancy); 
 			}else if(check == 9) {
-				if(playerCryomancy > playerCryomancyDefault) {
-					modifyCryomancy(-1); 
+				if(playerPyromancy) {
+					playerPyromancy = false;
+					playerSkills[9].modifyLevel(1, true);
 					modifyPoints(1); 
 				}
-				playerSkills.set(9, playerCryomancy); 
 			}else if(check == 10) {
-				if(playerElectromancy > playerElectromancyDefault) {
-					modifyElectromancy(-1); 
+				if(playerCryomancy) {
+					playerCryomancy = false;
+					playerSkills[10].modifyLevel(1, true);
 					modifyPoints(1); 
 				}
-				playerSkills.set(10, playerElectromancy); 
 			}else if(check == 11) {
-				if(playerAlchemancy > playerAlchemancyDefault) {
-					modifyAlchemancy(-1); 
+				if(playerElectromancy) {
+					playerElectromancy = false;
+					playerSkills[11].modifyLevel(1, true);
 					modifyPoints(1); 
 				}
-				playerSkills.set(11, playerAlchemancy); 
+			}else if(check == 12) {
+				if(playerAlchemancy) {
+					playerAlchemancy = false;
+					playerSkills[12].modifyLevel(1, true);
+					modifyPoints(1); 
+				}
 			}
-				
-				
+			updateMarkers(check);
 			return this;
 		
 			
 		case KeyEvent.VK_ENTER: 
 			if(skillPoints < 1) {
-				return new PlayScreen(playerClass, playerAbilities, playerSkills, playerName, playerSpecies); 
+				return new Zone1Screen(playerClass, playerAbilities, playerSkills, playerName); 
 			}else {
 				return this;
 			}
 			
-		case KeyEvent.VK_ESCAPE: return new ChooseAbilityScreen(playerClass, playerSpecies);
+		case KeyEvent.VK_ESCAPE: return new ChooseAbilityScreen(playerClass);
 		
 		}
 		
@@ -2702,4 +750,3 @@ public class ChooseSkillScreen implements Screen{
 
 }
 
-*/

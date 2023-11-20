@@ -2,19 +2,21 @@ package RogueLike.Main;
 
 public class Skill {
 	
-	public static Skill simpleWeapons = new Skill(0, "Simple Weapons", 1);
-	public static Skill martialWeapons = new Skill(1, "Martial Weapons", 1);
-	public static Skill armorTraining = new Skill(2, "Armor Training", 1);
-	public static Skill fortitude = new Skill(3, "Fortitude", 1);
-	public static Skill finesseWeapons= new Skill(4, "Finesse Weapons", 1);
-	public static Skill rangedWeapons = new Skill(5, "Ranged Weapons", 1);
-	public static Skill stealth = new Skill(6, "Stealth", 1);
-	public static Skill perception = new Skill(7, "Perception", 1);
-	public static Skill evocation = new Skill(8, "Evocation", 1);
-	public static Skill pyromancy = new Skill(9, "Pyromancy", 1);
-	public static Skill cryomancy = new Skill(10, "Cryomancy", 1);
-	public static Skill electromancy = new Skill(11, "Electromancy", 1);
-	public static Skill alchemancy = new Skill(12, "Alchemancy", 1);
+	public static Skill simpleWeaponsDefault = new Skill(0, "Simple Weapons", 0);
+	public static Skill martialWeaponsDefault = new Skill(1, "Martial Weapons", 0);
+	public static Skill armorTrainingDefault = new Skill(2, "Armor Training", 0);
+	public static Skill fortitudeDefault = new Skill(3, "Fortitude", 0);
+	public static Skill finesseWeaponsDefault = new Skill(4, "Finesse Weapons", 0);
+	public static Skill rangedWeaponsDefault = new Skill(5, "Ranged Weapons", 0);
+	public static Skill stealthDefault = new Skill(6, "Stealth", 0);
+	public static Skill perceptionDefault = new Skill(7, "Perception", 0);
+	public static Skill evocationDefault = new Skill(8, "Evocation", 0);
+	public static Skill pyromancyDefault = new Skill(9, "Pyromancy", 0);
+	public static Skill cryomancyDefault = new Skill(10, "Cryomancy", 0);
+	public static Skill electromancyDefault = new Skill(11, "Electromancy", 0);
+	public static Skill alchemancyDefault = new Skill(12, "Alchemancy", 0);
+	
+	private static Skill[] defaultSkillArray = {Skill.simpleWeaponsDefault, Skill.martialWeaponsDefault, Skill.armorTrainingDefault, Skill.fortitudeDefault, Skill.finesseWeaponsDefault, Skill.rangedWeaponsDefault, Skill.stealthDefault, Skill.perceptionDefault, Skill.evocationDefault, Skill.pyromancyDefault, Skill.cryomancyDefault, Skill.electromancyDefault, Skill.alchemancyDefault};
 	
 	private int id;
 	public int id() {
@@ -35,7 +37,7 @@ public class Skill {
 		return String.format("%s (%d)", this.name, this.level);
 	}
 	
-	private int level;
+	private int level = 1;
 	public int level() {
 		return level;
 	}
@@ -51,6 +53,10 @@ public class Skill {
 		}else {
 			level += amount;
 		}
+	}
+	
+	public static Skill[] defaultSkillArray() {
+		return defaultSkillArray.clone();
 	}
 	
 	

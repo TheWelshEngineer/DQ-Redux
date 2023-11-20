@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.Skill;
 import asciiPanel.AsciiPanel;
 
 public class Zone1Screen implements Screen{
@@ -12,6 +13,7 @@ public class Zone1Screen implements Screen{
 	public String playerClass;
 	public String playerName;
 	public List<Integer> playerAbilities;
+	public Skill[] playerSkills;
 	 
 	public int check = 0;
 	public void setCheck(int value) {
@@ -19,10 +21,11 @@ public class Zone1Screen implements Screen{
 	}
 	
 
-	public Zone1Screen(String playerClass, List<Integer> playerAbilities, String playerName){
+	public Zone1Screen(String playerClass, List<Integer> playerAbilities, Skill[] playerSkills, String playerName){
 		this.playerClass = playerClass;
 		this.playerName = playerName;
 		this.playerAbilities = playerAbilities;
+		this.playerSkills = playerSkills;
 		
 	}
 
@@ -44,7 +47,7 @@ public class Zone1Screen implements Screen{
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
 			case KeyEvent.VK_ENTER: 
-				return new PlayScreen(playerClass, playerAbilities, playerName);
+				return new PlayScreen(playerClass, playerAbilities, playerSkills, playerName);
 			default:
 				return this;
 		}

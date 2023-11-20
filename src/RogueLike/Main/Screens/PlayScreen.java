@@ -8,6 +8,7 @@ import java.util.List;
 import RogueLike.Main.Creature;
 import RogueLike.Main.Effect;
 import RogueLike.Main.FieldOfView;
+import RogueLike.Main.Skill;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
@@ -262,7 +263,7 @@ public class PlayScreen implements Screen{
 	private Screen subscreen;
 	public String playerClass;
 	public List<Integer> startingStats = new ArrayList<Integer>();
-	public List<Integer> startingSkills = new ArrayList<Integer>();
+	public Skill[] startingSkills;
 	public String playerName;
 	public String playerSpecies;
 	//temp
@@ -278,10 +279,10 @@ public class PlayScreen implements Screen{
 	
 	
 	// #########
-	public PlayScreen(String playerClass, List<Integer> playerAbilities, /*List<Integer> playerSkills,*/ String playerName/*, String playerSpecies*/) {
+	public PlayScreen(String playerClass, List<Integer> playerAbilities, Skill[] playerSkills, String playerName/*, String playerSpecies*/) {
 		this.playerClass = playerClass;
 		this.startingStats = playerAbilities;
-		//this.startingSkills = playerSkills;
+		this.startingSkills = playerSkills;
 		this.playerName = playerName;
 		//this.playerSpecies = playerSpecies;
 		screenWidth = 120; //80
@@ -300,7 +301,7 @@ public class PlayScreen implements Screen{
 	
 	
 	public void createCreatures(ObjectFactory factory) {
-		player = factory.newPlayer(messages, fov, this.playerClass, this.startingStats, this.playerName);
+		player = factory.newPlayer(messages, fov, this.playerClass, this.startingStats, this.startingSkills, this.playerName);
 		factory.setUpPotionIndex();
 		factory.setUpWandIndex(player);
 		factory.setUpRingIndex(player);

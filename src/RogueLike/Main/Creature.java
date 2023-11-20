@@ -3,6 +3,7 @@ package RogueLike.Main;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import RogueLike.Main.AI.CreatureAI;
@@ -982,173 +983,26 @@ public class Creature implements Cloneable{
 		return imunites;
 	}
 
-	/*private int skillSimpleWeapons;
-	public int skillSimpleWeapons() {
-		return skillSimpleWeapons;
+	private Skill[] skills = Skill.defaultSkillArray();
+	public Skill[] skills(){
+		//Collections.sort(skills, Comparator.comparing(Skill::id));
+		return skills;
 	}
-	public void modifySkillSimpleWeapons(int amount) {
-		skillSimpleWeapons += amount;
+	public void setSkills(Skill[] skills) {
+		this.skills = skills;
 	}
-	public void setSkillSimpleWeapons(int amount) {
-		skillSimpleWeapons = amount;
+	public void levelUpSkill(int id, int amount) {
+		boolean decrease = false;
+		if(amount < 0) {
+			decrease = true;
+		}
+		skills[id].modifyLevel(amount, decrease);
 	}
-	public int rollSimpleWeapons() {
-		return ExtraMaths.d20()+skillSimpleWeapons;
-	}
+	//TODO
 
-	private int skillMartialWeapons;
-	public int skillMartialWeapons() {
-		return skillMartialWeapons;
-	}
-	public void modifySkillMartialWeapons(int amount) {
-		skillMartialWeapons += amount;
-	}
-	public void setSkillMartialWeapons(int amount) {
-		skillMartialWeapons = amount;
-	}
-	public int rollMartialWeapons() {
-		return ExtraMaths.d20()+skillMartialWeapons;
-	}
 
-	private int skillFinesseWeapons;
-	public int skillFinesseWeapons() {
-		return skillFinesseWeapons;
-	}
-	public void modifySkillFinesseWeapons(int amount) {
-		skillFinesseWeapons += amount;
-	}
-	public void setSkillFinesseWeapons(int amount) {
-		skillFinesseWeapons = amount;
-	}
-	public int rollFinesseWeapons() {
-		return ExtraMaths.d20()+skillFinesseWeapons;
-	}
 
-	private int skillRangedWeapons;
-	public int skillRangedWeapons() {
-		return skillRangedWeapons;
-	}
-	public void modifySkillRangedWeapons(int amount) {
-		skillRangedWeapons += amount;
-	}
-	public void setSkillRangedWeapons(int amount) {
-		skillRangedWeapons = amount;
-	}
-	public int rollRangedWeapons() {
-		return ExtraMaths.d20()+skillRangedWeapons;
-	}
 
-	private int skillFortitude;
-	public int skillFortitude() {
-		return skillFortitude;
-	}
-	public void modifySkillFortitude(int amount) {
-		skillFortitude += amount;
-	}
-	public void setSkillFortitude(int amount) {
-		skillFortitude = amount;
-	}
-	public int rollFortitude() {
-		return ExtraMaths.d20()+skillFortitude;
-	}
-
-	private int skillPerception;
-	public int skillPerception() {
-		return skillPerception;
-	}
-	public void modifySkillPerception(int amount) {
-		skillPerception += amount;
-	}
-	public void setSkillPerception(int amount) {
-		skillPerception = amount;
-	}
-	public int rollPerception() {
-		return ExtraMaths.d20()+skillPerception;
-	}
-
-	private int skillStealth;
-	public int skillStealth() {
-		return skillStealth;
-	}
-	public void modifySkillStealth(int amount) {
-		skillStealth += amount;
-	}
-	public void setSkillStealth(int amount) {
-		skillStealth = amount;
-	}
-	public int rollStealth() {
-		return ExtraMaths.d20()+skillStealth;
-	}
-
-	private int skillEvocation;
-	public int skillEvocation() {
-		return skillEvocation;
-	}
-	public void modifySkillEvocation(int amount) {
-		skillEvocation += amount;
-	}
-	public void setSkillEvocation(int amount) {
-		skillEvocation = amount;
-	}
-	public int rollEvocation() {
-		return ExtraMaths.d20()+skillEvocation;
-	}
-
-	private int skillPyromancy;
-	public int skillPyromancy() {
-		return skillPyromancy;
-	}
-	public void modifySkillPyromancy(int amount) {
-		skillPyromancy += amount;
-	}
-	public void setSkillPyromancy(int amount) {
-		skillPyromancy = amount;
-	}
-	public int rollPyromancy() {
-		return ExtraMaths.d20()+skillPyromancy;
-	}
-
-	private int skillCryomancy;
-	public int skillCryomancy() {
-		return skillCryomancy;
-	}
-	public void modifySkillCryomancy(int amount) {
-		skillCryomancy += amount;
-	}
-	public void setSkillCryomancy(int amount) {
-		skillCryomancy = amount;
-	}
-	public int rollCryomancy() {
-		return ExtraMaths.d20()+skillCryomancy;
-	}
-
-	private int skillElectromancy;
-	public int skillElectromancy() {
-		return skillElectromancy;
-	}
-	public void modifySkillElectromancy(int amount) {
-		skillElectromancy += amount;
-	}
-	public void setSkillElectromancy(int amount) {
-		skillElectromancy = amount;
-	}
-	public int rollElectromancy() {
-		return ExtraMaths.d20()+skillElectromancy;
-	}
-
-	private int skillAlchemancy;
-	public int skillAlchemancy() {
-		return skillAlchemancy;
-	}
-	public void modifySkillAlchemancy(int amount) {
-		skillAlchemancy += amount;
-	}
-	public void setSkillAlchemancy(int amount) {
-		skillAlchemancy = amount;
-	}
-	public int rollAlchemancy() {
-		return ExtraMaths.d20()+skillAlchemancy;
-	}*/
 
 	private boolean dealsFireDamage;
 	public boolean dealsFireDamage() {

@@ -14,6 +14,7 @@ import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.FieldOfView;
+import RogueLike.Main.Skill;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.AlchemistAI;
@@ -294,7 +295,7 @@ public class ObjectFactory {
 		item.setCurse(enchantmentFactory.randomCurse());
 	}
 	
-	public Creature newPlayer(List<String> messages, FieldOfView fov, String playerClass, List<Integer> startingStats, /*List<Integer> startingSkills,*/ String playerName/*, String playerSpecies*/) {
+	public Creature newPlayer(List<String> messages, FieldOfView fov, String playerClass, List<Integer> startingStats, Skill[] startingSkills, String playerName/*, String playerSpecies*/) {
 		//world, name, glyph, color, maxHP 20, maxMana, base armorclass, strength, dexterity, intelligence, visionRadius, inventorySize) {
 		Creature player = new Creature(world, "player", '@', ExtraColors.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
 		player.setID(0);
@@ -304,6 +305,7 @@ public class ObjectFactory {
 		player.setStrength(startingStats.get(0));
 		player.setDexterity(startingStats.get(1));
 		player.setIntelligence(startingStats.get(2));
+		player.setSkills(startingSkills);
 		player.creatureTypes.add("Humanoid");
 		
 		//if(playerSpecies == "Orc") {

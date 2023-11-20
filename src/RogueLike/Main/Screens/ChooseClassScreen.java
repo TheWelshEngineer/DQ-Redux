@@ -130,7 +130,7 @@ public class ChooseClassScreen implements Screen{
 			terminal.writeCenter("+||+ Starting Skills +||+", y+=1);
 			y++;
 			terminal.writeCenter("+ Evocation (I)", y+=1);
-			terminal.writeCenter("+ Alchemancy (I)", y+=1);
+			terminal.writeCenter("+ Perception (I)", y+=1);
 			terminal.writeCenter("+ 2x Level I skills of your choice", y+=1);
 			y++;
 			terminal.writeCenter("+||+ Starting Equipment +||+", y+=1);
