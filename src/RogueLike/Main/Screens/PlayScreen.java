@@ -14,6 +14,7 @@ import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
+import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public class PlayScreen implements Screen{
@@ -110,51 +111,51 @@ public class PlayScreen implements Screen{
 			//
 			switch(key.getKeyCode()) {
 			// Movement Controls
-	        case KeyEvent.VK_NUMPAD4: player.moveBy(-1, 0, 0, false); inputAccepted = true; break;
-	        case KeyEvent.VK_NUMPAD6: player.moveBy( 1, 0, 0, false); inputAccepted = true; break;
-	        case KeyEvent.VK_NUMPAD8: player.moveBy( 0,-1, 0, false); inputAccepted = true; break;
-	        case KeyEvent.VK_NUMPAD2: player.moveBy( 0, 1, 0, false); inputAccepted = true; break;
-	        case KeyEvent.VK_NUMPAD7: player.moveBy(-1,-1, 0, false); inputAccepted = true; break;
-	        case KeyEvent.VK_NUMPAD9: player.moveBy( 1,-1, 0, false); inputAccepted = true; break;
-	        case KeyEvent.VK_NUMPAD1: player.moveBy(-1, 1, 0, false); inputAccepted = true; break;
-	        case KeyEvent.VK_NUMPAD3: player.moveBy( 1, 1, 0, false); inputAccepted = true; break;
-	        case KeyEvent.VK_NUMPAD5: player.idle(); inputAccepted = true; break;
+	        case KeybindManager.movementWest: player.moveBy(-1, 0, 0, false); inputAccepted = true; break;
+	        case KeybindManager.movementEast: player.moveBy( 1, 0, 0, false); inputAccepted = true; break;
+	        case KeybindManager.movementNorth: player.moveBy( 0,-1, 0, false); inputAccepted = true; break;
+	        case KeybindManager.movementSouth: player.moveBy( 0, 1, 0, false); inputAccepted = true; break;
+	        case KeybindManager.movementNorthWest: player.moveBy(-1,-1, 0, false); inputAccepted = true; break;
+	        case KeybindManager.movementNorthEast: player.moveBy( 1,-1, 0, false); inputAccepted = true; break;
+	        case KeybindManager.movementSouthWest: player.moveBy(-1, 1, 0, false); inputAccepted = true; break;
+	        case KeybindManager.movementSouthEast: player.moveBy( 1, 1, 0, false); inputAccepted = true; break;
+	        case KeybindManager.movementWait: player.idle(); inputAccepted = true; break;
 	        //
-	        case KeyEvent.VK_D: subscreen = new DropScreen(player); inputAccepted = true; break;
-	        case KeyEvent.VK_E: subscreen = new EatScreen(player); inputAccepted = true; break;
-	        case KeyEvent.VK_W: subscreen = new EquipScreen(player); inputAccepted = true; break;
-	        case KeyEvent.VK_H: subscreen = new HelpScreen(false); break;
-	        case KeyEvent.VK_C: subscreen = new CharacterSheetScreen(player); break;
-	        case KeyEvent.VK_I: subscreen = new IndexPotionScreen(player, player.factory()); break;
-	        case KeyEvent.VK_X: subscreen = new ExamineScreen(player); break;
-	        case KeyEvent.VK_L: subscreen = new LookScreen(player, "Looking", player.x - getScrollX(), player.y - getScrollY()); break;
-	        case KeyEvent.VK_T: subscreen = new ThrowScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeyEvent.VK_Q: subscreen = new QuaffScreen(player); inputAccepted = true; break;
-	        case KeyEvent.VK_R: subscreen = new ReadScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeybindManager.interactionDropItem: subscreen = new DropScreen(player); inputAccepted = true; break;
+	        case KeybindManager.interactionEatFood: subscreen = new EatScreen(player); inputAccepted = true; break;
+	        case KeybindManager.interactionEquipItem: subscreen = new EquipScreen(player); inputAccepted = true; break;
+	        case KeybindManager.menuHelp: subscreen = new HelpScreen(false); break;
+	        case KeybindManager.menuCharacterSheet: subscreen = new CharacterSheetScreen(player); break;
+	        case KeybindManager.menuIndex: subscreen = new IndexPotionScreen(player, player.factory()); break;
+	        case KeybindManager.interactionExamineItem: subscreen = new ExamineScreen(player); break;
+	        case KeybindManager.interactionLook: subscreen = new LookScreen(player, "Looking", player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionThrowItem: subscreen = new ThrowScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeybindManager.interactionDrinkPotion: subscreen = new QuaffScreen(player); inputAccepted = true; break;
+	        case KeybindManager.interactionReadSpell: subscreen = new ReadScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
 	        //
-	        case KeyEvent.VK_A: subscreen = new SpellbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = true; break;
+	        //case KeyEvent.VK_A: subscreen = new SpellbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = true; break;
 	        //
 	        //case KeyEvent.VK_M: subscreen = new FeatbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = 1; break;
 	        //
-	        case KeyEvent.VK_B: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); /*inputAccepted = 1;*/ break;
+	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); /*inputAccepted = 1;*/ break;
 	        //
 	        //
-	        case KeyEvent.VK_1: subscreen = player.useItemFromQuickslot(1, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeyEvent.VK_2: subscreen = player.useItemFromQuickslot(2, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeyEvent.VK_3: subscreen = player.useItemFromQuickslot(3, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeyEvent.VK_4: subscreen = player.useItemFromQuickslot(4, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeyEvent.VK_5: subscreen = player.useItemFromQuickslot(5, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeyEvent.VK_6: subscreen = player.useItemFromQuickslot(6, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeybindManager.interactionQuickslot_1: subscreen = player.useItemFromQuickslot(1, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeybindManager.interactionQuickslot_2: subscreen = player.useItemFromQuickslot(2, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeybindManager.interactionQuickslot_3: subscreen = player.useItemFromQuickslot(3, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeybindManager.interactionQuickslot_4: subscreen = player.useItemFromQuickslot(4, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeybindManager.interactionQuickslot_5: subscreen = player.useItemFromQuickslot(5, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeybindManager.interactionQuickslot_6: subscreen = player.useItemFromQuickslot(6, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
 	        //
-	        case KeyEvent.VK_G: player.pickup(); inputAccepted = true; break;
-	        case KeyEvent.VK_S: player.search(12, false); inputAccepted = true; break;
-	        case KeyEvent.VK_UP: 
+	        case KeybindManager.interactionPickUpItem: player.pickup(); inputAccepted = true; break;
+	        case KeybindManager.interactionSearch: player.search(12, false); inputAccepted = true; break;
+	        case KeybindManager.movementUpStairs: 
 	        	if(userIsTryingToExit()) {
 	        		return userExits();
 	        	}else {
 	        		player.moveBy( 0, 0, -1, false); inputAccepted = true; break;
 	        	}
-	        case KeyEvent.VK_DOWN: 
+	        case KeybindManager.movementDownStairs: 
 	        	player.moveBy( 0, 0, 1, false); inputAccepted = true; 
 	        	if(player.z()+1 == 6 && player.hasVisitedZone2() == false) {
 	        		subscreen = new Zone2Screen();
@@ -164,7 +165,7 @@ public class PlayScreen implements Screen{
 	        	}
 	        	break;
 	        
-	        case KeyEvent.VK_U: 
+	        case KeybindManager.interactionLevelUp: 
 	        	if(player.attributePoints() == 0 && player.skillPoints() == 0) {
 	        		player.notify("You don't have any skill points to spend."); break;
 	        	}else {
@@ -174,7 +175,7 @@ public class PlayScreen implements Screen{
 	        	
 	        	
 	        
-	        case KeyEvent.VK_F: 
+	        case KeybindManager.interactionFireRangedWeapon: 
 	        	if(player.weapon() == null || player.weapon().rangedDamageDice() == null) {
 	        		player.notify("You don't have a ranged weapon equipped."); 
 	        	}else if(player.ammunition() == null) {
