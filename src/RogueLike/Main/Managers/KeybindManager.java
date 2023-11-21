@@ -49,5 +49,6 @@ public class KeybindManager {
 	public static final int navigateMenuDown = KeyEvent.VK_DOWN;
 	public static final int navigateMenuLeft = KeyEvent.VK_LEFT;
 	public static final int navigateMenuRight = KeyEvent.VK_RIGHT;
+	public static final int navigateMenuFunction_1 = KeyEvent.VK_F1;
 
 }

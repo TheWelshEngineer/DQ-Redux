@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import RogueLike.Main.Creature;
+import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public class LoseScreen implements Screen {
@@ -61,7 +62,7 @@ public class LoseScreen implements Screen {
     public Screen respondToUserInput(KeyEvent key) {
         switch(key.getKeyCode()) {
         
-        case KeyEvent.VK_F1:
+        case KeybindManager.navigateMenuFunction_1:
         	String playerName = player.playerName();
         	String localDate = java.time.LocalDate.now().toString();
         	String desktopPath = System.getProperty("user.home") + "\\Desktop\\";
@@ -96,8 +97,8 @@ public class LoseScreen implements Screen {
         	
         	return this;
         
-        case KeyEvent.VK_ENTER:
-        	return new StartScreen();
+        case KeybindManager.navigateMenuConfirm:
+        	return new MainMenuScreen();
         default: return this;
         
         

@@ -6,6 +6,7 @@ import RogueLike.Main.Creature;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.Line;
 import RogueLike.Main.Point;
+import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public abstract class TargetBasedScreen implements Screen{
@@ -66,16 +67,16 @@ public abstract class TargetBasedScreen implements Screen{
 		int py = y;
 		
 		switch (key.getKeyCode()){
-        case KeyEvent.VK_NUMPAD4: x--; break;
-        case KeyEvent.VK_NUMPAD6: x++; break;
-        case KeyEvent.VK_NUMPAD8: y--; break;
-        case KeyEvent.VK_NUMPAD2: y++; break;
-        case KeyEvent.VK_NUMPAD7: x--; y--; break;
-        case KeyEvent.VK_NUMPAD9: x++; y--; break;
-        case KeyEvent.VK_NUMPAD1: x--; y++; break;
-        case KeyEvent.VK_NUMPAD3: x++; y++; break;
-        case KeyEvent.VK_ENTER: selectWorldCoordinate(player.x + x, player.y + y, sx + x, sy + y); return null;
-        case KeyEvent.VK_ESCAPE: return null;
+        case KeybindManager.movementWest: x--; break;
+        case KeybindManager.movementEast: x++; break;
+        case KeybindManager.movementNorth: y--; break;
+        case KeybindManager.movementSouth: y++; break;
+        case KeybindManager.movementNorthWest: x--; y--; break;
+        case KeybindManager.movementNorthEast: x++; y--; break;
+        case KeybindManager.movementSouthWest: x--; y++; break;
+        case KeybindManager.movementSouthEast: x++; y++; break;
+        case KeybindManager.navigateMenuConfirm: selectWorldCoordinate(player.x + x, player.y + y, sx + x, sy + y); return null;
+        case KeybindManager.navigateMenuBack: return null;
         }
 		
 		if(!isAcceptable(player.x+x, player.y+y)) {

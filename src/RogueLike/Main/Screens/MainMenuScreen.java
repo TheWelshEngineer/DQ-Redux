@@ -2,6 +2,7 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public class MainMenuScreen implements Screen{
@@ -66,7 +67,7 @@ public class MainMenuScreen implements Screen{
 
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
-		case KeyEvent.VK_UP:
+		case KeybindManager.navigateMenuUp:
 			if(check == 0) {
 				check = 2;
 			}else if(check == 1) {
@@ -76,7 +77,7 @@ public class MainMenuScreen implements Screen{
 			}
 			return this;
 			
-		case KeyEvent.VK_DOWN:
+		case KeybindManager.navigateMenuDown:
 			if(check == 0) {
 				check = 1;
 			}else if(check == 1) {
@@ -86,7 +87,7 @@ public class MainMenuScreen implements Screen{
 			}
 			return this;
 			
-		case KeyEvent.VK_ENTER:
+		case KeybindManager.navigateMenuConfirm:
 			if(check == 0) {
 				return new ChooseClassScreen();
 			}else if(check == 1) {
@@ -94,7 +95,7 @@ public class MainMenuScreen implements Screen{
 			}else if(check == 2) {
 				return new CreditsScreen();
 			}
-		case KeyEvent.VK_ESCAPE: return new StartScreen();
+		case KeybindManager.navigateMenuBack: return new StartScreen();
 		}
 		
 		return this;
