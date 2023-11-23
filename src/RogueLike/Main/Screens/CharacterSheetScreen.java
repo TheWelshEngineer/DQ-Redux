@@ -5,6 +5,7 @@ import java.util.List;
 
 import RogueLike.Main.Creature;
 import RogueLike.Main.Effect;
+import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public class CharacterSheetScreen implements Screen{
@@ -64,7 +65,7 @@ public class CharacterSheetScreen implements Screen{
 			return new SkillsScreen(player);
 		case KeyEvent.VK_RIGHT:
 			return new SkillsScreen(player);*/
-		case KeyEvent.VK_ESCAPE:
+		case KeybindManager.navigateMenuBack:
 			return null;
 		default: return this;
 		}

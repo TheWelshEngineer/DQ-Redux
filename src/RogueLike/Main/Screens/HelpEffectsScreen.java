@@ -2,6 +2,7 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public class HelpEffectsScreen implements Screen{
@@ -49,7 +50,7 @@ public class HelpEffectsScreen implements Screen{
 	
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
-        case KeyEvent.VK_ESCAPE: return new HelpScreen(fromMenu);
+        case KeybindManager.navigateMenuBack: return new HelpScreen(fromMenu);
 		}
 		return this;
 	}

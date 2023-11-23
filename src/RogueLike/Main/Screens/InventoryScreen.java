@@ -11,6 +11,7 @@ import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Items.Item;
+import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Inventory;
 import asciiPanel.AsciiPanel;
 
@@ -555,7 +556,7 @@ public class InventoryScreen implements Screen{
 					}
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).isEquippable()) {
-					terminal.writeCenter("-- [X]: Equip --", 36);
+					terminal.writeCenter("-- [W]: Equip --", 36);
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).foodValue() > 0) {
 					terminal.writeCenter("-- [E]: Eat --", 36);
@@ -598,28 +599,28 @@ public class InventoryScreen implements Screen{
 	@Override
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
-		case KeyEvent.VK_UP:
+		case KeybindManager.navigateMenuUp:
 			if(check == 0) {
 				check = inventory.getItems().size()-1;
 			}else {
 				check--;
 			}
 			return this;
-		case KeyEvent.VK_DOWN:
+		case KeybindManager.navigateMenuDown:
 			if(check == inventory.getItems().size()-1) {
 				check = 0;
 			}else {
 				check++;
 			}
 			return this;
-		case KeyEvent.VK_ESCAPE:
+		case KeybindManager.navigateMenuBack:
 			return null;
 		/*case KeyEvent.VK_ENTER:
 			if(spellbook.getSpells().size() > 0) {
 				return use(spellbook.get(check));
 			}
 			return null;*/
-		case KeyEvent.VK_X:
+		case KeybindManager.interactionEquipItem:
 			if(inventory.get(check).isEquippable()) {
 				player.equip(inventory.get(check));
 				playScreen.setInputAccepted(true);
@@ -628,12 +629,12 @@ public class InventoryScreen implements Screen{
 				return this;
 			}
 		
-		case KeyEvent.VK_D:
+		case KeybindManager.interactionDropItem:
 			player.drop(inventory.get(check));
 			playScreen.setInputAccepted(true);
 			return null;
 			
-		case KeyEvent.VK_E:
+		case KeybindManager.interactionEatFood:
 			if(inventory.get(check).foodValue() > 0) {
 				player.eat(inventory.get(check));
 				playScreen.setInputAccepted(true);
@@ -642,7 +643,7 @@ public class InventoryScreen implements Screen{
 				return this;
 			}
 		
-		case KeyEvent.VK_Q:
+		case KeybindManager.interactionDrinkPotion:
 			if(inventory.get(check).quaffEffect() != null) {
 				player.quaff(inventory.get(check));
 				playScreen.setInputAccepted(true);
@@ -651,7 +652,7 @@ public class InventoryScreen implements Screen{
 				return this;
 			}
 			
-		case KeyEvent.VK_1:
+		case KeybindManager.interactionQuickslot_1:
 			if(inventory.get(check).isQuickslottable()) {
 				player.equipToQuickslot(inventory.get(check), 1);
 				return this;
@@ -659,7 +660,7 @@ public class InventoryScreen implements Screen{
 				return this;
 			}
 			
-		case KeyEvent.VK_2:
+		case KeybindManager.interactionQuickslot_2:
 			if(inventory.get(check).isQuickslottable()) {
 				player.equipToQuickslot(inventory.get(check), 2);
 				return this;
@@ -667,7 +668,7 @@ public class InventoryScreen implements Screen{
 				return this;
 			}
 			
-		case KeyEvent.VK_3:
+		case KeybindManager.interactionQuickslot_3:
 			if(inventory.get(check).isQuickslottable()) {
 				player.equipToQuickslot(inventory.get(check), 3);
 				return this;
@@ -675,7 +676,7 @@ public class InventoryScreen implements Screen{
 				return this;
 			}
 			
-		case KeyEvent.VK_4:
+		case KeybindManager.interactionQuickslot_4:
 			if(inventory.get(check).isQuickslottable()) {
 				player.equipToQuickslot(inventory.get(check), 4);
 				return this;
@@ -683,7 +684,7 @@ public class InventoryScreen implements Screen{
 				return this;
 			}
 			
-		case KeyEvent.VK_5:
+		case KeybindManager.interactionQuickslot_5:
 			if(inventory.get(check).isQuickslottable()) {
 				player.equipToQuickslot(inventory.get(check), 5);
 				return this;
@@ -691,7 +692,7 @@ public class InventoryScreen implements Screen{
 				return this;
 			}
 			
-		case KeyEvent.VK_6:
+		case KeybindManager.interactionQuickslot_6:
 			if(inventory.get(check).isQuickslottable()) {
 				player.equipToQuickslot(inventory.get(check), 6);
 				return this;
@@ -699,7 +700,7 @@ public class InventoryScreen implements Screen{
 				return this;
 			}
 			
-		case KeyEvent.VK_R:
+		case KeybindManager.interactionReadSpell:
 			if(inventory.get(check).writtenSpells().size() > 0) {
 				if(inventory.get(check).isSpellbook()){
 					player.learnSpell(inventory.get(check).writtenSpells().get(0), inventory.get(check));

@@ -6,6 +6,7 @@ import java.util.List;
 
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Skill;
+import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public class Zone1Screen implements Screen{
@@ -46,7 +47,7 @@ public class Zone1Screen implements Screen{
 	
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
-			case KeyEvent.VK_ENTER: 
+			case KeybindManager.navigateMenuConfirm: 
 				return new PlayScreen(playerClass, playerAbilities, playerSkills, playerName);
 			default:
 				return this;

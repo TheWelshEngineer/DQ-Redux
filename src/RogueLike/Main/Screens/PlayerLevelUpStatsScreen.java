@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 
 import RogueLike.Main.Creature;
 import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public class PlayerLevelUpStatsScreen implements Screen{
@@ -230,7 +231,7 @@ public class PlayerLevelUpStatsScreen implements Screen{
 	@Override
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
-		case KeyEvent.VK_UP:
+		case KeybindManager.navigateMenuUp:
 			if(check == 0) {
 				check = 2;
 			}else if(check == 1) {
@@ -240,7 +241,7 @@ public class PlayerLevelUpStatsScreen implements Screen{
 			}
 			return this;
 			
-		case KeyEvent.VK_DOWN:
+		case KeybindManager.navigateMenuDown:
 			if(check == 0) {
 				check = 1;
 			}else if(check == 1) {
@@ -250,7 +251,7 @@ public class PlayerLevelUpStatsScreen implements Screen{
 			}
 			return this;
 			
-		case KeyEvent.VK_RIGHT:
+		case KeybindManager.navigateMenuRight:
 			if(check == 0) {
 				if(points > 0 && playerStrength < 30) {
 					modifyStrength(1); 
@@ -269,7 +270,7 @@ public class PlayerLevelUpStatsScreen implements Screen{
 			}
 			return this;
 			
-		case KeyEvent.VK_LEFT:
+		case KeybindManager.navigateMenuLeft:
 			if(check == 0) {
 				if(playerStrength > player.baseStrength()) {
 					modifyStrength(-1); 
@@ -289,7 +290,7 @@ public class PlayerLevelUpStatsScreen implements Screen{
 			return this;
 		
 			
-		case KeyEvent.VK_ENTER: 
+		case KeybindManager.navigateMenuConfirm: 
 			if(points < 1) {
 				player.setStrength(playerStrength);
 				player.setDexterity(playerDexterity);
