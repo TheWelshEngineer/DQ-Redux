@@ -37,7 +37,7 @@ public class CreditsScreen implements Screen{
 		y++;
 		terminal.writeCenter("GitHub: RolandReff", y++);
 		y++;
-		terminal.writeCenter("-- [ESCAPE]: Back --", 38);
+		terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
 
 	}
 

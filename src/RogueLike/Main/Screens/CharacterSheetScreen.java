@@ -54,7 +54,7 @@ public class CharacterSheetScreen implements Screen{
         	}
 		}
     
-        terminal.writeCenter("-- [ESCAPE]: Return to Game --", 38);
+        terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
 		
 	}
 

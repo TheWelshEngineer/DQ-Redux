@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public class ChooseAbilityScreen implements Screen{
@@ -238,36 +239,32 @@ public class ChooseAbilityScreen implements Screen{
 		
 		
 		if(abilityPoints < 1) {
-			terminal.writeCenter("-- [ENTER]: Confirm and Continue --", 36);
+			terminal.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 36);
 		}
-		terminal.writeCenter("-- [UP / DOWN]: Move Selection | [LEFT / RIGHT]: Increase/Decrease Attribute --", 38);
-		terminal.writeCenter("-- [ESCAPE]: Return to Class Selection --", 40);
+		terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Increase/Decrease Attribute --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 38);
+		terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 40);
 	}
 	
 	public Screen respondToUserInput(KeyEvent key) {
 		setPlayerName();
 		switch(key.getKeyCode()) {
-		case KeyEvent.VK_UP:
+		case KeybindManager.navigateMenuUp:
 			if(check == 0) {
 				check = 2;
-			}else if(check == 1) {
-				check = 0;
-			}else if(check == 2) {
-				check = 1;
+			}else{
+				check--;
 			}
 			return this;
 			
-		case KeyEvent.VK_DOWN:
-			if(check == 0) {
-				check = 1;
-			}else if(check == 1) {
-				check = 2;
-			}else if(check == 2) {
+		case KeybindManager.navigateMenuDown:
+			if(check == 2) {
 				check = 0;
+			}else {
+				check++;
 			}
 			return this;
 			
-		case KeyEvent.VK_RIGHT:
+		case KeybindManager.navigateMenuRight:
 			if(check == 0) {
 				if(playerStrength < 15 && abilityPoints > 0) {
 					modifyStrength(1); 
@@ -289,7 +286,7 @@ public class ChooseAbilityScreen implements Screen{
 			}
 			return this;
 			
-		case KeyEvent.VK_LEFT:
+		case KeybindManager.navigateMenuLeft:
 			if(check == 0) {
 				if(playerStrength > 8) {
 					modifyStrength(-1); 
@@ -312,14 +309,14 @@ public class ChooseAbilityScreen implements Screen{
 			return this;
 		
 			
-		case KeyEvent.VK_ENTER: 
+		case KeybindManager.navigateMenuConfirm: 
 			if(abilityPoints < 1) {
 				return new ChooseSkillScreen(playerClass, playerAbilities, playerName); 
 			}else {
 				return this;
 			}
 		
-		case KeyEvent.VK_ESCAPE: return new ChooseClassScreen(/*playerSpecies*/);
+		case KeybindManager.navigateMenuBack: return new ChooseClassScreen(/*playerSpecies*/);
 		}
 		return this;
 	}

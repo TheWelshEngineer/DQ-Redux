@@ -15,7 +15,6 @@ public class KeybindManager {
 	public static final int movementSouthEast = KeyEvent.VK_NUMPAD3;
 	
 	public static final int movementWait = KeyEvent.VK_NUMPAD5;
-	
 	public static final int movementUpStairs = KeyEvent.VK_UP;
 	public static final int movementDownStairs = KeyEvent.VK_DOWN;
 	
@@ -59,5 +58,10 @@ public class KeybindManager {
 	public static final int navigateMenuOption_8 = KeyEvent.VK_8;
 	public static final int navigateMenuOption_9 = KeyEvent.VK_9;
 	public static final int navigateMenuFunction_1 = KeyEvent.VK_F1;
+	
+	public static String keybindText(int keyCode) {
+		String representation = KeyEvent.getKeyText(keyCode);
+		return representation.toUpperCase();
+	}
 
 }

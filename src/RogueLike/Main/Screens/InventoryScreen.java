@@ -556,22 +556,22 @@ public class InventoryScreen implements Screen{
 					}
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).isEquippable()) {
-					terminal.writeCenter("-- [W]: Equip --", 36);
+					terminal.writeCenter(String.format("-- [%s]: Equip --", KeybindManager.keybindText(KeybindManager.interactionEquipItem)), 36);
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).foodValue() > 0) {
-					terminal.writeCenter("-- [E]: Eat --", 36);
+					terminal.writeCenter(String.format("-- [%s]: Eat --", KeybindManager.keybindText(KeybindManager.interactionEatFood)), 36);
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).quaffEffect() != null) {
-					terminal.writeCenter("-- [Q]: Quaff --", 36);
+					terminal.writeCenter(String.format("-- [%s]: Quaff --", KeybindManager.keybindText(KeybindManager.interactionDrinkPotion)), 36);
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).writtenSpells().size() > 0) {
-					terminal.writeCenter("-- [R]: Read --", 36);
+					terminal.writeCenter(String.format("-- [%s]: Read --", KeybindManager.keybindText(KeybindManager.interactionReadSpell)), 36);
 				}
 				
 				if(checkIfSelected(i, check) && inventory.get(i).isQuickslottable()) {
-					terminal.writeCenter("-- [1-6]: Equip to quickslot 1-6 | [D]: Drop | [T]: Throw --", 38);
+					terminal.writeCenter(String.format("-- [%s-%s]: Equip to quickslot 1-6 | [%s]: Drop | [%s]: Throw --", KeybindManager.interactionQuickslot_1, KeybindManager.interactionQuickslot_6, KeybindManager.interactionDropItem, KeybindManager.interactionThrowItem), 38);
 				}else {
-					terminal.writeCenter("-- [D]: Drop | [T]: Throw --", 38);
+					terminal.writeCenter(String.format("-- [%s]: Drop | [%s]: Throw --", KeybindManager.interactionDropItem, KeybindManager.interactionThrowItem), 38);
 				}
 				
 				
@@ -580,7 +580,7 @@ public class InventoryScreen implements Screen{
 		//
 		
 		
-        terminal.writeCenter("-- [UP / DOWN]: Move Selection | [ESCAPE]: Cancel --", 40);
+        terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Cancel --", KeybindManager.navigateMenuUp, KeybindManager.navigateMenuDown, KeybindManager.navigateMenuBack), 40);
 		
 	}
 	

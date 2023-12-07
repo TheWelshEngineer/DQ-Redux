@@ -29,8 +29,8 @@ public class HelpScreen implements Screen{
 	
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
-        case KeybindManager.navigateMenuOption_1: return new HelpControlsScreen(fromMenu);
-        case KeybindManager.navigateMenuOption_2: return new HelpInteractionsScreen(fromMenu);
+        case KeybindManager.navigateMenuOption_1: return new HelpMovementControlsScreen(fromMenu);
+        case KeybindManager.navigateMenuOption_2: return new HelpInteractionControlsScreen(fromMenu);
         case KeybindManager.navigateMenuOption_3: return new HelpEffectsScreen(fromMenu);
         case KeybindManager.navigateMenuBack: 
         	if(this.fromMenu == true) {

@@ -52,7 +52,7 @@ public class StartScreen implements Screen{
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
-		terminal.writeCenter("-- beta v18102023 -- Press [ENTER] to Start --", 45);
+		terminal.writeCenter(String.format("-- beta v07122023 -- Press [%s] to Start --", KeybindManager.navigateMenuConfirm), 45);
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {

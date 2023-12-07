@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 import RogueLike.Main.Skill;
+import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public class ChooseSkillScreen implements Screen{
@@ -497,76 +498,33 @@ public class ChooseSkillScreen implements Screen{
 		
 		
 		if(skillPoints < 1) {
-			terminal.writeCenter("-- [ENTER]: Confirm and Continue --", 38);
+			terminal.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 38);
 		}
-		terminal.writeCenter("-- [UP / DOWN]: Move Selection | [LEFT / RIGHT]: Select/Deselect Skill --", 40);
-		terminal.writeCenter("-- [ESCAPE]: Return to Ability Score Selection --", 42);
+		terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Select/Deselect Skill --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 40);
+		terminal.writeCenter(String.format("-- [%s]: Return to Ability Score selection --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 42);
 	}
 	
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
-		case KeyEvent.VK_UP:
+		case KeybindManager.navigateMenuUp:
 			if(check == 0) {
 				check = 12;
-			}else if(check == 1) {
-				check = 0;
-			}else if(check == 2) {
-				check = 1;
-			}else if(check == 3) {
-				check = 2;
-			}else if(check == 4) {
-				check = 3;
-			}else if(check == 5) {
-				check = 4;
-			}else if(check == 6) {
-				check = 5;
-			}else if(check == 7) {
-				check = 6;
-			}else if(check == 8) {
-				check = 7;
-			}else if(check == 9) {
-				check = 8;
-			}else if(check == 10) {
-				check = 9;
-			}else if(check == 11) {
-				check = 10;
-			}else if(check == 12) {
-				check = 11;
+			}else{
+				check--;
 			}
 			updateMarkers(check);
 			return this;
 			
-		case KeyEvent.VK_DOWN:
-			if(check == 0) {
-				check = 1;
-			}else if(check == 1) {
-				check = 2;
-			}else if(check == 2) {
-				check = 3;
-			}else if(check == 3) {
-				check = 4;
-			}else if(check == 4) {
-				check = 5;
-			}else if(check == 5) {
-				check = 6;
-			}else if(check == 6) {
-				check = 7;
-			}else if(check == 7) {
-				check = 8;
-			}else if(check == 8) {
-				check = 9;
-			}else if(check == 9) {
-				check = 10;
-			}else if(check == 10) {
-				check = 11;
-			}else if(check == 11) {
-				check = 12;
-			}else if(check == 12) {
+		case KeybindManager.navigateMenuDown:
+			if(check == 12) {
 				check = 0;
-			}updateMarkers(check);
+			}else{
+				check++;
+			}
+			updateMarkers(check);
 			return this;
 		
-		case KeyEvent.VK_RIGHT:
+		case KeybindManager.navigateMenuRight:
 			if(check == 0) {
 				if(skillPoints > 0 && !playerSimpleWeapons) {
 					playerSkills[0].modifyLevel(1, false);
@@ -649,7 +607,7 @@ public class ChooseSkillScreen implements Screen{
 			updateMarkers(check);
 			return this;
 			
-		case KeyEvent.VK_LEFT:
+		case KeybindManager.navigateMenuLeft:
 			if(check == 0) {
 				if(playerSimpleWeapons) {
 					playerSimpleWeapons = false;
@@ -733,14 +691,14 @@ public class ChooseSkillScreen implements Screen{
 			return this;
 		
 			
-		case KeyEvent.VK_ENTER: 
+		case KeybindManager.navigateMenuConfirm: 
 			if(skillPoints < 1) {
 				return new Zone1Screen(playerClass, playerAbilities, playerSkills, playerName); 
 			}else {
 				return this;
 			}
 			
-		case KeyEvent.VK_ESCAPE: return new ChooseAbilityScreen(playerClass);
+		case KeybindManager.navigateMenuBack: return new ChooseAbilityScreen(playerClass);
 		
 		}
 		

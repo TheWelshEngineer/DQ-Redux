@@ -172,7 +172,7 @@ public class PlayScreen implements Screen{
 	        		//subscreen = new LevelUpScreen(player, player.attributePoints()); break;
 	        		subscreen = new PlayerLevelUpStatsScreen(player);
 	        	}
-	        	
+	        	break;
 	        	
 	        
 	        case KeybindManager.interactionFireRangedWeapon: 

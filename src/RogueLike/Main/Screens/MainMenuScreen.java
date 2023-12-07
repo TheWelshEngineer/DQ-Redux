@@ -61,8 +61,8 @@ public class MainMenuScreen implements Screen{
 		terminal.write(String.format("%c  Help      %c", helpLeft, helpRight), 52, y+=2);
 		terminal.write(String.format("%c  Credits   %c", creditsLeft, creditsRight), 52, y+=2);
 
-		terminal.writeCenter("-- [UP / DOWN]: Move Selection | [ENTER]: Confirm and Continue --", 36);
-		terminal.writeCenter("-- [ESCAPE]: Return to Title Screen --", 38);
+		terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Confirm and Continue --", KeybindManager.navigateMenuUp, KeybindManager.navigateMenuDown, KeybindManager.navigateMenuConfirm), 36);
+		terminal.writeCenter(String.format("-- [%s]: Return to Title Screen --", KeybindManager.navigateMenuBack), 38);
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {
