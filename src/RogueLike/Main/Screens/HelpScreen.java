@@ -20,10 +20,10 @@ public class HelpScreen implements Screen{
 		int y = 3;
 		int x = 42;
 		
-        terminal.write("[1]: Controls - Movement", x, y++);
-        terminal.write("[2]: Controls - Interactions", x, y++);
-        terminal.write("[3]: Systems - Status Effects", x, y++);
-        terminal.write("[ESCAPE]: Exit help menu", x, y++);
+        terminal.write(String.format("[%s]: Controls - Movement", KeybindManager.keybindText(KeybindManager.navigateMenuOption_1)), x, y++);
+        terminal.write(String.format("[%s]: Controls - Interactions", KeybindManager.keybindText(KeybindManager.navigateMenuOption_2)), x, y++);
+        terminal.write(String.format("[%s]: Systems - Status Effects", KeybindManager.keybindText(KeybindManager.navigateMenuOption_3)), x, y++);
+        terminal.write(String.format("[%s]: Exit", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), x, y++);
 
 	}
 	

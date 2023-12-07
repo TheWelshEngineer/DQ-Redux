@@ -52,7 +52,7 @@ public class WinScreen implements Screen {
 		terminal.writeCenter("Shield: "+shieldName, 16);
 		terminal.writeCenter("Ring: "+ringName, 18);
 		terminal.writeCenter("Ammunition: "+ammunitionName, 20);
-		terminal.writeCenter(String.format("-- [%s]: Restart your Adventure | [%s]: Export Scores to Desktop --", KeybindManager.navigateMenuConfirm, KeybindManager.navigateMenuFunction_1), 24);
+		terminal.writeCenter(String.format("-- [%s]: Restart your Adventure | [%s]: Export Scores to Desktop --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm), KeybindManager.keybindText(KeybindManager.navigateMenuFunction_1)), 24);
         terminal.writeCenter(exportCheck, 26);
     }
 

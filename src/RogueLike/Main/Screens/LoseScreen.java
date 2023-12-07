@@ -55,7 +55,7 @@ public class LoseScreen implements Screen {
 		terminal.writeCenter("Shield: "+shieldName, 17);
 		terminal.writeCenter("Ring: "+ringName, 19);
 		terminal.writeCenter("Ammunition: "+ammunitionName, 21);
-		terminal.writeCenter(String.format("-- [%s]: Restart your Adventure | [%s]: Export Scores to Desktop --", KeybindManager.navigateMenuConfirm, KeybindManager.navigateMenuFunction_1), 24);
+		terminal.writeCenter(String.format("-- [%s]: Restart your Adventure | [%s]: Export Scores to Desktop --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm), KeybindManager.keybindText(KeybindManager.navigateMenuFunction_1)), 24);
 		terminal.writeCenter(exportCheck, 26);
     }
 
