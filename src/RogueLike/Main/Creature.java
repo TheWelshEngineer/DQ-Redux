@@ -2068,6 +2068,10 @@ public class Creature implements Cloneable{
 		else if(other.isContainer() == true){
 			openContainer(other);
 		}else {
+			//TODO
+			if(this.weapon() != null && this.weapon().isExtraAttack()) {
+				attack(other);
+			}
 			attack(other);
 		}		
 	}

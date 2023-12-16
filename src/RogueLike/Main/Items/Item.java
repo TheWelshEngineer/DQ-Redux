@@ -656,6 +656,14 @@ public class Item implements Cloneable{
 		isTwoHanded = value;
 	}
 	
+	private boolean isExtraAttack;
+	public boolean isExtraAttack() {
+		return isExtraAttack;
+	}
+	public void setIsExtraAttack(boolean value) {
+		isExtraAttack = value;
+	}
+	
 	private boolean isVersatile;
 	public boolean isVersatile() {
 		return isVersatile;

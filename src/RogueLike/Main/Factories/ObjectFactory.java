@@ -390,7 +390,7 @@ public class ObjectFactory {
 			player.featbook().add(featFactory.lightArmor());
 			player.featbook().add(featFactory.mediumArmor());*/
 			
-			Item startWeaponWarrior = newLongsword(0, false);
+			Item startWeaponWarrior = newSword(0, false);
 			player.learnNameQuiet(startWeaponWarrior);
 			player.inventory().add(startWeaponWarrior);
 			player.equip(startWeaponWarrior);
@@ -398,7 +398,7 @@ public class ObjectFactory {
 			player.learnNameQuiet(startArmorWarrior);
 			player.inventory().add(startArmorWarrior);
 			player.equip(startArmorWarrior);
-			Item startShieldWarrior = newKiteShield(0, false);
+			Item startShieldWarrior = newRoundShield(0, false);
 			player.learnNameQuiet(startShieldWarrior);
 			player.inventory().add(startShieldWarrior);
 			player.equip(startShieldWarrior);
@@ -1564,7 +1564,10 @@ public class ObjectFactory {
 	}
 	
 	public Item newPairedBlades(int depth, boolean addToWorld) {
-		Item item = new TwoHandedFinesseWeapon(')', AsciiPanel.brightWhite, "Paired Blades", null, Dice.d12, 200, 86);
+		//Item item = new TwoHandedFinesseWeapon(')', AsciiPanel.brightWhite, "Paired Blades", null, Dice.d12, 200, 86);
+		//TODO
+		Item item = new TwoHandedFinesseWeapon(')', AsciiPanel.brightWhite, "Paired Blades", null, Dice.d6, 200, 86);
+		item.setIsExtraAttack(true);
 		if(addToWorld) {
 			world.addAtEmptyLocation(item, depth);
 		}else {
