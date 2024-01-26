@@ -580,7 +580,7 @@ public class InventoryScreen implements Screen{
 		//
 		
 		
-        terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Cancel --", KeybindManager.navigateMenuUp, KeybindManager.navigateMenuDown, KeybindManager.navigateMenuBack), 40);
+        terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Cancel --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 40);
 		
 	}
 	

@@ -30,6 +30,7 @@ import RogueLike.Main.AI.GremlinAI.GremlinAI;
 import RogueLike.Main.AI.GremlinAI.GremlinSkirmisherAI;
 import RogueLike.Main.AI.SlimeAI.PinkSlimeAI;
 import RogueLike.Main.AI.SlimeAI.PinkSlimelingAI;
+import RogueLike.Main.Creatures.Fungus;
 import RogueLike.Main.Enchantments.Enchantment;
 import RogueLike.Main.Items.ArrowsRangedWeapon;
 import RogueLike.Main.Items.BasicFinesseWeapon;
@@ -496,44 +497,38 @@ public class ObjectFactory {
 		
 	}
 	
+//	public Creature newFungus(int depth, int addToWorld) {
+//		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
+//		Creature fungus = new Creature(world, "Fungus", 'f', AsciiPanel.green, 10, 10, 9, 3, 8, 10, 3, 20);
+//		fungus.setID(1);
+//		new FungusAI(fungus, this, this.world);
+//		fungus.creatureTypes.add("Plant");
+//		fungus.scaleHPWithDepth(depth);
+//		fungus.scaleManaWithDepth(depth);	
+//		fungus.scaleStrengthWithDepth(depth);	
+//		fungus.scaleDexterityWithDepth(depth);	
+//		fungus.scaleIntelligenceWithDepth(depth);	
+//		if(addToWorld > 0) {
+//			world.addAtEmptyLocation(fungus, depth);
+//		}else {
+//			
+//		}
+//		return fungus;
+//	}
+	
 	public Creature newFungus(int depth, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature fungus = new Creature(world, "Fungus", 'f', AsciiPanel.green, 10, 10, 9, 3, 8, 10, 3, 20);
-		fungus.setID(1);
-		new FungusAI(fungus, this, this.world);
-		fungus.creatureTypes.add("Plant");
-		fungus.scaleHPWithDepth(depth);
-		fungus.scaleManaWithDepth(depth);	
-		fungus.scaleStrengthWithDepth(depth);	
-		fungus.scaleDexterityWithDepth(depth);	
-		fungus.scaleIntelligenceWithDepth(depth);	
+		Creature fungus = new Fungus(this, "Fungus", 'f', AsciiPanel.green, 1, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(fungus, depth);
-		}else {
-			
 		}
 		return fungus;
-		
-		
 	}
 	
 	public Creature newBat(int depth, int addToWorld) {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature bat = new Creature(world, "Bat", 'b', AsciiPanel.magenta, 8, 1, 12, 2, 15, 2, 6, 20);
-		bat.setID(2);
-		new BatAI(bat, this, this.world);
-		bat.setIsFlying(true);
-		bat.setSocial(true);
-		bat.creatureTypes.add("Beast");
-		bat.scaleHPWithDepth(depth);
-		bat.scaleManaWithDepth(depth);	
-		bat.scaleStrengthWithDepth(depth);	
-		bat.scaleDexterityWithDepth(depth);	
-		bat.scaleIntelligenceWithDepth(depth);
+		Creature bat = new Fungus(this, "Bat", 'b', AsciiPanel.magenta, 2, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(bat, depth);
-		}else {
-			
 		}
 		return bat;
 		
