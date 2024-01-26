@@ -2660,6 +2660,16 @@ public class Creature implements Cloneable{
 			}
 			inventory.add(item);
 			stackItems();
+			if (item.isThrownWeapon()){
+				if (item.getWasCreatureWepon() && this.weapon() == null) {
+					doAction("wield a "+nameOf(item));
+					weapon = item;
+					weaponName = item.name();
+				}
+				else {
+					item.setWasCreatureWepon(false);
+				}
+			}
 			if(item.isInQuickslot1() || item.isInQuickslot2() || item.isInQuickslot3() || item.isInQuickslot4() || item.isInQuickslot5() || item.isInQuickslot6()) {
 				if(item.isInQuickslot1()) {
 					if(quickslot_1 == null) {

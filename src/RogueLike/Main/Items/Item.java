@@ -234,6 +234,17 @@ public class Item implements Cloneable{
 		thrownDamageDice = dice;
 	}
 	
+	
+	// Roland code in the works
+	private boolean wasCreatureWepon = false;
+	public void setWasCreatureWepon(boolean weponState){
+		this.wasCreatureWepon = weponState;
+	}
+	public boolean getWasCreatureWepon(){
+		return wasCreatureWepon;
+	}
+	
+	
 	private Dice rangedDamageDice;
 	public Dice rangedDamageDice() {
 		return rangedDamageDice;
@@ -1238,5 +1249,7 @@ public class Item implements Cloneable{
 			throw new InternalError(e.toString());
 		}
 	}
-
+	
+	
+	
 }

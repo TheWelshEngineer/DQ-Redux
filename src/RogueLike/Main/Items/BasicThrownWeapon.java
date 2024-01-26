@@ -11,5 +11,4 @@ public class BasicThrownWeapon extends BasicMeleeWeapon{
 		this.setIsThrownWeapon(true);
 		this.setThrownDamageDice(thrownDice);
 	}
-
 }
