@@ -1,5 +1,7 @@
 package RogueLike.Main.AI;
 
+import java.util.ArrayList;
+
 import RogueLike.Main.Creature;
 import RogueLike.Main.World;
 import RogueLike.Main.Factories.ObjectFactory;
@@ -11,6 +13,46 @@ public class OgreAI extends CreatureAI{
 		super(creature, factory, world);
 		this.player = player;
 
+	}
+	
+	public void selectAction() {
+		actionQueue = new ArrayList<Integer>();
+		if(canUseBetterEquipment()) {
+			//Burst
+			actionQueue.add(1);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Change Equipment]");
+		}else if(canThrowAt(player) && player.isInvisible() == false) {
+			//Throw Attack
+			actionQueue.add(2);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Throw Attack]");
+		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+			//Hunt
+			actionQueue.add(3);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Hunt Player]");
+		}else if(canPickup()) {
+			//Pick Up
+			actionQueue.add(4);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Pick Up]");
+		}else{
+			//Wander
+			actionQueue.add(5);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Wander]");
+		}
+	}
+	
+	public void decodeAction(int action) {
+		switch(action) {
+			case 1: this.useBetterEquipment(); break;
+			case 2: creature.throwItem(getWeaponToThrow(), player.x, player.y, player.z); break;
+			case 3: this.hunt(player); break;
+			case 4: creature.pickup(); break;
+			default: this.wander(); break;
+		}
 	}
 	
 	public void onUpdate() {
@@ -28,22 +70,7 @@ public class OgreAI extends CreatureAI{
 			return;
 
 		}else {
-			/*if(creature.isRaging == 0 && creature.hp() < ((int)creature.maxHP() / 4)) {
-				rage();
-			}*/
-			if(canUseBetterEquipment()) {
-				useBetterEquipment();
-			}else if(canRangedWeaponAttack(player) && player.isInvisible() == false) {
-				creature.rangedWeaponAttack(player);
-			}else if(canThrowAt(player) && player.isInvisible() == false) {
-				creature.throwItem(getWeaponToThrow(), player.x, player.y, player.z);
-			}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
-				hunt(player);
-			}else if(canPickup()){
-				creature.pickup();
-			}else {
-				wander();
-			}
+			decodeAction(actionQueue.get(0));
 		}
 	}
 

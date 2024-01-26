@@ -135,6 +135,16 @@ public class CreatureAI {
 		
 		return true;
 	}
+	
+	public boolean isAdjacentTo(Creature target) {
+		if(creature.z != target.z) {
+			return false;
+		}
+		if(((target.x >= 0 && target.x <= creature.x+1) || (target.x <= 0 && target.x >= creature.x-1)) && ((target.y >= 0 && target.y <= creature.y+1) || (target.y <= 0 && target.y >= creature.y-1))) {
+			return true;
+		}
+		return false;
+	}
 
 	public void onGainLevel() {
 		new LevelUpController().autoLevelUp(creature);
@@ -164,7 +174,7 @@ public class CreatureAI {
 		
 		
 		int my;
-			if(creature != null || points.size() == 0) {
+		if(creature != null || points.size() == 0) {
 			try {
 				my = points.get(0).y - creature.y;
 			} catch (Exception e) {

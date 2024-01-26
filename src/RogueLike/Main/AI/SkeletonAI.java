@@ -1,6 +1,9 @@
 package RogueLike.Main.AI;
 
+import java.util.ArrayList;
+
 import RogueLike.Main.Creature;
+import RogueLike.Main.Dice;
 import RogueLike.Main.World;
 import RogueLike.Main.Factories.ObjectFactory;
 
@@ -12,10 +15,35 @@ public class SkeletonAI extends CreatureAI{
 		this.player = player;
 	}
 	
-	public void onUpdate() {
-		if(Math.random() < 0.2) {
-			return;
+	public void selectAction() {
+		actionQueue = new ArrayList<Integer>();
+		if(Dice.d20.roll() == 1) {
+			//Blunder
+			actionQueue.add(1);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Blunder]");
+		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+			//Hunt
+			actionQueue.add(2);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Hunt Player]");
+		}else {
+			//Wander
+			actionQueue.add(3);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Wander]");
 		}
+	}
+	
+	public void decodeAction(int action) {
+		switch(action) {
+			case 1: this.wander(); break;
+			case 2: this.hunt(player); break;
+			default: this.wander(); break;
+		}
+	}
+	
+	public void onUpdate() {
 		if((creature.isParalyzed() == true)) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
@@ -30,11 +58,7 @@ public class SkeletonAI extends CreatureAI{
 			return;
 
 		}else {
-			if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
-				hunt(player);
-			}else {
-				wander();
-			}
+			decodeAction(actionQueue.get(0));
 		}
 	}
 	

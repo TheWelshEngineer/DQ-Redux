@@ -100,9 +100,7 @@ public class SlimeAI extends CreatureAI{
 				creature.cureParalysis();
 				creature.doAction("break free of paralysis!");
 			}
-			
 			decodeAction(actionQueue.get(0)); 
-
 		}
 	}
 	

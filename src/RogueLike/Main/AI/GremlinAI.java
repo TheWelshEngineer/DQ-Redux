@@ -1,6 +1,9 @@
 package RogueLike.Main.AI;
 
+import java.util.ArrayList;
+
 import RogueLike.Main.Creature;
+import RogueLike.Main.Dice;
 import RogueLike.Main.World;
 import RogueLike.Main.Factories.ObjectFactory;
 
@@ -11,8 +14,36 @@ public class GremlinAI extends CreatureAI{
 	public GremlinAI(Creature creature, Creature player, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		this.player = player;
-		this.arrowsLeft = 7;
+		this.arrowsLeft = Dice.d10.roll();
 
+	}
+	
+	public void selectAction() {
+		actionQueue = new ArrayList<Integer>();
+		if(canRangedWeaponAttack(player) && player.isInvisible() == false && arrowsLeft > 0) {
+			//Shoot Arrows
+			actionQueue.add(1);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Shoot Arrows]");
+		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+			//Hunt
+			actionQueue.add(2);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Hunt Player]");
+		}else {
+			//Wander
+			actionQueue.add(3);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Wander]");
+		}
+	}
+	
+	public void decodeAction(int action) {
+		switch(action) {
+			case 1: this.shootArrows(); break;
+			case 2: this.hunt(player); break;
+			default: this.wander(); break;
+		}
 	}
 	
 	public void onUpdate() {
@@ -30,15 +61,13 @@ public class GremlinAI extends CreatureAI{
 			return;
 
 		}else {
-			if(canRangedWeaponAttack(player) && player.isInvisible() == false && (int)(Math.random()*10) < 6 && arrowsLeft > 0) {
-				creature.rangedWeaponAttack(player);
-				arrowsLeft -= 1;
-			}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
-				hunt(player);
-			}else {
-				wander();
-			}
+			decodeAction(actionQueue.get(0)); 
 		}
+	}
+	
+	public void shootArrows() {
+		creature.rangedWeaponAttack(player);
+		arrowsLeft -= 1;
 	}
 
 }

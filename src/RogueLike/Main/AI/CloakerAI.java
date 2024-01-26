@@ -1,5 +1,7 @@
 package RogueLike.Main.AI;
 
+import java.util.ArrayList;
+
 import RogueLike.Main.Creature;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.World;
@@ -12,6 +14,40 @@ public class CloakerAI extends CreatureAI{
 		super(creature, factory, world);
 		this.player = player;
 
+	}
+	
+	public void selectAction() {
+		actionQueue = new ArrayList<Integer>();
+		if(creature.hp() < (creature.maxHP() / 2)) {
+			//Lose Invisible
+			actionQueue.add(1);
+			actionQueue.add(0);
+			System.out.println(this.toString() + " uses [Lose Invisible]");
+		}else if(creature.hp() < (creature.maxHP() / 2)) {
+			//Become Invisible
+			actionQueue.add(2);
+			actionQueue.add(500);
+			System.out.println(this.toString() + " uses [Become Invisible]");
+		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+			//Hunt
+			actionQueue.add(3);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Hunt Player]");
+		}else {
+			//Wander
+			actionQueue.add(4);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Wander]");
+		}
+	}
+	
+	public void decodeAction(int action) {
+		switch(action) {
+			case 1: this.loseInvisible(); break;
+			case 2: this.becomeInvisible(); break;
+			case 3: this.hunt(player); break;
+			default: this.wander(); break;
+		}
 	}
 	
 	public void onUpdate() {
@@ -29,22 +65,20 @@ public class CloakerAI extends CreatureAI{
 			return;
 
 		}else {
-			if(creature.hp() < ((int)creature.maxHP() / 2)) {
-				creature.setIsInvisible(false);
-				creature.changeColor(creature.defaultColor());
-				creature.doAction("become visible");
-			}
-		
-			if(creature.isInvisible() == false && creature.hp() >= ((int)creature.maxHP() / 2)) {
-				creature.setIsInvisible(true);
-				creature.changeColor(ExtraColors.invisible);
-				creature.doAction("become transparent");
-			}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
-				hunt(player);
-			}else {
-				wander();
-			}
+			decodeAction(actionQueue.get(0)); 
 		}
+	}
+	
+	public void loseInvisible() {
+		creature.setIsInvisible(false);
+		creature.changeColor(creature.defaultColor());
+		creature.doAction("become visible");
+	}
+	
+	public void becomeInvisible() {
+		creature.setIsInvisible(true);
+		creature.changeColor(ExtraColors.invisible);
+		creature.doAction("become transparent");
 	}
 
 }
