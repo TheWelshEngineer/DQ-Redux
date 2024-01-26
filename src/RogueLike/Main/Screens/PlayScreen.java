@@ -101,6 +101,8 @@ public class PlayScreen implements Screen{
 	//temp
 	int level = 1;
 	//
+	
+	//
 	public Screen respondToUserInput(KeyEvent key) {
 		//int level = player.level();
 		if(subscreen != null) {
@@ -229,6 +231,7 @@ public class PlayScreen implements Screen{
 		
 		if(subscreen == null && inputAccepted) {
 			//world.update();
+			world.generateActionsOnCurrentFloor(player);
 			world.updateOnCurrentFloor(player);
 			//temp
 			//player.stackEffects();
@@ -314,7 +317,8 @@ public class PlayScreen implements Screen{
 			}
 			//
 			for(int i = 0; i < 18; i++) {
-				factory.randomChest(z, player, 1);
+				//factory.randomChest(z, player, 1);
+				factory.newGoldChest(z, player, true);
 			}
 			
 			for(int i = 0; i < 70; i++) {
@@ -348,22 +352,22 @@ public class PlayScreen implements Screen{
 				factory.randomFood(z, 1);
 			}
 			for(int j = 0; j < 4; j++) {
-				factory.randomPotion(z, true);
+				//factory.randomPotion(z, true);
 			}
 			for(int k = 0; k < 1; k++) {
-				factory.randomArmor(z, true);
+				//factory.randomArmor(z, true);
 			}
 			for(int l = 0; l < 1; l++) {
-				factory.randomShield(z, true);
+				//factory.randomShield(z, true);
 			}
 			for(int m = 0; m < 2; m++) {
-				factory.randomWeapon(z, true);
+				//factory.randomWeapon(z, true);
 			}
 			for(int l = 0; l < 1; l++) {
-				factory.randomRing(z, true);
+				//factory.randomRing(z, true);
 			}
 			for(int l = 0; l < 1; l++) {
-				factory.randomScroll(z, player, true);
+				//factory.randomScroll(z, player, true);
 			}
 		}
 		factory.newVictoryItem(world.depth()-1, 1);

@@ -460,40 +460,11 @@ public class ObjectFactory {
 		
 		player.inventory().add(newRations(0, 0));
 		//
-		player.inventory().add(newDagger(0, false));
-		player.inventory().add(newBow(0, false));
+
 		//
-		Item spear = newGreatclub(0, false);
-		//
-		this.randomEnchantWeapon(spear);
-		//this.curseItem(spear);
-		this.upgradeItem(spear, 3);
-		player.inventory().add(spear);
-		//
-		//
-		Item armor = newChainArmor(0, false);
-		//
-		this.randomEnchantArmor(armor);
-		this.curseItem(armor);
-		this.upgradeItem(armor, 3);
-		player.inventory().add(armor);
-		//
-		player.inventory().add(newWarhammer(0, false));
-		player.inventory().add(newFalchion(0, false));
-		player.inventory().add(newPairedBlades(0, false));
-		player.inventory().add(newPotionOfLiquidFlame(0, false));
-		player.inventory().add(newPotionOfLiquidFlame(0, false));
-		player.inventory().add(newPotionOfLiquidFlame(0, false));
-		player.inventory().add(newPotionOfHealing(0, false));
-		player.inventory().add(newPotionOfHealing(0, false));
-		player.inventory().add(newPotionOfHealing(0, false));
-		player.inventory().add(newScrollOfIdentify(0, player, false));
-		player.inventory().add(newScrollOfIdentify(0, player, false));
-		player.inventory().add(newMissileWand(0, player, false));
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
-		player.inventory().add(newPotionOfParalysis(0, false));
 		//temp
 		//
 		//player.inventory().add(newScrollOfMagicMapping(0, player, false));
@@ -792,7 +763,7 @@ public class ObjectFactory {
 		Creature animatedWeapon = new Creature(world, "Animated Weapon", ')', ExtraColors.lilac, 35, 10, 18, 14, 11, 1, 8, 20);
 		animatedWeapon.setID(12);
 		new SkeletonAI(animatedWeapon, player, this, this.world);
-		Item startWeapon = randomMeleeWeapon(0, true);
+		Item startWeapon = randomMeleeWeapon(0, false);
 		animatedWeapon.inventory().add(startWeapon);
 		animatedWeapon.equip(startWeapon);
 		animatedWeapon.setHasNoCorpse(true);
@@ -866,7 +837,7 @@ public class ObjectFactory {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature weaponChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(weaponChest, this, this.world);
-		Item startWeapon = randomWeapon(0, true);
+		Item startWeapon = randomWeapon(0, false);
 		weaponChest.inventory().add(startWeapon);
 		weaponChest.modifyIsContainer(true);
 		weaponChest.setHasNoCorpse(true);
@@ -964,12 +935,27 @@ public class ObjectFactory {
 		
 	}
 	
+	public Creature newGoldChest(int depth, Creature player, boolean addToWorld) {
+		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
+		Creature goldChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
+		new ChestAI(goldChest, this, this.world);
+		Item startGold = newGold(depth, false);
+		goldChest.inventory().add(startGold);
+		goldChest.modifyIsContainer(true);
+		goldChest.setHasNoCorpse(true);
+		if(addToWorld) {
+			world.addAtEmptyLocation(goldChest, depth);
+		}
+		return goldChest;
+		
+	}
+	
 	public Creature newMimic(int depth, Creature player, int addToWorld) {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature mimic = new Creature(world, "Mimic", (char)127, ExtraColors.apple, 60, 10, 12, 17, 12, 5, 8, 20);
 		mimic.setID(13);
 		new MimicAI(mimic, player, this, this.world);
-		Item startItem = randomMimicDrop(0, true);
+		Item startItem = randomMimicDrop(0, false);
 		if(ExtraMaths.d10() < 4) {
 			upgradeItem(startItem, ExtraMaths.d4());
 		}
@@ -1347,16 +1333,6 @@ public class ObjectFactory {
 		return item;
 	}
 	
-	public Item newSickle(int depth, boolean addToWorld) {
-		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Sickle", null, Dice.d4, 10, 14);
-		if(addToWorld) {
-			world.addAtEmptyLocation(item, depth);
-		}else {
-			
-		}
-		//simple
-		return item;
-	}
 	
 	public Item newStaff(int depth, boolean addToWorld) {
 		Item item = new VersatileMeleeWeapon(')', AsciiPanel.brightWhite, "Quarterstaff", null, Dice.d6, Dice.d8, 20, 15);
@@ -1574,6 +1550,29 @@ public class ObjectFactory {
 			
 		}
 		//simple
+		return item;
+	}
+	
+	public Item newHandCrossbow(int depth, boolean addToWorld) {
+		Item item = new BoltsRangedWeapon('}', AsciiPanel.brightWhite, "Hand Crossbow", null, Dice.d4, 350, 87);
+		item.setIsExtraAttack(true);
+		if(addToWorld) {
+			world.addAtEmptyLocation(item, depth);
+		}else {
+			
+		}
+		return item;
+	}
+	
+	public Item newGold(int depth, boolean addToWorld) {
+		Item item = new Item((char)155, ExtraColors.brightYellow, "Gold", "Gold");
+		item.setIsGold(true);
+		item.setBaseGoldValue(ExtraMaths.diceRoll(ExtraMaths.d12(), ExtraMaths.d100()+12)*(depth+1));
+		item.setCurrentGoldValue(item.baseGoldValue());
+		item.setID(88);
+		if(addToWorld) {
+			world.addAtEmptyLocation(item, depth);
+		}
 		return item;
 	}
 	
@@ -3055,7 +3054,7 @@ public class ObjectFactory {
 		case 4: return newHandaxe(depth, addToWorld);
 		case 5: return newLightHammer(depth, addToWorld);
 		case 6: return newMace(depth, addToWorld);
-		case 7: return newSickle(depth, addToWorld);
+		//case 7: return newSickle(depth, addToWorld);
 		case 8: return newStaff(depth, addToWorld);
 		case 9: return newSpear(depth, addToWorld);
 		case 10: return newSword(depth, addToWorld);
@@ -3087,7 +3086,7 @@ public class ObjectFactory {
 		case 4: return newHandaxe(depth, addToWorld);
 		case 5: return newLightHammer(depth, addToWorld);
 		case 6: return newMace(depth, addToWorld);
-		case 7: return newSickle(depth, addToWorld);
+		//case 7: return newSickle(depth, addToWorld);
 		case 8: return newStaff(depth, addToWorld);
 		case 9: return newSpear(depth, addToWorld);
 		case 10: return newSword(depth, addToWorld);

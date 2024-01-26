@@ -33,6 +33,10 @@ public class Creature implements Cloneable{
 	public CreatureAI ai() {
 		return ai;
 	}
+	
+	public int getActionSpeed() {
+		return ai.getActionSpeed();
+	}
 
 	public ObjectFactory factory() {
 		return ai.factory;
@@ -1725,7 +1729,7 @@ public class Creature implements Cloneable{
 
 	private int score;
 	public int score() {
-		return score;
+		return score + this.xp() + this.gold();
 	}
 
 	public void modifyScore(int amount) {
@@ -2641,9 +2645,14 @@ public class Creature implements Cloneable{
 
 	public void pickup() {
 		Item item = world.item(x, y, z);
-		if(inventory.isFull() || item == null || item.isTrap()) {
+		if((inventory.isFull() && !item.isGold()) || item == null || item.isTrap()) {
 			doAction("grab fruitlessly at the ground");
+		}else if(item.isGold()){
+			this.modifyGold(item.currentGoldValue());
+			doAction(String.format("pick up %d gold", item.currentGoldValue()));
+			world.remove(item);
 		}else {
+		
 			doAction("pick up a %s", nameOf(item));
 			world.remove(x, y, z);
 			if(nameOf(item) == item.name()) {
@@ -3258,7 +3267,6 @@ public class Creature implements Cloneable{
 		}
 		if(amount > 0) {
 			modifyXP(amount);
-			modifyScore(amount);
 		}
 	}
 	
@@ -4220,7 +4228,7 @@ public class Creature implements Cloneable{
 				}
 			}
 			Creature tileSpell = ai().factory.newTileSpell(this.z(), this, 0);
-			ai().world.addAtGivenLocation(tileSpell, x2, y2, z);
+			ai().world.addCreatureAtLocation(tileSpell, x2, y2, z);
 			tileSpell.addEffect(spell.effect());
 			tileSpell.update();
 			//

@@ -741,37 +741,37 @@ public class EffectFactory {
 					//creature.moveBy(1, 1, 0);
 					if((creature.creature(cx+1, cy, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+1, cy, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
 					}
 					if((creature.creature(cx+2, cy-1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+2, cy-1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-1, creature.z());
 					}
 					if((creature.creature(cx, cy+1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx, cy+1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
 					}
 					if((creature.creature(cx-1, cy+2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-1, cy+2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy+1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-1, cy+1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
 					}
 					if((creature.creature(cx-2, cy+2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-2, cy+2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy-1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+1, cy-1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
 					}
 					if((creature.creature(cx+2, cy-2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+2, cy-2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
 					}
 				}
 
@@ -780,37 +780,37 @@ public class EffectFactory {
 					//creature.moveBy(-1, -1, 0);
 					if((creature.creature(cx-1, cy, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-1, cy, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
 					}
 					if((creature.creature(cx-2, cy+1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-2, cy+1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+1, creature.z());
 					}
 					if((creature.creature(cx, cy-1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx, cy-1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
 					}
 					if((creature.creature(cx+1, cy-2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+1, cy-2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy+1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-1, cy+1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
 					}
 					if((creature.creature(cx-2, cy+2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-2, cy+2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy-1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+1, cy-1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
 					}
 					if((creature.creature(cx+2, cy-2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+2, cy-2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
 					}
 				}
 
@@ -819,37 +819,37 @@ public class EffectFactory {
 					//creature.moveBy(1, -1, 0);
 					if((creature.creature(cx+1, cy, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+1, cy, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
 					}
 					if((creature.creature(cx+2, cy+1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+2, cy+1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+1, creature.z());
 					}
 					if((creature.creature(cx, cy-1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx, cy-1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
 					}
 					if((creature.creature(cx-1, cy-2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-1, cy-2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy+1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+1, cy+1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
 					}
 					if((creature.creature(cx+2, cy+2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+2, cy+2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy-1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-1, cy-1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
 					}
 					if((creature.creature(cx-2, cy-2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-2, cy-2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
 					}
 				}
 
@@ -858,37 +858,37 @@ public class EffectFactory {
 					//creature.moveBy(-1, 1, 0);
 					if((creature.creature(cx-1, cy, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-1, cy, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
 					}
 					if((creature.creature(cx-2, cy-1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-2, cy-1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-1, creature.z());
 					}
 					if((creature.creature(cx, cy+1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx, cy+1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
 					}
 					if((creature.creature(cx+1, cy+2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+1, cy+2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy+1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+1, cy+1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
 					}
 					if((creature.creature(cx+2, cy+2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+2, cy+2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy-1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-1, cy-1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
 					}
 					if((creature.creature(cx-2, cy-2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-2, cy-2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
 					}
 				}
 
@@ -896,20 +896,20 @@ public class EffectFactory {
 					//creature.moveBy(1, 0, 0);
 					if((creature.creature(cx, cy+1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx, cy+1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
 					}
 					if((creature.creature(cx, cy-1, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx, cy-1, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
 					}
 
 					if((creature.creature(cx, cy+2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx, cy+2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+2, creature.z());
 					}
 					if((creature.creature(cx, cy-2, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx, cy-2, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-2, creature.z());
 					}
 				}
 
@@ -918,20 +918,20 @@ public class EffectFactory {
 					//creature.moveBy(0, -1, 0);
 					if((creature.creature(cx+1, cy, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+1, cy, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
 					}
 					if((creature.creature(cx-1, cy, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-1, cy, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
 					}
 
 					if((creature.creature(cx+2, cy, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx+2, cy, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy, creature.z());
 					}
 					if((creature.creature(cx-2, cy, creature.z()) == null)) {
 						Creature newWall = objectFactory.newIceWall(0, player, 0);
-						creature.ai().world.addAtGivenLocation(newWall, cx-2, cy, creature.z());
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy, creature.z());
 					}
 				}
 
@@ -973,7 +973,7 @@ public class EffectFactory {
 	                    for (int oy = -2; oy < 3; oy++){
 	                        int nx = creature.x + ox;
 	                        int ny = creature.y + oy;
-	                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null) {
+	                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null || creature.creature(nx, ny, creature.z) == player) {
 	                            continue;
 	                        }
 	                        
@@ -1021,7 +1021,7 @@ public class EffectFactory {
 				if(creature == player) {
 					//int amount = Math.max(0, 15-creature.defenseValue());
 					
-					double tempAmount = (ExtraMaths.diceRoll(1, 15));
+					double tempAmount = (ExtraMaths.diceRoll(1, 12));
 					int amount = (int) Math.round(tempAmount);
 					Damage damage = new PhysicalDamage(amount, false, getThis(), true);
 					creature.doAction("get crushed!");

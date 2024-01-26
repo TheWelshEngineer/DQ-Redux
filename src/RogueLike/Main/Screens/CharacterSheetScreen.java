@@ -35,6 +35,7 @@ public class CharacterSheetScreen implements Screen{
         terminal.writeCenter(String.format("Dexterity: %2d%2s%d%s", player.dexterity(), "(", player.dexterityModifier(), ")"), y++);
         terminal.writeCenter(String.format("Intelligence: %2d%2s%d%s", player.intelligence(), "(", player.intelligenceModifier(), ")"), y++);
         terminal.writeCenter(String.format("Vision Radius: %3d %s", player.visionRadius(), "tiles"), y++);
+        terminal.writeCenter(String.format("Gold: %d gold", player.gold()), y++);
         y++;
         y++;
         y++;

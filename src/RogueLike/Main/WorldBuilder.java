@@ -165,7 +165,7 @@ public class WorldBuilder {
 			tiles[p.x][p.y][z+1] = Tile.STAIRS_UP;
 			stairs++;
 		}
-		while(candidates.size() / stairs > 250);
+		while(candidates.size() / stairs > 500);
 		
 	}
 	

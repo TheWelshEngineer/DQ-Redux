@@ -1,6 +1,9 @@
 package RogueLike.Main.AI;
 
+import java.util.ArrayList;
+
 import RogueLike.Main.Creature;
+import RogueLike.Main.Dice;
 import RogueLike.Main.World;
 import RogueLike.Main.Factories.ObjectFactory;
 
@@ -24,11 +27,32 @@ public class BatAI extends CreatureAI{
 			creature.doAction("struggle to move!");
 			return;
 
-		}else {
-			wander();
-			wander();
 		}
+		decodeAction(actionQueue.get(0));
 		
+	}
+	
+	public void selectAction() {
+		actionQueue = new ArrayList<Integer>();
+		if(Dice.d100.roll() > 50) {
+			//Double wander
+			actionQueue.add(1);
+			actionQueue.add(1000);
+			System.out.println(this.toString() + " uses [Double Wander]");
+		}else {
+			//Fast wander
+			actionQueue.add(2);
+			actionQueue.add(500);
+			System.out.println(this.toString() + " uses [Fast Wander]");
+		}
+	}
+	
+	public void decodeAction(int action) {
+		switch(action) {
+			case 1: this.wander(); this.wander(); break;
+			case 2: this.wander(); break;
+			default: this.wander(); break;
+		}
 	}
 
 }

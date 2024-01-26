@@ -104,7 +104,7 @@ public enum Tile {
 	}
 	
 	public boolean noItems() {
-		return this == WALL || this == FIRE || this == GRASS_TALL || this == BOUNDS || this == BARS_VERTICAL || this == BARS_HORIZONTAL || this == BARS_NW || this == BARS_SW || this == BARS_NE || this == BARS_SE || this == BARS_DOOR || this == PIT || this == STAIRS_UP || this == STAIRS_DOWN || this == STAIRS_EXIT;
+		return this == WALL || this == FIRE || this == GRASS_TALL || this == BOUNDS || this == BARS_VERTICAL || this == BARS_HORIZONTAL || this == BARS_NW || this == BARS_SW || this == BARS_NE || this == BARS_SE || this == BARS_DOOR || this == PIT || this == STAIRS_UP || this == STAIRS_DOWN || this == STAIRS_EXIT ;
 	}
 	
 	public boolean noWall() {

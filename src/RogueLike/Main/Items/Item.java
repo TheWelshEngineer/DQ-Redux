@@ -680,6 +680,14 @@ public class Item implements Cloneable{
 		versatileDamageDice = dice;
 	}
 	
+	private boolean isGold;
+	public boolean isGold() {
+		return isGold;
+	}
+	public void setIsGold(boolean value) {
+		isGold = value;
+	}
+	
 	private boolean isArmor;
 	public boolean isArmor() {
 		return isArmor;

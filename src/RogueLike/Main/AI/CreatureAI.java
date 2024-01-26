@@ -1,5 +1,6 @@
 package RogueLike.Main.AI;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,12 +23,34 @@ public class CreatureAI {
 	public ObjectFactory factory;
 	public World world;
 	
+	protected ArrayList<Integer> actionQueue = new ArrayList<Integer>();
+	
+	public void selectAction() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(1);
+		actionQueue.add(1000);
+		
+	}
+	
+	public void decodeAction(int action) {
+		switch(action) {
+			case 1: this.wander(); break;
+			default: this.wander(); break;
+		}
+	}
+	
+	public int getActionSpeed() {
+		return actionQueue.get(1);
+	}
+	
 	public CreatureAI(Creature creature, ObjectFactory factory, World world){
 		this.creature = creature;
 		this.creature.setCreatureAI(this);
 		this.itemNames = new HashMap<String, String>();
 		this.factory = factory;
 		this.world = world;
+		actionQueue.add(1);
+		actionQueue.add(1000);
 		
 	}
 	
@@ -88,7 +111,7 @@ public class CreatureAI {
 	}
 	
 	public void onUpdate() {
-		
+		decodeAction(actionQueue.get(0));
 	}
 	
 	public void onNotify(String message) {
@@ -217,15 +240,7 @@ public class CreatureAI {
 		
 	}
 
-	/*public void rage() {
-		if(creature.isRaging == 0) {
-			creature.doAction("burst into a berserker rage!");
-			creature.gainAttackValueOrc();
-			creature.modifyIsRaging(1);
-		}else {
-			creature.notify("You can't rage right now.");
-		}
-	}*/
+
 	
 	
 	

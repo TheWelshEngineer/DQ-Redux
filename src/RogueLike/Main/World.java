@@ -2,8 +2,11 @@ package RogueLike.Main;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Items.Item;
 
 public class World {
@@ -255,12 +258,12 @@ public class World {
 			y = (int)(Math.random() * height);
 		} 
 		//!tile(x,y,depth).isGround()
-		while (tile(x,y,depth).noItems() || creature(x,y,depth) != null || item(x,y,depth) != null);
+		while (tile(x,y,depth).noItems() || tile(x,y,depth).isBars() || creature(x,y,depth) != null || item(x,y,depth) != null);
 		
 		items[x][y][depth] = item;
 	}
 	
-	public void addAtGivenLocation(Creature creature, int x, int y, int z){
+	public void addCreatureAtLocation(Creature creature, int x, int y, int z){
 		if(tile(x,y,z).isBars() || tile(x,y,z).isStairs() || creature(x,y,z) != null || tile(x,y,z).isWall()) {
 			
 		}else {
@@ -364,8 +367,19 @@ public class World {
 	    //
 	}
 	
+	public void generateActionsOnCurrentFloor(Creature player) {
+		List<Creature> toUpdate = new ArrayList<Creature>(creatures);
+	    for (Creature creature : toUpdate){
+	    	if(creature.z() == player.z()) {
+	    		creature.ai().selectAction();
+	    	}
+	        
+	    }
+	}
+	
 	public void updateOnCurrentFloor(Creature player) {
 		List<Creature> toUpdate = new ArrayList<Creature>(creatures);
+		Collections.sort(toUpdate, Comparator.comparing(Creature::getActionSpeed));
 	    for (Creature creature : toUpdate){
 	    	if(creature.z() == player.z()) {
 	    		creature.update();

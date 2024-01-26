@@ -1,5 +1,6 @@
 package RogueLike.Main.AI;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.Creature;
@@ -19,6 +20,18 @@ public class PlayerAI extends CreatureAI{
 		this.messages = messages;
 		this.fov = fov;
 		
+	}
+	
+	public void selectAction() {
+		
+	}
+	
+	public void decodeAction(int action) {
+
+	}
+	
+	public void onUpdate() {
+
 	}
 	
 	public void onEnter(int x, int y, int z, Tile tile) {
