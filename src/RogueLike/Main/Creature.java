@@ -2807,6 +2807,7 @@ public class Creature implements Cloneable{
 						doAction("wield a "+nameOf(item));
 						weapon = item;
 						weaponName = item.name();
+						item.setWasCreatureWepon(true);
 					}
 
 				}

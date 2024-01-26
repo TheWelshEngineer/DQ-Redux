@@ -238,7 +238,7 @@ public class Item implements Cloneable{
 	// Roland code in the works
 	private boolean wasCreatureWepon = false;
 	public void setWasCreatureWepon(boolean weponState){
-		this.wasCreatureWepon = weponState;
+		wasCreatureWepon = weponState;
 	}
 	public boolean getWasCreatureWepon(){
 		return wasCreatureWepon;
