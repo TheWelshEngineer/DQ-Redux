@@ -10,6 +10,10 @@ import RogueLike.Main.Effect;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Enchantments.Enchantment;
 
+import RogueLike.Main.Creature;
+
+
+
 public class Item implements Cloneable{
 	
 	private char glyph;
@@ -233,6 +237,28 @@ public class Item implements Cloneable{
 	public void setThrownDamageDice(Dice dice) {
 		thrownDamageDice = dice;
 	}
+	
+	
+	// Roland code in the works
+	private boolean wasCreatureWepon = false;
+	
+	public void setWasCreatureWepon(boolean weponState){
+		wasCreatureWepon = weponState;
+	}
+	public boolean getWasCreatureWepon(){
+		return wasCreatureWepon;
+	}
+	
+	private Creature owner = null; 
+	
+	public void setOwner(Creature lowner) {
+		owner = lowner;
+	}
+	
+	public Creature getOwner() {
+		return owner;
+	}
+	
 	
 	private Dice rangedDamageDice;
 	public Dice rangedDamageDice() {
@@ -1238,5 +1264,7 @@ public class Item implements Cloneable{
 			throw new InternalError(e.toString());
 		}
 	}
-
+	
+	
+	
 }

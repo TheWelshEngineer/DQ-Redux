@@ -2285,7 +2285,7 @@ public class Creature implements Cloneable{
 
 	public void throwItem(Item item, int wx, int wy, int wz) {
 		Point end = new Point(x, y, 0);
-
+		item.setOwner(this);
 		for(Point p : new Line(x, y, wx, wy)) {
 			if(!realTile(p.x, p.y, z).isGround()) {
 				break;
@@ -2335,7 +2335,6 @@ public class Creature implements Cloneable{
 
 	private void throwAttack(Item item, Creature other) {
 		modifyFood(-1);
-
 		int amount = 0;
 		if(item.isThrownWeapon()) {
 			int attackBonus = 0;
@@ -2347,6 +2346,7 @@ public class Creature implements Cloneable{
 				attackBonus = this.intelligenceModifier();
 			}
 			amount = (int)(weapon.thrownDamageDice().roll())+attackBonus+weapon.upgradeLevel();
+		
 		}else {
 			amount = 1+strengthModifier();
 		}
@@ -2660,6 +2660,16 @@ public class Creature implements Cloneable{
 			}
 			inventory.add(item);
 			stackItems();
+			if (item.isThrownWeapon()){
+				if (item.getWasCreatureWepon() && this.weapon() == null && (item.getOwner().equals(this))) {
+					doAction("wield a "+nameOf(item));
+					weapon = item;
+					weaponName = item.name();
+				}
+				else {
+					item.setWasCreatureWepon(false);
+				}
+			}
 			if(item.isInQuickslot1() || item.isInQuickslot2() || item.isInQuickslot3() || item.isInQuickslot4() || item.isInQuickslot5() || item.isInQuickslot6()) {
 				if(item.isInQuickslot1()) {
 					if(quickslot_1 == null) {
@@ -2797,6 +2807,7 @@ public class Creature implements Cloneable{
 						doAction("wield a "+nameOf(item));
 						weapon = item;
 						weaponName = item.name();
+						item.setWasCreatureWepon(true);
 					}
 
 				}

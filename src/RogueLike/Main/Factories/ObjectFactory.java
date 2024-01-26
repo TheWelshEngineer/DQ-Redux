@@ -427,7 +427,6 @@ public class ObjectFactory {
 			player.learnNameQuiet(startItemRogue);
 			player.inventory().add(startItemRogue);
 			
-			
 			player.setHPScaleAmount(player.hpScaleMedium());
 			player.setManaScaleAmount(player.manaScaleMedium());
 			
@@ -466,6 +465,7 @@ public class ObjectFactory {
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
+		
 		//temp
 		//
 		//player.inventory().add(newScrollOfMagicMapping(0, player, false));
