@@ -1,14 +1,15 @@
-package RogueLike.Main.AI;
+package RogueLike.Main.AI.SlimeAI;
 
 import RogueLike.Main.Creature;
 import RogueLike.Main.World;
+import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Factories.ObjectFactory;
 
-public class SlimelingAI extends CreatureAI{
+public class PinkSlimelingAI extends CreatureAI{
 	private Creature player;
 
 	
-	public SlimelingAI(Creature creature, Creature player, ObjectFactory factory, World world) {
+	public PinkSlimelingAI(Creature creature, Creature player, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		this.player = player;
 

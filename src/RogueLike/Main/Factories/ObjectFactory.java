@@ -22,14 +22,14 @@ import RogueLike.Main.AI.BatAI;
 import RogueLike.Main.AI.ChestAI;
 import RogueLike.Main.AI.CloakerAI;
 import RogueLike.Main.AI.FungusAI;
-import RogueLike.Main.AI.GremlinAI;
-import RogueLike.Main.AI.GremlinSkirmisherAI;
 import RogueLike.Main.AI.MimicAI;
 import RogueLike.Main.AI.OgreAI;
 import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AI.SkeletonAI;
-import RogueLike.Main.AI.SlimeAI;
-import RogueLike.Main.AI.SlimelingAI;
+import RogueLike.Main.AI.GremlinAI.GremlinAI;
+import RogueLike.Main.AI.GremlinAI.GremlinSkirmisherAI;
+import RogueLike.Main.AI.SlimeAI.PinkSlimeAI;
+import RogueLike.Main.AI.SlimeAI.PinkSlimelingAI;
 import RogueLike.Main.Enchantments.Enchantment;
 import RogueLike.Main.Items.ArrowsRangedWeapon;
 import RogueLike.Main.Items.BasicFinesseWeapon;
@@ -596,7 +596,7 @@ public class ObjectFactory {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature slime = new Creature(world, "Pink Slime", 'P', ExtraColors.brightPink, 22, 10, 8, 12, 6, 1, 6, 20);
 		slime.setID(5);
-		new SlimeAI(slime, player, this, this.world);
+		new PinkSlimeAI(slime, player, this, this.world);
 		slime.creatureTypes.add("Ooze");
 		slime.scaleHPWithDepth(depth);
 		slime.scaleManaWithDepth(depth);	
@@ -616,7 +616,7 @@ public class ObjectFactory {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
 		Creature slimeling = new Creature(world, "Pink Slimeling", 'p', ExtraColors.brightPink, 6, 10, 8, 12, 6, 1, 6, 20);
 		slimeling.setID(6);
-		new SlimelingAI(slimeling, player, this, this.world);
+		new PinkSlimelingAI(slimeling, player, this, this.world);
 		slimeling.creatureTypes.add("Ooze");
 		slimeling.scaleHPWithDepth(depth);
 		slimeling.scaleManaWithDepth(depth);	

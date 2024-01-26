@@ -1,19 +1,20 @@
-package RogueLike.Main.AI;
+package RogueLike.Main.AI.SlimeAI;
 
 import java.util.ArrayList;
 
 import RogueLike.Main.Creature;
 import RogueLike.Main.Dice;
 import RogueLike.Main.World;
+import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Factories.ObjectFactory;
 
-public class SlimeAI extends CreatureAI{
+public class PinkSlimeAI extends CreatureAI{
 	private Creature player;
 
 
 	
-	public SlimeAI(Creature creature, Creature player, ObjectFactory factory, World world) {
+	public PinkSlimeAI(Creature creature, Creature player, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		this.player = player;
 		//this.factory = factory;
