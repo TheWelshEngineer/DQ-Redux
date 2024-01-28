@@ -8,9 +8,8 @@ import RogueLike.Main.Description;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Spell;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Enchantments.Enchantment;
-
-import RogueLike.Main.Creature;
 
 
 
@@ -455,6 +454,13 @@ public class Item implements Cloneable{
 	public void setImmunePhysicalDamage(boolean value) {
 		immunePhysicalDamage = value;
 	}
+	private boolean weakToPhysicalDamage;
+	public boolean weakToPhysicalDamage() {
+		return weakToPhysicalDamage;
+	}
+	public void setWeakToPhysicalDamage(boolean value) {
+		weakToPhysicalDamage = value;
+	}
 	
 	private boolean resistsFireDamage;
 	public boolean resistsFireDamage() {
@@ -469,6 +475,13 @@ public class Item implements Cloneable{
 	}
 	public void setImmuneFireDamage(boolean value) {
 		immuneFireDamage = value;
+	}
+	private boolean weakToFireDamage;
+	public boolean weakToFireDamage() {
+		return weakToFireDamage;
+	}
+	public void setWeakToFireDamage(boolean value) {
+		weakToFireDamage = value;
 	}
 	
 	private boolean resistsFrostDamage;
@@ -485,6 +498,13 @@ public class Item implements Cloneable{
 	public void setImmuneFrostDamage(boolean value) {
 		immuneFrostDamage = value;
 	}
+	private boolean weakToFrostDamage;
+	public boolean weakToFrostDamage() {
+		return weakToFrostDamage;
+	}
+	public void setWeakToFrostDamage(boolean value) {
+		weakToFrostDamage = value;
+	}
 	
 	private boolean resistsShockDamage;
 	public boolean resistsShockDamage() {
@@ -499,6 +519,13 @@ public class Item implements Cloneable{
 	}
 	public void setImmuneShockDamage(boolean value) {
 		immuneShockDamage = value;
+	}
+	private boolean weakToShockDamage;
+	public boolean weakToShockDamage() {
+		return weakToShockDamage;
+	}
+	public void setWeakToShockDamage(boolean value) {
+		weakToShockDamage = value;
 	}
 	
 	private boolean resistsPoisonDamage;
@@ -515,6 +542,13 @@ public class Item implements Cloneable{
 	public void setImmunePoisonDamage(boolean value) {
 		immunePoisonDamage = value;
 	}
+	private boolean weakToPoisonDamage;
+	public boolean weakToPoisonDamage() {
+		return weakToPoisonDamage;
+	}
+	public void setWeakToPoisonDamage(boolean value) {
+		weakToPoisonDamage = value;
+	}
 	
 	private boolean resistsAcidDamage;
 	public boolean resistsAcidDamage() {
@@ -529,6 +563,13 @@ public class Item implements Cloneable{
 	}
 	public void setImmuneAcidDamage(boolean value) {
 		immuneAcidDamage = value;
+	}
+	private boolean weakToAcidDamage;
+	public boolean weakToAcidDamage() {
+		return weakToAcidDamage;
+	}
+	public void setWeakToAcidDamage(boolean value) {
+		weakToAcidDamage = value;
 	}
 	
 	private boolean resistsMagicDamage;
@@ -545,6 +586,13 @@ public class Item implements Cloneable{
 	public void setImmuneMagicDamage(boolean value) {
 		immuneMagicDamage = value;
 	}
+	private boolean weakToMagicDamage;
+	public boolean weakToMagicDamage() {
+		return weakToMagicDamage;
+	}
+	public void setWeakToMagicDamage(boolean value) {
+		weakToMagicDamage = value;
+	}
 	
 	private boolean resistsChaosDamage;
 	public boolean resistsChaosDamage() {
@@ -559,6 +607,13 @@ public class Item implements Cloneable{
 	}
 	public void setImmuneChaosDamage(boolean value) {
 		immuneChaosDamage = value;
+	}
+	private boolean weakToChaosDamage;
+	public boolean weakToChaosDamage() {
+		return weakToChaosDamage;
+	}
+	public void setWeakToChaosDamage(boolean value) {
+		weakToChaosDamage = value;
 	}
 	
 	private Effect quaffEffect;

@@ -3,11 +3,11 @@ package RogueLike.Main.Screens;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Spellbook;
+import RogueLike.Main.Creatures.Creature;
 import asciiPanel.AsciiPanel;
 
 public class SpellbookScreen implements Screen{

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.LevelUpController;
 import RogueLike.Main.Line;
@@ -13,6 +12,7 @@ import RogueLike.Main.Path;
 import RogueLike.Main.Point;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 

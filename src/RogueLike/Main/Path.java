@@ -2,6 +2,8 @@ package RogueLike.Main;
 
 import java.util.List;
 
+import RogueLike.Main.Creatures.Creature;
+
 public class Path {
 	
 	private static PathFinder pf = new PathFinder();

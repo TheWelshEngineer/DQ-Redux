@@ -4,11 +4,11 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Spell;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;

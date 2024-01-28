@@ -1,8 +1,8 @@
 package RogueLike.Main.Factories;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Spell;
+import RogueLike.Main.Creatures.Creature;
 
 public class SpellFactory {
 	

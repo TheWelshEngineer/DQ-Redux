@@ -2,10 +2,10 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.Line;
 import RogueLike.Main.Point;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 

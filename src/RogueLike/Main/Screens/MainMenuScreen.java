@@ -89,7 +89,7 @@ public class MainMenuScreen implements Screen{
 			
 		case KeybindManager.navigateMenuConfirm:
 			if(check == 0) {
-				return new ChooseClassScreen();
+				return new ChooseAncestryScreen();
 			}else if(check == 1) {
 				return new HelpScreen(true);
 			}else if(check == 2) {

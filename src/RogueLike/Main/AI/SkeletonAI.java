@@ -2,9 +2,9 @@ package RogueLike.Main.AI;
 
 import java.util.ArrayList;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.Dice;
 import RogueLike.Main.World;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 
 public class SkeletonAI extends CreatureAI{

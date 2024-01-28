@@ -1,5 +1,7 @@
 package RogueLike.Main;
 
+import RogueLike.Main.Creatures.Creature;
+
 public class Effect implements Cloneable{
 	
 	protected int duration;

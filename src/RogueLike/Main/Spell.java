@@ -1,5 +1,7 @@
 package RogueLike.Main;
 
+import RogueLike.Main.Creatures.Creature;
+
 public class Spell {
 	
 	private String name;

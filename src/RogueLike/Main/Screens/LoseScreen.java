@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import RogueLike.Main.Creature;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
@@ -48,7 +48,7 @@ public class LoseScreen implements Screen {
     	terminal.writeCenter("You died...", 3);
     	terminal.writeCenter(String.format("%s", player.playerName()), 5);
 		terminal.writeCenter(player.causeOfDeath() + String.format(" on depth %d.", player.z()+1), 7);
-		terminal.writeCenter(String.format("Level %d %s | Score: %d | Max Depth Reached: %d", player.level(), player.playerClass(), player.score(), player.maxDepth()+1), 9);
+		terminal.writeCenter(String.format("Level %d %s %s | Score: %d | Max Depth Reached: %d", player.level(), player.playerAncestry(), player.playerClass(), player.score(), player.maxDepth()+1), 9);
 		terminal.writeCenter("-- Equipment --", 11);
 		terminal.writeCenter("Weapon: "+weaponName, 13);
 		terminal.writeCenter("Armor: "+armorName, 15);

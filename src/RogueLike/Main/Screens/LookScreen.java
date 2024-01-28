@@ -1,7 +1,7 @@
 package RogueLike.Main.Screens;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.Tile;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 
 

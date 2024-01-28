@@ -3,6 +3,8 @@ package RogueLike.Main;
 import java.util.ArrayList;
 import java.util.List;
 
+import RogueLike.Main.Creatures.Creature;
+
 public class LevelUpController {
 	
 	private static LevelUpOption[] options = new LevelUpOption[] {

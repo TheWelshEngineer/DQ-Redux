@@ -1,7 +1,7 @@
 package RogueLike.Main.AI;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.World;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 
 public class ChestAI extends CreatureAI{

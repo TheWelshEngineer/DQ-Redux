@@ -3,18 +3,19 @@ package RogueLike.Main.AI.SlimeAI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
+import RogueLike.Main.Effect;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Factories.ObjectFactory;
 
-public class PinkSlimeAI extends CreatureAI{
+public class MagmaSlimeAI extends CreatureAI{
 	private Creature player;
 
 
 	
-	public PinkSlimeAI(Creature creature, Creature player, ObjectFactory factory, World world) {
+	public MagmaSlimeAI(Creature creature, Creature player, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		this.player = player;
 		//this.factory = factory;
@@ -24,10 +25,10 @@ public class PinkSlimeAI extends CreatureAI{
 	public void selectAction() {
 		actionQueue = new ArrayList<Integer>();
 		if(creature.hp() < (creature.maxHP() / 2)) {
-			//Burst
+			//Explosive Burst
 			actionQueue.add(1);
 			actionQueue.add(0);
-			System.out.println(this.toString() + " uses [Burst]");
+			System.out.println(this.toString() + " uses [Explosive Burst]");
 		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
 			//Hunt
 			actionQueue.add(2);
@@ -59,7 +60,7 @@ public class PinkSlimeAI extends CreatureAI{
                         continue;
                     }
 
-                    Creature slimeling = factory.newPinkSlimeling(0, player, 0);
+                    Creature slimeling = factory.newMagmaSlimeling(0, player, 0);
 
                     if (!slimeling.canEnter(nx, ny, creature.z)){
                         world.remove(slimeling);
@@ -84,7 +85,8 @@ public class PinkSlimeAI extends CreatureAI{
                     
                 }
             }
-            creature.doAction("split into slimelings!");
+            creature.addEffect((Effect)factory.effectFactory.fireball().clone());
+            creature.doAction("explode into slimelings!");
             Damage damage = new Damage(creature.hp(), false, true, Damage.physical, factory.effectFactory, false);
             creature.modifyHP(damage, "");
 		}
@@ -107,3 +109,4 @@ public class PinkSlimeAI extends CreatureAI{
 	
 
 }
+

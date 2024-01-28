@@ -3,10 +3,10 @@ package RogueLike.Main.AI;
 import java.util.ArrayList;
 import java.util.List;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 

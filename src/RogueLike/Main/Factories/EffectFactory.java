@@ -1,11 +1,11 @@
 package RogueLike.Main.Factories;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Tile;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.AcidDamage;
 import RogueLike.Main.Damage.ChaosDamage;
 import RogueLike.Main.Damage.Damage;
@@ -686,7 +686,7 @@ public class EffectFactory {
 				super.update(creature);
 				creature.doAction("burn up!");
 				Damage damage = new FireDamage(Dice.d4.roll(), false, getThis(), false);
-				creature.modifyHP(damage, "Killed by fire magic");
+				creature.modifyHP(damage, "Burned to death");
 			}
 			public void end(Creature creature) {
 				creature.setIsIgnited(false);

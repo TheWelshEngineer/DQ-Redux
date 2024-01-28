@@ -2,9 +2,9 @@ package RogueLike.Main.AI.GremlinAI;
 
 import java.util.ArrayList;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 
 public class GremlinSkirmisherAI extends CreatureAI{

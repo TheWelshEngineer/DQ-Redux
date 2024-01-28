@@ -12,14 +12,14 @@ public class ChooseClassScreen implements Screen{
 		check = value;
 	}
 	
-	public ChooseClassScreen(/*String playerSpecies*/) {
-		//setSpecies(playerSpecies);
+	public ChooseClassScreen(String playerAncestry) {
+		setAncestry(playerAncestry);
 	}
 	
-	/*public String playerSpecies;
-	public void setSpecies(String species) {
-		playerSpecies = species;
-	}*/
+	private String playerAncestry;
+	public void setAncestry(String ancestry) {
+		playerAncestry = ancestry;
+	}
 	
 	public char borderVertical = 186;
 	public char borderHorizontal = 205;
@@ -169,13 +169,13 @@ public class ChooseClassScreen implements Screen{
 			
 		case KeyEvent.VK_ENTER:
 			if(check == 0) {
-				return new ChooseAbilityScreen("Warrior");
+				return new ChooseAbilityScreen("Warrior", playerAncestry);
 			}else if(check == 1) {
-				return new ChooseAbilityScreen("Rogue");
+				return new ChooseAbilityScreen("Rogue", playerAncestry);
 			}else if(check == 2) {
-				return new ChooseAbilityScreen("Mage");
+				return new ChooseAbilityScreen("Mage", playerAncestry);
 			}
-		case KeyEvent.VK_ESCAPE: return new MainMenuScreen();
+		case KeyEvent.VK_ESCAPE: return new ChooseAncestryScreen();
 		}
 		
 		return this;

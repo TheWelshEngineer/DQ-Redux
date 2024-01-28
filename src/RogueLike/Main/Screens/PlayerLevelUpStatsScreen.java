@@ -2,8 +2,8 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 

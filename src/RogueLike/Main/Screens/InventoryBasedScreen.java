@@ -3,7 +3,7 @@ package RogueLike.Main.Screens;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import RogueLike.Main.Creature;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 import asciiPanel.AsciiPanel;
 

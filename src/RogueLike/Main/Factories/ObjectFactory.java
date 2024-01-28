@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.Description;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
@@ -29,8 +28,16 @@ import RogueLike.Main.AI.SkeletonAI;
 import RogueLike.Main.AI.GremlinAI.GremlinAI;
 import RogueLike.Main.AI.GremlinAI.GremlinSkirmisherAI;
 import RogueLike.Main.AI.SlimeAI.PinkSlimeAI;
-import RogueLike.Main.AI.SlimeAI.PinkSlimelingAI;
+import RogueLike.Main.AI.SlimeAI.SlimelingAI;
+import RogueLike.Main.Creatures.Bat;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Creatures.Fungus;
+import RogueLike.Main.Creatures.Slimes.MagmaSlime;
+import RogueLike.Main.Creatures.Slimes.MagmaSlimeling;
+import RogueLike.Main.Creatures.Slimes.MetalSlime;
+import RogueLike.Main.Creatures.Slimes.MetalSlimeling;
+import RogueLike.Main.Creatures.Slimes.PinkSlime;
+import RogueLike.Main.Creatures.Slimes.PinkSlimeling;
 import RogueLike.Main.Enchantments.Enchantment;
 import RogueLike.Main.Items.ArrowsRangedWeapon;
 import RogueLike.Main.Items.BasicFinesseWeapon;
@@ -296,92 +303,43 @@ public class ObjectFactory {
 		item.setCurse(enchantmentFactory.randomCurse());
 	}
 	
-	public Creature newPlayer(List<String> messages, FieldOfView fov, String playerClass, List<Integer> startingStats, Skill[] startingSkills, String playerName/*, String playerSpecies*/) {
+	public Creature newPlayer(List<String> messages, FieldOfView fov, String playerClass, List<Integer> startingStats, Skill[] startingSkills, String playerName, String playerAncestry) {
 		//world, name, glyph, color, maxHP 20, maxMana, base armorclass, strength, dexterity, intelligence, visionRadius, inventorySize) {
 		Creature player = new Creature(world, "player", '@', ExtraColors.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
 		player.setID(0);
 		new PlayerAI(player, messages, fov, this, this.world);
+		
 		player.setPlayerName(playerName);
-		//player.modifyPlayerSpecies(playerSpecies);
+		player.setPlayerAncestry(playerAncestry);
+		player.creatureTypes.add(playerAncestry);
+		
 		player.setStrength(startingStats.get(0));
 		player.setDexterity(startingStats.get(1));
 		player.setIntelligence(startingStats.get(2));
+		
 		player.setSkills(startingSkills);
-		player.creatureTypes.add("Humanoid");
-		
-		//if(playerSpecies == "Orc") {
-			//int amount = (int)(((player.baseStrength()*2)-5)*1.25);
-			//player.setMaxHP(amount);
-		//}else {
-			player.setMaxHP((player.baseStrength()*2)-5);
-		//}
-		
-		//if(playerSpecies == "Elf") {
-			//int amount = (int)(((player.baseIntelligence()*2)-5)*1.25);
-			//player.setMaxMana(amount);
-		//}else if(playerSpecies == "Halfling") {
-			//int amount = (int)(((player.baseIntelligence()*2)-5)*1.15);
-			//player.setMaxMana(amount);
-		//}else {
+
+		//Max HP
+		player.setMaxHP((player.baseStrength()*2)-5);
+
+		//Max Mana
+		if(playerAncestry == "Elf") {
+			int amount = (int) Math.ceil((((player.baseIntelligence()*2)-5)*1.25));
+			player.setMaxMana(amount);
+		}else {
 			player.setMaxMana((player.baseIntelligence()*2)-5);
-		//}
+		}
 		
-		/*if(playerSpecies == "Lycan") {
-			player.modifyVisionRadius(2);
+		//Ancestry Traits
+		if(playerAncestry == "Dwarf") {
+			player.modifyBaseArmorClass(1);
+			player.setResistsPoisonDamage(true);
 		}
-		if(playerSpecies == "Tiefling") {
-			player.setResistsFire(1);
-			player.setSaveBonusFire(2);
+		if(playerAncestry == "Dragonborn") {
+			player.setResistsFireDamage(true);
 		}
-		if(playerSpecies == "Dwarf") {
-			player.modifyBaseArmorClass(2);
-			player.setResistsAcid(1);
-			player.setSaveBonusAcid(2);
-		}
-		if(playerSpecies == "Dragonborn") {
-			player.setResistsFrost(1);
-			player.setSaveBonusFrost(2);
-		}
-		if(playerSpecies == "Gorgon") {
-			player.setResistsPoison(1);
-			player.setSaveBonusPoison(2);
-		}
-		if(playerSpecies == "Zendarii") {
-			player.setResistsChaos(1);
-			player.setSaveBonusChaos(2);
-		}*/
 		
-		/*player.setSkillSimpleWeapons(startingSkills.get(0));
-		player.setSkillMartialWeapons(startingSkills.get(1));
-		player.setSkillFinesseWeapons(startingSkills.get(2));
-		player.setSkillRangedWeapons(startingSkills.get(3));
-		player.setSkillFortitude(startingSkills.get(4));
-		player.setSkillPerception(startingSkills.get(5));
-		player.setSkillStealth(startingSkills.get(6));
-		player.setSkillEvocation(startingSkills.get(7));
-		player.setSkillPyromancy(startingSkills.get(8));
-		player.setSkillCryomancy(startingSkills.get(9));
-		player.setSkillElectromancy(startingSkills.get(10));
-		player.setSkillAlchemancy(startingSkills.get(11));
-			
-		if(playerSpecies == "Elf") {
-			player.spellbook().add(spellFactory.magicMissile(player));
-		}else if(playerSpecies == "Orc") {
-			player.spellbook().add(spellFactory.overgrowth(player));
-		}else if(playerSpecies == "Tiefling") {
-			player.spellbook().add(spellFactory.firebolt(player));
-		}else if(playerSpecies == "Dragonborn") {
-			player.spellbook().add(spellFactory.frostWard(player));
-		}else if(playerSpecies == "Halfling") {
-			player.spellbook().add(spellFactory.levitate(player));
-		}else if(playerSpecies == "Gorgon") {
-			player.spellbook().add(spellFactory.paralysis(player));
-		}else if(playerSpecies == "Lycan") {
-			player.spellbook().add(spellFactory.beastForm(player));
-		}else if(playerSpecies == "Zendarii") {
-			player.spellbook().add(spellFactory.confusion(player));
-		}*/
-		
+		//Class Equipment
 		if(playerClass == "Warrior") {
 			player.setPlayerClass(playerClass);
 			
@@ -457,9 +415,15 @@ public class ObjectFactory {
 			
 		}
 	
-		
+		//Starting Food
 		player.inventory().add(newRations(0, 0));
-		//
+		
+		//Ancestry Items
+		if(playerAncestry == "Dragonborn") {
+			Item startWandDragonborn = newFireboltWand(0, player, false);
+			player.learnNameQuiet(startWandDragonborn);
+			player.inventory().add(startWandDragonborn);
+		}
 
 		//
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
@@ -526,7 +490,7 @@ public class ObjectFactory {
 	
 	public Creature newBat(int depth, int addToWorld) {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature bat = new Fungus(this, "Bat", 'b', AsciiPanel.magenta, 2, depth);
+		Creature bat = new Bat(this, "Bat", 'b', AsciiPanel.magenta, 2, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(bat, depth);
 		}
@@ -536,7 +500,7 @@ public class ObjectFactory {
 	
 	public Creature newSkeleton(int depth, Creature player, int addToWorld) {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature skeleton = new Creature(world, "Skeleton", 's', AsciiPanel.white, 13, 10, 13, 10, 14, 6, 6, 20);
+		Creature skeleton = new Creature(world, "Skeleton", 's', AsciiPanel.white, 13, 10, 13, 14, 8, 8, 6, 20);
 		skeleton.setID(3);
 		new SkeletonAI(skeleton, player, this, this.world);
 		//
@@ -589,19 +553,9 @@ public class ObjectFactory {
 	
 	public Creature newPinkSlime(int depth, Creature player, int addToWorld) {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature slime = new Creature(world, "Pink Slime", 'P', ExtraColors.brightPink, 22, 10, 8, 12, 6, 1, 6, 20);
-		slime.setID(5);
-		new PinkSlimeAI(slime, player, this, this.world);
-		slime.creatureTypes.add("Ooze");
-		slime.scaleHPWithDepth(depth);
-		slime.scaleManaWithDepth(depth);	
-		slime.scaleStrengthWithDepth(depth);	
-		slime.scaleDexterityWithDepth(depth);	
-		slime.scaleIntelligenceWithDepth(depth);
+		Creature slime = new PinkSlime(this, player, "Pink Slime", 'S', ExtraColors.brightPink, 5, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(slime, depth);
-		}else {
-			
 		}
 		return slime;
 		
@@ -609,19 +563,9 @@ public class ObjectFactory {
 	
 	public Creature newPinkSlimeling(int depth, Creature player, int addToWorld) {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature slimeling = new Creature(world, "Pink Slimeling", 'p', ExtraColors.brightPink, 6, 10, 8, 12, 6, 1, 6, 20);
-		slimeling.setID(6);
-		new PinkSlimelingAI(slimeling, player, this, this.world);
-		slimeling.creatureTypes.add("Ooze");
-		slimeling.scaleHPWithDepth(depth);
-		slimeling.scaleManaWithDepth(depth);	
-		slimeling.scaleStrengthWithDepth(depth);	
-		slimeling.scaleDexterityWithDepth(depth);	
-		slimeling.scaleIntelligenceWithDepth(depth);
+		Creature slimeling = new PinkSlimeling(this, player, "Pink Slimeling", 's', ExtraColors.brightPink, 6, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(slimeling, depth);
-		}else {
-			
 		}
 		return slimeling;
 		
@@ -682,7 +626,7 @@ public class ObjectFactory {
 	
 	public Creature newGremlinSkirmisher(int depth, Creature player, int addToWorld) {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature gremlin = new Creature(world, "Gremlin Skirmisher", 'g', ExtraColors.cobalt, 17, 10, 10, 8, 14, 10, 8, 20);
+		Creature gremlin = new Creature(world, "Gremlin Skirmisher", 'g', ExtraColors.red, 17, 10, 10, 8, 14, 10, 8, 20);
 		gremlin.setID(9);
 		new GremlinSkirmisherAI(gremlin, player, this, this.world);
 		Item startWeapon = newSword(0, false);
@@ -992,6 +936,46 @@ public class ObjectFactory {
 		
 	}
 	
+	public Creature newMetalSlime(int depth, Creature player, int addToWorld) {
+		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
+		Creature slime = new MetalSlime(this, player, "Metal Slime", 'S', ExtraColors.white, 15, depth);
+		if(addToWorld > 0) {
+			world.addAtEmptyLocation(slime, depth);
+		}
+		return slime;
+		
+	}
+	
+	public Creature newMetalSlimeling(int depth, Creature player, int addToWorld) {
+		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
+		Creature slimeling = new MetalSlimeling(this, player, "Metal Slimeling", 's', ExtraColors.white, 16, depth);
+		if(addToWorld > 0) {
+			world.addAtEmptyLocation(slimeling, depth);
+		}
+		return slimeling;
+		
+	}
+	
+	public Creature newMagmaSlime(int depth, Creature player, int addToWorld) {
+		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
+		Creature slime = new MagmaSlime(this, player, "Magma Slime", 'S', ExtraColors.orange, 17, depth);
+		if(addToWorld > 0) {
+			world.addAtEmptyLocation(slime, depth);
+		}
+		return slime;
+		
+	}
+	
+	public Creature newMagmaSlimeling(int depth, Creature player, int addToWorld) {
+		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
+		Creature slimeling = new MagmaSlimeling(this, player, "Magma Slimeling", 's', ExtraColors.orange, 18, depth);
+		if(addToWorld > 0) {
+			world.addAtEmptyLocation(slimeling, depth);
+		}
+		return slimeling;
+		
+	}
+	
 	// marker
 	
 	public Creature newMarker(int depth, Creature player, int addToWorld) {
@@ -1091,7 +1075,7 @@ public class ObjectFactory {
 	}
 	
 	public Item newVictoryItem(int depth, int addToWorld) {
-		Item item = new Item('*', AsciiPanel.brightWhite, "Ancient Axe of the Dwarflords", "Ancient Axe of the Dwarflords");
+		Item item = new Item('*', AsciiPanel.brightWhite, "Eitak's Ancient Axe", "Eitak's Ancient Axe");
 		//item.modifyIsStackable(1);
 		item.setID(4);
 		if(addToWorld > 0) {
@@ -3329,8 +3313,10 @@ public class ObjectFactory {
 		case 6: return newBat(depth, addToWorld);
 		case 7: return newBat(depth, addToWorld);
 		case 8: return newBat(depth, addToWorld);
-		case 9: return newPinkSlime(depth, player, addToWorld);
-		case 10: return newPinkSlime(depth, player, addToWorld);
+//		case 9: return newPinkSlime(depth, player, addToWorld);
+//		case 10: return newPinkSlime(depth, player, addToWorld);
+		case 9: return newMagmaSlime(depth, player, addToWorld);
+		case 10: return newMagmaSlime(depth, player, addToWorld); //TODO
 		default: return newFungus(depth, addToWorld);
 		}
 	}

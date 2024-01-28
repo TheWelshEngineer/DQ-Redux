@@ -11,7 +11,7 @@ import asciiPanel.AsciiPanel;
 public class ChooseAbilityScreen implements Screen{
 	
 	public String playerClass;
-	public String playerSpecies;
+	public String playerAncestry;
 	 
 	public int check = 0;
 	public void setCheck(int value) {
@@ -43,7 +43,7 @@ public class ChooseAbilityScreen implements Screen{
 			if(playerStrength == 8) {
 				strUp = '+';
 				strDown = ' ';
-			}else if(playerStrength == 15) {
+			}else if(playerStrength == 16) {
 				strUp = ' ';
 				strDown = '-';
 			}else{
@@ -53,7 +53,7 @@ public class ChooseAbilityScreen implements Screen{
 			if(playerDexterity == 8) {
 				dexUp = '+';
 				dexDown = ' ';
-			}else if(playerDexterity == 15) {
+			}else if(playerDexterity == 16) {
 				dexUp = ' ';
 				dexDown = '-';
 			}else{
@@ -63,7 +63,7 @@ public class ChooseAbilityScreen implements Screen{
 			if(playerIntelligence == 8) {
 				intUp = '+';
 				intDown = ' ';
-			}else if(playerIntelligence == 15) {
+			}else if(playerIntelligence == 16) {
 				intUp = ' ';
 				intDown = '-';
 			}else{
@@ -80,7 +80,7 @@ public class ChooseAbilityScreen implements Screen{
 			if(playerStrength == 8) {
 				strUp = '+';
 				strDown = ' ';
-			}else if(playerStrength == 15) {
+			}else if(playerStrength == 16) {
 				strUp = ' ';
 				strDown = '-';
 			}else{
@@ -90,7 +90,7 @@ public class ChooseAbilityScreen implements Screen{
 			if(playerDexterity == 8) {
 				dexUp = '+';
 				dexDown = ' ';
-			}else if(playerDexterity == 15) {
+			}else if(playerDexterity == 16) {
 				dexUp = ' ';
 				dexDown = '-';
 			}else{
@@ -100,7 +100,7 @@ public class ChooseAbilityScreen implements Screen{
 			if(playerIntelligence == 8) {
 				intUp = '+';
 				intDown = ' ';
-			}else if(playerIntelligence == 15) {
+			}else if(playerIntelligence == 16) {
 				intUp = ' ';
 				intDown = '-';
 			}else{
@@ -117,7 +117,7 @@ public class ChooseAbilityScreen implements Screen{
 			if(playerStrength == 8) {
 				strUp = '+';
 				strDown = ' ';
-			}else if(playerStrength == 15) {
+			}else if(playerStrength == 16) {
 				strUp = ' ';
 				strDown = '-';
 			}else{
@@ -127,7 +127,7 @@ public class ChooseAbilityScreen implements Screen{
 			if(playerDexterity == 8) {
 				dexUp = '+';
 				dexDown = ' ';
-			}else if(playerDexterity == 15) {
+			}else if(playerDexterity == 16) {
 				dexUp = ' ';
 				dexDown = '-';
 			}else{
@@ -137,7 +137,7 @@ public class ChooseAbilityScreen implements Screen{
 			if(playerIntelligence == 8) {
 				intUp = '+';
 				intDown = ' ';
-			}else if(playerIntelligence == 15) {
+			}else if(playerIntelligence == 16) {
 				intUp = ' ';
 				intDown = '-';
 			}else{
@@ -145,10 +145,15 @@ public class ChooseAbilityScreen implements Screen{
 				intDown = '-';
 			}
 		}
+		if(abilityPoints == 0) {
+			strUp = ' ';
+			dexUp = ' ';
+			intUp = ' ';
+		}
 	}
 	
 	
-	public int abilityPoints = 12;
+	public int abilityPoints = 14;
 	public void modifyPoints(int amount) {
 		abilityPoints += amount;
 	}
@@ -200,16 +205,12 @@ public class ChooseAbilityScreen implements Screen{
 	
 
 
-	public ChooseAbilityScreen(String playerClass/*, String playerSpecies*/) {
+	public ChooseAbilityScreen(String playerClass, String playerAncestry) {
 		this.playerClass = playerClass;
-		//this.playerSpecies = playerSpecies;
+		this.playerAncestry = playerAncestry;
 		playerAbilities.add(playerStrength);
 		playerAbilities.add(playerDexterity);
 		playerAbilities.add(playerIntelligence);
-		/*if(this.playerSpecies == "Human") {
-			modifyPoints(1);
-		}*/
-		
 	}
 
 	public void displayOutput(AsciiPanel terminal) {
@@ -266,21 +267,36 @@ public class ChooseAbilityScreen implements Screen{
 			
 		case KeybindManager.navigateMenuRight:
 			if(check == 0) {
-				if(playerStrength < 15 && abilityPoints > 0) {
-					modifyStrength(1); 
-					modifyPoints(-1); 
+				if(playerStrength < 16 && abilityPoints > 0) {
+					if(playerStrength == 15 && abilityPoints >= 2) {
+						modifyStrength(1); 
+						modifyPoints(-2); 
+					}else if(playerStrength < 15) {
+						modifyStrength(1); 
+						modifyPoints(-1);
+					}
 				}
 				playerAbilities.set(0, playerStrength); 
 			}else if(check == 1) {
-				if(playerDexterity < 15 && abilityPoints > 0) {
-					modifyDexterity(1); 
-					modifyPoints(-1); 
+				if(playerDexterity < 16 && abilityPoints > 0) {
+					if(playerDexterity == 15 && abilityPoints >= 2) {
+						modifyDexterity(1); 
+						modifyPoints(-2); 
+					}else if(playerDexterity < 15) {
+						modifyDexterity(1); 
+						modifyPoints(-1);
+					}
 				}
 				playerAbilities.set(1, playerDexterity);
 			}else if(check == 2) {
-				if(playerIntelligence < 15 && abilityPoints > 0) {
-					modifyIntelligence(1); 
-					modifyPoints(-1); 
+				if(playerIntelligence < 16 && abilityPoints > 0) {
+					if(playerIntelligence == 15 && abilityPoints >= 2) {
+						modifyIntelligence(1); 
+						modifyPoints(-2); 
+					}else if(playerIntelligence < 15) {
+						modifyIntelligence(1); 
+						modifyPoints(-1);
+					}
 				}
 				playerAbilities.set(2, playerIntelligence); 
 			}
@@ -289,20 +305,38 @@ public class ChooseAbilityScreen implements Screen{
 		case KeybindManager.navigateMenuLeft:
 			if(check == 0) {
 				if(playerStrength > 8) {
-					modifyStrength(-1); 
-					modifyPoints(1); 
+					if(playerStrength == 16) {
+						modifyStrength(-1); 
+						modifyPoints(2);
+					}else {
+						modifyStrength(-1); 
+						modifyPoints(1); 
+					}
+
 				}
 				playerAbilities.set(0, playerStrength);
 			}else if(check == 1) {
 				if(playerDexterity > 8) {
-					modifyDexterity(-1); 
-					modifyPoints(1); 
+					if(playerDexterity == 16) {
+						modifyDexterity(-1); 
+						modifyPoints(2);
+					}else {
+						modifyDexterity(-1); 
+						modifyPoints(1); 
+					}
+
 				}
 				playerAbilities.set(1, playerDexterity);
 			}else if(check == 2) {
 				if(playerIntelligence > 8) {
-					modifyIntelligence(-1); 
-					modifyPoints(1); 
+					if(playerIntelligence == 16) {
+						modifyIntelligence(-1); 
+						modifyPoints(2);
+					}else {
+						modifyIntelligence(-1); 
+						modifyPoints(1); 
+					}
+
 				}
 				playerAbilities.set(2, playerIntelligence); 
 			}
@@ -311,12 +345,12 @@ public class ChooseAbilityScreen implements Screen{
 			
 		case KeybindManager.navigateMenuConfirm: 
 			if(abilityPoints < 1) {
-				return new ChooseSkillScreen(playerClass, playerAbilities, playerName); 
+				return new ChooseSkillScreen(playerClass, playerAbilities, playerName, playerAncestry); 
 			}else {
 				return this;
 			}
 		
-		case KeybindManager.navigateMenuBack: return new ChooseClassScreen(/*playerSpecies*/);
+		case KeybindManager.navigateMenuBack: return new ChooseClassScreen(playerAncestry);
 		}
 		return this;
 	}

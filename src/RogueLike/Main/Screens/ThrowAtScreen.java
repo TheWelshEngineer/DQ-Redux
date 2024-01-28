@@ -1,8 +1,8 @@
 package RogueLike.Main.Screens;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.Line;
 import RogueLike.Main.Point;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 
 public class ThrowAtScreen extends TargetBasedScreen{

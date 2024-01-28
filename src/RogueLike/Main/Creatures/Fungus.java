@@ -2,7 +2,6 @@ package RogueLike.Main.Creatures;
 
 import java.awt.Color;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.AI.FungusAI;
 import RogueLike.Main.Factories.ObjectFactory;
 

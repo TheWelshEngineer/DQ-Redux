@@ -9,12 +9,12 @@ import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Factories.ObjectFactory;
 
-public class PinkSlimeAI extends CreatureAI{
+public class MetalSlimeAI extends CreatureAI{
 	private Creature player;
 
 
 	
-	public PinkSlimeAI(Creature creature, Creature player, ObjectFactory factory, World world) {
+	public MetalSlimeAI(Creature creature, Creature player, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		this.player = player;
 		//this.factory = factory;
@@ -59,7 +59,7 @@ public class PinkSlimeAI extends CreatureAI{
                         continue;
                     }
 
-                    Creature slimeling = factory.newPinkSlimeling(0, player, 0);
+                    Creature slimeling = factory.newMetalSlimeling(0, player, 0);
 
                     if (!slimeling.canEnter(nx, ny, creature.z)){
                         world.remove(slimeling);

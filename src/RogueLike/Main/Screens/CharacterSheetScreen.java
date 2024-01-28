@@ -3,8 +3,8 @@ package RogueLike.Main.Screens;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
-import RogueLike.Main.Creature;
 import RogueLike.Main.Effect;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
@@ -25,7 +25,7 @@ public class CharacterSheetScreen implements Screen{
 		int y = 3;
 		terminal.writeCenter(String.format("%s", player.playerName()), y++);
 		y++;
-		terminal.writeCenter(String.format("Level %d %s", player.level(), player.playerClass()), y++);
+		terminal.writeCenter(String.format("Level %d %s %s", player.level(), player.playerAncestry(), player.playerClass()), y++);
         terminal.writeCenter(String.format("Health: %3d/%d", player.hp(), player.maxHP()), y++);
         terminal.writeCenter(String.format("Mana: %3d/%d", player.mana(), player.maxMana()), y++);
         terminal.writeCenter(String.format("Hunger: %3d/%d", player.food(), player.maxFood()), y++);
