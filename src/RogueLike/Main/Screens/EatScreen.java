@@ -21,7 +21,8 @@ public class EatScreen extends InventoryBasedScreen{
 
 	@Override
 	protected Screen use(Item item) {
-		player.eat(item);
+		//player.eat(item);
+		player.ai().playerAIEatItem(item);
 		/*
 		if(player.playerClass() == "Warrior") {
 			player.modifyHP((int)(player.maxHP() / 5), "");

@@ -25,18 +25,20 @@ public class CreatureAI {
 	
 	protected ArrayList<Integer> actionQueue = new ArrayList<Integer>();
 	
+	protected Item itemToProcess = null;
+	public Item itemToProcess() {
+		return itemToProcess;
+	}
+	public void setItemToProcess(Item item) {
+		itemToProcess = item;
+	}
+	
 	public void selectAction() {
-		actionQueue = new ArrayList<Integer>();
-		actionQueue.add(1);
-		actionQueue.add(1000);
 		
 	}
 	
 	public void decodeAction(int action) {
-		switch(action) {
-			case 1: this.wander(); break;
-			default: this.wander(); break;
-		}
+
 	}
 	
 	public int getActionSpeed() {
@@ -311,6 +313,37 @@ public class CreatureAI {
 		actionQueue.add(9);
 		actionQueue.add(1000);
 		System.out.println(this.toString() + " uses [Idle]");
+	}
+	
+	public void playerAIDropItem(Item toDrop) {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(10);
+		actionQueue.add(1000);
+		this.setItemToProcess(toDrop);
+		System.out.println(this.toString() + " uses [Drop "+toDrop.toString()+"]");
+	}
+	
+	public void playerAIEatItem(Item toEat) {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(11);
+		actionQueue.add(1000);
+		this.setItemToProcess(toEat);
+		System.out.println(this.toString() + " uses [Eat "+toEat.toString()+"]");
+	}
+	
+	public void playerAIEquipItem(Item toEquip) {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(12);
+		actionQueue.add(1000);
+		this.setItemToProcess(toEquip);
+		System.out.println(this.toString() + " uses [Equip "+toEquip.toString()+"]");
+	}
+	
+	public void playerAIGetItem() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(13);
+		actionQueue.add(1000);
+		System.out.println(this.toString() + " uses [Get Item]");
 	}
 	
 	

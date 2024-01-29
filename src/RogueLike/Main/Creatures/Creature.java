@@ -4207,6 +4207,7 @@ public class Creature implements Cloneable{
 
 	//UPDATE
 	public void update() {
+		ai.onUpdate();
 		//modifyFood(-1);
 		//temp
 		//if(hp <= 0) {
@@ -4251,7 +4252,7 @@ public class Creature implements Cloneable{
 		}else {
 
 		}
-		ai.onUpdate();
+		
 	}
 	//jump
 	private void regenerateHealth() {

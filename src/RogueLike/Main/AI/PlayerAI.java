@@ -17,6 +17,7 @@ public class PlayerAI extends CreatureAI{
 	
 	public PlayerAI(Creature creature, List<String> messages, FieldOfView fov, ObjectFactory factory, World world) {
 		super(creature, factory, world);
+		actionQueue = new ArrayList<Integer>();
 		this.messages = messages;
 		this.fov = fov;
 		
@@ -30,18 +31,24 @@ public class PlayerAI extends CreatureAI{
 	
 	public void decodeAction(int action) {
 		switch(action) {
-			case 1: this.creature.moveBy(-1, 0, 0, false); break;
-			case 2: this.creature.moveBy(1, 0, 0, false); break;
-			case 3: this.creature.moveBy(0,-1, 0, false); break;
-			case 4: this.creature.moveBy(0, 1, 0, false); break;
-			case 5: this.creature.moveBy(-1,-1, 0, false); break;
-			case 6: this.creature.moveBy(1,-1, 0, false); break;
-			case 7: this.creature.moveBy(-1, 1, 0, false); break;
-			case 8: this.creature.moveBy(1, 1, 0, false); break;
+			case 1: this.creature.moveBy(-1, 0, 0, false); actionQueue = new ArrayList<Integer>(); break;
+			case 2: this.creature.moveBy(1, 0, 0, false); actionQueue = new ArrayList<Integer>(); break;
+			case 3: this.creature.moveBy(0,-1, 0, false); actionQueue = new ArrayList<Integer>(); break;
+			case 4: this.creature.moveBy(0, 1, 0, false); actionQueue = new ArrayList<Integer>(); break;
+			case 5: this.creature.moveBy(-1,-1, 0, false); actionQueue = new ArrayList<Integer>(); break;
+			case 6: this.creature.moveBy(1,-1, 0, false); actionQueue = new ArrayList<Integer>(); break;
+			case 7: this.creature.moveBy(-1, 1, 0, false); actionQueue = new ArrayList<Integer>(); break;
+			case 8: this.creature.moveBy(1, 1, 0, false); actionQueue = new ArrayList<Integer>(); break;
+			case 9: this.creature.idle(); break;
 			//
 			//TODO nonmovement player actions
+			case 10: if(this.itemToProcess() != null){this.creature.drop(itemToProcess); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 11: if(this.itemToProcess() != null){this.creature.eat(itemToProcess); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 12: if(this.itemToProcess() != null){this.creature.equip(itemToProcess); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 13: this.creature.pickup(); actionQueue = new ArrayList<Integer>(); break;
+			
+			
 			//
-			case 9: this.creature.idle();; break;
 			default: this.creature.idle(); break;
 		}
 	}

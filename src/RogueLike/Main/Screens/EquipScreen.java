@@ -21,7 +21,8 @@ public class EquipScreen extends InventoryBasedScreen{
 
 	@Override
 	protected Screen use(Item item) {
-		player.equip(item);
+		//player.equip(item);
+		player.ai().playerAIEquipItem(item);
 		return null;
 	}
 
