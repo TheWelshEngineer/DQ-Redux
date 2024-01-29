@@ -113,15 +113,25 @@ public class PlayScreen implements Screen{
 			//
 			switch(key.getKeyCode()) {
 			// Movement Controls
-	        case KeybindManager.movementWest: player.moveBy(-1, 0, 0, false); inputAccepted = true; break;
-	        case KeybindManager.movementEast: player.moveBy( 1, 0, 0, false); inputAccepted = true; break;
-	        case KeybindManager.movementNorth: player.moveBy( 0,-1, 0, false); inputAccepted = true; break;
-	        case KeybindManager.movementSouth: player.moveBy( 0, 1, 0, false); inputAccepted = true; break;
-	        case KeybindManager.movementNorthWest: player.moveBy(-1,-1, 0, false); inputAccepted = true; break;
-	        case KeybindManager.movementNorthEast: player.moveBy( 1,-1, 0, false); inputAccepted = true; break;
-	        case KeybindManager.movementSouthWest: player.moveBy(-1, 1, 0, false); inputAccepted = true; break;
-	        case KeybindManager.movementSouthEast: player.moveBy( 1, 1, 0, false); inputAccepted = true; break;
-	        case KeybindManager.movementWait: player.idle(); inputAccepted = true; break;
+//	        case KeybindManager.movementWest: player.moveBy(-1, 0, 0, false); inputAccepted = true; break;
+//	        case KeybindManager.movementEast: player.moveBy( 1, 0, 0, false); inputAccepted = true; break;
+//	        case KeybindManager.movementNorth: player.moveBy( 0,-1, 0, false); inputAccepted = true; break;
+//	        case KeybindManager.movementSouth: player.moveBy( 0, 1, 0, false); inputAccepted = true; break;
+//	        case KeybindManager.movementNorthWest: player.moveBy(-1,-1, 0, false); inputAccepted = true; break;
+//	        case KeybindManager.movementNorthEast: player.moveBy( 1,-1, 0, false); inputAccepted = true; break;
+//	        case KeybindManager.movementSouthWest: player.moveBy(-1, 1, 0, false); inputAccepted = true; break;
+//	        case KeybindManager.movementSouthEast: player.moveBy( 1, 1, 0, false); inputAccepted = true; break;
+//	        case KeybindManager.movementWait: player.idle(); inputAccepted = true; break;
+	        //
+	        case KeybindManager.movementWest: player.ai().playerAIMoveWest(); inputAccepted = true; break;
+	        case KeybindManager.movementEast: player.ai().playerAIMoveEast(); inputAccepted = true; break;
+	        case KeybindManager.movementNorth: player.ai().playerAIMoveNorth(); inputAccepted = true; break;
+	        case KeybindManager.movementSouth: player.ai().playerAIMoveSouth(); inputAccepted = true; break;
+	        case KeybindManager.movementNorthWest: player.ai().playerAIMoveNorthWest(); inputAccepted = true; break;
+	        case KeybindManager.movementNorthEast: player.ai().playerAIMoveNorthEast(); inputAccepted = true; break;
+	        case KeybindManager.movementSouthWest: player.ai().playerAIMoveSouthWest(); inputAccepted = true; break;
+	        case KeybindManager.movementSouthEast: player.ai().playerAIMoveSouthEast(); inputAccepted = true; break;
+	        case KeybindManager.movementWait: player.ai().playerAIMoveIdle(); inputAccepted = true; break;
 	        //
 	        case KeybindManager.interactionDropItem: subscreen = new DropScreen(player); inputAccepted = true; break;
 	        case KeybindManager.interactionEatFood: subscreen = new EatScreen(player); inputAccepted = true; break;

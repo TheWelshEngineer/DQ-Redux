@@ -250,7 +250,68 @@ public class CreatureAI {
 		
 	}
 
-
+	public void playerAIMoveWest() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(1);
+		actionQueue.add(1000);
+		System.out.println(this.toString() + " uses [Move/Attack West]");
+	}
+	
+	public void playerAIMoveEast() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(2);
+		actionQueue.add(1000);
+		System.out.println(this.toString() + " uses [Move/Attack East]");
+	}
+	
+	public void playerAIMoveNorth() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(3);
+		actionQueue.add(1000);
+		System.out.println(this.toString() + " uses [Move/Attack North]");
+	}
+	
+	public void playerAIMoveSouth() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(4);
+		actionQueue.add(1000);
+		System.out.println(this.toString() + " uses [Move/Attack South]");
+	}
+	
+	public void playerAIMoveNorthWest() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(5);
+		actionQueue.add(1000);
+		System.out.println(this.toString() + " uses [Move/Attack Northwest]");
+	}
+	
+	public void playerAIMoveNorthEast() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(6);
+		actionQueue.add(1000);
+		System.out.println(this.toString() + " uses [Move/Attack Northeast]");
+	}
+	
+	public void playerAIMoveSouthWest() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(7);
+		actionQueue.add(1000);
+		System.out.println(this.toString() + " uses [Move/Attack Southwest]");
+	}
+	
+	public void playerAIMoveSouthEast() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(8);
+		actionQueue.add(1000);
+		System.out.println(this.toString() + " uses [Move/Attack Southeast]");
+	}
+	
+	public void playerAIMoveIdle() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(9);
+		actionQueue.add(1000);
+		System.out.println(this.toString() + " uses [Idle]");
+	}
 	
 	
 	

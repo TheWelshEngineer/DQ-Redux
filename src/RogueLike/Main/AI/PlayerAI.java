@@ -22,16 +22,32 @@ public class PlayerAI extends CreatureAI{
 		
 	}
 	
+
+	
 	public void selectAction() {
 		
 	}
 	
 	public void decodeAction(int action) {
-
+		switch(action) {
+			case 1: this.creature.moveBy(-1, 0, 0, false); break;
+			case 2: this.creature.moveBy(1, 0, 0, false); break;
+			case 3: this.creature.moveBy(0,-1, 0, false); break;
+			case 4: this.creature.moveBy(0, 1, 0, false); break;
+			case 5: this.creature.moveBy(-1,-1, 0, false); break;
+			case 6: this.creature.moveBy(1,-1, 0, false); break;
+			case 7: this.creature.moveBy(-1, 1, 0, false); break;
+			case 8: this.creature.moveBy(1, 1, 0, false); break;
+			//
+			//TODO nonmovement player actions
+			//
+			case 9: this.creature.idle();; break;
+			default: this.creature.idle(); break;
+		}
 	}
 	
 	public void onUpdate() {
-
+		decodeAction(actionQueue.get(0));
 	}
 	
 	public void onEnter(int x, int y, int z, Tile tile) {

@@ -3513,7 +3513,6 @@ public class Creature implements Cloneable{
 				quickslot_6 = null;
 			}
 		}
-		//getRidOf(item);
 	}
 
 	public void addEffect(Effect effect) {
@@ -3526,7 +3525,6 @@ public class Creature implements Cloneable{
 
 	private void updateEffects() {
 		List<Effect> done = new ArrayList<Effect>();
-
 		for(Effect effect : effects) {
 			effect.update(this);
 			if(effect.isDone()) {
