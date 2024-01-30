@@ -10,6 +10,7 @@ import RogueLike.Main.LevelUpController;
 import RogueLike.Main.Line;
 import RogueLike.Main.Path;
 import RogueLike.Main.Point;
+import RogueLike.Main.Spell;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
@@ -24,6 +25,9 @@ public class CreatureAI {
 	public World world;
 	
 	protected ArrayList<Integer> actionQueue = new ArrayList<Integer>();
+	public ArrayList<Integer> actionQueue(){
+		return actionQueue;
+	}
 	
 	protected Item itemToProcess = null;
 	public Item itemToProcess() {
@@ -31,6 +35,38 @@ public class CreatureAI {
 	}
 	public void setItemToProcess(Item item) {
 		itemToProcess = item;
+	}
+	
+	protected Spell spellToProcess = null;
+	public Spell spellToProcess() {
+		return spellToProcess;
+	}
+	public void setSpellToProcess(Spell spell) {
+		spellToProcess = spell;
+	}
+	
+	protected Integer processX = null;
+	public Integer processX() {
+		return processX;
+	}
+	public void setProcessX(Integer value) {
+		processX = value;
+	}
+	
+	protected Integer processY = null;
+	public Integer processY() {
+		return processY;
+	}
+	public void setProcessY(Integer value) {
+		processY = value;
+	}
+	
+	protected Integer processZ = null;
+	public Integer processZ() {
+		return processZ;
+	}
+	public void setProcessZ(Integer value) {
+		processZ = value;
 	}
 	
 	public void selectAction() {
@@ -346,7 +382,35 @@ public class CreatureAI {
 		System.out.println(this.toString() + " uses [Get Item]");
 	}
 	
+	public void playerAIThrowItem(Item toThrow, int x, int y, int z) {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(14);
+		actionQueue.add(1000);
+		this.setItemToProcess(toThrow);
+		this.setProcessX(x);
+		this.setProcessY(y);
+		this.setProcessZ(z);
+		System.out.println(this.toString() + " uses [Throw "+toThrow.toString()+"] at: ("+x+","+y+","+z+")");
+	}
 	
+	public void playerAIQuaffItem(Item toQuaff) {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(15);
+		actionQueue.add(1000);
+		this.setItemToProcess(toQuaff);
+		System.out.println(this.toString() + " uses [Quaff "+toQuaff.toString()+"]");
+	}
+	
+	public void playerAICastSpell(Item toRead, Spell toCast, int x, int y) {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(16);
+		actionQueue.add(1000);
+		this.setItemToProcess(toRead);
+		this.setSpellToProcess(toCast);
+		this.setProcessX(x);
+		this.setProcessY(y);
+		System.out.println(this.toString() + " uses [Cast "+toCast.toString()+"] from: ("+toRead.toString()+")"+" at: ("+x+","+y+")");
+	}
 	
 
 }

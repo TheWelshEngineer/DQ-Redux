@@ -15,7 +15,8 @@ public class CastSpellScreen extends TargetBasedScreen{
 	}
 	
 	public void selectWorldCoordinate(int x, int y, int screenX, int screenY) {
-		player.castSpell(spell, x, y, item);
+		//player.castSpell(spell, x, y, item);
+		player.ai().playerAICastSpell(item, spell, x, y);
 	}
 
 }

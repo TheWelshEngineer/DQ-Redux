@@ -112,41 +112,45 @@ public class PlayScreen implements Screen{
 			
 			//
 			switch(key.getKeyCode()) {
+			//
 			// Movement Controls
-	        case KeybindManager.movementWest: player.ai().playerAIMoveWest(); inputAccepted = true; break;
-	        case KeybindManager.movementEast: player.ai().playerAIMoveEast(); inputAccepted = true; break;
-	        case KeybindManager.movementNorth: player.ai().playerAIMoveNorth(); inputAccepted = true; break;
-	        case KeybindManager.movementSouth: player.ai().playerAIMoveSouth(); inputAccepted = true; break;
-	        case KeybindManager.movementNorthWest: player.ai().playerAIMoveNorthWest(); inputAccepted = true; break;
-	        case KeybindManager.movementNorthEast: player.ai().playerAIMoveNorthEast(); inputAccepted = true; break;
-	        case KeybindManager.movementSouthWest: player.ai().playerAIMoveSouthWest(); inputAccepted = true; break;
-	        case KeybindManager.movementSouthEast: player.ai().playerAIMoveSouthEast(); inputAccepted = true; break;
-	        case KeybindManager.movementWait: player.ai().playerAIMoveIdle(); inputAccepted = true; break;
+	        case KeybindManager.movementWest: player.ai().playerAIMoveWest(); break;
+	        case KeybindManager.movementEast: player.ai().playerAIMoveEast(); break;
+	        case KeybindManager.movementNorth: player.ai().playerAIMoveNorth(); break;
+	        case KeybindManager.movementSouth: player.ai().playerAIMoveSouth(); break;
+	        case KeybindManager.movementNorthWest: player.ai().playerAIMoveNorthWest(); break;
+	        case KeybindManager.movementNorthEast: player.ai().playerAIMoveNorthEast(); break;
+	        case KeybindManager.movementSouthWest: player.ai().playerAIMoveSouthWest(); break;
+	        case KeybindManager.movementSouthEast: player.ai().playerAIMoveSouthEast(); break;
+	        case KeybindManager.movementWait: player.ai().playerAIMoveIdle(); break;
 	        //
 	        // Interaction Controls
-	        case KeybindManager.interactionDropItem: subscreen = new DropScreen(player); inputAccepted = true; break;
-	        case KeybindManager.interactionEatFood: subscreen = new EatScreen(player); inputAccepted = true; break;
-	        case KeybindManager.interactionEquipItem: subscreen = new EquipScreen(player); inputAccepted = true; break;
-	        case KeybindManager.interactionPickUpItem: player.ai().playerAIGetItem(); inputAccepted = true; break;
-	        
-	        
+	        case KeybindManager.interactionDropItem: subscreen = new DropScreen(player); break;
+	        case KeybindManager.interactionEatFood: subscreen = new EatScreen(player); break;
+	        case KeybindManager.interactionEquipItem: subscreen = new EquipScreen(player); break;
+	        case KeybindManager.interactionPickUpItem: player.ai().playerAIGetItem(); break;
+	        case KeybindManager.interactionExamineItem: subscreen = new ExamineScreen(player); break;
+	        case KeybindManager.interactionLook: subscreen = new LookScreen(player, String.format("Use the movement controls to look around, or press [%s] to stop looking.", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionThrowItem: subscreen = new ThrowScreen(player, player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionDrinkPotion: subscreen = new QuaffScreen(player); break;
+	        case KeybindManager.interactionReadSpell: subscreen = new ReadScreen(player, player.x - getScrollX(), player.y - getScrollY()); break;
 	        //
-	       
-	        
+	        // Menu Controls
 	        case KeybindManager.menuHelp: subscreen = new HelpScreen(false); break;
 	        case KeybindManager.menuCharacterSheet: subscreen = new CharacterSheetScreen(player); break;
 	        case KeybindManager.menuIndex: subscreen = new IndexPotionScreen(player, player.factory()); break;
-	        case KeybindManager.interactionExamineItem: subscreen = new ExamineScreen(player); break;
-	        case KeybindManager.interactionLook: subscreen = new LookScreen(player, "Looking", player.x - getScrollX(), player.y - getScrollY()); break;
-	        case KeybindManager.interactionThrowItem: subscreen = new ThrowScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeybindManager.interactionDrinkPotion: subscreen = new QuaffScreen(player); inputAccepted = true; break;
-	        case KeybindManager.interactionReadSpell: subscreen = new ReadScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); break;
+	        
+	        
+			
+	        
+	        
 	        //
 	        //case KeyEvent.VK_A: subscreen = new SpellbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = true; break;
 	        //
 	        //case KeyEvent.VK_M: subscreen = new FeatbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = 1; break;
 	        //
-	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); /*inputAccepted = 1;*/ break;
+	        
 	        //
 	        //
 	        case KeybindManager.interactionQuickslot_1: subscreen = player.useItemFromQuickslot(1, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
@@ -236,7 +240,7 @@ public class PlayScreen implements Screen{
 			inputAccepted = true;
 		}
 		
-		if(subscreen == null && inputAccepted) {
+		if(subscreen == null && (inputAccepted || player.ai().actionQueue().isEmpty() == false)) {
 			//world.update();
 			world.generateActionsOnCurrentFloor(player);
 			world.updateOnCurrentFloor(player);

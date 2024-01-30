@@ -33,7 +33,8 @@ public class ReadScreen extends InventoryBasedScreen{
 			if(item.writtenSpells().size() == 1 && !item.writtenSpells().get(0).isSelfCast()) {
 				return new CastSpellScreen(player, "Cast spell at?", sx, sy, item.writtenSpells().get(0), item);
 			}else if(item.writtenSpells().size() == 1 && item.writtenSpells().get(0).isSelfCast()){
-				player.castSpell(item.writtenSpells().get(0), player.x(), player.y(), item);
+				//player.castSpell(item.writtenSpells().get(0), player.x(), player.y(), item);
+				player.ai().playerAICastSpell(item, item.writtenSpells().get(0), player.x(), player.y());
 				return null;
 			}else {
 				return new ReadSpellScreen(player, sx, sy, item);

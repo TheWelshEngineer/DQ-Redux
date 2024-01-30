@@ -21,7 +21,8 @@ public class QuaffScreen extends InventoryBasedScreen{
 
 	@Override
 	protected Screen use(Item item) {
-		player.quaff(item);
+		//player.quaff(item);
+		player.ai().playerAIQuaffItem(item);
 		return null;
 	}
 

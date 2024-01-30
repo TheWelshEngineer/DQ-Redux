@@ -429,6 +429,8 @@ public class ObjectFactory {
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
 		player.inventory().add(newScrollOfMagicMapping(0, player, false));
+		player.inventory().add(newPotionOfHealing(0, false));
+		player.inventory().add(newPotionOfHealing(0, false));
 		
 		//temp
 		//

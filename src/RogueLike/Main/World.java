@@ -380,6 +380,10 @@ public class World {
 	
 	public void updateOnCurrentFloor(Creature player) {
 		List<Creature> toUpdate = new ArrayList<Creature>(creatures);
+		if(player.ai().actionQueue().isEmpty() == true) {
+			//player.ai().playerAIMoveIdle();
+			return;
+		}
 		Collections.sort(toUpdate, Comparator.comparing(Creature::getActionSpeed));
 	    for (Creature creature : toUpdate){
 	    	if(creature.z() == player.z()) {

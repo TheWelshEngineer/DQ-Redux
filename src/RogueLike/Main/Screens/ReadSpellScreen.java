@@ -79,7 +79,8 @@ public class ReadSpellScreen implements Screen{
     protected Screen use(Spell spell, Item item){
     	if(spell.isSelfCast()) {
     		//player.doAction("check");
-    		player.castSpell(spell, player.x(), player.y(), item);
+    		//player.castSpell(spell, player.x(), player.y(), item);
+    		player.ai().playerAICastSpell(item, item.writtenSpells().get(0), player.x(), player.y());
     		return null;
     	}else {
     		//return null;

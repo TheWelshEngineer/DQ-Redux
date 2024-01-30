@@ -30,6 +30,9 @@ public class PlayerAI extends CreatureAI{
 	}
 	
 	public void decodeAction(int action) {
+		if(this.actionQueue.get(0) == null) {
+			action = 0;
+		}
 		switch(action) {
 			case 1: this.creature.moveBy(-1, 0, 0, false); actionQueue = new ArrayList<Integer>(); break;
 			case 2: this.creature.moveBy(1, 0, 0, false); actionQueue = new ArrayList<Integer>(); break;
@@ -46,7 +49,9 @@ public class PlayerAI extends CreatureAI{
 			case 11: if(this.itemToProcess() != null){this.creature.eat(itemToProcess); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
 			case 12: if(this.itemToProcess() != null){this.creature.equip(itemToProcess); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
 			case 13: this.creature.pickup(); actionQueue = new ArrayList<Integer>(); break;
-			
+			case 14: if(this.itemToProcess() != null){this.creature.throwItem(itemToProcess, processX, processY, processZ); this.setItemToProcess(null); this.setProcessX(null); this.setProcessY(null); this.setProcessZ(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 15: if(this.itemToProcess() != null){this.creature.quaff(itemToProcess); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 16: if(this.itemToProcess() != null){this.creature.castSpell(spellToProcess, processX, processY, itemToProcess); this.setItemToProcess(null); this.setSpellToProcess(null); this.setProcessX(null); this.setProcessY(null);} actionQueue = new ArrayList<Integer>(); break;
 			
 			//
 			default: this.creature.idle(); break;
