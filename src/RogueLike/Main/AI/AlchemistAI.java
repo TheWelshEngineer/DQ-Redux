@@ -23,31 +23,27 @@ public class AlchemistAI extends CreatureAI{
 			//Brew Potion
 			actionQueue.add(1);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Brew Potion]");
 		}else if(canThrowAt(player) && player.isInvisible() == false) {
 			//Brew Potion
 			actionQueue.add(2);
 			actionQueue.add(500);
-			System.out.println(this.toString() + " uses [Throw Potion]");
 		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
 			//Hunt
 			actionQueue.add(3);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Hunt Player]");
 		}else {
 			//Wander
 			actionQueue.add(4);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Wander]");
 		}
 	}
 	
 	public void decodeAction(int action) {
 		switch(action) {
-			case 1: this.brewPotion(); break;
-			case 2: this.throwPotion(); break;
-			case 3: this.hunt(player); break;
-			default: this.wander(); break;
+			case 1: this.brewPotion(); System.out.println(this.toString() + " uses [Brew Potion]"); break;
+			case 2: this.throwPotion(); System.out.println(this.toString() + " uses [Throw Potion]"); break;
+			case 3: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
+			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}
 	
@@ -73,7 +69,7 @@ public class AlchemistAI extends CreatureAI{
 	
 	public void brewPotion() {
 		creature.inventory().add(factory.randomNegativePotion(0, false));
-		creature.doAction("brew a potion");
+		creature.doAction("brew a foul potion.");
 		brewPotionCooldown = 3;
 	}
 	

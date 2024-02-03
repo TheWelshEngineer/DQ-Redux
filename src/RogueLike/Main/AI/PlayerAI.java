@@ -34,27 +34,27 @@ public class PlayerAI extends CreatureAI{
 			action = 0;
 		}
 		switch(action) {
-			case 1: this.creature.moveBy(-1, 0, 0, false); actionQueue = new ArrayList<Integer>(); break;
-			case 2: this.creature.moveBy(1, 0, 0, false); actionQueue = new ArrayList<Integer>(); break;
-			case 3: this.creature.moveBy(0,-1, 0, false); actionQueue = new ArrayList<Integer>(); break;
-			case 4: this.creature.moveBy(0, 1, 0, false); actionQueue = new ArrayList<Integer>(); break;
-			case 5: this.creature.moveBy(-1,-1, 0, false); actionQueue = new ArrayList<Integer>(); break;
-			case 6: this.creature.moveBy(1,-1, 0, false); actionQueue = new ArrayList<Integer>(); break;
-			case 7: this.creature.moveBy(-1, 1, 0, false); actionQueue = new ArrayList<Integer>(); break;
-			case 8: this.creature.moveBy(1, 1, 0, false); actionQueue = new ArrayList<Integer>(); break;
-			case 9: this.creature.idle(); break;
+			case 1: this.creature.moveBy(-1, 0, 0, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move/Attack West]"); break;
+			case 2: this.creature.moveBy(1, 0, 0, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move/Attack East]"); break;
+			case 3: this.creature.moveBy(0,-1, 0, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move/Attack North]"); break;
+			case 4: this.creature.moveBy(0, 1, 0, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move/Attack South]"); break;
+			case 5: this.creature.moveBy(-1,-1, 0, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move/Attack Northwest]"); break;
+			case 6: this.creature.moveBy(1,-1, 0, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move/Attack Northeast]"); break;
+			case 7: this.creature.moveBy(-1, 1, 0, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move/Attack Southwest]"); break;
+			case 8: this.creature.moveBy(1, 1, 0, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move/Attack Southeast]"); break;
+			case 9: this.creature.idle(); System.out.println(this.toString() + " uses [Idle]"); break;
 			//
 			//TODO nonmovement player actions
-			case 10: if(this.itemToProcess() != null){this.creature.drop(itemToProcess); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
-			case 11: if(this.itemToProcess() != null){this.creature.eat(itemToProcess); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
-			case 12: if(this.itemToProcess() != null){this.creature.equip(itemToProcess); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
-			case 13: this.creature.pickup(); actionQueue = new ArrayList<Integer>(); break;
-			case 14: if(this.itemToProcess() != null){this.creature.throwItem(itemToProcess, processX, processY, processZ); this.setItemToProcess(null); this.setProcessX(null); this.setProcessY(null); this.setProcessZ(null);} actionQueue = new ArrayList<Integer>(); break;
-			case 15: if(this.itemToProcess() != null){this.creature.quaff(itemToProcess); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
-			case 16: if(this.itemToProcess() != null){this.creature.castSpell(spellToProcess, processX, processY, itemToProcess); this.setItemToProcess(null); this.setSpellToProcess(null); this.setProcessX(null); this.setProcessY(null);} actionQueue = new ArrayList<Integer>(); break;
-			
+			case 10: if(this.itemToProcess() != null){this.creature.drop(itemToProcess); System.out.println(this.toString() + " uses [Drop "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 11: if(this.itemToProcess() != null){this.creature.eat(itemToProcess); System.out.println(this.toString() + " uses [Eat "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 12: if(this.itemToProcess() != null){this.creature.equip(itemToProcess); System.out.println(this.toString() + " uses [Equip "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 13: this.creature.pickup(); System.out.println(this.toString() + " uses [Get Item]"); actionQueue = new ArrayList<Integer>(); break;
+			case 14: if(this.itemToProcess() != null){this.creature.throwItem(itemToProcess, processX, processY, processZ); System.out.println(this.toString() + " uses [Throw "+itemToProcess.toString()+"] at: ("+processX+","+processY+","+processZ+")"); this.setItemToProcess(null); this.setProcessX(null); this.setProcessY(null); this.setProcessZ(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 15: if(this.itemToProcess() != null){this.creature.quaff(itemToProcess); System.out.println(this.toString() + " uses [Quaff "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 16: if(this.itemToProcess() != null){this.creature.castSpell(spellToProcess, processX, processY, itemToProcess); System.out.println(this.toString() + " uses [Cast "+itemToProcess.toString()+"] at: ("+processX+","+processY+","+processZ+")"); this.setItemToProcess(null); this.setSpellToProcess(null); this.setProcessX(null); this.setProcessY(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 17: this.creature.search(12, false); System.out.println(this.toString() + " uses [Search Area]"); actionQueue = new ArrayList<Integer>(); break;
 			//
-			default: this.creature.idle(); break;
+			default: this.creature.idle(); System.out.println(this.toString() + " uses [Idle]"); break;
 		}
 	}
 	

@@ -23,19 +23,17 @@ public class SlimelingAI extends CreatureAI{
 			//Hunt
 			actionQueue.add(1);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Hunt Player]");
 		}else {
 			//Wander
 			actionQueue.add(2);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Wander]");
 		}
 	}
 	
 	public void decodeAction(int action) {
 		switch(action) {
-			case 1: this.hunt(player); break;
-			default: this.wander(); break;
+			case 1: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
+			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}
 	

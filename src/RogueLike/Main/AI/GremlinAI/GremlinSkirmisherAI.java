@@ -23,31 +23,27 @@ public class GremlinSkirmisherAI extends CreatureAI{
 			//Fast Hunt Player
 			actionQueue.add(1);
 			actionQueue.add(500);
-			System.out.println(this.toString() + " uses [Fast Hunt Player]");
 		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false && super.isAdjacentTo(player) && comboAttackCooldown == 0) {
 			//Hunt
 			actionQueue.add(2);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Combo Attack]");
 		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
 			//Hunt
 			actionQueue.add(3);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Hunt Player]");
 		}else {
 			//Wander
 			actionQueue.add(4);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Wander]");
 		}
 	}
 	
 	public void decodeAction(int action) {
 		switch(action) {
-			case 1: this.hunt(player); break;
-			case 2: this.comboAttack(); break;
-			case 3: this.hunt(player); break;
-			default: this.wander(); break;
+			case 1: this.hunt(player); System.out.println(this.toString() + " uses [Fast Hunt Player]"); break;
+			case 2: this.comboAttack(); System.out.println(this.toString() + " uses [Combo Attack]"); break;
+			case 3: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
+			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}
 	

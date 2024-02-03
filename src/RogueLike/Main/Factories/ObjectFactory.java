@@ -3319,10 +3319,10 @@ public class ObjectFactory {
 		case 6: return newBat(depth, addToWorld);
 		case 7: return newBat(depth, addToWorld);
 		case 8: return newBat(depth, addToWorld);
-//		case 9: return newPinkSlime(depth, player, addToWorld);
-//		case 10: return newPinkSlime(depth, player, addToWorld);
-		case 9: return newMagmaSlime(depth, player, addToWorld);
-		case 10: return newMagmaSlime(depth, player, addToWorld); //TODO
+		case 9: return newPinkSlime(depth, player, addToWorld);
+		case 10: return newPinkSlime(depth, player, addToWorld);
+		//case 9: return newMagmaSlime(depth, player, addToWorld);
+		//case 10: return newMagmaSlime(depth, player, addToWorld); //TODO
 		default: return newFungus(depth, addToWorld);
 		}
 	}

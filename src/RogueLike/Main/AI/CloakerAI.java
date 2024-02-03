@@ -22,31 +22,27 @@ public class CloakerAI extends CreatureAI{
 			//Lose Invisible
 			actionQueue.add(1);
 			actionQueue.add(0);
-			System.out.println(this.toString() + " uses [Lose Invisible]");
 		}else if(creature.hp() < (creature.maxHP() / 2)) {
 			//Become Invisible
 			actionQueue.add(2);
 			actionQueue.add(500);
-			System.out.println(this.toString() + " uses [Become Invisible]");
 		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
 			//Hunt
 			actionQueue.add(3);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Hunt Player]");
 		}else {
 			//Wander
 			actionQueue.add(4);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Wander]");
 		}
 	}
 	
 	public void decodeAction(int action) {
 		switch(action) {
-			case 1: this.loseInvisible(); break;
-			case 2: this.becomeInvisible(); break;
-			case 3: this.hunt(player); break;
-			default: this.wander(); break;
+			case 1: this.loseInvisible(); System.out.println(this.toString() + " uses [Lose Cloak]"); break;
+			case 2: this.becomeInvisible(); System.out.println(this.toString() + " uses [Become Invisible]"); break;
+			case 3: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
+			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}
 	

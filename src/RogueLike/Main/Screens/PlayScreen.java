@@ -136,6 +136,9 @@ public class PlayScreen implements Screen{
 	        case KeybindManager.interactionQuickslot_4: subscreen = player.useItemFromQuickslot(4, player.x - getScrollX(), player.y - getScrollY()); break;
 	        case KeybindManager.interactionQuickslot_5: subscreen = player.useItemFromQuickslot(5, player.x - getScrollX(), player.y - getScrollY()); break;
 	        case KeybindManager.interactionQuickslot_6: subscreen = player.useItemFromQuickslot(6, player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionSearch: player.ai().playerAISearchArea(); break;
+	        
+	        
 	        //
 	        // Menu Controls
 	        case KeybindManager.menuHelp: subscreen = new HelpScreen(false); break;
@@ -158,7 +161,7 @@ public class PlayScreen implements Screen{
 	        
 	        //
 	        
-	        case KeybindManager.interactionSearch: player.search(12, false); inputAccepted = true; break;
+	        
 	        case KeybindManager.movementUpStairs: 
 	        	if(userIsTryingToExit()) {
 	        		return userExits();

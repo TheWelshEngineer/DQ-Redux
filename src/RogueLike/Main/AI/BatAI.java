@@ -38,20 +38,18 @@ public class BatAI extends CreatureAI{
 			//Double wander
 			actionQueue.add(1);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Double Wander]");
 		}else {
 			//Fast wander
 			actionQueue.add(2);
 			actionQueue.add(500);
-			System.out.println(this.toString() + " uses [Fast Wander]");
 		}
 	}
 	
 	public void decodeAction(int action) {
 		switch(action) {
-			case 1: this.wander(); this.wander(); break;
-			case 2: this.wander(); break;
-			default: this.wander(); break;
+			case 1: this.wander(); this.wander(); System.out.println(this.toString() + " uses [Double Wander]"); break;
+			case 2: this.wander(); System.out.println(this.toString() + " uses [Fast Wander]"); break;
+			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}
 

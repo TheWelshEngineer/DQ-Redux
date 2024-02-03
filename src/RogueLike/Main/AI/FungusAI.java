@@ -21,20 +21,18 @@ public class FungusAI extends CreatureAI{
 			//Spread
 			actionQueue.add(1);
 			actionQueue.add(0);
-			System.out.println(this.toString() + " uses [Spread]");
 		}else {
 			//Idle
 			actionQueue.add(2);
 			actionQueue.add(1000);
-			System.out.println(this.toString() + " uses [Idle]");
 		}
 	}
 	
 	public void decodeAction(int action) {
 		switch(action) {
-			case 1: this.spread(); break;
-			case 2: break;
-			default: break;
+			case 1: this.spread(); System.out.println(this.toString() + " uses [Spread Mycelium]"); break;
+			case 2: System.out.println(this.toString() + " uses [Idle]"); break;
+			default: System.out.println(this.toString() + " uses [Idle]"); break;
 		}
 	}
 	

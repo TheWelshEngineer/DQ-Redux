@@ -292,63 +292,54 @@ public class CreatureAI {
 		actionQueue = new ArrayList<Integer>();
 		actionQueue.add(1);
 		actionQueue.add(1000);
-		System.out.println(this.toString() + " uses [Move/Attack West]");
 	}
 	
 	public void playerAIMoveEast() {
 		actionQueue = new ArrayList<Integer>();
 		actionQueue.add(2);
 		actionQueue.add(1000);
-		System.out.println(this.toString() + " uses [Move/Attack East]");
 	}
 	
 	public void playerAIMoveNorth() {
 		actionQueue = new ArrayList<Integer>();
 		actionQueue.add(3);
 		actionQueue.add(1000);
-		System.out.println(this.toString() + " uses [Move/Attack North]");
 	}
 	
 	public void playerAIMoveSouth() {
 		actionQueue = new ArrayList<Integer>();
 		actionQueue.add(4);
 		actionQueue.add(1000);
-		System.out.println(this.toString() + " uses [Move/Attack South]");
 	}
 	
 	public void playerAIMoveNorthWest() {
 		actionQueue = new ArrayList<Integer>();
 		actionQueue.add(5);
 		actionQueue.add(1000);
-		System.out.println(this.toString() + " uses [Move/Attack Northwest]");
 	}
 	
 	public void playerAIMoveNorthEast() {
 		actionQueue = new ArrayList<Integer>();
 		actionQueue.add(6);
 		actionQueue.add(1000);
-		System.out.println(this.toString() + " uses [Move/Attack Northeast]");
 	}
 	
 	public void playerAIMoveSouthWest() {
 		actionQueue = new ArrayList<Integer>();
 		actionQueue.add(7);
 		actionQueue.add(1000);
-		System.out.println(this.toString() + " uses [Move/Attack Southwest]");
 	}
 	
 	public void playerAIMoveSouthEast() {
 		actionQueue = new ArrayList<Integer>();
 		actionQueue.add(8);
 		actionQueue.add(1000);
-		System.out.println(this.toString() + " uses [Move/Attack Southeast]");
 	}
 	
 	public void playerAIMoveIdle() {
 		actionQueue = new ArrayList<Integer>();
 		actionQueue.add(9);
 		actionQueue.add(1000);
-		System.out.println(this.toString() + " uses [Idle]");
 	}
 	
 	public void playerAIDropItem(Item toDrop) {
@@ -356,7 +347,6 @@ public class CreatureAI {
 		actionQueue.add(10);
 		actionQueue.add(1000);
 		this.setItemToProcess(toDrop);
-		System.out.println(this.toString() + " uses [Drop "+toDrop.toString()+"]");
 	}
 	
 	public void playerAIEatItem(Item toEat) {
@@ -364,7 +354,6 @@ public class CreatureAI {
 		actionQueue.add(11);
 		actionQueue.add(1000);
 		this.setItemToProcess(toEat);
-		System.out.println(this.toString() + " uses [Eat "+toEat.toString()+"]");
 	}
 	
 	public void playerAIEquipItem(Item toEquip) {
@@ -372,14 +361,12 @@ public class CreatureAI {
 		actionQueue.add(12);
 		actionQueue.add(1000);
 		this.setItemToProcess(toEquip);
-		System.out.println(this.toString() + " uses [Equip "+toEquip.toString()+"]");
 	}
 	
 	public void playerAIGetItem() {
 		actionQueue = new ArrayList<Integer>();
 		actionQueue.add(13);
 		actionQueue.add(1000);
-		System.out.println(this.toString() + " uses [Get Item]");
 	}
 	
 	public void playerAIThrowItem(Item toThrow, int x, int y, int z) {
@@ -390,7 +377,6 @@ public class CreatureAI {
 		this.setProcessX(x);
 		this.setProcessY(y);
 		this.setProcessZ(z);
-		System.out.println(this.toString() + " uses [Throw "+toThrow.toString()+"] at: ("+x+","+y+","+z+")");
 	}
 	
 	public void playerAIQuaffItem(Item toQuaff) {
@@ -398,7 +384,6 @@ public class CreatureAI {
 		actionQueue.add(15);
 		actionQueue.add(1000);
 		this.setItemToProcess(toQuaff);
-		System.out.println(this.toString() + " uses [Quaff "+toQuaff.toString()+"]");
 	}
 	
 	public void playerAICastSpell(Item toRead, Spell toCast, int x, int y) {
@@ -409,7 +394,12 @@ public class CreatureAI {
 		this.setSpellToProcess(toCast);
 		this.setProcessX(x);
 		this.setProcessY(y);
-		System.out.println(this.toString() + " uses [Cast "+toCast.toString()+"] from: ("+toRead.toString()+")"+" at: ("+x+","+y+")");
+	}
+	
+	public void playerAISearchArea() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(17);
+		actionQueue.add(3000);
 	}
 	
 
