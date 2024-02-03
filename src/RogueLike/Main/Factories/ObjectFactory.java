@@ -435,6 +435,8 @@ public class ObjectFactory {
 		player.inventory().add(newScrollOfIdentify(0, player, false));
 		player.inventory().add(newPotionOfLiquidFlame(0, false));
 		player.inventory().add(newPotionOfLiquidFlame(0, false));
+		player.inventory().add(newBow(0, false));
+		player.inventory().add(newArrows(0, 0));
 		
 		//temp
 		//

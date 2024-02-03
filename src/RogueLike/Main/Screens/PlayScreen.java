@@ -119,6 +119,24 @@ public class PlayScreen implements Screen{
 	        case KeybindManager.movementSouthWest: player.ai().playerAIMoveSouthWest(); break;
 	        case KeybindManager.movementSouthEast: player.ai().playerAIMoveSouthEast(); break;
 	        case KeybindManager.movementWait: player.ai().playerAIMoveIdle(); break;
+	        case KeybindManager.movementUpStairs: 
+	        	if(userIsTryingToExit()) {
+	        		return userExits();
+	        	}else {
+	        		//player.moveBy( 0, 0, -1, false); inputAccepted = true; //break;
+	        		player.ai().playerAIMoveUpStairs();
+	        	}
+	        	break;
+	        case KeybindManager.movementDownStairs: 
+	        	//player.moveBy( 0, 0, 1, false); inputAccepted = true;
+	        	player.ai().playerAIMoveDownStairs();
+	        	if(player.z()+1 == 6 && player.hasVisitedZone2() == false) {
+	        		subscreen = new Zone2Screen();
+	        	}
+	        	if(player.z()+1 == 11 && player.hasVisitedZone3() == false) {
+	        		
+	        	}
+	        	break;
 	        //
 	        // Interaction Controls
 	        case KeybindManager.interactionDropItem: subscreen = new DropScreen(player); break;
@@ -137,57 +155,6 @@ public class PlayScreen implements Screen{
 	        case KeybindManager.interactionQuickslot_5: subscreen = player.useItemFromQuickslot(5, player.x - getScrollX(), player.y - getScrollY()); break;
 	        case KeybindManager.interactionQuickslot_6: subscreen = player.useItemFromQuickslot(6, player.x - getScrollX(), player.y - getScrollY()); break;
 	        case KeybindManager.interactionSearch: player.ai().playerAISearchArea(); break;
-	        
-	        
-	        //
-	        // Menu Controls
-	        case KeybindManager.menuHelp: subscreen = new HelpScreen(false); break;
-	        case KeybindManager.menuCharacterSheet: subscreen = new CharacterSheetScreen(player); break;
-	        case KeybindManager.menuIndex: subscreen = new IndexPotionScreen(player, player.factory()); break;
-	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); break;
-	        
-	        
-			
-	        
-	        
-	        //
-	        //case KeyEvent.VK_A: subscreen = new SpellbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = true; break;
-	        //
-	        //case KeyEvent.VK_M: subscreen = new FeatbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = 1; break;
-	        //
-	        
-	        //
-	        //
-	        
-	        //
-	        
-	        
-	        case KeybindManager.movementUpStairs: 
-	        	if(userIsTryingToExit()) {
-	        		return userExits();
-	        	}else {
-	        		player.moveBy( 0, 0, -1, false); inputAccepted = true; break;
-	        	}
-	        case KeybindManager.movementDownStairs: 
-	        	player.moveBy( 0, 0, 1, false); inputAccepted = true; 
-	        	if(player.z()+1 == 6 && player.hasVisitedZone2() == false) {
-	        		subscreen = new Zone2Screen();
-	        	}
-	        	if(player.z()+1 == 11 && player.hasVisitedZone3() == false) {
-	        		
-	        	}
-	        	break;
-	        
-	        case KeybindManager.interactionLevelUp: 
-	        	if(player.attributePoints() == 0 && player.skillPoints() == 0) {
-	        		player.notify("You don't have any skill points to spend."); break;
-	        	}else {
-	        		//subscreen = new LevelUpScreen(player, player.attributePoints()); break;
-	        		subscreen = new PlayerLevelUpStatsScreen(player);
-	        	}
-	        	break;
-	        	
-	        
 	        case KeybindManager.interactionFireRangedWeapon: 
 	        	if(player.weapon() == null || player.weapon().rangedDamageDice() == null) {
 	        		player.notify("You don't have a ranged weapon equipped."); 
@@ -202,7 +169,24 @@ public class PlayScreen implements Screen{
 	        	}else{
 	        		subscreen = new FireWeaponScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
 	        	}
-	        
+	        case KeybindManager.interactionLevelUp: 
+	        	if(player.attributePoints() == 0 && player.skillPoints() == 0) {
+	        		player.notify("You don't have any skill points to spend."); break;
+	        	}else {
+	        		//subscreen = new LevelUpScreen(player, player.attributePoints()); break;
+	        		subscreen = new PlayerLevelUpStatsScreen(player);
+	        	}
+	        	break;
+	        //
+	        // Menu Controls
+	        case KeybindManager.menuHelp: subscreen = new HelpScreen(false); break;
+	        case KeybindManager.menuCharacterSheet: subscreen = new CharacterSheetScreen(player); break;
+	        case KeybindManager.menuIndex: subscreen = new IndexPotionScreen(player, player.factory()); break;
+	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); break;
+	        //
+	        //case KeyEvent.VK_A: subscreen = new SpellbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = true; break;
+	        //
+	        //case KeyEvent.VK_M: subscreen = new FeatbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = 1; break;
 			}
 			
 		}
@@ -250,23 +234,13 @@ public class PlayScreen implements Screen{
 				creature.stackEffects();
 			}
 			inputAccepted = false;
-			//
-			/*System.out.print("\n");
-			System.out.print(player.x());
-			System.out.print(" ");
-			System.out.print(player.y());
-			System.out.print(" ");
-			System.out.print(player.z());*/
 		}
-		
-		
 		if(player.hp() < 1) {
-			return new LoseScreen(player);
-			
+			return new LoseScreen(player);	
 		}
-		
 		return this;
 	}
+	
 	//variables
 	private World world;
 	private int screenWidth;

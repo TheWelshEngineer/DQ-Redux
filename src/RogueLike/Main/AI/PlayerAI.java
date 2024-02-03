@@ -53,7 +53,10 @@ public class PlayerAI extends CreatureAI{
 			case 15: if(this.itemToProcess() != null){this.creature.quaff(itemToProcess); System.out.println(this.toString() + " uses [Quaff "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
 			case 16: if(this.itemToProcess() != null){this.creature.castSpell(spellToProcess, processX, processY, itemToProcess); System.out.println(this.toString() + " uses [Cast "+itemToProcess.toString()+"] at: ("+processX+","+processY+","+processZ+")"); this.setItemToProcess(null); this.setSpellToProcess(null); this.setProcessX(null); this.setProcessY(null);} actionQueue = new ArrayList<Integer>(); break;
 			case 17: this.creature.search(12, false); System.out.println(this.toString() + " uses [Search Area]"); actionQueue = new ArrayList<Integer>(); break;
+			case 18: if(this.creatureToProcess() != null){this.creature.rangedWeaponAttack(creatureToProcess); System.out.println(this.toString() + " uses [Ranged Attack: "+creatureToProcess.toString()+"]"); this.setCreatureToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
 			//
+			case 19: this.creature.moveBy(0, 0, -1, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move Upstairs]"); break;
+			case 20: this.creature.moveBy(0, 0, 1, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move Downstairs]"); break;
 			default: this.creature.idle(); System.out.println(this.toString() + " uses [Idle]"); break;
 		}
 	}

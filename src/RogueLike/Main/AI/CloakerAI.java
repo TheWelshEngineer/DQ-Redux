@@ -22,7 +22,7 @@ public class CloakerAI extends CreatureAI{
 			//Lose Invisible
 			actionQueue.add(1);
 			actionQueue.add(0);
-		}else if(creature.hp() < (creature.maxHP() / 2)) {
+		}else if(creature.hp() <= (creature.maxHP() / 2)) {
 			//Become Invisible
 			actionQueue.add(2);
 			actionQueue.add(500);

@@ -28,10 +28,11 @@ public class FireWeaponScreen extends TargetBasedScreen{
 		if(other == null || other.isContainer() == true || other.isDisguised() == true) {
 			player.notify("There's nothing there to attack.");
 		}else {
-			if(player.weapon().isExtraAttack()) {
-				player.rangedWeaponAttack(other);
-			}
-			player.rangedWeaponAttack(other);
+//			if(player.weapon().isExtraAttack()) {
+//				player.rangedWeaponAttack(other);
+//			}
+			//player.rangedWeaponAttack(other);
+			player.ai().playerAIRangedAttack(other);
 		}
 	}
 

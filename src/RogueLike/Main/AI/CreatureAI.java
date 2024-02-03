@@ -45,6 +45,14 @@ public class CreatureAI {
 		spellToProcess = spell;
 	}
 	
+	protected Creature creatureToProcess = null;
+	public Creature creatureToProcess() {
+		return creatureToProcess;
+	}
+	public void setCreatureToProcess(Creature creature) {
+		creatureToProcess = creature;
+	}
+	
 	protected Integer processX = null;
 	public Integer processX() {
 		return processX;
@@ -400,6 +408,25 @@ public class CreatureAI {
 		actionQueue = new ArrayList<Integer>();
 		actionQueue.add(17);
 		actionQueue.add(3000);
+	}
+	
+	public void playerAIRangedAttack(Creature toAttack) {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(18);
+		actionQueue.add(1000);
+		this.setCreatureToProcess(toAttack);
+	}
+	
+	public void playerAIMoveUpStairs() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(19);
+		actionQueue.add(1000);
+	}
+	
+	public void playerAIMoveDownStairs() {
+		actionQueue = new ArrayList<Integer>();
+		actionQueue.add(20);
+		actionQueue.add(1000);
 	}
 	
 
