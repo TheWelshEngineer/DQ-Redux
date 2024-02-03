@@ -24,7 +24,7 @@ public class AlchemistAI extends CreatureAI{
 			actionQueue.add(1);
 			actionQueue.add(1000);
 		}else if(canThrowAt(player) && player.isInvisible() == false) {
-			//Brew Potion
+			//Throw Potion
 			actionQueue.add(2);
 			actionQueue.add(500);
 		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
