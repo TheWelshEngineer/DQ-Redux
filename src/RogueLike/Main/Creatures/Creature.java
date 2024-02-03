@@ -3265,14 +3265,16 @@ public class Creature implements Cloneable{
 				if(quickslot_1().isNegativePotion() && quickslot_1().isIdentified()) {
 					return new ThrowAtScreen(this, sx, sy, quickslot_1());
 				}else {
-					this.quaff(quickslot_1());
+					//this.quaff(quickslot_1());
+					this.ai().playerAIQuaffItem(quickslot_1());
 					return null;
 				}
 			}else if(quickslot_1().isWand() || quickslot_1().isScroll()) {
 				if(quickslot_1().writtenSpells().size() == 1 && !quickslot_1().writtenSpells().get(0).isSelfCast()) {
 					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_1().writtenSpells().get(0), quickslot_1());
 				}else if(quickslot_1().writtenSpells().size() == 1 && quickslot_1().writtenSpells().get(0).isSelfCast()){
-					this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
+					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
+					this.ai().playerAICastSpell(quickslot_1(), quickslot_1().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
 					return new ReadSpellScreen(this, sx, sy, quickslot_1());
@@ -3290,14 +3292,16 @@ public class Creature implements Cloneable{
 				if(quickslot_2().isNegativePotion() && quickslot_2().isIdentified()) {
 					return new ThrowAtScreen(this, sx, sy, quickslot_2());
 				}else {
-					this.quaff(quickslot_2());
+					//this.quaff(quickslot_1());
+					this.ai().playerAIQuaffItem(quickslot_2());
 					return null;
 				}
 			}else if(quickslot_2().isWand() || quickslot_2().isScroll()) {
 				if(quickslot_2().writtenSpells().size() == 1 && !quickslot_2().writtenSpells().get(0).isSelfCast()) {
 					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_2().writtenSpells().get(0), quickslot_2());
 				}else if(quickslot_2().writtenSpells().size() == 1 && quickslot_2().writtenSpells().get(0).isSelfCast()){
-					this.castSpell(quickslot_2().writtenSpells().get(0), this.x(), this.y(), quickslot_2());
+					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
+					this.ai().playerAICastSpell(quickslot_2(), quickslot_2().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
 					return new ReadSpellScreen(this, sx, sy, quickslot_2());
@@ -3315,14 +3319,16 @@ public class Creature implements Cloneable{
 				if(quickslot_3().isNegativePotion() && quickslot_3().isIdentified()) {
 					return new ThrowAtScreen(this, sx, sy, quickslot_3());
 				}else {
-					this.quaff(quickslot_3());
+					//this.quaff(quickslot_1());
+					this.ai().playerAIQuaffItem(quickslot_3());
 					return null;
 				}
 			}else if(quickslot_3().isWand() || quickslot_3().isScroll()) {
 				if(quickslot_3().writtenSpells().size() == 1 && !quickslot_3().writtenSpells().get(0).isSelfCast()) {
 					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_3().writtenSpells().get(0), quickslot_3());
 				}else if(quickslot_3().writtenSpells().size() == 1 && quickslot_3().writtenSpells().get(0).isSelfCast()){
-					this.castSpell(quickslot_3().writtenSpells().get(0), this.x(), this.y(), quickslot_3());
+					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
+					this.ai().playerAICastSpell(quickslot_3(), quickslot_3().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
 					return new ReadSpellScreen(this, sx, sy, quickslot_3());
@@ -3340,14 +3346,16 @@ public class Creature implements Cloneable{
 				if(quickslot_4().isNegativePotion() && quickslot_4().isIdentified()) {
 					return new ThrowAtScreen(this, sx, sy, quickslot_4());
 				}else {
-					this.quaff(quickslot_4());
+					//this.quaff(quickslot_1());
+					this.ai().playerAIQuaffItem(quickslot_4());
 					return null;
 				}
 			}else if(quickslot_4().isWand() || quickslot_4().isScroll()) {
 				if(quickslot_4().writtenSpells().size() == 1 && !quickslot_4().writtenSpells().get(0).isSelfCast()) {
 					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_4().writtenSpells().get(0), quickslot_4());
 				}else if(quickslot_4().writtenSpells().size() == 1 && quickslot_4().writtenSpells().get(0).isSelfCast()){
-					this.castSpell(quickslot_4().writtenSpells().get(0), this.x(), this.y(), quickslot_4());
+					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
+					this.ai().playerAICastSpell(quickslot_4(), quickslot_4().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
 					return new ReadSpellScreen(this, sx, sy, quickslot_4());
@@ -3365,14 +3373,16 @@ public class Creature implements Cloneable{
 				if(quickslot_5().isNegativePotion() && quickslot_5().isIdentified()) {
 					return new ThrowAtScreen(this, sx, sy, quickslot_5());
 				}else {
-					this.quaff(quickslot_5());
+					//this.quaff(quickslot_1());
+					this.ai().playerAIQuaffItem(quickslot_5());
 					return null;
 				}
 			}else if(quickslot_5().isWand() || quickslot_5().isScroll()) {
 				if(quickslot_5().writtenSpells().size() == 1 && !quickslot_5().writtenSpells().get(0).isSelfCast()) {
 					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_5().writtenSpells().get(0), quickslot_5());
 				}else if(quickslot_5().writtenSpells().size() == 1 && quickslot_5().writtenSpells().get(0).isSelfCast()){
-					this.castSpell(quickslot_5().writtenSpells().get(0), this.x(), this.y(), quickslot_5());
+					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
+					this.ai().playerAICastSpell(quickslot_5(), quickslot_5().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
 					return new ReadSpellScreen(this, sx, sy, quickslot_5());
@@ -3390,14 +3400,15 @@ public class Creature implements Cloneable{
 				if(quickslot_6().isNegativePotion() && quickslot_6().isIdentified()) {
 					return new ThrowAtScreen(this, sx, sy, quickslot_6());
 				}else {
-					this.quaff(quickslot_6());
-					return null;
+					//this.quaff(quickslot_1());
+					this.ai().playerAIQuaffItem(quickslot_6());
 				}
 			}else if(quickslot_6().isWand() || quickslot_6().isScroll()) {
 				if(quickslot_6().writtenSpells().size() == 1 && !quickslot_6().writtenSpells().get(0).isSelfCast()) {
 					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_6().writtenSpells().get(0), quickslot_6());
 				}else if(quickslot_6().writtenSpells().size() == 1 && quickslot_6().writtenSpells().get(0).isSelfCast()){
-					this.castSpell(quickslot_6().writtenSpells().get(0), this.x(), this.y(), quickslot_6());
+					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
+					this.ai().playerAICastSpell(quickslot_6(), quickslot_6().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
 					return new ReadSpellScreen(this, sx, sy, quickslot_6());

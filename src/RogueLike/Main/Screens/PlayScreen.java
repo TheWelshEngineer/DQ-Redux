@@ -25,16 +25,12 @@ public class PlayScreen implements Screen{
 	}
 
 	public void displayOutput(AsciiPanel terminal) {
-		//terminal.write("fun", 1, 1);
-		//terminal.writeCenter("escape to lose enter to win", 22);
 		
 		int left = getScrollX();
 		int top = getScrollY();
 		
 		displayTiles(terminal, left, top);
 		displayMessages(terminal, messages);
-		
-		//terminal.write(player.glyph(), player.x - left, player.y - top, player.color());
 		
 		//health bar
 		terminal.writeCenter("====================================================================================================================", 21);
@@ -134,6 +130,12 @@ public class PlayScreen implements Screen{
 	        case KeybindManager.interactionThrowItem: subscreen = new ThrowScreen(player, player.x - getScrollX(), player.y - getScrollY()); break;
 	        case KeybindManager.interactionDrinkPotion: subscreen = new QuaffScreen(player); break;
 	        case KeybindManager.interactionReadSpell: subscreen = new ReadScreen(player, player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionQuickslot_1: subscreen = player.useItemFromQuickslot(1, player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionQuickslot_2: subscreen = player.useItemFromQuickslot(2, player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionQuickslot_3: subscreen = player.useItemFromQuickslot(3, player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionQuickslot_4: subscreen = player.useItemFromQuickslot(4, player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionQuickslot_5: subscreen = player.useItemFromQuickslot(5, player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionQuickslot_6: subscreen = player.useItemFromQuickslot(6, player.x - getScrollX(), player.y - getScrollY()); break;
 	        //
 	        // Menu Controls
 	        case KeybindManager.menuHelp: subscreen = new HelpScreen(false); break;
@@ -153,12 +155,7 @@ public class PlayScreen implements Screen{
 	        
 	        //
 	        //
-	        case KeybindManager.interactionQuickslot_1: subscreen = player.useItemFromQuickslot(1, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeybindManager.interactionQuickslot_2: subscreen = player.useItemFromQuickslot(2, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeybindManager.interactionQuickslot_3: subscreen = player.useItemFromQuickslot(3, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeybindManager.interactionQuickslot_4: subscreen = player.useItemFromQuickslot(4, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeybindManager.interactionQuickslot_5: subscreen = player.useItemFromQuickslot(5, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
-	        case KeybindManager.interactionQuickslot_6: subscreen = player.useItemFromQuickslot(6, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        
 	        //
 	        
 	        case KeybindManager.interactionSearch: player.search(12, false); inputAccepted = true; break;
