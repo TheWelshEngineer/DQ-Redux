@@ -1,8 +1,8 @@
-/*package RogueLike.Main.Screens;
+package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
-import RogueLike.Main.Creature;
+import RogueLike.Main.Creatures.Creature;
 import asciiPanel.AsciiPanel;
 
 public class PlayerLevelUpSkillsScreen implements Screen{
@@ -19,51 +19,55 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 		check = value;
 	}
 	
-	public int playerSimpleWeapons;
+	public int playerSimpleWeapons = 0;
 	public void modifySimpleWeapons(int amount) {
 		playerSimpleWeapons += amount;
 	}
-	public int playerMartialWeapons;
+	public int playerMartialWeapons = 0;
 	public void modifyMartialWeapons(int amount) {
 		playerMartialWeapons += amount;
 	}
-	public int playerFinesseWeapons;
-	public void modifyFinesseWeapons(int amount) {
-		playerFinesseWeapons += amount;
+	public int playerArmorTraining = 0;
+	public void modifyArmorTraining(int amount) {
+		playerArmorTraining += amount;
 	}
-	public int playerRangedWeapons;
-	public void modifyRangedWeapons(int amount) {
-		playerRangedWeapons += amount;
-	}
-	public int playerFortitude;
+	public int playerFortitude = 0;
 	public void modifyFortitude(int amount) {
 		playerFortitude += amount;
 	}
-	public int playerPerception;
-	public void modifyPerception(int amount) {
-		playerPerception += amount;
+	public int playerFinesseWeapons = 0;
+	public void modifyFinesseWeapons(int amount) {
+		playerFinesseWeapons += amount;
+	}
+	public int playerRangedWeapons = 0;
+	public void modifyRangedWeapons(int amount) {
+		playerRangedWeapons += amount;
 	}
 	public int playerStealth = 0;
 	public void modifyStealth(int amount) {
 		playerStealth += amount;
 	}
-	public int playerEvocation;
+	public int playerPerception = 0;
+	public void modifyPerception(int amount) {
+		playerPerception += amount;
+	}
+	public int playerEvocation = 0;
 	public void modifyEvocation(int amount) {
 		playerEvocation += amount;
 	}
-	public int playerPyromancy;
+	public int playerPyromancy = 0;
 	public void modifyPyromancy(int amount) {
 		playerPyromancy += amount;
 	}
-	public int playerCryomancy;
+	public int playerCryomancy = 0;
 	public void modifyCryomancy(int amount) {
 		playerCryomancy += amount;
 	}
-	public int playerElectromancy;
+	public int playerElectromancy = 0;
 	public void modifyElectromancy(int amount) {
 		playerElectromancy += amount;
 	}
-	public int playerAlchemancy;
+	public int playerAlchemancy = 0;
 	public void modifyAlchemancy(int amount) {
 		playerAlchemancy += amount;
 	}
@@ -72,346 +76,127 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 	public char simpleRight = '<';
 	public char martialLeft = '>';
 	public char martialRight = '<';
+	public char armorLeft = '>';
+	public char armorRight = '<';
+	public char fortitudeLeft = '>';
+	public char fortitudeRight = '<';
 	public char finesseLeft = '>';
 	public char finesseRight = '<';
 	public char rangedLeft = '>';
 	public char rangedRight = '<';
-	public char fortitudeLeft = '>';
-	public char fortitudeRight = '<';
-	public char percepLeft = '>';
-	public char percepRight = '<';
 	public char stealthLeft = '>';
 	public char stealthRight = '<';
-	public char evoLeft = '>';
-	public char evoRight = '<';
-	public char pyroLeft = '>';
-	public char pyroRight = '<';
-	public char cryoLeft = '>';
-	public char cryoRight = '<';
-	public char electroLeft = '>';
-	public char electroRight = '<';
-	public char alchLeft = '>';
-	public char alchRight = '<';
+	public char perceptionLeft = '>';
+	public char perceptionRight = '<';
+	public char evocationLeft = '>';
+	public char evocationRight = '<';
+	public char pyromancyLeft = '>';
+	public char pyromancyRight = '<';
+	public char cryomancyLeft = '>';
+	public char cryomancyRight = '<';
+	public char electromancyLeft = '>';
+	public char electromancyRight = '<';
+	public char alchemancyLeft = '>';
+	public char alchemancyRight = '<';
+	
+	public void updateSimpleMarker(int check) {
+		switch(check) {
+		case 0: simpleLeft = '>'; simpleRight = '<'; break;
+		default: simpleLeft = ' '; simpleRight = ' '; break;
+		}
+	}
+	public void updateMartialMarker(int check) {
+		switch(check) {
+		case 1: martialLeft = '>'; martialRight = '<'; break;
+		default: martialLeft = ' '; martialRight = ' '; break;
+		}
+	}
+	public void updateArmorMarker(int check) {
+		switch(check) {
+		case 2: armorLeft = '>'; armorRight = '<'; break;
+		default: armorLeft = ' '; armorRight = ' '; break;
+		}
+	}
+	public void updateFortitudeMarker(int check) {
+		switch(check) {
+		case 3: fortitudeLeft = '>'; fortitudeRight = '<'; break;
+		default: fortitudeLeft = ' '; fortitudeRight = ' '; break;
+		}
+	}
+	public void updateFinesseMarker(int check) {
+		switch(check) {
+		case 4: finesseLeft = '>'; finesseRight = '<'; break;
+		default: finesseLeft = ' '; finesseRight = ' '; break;
+		}
+	}
+	public void updateRangedMarker(int check) {
+		switch(check) {
+		case 5: rangedLeft = '>'; rangedRight = '<'; break;
+		default: rangedLeft = ' '; rangedRight = ' '; break;
+		}
+	}
+	public void updateStealthMarker(int check) {
+		switch(check) {
+		case 6: stealthLeft = '>'; stealthRight = '<'; break;
+		default: stealthLeft = ' '; stealthRight = ' '; break;
+		}
+	}
+	public void updatePerceptionMarker(int check) {
+		switch(check) {
+		case 7: perceptionLeft = '>'; perceptionRight = '<'; break;
+		default: perceptionLeft = ' '; perceptionRight = ' '; break;
+		}
+	}
+	public void updateEvocationMarker(int check) {
+		switch(check) {
+		case 8: evocationLeft = '>'; evocationRight = '<'; break;
+		default: evocationLeft = ' '; evocationRight = ' '; break;
+		}
+	}
+	public void updatePyromancyMarker(int check) {
+		switch(check) {
+		case 9: pyromancyLeft = '>'; pyromancyRight = '<'; break;
+		default: pyromancyLeft = ' '; pyromancyRight = ' '; break;
+		}
+	}
+	public void updateCryomancyMarker(int check) {
+		switch(check) {
+		case 10: cryomancyLeft = '>'; cryomancyRight = '<'; break;
+		default: cryomancyLeft = ' '; cryomancyRight = ' '; break;
+		}
+	}
+	public void updateElectromancyMarker(int check) {
+		switch(check) {
+		case 11: electromancyLeft = '>'; electromancyRight = '<'; break;
+		default: electromancyLeft = ' '; electromancyRight = ' '; break;
+		}
+	}
+	public void updateAlchemancyMarker(int check) {
+		switch(check) {
+		case 12: alchemancyLeft = '>'; alchemancyRight = '<'; break;
+		default: alchemancyLeft = ' '; alchemancyRight = ' '; break;
+		}
+	}
 	
 	public void changeMarkers(int check) {
-		if(check == 0) {
-			simpleLeft = '>';
-			simpleRight = '<';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-		}else if(check == 1) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = '>';
-			martialRight = '<';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-		}else if(check == 2) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = '>';
-			finesseRight = '<';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-		}else if(check == 3) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = '>';
-			rangedRight = '<';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-		}else if(check == 4) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = '>';
-			fortitudeRight = '<';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-		}else if(check == 5) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = '>';
-			percepRight = '<';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-		}else if(check == 6) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = '>';
-			stealthRight = '<';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-		}else if(check == 7) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = '>';
-			evoRight = '<';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-		}else if(check == 8) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = '>';
-			pyroRight = '<';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-		}else if(check == 9) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = '>';
-			cryoRight = '<';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = ' ';
-			alchRight = ' ';
-		}else if(check == 10) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = '>';
-			electroRight = '<';
-			alchLeft = ' ';
-			alchRight = ' ';
-		}else if(check == 11) {
-			simpleLeft = ' ';
-			simpleRight = ' ';
-			martialLeft = ' ';
-			martialRight = ' ';
-			finesseLeft = ' ';
-			finesseRight = ' ';
-			rangedLeft = ' ';
-			rangedRight = ' ';
-			fortitudeLeft = ' ';
-			fortitudeRight = ' ';
-			percepLeft = ' ';
-			percepRight = ' ';
-			stealthLeft = ' ';
-			stealthRight = ' ';
-			evoLeft = ' ';
-			evoRight = ' ';
-			pyroLeft = ' ';
-			pyroRight = ' ';
-			cryoLeft = ' ';
-			cryoRight = ' ';
-			electroLeft = ' ';
-			electroRight = ' ';
-			alchLeft = '>';
-			alchRight = '<';
-		}
+		updateSimpleMarker(check);
+		updateMartialMarker(check);
+		updateArmorMarker(check);
+		updateFortitudeMarker(check);
+		updateFinesseMarker(check);
+		updateRangedMarker(check);
+		updateStealthMarker(check);
+		updatePerceptionMarker(check);
+		updateEvocationMarker(check);
+		updatePyromancyMarker(check);
+		updateCryomancyMarker(check);
+		updateElectromancyMarker(check);
+		updateAlchemancyMarker(check);
 	}
 	
 	public PlayerLevelUpSkillsScreen(Creature player) {
 		this.player = player;
 		this.points = player.skillPoints();
-		this.playerSimpleWeapons = player.skillSimpleWeapons();
-		this.playerMartialWeapons = player.skillMartialWeapons();
-		this.playerFinesseWeapons = player.skillFinesseWeapons();
-		this.playerRangedWeapons = player.skillRangedWeapons();
-		this.playerFortitude = player.skillFortitude();
-		this.playerPerception = player.skillPerception();
-		this.playerStealth = player.skillStealth();
-		this.playerEvocation = player.skillEvocation();
-		this.playerPyromancy = player.skillPyromancy();
-		this.playerCryomancy = player.skillCryomancy();
-		this.playerElectromancy = player.skillElectromancy();
-		this.playerAlchemancy = player.skillAlchemancy();
 	}
 
 	@Override
@@ -422,76 +207,83 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 		int y = 3;
 		
 		terminal.writeCenter(String.format("-- Points remaining: %d --", points), y);
-		
-		terminal.writeCenter(String.format("%c Simple Weapons ( %d ) %c", simpleLeft, playerSimpleWeapons, simpleRight), y+=3);
-		terminal.writeCenter(String.format("%c Martial Weapons ( %d ) %c", martialLeft, playerMartialWeapons, martialRight), y+=2);
-		terminal.writeCenter(String.format("%c Finesse Weapons ( %d ) %c", finesseLeft, playerFinesseWeapons, finesseRight), y+=2);
-		terminal.writeCenter(String.format("%c Ranged Weapons ( %d ) %c", rangedLeft, playerRangedWeapons, rangedRight), y+=2);
-		terminal.writeCenter(String.format("%c Fortitude ( %d ) %c", fortitudeLeft, playerFortitude, fortitudeRight), y+=2);
-		terminal.writeCenter(String.format("%c Perception ( %d ) %c", percepLeft, playerPerception, percepRight), y+=2);
-		terminal.writeCenter(String.format("%c Stealth ( %d ) %c", stealthLeft, playerStealth, stealthRight), y+=2);
-		terminal.writeCenter(String.format("%c Evocation ( %d ) %c", evoLeft, playerEvocation, evoRight), y+=2);
-		terminal.writeCenter(String.format("%c Pyromancy ( %d ) %c", pyroLeft, playerPyromancy, pyroRight), y+=2);
-		terminal.writeCenter(String.format("%c Cryomancy ( %d ) %c", cryoLeft, playerCryomancy, cryoRight), y+=2);
-		terminal.writeCenter(String.format("%c Electromancy ( %d ) %c", electroLeft, playerElectromancy, electroRight), y+=2);
-		terminal.writeCenter(String.format("%c Alchemancy ( %d ) %c", alchLeft, playerAlchemancy, alchRight), y+=2);
+		y+=3;
+		terminal.writeCenter(String.format("%c Simple Weapons ( %d ) %c", simpleLeft, player.simpleWeaponsLevel()+playerSimpleWeapons, simpleRight), y++);
+		terminal.writeCenter(String.format("%c Martial Weapons ( %d ) %c", martialLeft, player.martialWeaponsLevel()+playerMartialWeapons, martialRight), y++);
+		terminal.writeCenter(String.format("%c Armor Training ( %d ) %c", armorLeft, player.armorTrainingLevel()+playerArmorTraining, armorRight), y++);
+		terminal.writeCenter(String.format("%c Fortitude ( %d ) %c", fortitudeLeft, player.fortitudeLevel()+playerFortitude, fortitudeRight), y++);
+		terminal.writeCenter(String.format("%c Finesse Weapons ( %d ) %c", finesseLeft, player.finesseWeaponsLevel()+playerFinesseWeapons, finesseRight), y++);
+		terminal.writeCenter(String.format("%c Ranged Weapons ( %d ) %c", rangedLeft, player.rangedWeaponsLevel()+playerRangedWeapons, rangedRight), y++);
+		terminal.writeCenter(String.format("%c Stealth ( %d ) %c", stealthLeft, player.stealthLevel()+playerStealth, stealthRight), y++);
+		terminal.writeCenter(String.format("%c Perception ( %d ) %c", perceptionLeft, player.perceptionLevel()+playerPerception, perceptionRight), y++);
+		terminal.writeCenter(String.format("%c Evocation ( %d ) %c", evocationLeft, player.evocationLevel()+playerEvocation, evocationRight), y++);
+		terminal.writeCenter(String.format("%c Pyromancy ( %d ) %c", pyromancyLeft, player.pyromancyLevel()+playerPyromancy, pyromancyRight), y++);
+		terminal.writeCenter(String.format("%c Cryomancy ( %d ) %c", cryomancyLeft, player.cryomancyLevel()+playerCryomancy, cryomancyRight), y++);
+		terminal.writeCenter(String.format("%c Electromancy ( %d ) %c", electromancyLeft, player.electromancyLevel()+playerElectromancy, electromancyRight), y++);
+		terminal.writeCenter(String.format("%c Alchemancy ( %d ) %c", alchemancyLeft, player.alchemancyLevel()+playerAlchemancy, alchemancyRight), y++);
 		
 		if(check == 0) {
-			terminal.writeCenter("Simple Weapons represents your skill with simple weapons", y+=4);
+			terminal.writeCenter("Simple Weapons represents your skill with simple weapons", y+=5);
 			terminal.writeCenter("such as clubs and handaxes. A higher Simple Weapons skill", y+=1);
 			terminal.writeCenter("allows you to use more powerful simple weapons,", y+=1);
 			terminal.writeCenter("and improves your accuracy with weapons of this type.", y+=1);
 		}else if(check == 1) {
-			terminal.writeCenter("Martial Weapons represents your skill with martial weapons", y+=4);
+			terminal.writeCenter("Martial Weapons represents your skill with martial weapons", y+=5);
 			terminal.writeCenter("such as longswords and battleaxes. A higher Martial Weapons skill", y+=1);
 			terminal.writeCenter("allows you to use more powerful martial weapons,", y+=1);
 			terminal.writeCenter("and improves your accuracy with weapons of this type.", y+=1);
 		}else if(check == 2) {
-			terminal.writeCenter("Finesse Weapons represents your skill with finesse weapons", y+=4);
+			terminal.writeCenter("Armor Training represents your ability to move and fight", y+=5);
+			terminal.writeCenter("whilst wearing armor. A higher Armor Training skill", y+=1);
+			terminal.writeCenter("allows you to use heavier armor and shields, and provides", y+=1);
+			terminal.writeCenter("further bonuses to your Armor Class at higher levels.", y+=1);
+		}else if(check == 3) {
+			terminal.writeCenter("Fortitude is a measure of your stamina and constitution.", y+=5);
+			terminal.writeCenter("A higher Fortitude skill increases the length of time you", y+=1);
+			terminal.writeCenter("can go without eating, and lessens the negative effects", y+=1);
+			terminal.writeCenter("incurred by eating certain food items.", y+=1);
+		}else if(check == 4) {
+			terminal.writeCenter("Finesse Weapons represents your skill with finesse weapons", y+=5);
 			terminal.writeCenter("such as daggers and rapiers. A higher Finesse Weapons skill", y+=1);
 			terminal.writeCenter("allows you to use more powerful finesse weapons,", y+=1);
 			terminal.writeCenter("and improves your accuracy with weapons of this type.", y+=1);
-		}else if(check == 3) {
-			terminal.writeCenter("Ranged Weapons represents your skill with ranged weapons", y+=4);
+		}else if(check == 5) {
+			terminal.writeCenter("Ranged Weapons represents your skill with ranged weapons", y+=5);
 			terminal.writeCenter("such as bows and crossbows. A higher Ranged Weapons skill", y+=1);
 			terminal.writeCenter("allows you to use more powerful ranged weapons,", y+=1);
 			terminal.writeCenter("and improves your accuracy with weapons of this type.", y+=1);
-		}else if(check == 4) {
-			terminal.writeCenter("Fortitude is a measure of your stamina and endurance.", y+=4);
-			terminal.writeCenter("A higher Fortitude skill allows you to wear heavier armor,", y+=1);
-			terminal.writeCenter("and increases the amount of time you can go without eating.", y+=1);
-		}else if(check == 5) {
-			terminal.writeCenter("Perception is a measure of your awareness and eye for detail.", y+=4);
-			terminal.writeCenter("A higher Perception skill allows you to spot traps and other", y+=1);
-			terminal.writeCenter("hidden things with greater ease, as well as improving", y+=1);
-			terminal.writeCenter("your chances of identifying unknown items.", y+=1);
 		}else if(check == 6) {
-			terminal.writeCenter("Stealth represents your ability to move unnoticed.", y+=4);
+			terminal.writeCenter("Stealth represents your ability to move unnoticed.", y+=5);
 			terminal.writeCenter("A higher Stealth skill allows you to sneak past sleeping", y+=1);
 			terminal.writeCenter("and unalerted foes more reliably, giving you the upper", y+=1);
 			terminal.writeCenter("hand in combat and making it easier to avoid a fight.", y+=1);
 		}else if(check == 7) {
-			terminal.writeCenter("Evocation is a school of magic focused mainly on the", y+=4);
+			terminal.writeCenter("Perception is a measure of your awareness and eye for detail.", y+=5);
+			terminal.writeCenter("A higher Perception skill allows you to spot traps and other", y+=1);
+			terminal.writeCenter("hidden things with greater ease, as well as improving", y+=1);
+			terminal.writeCenter("your chances of identifying unknown items.", y+=1);
+		}else if(check == 8) {
+			terminal.writeCenter("Evocation is a school of magic focused mainly on the", y+=5);
 			terminal.writeCenter("manipulation of raw magic. A higher Evocation skill", y+=1);
 			terminal.writeCenter("allows you to use more powerful evocation wands,", y+=1);
 			terminal.writeCenter("and improves the effectiveness of your evocation wands.", y+=1);
-		}else if(check == 8) {
-			terminal.writeCenter("Pyromancy is a school of magic focused mainly on the", y+=4);
-			terminal.writeCenter("manipulation of fire and heat. A higher Pyromancy skill", y+=1);
-			terminal.writeCenter("allows you to use more powerful evocation wands,", y+=1);
-			terminal.writeCenter("and improves the effectiveness of your evocation wands.", y+=1);
 		}else if(check == 9) {
-			terminal.writeCenter("Cryomancy is a school of magic focused mainly on the", y+=4);
+			terminal.writeCenter("Pyromancy is a school of magic focused mainly on the", y+=5);
+			terminal.writeCenter("manipulation of fire and heat. A higher Pyromancy skill", y+=1);
+			terminal.writeCenter("allows you to use more powerful pyromancy wands,", y+=1);
+			terminal.writeCenter("and improves the effectiveness of your pyromancy wands.", y+=1);
+		}else if(check == 10) {
+			terminal.writeCenter("Cryomancy is a school of magic focused mainly on the", y+=5);
 			terminal.writeCenter("manipulation of water and ice. A higher Cryomancy skill", y+=1);
 			terminal.writeCenter("allows you to use more powerful cryomancy wands,", y+=1);
 			terminal.writeCenter("and improves the effectiveness of your cryomancy wands.", y+=1);
-		}else if(check == 10) {
-			terminal.writeCenter("Electromancy is a school of magic focused mainly on the", y+=4);
+		}else if(check == 11) {
+			terminal.writeCenter("Electromancy is a school of magic focused mainly on the", y+=5);
 			terminal.writeCenter("manipulation of electrical energy. A higher Electromancy skill", y+=1);
 			terminal.writeCenter("allows you to use more powerful electromancy wands,", y+=1);
 			terminal.writeCenter("and improves the effectiveness of your electromancy wands.", y+=1);
-		}else if(check == 11) {
-			terminal.writeCenter("Alchemancy is a school of magic focused mainly on the", y+=4);
+		}else if(check == 12) {
+			terminal.writeCenter("Alchemancy is a school of magic focused mainly on the", y+=5);
 			terminal.writeCenter("manipulation of chemical processes. A higher Alchemancy skill", y+=1);
 			terminal.writeCenter("allows you to use more powerful alchemancy wands,", y+=1);
 			terminal.writeCenter("and improves the effectiveness of your alchemancy wands.", y+=1);
@@ -509,57 +301,17 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 		switch(key.getKeyCode()) {
 		case KeyEvent.VK_UP:
 			if(check == 0) {
-				check = 11;
-			}else if(check == 1) {
-				check = 0;
-			}else if(check == 2) {
-				check = 1;
-			}else if(check == 3) {
-				check = 2;
-			}else if(check == 4) {
-				check = 3;
-			}else if(check == 5) {
-				check = 4;
-			}else if(check == 6) {
-				check = 5;
-			}else if(check == 7) {
-				check = 6;
-			}else if(check == 8) {
-				check = 7;
-			}else if(check == 9) {
-				check = 8;
-			}else if(check == 10) {
-				check = 11;
-			}else if(check == 11) {
-				check = 0;
+				check = 12;
+			}else{
+				check--;
 			}
 			return this;
 			
 		case KeyEvent.VK_DOWN:
-			if(check == 0) {
-				check = 1;
-			}else if(check == 1) {
-				check = 2;
-			}else if(check == 2) {
-				check = 3;
-			}else if(check == 3) {
-				check = 4;
-			}else if(check == 4) {
-				check = 5;
-			}else if(check == 5) {
-				check = 6;
-			}else if(check == 6) {
-				check = 7;
-			}else if(check == 7) {
-				check = 8;
-			}else if(check == 8) {
-				check = 9;
-			}else if(check == 9) {
-				check = 10;
-			}else if(check == 10) {
-				check = 11;
-			}else if(check == 11) {
+			if(check == 12) {
 				check = 0;
+			}else{
+				check++;
 			}
 			return this;
 		
@@ -576,22 +328,22 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 				}
 			}else if(check == 2) {
 				if(points > 0) {
-					modifyFinesseWeapons(1); 
+					modifyArmorTraining(1); 
 					modifyPoints(-1); 
 				}
 			}else if(check == 3) {
 				if(points > 0) {
-					modifyRangedWeapons(1); 
+					modifyFortitude(1); 
 					modifyPoints(-1); 
 				}
 			}else if(check == 4) {
 				if(points > 0) {
-					modifyFortitude(1); 
+					modifyFinesseWeapons(1); 
 					modifyPoints(-1); 
 				}
 			}else if(check == 5) {
 				if(points > 0) {
-					modifyPerception(1); 
+					modifyRangedWeapons(1); 
 					modifyPoints(-1); 
 				}
 			}else if(check == 6) {
@@ -601,25 +353,30 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 				} 
 			}else if(check == 7) {
 				if(points > 0) {
+					modifyPerception(1); 
+					modifyPoints(-1); 
+				}
+			}else if(check == 8) {
+				if(points > 0) {
 					modifyEvocation(1); 
 					modifyPoints(-1); 
 				} 
-			}else if(check == 8) {
+			}else if(check == 9) {
 				if(points > 0) {
 					modifyPyromancy(1); 
 					modifyPoints(-1); 
 				}
-			}else if(check == 9) {
+			}else if(check == 10) {
 				if(points > 0) {
 					modifyCryomancy(1); 
 					modifyPoints(-1); 
 				}
-			}else if(check == 10) {
+			}else if(check == 11) {
 				if(points > 0) {
 					modifyElectromancy(1); 
 					modifyPoints(-1); 
 				}
-			}else if(check == 11) {
+			}else if(check == 12) {
 				if(points > 0) {
 					modifyAlchemancy(1); 
 					modifyPoints(-1); 
@@ -629,62 +386,67 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 			
 		case KeyEvent.VK_LEFT:
 			if(check == 0) {
-				if(playerSimpleWeapons > player.skillSimpleWeapons()) {
+				if(playerSimpleWeapons > 0) {
 					modifySimpleWeapons(-1); 
 					modifyPoints(1); 
 				}
 			}else if(check == 1) {
-				if(playerMartialWeapons > player.skillMartialWeapons()) {
+				if(playerMartialWeapons > 0) {
 					modifyMartialWeapons(-1); 
 					modifyPoints(1); 
 				} 
 			}else if(check == 2) {
-				if(playerFinesseWeapons > player.skillFinesseWeapons()) {
-					modifyFinesseWeapons(-1); 
+				if(playerArmorTraining > 0) {
+					modifyArmorTraining(-1); 
 					modifyPoints(1); 
 				}
 			}else if(check == 3) {
-				if(playerRangedWeapons > player.skillRangedWeapons()) {
-					modifyRangedWeapons(-1); 
-					modifyPoints(1); 
-				}
-			}else if(check == 4) {
-				if(playerFortitude > player.skillFortitude()) {
+				if(playerFortitude > 0) {
 					modifyFortitude(-1); 
 					modifyPoints(1); 
 				}
-			}else if(check == 5) {
-				if(playerPerception > player.skillPerception()) {
-					modifyPerception(-1); 
+			}else if(check == 4) {
+				if(playerFinesseWeapons > 0) {
+					modifyFinesseWeapons(-1); 
 					modifyPoints(1); 
 				}
-			}else if(check == 6) {
-				if(playerStealth > player.skillStealth()) {
+			}else if(check == 5) {
+				if(playerRangedWeapons > 0) {
+					modifyRangedWeapons(-1); 
+					modifyPoints(1); 
+				}
+			}else  if(check == 6) {
+				if(playerStealth > 0) {
 					modifyStealth(-1); 
 					modifyPoints(1); 
 				}
 			}else if(check == 7) {
-				if(playerEvocation > player.skillEvocation()) {
-					modifyEvocation(-1); 
+				if(playerPerception > 0) {
+					modifyPerception(-1); 
 					modifyPoints(1); 
 				}
 			}else if(check == 8) {
-				if(playerPyromancy > player.skillPyromancy()) {
+				if(playerEvocation > 0) {
+					modifyEvocation(-1); 
+					modifyPoints(1); 
+				}
+			}else if(check == 9) {
+				if(playerPyromancy > 0) {
 					modifyPyromancy(-1); 
 					modifyPoints(1); 
 				} 
-			}else if(check == 9) {
-				if(playerCryomancy > player.skillCryomancy()) {
+			}else if(check == 10) {
+				if(playerCryomancy > 0) {
 					modifyCryomancy(-1); 
 					modifyPoints(1); 
 				} 
-			}else if(check == 10) {
-				if(playerElectromancy > player.skillElectromancy()) {
+			}else if(check == 11) {
+				if(playerElectromancy > 0) {
 					modifyElectromancy(-1); 
 					modifyPoints(1); 
 				}
-			}else if(check == 11) {
-				if(playerAlchemancy > player.skillAlchemancy()) {
+			}else if(check == 12) {
+				if(playerAlchemancy > 0) {
 					modifyAlchemancy(-1); 
 					modifyPoints(1); 
 				} 
@@ -696,18 +458,19 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 			
 		case KeyEvent.VK_ENTER: 
 			if(points < 1) {
-				player.setSkillSimpleWeapons(playerSimpleWeapons);
-				player.setSkillMartialWeapons(playerMartialWeapons);
-				player.setSkillFinesseWeapons(playerFinesseWeapons);
-				player.setSkillRangedWeapons(playerRangedWeapons);
-				player.setSkillFortitude(playerFortitude);
-				player.setSkillPerception(playerPerception);
-				player.setSkillStealth(playerStealth);
-				player.setSkillEvocation(playerEvocation);
-				player.setSkillPyromancy(playerPyromancy);
-				player.setSkillCryomancy(playerCryomancy);
-				player.setSkillElectromancy(playerElectromancy);
-				player.setSkillAlchemancy(playerAlchemancy);
+				player.levelUpSkill(0, playerSimpleWeapons);
+				player.levelUpSkill(1, playerMartialWeapons);
+				player.levelUpSkill(2, playerArmorTraining);
+				player.levelUpSkill(3, playerFortitude);
+				player.levelUpSkill(4, playerFinesseWeapons);
+				player.levelUpSkill(5, playerRangedWeapons);
+				player.levelUpSkill(6, playerStealth);
+				player.levelUpSkill(7, playerPerception);
+				player.levelUpSkill(8, playerEvocation);
+				player.levelUpSkill(9, playerPyromancy);
+				player.levelUpSkill(10, playerCryomancy);
+				player.levelUpSkill(11, playerElectromancy);
+				player.levelUpSkill(12, playerAlchemancy);
 				player.setSkillPoints(0);
 				return null;
 			}else {
@@ -721,4 +484,3 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 
 }
 
-*/

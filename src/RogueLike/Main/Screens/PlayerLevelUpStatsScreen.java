@@ -187,20 +187,6 @@ public class PlayerLevelUpStatsScreen implements Screen{
 		terminal.clear();
 		terminal.writeCenter("== Increase your Ability Scores ==", 1);	
 		int y = 3;
-		/*
-        terminal.writeCenter("[1]: 14(+2) Strength, 12(+1) Dexterity, 10(+0) Intelligence", y+=2);
-        terminal.writeCenter("[2]: 14(+2) Strength, 10(+0) Dexterity, 12(+1) Intelligence", y+=2);
-        
-        terminal.writeCenter("[3]: 12(+1) Strength, 14(+2) Dexterity, 10(+0) Intelligence", y+=2);
-        terminal.writeCenter("[4]: 10(+0) Strength, 14(+2) Dexterity, 12(+1) Intelligence", y+=2);
-        
-        terminal.writeCenter("[5]: 10(+0) Strength, 12(+1) Dexterity, 14(+2) Intelligence", y+=2);
-        terminal.writeCenter("[6]: 12(+1) Strength, 10(+0) Dexterity, 14(+2) Intelligence", y+=2);
-        
-        terminal.writeCenter("[7]: 12(+1) Strength, 12(+1) Dexterity, 12(+1) Intelligence", y+=2);
-        */
-		
-		//terminal.writeCenter(TEST, y+=2);
 		
 		terminal.writeCenter(String.format("-- Points remaining: %d --", points), y);
 		
@@ -296,8 +282,8 @@ public class PlayerLevelUpStatsScreen implements Screen{
 				player.setDexterity(playerDexterity);
 				player.setIntelligence(playerIntelligence);
 				player.setAttributePoints(0);
-				//return new PlayerLevelUpSkillsScreen(player);
-				return null;
+				return new PlayerLevelUpSkillsScreen(player);
+				//return null;
 			}else {
 				return this;
 			}

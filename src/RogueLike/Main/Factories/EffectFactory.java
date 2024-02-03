@@ -143,12 +143,29 @@ public class EffectFactory {
 	public Effect firebolt(Creature reference) {
 		Effect firebolt = new Effect(1, "Firebolt", true, null) {
         	public void start(Creature creature) {
-        		creature.notify("The firebolt splashes over your body!");
-        		Damage damage = new FireDamage(Dice.d8.roll()+reference.intelligenceModifier(), false, getThis(), true);
-				creature.modifyHP(damage, "Killed by fire magic");
+				Damage damage = new FireDamage(Dice.d8.roll()+reference.intelligenceModifier(), false, getThis(), true);
+				if(reference.intelligenceRoll() >= creature.armorClass()) {
+					creature.doAction("get hit with a bolt of fire!");
+					creature.setLastHit(reference);
+					creature.modifyHP(damage, String.format("Killed by %s using Firebolt", reference.name()));
+				}else {
+					reference.notify(String.format("Your spell misses the %s.", creature.name()));
+				}
 			}
         };
 		return firebolt;
+	}
+	
+	public Effect magicMissile(Creature reference) {
+		Effect missile = new Effect(1, null, true, reference){
+			public void start(Creature creature) {
+				creature.doAction("get hit with a magic missile!");
+				creature.setLastHit(reference);
+	        	Damage damage = new MagicDamage(Dice.d6.roll()+reference.intelligenceModifier(), false, getThis(), true);
+				creature.modifyHP(damage, String.format("Killed by %s using Magic Missile", reference.name()));
+			}
+		};
+		return missile;
 	}
 	
 	public Effect causticVapor() {
@@ -701,28 +718,7 @@ public class EffectFactory {
 		
 	}
 	
-	public Effect magicMissile(Creature player) {
-		Effect missile = new Effect(1, null, true, player){
-			public void start(Creature creature) {
-				//int amount = Math.max(0, 7-creature.defenseValue());
-				
-				double tempAmount = (ExtraMaths.d8()+(player.intelligenceModifier()));
-				int amount = (int) Math.round(tempAmount);
-				int attackRoll = player.intelligenceRoll();
-				if(attackRoll >= creature.armorClass()) {
-					creature.doAction("get hit with magic missiles!");
-					creature.setLastHit(player);
-					Damage damage = new MagicDamage(amount, false, getThis(), true);
-					creature.modifyHP(damage, "Killed by magic");
-				}else {
-					creature.doAction("resist the spell!");
-				}
-				
-				//creature.learnName(item);
-			}
-		};
-		return missile;
-	}
+
 	
 	public Effect iceWall(Creature player) {
 		Effect wall = new Effect(1, null, false, player){

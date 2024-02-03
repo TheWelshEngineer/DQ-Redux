@@ -1124,8 +1124,97 @@ public class Creature implements Cloneable{
 		skills[id].modifyLevel(amount, decrease);
 	}
 	//TODO
+	
+	public Skill simpleWeapons() {
+		return skills[0];
+	}
+	public int simpleWeaponsLevel() {
+		return skills[0].level();
+	}
+	
+	public Skill martialWeapons() {
+		return skills[1];
+	}
+	public int martialWeaponsLevel() {
+		return skills[1].level();
+	}
+	
+	public Skill armorTraining() {
+		return skills[2];
+	}
+	public int armorTrainingLevel() {
+		return skills[2].level();
+	}
+	
+	public Skill fortitude() {
+		return skills[3];
+	}
+	public int fortitudeLevel() {
+		return skills[3].level();
+	}
 
-
+	public Skill finesseWeapons() {
+		return skills[4];
+	}
+	public int finesseWeaponsLevel() {
+		return skills[4].level();
+	}
+	
+	public Skill rangedWeapons() {
+		return skills[5];
+	}
+	public int rangedWeaponsLevel() {
+		return skills[5].level();
+	}
+	
+	public Skill stealth() {
+		return skills[6];
+	}
+	public int stealthLevel() {
+		return skills[6].level();
+	}
+	
+	public Skill perception() {
+		return skills[7];
+	}
+	public int perceptionLevel() {
+		return skills[7].level();
+	}
+	
+	public Skill evocation() {
+		return skills[8];
+	}
+	public int evocationLevel() {
+		return skills[8].level();
+	}
+	
+	public Skill pyromancy() {
+		return skills[9];
+	}
+	public int pyromancyLevel() {
+		return skills[9].level();
+	}
+	
+	public Skill cryomancy() {
+		return skills[10];
+	}
+	public int cryomancyLevel() {
+		return skills[10].level();
+	}
+	
+	public Skill electromancy() {
+		return skills[11];
+	}
+	public int electromancyLevel() {
+		return skills[11].level();
+	}
+	
+	public Skill alchemancy() {
+		return skills[0];
+	}
+	public int alchemancyLevel() {
+		return skills[0].level();
+	}
 
 
 
