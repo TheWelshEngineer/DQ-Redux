@@ -622,22 +622,25 @@ public class InventoryScreen implements Screen{
 			return null;*/
 		case KeybindManager.interactionEquipItem:
 			if(inventory.get(check).isEquippable()) {
-				player.equip(inventory.get(check));
-				playScreen.setInputAccepted(true);
+				//player.equip(inventory.get(check));
+				//.setInputAccepted(true);
+				player.ai().playerAIEquipItem(inventory.get(check));
 				return null;
 			}else {
 				return this;
 			}
 		
 		case KeybindManager.interactionDropItem:
-			player.drop(inventory.get(check));
+			//player.drop(inventory.get(check));
+			player.ai().playerAIDropItem(inventory.get(check));
 			playScreen.setInputAccepted(true);
 			return null;
 			
 		case KeybindManager.interactionEatFood:
 			if(inventory.get(check).foodValue() > 0) {
-				player.eat(inventory.get(check));
-				playScreen.setInputAccepted(true);
+				//player.eat(inventory.get(check));
+				//playScreen.setInputAccepted(true);
+				player.ai().playerAIEatItem(inventory.get(check));
 				return null;
 			}else {
 				return this;
@@ -645,8 +648,9 @@ public class InventoryScreen implements Screen{
 		
 		case KeybindManager.interactionDrinkPotion:
 			if(inventory.get(check).quaffEffect() != null) {
-				player.quaff(inventory.get(check));
-				playScreen.setInputAccepted(true);
+				//player.quaff(inventory.get(check));
+				//playScreen.setInputAccepted(true);
+				player.ai().playerAIQuaffItem(inventory.get(check));
 				return null;
 			}else {
 				return this;
@@ -710,8 +714,9 @@ public class InventoryScreen implements Screen{
 					if(inventory.get(check).writtenSpells().size() == 1 && !inventory.get(check).writtenSpells().get(0).isSelfCast()) {
 						return new CastSpellScreen(player, "Cast spell at?", sx, sy, inventory.get(check).writtenSpells().get(0), inventory.get(check));
 					}else if(inventory.get(check).writtenSpells().size() == 1 && inventory.get(check).writtenSpells().get(0).isSelfCast()){
-						player.castSpell(inventory.get(check).writtenSpells().get(0), player.x(), player.y(), inventory.get(check));
-						playScreen.setInputAccepted(true);
+						//player.castSpell(inventory.get(check).writtenSpells().get(0), player.x(), player.y(), inventory.get(check));
+						//playScreen.setInputAccepted(true);
+						player.ai().playerAICastSpell(inventory.get(check), inventory.get(check).writtenSpells().get(0), player.x(), player.y());
 						return null;
 					}else {
 						return new ReadSpellScreen(player, sx, sy, inventory.get(check));
