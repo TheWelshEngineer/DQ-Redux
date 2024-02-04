@@ -2,7 +2,9 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public class PlayerLevelUpSkillsScreen implements Screen{
@@ -208,19 +210,19 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 		
 		terminal.writeCenter(String.format("-- Points remaining: %d --", points), y);
 		y+=3;
-		terminal.writeCenter(String.format("%c Simple Weapons ( %d ) %c", simpleLeft, player.simpleWeaponsLevel()+playerSimpleWeapons, simpleRight), y++);
-		terminal.writeCenter(String.format("%c Martial Weapons ( %d ) %c", martialLeft, player.martialWeaponsLevel()+playerMartialWeapons, martialRight), y++);
-		terminal.writeCenter(String.format("%c Armor Training ( %d ) %c", armorLeft, player.armorTrainingLevel()+playerArmorTraining, armorRight), y++);
-		terminal.writeCenter(String.format("%c Fortitude ( %d ) %c", fortitudeLeft, player.fortitudeLevel()+playerFortitude, fortitudeRight), y++);
-		terminal.writeCenter(String.format("%c Finesse Weapons ( %d ) %c", finesseLeft, player.finesseWeaponsLevel()+playerFinesseWeapons, finesseRight), y++);
-		terminal.writeCenter(String.format("%c Ranged Weapons ( %d ) %c", rangedLeft, player.rangedWeaponsLevel()+playerRangedWeapons, rangedRight), y++);
-		terminal.writeCenter(String.format("%c Stealth ( %d ) %c", stealthLeft, player.stealthLevel()+playerStealth, stealthRight), y++);
-		terminal.writeCenter(String.format("%c Perception ( %d ) %c", perceptionLeft, player.perceptionLevel()+playerPerception, perceptionRight), y++);
-		terminal.writeCenter(String.format("%c Evocation ( %d ) %c", evocationLeft, player.evocationLevel()+playerEvocation, evocationRight), y++);
-		terminal.writeCenter(String.format("%c Pyromancy ( %d ) %c", pyromancyLeft, player.pyromancyLevel()+playerPyromancy, pyromancyRight), y++);
-		terminal.writeCenter(String.format("%c Cryomancy ( %d ) %c", cryomancyLeft, player.cryomancyLevel()+playerCryomancy, cryomancyRight), y++);
-		terminal.writeCenter(String.format("%c Electromancy ( %d ) %c", electromancyLeft, player.electromancyLevel()+playerElectromancy, electromancyRight), y++);
-		terminal.writeCenter(String.format("%c Alchemancy ( %d ) %c", alchemancyLeft, player.alchemancyLevel()+playerAlchemancy, alchemancyRight), y++);
+		terminal.writeCenter(String.format("%c Simple Weapons: %s %c", simpleLeft, ExtraMaths.toRomanNumerals(player.simpleWeaponsLevel()+playerSimpleWeapons), simpleRight), y++);
+		terminal.writeCenter(String.format("%c Martial Weapons: %s %c", martialLeft, ExtraMaths.toRomanNumerals(player.martialWeaponsLevel()+playerMartialWeapons), martialRight), y++);
+		terminal.writeCenter(String.format("%c Armor Training: %s %c", armorLeft, ExtraMaths.toRomanNumerals(player.armorTrainingLevel()+playerArmorTraining), armorRight), y++);
+		terminal.writeCenter(String.format("%c Fortitude: %s %c", fortitudeLeft, ExtraMaths.toRomanNumerals(player.fortitudeLevel()+playerFortitude), fortitudeRight), y++);
+		terminal.writeCenter(String.format("%c Finesse Weapons: %s %c", finesseLeft, ExtraMaths.toRomanNumerals(player.finesseWeaponsLevel()+playerFinesseWeapons), finesseRight), y++);
+		terminal.writeCenter(String.format("%c Ranged Weapons: %s %c", rangedLeft, ExtraMaths.toRomanNumerals(player.rangedWeaponsLevel()+playerRangedWeapons), rangedRight), y++);
+		terminal.writeCenter(String.format("%c Stealth: %s %c", stealthLeft, ExtraMaths.toRomanNumerals(player.stealthLevel()+playerStealth), stealthRight), y++);
+		terminal.writeCenter(String.format("%c Perception: %s %c", perceptionLeft, ExtraMaths.toRomanNumerals(player.perceptionLevel()+playerPerception), perceptionRight), y++);
+		terminal.writeCenter(String.format("%c Evocation: %s %c", evocationLeft, ExtraMaths.toRomanNumerals(player.evocationLevel()+playerEvocation), evocationRight), y++);
+		terminal.writeCenter(String.format("%c Pyromancy: %s %c", pyromancyLeft, ExtraMaths.toRomanNumerals(player.pyromancyLevel()+playerPyromancy), pyromancyRight), y++);
+		terminal.writeCenter(String.format("%c Cryomancy: %s %c", cryomancyLeft, ExtraMaths.toRomanNumerals(player.cryomancyLevel()+playerCryomancy), cryomancyRight), y++);
+		terminal.writeCenter(String.format("%c Electromancy: %s %c", electromancyLeft, ExtraMaths.toRomanNumerals(player.electromancyLevel()+playerElectromancy), electromancyRight), y++);
+		terminal.writeCenter(String.format("%c Alchemancy: %s %c", alchemancyLeft, ExtraMaths.toRomanNumerals(player.alchemancyLevel()+playerAlchemancy), alchemancyRight), y++);
 		
 		if(check == 0) {
 			terminal.writeCenter("Simple Weapons represents your skill with simple weapons", y+=5);
@@ -291,15 +293,15 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 		
 		
 		if(points < 1) {
-			terminal.writeCenter("-- [ENTER]: Confirm and Continue --", 38);
+			terminal.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 40);
 		}
-		terminal.writeCenter("-- [UP / DOWN]: Move Selection | [LEFT / RIGHT]: Increase/Decrease Skill --", 40);
+		terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Increase/Decrease Skill Point Allocation --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 38);
 	}
 
 	@Override
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
-		case KeyEvent.VK_UP:
+		case KeybindManager.navigateMenuUp:
 			if(check == 0) {
 				check = 12;
 			}else{
@@ -307,7 +309,7 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 			}
 			return this;
 			
-		case KeyEvent.VK_DOWN:
+		case KeybindManager.navigateMenuDown:
 			if(check == 12) {
 				check = 0;
 			}else{
@@ -315,7 +317,7 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 			}
 			return this;
 		
-		case KeyEvent.VK_RIGHT:
+		case KeybindManager.navigateMenuRight:
 			if(check == 0) {
 				if(points > 0) {
 					modifySimpleWeapons(1); 
@@ -384,7 +386,7 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 			}	
 			return this;
 			
-		case KeyEvent.VK_LEFT:
+		case KeybindManager.navigateMenuLeft:
 			if(check == 0) {
 				if(playerSimpleWeapons > 0) {
 					modifySimpleWeapons(-1); 
@@ -456,7 +458,7 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 			return this;
 		
 			
-		case KeyEvent.VK_ENTER: 
+		case KeybindManager.navigateMenuConfirm: 
 			if(points < 1) {
 				player.levelUpSkill(0, playerSimpleWeapons);
 				player.levelUpSkill(1, playerMartialWeapons);

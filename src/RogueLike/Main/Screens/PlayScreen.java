@@ -35,7 +35,7 @@ public class PlayScreen implements Screen{
 		//health bar
 		terminal.writeCenter("====================================================================================================================", 21);
 		terminal.writeCenter("====================================================================================================================", 47);
-		String stats = String.format("+||+ Depth: %2d (%d | %d) // Level: %2d%s // XP: %d/%d // Health: %3d/%3d // Mana: %d/%d // Hunger: %s +||+", player.z()+1, player.x()+1, player.y()+1, player.level(), canLevelUp(), player.xp(), player.xpToNextLevel(), player.hp(), player.maxHP(), player.mana(), player.maxMana(), hunger());
+		String stats = String.format("+||+ Depth: %2d (%d | %d) // Level: %2d%s // XP: %d/%d // Health: %3d/%3d // Mana: %d/%d // Hunger: %s +||+", player.z()+1, player.x()+1, player.y()+1, player.level(), canLevelUp(), player.xp(), player.xpToNextLevel(), player.hp(), player.maxHP(), player.mana(), player.maxMana(), player.hungerAsString());
 		terminal.writeCenter(stats, 22);
 		//
 		int y = 24;
@@ -77,23 +77,6 @@ public class PlayScreen implements Screen{
 		}
 	}
 	
-	private String hunger() {
-		if(player.food() < player.maxFood() * 0.1) {
-			return "Starving";
-		}else if(player.food() < player.maxFood() * 0.2) {
-			return "Hungry";
-		}else if(player.food() < player.maxFood() * 0.5) {
-			return "Satisfied";
-		}else if(player.food() < player.maxFood() * 0.8) {
-			return "Stuffed";
-		}else if(player.food() < player.maxFood() * 0.9) {
-			return "Full";
-		}else if(player.food() <= player.maxFood()) {
-			return "Full";
-		}else{
-			return "";
-		}
-	}
 	//temp
 	int level = 1;
 	//

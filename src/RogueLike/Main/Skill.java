@@ -37,6 +37,10 @@ public class Skill {
 		return String.format("%s (%d)", this.name, this.level);
 	}
 	
+	public String toStringCharacterSheet() {
+		return String.format("%s: %s", this.name(), ExtraMaths.toRomanNumerals(this.level()));
+	}
+	
 	private int level = 1;
 	public int level() {
 		return level;
