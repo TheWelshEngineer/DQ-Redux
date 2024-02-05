@@ -19,13 +19,15 @@ import RogueLike.Main.World;
 import RogueLike.Main.AI.AlchemistAI;
 import RogueLike.Main.AI.ChestAI;
 import RogueLike.Main.AI.CloakerAI;
-import RogueLike.Main.AI.MimicAI;
 import RogueLike.Main.AI.OgreAI;
 import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AI.SkeletonAI;
 import RogueLike.Main.Creatures.Bat;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Creatures.Fungus;
+import RogueLike.Main.Creatures.Mimic;
+import RogueLike.Main.Creatures.Constructs.AnimatedArmor;
+import RogueLike.Main.Creatures.Constructs.AnimatedWeapon;
 import RogueLike.Main.Creatures.Gremlins.Gremlin;
 import RogueLike.Main.Creatures.Slimes.MagmaSlime;
 import RogueLike.Main.Creatures.Slimes.MagmaSlimeling;
@@ -642,51 +644,19 @@ public class ObjectFactory {
 	}
 	
 	public Creature newAnimatedArmor(int depth, Creature player, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature animatedArmor = new Creature(world, "Animated Armor", (char)203, ExtraColors.lilac, 35, 10, 18, 14, 11, 1, 8, 20);
-		animatedArmor.setID(11);
-		new SkeletonAI(animatedArmor, player, this, this.world);
-		Item startArmor = randomArmor(0, false);
-		animatedArmor.inventory().add(startArmor);
-		animatedArmor.equip(startArmor);
-		animatedArmor.setHasNoCorpse(true);
-		animatedArmor.creatureTypes.add("Construct");
-		animatedArmor.scaleHPWithDepth(depth);
-		animatedArmor.scaleManaWithDepth(depth);	
-		animatedArmor.scaleStrengthWithDepth(depth);	
-		animatedArmor.scaleDexterityWithDepth(depth);	
-		animatedArmor.scaleIntelligenceWithDepth(depth);
+		Creature animatedArmor = new AnimatedArmor(this, player, "Animated Armor", (char)203, ExtraColors.lilac, 11, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(animatedArmor, depth);
-		}else {
-			
 		}
 		return animatedArmor;
-		
 	}
 	
 	public Creature newAnimatedWeapon(int depth, Creature player, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature animatedWeapon = new Creature(world, "Animated Weapon", ')', ExtraColors.lilac, 35, 10, 18, 14, 11, 1, 8, 20);
-		animatedWeapon.setID(12);
-		new SkeletonAI(animatedWeapon, player, this, this.world);
-		Item startWeapon = randomMeleeWeapon(0, false);
-		animatedWeapon.inventory().add(startWeapon);
-		animatedWeapon.equip(startWeapon);
-		animatedWeapon.setHasNoCorpse(true);
-		animatedWeapon.creatureTypes.add("Construct");
-		animatedWeapon.scaleHPWithDepth(depth);
-		animatedWeapon.scaleManaWithDepth(depth);	
-		animatedWeapon.scaleStrengthWithDepth(depth);	
-		animatedWeapon.scaleDexterityWithDepth(depth);	
-		animatedWeapon.scaleIntelligenceWithDepth(depth);
+		Creature animatedWeapon = new AnimatedWeapon(this, player, "Animated Weapon", ')', ExtraColors.lilac, 12, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(animatedWeapon, depth);
-		}else {
-			
 		}
 		return animatedWeapon;
-		
 	}
 	
 	public Creature newPotionChest(int depth, int addToWorld) {
@@ -858,32 +828,11 @@ public class ObjectFactory {
 	}
 	
 	public Creature newMimic(int depth, Creature player, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature mimic = new Creature(world, "Mimic", (char)127, ExtraColors.apple, 60, 10, 12, 17, 12, 5, 8, 20);
-		mimic.setID(13);
-		new MimicAI(mimic, player, this, this.world);
-		Item startItem = randomMimicDrop(0, false);
-		if(ExtraMaths.d10() < 4) {
-			upgradeItem(startItem, ExtraMaths.d4());
-		}
-		if(ExtraMaths.d10() == 1) { // == 1
-			curseItem(startItem);
-		}
-		mimic.inventory().add(startItem);
-		mimic.creatureTypes.add("Monstrosity");
-		mimic.scaleHPWithDepth(depth);
-		mimic.scaleManaWithDepth(depth);	
-		mimic.scaleStrengthWithDepth(depth);	
-		mimic.scaleDexterityWithDepth(depth);	
-		mimic.scaleIntelligenceWithDepth(depth);
-		mimic.hide();
+		Creature mimic = new Mimic(this, player, "Mimic", (char)127, ExtraColors.apple, 13, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(mimic, depth);
-		}else {
-			
 		}
 		return mimic;
-		
 	}
 	
 	public Creature newIceWall(int depth, Creature player, int addToWorld) {
