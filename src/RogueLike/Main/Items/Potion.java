@@ -1,7 +1,5 @@
 package RogueLike.Main.Items;
 
-import java.awt.Color;
-
 import RogueLike.Main.Description;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Factories.ObjectFactory;

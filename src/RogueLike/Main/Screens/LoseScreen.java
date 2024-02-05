@@ -69,6 +69,7 @@ public class LoseScreen implements Screen {
         	String desktopPath = System.getProperty("user.home") + "\\Desktop\\";
         	String filename = String.format("%sDwarfQuest %s %s.txt", desktopPath, playerName, localDate);
         	try {
+				@SuppressWarnings("unused")
 				File saveScores = new File(filename);
 				//System.out.println("Successfully created the file.");
 			} catch (Exception e) {

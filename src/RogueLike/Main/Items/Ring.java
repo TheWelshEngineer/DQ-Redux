@@ -1,6 +1,5 @@
 package RogueLike.Main.Items;
 
-import RogueLike.Main.Spell;
 import RogueLike.Main.Factories.ObjectFactory;
 import asciiPanel.AsciiPanel;
 

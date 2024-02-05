@@ -17,21 +17,16 @@ import RogueLike.Main.Skill;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.AlchemistAI;
-import RogueLike.Main.AI.BatAI;
 import RogueLike.Main.AI.ChestAI;
 import RogueLike.Main.AI.CloakerAI;
-import RogueLike.Main.AI.FungusAI;
 import RogueLike.Main.AI.MimicAI;
 import RogueLike.Main.AI.OgreAI;
 import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AI.SkeletonAI;
-import RogueLike.Main.AI.GremlinAI.GremlinAI;
-import RogueLike.Main.AI.GremlinAI.GremlinSkirmisherAI;
-import RogueLike.Main.AI.SlimeAI.PinkSlimeAI;
-import RogueLike.Main.AI.SlimeAI.SlimelingAI;
 import RogueLike.Main.Creatures.Bat;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Creatures.Fungus;
+import RogueLike.Main.Creatures.Gremlins.Gremlin;
 import RogueLike.Main.Creatures.Slimes.MagmaSlime;
 import RogueLike.Main.Creatures.Slimes.MagmaSlimeling;
 import RogueLike.Main.Creatures.Slimes.MetalSlime;
@@ -607,52 +602,17 @@ public class ObjectFactory {
 	}
 	
 	public Creature newGremlin(int depth, Creature player, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature gremlin = new Creature(world, "Gremlin", 'g', ExtraColors.cobalt, 17, 10, 10, 8, 14, 10, 8, 20);
-		gremlin.setID(8);
-		new GremlinAI(gremlin, player, this, this.world);
-		Item startWeapon = newBow(0, false);
-		gremlin.inventory().add(startWeapon);
-		gremlin.equip(startWeapon);
-		Item startAmmo = newArrows(0, 0);
-		gremlin.inventory().add(startAmmo);
-		gremlin.equip(startAmmo);
-		gremlin.creatureTypes.add("Gremlin");
-		gremlin.scaleHPWithDepth(depth);
-		gremlin.scaleManaWithDepth(depth);	
-		gremlin.scaleStrengthWithDepth(depth);	
-		gremlin.scaleDexterityWithDepth(depth);	
-		gremlin.scaleIntelligenceWithDepth(depth);
+		Creature gremlin = new Gremlin(this, player, "Gremlin", 'g', ExtraColors.cobalt, 8, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(gremlin, depth);
-		}else {
-			
 		}
 		return gremlin;
-		
 	}
 	
 	public Creature newGremlinSkirmisher(int depth, Creature player, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature gremlin = new Creature(world, "Gremlin Skirmisher", 'g', ExtraColors.red, 17, 10, 10, 8, 14, 10, 8, 20);
-		gremlin.setID(9);
-		new GremlinSkirmisherAI(gremlin, player, this, this.world);
-		Item startWeapon = newSword(0, false);
-		gremlin.inventory().add(startWeapon);
-		gremlin.equip(startWeapon);
-		Item startArmor = newLeatherArmor(0, false);
-		gremlin.inventory().add(startArmor);
-		gremlin.equip(startArmor);
-		gremlin.creatureTypes.add("Gremlin");
-		gremlin.scaleHPWithDepth(depth);
-		gremlin.scaleManaWithDepth(depth);	
-		gremlin.scaleStrengthWithDepth(depth);	
-		gremlin.scaleDexterityWithDepth(depth);	
-		gremlin.scaleIntelligenceWithDepth(depth);
+		Creature gremlin = new Gremlin(this, player, "Gremlin Skirmisher", 'g', ExtraColors.red, 9, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(gremlin, depth);
-		}else {
-			
 		}
 		return gremlin;
 		

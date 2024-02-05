@@ -2,8 +2,6 @@ package RogueLike.Main.Creatures;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import RogueLike.Main.*;
@@ -301,7 +299,7 @@ public class Creature implements Cloneable{
 		return (Spell) spellbook.get(i).clone();
 	}
 
-	private int armorClass;
+	//private int armorClass;
 	public int armorClass() {
 		int returnArmorClass = 0;
 
@@ -343,9 +341,6 @@ public class Creature implements Cloneable{
 		return returnArmorClass; 
 	}
 
-	public void modifyArmorClass(int amount) {
-		armorClass += amount;
-	}
 
 	private int baseArmorClass;
 	public int baseArmorClass() {

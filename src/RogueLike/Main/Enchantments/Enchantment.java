@@ -3,7 +3,6 @@ package RogueLike.Main.Enchantments;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Damage.Damage;
 
 public class Enchantment {
 	
