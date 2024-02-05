@@ -79,7 +79,7 @@ public class SpellbookScreen implements Screen{
     		return null;
     	}else {
     		//return null;
-    		return new CastSpellScreen(player, "Cast spell at?", sx, sy, spell, null);
+    		return new SpellTargetingScreen(player, "Cast spell at?", sx, sy, spell, null);
     	}
         //return new CastSpellScreen(player, "Cast spell at?", sx, sy, spell, item);
     }

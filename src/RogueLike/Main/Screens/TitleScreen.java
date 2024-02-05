@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
-public class StartScreen implements Screen{
+public class TitleScreen implements Screen{
 
 	public void displayOutput(AsciiPanel terminal) {
 		Screen.generateBorders(terminal);
@@ -53,7 +53,7 @@ public class StartScreen implements Screen{
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
-		terminal.writeCenter(String.format("-- beta v07122023 -- Press [%s] to Start --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 45);
+		terminal.writeCenter(String.format("-- beta v05-02-2024 -- Press [%s] to Start --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 45);
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {

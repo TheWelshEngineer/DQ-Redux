@@ -31,13 +31,13 @@ public class ReadScreen extends InventoryBasedScreen{
 			return null;
 		}else {
 			if(item.writtenSpells().size() == 1 && !item.writtenSpells().get(0).isSelfCast()) {
-				return new CastSpellScreen(player, "Cast spell at?", sx, sy, item.writtenSpells().get(0), item);
+				return new SpellTargetingScreen(player, "Cast spell at?", sx, sy, item.writtenSpells().get(0), item);
 			}else if(item.writtenSpells().size() == 1 && item.writtenSpells().get(0).isSelfCast()){
 				//player.castSpell(item.writtenSpells().get(0), player.x(), player.y(), item);
 				player.ai().playerAICastSpell(item, item.writtenSpells().get(0), player.x(), player.y());
 				return null;
 			}else {
-				return new ReadSpellScreen(player, sx, sy, item);
+				return new SpellSelectScreen(player, sx, sy, item);
 			}
 		}
 		

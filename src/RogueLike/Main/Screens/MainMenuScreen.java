@@ -96,7 +96,7 @@ public class MainMenuScreen implements Screen{
 			}else if(check == 2) {
 				return new CreditsScreen();
 			}
-		case KeybindManager.navigateMenuBack: return new StartScreen();
+		case KeybindManager.navigateMenuBack: return new TitleScreen();
 		}
 		
 		return this;

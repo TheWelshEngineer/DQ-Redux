@@ -8,7 +8,7 @@ import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 import asciiPanel.AsciiPanel;
 
-public class ReadSpellScreen implements Screen{
+public class SpellSelectScreen implements Screen{
 	
 	protected Creature player;
 	private String letters;
@@ -16,7 +16,7 @@ public class ReadSpellScreen implements Screen{
 	private int sx;
 	private int sy;
 	
-	public ReadSpellScreen(Creature player, int sx, int sy, Item item) {
+	public SpellSelectScreen(Creature player, int sx, int sy, Item item) {
 		this.player = player;
 		this.letters = "abcdefghijklmnopqrstuvwxyz";
 		this.item = item;
@@ -84,7 +84,7 @@ public class ReadSpellScreen implements Screen{
     		return null;
     	}else {
     		//return null;
-    		return new CastSpellScreen(player, "Cast spell at?", sx, sy, spell, item);
+    		return new SpellTargetingScreen(player, "Cast spell at?", sx, sy, spell, item);
     	}
         //return new CastSpellScreen(player, "Cast spell at?", sx, sy, spell, item);
     }

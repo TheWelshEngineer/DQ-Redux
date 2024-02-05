@@ -50,7 +50,7 @@ public class Zone1Screen implements Screen{
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
 			case KeybindManager.navigateMenuConfirm: 
-				return new PlayScreen(playerClass, playerAbilities, playerSkills, playerName, playerAncestry);
+				return new GameplayScreen(playerClass, playerAbilities, playerSkills, playerName, playerAncestry);
 			default:
 				return this;
 		}

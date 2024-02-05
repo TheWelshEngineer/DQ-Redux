@@ -4,11 +4,11 @@ import RogueLike.Main.Spell;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 
-public class CastSpellScreen extends TargetBasedScreen{
+public class SpellTargetingScreen extends TargetBasedScreen{
 	private Spell spell;
 	public Item item;
 
-	public CastSpellScreen(Creature player, String caption, int sx, int sy, Spell spell, Item item) {
+	public SpellTargetingScreen(Creature player, String caption, int sx, int sy, Spell spell, Item item) {
 		super(player, caption, sx, sy);
 		this.spell = spell;
 		this.item = item;

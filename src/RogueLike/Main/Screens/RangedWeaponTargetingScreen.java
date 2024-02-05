@@ -4,9 +4,9 @@ import RogueLike.Main.Line;
 import RogueLike.Main.Point;
 import RogueLike.Main.Creatures.Creature;
 
-public class FireWeaponScreen extends TargetBasedScreen{
+public class RangedWeaponTargetingScreen extends TargetBasedScreen{
 
-	public FireWeaponScreen(Creature player, int sx, int sy) {
+	public RangedWeaponTargetingScreen(Creature player, int sx, int sy) {
 		super(player, "Fire "+player.nameOf(player.weapon())+" at?", sx, sy);
 	}
 	

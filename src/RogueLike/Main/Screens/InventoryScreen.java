@@ -17,7 +17,7 @@ import asciiPanel.AsciiPanel;
 
 public class InventoryScreen implements Screen{
 	
-	protected PlayScreen playScreen;
+	protected GameplayScreen playScreen;
 	protected Creature player;
 	protected List<Effect> effects;
 	protected Inventory inventory;
@@ -32,7 +32,7 @@ public class InventoryScreen implements Screen{
 	public int itemsPerPage = 30;
 	public int pageNumber = 1;
 	
-	public InventoryScreen(PlayScreen playScreen, Creature player, int sx, int sy) {
+	public InventoryScreen(GameplayScreen playScreen, Creature player, int sx, int sy) {
 		this.playScreen = playScreen;
 		this.player = player;
 		this.effects = player.effects();
@@ -713,14 +713,14 @@ public class InventoryScreen implements Screen{
 					return null;
 				}else {
 					if(inventory.get(check).writtenSpells().size() == 1 && !inventory.get(check).writtenSpells().get(0).isSelfCast()) {
-						return new CastSpellScreen(player, "Cast spell at?", sx, sy, inventory.get(check).writtenSpells().get(0), inventory.get(check));
+						return new SpellTargetingScreen(player, "Cast spell at?", sx, sy, inventory.get(check).writtenSpells().get(0), inventory.get(check));
 					}else if(inventory.get(check).writtenSpells().size() == 1 && inventory.get(check).writtenSpells().get(0).isSelfCast()){
 						//player.castSpell(inventory.get(check).writtenSpells().get(0), player.x(), player.y(), inventory.get(check));
 						//playScreen.setInputAccepted(true);
 						player.ai().playerAICastSpell(inventory.get(check), inventory.get(check).writtenSpells().get(0), player.x(), player.y());
 						return null;
 					}else {
-						return new ReadSpellScreen(player, sx, sy, inventory.get(check));
+						return new SpellSelectScreen(player, sx, sy, inventory.get(check));
 					}
 				}
 			}else {

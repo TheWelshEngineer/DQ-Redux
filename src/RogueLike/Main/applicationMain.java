@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import RogueLike.Main.Screens.Screen;
-import RogueLike.Main.Screens.StartScreen;
+import RogueLike.Main.Screens.TitleScreen;
 import asciiPanel.AsciiPanel;
 //import asciiPanel.AsciiFont;
 
@@ -57,7 +57,7 @@ public class applicationMain extends JFrame implements KeyListener{
         //
         add(terminal);
         pack();
-        screen = new StartScreen();
+        screen = new TitleScreen();
         addKeyListener(this);
         repaint();
     }

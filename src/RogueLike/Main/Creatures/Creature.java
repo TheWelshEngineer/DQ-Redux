@@ -11,8 +11,8 @@ import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Damage.*;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
-import RogueLike.Main.Screens.CastSpellScreen;
-import RogueLike.Main.Screens.ReadSpellScreen;
+import RogueLike.Main.Screens.SpellTargetingScreen;
+import RogueLike.Main.Screens.SpellSelectScreen;
 import RogueLike.Main.Screens.Screen;
 import RogueLike.Main.Screens.ThrowAtScreen;
 
@@ -3360,13 +3360,13 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_1().isWand() || quickslot_1().isScroll()) {
 				if(quickslot_1().writtenSpells().size() == 1 && !quickslot_1().writtenSpells().get(0).isSelfCast()) {
-					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_1().writtenSpells().get(0), quickslot_1());
+					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_1().writtenSpells().get(0), quickslot_1());
 				}else if(quickslot_1().writtenSpells().size() == 1 && quickslot_1().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_1(), quickslot_1().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new ReadSpellScreen(this, sx, sy, quickslot_1());
+					return new SpellSelectScreen(this, sx, sy, quickslot_1());
 				}
 			}else {
 				return null;
@@ -3387,13 +3387,13 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_2().isWand() || quickslot_2().isScroll()) {
 				if(quickslot_2().writtenSpells().size() == 1 && !quickslot_2().writtenSpells().get(0).isSelfCast()) {
-					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_2().writtenSpells().get(0), quickslot_2());
+					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_2().writtenSpells().get(0), quickslot_2());
 				}else if(quickslot_2().writtenSpells().size() == 1 && quickslot_2().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_2(), quickslot_2().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new ReadSpellScreen(this, sx, sy, quickslot_2());
+					return new SpellSelectScreen(this, sx, sy, quickslot_2());
 				}
 			}else {
 				return null;
@@ -3414,13 +3414,13 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_3().isWand() || quickslot_3().isScroll()) {
 				if(quickslot_3().writtenSpells().size() == 1 && !quickslot_3().writtenSpells().get(0).isSelfCast()) {
-					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_3().writtenSpells().get(0), quickslot_3());
+					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_3().writtenSpells().get(0), quickslot_3());
 				}else if(quickslot_3().writtenSpells().size() == 1 && quickslot_3().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_3(), quickslot_3().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new ReadSpellScreen(this, sx, sy, quickslot_3());
+					return new SpellSelectScreen(this, sx, sy, quickslot_3());
 				}
 			}else {
 				return null;
@@ -3441,13 +3441,13 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_4().isWand() || quickslot_4().isScroll()) {
 				if(quickslot_4().writtenSpells().size() == 1 && !quickslot_4().writtenSpells().get(0).isSelfCast()) {
-					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_4().writtenSpells().get(0), quickslot_4());
+					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_4().writtenSpells().get(0), quickslot_4());
 				}else if(quickslot_4().writtenSpells().size() == 1 && quickslot_4().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_4(), quickslot_4().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new ReadSpellScreen(this, sx, sy, quickslot_4());
+					return new SpellSelectScreen(this, sx, sy, quickslot_4());
 				}
 			}else {
 				return null;
@@ -3468,13 +3468,13 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_5().isWand() || quickslot_5().isScroll()) {
 				if(quickslot_5().writtenSpells().size() == 1 && !quickslot_5().writtenSpells().get(0).isSelfCast()) {
-					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_5().writtenSpells().get(0), quickslot_5());
+					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_5().writtenSpells().get(0), quickslot_5());
 				}else if(quickslot_5().writtenSpells().size() == 1 && quickslot_5().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_5(), quickslot_5().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new ReadSpellScreen(this, sx, sy, quickslot_5());
+					return new SpellSelectScreen(this, sx, sy, quickslot_5());
 				}
 			}else {
 				return null;
@@ -3494,13 +3494,13 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_6().isWand() || quickslot_6().isScroll()) {
 				if(quickslot_6().writtenSpells().size() == 1 && !quickslot_6().writtenSpells().get(0).isSelfCast()) {
-					return new CastSpellScreen(this, "Cast spell at?", sx, sy, quickslot_6().writtenSpells().get(0), quickslot_6());
+					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_6().writtenSpells().get(0), quickslot_6());
 				}else if(quickslot_6().writtenSpells().size() == 1 && quickslot_6().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_6(), quickslot_6().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new ReadSpellScreen(this, sx, sy, quickslot_6());
+					return new SpellSelectScreen(this, sx, sy, quickslot_6());
 				}
 			}else {
 				return null;

@@ -17,7 +17,7 @@ import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
-public class PlayScreen implements Screen{
+public class GameplayScreen implements Screen{
 	
 	private boolean inputAccepted = false;
 	public void setInputAccepted(boolean value) {
@@ -150,7 +150,7 @@ public class PlayScreen implements Screen{
 	        	}else if(player.ammunition().isPowderAmmunition() && !player.weapon().usesPowderAmmunition()) {
 	        		player.notify("You don't have the right ammunition ready."); 
 	        	}else{
-	        		subscreen = new FireWeaponScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        		subscreen = new RangedWeaponTargetingScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
 	        	}
 	        case KeybindManager.interactionLevelUp: 
 	        	if(player.attributePoints() == 0 && player.skillPoints() == 0) {
@@ -251,7 +251,7 @@ public class PlayScreen implements Screen{
 	
 	
 	// #########
-	public PlayScreen(String playerClass, List<Integer> playerAbilities, Skill[] playerSkills, String playerName, String playerAncestry) {
+	public GameplayScreen(String playerClass, List<Integer> playerAbilities, Skill[] playerSkills, String playerName, String playerAncestry) {
 		this.playerClass = playerClass;
 		this.startingStats = playerAbilities;
 		this.startingSkills = playerSkills;
