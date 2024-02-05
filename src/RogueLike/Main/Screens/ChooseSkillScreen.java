@@ -420,6 +420,7 @@ public class ChooseSkillScreen implements Screen{
 	public void displayOutput(AsciiPanel terminal) {
 		updateMarkers(check);
 		terminal.clear();
+		Screen.generateBorders(terminal);
 		terminal.writeCenter("== Select your starting Skills ==", 1);	
 		int y = 3;
 		

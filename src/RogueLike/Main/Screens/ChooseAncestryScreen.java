@@ -93,6 +93,7 @@ public class ChooseAncestryScreen implements Screen{
 	public void displayOutput(AsciiPanel terminal) {
 		changeMarkers(check);
 		terminal.clear();
+		Screen.generateBorders(terminal);
 		terminal.writeCenter("== Choose your Ancestry ==", 1);	
 		int y = 5;
 		

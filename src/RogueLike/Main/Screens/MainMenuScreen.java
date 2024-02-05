@@ -47,6 +47,7 @@ public class MainMenuScreen implements Screen{
 	public void displayOutput(AsciiPanel terminal) {
 		changeMarkers(check);
 		terminal.clear();
+		Screen.generateBorders(terminal);
 		int y = 1;
 		terminal.writeCenter(" _____                      __  ____                  _   ", y++);
 		terminal.writeCenter("|  __ \\                    / _|/ __ \\                | |  ", y++);

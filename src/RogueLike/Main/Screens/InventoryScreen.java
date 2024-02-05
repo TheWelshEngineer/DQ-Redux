@@ -54,6 +54,7 @@ public class InventoryScreen implements Screen{
 		//
 		//
 		terminal.clear();
+		Screen.generateBorders(terminal);
 		terminal.writeCenter("== Inventory ==", 1);	
 		int y = 3;
 		//

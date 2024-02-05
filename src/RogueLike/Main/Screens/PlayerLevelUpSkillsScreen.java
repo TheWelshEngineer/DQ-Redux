@@ -205,6 +205,7 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 	public void displayOutput(AsciiPanel terminal) {
 		changeMarkers(check);
 		terminal.clear();
+		Screen.generateBorders(terminal);
 		terminal.writeCenter("== Increase your Skills ==", 1);	
 		int y = 3;
 		

@@ -64,6 +64,7 @@ public class ChooseClassScreen implements Screen{
 	public void displayOutput(AsciiPanel terminal) {
 		changeMarkers(check);
 		terminal.clear();
+		Screen.generateBorders(terminal);
 		terminal.writeCenter("== Select your Class ==", 1);	
 		int y = 5;
 		

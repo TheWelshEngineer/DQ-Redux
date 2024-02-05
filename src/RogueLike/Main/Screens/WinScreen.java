@@ -23,6 +23,7 @@ public class WinScreen implements Screen {
 	}
 
     public void displayOutput(AsciiPanel terminal) {
+    	Screen.generateBorders(terminal);
     	if(player.weaponName() != null) {
     		weaponName = player.weaponName();
     	}

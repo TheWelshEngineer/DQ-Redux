@@ -8,6 +8,7 @@ import asciiPanel.AsciiPanel;
 public class StartScreen implements Screen{
 
 	public void displayOutput(AsciiPanel terminal) {
+		Screen.generateBorders(terminal);
 		int y = 1;
 		terminal.writeCenter(" _____                      __  ____                  _   ", y++);
 		terminal.writeCenter("|  __ \\                    / _|/ __ \\                | |  ", y++);

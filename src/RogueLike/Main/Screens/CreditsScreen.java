@@ -8,6 +8,7 @@ import asciiPanel.AsciiPanel;
 public class CreditsScreen implements Screen{
 
 	public void displayOutput(AsciiPanel terminal) {
+		Screen.generateBorders(terminal);
 		int y = 1;
 		terminal.writeCenter("+|=|+ Credits +|=|+", y++);
 		y+=2;

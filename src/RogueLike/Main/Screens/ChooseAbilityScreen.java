@@ -216,6 +216,7 @@ public class ChooseAbilityScreen implements Screen{
 	public void displayOutput(AsciiPanel terminal) {
 		changeMarkers(check);
 		terminal.clear();
+		Screen.generateBorders(terminal);
 		terminal.writeCenter("== Select your starting Ability Scores ==", 1);	
 		int y = 3;
 		

@@ -15,6 +15,7 @@ public class HelpScreen implements Screen{
 
 	public void displayOutput(AsciiPanel terminal) {
 		terminal.clear();
+		Screen.generateBorders(terminal);
 		terminal.writeCenter("== Help Menu ==", 1);
 		
 		int y = 3;

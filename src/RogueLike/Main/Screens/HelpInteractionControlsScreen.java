@@ -15,6 +15,7 @@ public class HelpInteractionControlsScreen implements Screen{
 	
 	public void displayOutput(AsciiPanel terminal) {
 		terminal.clear();
+		Screen.generateBorders(terminal);
 		terminal.writeCenter("== Help: Interaction Controls ==", 1);
 		
 		int y = 3;
