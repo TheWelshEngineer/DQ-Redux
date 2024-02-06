@@ -68,6 +68,15 @@ public class Effect implements Cloneable{
 		isNegative = value;
 	}
 	
+	protected boolean showInMenu = true;
+	public boolean showInMenu() {
+		return showInMenu;
+	}
+	
+	public void setShowInMenu(boolean value) {
+		showInMenu = value;
+	}
+	
 	protected boolean isIgnited;
 	public boolean isIgnited() {
 		return isIgnited;

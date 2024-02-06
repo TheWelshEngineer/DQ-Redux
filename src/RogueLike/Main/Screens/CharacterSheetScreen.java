@@ -72,7 +72,10 @@ public class CharacterSheetScreen implements Screen{
         		if(effect.isNegative()) {
         			effectIcon = (char)31;
         		}
-        		terminal.write(String.format("%c %s: %d %s remaining", effectIcon, effect.name(), effect.duration(), turns), x3, y3++);
+        		if(effect.showInMenu()) {
+        			terminal.write(String.format("%c %s: %d %s remaining", effectIcon, effect.name(), effect.duration(), turns), x3, y3++);
+        		}
+        		
         	}
 		}
         

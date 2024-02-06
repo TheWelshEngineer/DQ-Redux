@@ -149,11 +149,41 @@ public class EffectFactory {
 					creature.setLastHit(reference);
 					creature.modifyHP(damage, String.format("Killed by %s using Firebolt", reference.name()));
 				}else {
+					creature.notify(String.format("The %s's spell misses you.", reference.name()));
 					reference.notify(String.format("Your spell misses the %s.", creature.name()));
 				}
 			}
         };
+        firebolt.setShowInMenu(false);
 		return firebolt;
+	}
+	
+	public Effect iceKnife(Creature reference) {
+		Effect iceKnife = new Effect(1, "Ice Knife", true, null) {
+        	public void start(Creature creature) {
+				Damage damage = new FrostDamage(Dice.d6.roll()+reference.intelligenceModifier(), false, getThis(), true);
+				if(reference.intelligenceRoll() >= creature.armorClass()) {
+					creature.doAction("get hit with a blade of ice!");
+					creature.setLastHit(reference);
+					creature.modifyHP(damage, String.format("Killed by %s using Ice Knife", reference.name()));
+				}else {
+					creature.notify(String.format("The %s's spell misses you.", reference.name()));
+					reference.notify(String.format("Your spell misses the %s.", creature.name()));
+				}
+				damage = new FrostDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
+				if(creature.dexterityRoll() < reference.intelligenceSaveDC()) {
+					creature.notify("You feel a biting frost creep over you!");
+					reference.notify(String.format("The %s is frostbitten by your spell!", creature.name()));
+					creature.setLastHit(reference);
+					creature.modifyHP(damage, String.format("Killed by %s using Ice Knife", reference.name()));
+				}else {
+					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
+					reference.notify(String.format("The %s dodges your spell.", creature.name()));
+				}
+			}
+        };
+        iceKnife.setShowInMenu(false);
+		return iceKnife;
 	}
 	
 	public Effect magicMissile(Creature reference) {
@@ -165,6 +195,7 @@ public class EffectFactory {
 				creature.modifyHP(damage, String.format("Killed by %s using Magic Missile", reference.name()));
 			}
 		};
+		missile.setShowInMenu(false);
 		return missile;
 	}
 	

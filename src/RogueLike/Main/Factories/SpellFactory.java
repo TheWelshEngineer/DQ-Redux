@@ -117,6 +117,11 @@ public class SpellFactory {
 		return confuse;
 	}
 	
+	public Spell iceKnife(Creature player) {
+		Spell iceKnife = new Spell("ice knife", 0, 8, player, effectFactory.iceKnife(player), false, false);
+		return iceKnife;
+	}
+	
 
 
 }

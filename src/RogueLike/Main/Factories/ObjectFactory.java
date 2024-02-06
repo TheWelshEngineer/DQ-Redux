@@ -153,6 +153,7 @@ public class ObjectFactory {
 		wandIndex.add(newFireboltWand(0, player, false));
 		wandIndex.add(newMissileWand(0, player, false));
 		wandIndex.add(newIceWallWand(0, player, false));
+		wandIndex.add(newIceKnifeWand(0, player, false));
 		
 		Collections.shuffle(wandIndex);
 	}
@@ -342,6 +343,7 @@ public class ObjectFactory {
 			player.learnNameQuiet(startWeaponRogue);
 			player.inventory().add(startWeaponRogue);
 			player.equip(startWeaponRogue);
+			player.equipToQuickslot(startWeaponRogue, 1);
 			Item startArmorRogue = newPaddedArmor(0, false);
 			player.learnNameQuiet(startArmorRogue);
 			player.inventory().add(startArmorRogue);
@@ -372,6 +374,7 @@ public class ObjectFactory {
 			Item startWandMage = newMissileWand(0, player, false);
 			player.learnNameQuiet(startWandMage);
 			player.inventory().add(startWandMage);
+			player.equipToQuickslot(startWandMage, 1);
 
 			player.setHPScaleAmount(player.hpScaleLow());
 			player.setManaScaleAmount(player.manaScaleHigh());
@@ -388,39 +391,22 @@ public class ObjectFactory {
 			Item startWandDragonborn = newFireboltWand(0, player, false);
 			player.learnNameQuiet(startWandDragonborn);
 			player.inventory().add(startWandDragonborn);
+			if(playerClass == "Mage") {
+				player.equipToQuickslot(startWandDragonborn, 2);
+			}else {
+				player.equipToQuickslot(startWandDragonborn, 1);
+			}
 		}
 
-		//
-		player.inventory().add(newScrollOfMagicMapping(0, player, false));
-		player.inventory().add(newScrollOfMagicMapping(0, player, false));
-		player.inventory().add(newScrollOfMagicMapping(0, player, false));
-		player.inventory().add(newPotionOfHealing(0, false));
-		player.inventory().add(newPotionOfHealing(0, false));
-		player.inventory().add(newPotionOfHealing(0, false));
-		player.inventory().add(newScrollOfIdentify(0, player, false));
-		player.inventory().add(newPotionOfLiquidFlame(0, false));
-		player.inventory().add(newPotionOfLiquidFlame(0, false));
-		player.inventory().add(newBow(0, false));
-		player.inventory().add(newArrows(0, 0));
+		//Test Items
+		Item startWandDragonborn = newIceKnifeWand(0, player, false);
+		player.learnNameQuiet(startWandDragonborn);
+		player.inventory().add(startWandDragonborn);
+		player.inventory().add(newPotionOfGiantStrength(0, false));
+		player.inventory().add(newPotionOfGiantStrength(0, false));
+		player.inventory().add(newPotionOfPoison(0, false));
+		player.inventory().add(newPotionOfPoison(0, false));
 		
-		//temp
-		//
-		//player.inventory().add(newScrollOfMagicMapping(0, player, false));
-		//player.inventory().add(newScrollOfMagicMapping(0, player, false));
-		//player.inventory().add(newScrollOfMagicMapping(0, player, false));
-		//player.inventory().add(newPotionOfHealing(0, 0));
-		//player.inventory().add(newPotionOfHealing(0, 0));
-		//
-		//player.spellbook().add(spellFactory.test(player));
-		//player.inventory().add(newStrengthRing(0, false));
-
-		/*player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newFireboltWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newForceWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newLightningWand(0, player, 0).writtenSpells().get(0));
-		player.spellbook().add(newFireboltWand(0, player, 0).writtenSpells().get(0));*/
-		//
 
 
 
@@ -434,24 +420,7 @@ public class ObjectFactory {
 		
 	}
 	
-//	public Creature newFungus(int depth, int addToWorld) {
-//		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-//		Creature fungus = new Creature(world, "Fungus", 'f', AsciiPanel.green, 10, 10, 9, 3, 8, 10, 3, 20);
-//		fungus.setID(1);
-//		new FungusAI(fungus, this, this.world);
-//		fungus.creatureTypes.add("Plant");
-//		fungus.scaleHPWithDepth(depth);
-//		fungus.scaleManaWithDepth(depth);	
-//		fungus.scaleStrengthWithDepth(depth);	
-//		fungus.scaleDexterityWithDepth(depth);	
-//		fungus.scaleIntelligenceWithDepth(depth);	
-//		if(addToWorld > 0) {
-//			world.addAtEmptyLocation(fungus, depth);
-//		}else {
-//			
-//		}
-//		return fungus;
-//	}
+
 	
 	public Creature newFungus(int depth, int addToWorld) {
 		Creature fungus = new Fungus(this, "Fungus", 'f', AsciiPanel.green, 1, depth);
@@ -478,7 +447,6 @@ public class ObjectFactory {
 			world.addAtEmptyLocation(skeleton, depth);
 		}
 		return skeleton;
-		
 	}
 	
 	public Creature newCrazyAlchemist(int depth, Creature player, int addToWorld) {
@@ -636,6 +604,14 @@ public class ObjectFactory {
 		}
 		return slimeling;
 		
+	}
+	
+	public Creature newSkeletonMage(int depth, Creature player, int addToWorld) {
+		Creature skeleton = new SkeletonMage(this, player, "Skeleton Mage", 'k', ExtraColors.water, 19, depth);
+		if(addToWorld > 0) {
+			world.addAtEmptyLocation(skeleton, depth);
+		}
+		return skeleton;
 	}
 	
 	// marker
@@ -1203,6 +1179,17 @@ public class ObjectFactory {
 			
 		}
 		return item;
+	}
+	
+	public Item newIceKnifeWand(int depth, Creature player, boolean addToWorld) {
+		Item item = new Wand(this, (char)33, "Wand of Ice Knife", 6, spellFactory.iceKnife(player), 250, 88);
+		if(addToWorld) {
+			world.addAtEmptyLocation(item, depth);
+		}else {
+			
+		}
+		return item;
+		
 	}
 	
 	public Item newGold(int depth, boolean addToWorld) {
@@ -2975,10 +2962,10 @@ public class ObjectFactory {
 		case 6: return newBat(depth, addToWorld);
 		case 7: return newBat(depth, addToWorld);
 		case 8: return newBat(depth, addToWorld);
-		case 9: return newPinkSlime(depth, player, addToWorld);
-		case 10: return newPinkSlime(depth, player, addToWorld);
-		//case 9: return newMagmaSlime(depth, player, addToWorld);
-		//case 10: return newMagmaSlime(depth, player, addToWorld); //TODO
+		//case 9: return newPinkSlime(depth, player, addToWorld);
+		//case 10: return newPinkSlime(depth, player, addToWorld);
+		case 9: return newSkeletonMage(depth, player, addToWorld);
+		case 10: return newSkeletonMage(depth, player, addToWorld); //TODO
 		default: return newFungus(depth, addToWorld);
 		}
 	}

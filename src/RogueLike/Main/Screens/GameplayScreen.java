@@ -51,7 +51,9 @@ public class GameplayScreen implements Screen{
         		if(effect.isNegative()) {
         			effectIcon = (char)31;
         		}
-        		terminal.write(String.format("%c %s (%d)", effectIcon, effect.name(), effect.duration()), 95, y2);
+        		if(effect.showInMenu()) {
+        			terminal.write(String.format("%c %s (%d)", effectIcon, effect.name(), effect.duration()), 95, y2);
+        		}
         		y++;
         	}
 		}
