@@ -5,6 +5,7 @@ import java.util.List;
 
 import RogueLike.Main.Skill;
 import RogueLike.Main.Managers.KeybindManager;
+import RogueLike.Main.Managers.SkillManager;
 import asciiPanel.AsciiPanel;
 
 public class ChooseSkillScreen implements Screen{
@@ -13,7 +14,7 @@ public class ChooseSkillScreen implements Screen{
 	public String playerName;
 	public String playerAncestry;
 	public List<Integer> playerAbilities;
-	public Skill[] playerSkills = Skill.defaultSkillArray();
+	public Skill[] playerSkills;// = Skill.defaultSkillArray();
 	
 	public int skillPoints = 2;
 	public void modifyPoints(int amount) {
@@ -44,6 +45,7 @@ public class ChooseSkillScreen implements Screen{
 		this.playerAbilities = playerAbilities;
 		this.playerName = playerName;
 		this.playerAncestry = playerAncestry;
+		playerSkills = SkillManager.getDefaultSkillArray();
 		if(this.playerAncestry == "Human") {
 			this.skillPoints = 3;
 		}
@@ -705,6 +707,16 @@ public class ChooseSkillScreen implements Screen{
 			
 		case KeybindManager.navigateMenuConfirm: 
 			if(skillPoints < 1) {
+				System.out.println("static skills");
+				for(Skill s : SkillManager.getDefaultSkillArray()) {
+					System.out.println(s.toString());
+				}
+				System.out.println("====");
+				System.out.println("choose skills");
+				for(Skill s : playerSkills) {
+					System.out.println(s.toString());
+				}
+				//TODO
 				return new Zone1Screen(playerClass, playerAbilities, playerSkills, playerName, playerAncestry); 
 			}else {
 				return this;

@@ -9,6 +9,7 @@ import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Damage.*;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
+import RogueLike.Main.Managers.SkillManager;
 import RogueLike.Main.Screens.SpellTargetingScreen;
 import RogueLike.Main.Screens.SpellSelectScreen;
 import RogueLike.Main.Screens.Screen;
@@ -1103,7 +1104,7 @@ public class Creature implements Cloneable{
 		return weaknesses;
 	}
 
-	private Skill[] skills = Skill.defaultSkillArray();
+	private Skill[] skills = SkillManager.getDefaultSkillArray();
 	public Skill[] skills(){
 		//Collections.sort(skills, Comparator.comparing(Skill::id));
 		return skills;
