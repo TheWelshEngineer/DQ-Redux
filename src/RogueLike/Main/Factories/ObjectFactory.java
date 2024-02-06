@@ -26,6 +26,7 @@ import RogueLike.Main.Creatures.Bat;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Creatures.Fungus;
 import RogueLike.Main.Creatures.Mimic;
+import RogueLike.Main.Creatures.Ogre;
 import RogueLike.Main.Creatures.Constructs.AnimatedArmor;
 import RogueLike.Main.Creatures.Constructs.AnimatedWeapon;
 import RogueLike.Main.Creatures.Gremlins.Gremlin;
@@ -577,27 +578,9 @@ public class ObjectFactory {
 	}
 	
 	public Creature newOgre(int depth, Creature player, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature ogre = new Creature(world, "Ogre", 'O', AsciiPanel.brightGreen, 40, 20, 10, 16, 12, 7, 8, 20);
-		ogre.setID(7);
-		new OgreAI(ogre, player, this, this.world);
-		Item startWeapon = newMaul(0, false);
-		Item startArmor = newHideArmor(0, false);
-		ogre.inventory().add(startWeapon);
-		ogre.inventory().add(startArmor);
-		ogre.equip(startWeapon);
-		ogre.equip(startArmor);
-		ogre.creatureTypes.add("Humanoid");
-		ogre.creatureTypes.add("Beast");
-		ogre.scaleHPWithDepth(depth);
-		ogre.scaleManaWithDepth(depth);	
-		ogre.scaleStrengthWithDepth(depth);	
-		ogre.scaleDexterityWithDepth(depth);	
-		ogre.scaleIntelligenceWithDepth(depth);
+		Creature ogre = new Ogre(this, player, "Ogre", 'O', AsciiPanel.brightGreen, 7, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(ogre, depth);
-		}else {
-			
 		}
 		return ogre;
 		
