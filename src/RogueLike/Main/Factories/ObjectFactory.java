@@ -16,50 +16,16 @@ import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
-import RogueLike.Main.AI.AlchemistAI;
 import RogueLike.Main.AI.ChestAI;
 import RogueLike.Main.AI.CloakerAI;
-import RogueLike.Main.AI.OgreAI;
 import RogueLike.Main.AI.PlayerAI;
-import RogueLike.Main.AI.SkeletonAI;
-import RogueLike.Main.Creatures.Bat;
-import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Creatures.Fungus;
-import RogueLike.Main.Creatures.Mimic;
-import RogueLike.Main.Creatures.Ogre;
-import RogueLike.Main.Creatures.Constructs.AnimatedArmor;
-import RogueLike.Main.Creatures.Constructs.AnimatedWeapon;
-import RogueLike.Main.Creatures.Gremlins.Gremlin;
-import RogueLike.Main.Creatures.Slimes.MagmaSlime;
-import RogueLike.Main.Creatures.Slimes.MagmaSlimeling;
-import RogueLike.Main.Creatures.Slimes.MetalSlime;
-import RogueLike.Main.Creatures.Slimes.MetalSlimeling;
-import RogueLike.Main.Creatures.Slimes.PinkSlime;
-import RogueLike.Main.Creatures.Slimes.PinkSlimeling;
-import RogueLike.Main.Enchantments.Enchantment;
-import RogueLike.Main.Items.ArrowsRangedWeapon;
-import RogueLike.Main.Items.BasicFinesseWeapon;
-import RogueLike.Main.Items.BasicMeleeWeapon;
-import RogueLike.Main.Items.BasicShield;
-import RogueLike.Main.Items.BasicThrownWeapon;
-import RogueLike.Main.Items.BoltsRangedWeapon;
-import RogueLike.Main.Items.HeavyArmor;
-import RogueLike.Main.Items.IronKey;
-import RogueLike.Main.Items.Item;
-import RogueLike.Main.Items.LightArmor;
-import RogueLike.Main.Items.MediumArmor;
-import RogueLike.Main.Items.Potion;
-import RogueLike.Main.Items.PowderRangedWeapon;
-import RogueLike.Main.Items.Ring;
-import RogueLike.Main.Items.Scroll;
-import RogueLike.Main.Items.ThrownFinesseWeapon;
-import RogueLike.Main.Items.ThrownVersatileWeapon;
-import RogueLike.Main.Items.TowerShield;
-import RogueLike.Main.Items.TwoHandedFinesseWeapon;
-import RogueLike.Main.Items.TwoHandedMeleeWeapon;
-import RogueLike.Main.Items.VersatileFinesseWeapon;
-import RogueLike.Main.Items.VersatileMeleeWeapon;
-import RogueLike.Main.Items.Wand;
+import RogueLike.Main.Creatures.*;
+import RogueLike.Main.Creatures.Slimes.*;
+import RogueLike.Main.Creatures.Gremlins.*;
+import RogueLike.Main.Creatures.Constructs.*;
+import RogueLike.Main.Enchantments.*;
+import RogueLike.Main.Items.*;
+
 import asciiPanel.AsciiPanel;
 
 public class ObjectFactory {
@@ -505,53 +471,19 @@ public class ObjectFactory {
 	}	
 	
 	public Creature newSkeleton(int depth, Creature player, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature skeleton = new Creature(world, "Skeleton", 's', AsciiPanel.white, 13, 10, 13, 14, 8, 8, 6, 20);
+		Creature skeleton = new Skeleton(this, player, "Skeleton", 'k', AsciiPanel.white, 3, depth);
 		skeleton.setID(3);
-		new SkeletonAI(skeleton, player, this, this.world);
-		//
-		Item startWeapon = newSword(0, false);
-		skeleton.inventory().add(startWeapon);
-		skeleton.equip(startWeapon);
-		//
-		skeleton.creatureTypes.add("Undead");
-		skeleton.scaleHPWithDepth(depth);
-		skeleton.scaleManaWithDepth(depth);	
-		skeleton.scaleStrengthWithDepth(depth);	
-		skeleton.scaleDexterityWithDepth(depth);	
-		skeleton.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(skeleton, depth);
-		}else {
-			
 		}
 		return skeleton;
 		
 	}
 	
 	public Creature newCrazyAlchemist(int depth, Creature player, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature alchemist = new Creature(world, "Crazy Alchemist", 'c', ExtraColors.paper, 15, 15, 12, 11, 12, 10, 8, 20);
-		alchemist.setID(4);
-		new AlchemistAI(alchemist, player, this, this.world);
-		//
-		Item startWeapon = newDagger(0, false);
-		Item startArmor = newLeatherArmor(0, false);
-		alchemist.inventory().add(startWeapon);
-		alchemist.inventory().add(startArmor);
-		alchemist.equip(startWeapon);
-		alchemist.equip(startArmor);
-		//
-		alchemist.creatureTypes.add("Humanoid");
-		alchemist.scaleHPWithDepth(depth);
-		alchemist.scaleManaWithDepth(depth);	
-		alchemist.scaleStrengthWithDepth(depth);	
-		alchemist.scaleDexterityWithDepth(depth);	
-		alchemist.scaleIntelligenceWithDepth(depth);
+		Creature alchemist = new CrazyAlchemist(this, player, "Crazy Alchemist", 'a', ExtraColors.paper, 4, depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(alchemist, depth);
-		}else {
-			
 		}
 		return alchemist;
 		
