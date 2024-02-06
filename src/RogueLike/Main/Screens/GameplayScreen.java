@@ -285,8 +285,8 @@ public class GameplayScreen implements Screen{
 			}
 			//
 			for(int i = 0; i < 18; i++) {
-				//factory.randomChest(z, player, 1);
-				factory.newGoldChest(z, player, true);
+				factory.randomChest(z, player, 1);
+				//factory.newGoldChest(z, player, true);
 			}
 			
 			for(int i = 0; i < 70; i++) {

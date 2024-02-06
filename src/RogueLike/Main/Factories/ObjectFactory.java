@@ -23,6 +23,7 @@ import RogueLike.Main.Creatures.*;
 import RogueLike.Main.Creatures.Slimes.*;
 import RogueLike.Main.Creatures.Gremlins.*;
 import RogueLike.Main.Creatures.Constructs.*;
+import RogueLike.Main.Creatures.Containers.BasicChest;
 import RogueLike.Main.Enchantments.*;
 import RogueLike.Main.Items.*;
 
@@ -536,23 +537,10 @@ public class ObjectFactory {
 	}
 	
 	public Creature newCloaker(int depth, Creature player, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature cloaker = new Creature(world, "Cloaker", 'c', AsciiPanel.brightBlack, 22, 10, 11, 16, 12, 2, 8, 20);
+		Creature cloaker = new Cloaker(this, player, "Cloaker", 'c', AsciiPanel.brightBlack, 10, depth);
 		cloaker.setID(10);
-		new CloakerAI(cloaker, player, this, this.world);
-		cloaker.setIsInvisible(true);
-		cloaker.changeColor(ExtraColors.invisible);
-		cloaker.creatureTypes.add("Beast");
-		cloaker.creatureTypes.add("Monstrosity");
-		cloaker.scaleHPWithDepth(depth);
-		cloaker.scaleManaWithDepth(depth);	
-		cloaker.scaleStrengthWithDepth(depth);	
-		cloaker.scaleDexterityWithDepth(depth);	
-		cloaker.scaleIntelligenceWithDepth(depth);
 		if(addToWorld > 0) {
 			world.addAtEmptyLocation(cloaker, depth);
-		}else {
-			
 		}
 		return cloaker;
 		
@@ -574,171 +562,13 @@ public class ObjectFactory {
 		return animatedWeapon;
 	}
 	
-	public Creature newPotionChest(int depth, int addToWorld) {
+	public Creature newChest(int depth, Creature player, int addToWorld) {
 		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature potionChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
-		new ChestAI(potionChest, this, this.world);
-		Item startPotion = randomPotion(0, false);
-		potionChest.inventory().add(startPotion);
-		potionChest.modifyIsContainer(true);
-		potionChest.setHasNoCorpse(true);
+		Creature chest = new BasicChest(this, player, "Chest", (char)127, ExtraColors.brown, depth, Dice.d12.roll());
 		if(addToWorld > 0) {
-			world.addAtEmptyLocation(potionChest, depth);
-		}else {
-			
+			world.addAtEmptyLocation(chest, depth);
 		}
-		return potionChest;
-		
-	}
-	
-	public Creature newFoodChest(int depth, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature foodChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
-		new ChestAI(foodChest, this, this.world);
-		Item startFood = randomFood(0, 0);
-		foodChest.inventory().add(startFood);
-		foodChest.modifyIsContainer(true);
-		foodChest.setHasNoCorpse(true);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(foodChest, depth);
-		}else {
-			
-		}
-		return foodChest;
-		
-	}
-	
-	public Creature newAmmoChest(int depth, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature ammoChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
-		new ChestAI(ammoChest, this, this.world);
-		Item startAmmo = randomAmmunition(0, 0);
-		ammoChest.inventory().add(startAmmo);
-		ammoChest.modifyIsContainer(true);
-		ammoChest.setHasNoCorpse(true);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(ammoChest, depth);
-		}else {
-			
-		}
-		return ammoChest;
-		
-	}
-	
-	public Creature newWeaponChest(int depth, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature weaponChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
-		new ChestAI(weaponChest, this, this.world);
-		Item startWeapon = randomWeapon(0, false);
-		weaponChest.inventory().add(startWeapon);
-		weaponChest.modifyIsContainer(true);
-		weaponChest.setHasNoCorpse(true);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(weaponChest, depth);
-		}else {
-			
-		}
-		return weaponChest;
-		
-	}
-	
-	public Creature newArmorChest(int depth, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature armorChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
-		new ChestAI(armorChest, this, this.world);
-		Item startArmor = randomArmor(0, false);
-		armorChest.inventory().add(startArmor);
-		armorChest.modifyIsContainer(true);
-		armorChest.setHasNoCorpse(true);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(armorChest, depth);
-		}else {
-			
-		}
-		return armorChest;
-		
-	}
-	
-	public Creature newShieldChest(int depth, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature shieldChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
-		new ChestAI(shieldChest, this, this.world);
-		Item startShield = randomShield(0, false);
-		shieldChest.inventory().add(startShield);
-		shieldChest.modifyIsContainer(true);
-		shieldChest.setHasNoCorpse(true);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(shieldChest, depth);
-		}else {
-			
-		}
-		return shieldChest;
-		
-	}
-	
-	public Creature newRingChest(int depth, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature ringChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
-		new ChestAI(ringChest, this, this.world);
-		Item startRing = randomRing(0, false);
-		ringChest.inventory().add(startRing);
-		ringChest.modifyIsContainer(true);
-		ringChest.setHasNoCorpse(true);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(ringChest, depth);
-		}else {
-			
-		}
-		return ringChest;
-		
-	}
-	
-	public Creature newScrollChest(int depth, Creature player, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature scrollChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
-		new ChestAI(scrollChest, this, this.world);
-		Item startScroll = randomScroll(0, player, false);
-		scrollChest.inventory().add(startScroll);
-		scrollChest.modifyIsContainer(true);
-		scrollChest.setHasNoCorpse(true);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(scrollChest, depth);
-		}else {
-			
-		}
-		return scrollChest;
-		
-	}
-	
-	public Creature newWandChest(int depth, Creature player, int addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature wandChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
-		new ChestAI(wandChest, this, this.world);
-		Item startWand = randomWand(0, player, false);
-		wandChest.inventory().add(startWand);
-		wandChest.modifyIsContainer(true);
-		wandChest.setHasNoCorpse(true);
-		if(addToWorld > 0) {
-			world.addAtEmptyLocation(wandChest, depth);
-		}else {
-			
-		}
-		return wandChest;
-		
-	}
-	
-	public Creature newGoldChest(int depth, Creature player, boolean addToWorld) {
-		//world, name, glyph, color, max health, max mana, base armor class, strength, dexterity, intelligence, vision range, inventory size (max 20)
-		Creature goldChest = new Creature(world, "Chest", (char)127, ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
-		new ChestAI(goldChest, this, this.world);
-		Item startGold = newGold(depth, false);
-		goldChest.inventory().add(startGold);
-		goldChest.modifyIsContainer(true);
-		goldChest.setHasNoCorpse(true);
-		if(addToWorld) {
-			world.addAtEmptyLocation(goldChest, depth);
-		}
-		return goldChest;
+		return chest;
 		
 	}
 	
@@ -3186,28 +3016,9 @@ public class ObjectFactory {
 	}
 	
 	public Creature randomChest(int depth, Creature player, int addToWorld) {
-		switch(ExtraMaths.diceRoll(1, 20)) {
-		case 1: return newFoodChest(depth, addToWorld);
-		case 2: return newFoodChest(depth, addToWorld);
-		case 3: return newFoodChest(depth, addToWorld);
-		case 4: return newAmmoChest(depth, addToWorld);
-		case 5: return newAmmoChest(depth, addToWorld);
-		case 6: return newAmmoChest(depth, addToWorld);
-		case 7: return newPotionChest(depth, addToWorld);
-		case 8: return newPotionChest(depth, addToWorld);
-		case 9: return newScrollChest(depth, player, addToWorld);
-		case 10: return newWandChest(depth, player, addToWorld);
-		case 11: return newRingChest(depth, addToWorld);
-		case 12: return newWeaponChest(depth, addToWorld);
-		case 13: return newWeaponChest(depth, addToWorld);
-		case 14: return newShieldChest(depth, addToWorld);
-		case 15: return newShieldChest(depth, addToWorld);
-		case 16: return newArmorChest(depth, addToWorld);
-		case 17: return newArmorChest(depth,addToWorld);
-		case 18: return newWeaponChest(depth, addToWorld);
-		case 19: return newArmorChest(depth, addToWorld);
-		case 20: return newMimic(depth, player, addToWorld);
-		default: return newFoodChest(depth, addToWorld);
+		switch(Dice.d20.roll()) {
+		case 1: return newMimic(depth, player, addToWorld);
+		default: return newChest(depth, player, addToWorld);
 		}
 	}
 
