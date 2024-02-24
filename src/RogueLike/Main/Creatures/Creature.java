@@ -330,10 +330,10 @@ public class Creature implements Cloneable{
 			returnArmorClass += shield.upgradeLevel();
 		}
 
-		if(hasGiantStrength() == true) {
+		if(affectedBy(Effect.giantStrength) == true) {
 			returnArmorClass += 4;
 		}
-		if(isCorroded() == true) {
+		if(affectedBy(Effect.corroded) == true) {
 			returnArmorClass -= 2;
 		}
 		if(returnArmorClass < 0) {
@@ -358,11 +358,14 @@ public class Creature implements Cloneable{
 	private int visionRadius;
 	public int visionRadius() {
 		int returnVisionRadius = visionRadius + (weapon == null ? 0 : weapon.visionRadius()) + (armor == null ? 0 : armor.visionRadius()) + (ring == null ? 0 : ring.visionRadius()) + (shield == null ? 0 : shield.visionRadius());
-		if(isBlinded() == true) {
+		if(affectedBy(Effect.blinded) == true) {
 			returnVisionRadius = 2;
 		}
-		if(hasBeastForm() == true) {
+		if(affectedBy(Effect.beastForm) == true) {
 			returnVisionRadius += 4;
+		}
+		if(affectedBy(Effect.illuminated) == true) {
+			returnVisionRadius += 10;
 		}
 		return returnVisionRadius; 
 	}
@@ -374,7 +377,7 @@ public class Creature implements Cloneable{
 	private int strength;
 	public int strength() {
 		int returnStrength = strength + (weapon == null ? 0 : weapon.strength()) + (armor == null ? 0 : armor.strength()) + (ring == null ? 0 : ring.strength()) + (shield == null ? 0 : shield.strength());
-		if(hasGiantStrength() == true) {
+		if(affectedBy(Effect.giantStrength) == true) {
 			returnStrength += 4;
 		}
 		//strength = returnStrength;
@@ -406,7 +409,7 @@ public class Creature implements Cloneable{
 	public int dexterity() {
 		int returnDexterity = dexterity + (weapon == null ? 0 : weapon.dexterity()) + (armor == null ? 0 : armor.dexterity()) + (ring == null ? 0 : ring.dexterity()) + (shield == null ? 0 : shield.dexterity());
 		//dexterity = returnDexterity;
-		if(hasBeastForm() == true) {
+		if(affectedBy(Effect.beastForm)) {
 			returnDexterity += 4;
 		}
 		return returnDexterity; 
@@ -479,7 +482,7 @@ public class Creature implements Cloneable{
 	private int saveBonusFire;
 	public int saveBonusFire() {
 		int returnSaveBonusFire = saveBonusFire + (weapon == null ? 0 : weapon.saveBonusFire()) + (armor == null ? 0 : armor.saveBonusFire()) + (ring == null ? 0 : ring.saveBonusFire()) + (shield == null ? 0 : shield.saveBonusFire());
-		if(hasMagmaWard() == true) {
+		if(affectedBy(Effect.magmaWard) == true) {
 			returnSaveBonusFire += 5;
 		}
 		return returnSaveBonusFire;
@@ -497,7 +500,7 @@ public class Creature implements Cloneable{
 	private int saveBonusFrost;
 	public int saveBonusFrost() {
 		int returnSaveBonusFrost = saveBonusFrost + (weapon == null ? 0 : weapon.saveBonusFrost()) + (armor == null ? 0 : armor.saveBonusFrost()) + (ring == null ? 0 : ring.saveBonusFrost()) + (shield == null ? 0 : shield.saveBonusFrost());
-		if(hasChillWard() == true) {
+		if(affectedBy(Effect.chillWard)) {
 			returnSaveBonusFrost += 5;
 		}
 		return returnSaveBonusFrost;
@@ -515,7 +518,7 @@ public class Creature implements Cloneable{
 	private int saveBonusShock;
 	public int saveBonusShock() {
 		int returnSaveBonusShock = saveBonusShock + (weapon == null ? 0 : weapon.saveBonusShock()) + (armor == null ? 0 : armor.saveBonusShock()) + (ring == null ? 0 : ring.saveBonusShock()) + (shield == null ? 0 : shield.saveBonusShock());
-		if(hasArcWard() == true) {
+		if(affectedBy(Effect.arcWard)) {
 			returnSaveBonusShock += 5;
 		}
 		return returnSaveBonusShock;
@@ -598,7 +601,7 @@ public class Creature implements Cloneable{
 	}
 
 	public int chaosSave() {
-		int roll = (ExtraMaths.d20())+saveBonusMagic();
+		int roll = (ExtraMaths.d20())+saveBonusChaos();
 		return roll;
 	}
 	
@@ -1206,10 +1209,17 @@ public class Creature implements Cloneable{
 	}
 	
 	public Skill alchemancy() {
-		return skills[0];
+		return skills[12];
 	}
 	public int alchemancyLevel() {
-		return skills[0].level();
+		return skills[12].level();
+	}
+	
+	public Skill ferromancy() {
+		return skills[13];
+	}
+	public int ferromancyLevel() {
+		return skills[13].level();
 	}
 
 
@@ -1757,61 +1767,16 @@ public class Creature implements Cloneable{
 		return effects;
 	}
 
-	private boolean hasMindVision;
-	public boolean hasMindVision() {
-		return hasMindVision;
-	}
-	public void setHasMindVision(boolean value) {
-		hasMindVision = value;
+	public boolean affectedBy(String type) {
+		for(Effect e : this.effects()) {
+			if(e.type() == type) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	private boolean hasGiantStrength;
-	public boolean hasGiantStrength() {
-		return hasGiantStrength;
-	}
-	public void setHasGiantStrength(boolean value) {
-		hasGiantStrength = value;
-	}
 	
-	private boolean hasBeastForm;
-	public boolean hasBeastForm() {
-		return hasBeastForm;
-	}
-	public void setHasBeastForm(boolean value) {
-		hasBeastForm = value;
-	}
-
-	private boolean hasMagmaWard;
-	public boolean hasMagmaWard() {
-		return hasMagmaWard;
-	}
-	public void setHasMagmaWard(boolean value) {
-		hasMagmaWard = value;
-	}
-
-	private boolean hasArcWard;
-	public boolean hasArcWard() {
-		return hasArcWard;
-	}
-	public void setHasArcWard(boolean value) {
-		hasArcWard = value;
-	}
-
-	private boolean hasChillWard;
-	public boolean hasChillWard() {
-		return hasChillWard;
-	}
-	public void setHasChillWard(boolean value) {
-		hasChillWard = value;
-	}
-
-	private boolean isInvisible;
-	public boolean isInvisible() {
-		return isInvisible;
-	}
-	public void setIsInvisible(boolean value) {
-		isInvisible = value;
-	}
 
 	private boolean stayVisible;
 	public boolean stayVisible() {
@@ -1829,53 +1794,7 @@ public class Creature implements Cloneable{
 		isFlying = value;
 	}
 
-	private boolean isFrozen;
-	public boolean isFrozen() {
-		return isFrozen;
-	}
-	public void setIsFrozen(boolean value) {
-		isFrozen = value;
-	}
-
-	private boolean isParalyzed;
-	public boolean isParalyzed() {
-		return isParalyzed;
-	}
-	public void setIsParalyzed(boolean value) {
-		isParalyzed = value;
-	}
-
-	private boolean isCorroded;
-	public boolean isCorroded() {
-		return isCorroded;
-	}
-	public void setIsCorroded(boolean value) {
-		isCorroded = value;
-	}
-
-	private boolean isShocked;
-	public boolean isShocked() {
-		return isShocked;
-	}
-	public void setIsShocked(boolean value) {
-		isShocked = value;
-	}
-
-	private boolean isPoisoned;
-	public boolean isPoisoned() {
-		return isPoisoned;
-	}
-	public void setIsPoisoned(boolean value) {
-		isPoisoned = value;
-	}
-
-	private boolean isIgnited;
-	public boolean isIgnited() {
-		return isIgnited;
-	}
-	public void setIsIgnited(boolean value) {
-		isIgnited = value;
-	}
+	
 
 	private boolean isAsleep;
 	public boolean isAsleep() {
@@ -1885,45 +1804,7 @@ public class Creature implements Cloneable{
 		isAsleep = value;
 	}
 
-	private boolean hasTruesight;
-	public boolean hasTruesight() {
-		return hasTruesight;
-	}
-	public void setHasTruesight(boolean value) {
-		hasTruesight = value;
-	}
-
-	private boolean isConfused;
-	public boolean isConfused() {
-		return isConfused;
-	}
-	public void setIsConfused(boolean value) {
-		isConfused = value;
-	}
-
-	private boolean isLevitating;
-	public boolean isLevitating() {
-		return isLevitating;
-	}
-	public void setIsLevitating(boolean value) {
-		isLevitating = value;
-	}
-
-	private boolean isDevoured;
-	public boolean isDevoured() {
-		return isDevoured;
-	}
-	public void setIsDevoured(boolean value) {
-		isDevoured = value;
-	}
-
-	private boolean isBlinded;
-	public boolean isBlinded() {
-		return isBlinded;
-	}
-	public void setIsBlinded(boolean value) {
-		isBlinded = value;
-	}
+	
 
 	private boolean isDisguised;
 	public boolean isDisguised() {
@@ -2201,10 +2082,7 @@ public class Creature implements Cloneable{
 		this.effects = new ArrayList<Effect>();
 		this.score = 0;
 		this.maxDepth = z;
-		this.hasMindVision = false;
 		this.isFlying = false;
-		this.isFrozen = false;
-		this.isParalyzed = false;
 		this.strength = strength;
 		this.dexterity = dexterity;
 		this.intelligence = intelligence;
@@ -2250,22 +2128,22 @@ public class Creature implements Cloneable{
 		//if(mx == 0 && my == 0 && mz == 0) {
 		//return;
 		//}
-		if((isParalyzed == true) && isPlayer()) {
+		if((affectedBy(Effect.paralysed)) && isPlayer()) {
 			if((int)(Math.random()*10) < 8) {
-				doAction("struggle to move!");
+				doAction("struggle to overcome paralysis!");
 				return;
 			}else {
 				doAction("move with difficulty");
 			}
 		}
 
-		if((isFrozen == true) && isPlayer()) {
-			doAction("struggle to move!");
+		if((affectedBy(Effect.frozen)) && isPlayer()) {
+			doAction("struggle to break the frost!");
 			return;
 
 		}
 
-		if(isConfused == true) {
+		if(affectedBy(Effect.confused)) {
 			mx = ExtraMaths.diceRoll(-1, 1);
 			my = ExtraMaths.diceRoll(-1, 1);
 		}
@@ -2376,11 +2254,11 @@ public class Creature implements Cloneable{
 			attackRoll = this.strengthRoll();
 		}
 
-		if(this.isInvisible() == true) {
+		if(affectedBy(Effect.invisible) == true) {
 			attackRoll += 5;
 		}
 
-		if(other.isInvisible() == true) {
+		if(other.affectedBy(Effect.invisible) == true) {
 			attackRoll -= 5;
 		}
 		
@@ -2502,8 +2380,8 @@ public class Creature implements Cloneable{
 		}
 
 
-		if(this.isInvisible() == true) {
-			this.cureInvisible();
+		if(affectedBy(Effect.invisible) == true) {
+			this.cureEffectOfType(Effect.invisible);
 		}
 
 		//if(other.hp < 1) {
@@ -2661,11 +2539,11 @@ public class Creature implements Cloneable{
 			attackRoll = this.strengthRoll();
 		}
 
-		if(this.isInvisible() == true) {
+		if(affectedBy(Effect.invisible) == true) {
 			attackRoll += 5;
 		}
 
-		if(other.isInvisible() == true) {
+		if(other.affectedBy(Effect.invisible) == true) {
 			attackRoll -= 5;
 		}
 
@@ -2706,8 +2584,8 @@ public class Creature implements Cloneable{
 			doAction("fail to hit the %s", other.name);
 		}
 
-		if(this.isInvisible() == true) {
-			this.cureInvisible();
+		if(affectedBy(Effect.invisible) == true) {
+			this.cureEffectOfType(Effect.invisible);
 		}
 
 		//if(other.hp < 1) {
@@ -2813,11 +2691,11 @@ public class Creature implements Cloneable{
 			}
 		}
 
-		if(this.isInvisible() == true) {
+		if(affectedBy(Effect.invisible) == true) {
 			attackRoll += 5;
 		}
 
-		if(other.isInvisible() == true) {
+		if(other.affectedBy(Effect.invisible) == true) {
 			attackRoll -= 5;
 		}
 		if(this.isPlayer()) {
@@ -2864,8 +2742,8 @@ public class Creature implements Cloneable{
 		}
 
 
-		if(this.isInvisible() == true) {
-			this.cureInvisible();
+		if(affectedBy(Effect.invisible) == true) {
+			this.cureEffectOfType(Effect.invisible);
 		}
 
 		//if(other.hp < 1) {
@@ -2875,6 +2753,7 @@ public class Creature implements Cloneable{
 
 	public void pickup() {
 		Item item = world.item(x, y, z);
+		item.setOwner(this);
 		if((inventory.isFull() && !item.isGold()) || item == null || item.isTrap()) {
 			doAction("grab fruitlessly at the ground");
 		}else if(item.isGold()){
@@ -2893,8 +2772,9 @@ public class Creature implements Cloneable{
 			if (item.isThrownWeapon()){
 				if (item.getWasCreatureWepon() && this.weapon() == null && (item.getOwner().equals(this))) {
 					doAction("wield a "+nameOf(item));
-					weapon = item;
-					weaponName = item.name();
+					this.equip(item);
+					//weapon = item;
+					//weaponName = item.name();
 				}
 				else {
 					item.setWasCreatureWepon(false);
@@ -3642,488 +3522,24 @@ public class Creature implements Cloneable{
 		}
 		effects.removeAll(cured);
 	}
-
-	public void cureParalysis() {
+	
+	public void cureEffectOfType(String type) {
 		List<Effect> cured = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isParalysis()) {
+			if(effect.type() == type) {
 				effect.end(this);
 				cured.add(effect);
 			}
 		}
 		effects.removeAll(cured);
-	}
-
-	public void stackParalysis() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isParalysis()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureCorrosion() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isCorrosion()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackCorrosion() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isCorrosion()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureFrozen() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isFrozen()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackFrozen() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isFrozen()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureIgnited() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isIgnited()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackIgnited() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isIgnited()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureElectrified() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isElectrified()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackElectrified() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isElectrified()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void curePoison() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isPoison()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackPoison() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isPoison()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureInvisible() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isInvisible()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackInvisible() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isInvisible()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureGiantStrength() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isGiantStrength()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackGiantStrength() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isGiantStrength()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
 	}
 	
-	public void cureBeastForm() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isBeastForm()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackBeastForm() {
+	public void stackEffectOfType(String type) {
 		List<Effect> stacked = new ArrayList<Effect>();
 
 		for(Effect effect : effects) {
-			if(effect.isBeastForm()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureMindVision() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isMindVision()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackMindVision() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isMindVision()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureArcWard() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isArcWard()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackArcWard() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isArcWard()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureMagmaWard() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isMagmaWard()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackMagmaWard() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isMagmaWard()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureChillWard() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isChillWard()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackChillWard() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isChillWard()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureConfused() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isConfused()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackConfused() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isConfused()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureLevitating() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isLevitating()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackLevitating() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isLevitating()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureDevoured() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isDevoured()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackDevoured() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isDevoured()) {
-				stacked.add(effect);
-			}
-		}
-		if(stacked.size() > 0) {
-			Effect master = stacked.get(0);
-			for(int i = 1; i < stacked.size(); i++) {
-				master.modifyDuration(stacked.get(i).durationBase());
-				effects.remove(stacked.get(i));
-			}
-		}
-	}
-
-	public void cureBlinded() {
-		List<Effect> cured = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isBlinded()) {
-				effect.end(this);
-				cured.add(effect);
-			}
-		}
-		effects.removeAll(cured);
-	}
-
-	public void stackBlinded() {
-		List<Effect> stacked = new ArrayList<Effect>();
-
-		for(Effect effect : effects) {
-			if(effect.isBlinded()) {
+			if(effect.type() == type) {
 				stacked.add(effect);
 			}
 		}
@@ -4137,7 +3553,7 @@ public class Creature implements Cloneable{
 	}
 
 	public void updateInvisibility() {
-		if(isInvisible() == false && color == ExtraColors.invisible) {
+		if(!affectedBy(Effect.invisible) && color == ExtraColors.invisible) {
 			changeColor(defaultColor);
 		}
 	}
@@ -4165,56 +3581,42 @@ public class Creature implements Cloneable{
 	}
 
 	public void stackEffects() {
-		stackParalysis();
-		stackCorrosion();
-		stackFrozen();
-		stackIgnited();
-		stackElectrified();
-		stackPoison();
-		stackInvisible();
-		stackGiantStrength();
-		stackBeastForm();
-		stackMindVision();
-		stackArcWard();
-		stackMagmaWard();
-		stackChillWard();
-		stackConfused();
-		stackLevitating();
-		stackDevoured();
-		stackBlinded();
+		for(String t : Effect.effectTypeList) {
+			this.stackEffectOfType(t);
+		}
 	}
 	
 	public void stepInPit() {
-		if(realTile(this.x(), this.y(), this.z()) == Tile.PIT && !this.isFlying() && !this.isLevitating()) {
+		if(realTile(this.x(), this.y(), this.z()) == Tile.PIT && !this.isFlying() && !affectedBy(Effect.levitating)) {
 			Effect fall = this.ai.factory.effectFactory.pitFall();
 			addEffect(fall);
 		}
 	}
 	
 	public void stepInFire() {
-		if(realSubtile(this.x(), this.y(), this.z()) == Tile.FIRE && !this.isFlying() && !this.isLevitating() && (ExtraMaths.d10() > 4)) {
-			Effect fire = this.ai.factory.effectFactory.ignited();
+		if(realSubtile(this.x(), this.y(), this.z()) == Tile.FIRE && !this.isFlying() && !affectedBy(Effect.levitating) && (ExtraMaths.d10() > 4)) {
+			Effect fire = this.ai.factory.effectFactory.ignited(5);
 			addEffect(fire);
 		}
 	}
 
 	public void stepInParalysis() {
 		if(realGastile(this.x(), this.y(), this.z()) == Tile.PARALYZE_GAS && (ExtraMaths.d10() > 4)) {
-			Effect paralysis = this.ai.factory.effectFactory.paralyzed();
+			Effect paralysis = this.ai.factory.effectFactory.paralysed(5);
 			addEffect(paralysis);
 		}
 	}
 
 	public void stepInCaustic() {
 		if(realGastile(this.x(), this.y(), this.z()) == Tile.ACID_GAS && (ExtraMaths.d10() > 4)) {
-			Effect caustic = this.ai.factory.effectFactory.corroded();
+			Effect caustic = this.ai.factory.effectFactory.corroded(5);
 			addEffect(caustic);
 		}
 	}
 
 	public void stepInConfusion() {
 		if(realGastile(this.x(), this.y(), this.z()) == Tile.CONFUSE_GAS && (ExtraMaths.d10() > 4)) {
-			Effect confusion = this.ai.factory.effectFactory.confused();
+			Effect confusion = this.ai.factory.effectFactory.confused(5);
 			addEffect(confusion);
 		}
 	}
@@ -4343,7 +3745,7 @@ public class Creature implements Cloneable{
 			search(18, true);
 		}
 		Item trap = world.item(x, y, z);
-		if(trap != null && trap.isTrap() && !isFlying && !isLevitating) {
+		if(trap != null && trap.isTrap() && !isFlying && !affectedBy(Effect.levitating)) {
 			triggerTrap(trap);
 		}else {
 
@@ -4482,7 +3884,7 @@ public class Creature implements Cloneable{
 					return;
 				}
 			}
-			Creature tileSpell = ai().factory.newTileSpell(this.z(), this, 0);
+			Creature tileSpell = ai().factory.creatureFactory.newTileSpell(this.z(), this, false);
 			ai().world.addCreatureAtLocation(tileSpell, x2, y2, z);
 			tileSpell.addEffect(spell.effect());
 			tileSpell.update();
@@ -4521,8 +3923,8 @@ public class Creature implements Cloneable{
 					}
 				}
 			}
-			if(this.isInvisible() == true) {
-				this.cureInvisible();
+			if(affectedBy(Effect.invisible) == true) {
+				this.cureEffectOfType(Effect.invisible);
 			}
 
 		}else {
@@ -4574,8 +3976,8 @@ public class Creature implements Cloneable{
 					}
 				}
 			}
-			if(this.isInvisible() == true) {
-				this.cureInvisible();
+			if(affectedBy(Effect.invisible) == true) {
+				this.cureEffectOfType(Effect.invisible);
 			}
 		}
 
@@ -4671,7 +4073,7 @@ public class Creature implements Cloneable{
 
 	public boolean canSee(int wx, int wy, int wz) {
 		//return (mindVision > 0 && world.creature(wx, wy, wz) !=null || ai.canSee(wx, wy, wz));
-		if(hasMindVision == true && world.creature(wx, wy, wz) !=null) {
+		if(affectedBy(Effect.mindVision) && world.creature(wx, wy, wz) !=null) {
 			return true;
 		}
 		else {

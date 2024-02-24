@@ -30,8 +30,8 @@ public class UpgradeScreen extends InventoryBasedScreen{
 		if(item.enchantment() != null && item.isIdentified()) {
 			player.notify("The interaction of different types of magic");
 			player.notify("has clouded your memory of the "+player.nameOf(item)+"!");
+			item.setIsIdentified(false);
 		}
-		item.setIsIdentified(false);
 		return null;
 	}
 

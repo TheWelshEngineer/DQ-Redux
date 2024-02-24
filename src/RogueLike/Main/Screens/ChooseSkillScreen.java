@@ -39,6 +39,7 @@ public class ChooseSkillScreen implements Screen{
 	public boolean playerCryomancy = false;
 	public boolean playerElectromancy = false;
 	public boolean playerAlchemancy = false;
+	public boolean playerFerromancy = false;
 	
 	public ChooseSkillScreen(String playerClass, List<Integer> playerAbilities, String playerName, String playerAncestry) {
 		this.playerClass = playerClass;
@@ -112,6 +113,8 @@ public class ChooseSkillScreen implements Screen{
 	public char electromancyRight = '<';
 	public char alchemancyLeft = '>';
 	public char alchemancyRight = '<';
+	public char ferromancyLeft = '>';
+	public char ferromancyRight = '<';
 	
 	public void updateSimpleMarker(int check) {
 		switch(check) {
@@ -191,6 +194,12 @@ public class ChooseSkillScreen implements Screen{
 		default: alchemancyLeft = ' '; alchemancyRight = ' '; break;
 		}
 	}
+	public void updateFerromancyMarker(int check) {
+		switch(check) {
+		case 13: ferromancyLeft = '>'; ferromancyRight = '<'; break;
+		default: ferromancyLeft = ' '; ferromancyRight = ' '; break;
+		}
+	}
 
 
 
@@ -222,6 +231,8 @@ public class ChooseSkillScreen implements Screen{
 	public char electromancyDown = ' ';
 	public char alchemancyUp = '+';
 	public char alchemancyDown = ' ';
+	public char ferromancyUp = '+';
+	public char ferromancyDown = ' ';
 	
 	public void updateMarkers(int check) {
 		updateSimpleMarker(check);
@@ -237,6 +248,7 @@ public class ChooseSkillScreen implements Screen{
 		updateCryomancyMarker(check);
 		updateElectromancyMarker(check);
 		updateAlchemancyMarker(check);
+		updateFerromancyMarker(check);
 		switch(check) {
 		case 0: if(playerSimpleWeapons == false && skillPoints > 0) {
 					simpleUp = '+';
@@ -407,6 +419,19 @@ public class ChooseSkillScreen implements Screen{
 					alchemancyUp = '+';
 					alchemancyDown = '-';
 				}break;
+		case 13: if(playerFerromancy == false && skillPoints > 0) {
+				ferromancyUp = '+';
+				ferromancyDown = ' ';
+			}else if(playerFerromancy == true) {
+				ferromancyUp = ' ';
+				ferromancyDown = '-';
+			}else if(skillPoints == 0) {
+				ferromancyUp = ' ';
+				ferromancyDown = ' ';
+			}else {
+				ferromancyUp = '+';
+				ferromancyDown = '-';
+			}break;
 		}
 	}
 	
@@ -441,6 +466,7 @@ public class ChooseSkillScreen implements Screen{
 		terminal.write(String.format("%c %c Cryomancy I       ( %c ) %c %c", borderVertical, cryomancyLeft, booleanToChar(playerCryomancy), cryomancyRight, borderVertical), 4, y++);
 		terminal.write(String.format("%c %c Electromancy I    ( %c ) %c %c", borderVertical, electromancyLeft, booleanToChar(playerElectromancy), electromancyRight, borderVertical), 4, y++);
 		terminal.write(String.format("%c %c Alchemancy I      ( %c ) %c %c", borderVertical, alchemancyLeft, booleanToChar(playerAlchemancy), alchemancyRight, borderVertical), 4, y++);
+		terminal.write(String.format("%c %c Ferromancy I      ( %c ) %c %c", borderVertical, ferromancyLeft, booleanToChar(playerFerromancy), ferromancyRight, borderVertical), 4, y++);
 		terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 4, y++);
 		
 		if(check == 0) {
@@ -508,6 +534,11 @@ public class ChooseSkillScreen implements Screen{
 			terminal.writeCenter("manipulation of chemical processes. A higher Alchemancy skill", y+=1);
 			terminal.writeCenter("allows you to use more powerful alchemancy wands,", y+=1);
 			terminal.writeCenter("and improves the effectiveness of your alchemancy wands.", y+=1);
+		}else if(check == 13) {
+			terminal.writeCenter("Ferromancy is a school of magic focused mainly on the", y+=5);
+			terminal.writeCenter("manipulation of stone and metals. A higher Ferromancy skill", y+=1);
+			terminal.writeCenter("allows you to use more powerful ferromancy wands,", y+=1);
+			terminal.writeCenter("and improves the effectiveness of your ferromancy wands.", y+=1);
 		}
 		
 		
@@ -522,7 +553,7 @@ public class ChooseSkillScreen implements Screen{
 		switch(key.getKeyCode()) {
 		case KeybindManager.navigateMenuUp:
 			if(check == 0) {
-				check = 12;
+				check = 13;
 			}else{
 				check--;
 			}
@@ -530,7 +561,7 @@ public class ChooseSkillScreen implements Screen{
 			return this;
 			
 		case KeybindManager.navigateMenuDown:
-			if(check == 12) {
+			if(check == 13) {
 				check = 0;
 			}else{
 				check++;
@@ -617,6 +648,12 @@ public class ChooseSkillScreen implements Screen{
 					playerAlchemancy = true;
 					modifyPoints(-1);
 				}
+			}else if(check == 13) {
+				if(skillPoints > 0 && !playerFerromancy) {
+					playerSkills[13].modifyLevel(1, false);
+					playerFerromancy = true;
+					modifyPoints(-1);
+				}
 			}
 			updateMarkers(check);
 			return this;
@@ -698,6 +735,12 @@ public class ChooseSkillScreen implements Screen{
 				if(playerAlchemancy) {
 					playerAlchemancy = false;
 					playerSkills[12].modifyLevel(1, true);
+					modifyPoints(1); 
+				}
+			}else if(check == 13) {
+				if(playerFerromancy) {
+					playerFerromancy = false;
+					playerSkills[13].modifyLevel(1, true);
 					modifyPoints(1); 
 				}
 			}

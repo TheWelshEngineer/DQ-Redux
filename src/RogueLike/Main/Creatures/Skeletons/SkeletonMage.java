@@ -1,8 +1,9 @@
-package RogueLike.Main.Creatures;
+package RogueLike.Main.Creatures.Skeletons;
 
 import java.awt.Color;
 
-import RogueLike.Main.AI.SkeletonMageAI;
+import RogueLike.Main.AI.SkeletonAI.SkeletonMageAI;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 
@@ -20,7 +21,7 @@ public class SkeletonMage extends Creature{
 		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
 		new SkeletonMageAI(this, player, factory, factory.world);
-		Item startWeapon = factory.newClub(0, false);
+		Item startWeapon = factory.itemFactory.newClub(0, false);
 		this.inventory().add(startWeapon);
 		this.equip(startWeapon);
 		this.creatureTypes.add("Undead");

@@ -2,6 +2,7 @@ package RogueLike.Main.AI.SlimeAI;
 
 import java.util.ArrayList;
 
+import RogueLike.Main.Effect;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
@@ -19,7 +20,7 @@ public class SlimelingAI extends CreatureAI{
 	
 	public void selectAction() {
 		actionQueue = new ArrayList<Integer>();
-		if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+		if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
 			//Hunt
 			actionQueue.add(1);
 			actionQueue.add(1000);
@@ -39,13 +40,13 @@ public class SlimelingAI extends CreatureAI{
 	
 	public void onUpdate() {
 		
-		if((creature.isFrozen() == true)) {
+		if((creature.affectedBy(Effect.frozen))) {
 			creature.doAction("struggle to move!");
 			return;
 
 		}else {
-			if((creature.isParalyzed() == true)) {
-				creature.cureParalysis();
+			if((creature.affectedBy(Effect.paralysed))) {
+				creature.cureEffectOfType(Effect.paralysed);
 				creature.doAction("break free of paralysis!");
 			}
 			decodeAction(actionQueue.get(0)); 

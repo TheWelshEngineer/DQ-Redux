@@ -1,16 +1,18 @@
-package RogueLike.Main.AI;
+package RogueLike.Main.AI.GremlinAI;
 
 import java.util.ArrayList;
 
+import RogueLike.Main.Effect;
 import RogueLike.Main.World;
+import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 
-public class AlchemistAI extends CreatureAI{
+public class GremlinAlchemistAI extends CreatureAI{
 	private Creature player;
 	private int brewPotionCooldown;
 	
-	public AlchemistAI(Creature creature, Creature player, ObjectFactory factory, World world) {
+	public GremlinAlchemistAI(Creature creature, Creature player, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		this.player = player;
 		this.factory = factory;
@@ -23,11 +25,11 @@ public class AlchemistAI extends CreatureAI{
 			//Brew Potion
 			actionQueue.add(1);
 			actionQueue.add(1000);
-		}else if(canThrowAt(player) && player.isInvisible() == false) {
+		}else if(canThrowAt(player) && !player.affectedBy(Effect.invisible)) {
 			//Throw Potion
 			actionQueue.add(2);
 			actionQueue.add(500);
-		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
 			//Hunt
 			actionQueue.add(3);
 			actionQueue.add(1000);
@@ -48,7 +50,7 @@ public class AlchemistAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if((creature.isParalyzed() == true)) {
+		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -57,7 +59,7 @@ public class AlchemistAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.isFrozen() == true)) {
+		if((creature.affectedBy(Effect.frozen))) {
 			creature.doAction("struggle to move!");
 			return;
 

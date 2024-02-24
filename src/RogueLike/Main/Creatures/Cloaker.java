@@ -20,8 +20,8 @@ public class Cloaker extends Creature{
 	public Cloaker(ObjectFactory factory, Creature player, String name, char glyph, Color color, int id, int depth) {
 		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
-		new CloakerAI(this, player, factory, factory.world);
-		this.setIsInvisible(true);
+		CloakerAI ai = new CloakerAI(this, player, factory, factory.world);
+		ai.becomeInvisible();
 		this.changeColor(ExtraColors.invisible);
 		this.creatureTypes.add("Monstrosity");
 		this.scaleHPWithDepth(depth);

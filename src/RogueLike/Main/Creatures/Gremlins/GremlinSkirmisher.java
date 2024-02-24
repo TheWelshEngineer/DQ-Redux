@@ -22,10 +22,10 @@ public class GremlinSkirmisher extends Creature{
 		this.setID(id);
 		new GremlinSkirmisherAI(this, player, factory, factory.world);
 		this.creatureTypes.add("Gremlin");
-		Item startWeapon = factory.newSword(0, false);
+		Item startWeapon = factory.itemFactory.newShortsword(0, false);
 		this.inventory().add(startWeapon);
 		this.equip(startWeapon);
-		Item startArmor = factory.newLeatherArmor(0, false);
+		Item startArmor = factory.itemFactory.newLeatherArmor(0, false);
 		this.inventory().add(startArmor);
 		this.equip(startArmor);
 		this.scaleHPWithDepth(depth);

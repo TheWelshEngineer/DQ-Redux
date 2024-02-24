@@ -3,6 +3,7 @@ package RogueLike.Main.Enchantments;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Items.Item;
 
 public class Enchantment {
 	
@@ -12,6 +13,14 @@ public class Enchantment {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	private Item hostItem;
+	public Item hostItem() {
+		return hostItem;
+	}
+	public void setHostItem(Item item) {
+		hostItem = item;
 	}
 	
 	private int activationChance = 10;
@@ -42,19 +51,35 @@ public class Enchantment {
 		this.effect = (Effect) effect.clone();
 	}
 	
+	private int baseEffectDuration;
+	public int baseEffectDuration() {
+		return baseEffectDuration;
+	}
+	public void setBaseEffectDuration(int value) {
+		baseEffectDuration = value;
+	}
+	
+	public void updateEffectDuration() {
+		this.effect.setDuration(baseEffectDuration + this.hostItem.upgradeLevel());
+	}
+	
 	public void applyToCreature(Creature creature) {
 		creature.addEffect(effect());
 	}
 	
-	public Enchantment(String name, Effect effect, String type) {
+	public Enchantment(String name, Effect effect, int duration, Item host, String type) {
 		this.name = name;
 		this.effect = effect;
 		this.damageTypeString = type;
+		this.hostItem = host;
+		this.baseEffectDuration = duration;
 	}
 	
-	public Enchantment(String name, Effect effect) {
+	public Enchantment(String name, Effect effect, int duration, Item host) {
 		this.name = name;
 		this.effect = effect;
+		this.hostItem = host;
+		this.baseEffectDuration = duration;
 	}
 
 }

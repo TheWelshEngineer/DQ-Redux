@@ -20,8 +20,8 @@ public class Ogre extends Creature{
 		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
 		new OgreAI(this, player, factory, factory.world);
-		Item startWeapon = factory.newMaul(0, false);
-		Item startArmor = factory.newHideArmor(0, false);
+		Item startWeapon = factory.itemFactory.newMaul(0, false);
+		Item startArmor = factory.itemFactory.newHideArmor(0, false);
 		this.inventory().add(startWeapon);
 		this.inventory().add(startArmor);
 		this.equip(startWeapon);

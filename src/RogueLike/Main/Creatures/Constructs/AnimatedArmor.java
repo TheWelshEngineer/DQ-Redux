@@ -2,7 +2,7 @@ package RogueLike.Main.Creatures.Constructs;
 
 import java.awt.Color;
 
-import RogueLike.Main.AI.SkeletonAI;
+import RogueLike.Main.AI.SkeletonAI.SkeletonAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;

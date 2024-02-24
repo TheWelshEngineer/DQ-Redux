@@ -56,11 +56,10 @@ public class EffectFactory {
 		return maxMana;
 	}
 	
-	public Effect poisoned() {
-		Effect poisoned = new Effect(10, "Poisoned", true, null) { //10
+	public Effect poisoned(int duration) {
+		Effect poisoned = new Effect(duration, "Poisoned", true, null, Effect.poisoned) { //10
 			public void start(Creature creature) {
 				creature.doAction("look unwell");
-				creature.setIsPoisoned(true);
 				//creature.learnName(item);
 			}
 			public void update(Creature creature) {
@@ -69,74 +68,82 @@ public class EffectFactory {
 				creature.modifyHP(damage, "Killed by poison");
 			}
 			public void end(Creature creature) {
-				creature.setIsPoisoned(false);
-				if(creature.isPoisoned() == false) {
+				if(!creature.affectedBy(Effect.poisoned)) {
 					creature.doAction("recover from poison");
 				}
 
 			}
 		};
-		poisoned.setIsPoison(true);
-		poisoned.setIsNegative(true);
 		return poisoned;
 	}
 	
-	public Effect giantStrength() {
-		Effect giantStrength = new Effect(15, "Giant Strength", false, null) {
+	public Effect bleeding(int duration) {
+		Effect bleeding = new Effect(duration, "Bleeding", true, null, Effect.bleeding) { //10
 			public void start(Creature creature) {
-				creature.setHasGiantStrength(true);
-				creature.doAction("swell with power");
-			}
-			public void end(Creature creature) {
-				creature.setHasGiantStrength(false);
-				creature.doAction("return to normal strength");
-			}
-		};
-		giantStrength.setIsGiantStrength(true);
-		return giantStrength;
-	}
-	
-	public Effect beastForm() {
-		Effect beastForm = new Effect(15, "Beast Form", false, null) {
-			public void start(Creature creature) {
-				creature.setHasBeastForm(true);
-				creature.doAction("appear more bestial");
-			}
-			public void end(Creature creature) {
-				creature.setHasBeastForm(false);
-				creature.doAction("return to a normal appearance");
-			}
-		};
-		beastForm.setIsBeastForm(true);
-		return beastForm;
-	}
-	
-	public Effect corroded() {
-		Effect corroded = new Effect(5, "Corroded", true, null) {
-        	public void start(Creature creature) {
-        		creature.setIsCorroded(true);
-        		//creature.modifyDefenseValue(-6);
-				creature.doAction("get coated in caustic vapour");
+				creature.doAction("begin to bleed");
 				//creature.learnName(item);
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new AcidDamage(ExtraMaths.diceRoll(1, 3), false, getThis(), false);
-				creature.modifyHP(damage, "Killed by caustic gas");
-				creature.notify("The vapour burns you!");	
+				Damage damage = new PhysicalDamage(Dice.d4.roll(), false, getThis(), false);
+				creature.modifyHP(damage, "Killed by bleeding");
 			}
 			public void end(Creature creature) {
-				creature.setIsCorroded(false);
+				if(!creature.affectedBy(Effect.bleeding)) {
+					creature.doAction("stem the bleeding");
+				}
+
+			}
+		};
+		return bleeding;
+	}
+	
+	public Effect giantStrength(int duration) {
+		Effect giantStrength = new Effect(duration, "Giant Strength", false, null, Effect.giantStrength) {
+			public void start(Creature creature) {
+				creature.doAction("swell with power");
+			}
+			public void end(Creature creature) {
+				creature.doAction("return to normal strength");
+			}
+		};
+		return giantStrength;
+	}
+	
+	public Effect beastForm(int duration) {
+		Effect beastForm = new Effect(duration, "Beast Form", false, null, Effect.beastForm) {
+			public void start(Creature creature) {
+				creature.doAction("appear more bestial");
+			}
+			public void end(Creature creature) {
+				creature.doAction("return to a normal appearance");
+			}
+		};
+		return beastForm;
+	}
+	
+	public Effect corroded(int duration) {
+		Effect corroded = new Effect(duration, "Corroded", true, null, Effect.corroded) {
+        	public void start(Creature creature) {
+        		//creature.modifyDefenseValue(-6);
+				creature.doAction("get coated in biting acid");
+				//creature.learnName(item);
+			}
+			public void update(Creature creature) {
+				super.update(creature);
+				Damage damage = new AcidDamage(Dice.d4.roll(), false, getThis(), false);
+				creature.modifyHP(damage, "Killed by acid");
+				creature.notify("The acid burns you!");	
+			}
+			public void end(Creature creature) {
 				//creature.modifyDefenseValue(6);
-				if(creature.isCorroded() == false) {
-    				creature.doAction("recover from the corrosion");
+				if(!creature.affectedBy(Effect.corroded) == false) {
+    				creature.doAction("recover from the acid burns");
 				}
 				
 				
 			}
         };
-        corroded.setIsNegative(true);
-		corroded.setIsCorrosion(true);
 		return corroded;
 	}
 	
@@ -156,6 +163,64 @@ public class EffectFactory {
         };
         firebolt.setShowInMenu(false);
 		return firebolt;
+	}
+	
+	public Effect acidBlast(Creature reference) {
+		Effect acidBlast = new Effect(1, "Acid Blast", true, null) {
+        	public void start(Creature creature) {
+				Damage damage = new AcidDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
+				if(creature.affectedBy(Effect.corroded)) {
+					damage = new AcidDamage(Dice.d10.roll()+reference.intelligenceModifier(), false, getThis(), false);
+				}
+				if(reference.intelligenceRoll() >= creature.armorClass()) {
+					creature.doAction("get hit with a blast of acid!");
+					creature.setLastHit(reference);
+					if(creature.affectedBy(Effect.corroded)) {
+						creature.cureEffectOfType(Effect.corroded);
+					}
+					creature.modifyHP(damage, String.format("Killed by %s using Acid Blast", reference.name()));
+				}else {
+					creature.notify(String.format("The %s's spell misses you.", reference.name()));
+					reference.notify(String.format("Your spell misses the %s.", creature.name()));
+				}
+			}
+        };
+        acidBlast.setShowInMenu(false);
+		return acidBlast;
+	}
+	
+	public Effect flashfire(Creature reference) {
+		Effect flashfire = new Effect(1, "Flashfire", true, null) {
+        	public void start(Creature creature) {
+				Damage damage = new FireDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
+				if(creature.affectedBy(Effect.ignited)) {
+					int amount = reference.intelligenceModifier();
+					Effect temp = null;
+					for(int i = 0; i < creature.effects().size(); i++) {
+						if(creature.effects().get(i).type() == Effect.ignited) {
+							temp = creature.effects().get(i);
+						}
+					}
+					for(int i = 0; i < temp.duration(); i++) {
+						amount += Dice.d4.roll();
+					}
+					damage = new FireDamage(amount, false, getThis(), false);
+				}
+				if(creature.dexterityRoll() >= reference.intelligenceSaveDC()) {
+					creature.doAction("get consumed by searing flames!");
+					creature.setLastHit(reference);
+					if(creature.affectedBy(Effect.ignited)) {
+						creature.cureEffectOfType(Effect.ignited);
+					}
+					creature.modifyHP(damage, String.format("Killed by %s using Flashfire", reference.name()));
+				}else {
+					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
+					reference.notify(String.format("The %s dodges your spell.", creature.name()));
+				}
+			}
+        };
+        flashfire.setShowInMenu(false);
+		return flashfire;
 	}
 	
 	public Effect iceKnife(Creature reference) {
@@ -199,7 +264,7 @@ public class EffectFactory {
 		return missile;
 	}
 	
-	public Effect causticVapor() {
+	public Effect causticVapor(int duration) {
 		Effect causticVapor = new Effect(1, null, true, null) {
 			public void start(Creature creature){
                 for (int ox = -2; ox < 3; ox++){
@@ -212,7 +277,7 @@ public class EffectFactory {
                         if (creature.creature(nx, ny, creature.z) == null) {
                             continue;
                         }
-                        Effect gas = corroded();
+                        Effect gas = corroded(duration);
                         creature.creature(nx, ny, creature.z).addEffect(gas);
                     }
                 }
@@ -221,17 +286,43 @@ public class EffectFactory {
 		return causticVapor;
 	}
 	
-	public Effect mindVision() {
-		Effect mindVision = new Effect(5, "Mind Vision", false, null){
+	public Effect pyrotechnics(Creature reference) {
+		Effect pyrotechnics = new Effect(1, null, true, reference) {
+			public void start(Creature creature){
+                for (int ox = -2; ox < 3; ox++){
+                    for (int oy = -2; oy < 3; oy++){
+                        int nx = creature.x + ox;
+                        int ny = creature.y + oy;
+                        if(creature.tile(nx, ny, creature.z()).canHaveGas()) {
+                        	creature.world().changeGasTile(nx, ny, creature.z(), Tile.SMOKE);
+                        }
+                        if (creature.creature(nx, ny, creature.z) == null) {
+                            continue;
+                        }
+                        int duration_ = 5;
+                        if(reference.pyromancyLevel() >= 1) {
+                        	duration_ += reference.proficiencyBonus();
+                        }
+                        if(reference.pyromancyLevel() >= 2) {
+                        	duration_ += reference.proficiencyBonus();
+                        }
+                        Effect smoke = blinded(duration_);
+                        creature.creature(nx, ny, creature.z).addEffect(smoke);
+                    }
+                }
+            }
+		};
+		return pyrotechnics;
+	}
+	
+	public Effect mindVision(int duration) {
+		Effect mindVision = new Effect(duration, "Mind Vision", false, null, Effect.mindVision){
             public void start(Creature creature){
                 creature.doAction("look far off into the distance");
-                creature.setHasMindVision(true);
             }
             public void end(Creature creature){
-                creature.setHasMindVision(false);
             }
         };
-        mindVision.setIsMindVision(true);
         return mindVision;
 	}
 	
@@ -245,45 +336,52 @@ public class EffectFactory {
 		return restoration;
 	}
 	
-	public Effect blinded() {
-		Effect blinded = new Effect(5, "Blinded", true, null) {
+	public Effect blinded(int duration) {
+		Effect blinded = new Effect(duration, "Blinded", true, null, Effect.blinded) {
 			public void start(Creature creature) {
 				creature.doAction("become blinded!");
-				creature.setIsBlinded(true);
 			}
 			public void end(Creature creature) {
-				creature.setIsBlinded(false);
-				if(creature.isBlinded() == false) {
+				if(!creature.affectedBy(Effect.blinded) == false) {
 					creature.doAction("return to seeing normally");
 				}
 
 			}
 		};
-		blinded.setIsNegative(true);
-		blinded.setIsBlinded(true);
 		return blinded;
 	}
 	
-	public Effect levitating() {
-		Effect levitating = new Effect(5, "Levitating", false, null){
+	public Effect illuminated(int duration) {
+		Effect illuminated = new Effect(duration, "Illuminated", true, null, Effect.illuminated) {
+			public void start(Creature creature) {
+				creature.doAction("glow with a bright light!");
+			}
+			public void end(Creature creature) {
+				if(!creature.affectedBy(Effect.illuminated) == false) {
+					creature.doAction("stop glowing");
+				}
+
+			}
+		};
+		return illuminated;
+	}
+	
+	public Effect levitating(int duration) {
+		Effect levitating = new Effect(duration, "Levitating", false, null, Effect.levitating){
             public void start(Creature creature){
                 creature.doAction("float into the air!");
-                creature.setIsLevitating(true);
             }
             public void end(Creature creature){
             	creature.doAction("float back down to the floor");
-                creature.setIsLevitating(false);
             }
         };
-		levitating.setIsLevitating(true);
 		return levitating;
 	}
 	
-	public Effect devoured() {
-		Effect devoured = new Effect(5, "Devoured", true, null) {
+	public Effect devoured(int duration) {
+		Effect devoured = new Effect(duration, "Devoured", true, null, Effect.devoured) {
 			public void start(Creature creature) {
 				creature.doAction("writhe in agony");
-				creature.setIsDevoured(true);
 			}
 			public void update(Creature creature) {
 				super.update(creature);
@@ -293,40 +391,19 @@ public class EffectFactory {
 				creature.modifyMana(damage2);
 			}
 			public void end(Creature creature) {
-				creature.setIsDevoured(false);
-				if(creature.isDevoured() == false) {
+				if(!creature.affectedBy(Effect.devoured)) {
 					creature.doAction("escape a devouring curse");
 				}
 
 			}
 		};
-		devoured.setIsNegative(true);
-		devoured.setIsDevoured(true);
 		return devoured;
 	}
 	
-	public Effect updateTest(Creature reference) {
-		Effect test = new Effect(25, "Test", false, null) {
-			public void start(Creature creature) {
-				creature.doAction(String.format("%d %d", reference.x(), reference.y()));
-			}
-			public void update(Creature creature) {
-				super.update(creature);
-				creature.doAction(String.format("%d %d", reference.x(), reference.y()));
-			}
-			public void end(Creature creature) {
-				creature.doAction(String.format("%d %d", reference.x(), reference.y()));
-			}
-		};
-
-		return test;
-	}
-	
-	public Effect confused() {
-		Effect confused = new Effect(5, "Confused", true, null) {
+	public Effect confused(int duration) {
+		Effect confused = new Effect(duration, "Confused", true, null, Effect.confused) {
 			public void start(Creature creature) {
 				creature.doAction("become confused!");
-				creature.setIsConfused(true);
 			}
 			public void update(Creature creature) {
 				super.update(creature);
@@ -335,15 +412,12 @@ public class EffectFactory {
 				
 			}
 			public void end(Creature creature) {
-				creature.setIsConfused(false);
-				if(creature.isConfused() == false) {
+				if(!creature.affectedBy(Effect.confused)) {
 					creature.doAction("stop being confused");
 				}
 
 			}
 		};
-		confused.setIsNegative(true);
-		confused.setIsConfused(true);
 		return confused;
 	}
 	
@@ -413,10 +487,154 @@ public class EffectFactory {
 		return bounce;
 	}
 	
-	public Effect chillWard() {
-		Effect chillWard = new Effect(5, "Chill Ward", false, null){
+	public Effect arcaneWard(int duration) {
+		Effect arcaneWard = new Effect(duration, "Arcane Ward", false, null, Effect.arcaneWard){
 			public void start(Creature creature){
-				creature.setHasChillWard(true);
+				creature.doAction("raise a magical shield!");
+
+                for (int ox = -1; ox < 2; ox++){
+                    for (int oy = -1; oy < 2; oy++){
+                        int nx = creature.x + ox;
+                        int ny = creature.y + oy;
+                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null) {
+                            continue;
+                        }
+                        
+                        
+                        Creature target = creature.creature(nx, ny, creature.z);
+                        
+                        Effect magicBurst = blink();
+                		target.addEffect(magicBurst);
+
+                    }
+                }
+            }
+			public void end(Creature creature) {
+				creature.doAction("let the shielding magic dissipate");
+			}
+        };
+		return arcaneWard;
+	}
+	
+	public Effect venomousWard(int duration) {
+		Effect venomousWard = new Effect(duration, "Venomous Ward", false, null, Effect.venomousWard){
+			public void start(Creature creature){
+				creature.doAction("become coated in vicious poison!");
+
+                for (int ox = -1; ox < 2; ox++){
+                    for (int oy = -1; oy < 2; oy++){
+                        int nx = creature.x + ox;
+                        int ny = creature.y + oy;
+                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null) {
+                            continue;
+                        }
+                        
+                        
+                        Creature target = creature.creature(nx, ny, creature.z);
+                        
+                        Effect venomBurst = poisoned((int)duration/2);
+                		target.addEffect(venomBurst);
+
+                    }
+                }
+            }
+			public void end(Creature creature) {
+				creature.doAction("feel the poisonous barrier fade");
+			}
+        };
+		return venomousWard;
+	}
+	
+	public Effect eldritchWard(int duration) {
+		Effect eldritchWard = new Effect(duration, "Eldritch Ward", false, null, Effect.eldritchWard){
+			public void start(Creature creature){
+				creature.doAction("become shrouded by chaotic energy!");
+
+                for (int ox = -1; ox < 2; ox++){
+                    for (int oy = -1; oy < 2; oy++){
+                        int nx = creature.x + ox;
+                        int ny = creature.y + oy;
+                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null) {
+                            continue;
+                        }
+                        
+                        
+                        Creature target = creature.creature(nx, ny, creature.z);
+                        
+                        Effect chaosBurst = devoured((int)duration/2);
+                		target.addEffect(chaosBurst);
+
+                    }
+                }
+            }
+			public void end(Creature creature) {
+				creature.doAction("feel the chaotic energy fade away");
+			}
+        };
+		return eldritchWard;
+	}
+	
+	public Effect bladeWard(int duration) {
+		Effect bladeWard = new Effect(duration, "Blade Ward", false, null, Effect.bladeWard){
+			public void start(Creature creature){
+				creature.doAction("become surrounded by metal shards!");
+
+                for (int ox = -1; ox < 2; ox++){
+                    for (int oy = -1; oy < 2; oy++){
+                        int nx = creature.x + ox;
+                        int ny = creature.y + oy;
+                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null) {
+                            continue;
+                        }
+                        
+                        
+                        Creature target = creature.creature(nx, ny, creature.z);
+                        
+                        Effect bladeBurst = bleeding((int)duration/2);
+                		target.addEffect(bladeBurst);
+
+                    }
+                }
+            }
+			public void end(Creature creature) {
+				creature.doAction("return the metal shards to the earth");
+			}
+        };
+		return bladeWard;
+	}
+	
+	public Effect causticWard(int duration) {
+		Effect causticWard = new Effect(duration, "Venomous Ward", false, null, Effect.causticWard){
+			public void start(Creature creature){
+				creature.doAction("become veiled in protective acid!");
+
+                for (int ox = -1; ox < 2; ox++){
+                    for (int oy = -1; oy < 2; oy++){
+                        int nx = creature.x + ox;
+                        int ny = creature.y + oy;
+                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null) {
+                            continue;
+                        }
+                        
+                        
+                        Creature target = creature.creature(nx, ny, creature.z);
+                        
+                        Effect acidBurst = corroded((int)duration/2);
+                		target.addEffect(acidBurst);
+
+                    }
+                }
+            }
+			public void end(Creature creature) {
+				creature.doAction("feel the acidic veil fade");
+			}
+        };
+		return causticWard;
+	}
+	
+	public Effect chillWard(int duration) {
+		Effect chillWard = new Effect(duration, "Chill Ward", false, null, Effect.chillWard){
+			public void start(Creature creature){
 				creature.doAction("become wreathed in freezing air!");
 
                 for (int ox = -1; ox < 2; ox++){
@@ -430,25 +648,22 @@ public class EffectFactory {
                         
                         Creature target = creature.creature(nx, ny, creature.z);
                         
-                        Effect chillBurst = frozen();
+                        Effect chillBurst = frozen((int)duration/2);
                 		target.addEffect(chillBurst);
 
                     }
                 }
             }
 			public void end(Creature creature) {
-				creature.setHasChillWard(false);
 				creature.doAction("feel the freezing winds fade away");
 			}
         };
-        chillWard.setIsChillWard(true);
 		return chillWard;
 	}
 	
-	public Effect magmaWard() {
-		Effect magmaWard = new Effect(5, "Magma Ward", false, null){
+	public Effect magmaWard(int duration) {
+		Effect magmaWard = new Effect(duration, "Magma Ward", false, null, Effect.magmaWard){
 			public void start(Creature creature){
-				creature.setHasMagmaWard(true);
 				creature.doAction("become shielded by flames!");
 
                 for (int ox = -1; ox < 2; ox++){
@@ -462,7 +677,7 @@ public class EffectFactory {
                         
                         Creature target = creature.creature(nx, ny, creature.z);
                         
-                        Effect magmaBurst = ignited();
+                        Effect magmaBurst = ignited((int)duration/2);
                         
                 		target.addEffect(magmaBurst);
 
@@ -470,15 +685,13 @@ public class EffectFactory {
                 }
             }
 			public void end(Creature creature) {
-				creature.setHasMagmaWard(false);
 				creature.doAction("feel the flaming shield burn out");
 			}
         };
-        magmaWard.setIsMagmaWard(true);
 		return magmaWard;
 	}
 	
-	public Effect fireball() {
+	public Effect fireball(int duration) {
 		Effect fireball = new Effect(1, null, true, null) {
 			public void start(Creature creature){
                 for (int ox = -2; ox < 3; ox++){
@@ -496,7 +709,7 @@ public class EffectFactory {
                         if (creature.creature(nx, ny, creature.z) == null) {
                             continue;
                         }
-                        Effect gas = ignited();
+                        Effect gas = ignited(duration);
                         creature.creature(nx, ny, creature.z).addEffect(gas);
                        
                     }
@@ -506,7 +719,7 @@ public class EffectFactory {
 		return fireball;
 	}
 	
-	public Effect overgrow() {
+	public Effect overgrow(int duration) {
 		Effect overgrow = new Effect(1, null, true, null){
 			public void start(Creature creature) {
 				
@@ -519,8 +732,8 @@ public class EffectFactory {
                         	if(ExtraMaths.d10() > 4) {
                         		creature.world().changeTile(nx, ny, creature.z(), Tile.GRASS_TALL);
                         		if(creature.creature(nx, ny, creature.z()) != null) {
-                        			creature.creature(nx, ny, creature.z()).notify("Thick grass springs up around you!");
-                        			creature.creature(nx, ny, creature.z()).addEffect(paralyzed());
+                        			creature.creature(nx, ny, creature.z()).notify("Thick foliage springs up around you!");
+                        			creature.creature(nx, ny, creature.z()).addEffect(paralysed(duration));
                         		}
                         	}
                         }
@@ -531,10 +744,9 @@ public class EffectFactory {
         return overgrow;
 	}
 	
-	public Effect arcWard() {
-		Effect arcWard = new Effect(5, "Arc Ward", false, null){
+	public Effect arcWard(int duration) {
+		Effect arcWard = new Effect(duration, "Arc Ward", false, null, Effect.arcWard){
 			public void start(Creature creature){
-				creature.setHasArcWard(true);
 				creature.doAction("become shrouded in lightning!");
 
                 for (int ox = -1; ox < 2; ox++){
@@ -563,18 +775,15 @@ public class EffectFactory {
                 }
             }
 			public void end(Creature creature) {
-				creature.setHasArcWard(false);
 				creature.doAction("feel the lightning shroud dissipate");
 			}
         };
-        arcWard.setIsArcWard(true);
 		return arcWard;
 	}
 	
-	public Effect invisible() {
-		Effect invisible = new Effect(5, "Invisible", false, null) {
+	public Effect invisible(int duration) {
+		Effect invisible = new Effect(duration, "Invisible", false, null, Effect.invisible) {
 			public void start(Creature creature) {
-				creature.setIsInvisible(true);
 				creature.changeColor(ExtraColors.invisible);
 				creature.doAction("become transparent");
 			}
@@ -583,33 +792,27 @@ public class EffectFactory {
 				creature.changeColor(ExtraColors.invisible);
 			}
 			public void end(Creature creature) {
-				creature.setIsInvisible(false);
-				if(creature.isInvisible() == false) {
+				if(!creature.affectedBy(Effect.invisible)) {
 					creature.changeColor(creature.defaultColor());
 					creature.doAction("become visible");
 				}
 				
 			}
 		};
-		invisible.setIsInvisible(true);
 		return invisible;
 	}
 	
-	public Effect paralyzed() {
-		Effect paralyzed = new Effect(5, "Paralyzed", true, null) {
+	public Effect paralysed(int duration) {
+		Effect paralyzed = new Effect(duration, "Paralysed", true, null, Effect.paralysed) {
 			public void start(Creature creature) {
-				creature.setIsParalyzed(true);
 				creature.doAction("seize up!");
 			}
 			public void end(Creature creature) {
-				creature.setIsParalyzed(false);
-				if(creature.isParalyzed() == false) {
+				if(!creature.affectedBy(Effect.paralysed)) {
 					creature.doAction("become mobile again");
 				}
 			}
 		};
-		paralyzed.setIsNegative(true);
-		paralyzed.setIsParalysis(true);
 		return paralyzed;
 	}
 	
@@ -672,38 +875,25 @@ public class EffectFactory {
 		return pit;
 	}
 	
-	public Effect frozen() {
-		Effect frozen = new Effect(5, "Frozen", true, null){
+	public Effect frozen(int duration) {
+		Effect frozen = new Effect(duration, "Frozen", true, null, Effect.frozen){
 			public void start(Creature creature) {
-				
-				double tempAmount = (ExtraMaths.d8());
-				int amount = (int) Math.round(tempAmount);
-				if(amount < 1) {
-					amount = 1;
-				}
-				
-				creature.setIsFrozen(true);
 				creature.doAction("freeze solid!");
-				Damage damage = new FrostDamage(amount, false, getThis(), false);
+				Damage damage = new FrostDamage(Dice.d8.roll(), false, getThis(), false);
 				creature.modifyHP(damage, "Killed by icy magic");
-
 			}
 			
 			public void end(Creature creature) {
-				creature.setIsFrozen(false);
-				if(creature.isFrozen() == false) {
+				if(!creature.affectedBy(Effect.frozen)) {
 					creature.doAction("defrost");
 				}
 			}};
-		frozen.setIsNegative(true);
-		frozen.setIsFrozen(true);
 		return frozen;
 	}
 	
-	public Effect electrified() {
-		Effect electrified = new Effect(5, "Electrified", true, null) {
+	public Effect electrified(int duration) {
+		Effect electrified = new Effect(duration, "Electrified", true, null, Effect.electrified) {
 			public void start(Creature creature) {
-				creature.setIsShocked(true);
 				creature.doAction("get a shock!");
 				Damage damage = new ShockDamage(Dice.d6.roll(), false, getThis(), false);
 				creature.modifyHP(damage, "Killed by shocking magic");
@@ -714,21 +904,17 @@ public class EffectFactory {
 				creature.modifyMana(damage);
 			}
 			public void end(Creature creature) {
-				creature.setIsShocked(false);
-				if(creature.isShocked() == false) {
+				if(!creature.affectedBy(Effect.electrified)) {
 					creature.doAction("recover from a shock");
 				}
 			}};
-		electrified.setIsNegative(true);
-		electrified.setIsElectrified(true);
 		return electrified;
 	}
 	
-	public Effect ignited() {
-		Effect ignited = new Effect(5, "Ignited", true, null) {
+	public Effect ignited(int duration) {
+		Effect ignited = new Effect(duration, "Ignited", true, null, Effect.ignited) {
 			public void start(Creature creature) {
 				creature.doAction("burst into flames!");
-				creature.setIsIgnited(true);
 			}
 			public void update(Creature creature) {
 				super.update(creature);
@@ -737,25 +923,40 @@ public class EffectFactory {
 				creature.modifyHP(damage, "Burned to death");
 			}
 			public void end(Creature creature) {
-				creature.setIsIgnited(false);
-				if(creature.isIgnited() == false) {
+				if(!creature.affectedBy(Effect.ignited)) {
 					creature.doAction("put the flames out");
 				}
 
 			}};
-		ignited.setIsNegative(true);
-		ignited.setIsIgnited(true);
 		return ignited;
 		
 	}
 	
-
+	public Effect brazierBarrier(Creature reference) {
+		Effect brazierBarrier = new Effect(1, "Brazier Barrier", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.pyromancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.pyromancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect magmaWard_ = reference.ai().factory.effectFactory.magmaWard(duration_);
+        		Effect illuminated_ = reference.ai().factory.effectFactory.illuminated(duration_);
+				creature.addEffect((Effect) magmaWard_.clone());
+				creature.addEffect((Effect) illuminated_.clone());
+			}
+        };
+        brazierBarrier.setShowInMenu(false);
+		return brazierBarrier;
+	}
 	
 	public Effect iceWall(Creature player) {
 		Effect wall = new Effect(1, null, false, player){
 			public void start(Creature creature) {
 				player.notify("You summon a wall of ice!");
-				Creature iceWall = objectFactory.newIceWall(0, player, 0);
+				Creature iceWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 				creature.become(iceWall);
 
 				int px = player.x();
@@ -767,37 +968,37 @@ public class EffectFactory {
 					//south west
 					//creature.moveBy(1, 1, 0);
 					if((creature.creature(cx+1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
 					}
 					if((creature.creature(cx+2, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-1, creature.z());
 					}
 					if((creature.creature(cx, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
 					}
 					if((creature.creature(cx-1, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
 					}
 					if((creature.creature(cx-2, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
 					}
 					if((creature.creature(cx+2, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
 					}
 				}
@@ -806,37 +1007,37 @@ public class EffectFactory {
 					//north east
 					//creature.moveBy(-1, -1, 0);
 					if((creature.creature(cx-1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
 					}
 					if((creature.creature(cx-2, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+1, creature.z());
 					}
 					if((creature.creature(cx, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
 					}
 					if((creature.creature(cx+1, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
 					}
 					if((creature.creature(cx-2, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
 					}
 					if((creature.creature(cx+2, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
 					}
 				}
@@ -845,37 +1046,37 @@ public class EffectFactory {
 					//north west
 					//creature.moveBy(1, -1, 0);
 					if((creature.creature(cx+1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
 					}
 					if((creature.creature(cx+2, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+1, creature.z());
 					}
 					if((creature.creature(cx, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
 					}
 					if((creature.creature(cx-1, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
 					}
 					if((creature.creature(cx+2, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
 					}
 					if((creature.creature(cx-2, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
 					}
 				}
@@ -884,37 +1085,37 @@ public class EffectFactory {
 					//south east
 					//creature.moveBy(-1, 1, 0);
 					if((creature.creature(cx-1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
 					}
 					if((creature.creature(cx-2, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-1, creature.z());
 					}
 					if((creature.creature(cx, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
 					}
 					if((creature.creature(cx+1, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
 					}
 					if((creature.creature(cx+2, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
 					}
 					if((creature.creature(cx-2, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
 					}
 				}
@@ -922,20 +1123,20 @@ public class EffectFactory {
 				if((cx > px && cy == py)||(cx < px && cy == py)) {
 					//creature.moveBy(1, 0, 0);
 					if((creature.creature(cx, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
 					}
 					if((creature.creature(cx, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
 					}
 
 					if((creature.creature(cx, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+2, creature.z());
 					}
 					if((creature.creature(cx, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-2, creature.z());
 					}
 				}
@@ -944,20 +1145,20 @@ public class EffectFactory {
 				if((cx == px && cy < py)||(cx == px && cy > py)) {
 					//creature.moveBy(0, -1, 0);
 					if((creature.creature(cx+1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
 					}
 					if((creature.creature(cx-1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
 					}
 
 					if((creature.creature(cx+2, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy, creature.z());
 					}
 					if((creature.creature(cx-2, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.newIceWall(0, player, 0);
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
 						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy, creature.z());
 					}
 				}
@@ -971,7 +1172,7 @@ public class EffectFactory {
 		return wall;
 	}
 
-	public Effect chainLightning(Creature player) {
+	public Effect chainLightning(Creature player) { //TODO CLEANUP
 		Effect lightning = new Effect(7, null, true, player){
 			public void start(Creature creature){
 				int playerDC = player.intelligenceSaveDC();
@@ -1028,8 +1229,9 @@ public class EffectFactory {
 				
 				int savingThrow = creature.frostSave();
 				int saveTarget = player.intelligenceSaveDC();
+				int duration = 2+Dice.d4.roll(); //TODO apply cryomancy
 				if(savingThrow < saveTarget) {
-					creature.addEffect(frozen());
+					creature.addEffect(frozen(duration));
 				}else {
 					creature.doAction("resist the spell!");
 				}
@@ -1055,7 +1257,7 @@ public class EffectFactory {
 					creature.modifyHP(damage, "Killed by kinetic energy");
 				}else {
 					int push = 0;
-					for(int i = 0; i < 3; i++) {
+					for(int i = 0; i < 3; i++) { //TODO apply evocation
 						if(cx > px && cy < py) {
 							creature.moveBy(1, -1, 0, false);
 							push++;
@@ -1088,9 +1290,13 @@ public class EffectFactory {
 							creature.moveBy(0, -1, 0, false);
 							push++;
 						}
-						if(push > 2) {
-							creature.doAction("get thrown back!");
+						creature.doAction("get thrown back!");
+						int amount = 0;
+						for(int j = 0; j < push+1; j++) {
+							amount += Dice.d4.roll();
 						}
+						Damage damage = new MagicDamage(amount, false, getThis(), false);
+						creature.modifyHP(damage, "Killed by kinetic energy");
 					}
 				}
 			}
@@ -1135,7 +1341,7 @@ public class EffectFactory {
                         if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) != null) {
                             continue;
                         }
-                        Creature bat = objectFactory.randomLesserMonster(0, player, 0);
+                        Creature bat = objectFactory.randomLesserMonster(0, player, false);
                         if (!bat.canEnter(nx, ny, creature.z)){
                         	objectFactory.world.remove(bat);
                             continue;

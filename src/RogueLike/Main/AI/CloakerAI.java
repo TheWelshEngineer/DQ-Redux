@@ -2,6 +2,7 @@ package RogueLike.Main.AI;
 
 import java.util.ArrayList;
 
+import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
@@ -26,7 +27,7 @@ public class CloakerAI extends CreatureAI{
 			//Become Invisible
 			actionQueue.add(2);
 			actionQueue.add(500);
-		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
 			//Hunt
 			actionQueue.add(3);
 			actionQueue.add(1000);
@@ -47,7 +48,7 @@ public class CloakerAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if((creature.isParalyzed() == true)) {
+		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -56,7 +57,7 @@ public class CloakerAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.isFrozen() == true)) {
+		if((creature.affectedBy(Effect.frozen))) {
 			creature.doAction("struggle to move!");
 			return;
 
@@ -66,15 +67,12 @@ public class CloakerAI extends CreatureAI{
 	}
 	
 	public void loseInvisible() {
-		creature.setIsInvisible(false);
-		creature.changeColor(creature.defaultColor());
-		creature.doAction("become visible");
+		creature.cureEffectOfType(Effect.invisible);
 	}
 	
 	public void becomeInvisible() {
-		creature.setIsInvisible(true);
-		creature.changeColor(ExtraColors.invisible);
-		creature.doAction("become transparent");
+		Effect invisible = (Effect) this.factory.effectFactory.invisible(100000).clone();
+		creature.addEffect(invisible);
 	}
 
 }

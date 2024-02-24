@@ -73,6 +73,10 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 	public void modifyAlchemancy(int amount) {
 		playerAlchemancy += amount;
 	}
+	public int playerFerromancy = 0;
+	public void modifyFerromancy(int amount) {
+		playerFerromancy += amount;
+	}
 	
 	public char simpleLeft = '>';
 	public char simpleRight = '<';
@@ -100,6 +104,8 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 	public char electromancyRight = '<';
 	public char alchemancyLeft = '>';
 	public char alchemancyRight = '<';
+	public char ferromancyLeft = '>';
+	public char ferromancyRight = '<';
 	
 	public void updateSimpleMarker(int check) {
 		switch(check) {
@@ -179,6 +185,12 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 		default: alchemancyLeft = ' '; alchemancyRight = ' '; break;
 		}
 	}
+	public void updateFerromancyMarker(int check) {
+		switch(check) {
+		case 13: ferromancyLeft = '>'; ferromancyRight = '<'; break;
+		default: ferromancyLeft = ' '; ferromancyRight = ' '; break;
+		}
+	}
 	
 	public void changeMarkers(int check) {
 		updateSimpleMarker(check);
@@ -194,6 +206,7 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 		updateCryomancyMarker(check);
 		updateElectromancyMarker(check);
 		updateAlchemancyMarker(check);
+		updateFerromancyMarker(check);
 	}
 	
 	public PlayerLevelUpSkillsScreen(Creature player) {
@@ -224,6 +237,7 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 		terminal.writeCenter(String.format("%c Cryomancy: %s %c", cryomancyLeft, ExtraMaths.toRomanNumerals(player.cryomancyLevel()+playerCryomancy), cryomancyRight), y++);
 		terminal.writeCenter(String.format("%c Electromancy: %s %c", electromancyLeft, ExtraMaths.toRomanNumerals(player.electromancyLevel()+playerElectromancy), electromancyRight), y++);
 		terminal.writeCenter(String.format("%c Alchemancy: %s %c", alchemancyLeft, ExtraMaths.toRomanNumerals(player.alchemancyLevel()+playerAlchemancy), alchemancyRight), y++);
+		terminal.writeCenter(String.format("%c Ferromancy: %s %c", ferromancyLeft, ExtraMaths.toRomanNumerals(player.ferromancyLevel()+playerFerromancy), ferromancyRight), y++);
 		
 		if(check == 0) {
 			terminal.writeCenter("Simple Weapons represents your skill with simple weapons", y+=5);
@@ -290,6 +304,11 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 			terminal.writeCenter("manipulation of chemical processes. A higher Alchemancy skill", y+=1);
 			terminal.writeCenter("allows you to use more powerful alchemancy wands,", y+=1);
 			terminal.writeCenter("and improves the effectiveness of your alchemancy wands.", y+=1);
+		}else if(check == 13) {
+			terminal.writeCenter("Ferromancy is a school of magic focused mainly on the", y+=5);
+			terminal.writeCenter("manipulation of stone and metals. A higher Ferromancy skill", y+=1);
+			terminal.writeCenter("allows you to use more powerful ferromancy wands,", y+=1);
+			terminal.writeCenter("and improves the effectiveness of your ferromancy wands.", y+=1);
 		}
 		
 		
@@ -304,14 +323,14 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 		switch(key.getKeyCode()) {
 		case KeybindManager.navigateMenuUp:
 			if(check == 0) {
-				check = 12;
+				check = 13;
 			}else{
 				check--;
 			}
 			return this;
 			
 		case KeybindManager.navigateMenuDown:
-			if(check == 12) {
+			if(check == 13) {
 				check = 0;
 			}else{
 				check++;
@@ -384,6 +403,11 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 					modifyAlchemancy(1); 
 					modifyPoints(-1); 
 				}
+			}else if(check == 13) {
+				if(points > 0) {
+					modifyFerromancy(1); 
+					modifyPoints(-1); 
+				}
 			}	
 			return this;
 			
@@ -451,6 +475,11 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 			}else if(check == 12) {
 				if(playerAlchemancy > 0) {
 					modifyAlchemancy(-1); 
+					modifyPoints(1); 
+				} 
+			}else if(check == 13) {
+				if(playerFerromancy > 0) {
+					modifyFerromancy(-1); 
 					modifyPoints(1); 
 				} 
 			}

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.LevelUpController;
 import RogueLike.Main.Line;
@@ -112,7 +113,7 @@ public class CreatureAI {
 	public void onEnter(int x, int y, int z, Tile tile) {
 		//fixed
 		if((tile.isOpen() && !tile.isBars()) || (tile.isStairs() && !tile.isBars())) {
-			if(tile == Tile.PIT && (!creature.isLevitating() && !creature.isFlying())) {
+			if(tile == Tile.PIT && (!creature.affectedBy(Effect.levitating) && !creature.isFlying())) {
 				
 			}else {
 				creature.x = x;
@@ -399,7 +400,7 @@ public class CreatureAI {
 		actionQueue.add(16);
 		actionQueue.add(1000);
 		this.setItemToProcess(toRead);
-		this.setSpellToProcess(toCast);
+		this.setSpellToProcess((Spell) toCast.clone());
 		this.setProcessX(x);
 		this.setProcessY(y);
 	}

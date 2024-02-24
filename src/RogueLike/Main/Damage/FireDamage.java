@@ -6,7 +6,7 @@ public class FireDamage extends Damage{
 
 	public FireDamage(int value, boolean silent, EffectFactory factory, boolean status) {
 		super(value, false, silent, Damage.fire, factory, status);
-		this.setStatusEffect(factory.ignited());
+		this.setStatusEffect(factory.ignited(value));
 	}
 
 }

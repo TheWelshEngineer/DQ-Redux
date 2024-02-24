@@ -275,7 +275,7 @@ public class GameplayScreen implements Screen{
 	
 	
 	public void createCreatures(ObjectFactory factory) {
-		player = factory.newPlayer(messages, fov, this.playerClass, this.startingStats, this.startingSkills, this.playerName, this.playerAncestry);
+		player = factory.creatureFactory.newPlayer(messages, fov, this.playerClass, this.startingStats, this.startingSkills, this.playerName, this.playerAncestry);
 		factory.setUpPotionIndex();
 		factory.setUpWandIndex(player);
 		factory.setUpRingIndex(player);
@@ -283,25 +283,25 @@ public class GameplayScreen implements Screen{
 		for(int z = 0; z < world.depth(); z++) {
 			//temp
 			for(int i = 0; i < 20; i++) { // 20
-				factory.newMarker(z, player, 1);
+				factory.creatureFactory.newMarker(z, player, true);
 			}
 			//
 			for(int i = 0; i < 18; i++) {
-				factory.randomChest(z, player, 1);
+				factory.randomChest(z, player, true);
 				//factory.newGoldChest(z, player, true);
 			}
 			
 			for(int i = 0; i < 70; i++) {
-				factory.randomLesserMonster(z, player, 1);
+				factory.randomLesserMonster(z, player, true);
 			}
 			if(z > 1) {
 				for(int i = 0; i < 35; i++) {
-					factory.randomMediumMonster(z, player, 1);
+					factory.randomMediumMonster(z, player, true);
 				}
 			}
 			if(z > 3) {
 				for(int i = 0; i < 18; i++) {
-					factory.randomGreaterMonster(z, player, 1);
+					factory.randomGreaterMonster(z, player, true);
 				}
 			}
 
@@ -313,34 +313,34 @@ public class GameplayScreen implements Screen{
 	private void createItems(ObjectFactory factory) {
 		for(int z = 0; z < world.depth(); z++) {
 			for(int i = 0; i < world.width() * world.height() / 25; i++) {
-				factory.newRock(z, 1);
+				factory.itemFactory.newRock(z, 1);
 			}
 			for(int i = 0; i < 35; i++) {
-				factory.randomTrap(z, 1);
+				factory.randomTrap(z, 1, player);
 			}
 			for(int i = 0; i < 6; i++) {//6
 				factory.randomFood(z, 1);
 			}
 			for(int j = 0; j < 4; j++) {
-				//factory.randomPotion(z, true);
+				factory.randomPotion(z, true);
 			}
 			for(int k = 0; k < 1; k++) {
-				//factory.randomArmor(z, true);
+				factory.randomArmor(z, true);
 			}
 			for(int l = 0; l < 1; l++) {
-				//factory.randomShield(z, true);
+				factory.randomShield(z, true);
 			}
 			for(int m = 0; m < 2; m++) {
-				//factory.randomWeapon(z, true);
+				factory.randomWeapon(z, true);
 			}
 			for(int l = 0; l < 1; l++) {
-				//factory.randomRing(z, true);
+				factory.randomRing(z, true);
 			}
 			for(int l = 0; l < 1; l++) {
-				//factory.randomScroll(z, player, true);
+				factory.randomScroll(z, player, true);
 			}
 		}
-		factory.newVictoryItem(world.depth()-1, 1);
+		factory.itemFactory.newVictoryItem(world.depth()-1, 1);
 	}
 	
 	private void createWorld() {
@@ -395,7 +395,7 @@ public class GameplayScreen implements Screen{
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
 		if(player.isReadingMagicMapping()) {
 			fov.updateMagicMapping(player.x, player.y, player.z, 1000);
-		}else if(player.isLevitating() == true) {
+		}else if(player.affectedBy(Effect.levitating)) {
 			fov.updateLevitating(player.x, player.y, player.z, player.visionRadius());
 		}else{
 			fov.update(player.x, player.y, player.z, player.visionRadius());

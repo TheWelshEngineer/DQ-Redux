@@ -17,7 +17,7 @@ public class SpellFactory {
 		return firebolt;
 	}
 	
-	public Spell repel(Creature player) {
+	public Spell forceBlast(Creature player) {
 		Spell repel = new Spell("repel", 1, 4, player, effectFactory.repelWand(player), false, false);
 		return repel;
 	}
@@ -73,53 +73,33 @@ public class SpellFactory {
 	}
 	
 	public Spell confuseScroll(Creature player) {
-		Spell confuse = new Spell("confusion", 12, 0, player, effectFactory.confused(), false, false);
-		return confuse;
-	}
-	
-	public Spell overgrowth(Creature player) {
-		Spell wildgrowth = new Spell("overgrowth", 13, 6, player, effectFactory.overgrow(), false, false);
-		return wildgrowth;
-	}
-	
-	public Spell frostWard(Creature player) {
-		Effect temp = effectFactory.chillWard();
-		temp.setDuration(12);
-		Spell frostWard = new Spell("frost ward", 14, 8, player, temp, true, false);
-		return frostWard;
-	}
-	
-	public Spell levitate(Creature player) {
-		Effect temp = effectFactory.levitating();
-		temp.setDuration(16);
-		Spell levitate = new Spell("levitate", 15, 8, player, temp, true, false);
-		return levitate;
-	}
-	
-	public Spell paralysis(Creature player) {
-		Effect temp = effectFactory.paralyzed();
-		temp.setDuration(8);
-		Spell paralysis = new Spell("paralysis", 16, 10, player, temp, false, false);
-		return paralysis;
-	}
-	
-	public Spell beastForm(Creature player) {
-		Effect temp = effectFactory.beastForm();
-		temp.setDuration(10);
-		Spell beastForm = new Spell("beast form", 17, 8, player, temp, true, false);
-		return beastForm;
-	}
-	
-	public Spell confusion(Creature player) {
-		Effect temp = effectFactory.confused();
-		temp.setDuration(10);
-		Spell confuse = new Spell("confusion", 18, 8, player, temp, false, false);
+		Spell confuse = new Spell("confusion", 12, 0, player, effectFactory.confused(5), false, false);
 		return confuse;
 	}
 	
 	public Spell iceKnife(Creature player) {
-		Spell iceKnife = new Spell("ice knife", 0, 8, player, effectFactory.iceKnife(player), false, false);
+		Spell iceKnife = new Spell("ice knife", 19, 8, player, effectFactory.iceKnife(player), false, false);
 		return iceKnife;
+	}
+	
+	public Spell acidBlast(Creature player) {
+		Spell acidBlast = new Spell("acid blast", 20, 4, player, effectFactory.acidBlast(player), false, false);
+		return acidBlast;
+	}
+	
+	public Spell brazierBarrier(Creature player) {
+		Spell brazierBarrier = new Spell("brazier barrier", 21, 4, player, effectFactory.brazierBarrier(player), true, false);
+		return brazierBarrier;
+	}
+	
+	public Spell pyrotechnics(Creature player) {
+		Spell pyrotechnics = new Spell("pyrotechnics", 22, 4, player, effectFactory.pyrotechnics(player), false, false);
+		return pyrotechnics;
+	}
+	
+	public Spell flashfire(Creature player) {
+		Spell flashfire = new Spell("flashfire", 23, 4, player, effectFactory.flashfire(player), false, false);
+		return flashfire;
 	}
 	
 

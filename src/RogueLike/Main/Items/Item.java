@@ -1208,7 +1208,7 @@ public class Item implements Cloneable{
 		isIdentified = value;
 	}
 	
-	private int upgradeLevel;
+	private int upgradeLevel = 0;
 	public int upgradeLevel() {
 		return upgradeLevel;
 	}

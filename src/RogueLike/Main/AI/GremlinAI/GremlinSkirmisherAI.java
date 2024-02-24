@@ -2,6 +2,7 @@ package RogueLike.Main.AI.GremlinAI;
 
 import java.util.ArrayList;
 
+import RogueLike.Main.Effect;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
@@ -19,15 +20,15 @@ public class GremlinSkirmisherAI extends CreatureAI{
 	
 	public void selectAction() {
 		actionQueue = new ArrayList<Integer>();
-		if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false && !super.isAdjacentTo(player)) {
+		if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible) && !super.isAdjacentTo(player)) {
 			//Fast Hunt Player
 			actionQueue.add(1);
 			actionQueue.add(500);
-		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false && super.isAdjacentTo(player) && comboAttackCooldown == 0) {
+		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible) && super.isAdjacentTo(player) && comboAttackCooldown == 0) {
 			//Hunt
 			actionQueue.add(2);
 			actionQueue.add(1000);
-		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
 			//Hunt
 			actionQueue.add(3);
 			actionQueue.add(1000);
@@ -48,7 +49,7 @@ public class GremlinSkirmisherAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if((creature.isParalyzed() == true)) {
+		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -57,7 +58,7 @@ public class GremlinSkirmisherAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.isFrozen() == true)) {
+		if((creature.affectedBy(Effect.frozen))) {
 			creature.doAction("struggle to move!");
 			return;
 

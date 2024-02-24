@@ -2,6 +2,7 @@ package RogueLike.Main.AI;
 
 import java.util.ArrayList;
 
+import RogueLike.Main.Effect;
 import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
@@ -21,11 +22,11 @@ public class OgreAI extends CreatureAI{
 			//Burst
 			actionQueue.add(1);
 			actionQueue.add(1000);
-		}else if(canThrowAt(player) && player.isInvisible() == false) {
+		}else if(canThrowAt(player) && !player.affectedBy(Effect.invisible)) {
 			//Throw Attack
 			actionQueue.add(2);
 			actionQueue.add(1000);
-		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
 			//Hunt
 			actionQueue.add(3);
 			actionQueue.add(1000);
@@ -51,7 +52,7 @@ public class OgreAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if((creature.isParalyzed() == true)) {
+		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -60,7 +61,7 @@ public class OgreAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.isFrozen() == true)) {
+		if((creature.affectedBy(Effect.frozen))) {
 			creature.doAction("struggle to move!");
 			return;
 

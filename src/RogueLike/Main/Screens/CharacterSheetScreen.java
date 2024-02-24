@@ -55,7 +55,7 @@ public class CharacterSheetScreen implements Screen{
         terminal.write(String.format("Vision Radius: %d tiles", player.visionRadius()), x, y++);
         y++;
         terminal.write("== Skills ==", x2, y2++);
-        for(int i = 0; i < 13; i++) {
+        for(int i = 0; i < 14; i++) {
         	terminal.write(String.format("%s", player.skills()[i].toStringCharacterSheet()), x2, y2++);
         }
         y++;

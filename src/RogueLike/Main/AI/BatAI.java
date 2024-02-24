@@ -3,6 +3,7 @@ package RogueLike.Main.AI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
+import RogueLike.Main.Effect;
 import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
@@ -14,7 +15,7 @@ public class BatAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if((creature.isParalyzed() == true)) {
+		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -23,7 +24,7 @@ public class BatAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.isFrozen() == true)) {
+		if((creature.affectedBy(Effect.frozen))) {
 			creature.doAction("struggle to move!");
 			return;
 

@@ -3,6 +3,7 @@ package RogueLike.Main.AI.SlimeAI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
+import RogueLike.Main.Effect;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
@@ -27,7 +28,7 @@ public class PinkSlimeAI extends CreatureAI{
 			//Burst
 			actionQueue.add(1);
 			actionQueue.add(0);
-		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
 			//Hunt
 			actionQueue.add(2);
 			actionQueue.add(1000);
@@ -56,7 +57,7 @@ public class PinkSlimeAI extends CreatureAI{
                         continue;
                     }
 
-                    Creature slimeling = factory.newPinkSlimeling(0, player, 0);
+                    Creature slimeling = factory.creatureFactory.newPinkSlimeling(0, player, false);
 
                     if (!slimeling.canEnter(nx, ny, creature.z)){
                         world.remove(slimeling);
@@ -89,13 +90,13 @@ public class PinkSlimeAI extends CreatureAI{
 	
 	public void onUpdate() {
 		
-		if((creature.isFrozen() == true)) {
+		if((creature.affectedBy(Effect.frozen))) {
 			creature.doAction("struggle to move!");
 			return;
 
 		}else {
-			if((creature.isParalyzed() == true)) {
-				creature.cureParalysis();
+			if((creature.affectedBy(Effect.paralysed))) {
+				creature.cureEffectOfType(Effect.paralysed);
 				creature.doAction("break free of paralysis!");
 			}
 			decodeAction(actionQueue.get(0)); 

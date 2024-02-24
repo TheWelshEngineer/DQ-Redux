@@ -3,6 +3,7 @@ package RogueLike.Main.AI.GremlinAI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
+import RogueLike.Main.Effect;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
@@ -15,17 +16,17 @@ public class GremlinAI extends CreatureAI{
 	public GremlinAI(Creature creature, Creature player, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		this.player = player;
-		this.arrowsLeft = Dice.d10.roll();
+		this.arrowsLeft = Dice.d10.roll()+3;
 
 	}
 	
 	public void selectAction() {
 		actionQueue = new ArrayList<Integer>();
-		if(canRangedWeaponAttack(player) && player.isInvisible() == false && arrowsLeft > 0) {
+		if(canRangedWeaponAttack(player) && !player.affectedBy(Effect.invisible) && arrowsLeft > 0) {
 			//Shoot Arrows
 			actionQueue.add(1);
 			actionQueue.add(1000);
-		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
 			//Hunt
 			actionQueue.add(2);
 			actionQueue.add(1000);
@@ -45,7 +46,7 @@ public class GremlinAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if((creature.isParalyzed() == true)) {
+		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -54,7 +55,7 @@ public class GremlinAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.isFrozen() == true)) {
+		if((creature.affectedBy(Effect.frozen))) {
 			creature.doAction("struggle to move!");
 			return;
 

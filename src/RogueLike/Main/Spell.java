@@ -2,7 +2,7 @@ package RogueLike.Main;
 
 import RogueLike.Main.Creatures.Creature;
 
-public class Spell {
+public class Spell implements Cloneable{
 	
 	private String name;
 	public String name() {
@@ -50,32 +50,8 @@ public class Spell {
 		effect.setIsNegative(true);
 	}
 	
-	public void makeEffectIgnited() {
-		effect.setIsIgnited(true);
-	}
-	
-	public void makeEffectFrozen() {
-		effect.setIsFrozen(true);
-	}
-	
-	public void makeEffectElectrified() {
-		effect.setIsElectrified(true);
-	}
-	
-	public void makeEffectParalysis() {
-		effect.setIsParalysis(true);
-	}
-	
-	public void makeEffectCorrosion() {
-		effect.setIsCorrosion(true);
-	}
-	
-	public void makeEffectPoison() {
-		effect.setIsPoison(true);
-	}
-	
-	public void makeEffectConfused() {
-		effect.setIsConfused(true);
+	public void setSpellEffectType(String type) {
+		effect.setType(type);
 	}
 	
 	public Spell(String name, int id, int manaCost, Creature caster, Effect effect, boolean selfCast, boolean tileCast) {

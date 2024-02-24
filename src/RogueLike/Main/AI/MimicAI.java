@@ -2,6 +2,7 @@ package RogueLike.Main.AI;
 
 import java.util.ArrayList;
 
+import RogueLike.Main.Effect;
 import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
@@ -21,7 +22,7 @@ public class MimicAI extends CreatureAI{
 			//Hide
 			actionQueue.add(1);
 			actionQueue.add(0);
-		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
 			//Hunt
 			actionQueue.add(2);
 			actionQueue.add(1000);
@@ -45,7 +46,7 @@ public class MimicAI extends CreatureAI{
 			return;
 		}
 		
-		if((creature.isParalyzed() == true)) {
+		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -54,12 +55,12 @@ public class MimicAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.isFrozen() == true)) {
+		if((creature.affectedBy(Effect.frozen))) {
 			creature.doAction("struggle to move!");
 			return;
 
 		}else{
-			if(!creature.canSee(player.x, player.y, player.z) || player.isInvisible() == true) {
+			if(!creature.canSee(player.x, player.y, player.z) || player.affectedBy(Effect.invisible)) {
 				turnsWithoutPlayer++;
 			}
 			decodeAction(actionQueue.get(0)); 

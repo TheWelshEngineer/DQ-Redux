@@ -2,6 +2,7 @@ package RogueLike.Main.AI;
 
 import java.util.ArrayList;
 
+import RogueLike.Main.Effect;
 import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
@@ -37,7 +38,7 @@ public class FungusAI extends CreatureAI{
 	}
 	
 	public void onUpdate() {
-		if(creature.isParalyzed() == false && creature.isFrozen() == false) {
+		if(!creature.affectedBy(Effect.frozen)) {
 			decodeAction(actionQueue.get(0)); 
 		}
 	}
@@ -54,7 +55,7 @@ public class FungusAI extends CreatureAI{
 			
 		}
 		creature.doAction("spawn a child");		
-		Creature child = factory.newFungus(creature.z, 1);
+		Creature child = factory.creatureFactory.newFungus(creature.z, true);
 		child.x = x;
 		child.y = y;
 		spreadcount++;		

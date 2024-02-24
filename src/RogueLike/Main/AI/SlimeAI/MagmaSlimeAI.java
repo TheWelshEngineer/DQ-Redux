@@ -28,7 +28,7 @@ public class MagmaSlimeAI extends CreatureAI{
 			//Explosive Burst
 			actionQueue.add(1);
 			actionQueue.add(0);
-		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
+		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
 			//Hunt
 			actionQueue.add(2);
 			actionQueue.add(1000);
@@ -57,7 +57,7 @@ public class MagmaSlimeAI extends CreatureAI{
                         continue;
                     }
 
-                    Creature slimeling = factory.newMagmaSlimeling(0, player, 0);
+                    Creature slimeling = factory.creatureFactory.newMagmaSlimeling(0, player, false);
 
                     if (!slimeling.canEnter(nx, ny, creature.z)){
                         world.remove(slimeling);
@@ -82,7 +82,7 @@ public class MagmaSlimeAI extends CreatureAI{
                     
                 }
             }
-            creature.addEffect((Effect)factory.effectFactory.fireball().clone());
+            creature.addEffect((Effect)factory.effectFactory.fireball(5).clone());
             creature.doAction("explode into slimelings!");
             Damage damage = new Damage(creature.hp(), false, true, Damage.physical, factory.effectFactory, false);
             creature.modifyHP(damage, "");
@@ -91,13 +91,13 @@ public class MagmaSlimeAI extends CreatureAI{
 	
 	public void onUpdate() {
 		
-		if((creature.isFrozen() == true)) {
+		if((creature.affectedBy(Effect.frozen))) {
 			creature.doAction("struggle to move!");
 			return;
 
 		}else {
-			if((creature.isParalyzed() == true)) {
-				creature.cureParalysis();
+			if((creature.affectedBy(Effect.paralysed))) {
+				creature.cureEffectOfType(Effect.paralysed);
 				creature.doAction("break free of paralysis!");
 			}
 			decodeAction(actionQueue.get(0)); 

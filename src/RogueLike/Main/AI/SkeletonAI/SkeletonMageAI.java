@@ -1,16 +1,20 @@
-package RogueLike.Main.AI;
+package RogueLike.Main.AI.SkeletonAI;
 
 import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
+import RogueLike.Main.Effect;
 import RogueLike.Main.World;
+import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 
-public class SkeletonAI extends CreatureAI{
+public class SkeletonMageAI extends CreatureAI{
 	private Creature player;
 	
-	public SkeletonAI(Creature creature, Creature player, ObjectFactory factory, World world) {
+	private int spellCooldown = 0;
+	
+	public SkeletonMageAI(Creature creature, Creature player, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		this.player = player;
 	}
@@ -21,13 +25,17 @@ public class SkeletonAI extends CreatureAI{
 			//Blunder
 			actionQueue.add(1);
 			actionQueue.add(1000);
-		}else if(creature.canSee(player.x, player.y, player.z) && player.isInvisible() == false) {
-			//Hunt
+		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible) && this.spellCooldown == 0) {
+			//Cast Ice Knife
 			actionQueue.add(2);
+			actionQueue.add(1000);
+		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
+			//Hunt
+			actionQueue.add(3);
 			actionQueue.add(1000);
 		}else {
 			//Wander
-			actionQueue.add(3);
+			actionQueue.add(4);
 			actionQueue.add(1000);
 		}
 	}
@@ -35,13 +43,14 @@ public class SkeletonAI extends CreatureAI{
 	public void decodeAction(int action) {
 		switch(action) {
 			case 1: this.wander(); System.out.println(this.toString() + " uses [Blunder]"); break;
-			case 2: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
+			case 2: this.castSpell(); System.out.println(this.toString() + " uses [Cast Ice Knife]"); this.spellCooldown = 4; break;
+			case 3: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
 			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}
 	
 	public void onUpdate() {
-		if((creature.isParalyzed() == true)) {
+		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
 				return;
@@ -50,13 +59,20 @@ public class SkeletonAI extends CreatureAI{
 			}
 		}
 		
-		if((creature.isFrozen() == true)) {
+		if((creature.affectedBy(Effect.frozen))) {
 			creature.doAction("struggle to move!");
 			return;
 
 		}else {
+			if(spellCooldown > 0) {
+				spellCooldown--;
+			}
 			decodeAction(actionQueue.get(0));
 		}
+	}
+	
+	public void castSpell() {
+		player.addEffect((Effect)factory.effectFactory.iceKnife(creature).clone());
 	}
 	
 }

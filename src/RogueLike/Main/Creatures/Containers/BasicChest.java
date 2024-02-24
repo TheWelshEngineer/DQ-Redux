@@ -61,11 +61,11 @@ public class BasicChest extends Creature{
 			this.inventory().add(startWand);
 			break;
 		case 10: 
-			Item startGold = factory.newGold(depth, false);
+			Item startGold = factory.itemFactory.newGold(depth, false);
 			this.inventory().add(startGold);
 			break;
 		default: 
-			Item defaultGold = factory.newGold(depth, false);
+			Item defaultGold = factory.itemFactory.newGold(depth, false);
 			this.inventory().add(defaultGold);
 			break;
 		}
