@@ -711,7 +711,7 @@ public class InventoryScreen implements Screen{
 					return null;
 				}else {
 					if(inventory.get(check).writtenSpells().size() == 1 && !inventory.get(check).writtenSpells().get(0).isSelfCast()) {
-						return new SpellTargetingScreen(player, "Cast spell at?", sx, sy, inventory.get(check).writtenSpells().get(0), inventory.get(check));
+						return new SpellTargetingScreen(player, String.format("Cast %s at?", inventory.get(check).writtenSpells().get(0).name()), sx, sy, inventory.get(check).writtenSpells().get(0), inventory.get(check));
 					}else if(inventory.get(check).writtenSpells().size() == 1 && inventory.get(check).writtenSpells().get(0).isSelfCast()){
 						//player.castSpell(inventory.get(check).writtenSpells().get(0), player.x(), player.y(), inventory.get(check));
 						//playScreen.setInputAccepted(true);

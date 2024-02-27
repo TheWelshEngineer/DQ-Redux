@@ -12,6 +12,7 @@ import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.SkillManager;
 import RogueLike.Main.Screens.SpellTargetingScreen;
 import RogueLike.Main.Screens.SpellSelectScreen;
+import RogueLike.Main.Screens.GameplayScreen;
 import RogueLike.Main.Screens.Screen;
 import RogueLike.Main.Screens.ThrowAtScreen;
 
@@ -21,13 +22,26 @@ public class Creature implements Cloneable{
 	public World world() {
 		return world;
 	}
+	
+	private GameplayScreen gameplayScreen;
+	public GameplayScreen gameplayScreen() {
+		return gameplayScreen;
+	}
+	public void setGameplayScreen(GameplayScreen screen) {
+		gameplayScreen = screen;
+	}
+	
 	private CreatureAI ai;
 	public CreatureAI ai() {
 		return ai;
 	}
 	
 	public int getActionSpeed() {
-		return ai.getActionSpeed();
+		int speed = ai.getActionSpeed();
+		if(this.affectedBy(Effect.haste)) {
+			speed = (int) Math.floor(speed/2);
+		}
+		return speed;
 	}
 
 	public ObjectFactory factory() {
@@ -69,6 +83,10 @@ public class Creature implements Cloneable{
 	
 	public void overrideZ(int amount) {
 		z = amount;
+	}
+	
+	public int depth() {
+		return z+1;
 	}
 
 	private int maxDepth;
@@ -2239,6 +2257,12 @@ public class Creature implements Cloneable{
 			amount = 1;
 		}
 		
+		int electroAmount = this.proficiencyBonus();
+		if(this.weapon() != null) {
+			electroAmount += this.weapon().upgradeLevel();
+		}
+		Damage electroDamage = new ShockDamage(electroAmount, false, this.ai.factory.effectFactory, true);
+		
 		int attackRoll = 0;
 		if(weapon != null) {
 			if(weapon.usesDexterity()) {
@@ -2341,11 +2365,21 @@ public class Creature implements Cloneable{
 			doAction("attack the %s", other.name);
 
 			//
+			
+			
+			
 			other.setLastHit(this);
 			if(weapon != null) {
 				other.modifyHP(damage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
 			}else {
 				other.modifyHP(damage, String.format("Killed by a %s", this.name));
+			}
+			if(this.affectedBy(Effect.electrocharged)) {
+				if(weapon != null) {
+					other.modifyHP(electroDamage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
+				}else {
+					other.modifyHP(electroDamage, String.format("Killed by a %s", this.name));
+				}
 			}
 
 			if(other.hp > 0){
@@ -2546,6 +2580,12 @@ public class Creature implements Cloneable{
 		if(other.affectedBy(Effect.invisible) == true) {
 			attackRoll -= 5;
 		}
+		
+		int electroAmount = this.proficiencyBonus();
+		if(this.weapon() != null) {
+			electroAmount += this.weapon().upgradeLevel();
+		}
+		Damage electroDamage = new ShockDamage(electroAmount, false, this.ai.factory.effectFactory, true);
 
 		if(attackRoll >= other.armorClass()) {
 			//doAction("throw a %s at the %s for %d damage", nameOf(item), other.name, damage.amount());
@@ -2554,6 +2594,9 @@ public class Creature implements Cloneable{
 			other.setLastHit(this);
 			other.addEffect(item.quaffEffect());
 			other.modifyHP(damage, String.format("Killed by a %s using a %s", this.name, item.name()));
+			if(this.affectedBy(Effect.electrocharged)) {
+				other.modifyHP(electroDamage, String.format("Killed by a %s using a %s", this.name, item.name()));
+			}
 			if(other.hp > 0){
 				this.setLastTarget(other);
 			}
@@ -2701,6 +2744,13 @@ public class Creature implements Cloneable{
 		if(this.isPlayer()) {
 			this.ammunition().modifyStackAmount(-1);
 		}
+		
+		int electroAmount = this.proficiencyBonus();
+		if(this.weapon() != null) {
+			electroAmount += this.weapon().upgradeLevel();
+		}
+		Damage electroDamage = new ShockDamage(electroAmount, false, this.ai.factory.effectFactory, true);
+		
 		if(attackRoll >= other.armorClass()) {
 			//doAction("fire the %s at the %s for %d damage", nameOf(weapon), other.name, damage.amount());
 			doAction("fire the %s at the %s", nameOf(weapon), other.name);
@@ -2710,6 +2760,13 @@ public class Creature implements Cloneable{
 				other.modifyHP(damage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
 			}else {
 				other.modifyHP(damage, String.format("Killed by a %s", this.name));
+			}
+			if(this.affectedBy(Effect.electrocharged)) {
+				if(weapon != null) {
+					other.modifyHP(electroDamage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
+				}else {
+					other.modifyHP(electroDamage, String.format("Killed by a %s", this.name));
+				}
 			}
 			if(other.hp > 0){
 				this.setLastTarget(other);
@@ -3236,7 +3293,7 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_1().isWand() || quickslot_1().isScroll()) {
 				if(quickslot_1().writtenSpells().size() == 1 && !quickslot_1().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_1().writtenSpells().get(0), quickslot_1());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_1().writtenSpells().get(0).name()), sx, sy, quickslot_1().writtenSpells().get(0), quickslot_1());
 				}else if(quickslot_1().writtenSpells().size() == 1 && quickslot_1().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_1(), quickslot_1().writtenSpells().get(0), this.x(), this.y());
@@ -3263,7 +3320,7 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_2().isWand() || quickslot_2().isScroll()) {
 				if(quickslot_2().writtenSpells().size() == 1 && !quickslot_2().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_2().writtenSpells().get(0), quickslot_2());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_2().writtenSpells().get(0).name()), sx, sy, quickslot_2().writtenSpells().get(0), quickslot_2());
 				}else if(quickslot_2().writtenSpells().size() == 1 && quickslot_2().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_2(), quickslot_2().writtenSpells().get(0), this.x(), this.y());
@@ -3290,7 +3347,7 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_3().isWand() || quickslot_3().isScroll()) {
 				if(quickslot_3().writtenSpells().size() == 1 && !quickslot_3().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_3().writtenSpells().get(0), quickslot_3());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_3().writtenSpells().get(0).name()), sx, sy, quickslot_3().writtenSpells().get(0), quickslot_3());
 				}else if(quickslot_3().writtenSpells().size() == 1 && quickslot_3().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_3(), quickslot_3().writtenSpells().get(0), this.x(), this.y());
@@ -3317,7 +3374,7 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_4().isWand() || quickslot_4().isScroll()) {
 				if(quickslot_4().writtenSpells().size() == 1 && !quickslot_4().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_4().writtenSpells().get(0), quickslot_4());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_4().writtenSpells().get(0).name()), sx, sy, quickslot_4().writtenSpells().get(0), quickslot_4());
 				}else if(quickslot_4().writtenSpells().size() == 1 && quickslot_4().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_4(), quickslot_4().writtenSpells().get(0), this.x(), this.y());
@@ -3344,7 +3401,7 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_5().isWand() || quickslot_5().isScroll()) {
 				if(quickslot_5().writtenSpells().size() == 1 && !quickslot_5().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_5().writtenSpells().get(0), quickslot_5());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_5().writtenSpells().get(0).name()), sx, sy, quickslot_5().writtenSpells().get(0), quickslot_5());
 				}else if(quickslot_5().writtenSpells().size() == 1 && quickslot_5().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_5(), quickslot_5().writtenSpells().get(0), this.x(), this.y());
@@ -3370,7 +3427,7 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_6().isWand() || quickslot_6().isScroll()) {
 				if(quickslot_6().writtenSpells().size() == 1 && !quickslot_6().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, "Cast spell at?", sx, sy, quickslot_6().writtenSpells().get(0), quickslot_6());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_6().writtenSpells().get(0).name()), sx, sy, quickslot_6().writtenSpells().get(0), quickslot_6());
 				}else if(quickslot_6().writtenSpells().size() == 1 && quickslot_6().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_6(), quickslot_6().writtenSpells().get(0), this.x(), this.y());
@@ -4142,8 +4199,4 @@ public class Creature implements Cloneable{
 			return "";
 		}
 	}
-
-	
-
-
 }

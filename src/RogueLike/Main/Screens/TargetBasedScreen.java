@@ -1,5 +1,6 @@
 package RogueLike.Main.Screens;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 import RogueLike.Main.ExtraColors;
@@ -17,6 +18,11 @@ public abstract class TargetBasedScreen implements Screen{
 	private int sy;
 	private int x;
 	private int y;
+	private int dx;
+	private int dy;
+	private int fx;
+	private int fy;
+	private int iteration;
 	
 	public TargetBasedScreen(Creature player, String caption, int sx, int sy) {
 		this.player = player;
@@ -30,6 +36,12 @@ public abstract class TargetBasedScreen implements Screen{
 			//if(p.x < 0 || p.x >= 80 || p.y < 0 || p.y >= 24) {
 				//continue;
 			//}
+			iteration++;
+			dx = p.x;
+			dy = p.y;
+			fx = player.gameplayScreen().getScrollX();
+			fy = player.gameplayScreen().getScrollY();
+			
 			if(p.x < 0) {
 				p.x = 0;
 				x++;
@@ -47,14 +59,47 @@ public abstract class TargetBasedScreen implements Screen{
 				p.y = 20; //48
 				y--;
 			}
+			if(dx < 0) {
+				dx = 0;
+			}
+			if(dx >= player.world().width()) {
+				dx = player.world().width();
+			}
+			if(dy < 0) {
+				dy = 0;
+			}
+			if(dy >= player.world().height()) {
+				dy = player.world().height();
+			}
 			//terminal.write((char)177, p.x, p.y, AsciiPanel.brightCyan);
 			//temp
+			//
 			if(p.x == sx+x && p.y == sy+y) {
-				terminal.write((char)15, p.x, p.y, ExtraColors.brightRed);
+				if(player.creature(player.x()+x, player.y()+y, player.z) != null) {
+					char c = player.creature(player.x()+x, player.y()+y, player.z).glyph();
+					terminal.write(c, p.x, p.y, ExtraColors.brightRed);
+				}else if(player.item(player.x()+x, player.y()+y, player.z) != null && !player.item(player.x()+x, player.y()+y, player.z).isTrap()) {
+					char c = player.item(player.x()+x, player.y()+y, player.z).glyph();
+					terminal.write(c, p.x, p.y, ExtraColors.brightRed);
+				}else{
+					char c = (char)15;
+					terminal.write(c, p.x, p.y, ExtraColors.brightRed);
+				}
 			}else if(p.x == sx && p.y == sy){
-				terminal.write('@', p.x, p.y, ExtraColors.brightWhite);
+				terminal.write(player.glyph(), p.x, p.y, ExtraColors.brightWhite);
 			}else {
-				terminal.write((char)15, p.x, p.y, AsciiPanel.brightCyan);
+				//System.out.println(dx + " " + (dy));
+				if(player.creature(dx+fx, dy+fy, player.z) != null) {
+					char c = player.creature(dx+fx, dy+fy, player.z).glyph();
+					terminal.write(c, p.x, p.y, ExtraColors.brightCyan);
+				}else if(player.item(dx+fx, dy+fy, player.z) != null && !player.item(dx+fx, dy+fy, player.z).isTrap()) {
+					char c = player.item(dx+fx, dy+fy, player.z).glyph();
+					terminal.write(c, p.x, p.y, ExtraColors.brightCyan);
+				}else{
+					char c = (char)15;
+					terminal.write(c, p.x, p.y, ExtraColors.brightCyan);
+				}
+				
 			}
 			
 		}
@@ -67,14 +112,14 @@ public abstract class TargetBasedScreen implements Screen{
 		int py = y;
 		
 		switch (key.getKeyCode()){
-        case KeybindManager.movementWest: x--; break;
-        case KeybindManager.movementEast: x++; break;
-        case KeybindManager.movementNorth: y--; break;
-        case KeybindManager.movementSouth: y++; break;
-        case KeybindManager.movementNorthWest: x--; y--; break;
-        case KeybindManager.movementNorthEast: x++; y--; break;
-        case KeybindManager.movementSouthWest: x--; y++; break;
-        case KeybindManager.movementSouthEast: x++; y++; break;
+        case KeybindManager.movementWest: x--; dx--; break;
+        case KeybindManager.movementEast: x++; dx++; break;
+        case KeybindManager.movementNorth: y--; dy--; break;
+        case KeybindManager.movementSouth: y++; dy++; break;
+        case KeybindManager.movementNorthWest: x--; y--; dx--; dy--; break;
+        case KeybindManager.movementNorthEast: x++; y--; dx++; dy--; break;
+        case KeybindManager.movementSouthWest: x--; y++; dx--; dy++; break;
+        case KeybindManager.movementSouthEast: x++; y++; dx++; dy++; break;
         case KeybindManager.navigateMenuConfirm: selectWorldCoordinate(player.x + x, player.y + y, sx + x, sy + y); return null;
         case KeybindManager.navigateMenuBack: return null;
         }

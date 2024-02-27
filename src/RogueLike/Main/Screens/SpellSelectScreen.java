@@ -84,7 +84,7 @@ public class SpellSelectScreen implements Screen{
     		return null;
     	}else {
     		//return null;
-    		return new SpellTargetingScreen(player, "Cast spell at?", sx, sy, spell, item);
+    		return new SpellTargetingScreen(player, String.format("Cast %s at?", spell.name()), sx, sy, spell, item);
     	}
         //return new CastSpellScreen(player, "Cast spell at?", sx, sy, spell, item);
     }

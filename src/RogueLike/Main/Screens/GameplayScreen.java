@@ -276,6 +276,7 @@ public class GameplayScreen implements Screen{
 	
 	public void createCreatures(ObjectFactory factory) {
 		player = factory.creatureFactory.newPlayer(messages, fov, this.playerClass, this.startingStats, this.startingSkills, this.playerName, this.playerAncestry);
+		
 		factory.setUpPotionIndex();
 		factory.setUpWandIndex(player);
 		factory.setUpRingIndex(player);
@@ -307,6 +308,9 @@ public class GameplayScreen implements Screen{
 
 
 
+		}
+		for(Creature c : world.creatures) {
+			c.setGameplayScreen(this);
 		}
 	}
 	

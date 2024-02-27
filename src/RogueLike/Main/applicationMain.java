@@ -18,7 +18,7 @@ import asciiPanel.AsciiPanel;
 public class applicationMain extends JFrame implements KeyListener{
 	private static final long serialVersionUID = 1060623638149583738L;
 	
-	private AsciiPanel terminal;
+	public static AsciiPanel terminal;
 	private Screen screen;
 	//
 	//private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

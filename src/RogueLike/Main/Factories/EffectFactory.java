@@ -1,10 +1,16 @@
 package RogueLike.Main.Factories;
 
+import java.util.ArrayList;
+
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.Line;
+import RogueLike.Main.Point;
 import RogueLike.Main.Tile;
+import RogueLike.Main.World;
+import RogueLike.Main.applicationMain;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.AcidDamage;
 import RogueLike.Main.Damage.ChaosDamage;
@@ -251,6 +257,73 @@ public class EffectFactory {
 		return iceKnife;
 	}
 	
+	public Effect lightningLance(Creature reference) {
+		Effect lightningLance = new Effect(1, "Lightning Lance", false, reference) {
+        	public void start(Creature creature) {
+        		Line l = new Line(reference.x(), reference.y(), creature.x(), creature.y());
+        		ArrayList<Creature> targets = new ArrayList<Creature>();
+        		for(Point p : l) {
+        			//applicationMain.terminal.write((char)15, p.x, p.y, ExtraColors.paralyzed);
+        			if(creature.creature(p.x, p.y, creature.z()) != null && creature.creature(p.x, p.y, creature.z()) != null) {
+        				targets.add(creature.creature(p.x, p.y, creature.z()));
+        			}
+        		}
+        		for(Creature c : targets) {
+        			int amount = Dice.d8.roll()+reference.intelligenceModifier();
+    				Damage damage = new ShockDamage(amount, false, creature.ai().factory.effectFactory, true);
+    				c.modifyHP(damage, String.format("Killed by %s using Lightning Lance", reference.name()));
+        		}
+			}
+        };
+        lightningLance.setShowInMenu(false);
+		return lightningLance;
+	}
+	
+	public Effect glaciate(Creature reference) {
+		Effect glaciate = new Effect(1, "Glaciate", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.cryomancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.cryomancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect chillWard_ = reference.ai().factory.effectFactory.chillWard(duration_);
+				creature.addEffect((Effect) chillWard_.clone());
+				for(int x = -1; x < 2; x++) {
+					for(int y = -1; y < 2; y++) {
+						if((creature.creature(creature.x()+x, creature.y()+y, creature.z()) == null)) {
+							Creature newWall = objectFactory.creatureFactory.newIceWall(0, reference, false);
+							creature.ai().world.addCreatureAtLocation(newWall, creature.x()+x, creature.y()+y, creature.z());
+						}
+					}
+				}
+				creature.notify("You summon a ring of ice!");
+			}
+        };
+        glaciate.setShowInMenu(false);
+		return glaciate;
+	}
+	
+	public Effect hasteSpell(Creature reference) {
+		Effect hasteSpell = new Effect(1, "Haste", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.electromancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.electromancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect haste_ = reference.ai().factory.effectFactory.haste(duration_);
+				creature.addEffect((Effect) haste_.clone());
+			}
+        };
+        hasteSpell.setShowInMenu(false);
+		return hasteSpell;
+	}
+	
 	public Effect magicMissile(Creature reference) {
 		Effect missile = new Effect(1, null, true, reference){
 			public void start(Creature creature) {
@@ -352,7 +425,7 @@ public class EffectFactory {
 	}
 	
 	public Effect illuminated(int duration) {
-		Effect illuminated = new Effect(duration, "Illuminated", true, null, Effect.illuminated) {
+		Effect illuminated = new Effect(duration, "Illuminated", false, null, Effect.illuminated) {
 			public void start(Creature creature) {
 				creature.doAction("glow with a bright light!");
 			}
@@ -364,6 +437,36 @@ public class EffectFactory {
 			}
 		};
 		return illuminated;
+	}
+	
+	public Effect haste(int duration) {
+		Effect haste = new Effect(duration, "Haste", false, null, Effect.haste) {
+			public void start(Creature creature) {
+				creature.doAction("begin to vibrate with energy!");
+			}
+			public void end(Creature creature) {
+				if(!creature.affectedBy(Effect.haste) == false) {
+					creature.doAction("slow down to normal speed");
+				}
+
+			}
+		};
+		return haste; //TODO finish + implement
+	}
+	
+	public Effect electrocharged(int duration) {
+		Effect electrocharged = new Effect(duration, "Electrocharged", false, null, Effect.electrocharged) {
+			public void start(Creature creature) {
+				creature.doAction("become infused with electricity!");
+			}
+			public void end(Creature creature) {
+				if(!creature.affectedBy(Effect.electrocharged) == false) {
+					creature.doAction("feel the electrical infusion fade away");
+				}
+
+			}
+		};
+		return electrocharged;
 	}
 	
 	public Effect levitating(int duration) {
@@ -519,7 +622,7 @@ public class EffectFactory {
 	public Effect venomousWard(int duration) {
 		Effect venomousWard = new Effect(duration, "Venomous Ward", false, null, Effect.venomousWard){
 			public void start(Creature creature){
-				creature.doAction("become coated in vicious poison!");
+				creature.doAction("become coated in protective poison!");
 
                 for (int ox = -1; ox < 2; ox++){
                     for (int oy = -1; oy < 2; oy++){
@@ -932,6 +1035,46 @@ public class EffectFactory {
 		
 	}
 	
+	public Effect toxicTransfusion(Creature reference) {
+		Effect toxicTransfusion = new Effect(1, "Toxic Transfusion", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.alchemancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.alchemancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect venomousWard_ = reference.ai().factory.effectFactory.venomousWard(duration_);
+        		Effect poisoned_ = reference.ai().factory.effectFactory.poisoned(duration_/2);
+        		Effect corroded_ = reference.ai().factory.effectFactory.corroded(duration_/2);
+				reference.addEffect((Effect) venomousWard_.clone());
+				Damage damage = new PoisonDamage(Dice.d6.roll()+reference.intelligenceModifier(), false, getThis(), false);
+
+				if(reference.intelligenceRoll() >= creature.armorClass()) {
+					creature.doAction("get hit with a splash of poison!");
+					creature.setLastHit(reference);
+					creature.modifyHP(damage, String.format("Killed by %s using Toxic Transfusion", reference.name()));
+				}else {
+					creature.notify(String.format("The %s's spell misses you.", reference.name()));
+					reference.notify(String.format("Your spell misses the %s.", creature.name()));
+				}
+				if(creature.strengthRoll() < reference.intelligenceSaveDC()) {
+					creature.notify("You feel a searing toxin flood your veins!");
+					reference.notify(String.format("The %s is afflicted by your spell!", creature.name()));
+					creature.setLastHit(reference);
+					creature.addEffect((Effect) poisoned_.clone());
+					creature.addEffect((Effect) corroded_.clone());
+				}else {
+					creature.notify(String.format("You resist the %s's spell.", reference.name()));
+					reference.notify(String.format("The %s resists your spell.", creature.name()));
+				}
+			}
+        };
+        toxicTransfusion.setShowInMenu(false);
+		return toxicTransfusion;
+	}
+	
 	public Effect brazierBarrier(Creature reference) {
 		Effect brazierBarrier = new Effect(1, "Brazier Barrier", false, reference) {
         	public void start(Creature creature) {
@@ -950,6 +1093,52 @@ public class EffectFactory {
         };
         brazierBarrier.setShowInMenu(false);
 		return brazierBarrier;
+	}
+	
+	public Effect archmagesAegis(Creature reference) {
+		Effect archmagesAegis = new Effect(1, "Archmage's Aegis", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.evocationLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.evocationLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect arcaneWard_ = reference.ai().factory.effectFactory.arcaneWard(duration_);
+        		Effect confused_ = reference.ai().factory.effectFactory.confused(duration_);
+				creature.addEffect((Effect) arcaneWard_.clone());
+				for(int x = -2; x < 3; x++) {
+					for(int y = -2; y < 3; y++) {
+						if(reference.creature(x, y, reference.z()) != null && reference.creature(x, y, reference.z()) != reference) {
+							reference.creature(x, y, reference.z()).addEffect((Effect) confused_.clone());
+						}
+					}
+				}
+			}
+        };
+        archmagesAegis.setShowInMenu(false);
+		return archmagesAegis;
+	}
+	
+	public Effect staticSurge(Creature reference) {
+		Effect staticSurge = new Effect(1, "Static Surge", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.electromancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.electromancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect arcWard_ = reference.ai().factory.effectFactory.arcWard(duration_);
+        		Effect electrocharged_ = reference.ai().factory.effectFactory.electrocharged(duration_);
+				creature.addEffect((Effect) arcWard_.clone());
+				creature.addEffect((Effect) electrocharged_.clone());
+			}
+        };
+        staticSurge.setShowInMenu(false);
+		return staticSurge;
 	}
 	
 	public Effect iceWall(Creature player) {
@@ -1303,6 +1492,34 @@ public class EffectFactory {
         };
         return repel;
 	}
+	
+	public Effect findTraps() {
+		Effect findTraps = new Effect(0, null, false, null) {
+			public void start(Creature creature) {
+				int count = 0;
+				for(int x = -creature.visionRadius(); x < creature.visionRadius()+1; x++) {
+					for(int y = -creature.visionRadius(); y < creature.visionRadius()+1; y++) {
+						if(x < 0 || y < 0 || x > creature.world().width() || y > creature.world().height()) {
+							continue;
+						}
+						if(creature.world().item(x, y, creature.z()) != null && creature.world().item(x, y, creature.z()).isTrap()) {
+							count++;
+						}
+					}
+				}
+				if(count > 0) {
+					String trap = "trap";
+					if(count > 1) {
+						trap = "traps";
+					}
+					creature.notify(String.format("You sense %d %s nearby.", count, trap));
+				}else {
+					creature.notify("You do not sense any traps nearby");
+				}
+			}
+		};
+		return findTraps;
+	}
 
 	public Effect enchantScroll() {
 		Effect enchant = new Effect(0, null, false, null) {
@@ -1330,6 +1547,8 @@ public class EffectFactory {
 		};
 		return upgrade;
 	}
+	
+	
 	
 	public Effect summonMonstersScroll(Creature player) {
 		Effect summon = new Effect(1, null, false, null) {

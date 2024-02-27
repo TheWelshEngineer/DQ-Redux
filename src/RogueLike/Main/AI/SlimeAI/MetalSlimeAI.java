@@ -27,7 +27,7 @@ public class MetalSlimeAI extends CreatureAI{
 		if(creature.hp() < (creature.maxHP() / 2)) {
 			//Burst
 			actionQueue.add(1);
-			actionQueue.add(0);
+			actionQueue.add(2000);
 		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
 			//Hunt
 			actionQueue.add(2);
