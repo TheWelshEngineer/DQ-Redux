@@ -692,56 +692,56 @@ public class ItemFactory {
 	}
 	
 	//Scrolls
-	public Item newScrollOfMagicMapping(int depth, Creature player, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Magic Mapping", 0, objectFactory.spellFactory.magicMappingScroll(player), 150, 1200);
+	public Item newScrollOfMagicMapping(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Magic Mapping", 0, objectFactory.spellFactory.magicMappingScroll(reference), 150, 1200);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newScrollOfIdentify(int depth, Creature player, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Identify", 1, objectFactory.spellFactory.identifyScroll(player), 150, 1201);
+	public Item newScrollOfIdentify(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Identify", 1, objectFactory.spellFactory.identifyScroll(reference), 150, 1201);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newScrollOfSummonMonsters(int depth, Creature player, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Summon Monsters", 2, objectFactory.spellFactory.summonMonstersScroll(player), 150, 1202);
+	public Item newScrollOfSummonMonsters(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Summon Monsters", 2, objectFactory.spellFactory.summonMonstersScroll(reference), 150, 1202);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newScrollOfUpgrade(int depth, Creature player, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Upgrade", 3, objectFactory.spellFactory.upgradeScroll(player), 150, 1203);
+	public Item newScrollOfUpgrade(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Upgrade", 3, objectFactory.spellFactory.upgradeScroll(reference), 150, 1203);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newScrollOfRemoveCurse(int depth, Creature player, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Remove Curse", 4, objectFactory.spellFactory.removeCurseScroll(player), 150, 1204);
+	public Item newScrollOfRemoveCurse(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Remove Curse", 4, objectFactory.spellFactory.removeCurseScroll(reference), 150, 1204);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newScrollOfEnchantment(int depth, Creature player, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Enchantment", 5, objectFactory.spellFactory.magicMappingScroll(player), 150, 1205);
+	public Item newScrollOfEnchantment(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Enchantment", 5, objectFactory.spellFactory.magicMappingScroll(reference), 150, 1205);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newScrollOfConfusion(int depth, Creature player, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Confusion", 0, objectFactory.spellFactory.confuseScroll(player), 150, 1206);
+	public Item newScrollOfConfusion(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Confusion", 6, objectFactory.spellFactory.confuseScroll(reference), 150, 1206);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -750,29 +750,29 @@ public class ItemFactory {
 	
 	//Wands
 	//Evocation Wands
-	public Item newMagicMissileWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Magic Missile", 1, objectFactory.spellFactory.magicMissile(player), 250, 1300);
+	public Item newMagicMissileWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Magic Missile", 1, objectFactory.spellFactory.magicMissile(reference), 250, 1300);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newForceBlastWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Force Blast", 2, objectFactory.spellFactory.forceBlast(player), 250, 1301);
+	public Item newForceBlastWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Force Blast", 2, objectFactory.spellFactory.forceBlast(reference), 250, 1301);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newArchmagesAegisWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Archmage's Aegis", 3, objectFactory.spellFactory.archmagesAegis(player), 250, 1302);
+	public Item newArchmagesAegisWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Archmage's Aegis", 3, objectFactory.spellFactory.archmagesAegis(reference), 250, 1302);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newFindTrapsWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Find Traps", 4, objectFactory.spellFactory.findTraps(player), 250, 1303);
+	public Item newFindTrapsWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Find Traps", 4, objectFactory.spellFactory.findTraps(reference), 250, 1303);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -780,31 +780,31 @@ public class ItemFactory {
 	}
 	
 	//Pyromancy Wands
-	public Item newFireboltWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Firebolt", 5, objectFactory.spellFactory.firebolt(player), 250, 1400);
+	public Item newFireboltWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Firebolt", 5, objectFactory.spellFactory.firebolt(reference), 250, 1400);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newBrazierBarrierWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Brazier Barrier", 6, objectFactory.spellFactory.brazierBarrier(player), 250, 1401);
-		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
-		}
-		return item;
-	}
-	
-	public Item newPyrotechnicsWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Pyrotechnics", 7, objectFactory.spellFactory.pyrotechnics(player), 250, 1402);
+	public Item newBrazierBarrierWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Brazier Barrier", 6, objectFactory.spellFactory.brazierBarrier(reference), 250, 1401);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newFlashfireWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flashfire", 8, objectFactory.spellFactory.flashfire(player), 250, 1403);
+	public Item newPyrotechnicsWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Pyrotechnics", 7, objectFactory.spellFactory.pyrotechnics(reference), 250, 1402);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(item, depth);
+		}
+		return item;
+	}
+	
+	public Item newFlashfireWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flashfire", 8, objectFactory.spellFactory.flashfire(reference), 250, 1403);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -812,29 +812,29 @@ public class ItemFactory {
 	}
 	
 	//Cryomancy Wands
-	public Item newFlashFreezeWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flash Freeze", 9, objectFactory.spellFactory.flashFreeze(player), 250, 1500);
+	public Item newFlashFreezeWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flash Freeze", 9, objectFactory.spellFactory.flashFreeze(reference), 250, 1500);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newIceWallWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Wall", 10, objectFactory.spellFactory.iceWall(player), 250, 1501);
+	public Item newIceWallWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Wall", 10, objectFactory.spellFactory.iceWall(reference), 250, 1501);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newIceKnifeWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Knife", 11, objectFactory.spellFactory.iceKnife(player), 250, 1502);
+	public Item newIceKnifeWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Knife", 11, objectFactory.spellFactory.iceKnife(reference), 250, 1502);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newGlaciateWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Glaciate", 12, objectFactory.spellFactory.glaciate(player), 250, 1503);
+	public Item newGlaciateWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Glaciate", 12, objectFactory.spellFactory.glaciate(reference), 250, 1503);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -842,29 +842,29 @@ public class ItemFactory {
 	}
 	
 	//Electromancy Wands
-	public Item newChainLightningWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Chain Lightning", 13, objectFactory.spellFactory.chainLightning(player), 250, 1600);
+	public Item newChainLightningWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Chain Lightning", 13, objectFactory.spellFactory.chainLightning(reference), 250, 1600);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newLightningLanceWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lightning Lance", 14, objectFactory.spellFactory.lightningLance(player), 250, 1601);
+	public Item newLightningLanceWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lightning Lance", 14, objectFactory.spellFactory.lightningLance(reference), 250, 1601);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newStaticSurgeWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Static Surge", 15, objectFactory.spellFactory.staticSurge(player), 250, 1602);
+	public Item newStaticSurgeWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Static Surge", 15, objectFactory.spellFactory.staticSurge(reference), 250, 1602);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newHasteWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Haste", 16, objectFactory.spellFactory.haste(player), 250, 1603);
+	public Item newHasteWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Haste", 16, objectFactory.spellFactory.haste(reference), 250, 1603);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -872,15 +872,29 @@ public class ItemFactory {
 	}
 	
 	//Alchemancy Wands
-	public Item newAcidBlastWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Acid Blast", 17, objectFactory.spellFactory.acidBlast(player), 250, 1700);
+	public Item newAcidBlastWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Acid Blast", 17, objectFactory.spellFactory.acidBlast(reference), 250, 1700);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newToxicTransfusionWand(int depth, Creature player, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Toxic Transfusion", 18, objectFactory.spellFactory.toxicTransfusion(player), 250, 1701);
+	public Item newToxicTransfusionWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Toxic Transfusion", 18, objectFactory.spellFactory.toxicTransfusion(reference), 250, 1701);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(item, depth);
+		}
+		return item;
+	}
+	public Item newRefluxBarrierWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Reflux Barrier", 19, objectFactory.spellFactory.refluxBarrier(reference), 250, 1702);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(item, depth);
+		}
+		return item;
+	}
+	public Item newLifetapWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lifetap", 20, objectFactory.spellFactory.lifetap(reference), 250, 1703);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}

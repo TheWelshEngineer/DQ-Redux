@@ -1141,6 +1141,46 @@ public class EffectFactory {
 		return staticSurge;
 	}
 	
+	public Effect refluxBarrier(Creature reference) {
+		Effect refluxBarrier = new Effect(1, "Reflux Barrier", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.alchemancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.alchemancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect causticWard_ = reference.ai().factory.effectFactory.causticWard(duration_);
+        		Effect restoration_ = reference.ai().factory.effectFactory.restoration();
+				creature.addEffect((Effect) causticWard_.clone());
+				creature.addEffect((Effect) restoration_.clone());
+			}
+        };
+        refluxBarrier.setShowInMenu(false);
+		return refluxBarrier;
+	}
+	
+	public Effect lifetap(Creature reference) {
+		Effect lifetap = new Effect(1, "Lifetap", false, reference) {
+        	public void start(Creature creature) {
+        		int amount_ = (int) creature.hp() / 2;
+        		Damage damage = new Damage(amount_, false, false, null, null, false);
+        		creature.modifyHP(damage, null);
+        		if(reference.alchemancyLevel() >= 1) {
+        			amount_ += reference.proficiencyBonus();
+        		}
+        		if(reference.alchemancyLevel() >= 2) {
+        			amount_ += reference.proficiencyBonus();
+        		}
+        		Damage manaRestore = new Damage(amount_, true, false, null, null, false);
+        		creature.modifyMana(manaRestore);
+			}
+        };
+        lifetap.setShowInMenu(false);
+		return lifetap;
+	}
+	
 	public Effect iceWall(Creature player) {
 		Effect wall = new Effect(1, null, false, player){
 			public void start(Creature creature) {
