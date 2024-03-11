@@ -1177,6 +1177,8 @@ public class EffectFactory {
         		Damage damage = new PhysicalDamage(amount, false, reference.ai().factory.effectFactory, true);
         		creature.modifyHP(damage, String.format("Killed by %s using Armor Storm", reference.name()));
         		creature.setLastHit(reference);
+        		Effect sundered_ = reference.ai().factory.effectFactory.sundered(stacks_);
+				reference.addEffect((Effect) sundered_.clone());
 			}
         };
         armorStorm.setShowInMenu(false);
