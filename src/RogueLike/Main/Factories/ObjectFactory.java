@@ -108,7 +108,7 @@ public class ObjectFactory {
 	
 	private void setUpWandAppearances() {
 		wandColors = new HashMap<String, Color>();
-		wandColors.put("Oak Wand", ExtraColors.paper);
+		wandColors.put("Oak Wand", ExtraColors.paper); 
 		wandColors.put("Ash Wand", ExtraColors.brightGreen);
 		wandColors.put("Thorn Wand", ExtraColors.brightMagenta);
 		wandColors.put("Beech Wand", ExtraColors.brown);
@@ -129,7 +129,10 @@ public class ObjectFactory {
 		wandColors.put("Redwood Wand", ExtraColors.brightRed);
 		wandColors.put("Sequoia Wand", ExtraColors.yellow);
 		wandColors.put("Pear Wand", ExtraColors.paralyzed);
-		wandColors.put("Lavender Wand", ExtraColors.lilac);
+		wandColors.put("Lavender Wand", ExtraColors.lilac); //21
+		wandColors.put("Heartwood Wand", ExtraColors.kathryn); //22
+		wandColors.put("Copper Wand", ExtraColors.copper); //23
+		wandColors.put("Driftwood Wand", ExtraColors.seafoam); //24
 		
 		wandAppearances = new ArrayList<String>(wandColors.keySet());
 		Collections.shuffle(wandAppearances);

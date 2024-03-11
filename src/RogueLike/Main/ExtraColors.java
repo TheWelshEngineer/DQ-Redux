@@ -26,6 +26,9 @@ public class ExtraColors extends AsciiPanel{
 	public static Color lilac = new Color(207, 130, 255);
 	public static Color apple = new Color(139, 191, 96);
 	public static Color smoke = new Color(87, 81, 77);
+	public static Color copper = new Color(163, 95, 46);
+	public static Color kathryn = new Color(135, 41, 89);
+	public static Color seafoam = new Color(69, 130, 95);
 	
 	public void scalingTest() {
 		

@@ -32,8 +32,9 @@ public class Effect implements Cloneable{
 	public static String illuminated = "Illuminated";
 	public static String electrocharged = "Electrocharged";
 	public static String haste = "Haste";
+	public static String sundered = "Sundered";
 	
-	public static String[] effectTypeList = new String[]{ignited, frozen, electrified, paralysed, corroded, poisoned, invisible, giantStrength, beastForm, mindVision, arcWard, magmaWard, chillWard, truesight, confused, levitating, devoured, blinded, venomousWard, causticWard, arcaneWard, eldritchWard, bladeWard, bleeding, illuminated, electrocharged, haste};
+	public static String[] effectTypeList = new String[]{ignited, frozen, electrified, paralysed, corroded, poisoned, invisible, giantStrength, beastForm, mindVision, arcWard, magmaWard, chillWard, truesight, confused, levitating, devoured, blinded, venomousWard, causticWard, arcaneWard, eldritchWard, bladeWard, bleeding, illuminated, electrocharged, haste, sundered};
 	
 	protected int duration;
 	public int duration() {

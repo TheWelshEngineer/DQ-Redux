@@ -150,9 +150,9 @@ public ObjectFactory objectFactory;
 		}
 
 		//Test Items
-		Item startWandDragonborn = objectFactory.itemFactory.newLightningLanceWand(0, player, false);
-		player.learnNameQuiet(startWandDragonborn);
-		player.inventory().add(startWandDragonborn);
+		Item startWandTest = objectFactory.itemFactory.newInfuseUpgradeWand(0, player, false);
+		player.learnNameQuiet(startWandTest);
+		player.inventory().add(startWandTest);
 		
 		player.inventory().add(objectFactory.itemFactory.newScrollOfMagicMapping(0, player, false));
 		//player.inventory().add(objectFactory.itemFactory.newScrollOfMagicMapping(0, player, false));

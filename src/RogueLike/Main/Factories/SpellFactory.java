@@ -146,6 +146,26 @@ public class SpellFactory {
 		Spell lifetap = new Spell("Lifetap", 32, 0, caster, effectFactory.lifetap(caster), true, false);
 		return lifetap;
 	}
+	
+	public Spell armorStorm(Creature caster) {
+		Spell armorStorm = new Spell("Armor Storm", 33, 4, caster, effectFactory.armorStorm(caster), false, false);
+		return armorStorm;
+	}
+	
+	public Spell bladsWard(Creature caster) {
+		Spell bladsWard = new Spell("Blad's Ward", 34, 4, caster, effectFactory.bladsWard(caster), true, false);
+		return bladsWard;
+	}
+	
+	public Spell weaponBolt(Creature caster) {
+		Spell weaponBolt = new Spell("Weapon Bolt", 35, 4, caster, effectFactory.weaponBolt(caster), false, false);
+		return weaponBolt;
+	}
+	
+	public Spell infuseUpgrade(Creature caster) {
+		Spell infuseUpgrate = new Spell("Weapon Bolt", 36, 0, caster, effectFactory.infuseUpgrade(caster), true, false);
+		return infuseUpgrate;
+	}
 
 
 }

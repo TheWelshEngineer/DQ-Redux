@@ -354,6 +354,9 @@ public class Creature implements Cloneable{
 		if(affectedBy(Effect.corroded) == true) {
 			returnArmorClass -= 2;
 		}
+		if(affectedBy(Effect.sundered) == true) {
+			returnArmorClass = 10;
+		}
 		if(returnArmorClass < 0) {
 			returnArmorClass = 0;
 		}

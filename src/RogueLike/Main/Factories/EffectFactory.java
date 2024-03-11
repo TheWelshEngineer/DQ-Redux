@@ -994,6 +994,20 @@ public class EffectFactory {
 		return frozen;
 	}
 	
+	public Effect sundered(int duration) {
+		Effect sundered = new Effect(duration, "Sundered", true, null, Effect.sundered){
+			public void start(Creature creature) {
+				creature.doAction("become defenseless!");
+			}
+			
+			public void end(Creature creature) {
+				if(!creature.affectedBy(Effect.frozen)) {
+					creature.doAction("recover defenses");
+				}
+			}};
+		return sundered;
+	}
+	
 	public Effect electrified(int duration) {
 		Effect electrified = new Effect(duration, "Electrified", true, null, Effect.electrified) {
 			public void start(Creature creature) {
@@ -1093,6 +1107,119 @@ public class EffectFactory {
         };
         brazierBarrier.setShowInMenu(false);
 		return brazierBarrier;
+	}
+	
+	public Effect bladsWard(Creature reference) {
+		Effect bladsWard = new Effect(1, "Blad's Ward", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.ferromancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.ferromancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect bladeWard_ = reference.ai().factory.effectFactory.bladeWard(duration_);
+        		Effect giantStrength_ = reference.ai().factory.effectFactory.giantStrength(duration_);
+				creature.addEffect((Effect) bladeWard_.clone());
+				creature.addEffect((Effect) giantStrength_.clone());
+			}
+        };
+        bladsWard.setShowInMenu(false);
+		return bladsWard;
+	}
+	
+	public Effect infuseUpgrade(Creature reference) {
+		Effect infuseUpgrade = new Effect(1, "Infuse Upgrade", false, reference) {
+        	public void start(Creature creature) {
+        		int chance = reference.mana();
+        		Damage chanceMana = new Damage(chance, false, false, null, null, false);
+        		creature.modifyMana(chanceMana);
+        		
+        		if(reference.ferromancyLevel() >= 1) {
+        			chance += reference.proficiencyBonus();
+        		}
+        		if(reference.ferromancyLevel() >= 2) {
+        			chance += reference.proficiencyBonus();
+        		}
+        		
+        		if(Dice.d100.roll() <= chance) {
+        			creature.notify("You call forth upgrading magic!");
+        			Effect upgradeScroll_ = reference.ai().factory.effectFactory.upgradeScroll();
+    				creature.addEffect((Effect) upgradeScroll_.clone());
+        		}else {
+        			creature.notify("You fail to call forth upgrading magic..");
+        		}
+        		
+			}
+        };
+        infuseUpgrade.setShowInMenu(false);
+		return infuseUpgrade;
+	}
+	
+	public Effect armorStorm(Creature reference) {
+		Effect armorStorm = new Effect(1, "Armor Storm", false, reference) {
+        	public void start(Creature creature) {
+        		int stacks_ = reference.armorClass()-10;
+        		if(stacks_ <= 0) {
+        			stacks_ = 1;
+        		}
+        		int amount = 0;
+        		for(int i = 0; i < stacks_+1; i++) {
+        			amount += Dice.d4.roll();
+        		}
+        		if(reference.ferromancyLevel() >= 1) {
+        			amount += reference.proficiencyBonus();
+        		}
+        		if(reference.ferromancyLevel() >= 2) {
+        			amount += reference.proficiencyBonus();
+        		}
+        		Damage damage = new PhysicalDamage(amount, false, reference.ai().factory.effectFactory, true);
+        		creature.modifyHP(damage, String.format("Killed by %s using Armor Storm", reference.name()));
+        		creature.setLastHit(reference);
+			}
+        };
+        armorStorm.setShowInMenu(false);
+		return armorStorm;
+	}
+	
+	public Effect weaponBolt(Creature reference) {
+		Effect weaponBolt = new Effect(1, "Weapon Bolt", false, reference) {
+        	public void start(Creature creature) {
+        		int amount = 0;
+        		if(reference.weapon() != null) {
+        			if(reference.weapon().isVersatile()) {
+        				amount = reference.weapon().versatileDamageDice().roll();
+        			}else if(reference.weapon().isRangedWeapon()){
+        				amount = reference.weapon().rangedDamageDice().roll();
+        			}else {
+        				amount = reference.weapon().damageDice().roll();
+        			}
+        			if(reference.weapon().upgradeLevel() > 0) {
+        				amount += reference.weapon().upgradeLevel();
+        			}
+        		}
+        		int attackRoll = reference.intelligenceSaveDC();
+        		
+        		if(reference.ferromancyLevel() >= 1) {
+        			attackRoll += reference.proficiencyBonus();
+        		}
+        		if(reference.ferromancyLevel() >= 2) {
+        			amount += reference.proficiencyBonus();
+        		}
+        		Damage damage = new MagicDamage(amount, false, reference.ai().factory.effectFactory, true);
+        		if(attackRoll >= creature.armorClass()) {
+					creature.doAction("get hit with a spectral weapon!");
+					creature.setLastHit(reference);
+					creature.modifyHP(damage, String.format("Killed by %s using Weapon Bolt", reference.name()));
+				}else {
+					creature.notify(String.format("The %s's spell misses you.", reference.name()));
+					reference.notify(String.format("Your spell misses the %s.", creature.name()));
+				}
+			}
+        };
+        weaponBolt.setShowInMenu(false);
+		return weaponBolt;
 	}
 	
 	public Effect archmagesAegis(Creature reference) {

@@ -901,6 +901,35 @@ public class ItemFactory {
 		return item;
 	}
 	
+	//Ferromancy Wands
+	public Item newArmorStormWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Armor Storm", 21, objectFactory.spellFactory.armorStorm(reference), 250, 1800);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(item, depth);
+		}
+		return item;
+	}
+	public Item newBladsWardWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Blad's Ward", 22, objectFactory.spellFactory.bladsWard(reference), 250, 1801);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(item, depth);
+		}
+		return item;
+	}
+	public Item newWeaponBoltWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Weapon Bolt", 23, objectFactory.spellFactory.weaponBolt(reference), 250, 1802);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(item, depth);
+		}
+		return item;
+	}
+	public Item newInfuseUpgradeWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Infuse Upgrade", 24, objectFactory.spellFactory.infuseUpgrade(reference), 250, 1803);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(item, depth);
+		}
+		return item;
+	}
 	
 	
 	
