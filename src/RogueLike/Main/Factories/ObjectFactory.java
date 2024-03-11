@@ -1346,11 +1346,11 @@ public class ObjectFactory {
 	public Item randomWand(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 6)) {
 		case 1: return randomEvocationWand(depth, player, addToWorld);
-		case 2: return randomEvocationWand(depth, player, addToWorld);
-		case 3: return randomEvocationWand(depth, player, addToWorld);
-		case 4: return randomEvocationWand(depth, player, addToWorld);
-		case 5: return randomEvocationWand(depth, player, addToWorld);
-		//case 1: return randomEvocationWand(depth, player, addToWorld); //TODO Ferromancy
+		case 2: return randomPyromancyWand(depth, player, addToWorld);
+		case 3: return randomCryomancyWand(depth, player, addToWorld);
+		case 4: return randomElectromancyWand(depth, player, addToWorld);
+		case 5: return randomAlchemancyWand(depth, player, addToWorld);
+		case 6: return randomFerromancyWand(depth, player, addToWorld); //TODO Ferromancy
 		
 		default: return randomEvocationWand(depth, player, addToWorld);
 		}
@@ -1360,6 +1360,8 @@ public class ObjectFactory {
 		switch(ExtraMaths.diceRoll(1, 4)) {
 		case 1: return itemFactory.newMagicMissileWand(depth, player, addToWorld);
 		case 2: return itemFactory.newForceBlastWand(depth, player, addToWorld);
+		case 3: return itemFactory.newFindTrapsWand(depth, player, addToWorld);
+		case 4: return itemFactory.newArchmagesAegisWand(depth, player, addToWorld);
 		
 		default: return itemFactory.newMagicMissileWand(depth, player, addToWorld);
 		}
@@ -1368,6 +1370,9 @@ public class ObjectFactory {
 	public Item randomPyromancyWand(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
 		case 1: return itemFactory.newFireboltWand(depth, player, addToWorld);
+		case 2: return itemFactory.newFlashfireWand(depth, player, addToWorld);
+		case 3: return itemFactory.newBrazierBarrierWand(depth, player, addToWorld);
+		case 4: return itemFactory.newPyrotechnicsWand(depth, player, addToWorld);
 		
 		default: return itemFactory.newFireboltWand(depth, player, addToWorld);
 		}
@@ -1378,6 +1383,7 @@ public class ObjectFactory {
 		case 1: return itemFactory.newFlashFreezeWand(depth, player, addToWorld);
 		case 2: return itemFactory.newIceKnifeWand(depth, player, addToWorld);
 		case 3: return itemFactory.newIceWallWand(depth, player, addToWorld);
+		case 4: return itemFactory.newGlaciateWand(depth, player, addToWorld);
 		
 		default: return itemFactory.newFlashFreezeWand(depth, player, addToWorld);
 		}
@@ -1386,6 +1392,9 @@ public class ObjectFactory {
 	public Item randomElectromancyWand(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
 		case 1: return itemFactory.newChainLightningWand(depth, player, addToWorld);
+		case 2: return itemFactory.newLightningLanceWand(depth, player, addToWorld);
+		case 3: return itemFactory.newHasteWand(depth, player, addToWorld);
+		case 4: return itemFactory.newStaticSurgeWand(depth, player, addToWorld);
 		
 		default: return itemFactory.newChainLightningWand(depth, player, addToWorld);
 		}
@@ -1394,8 +1403,22 @@ public class ObjectFactory {
 	public Item randomAlchemancyWand(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
 		case 1: return itemFactory.newAcidBlastWand(depth, player, addToWorld);
+		case 2: return itemFactory.newToxicTransfusionWand(depth, player, addToWorld);
+		case 3: return itemFactory.newRefluxBarrierWand(depth, player, addToWorld);
+		case 4: return itemFactory.newLifetapWand(depth, player, addToWorld);
 		
 		default: return itemFactory.newAcidBlastWand(depth, player, addToWorld);
+		}
+	}
+	
+	public Item randomFerromancyWand(int depth, Creature player, boolean addToWorld) {
+		switch(ExtraMaths.diceRoll(1, 4)) {
+		case 1: return itemFactory.newArmorStormWand(depth, player, addToWorld);
+		case 2: return itemFactory.newWeaponBoltWand(depth, player, addToWorld);
+		case 3: return itemFactory.newBladsWardWand(depth, player, addToWorld);
+		case 4: return itemFactory.newInfuseUpgradeWand(depth, player, addToWorld);
+		
+		default: return itemFactory.newArmorStormWand(depth, player, addToWorld);
 		}
 	}
 	
@@ -1523,7 +1546,8 @@ public class ObjectFactory {
 	
 	public Creature randomSkeleton(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		case 1: return creatureFactory.newSkeletonMage(depth, player, addToWorld);
+		case 1: return creatureFactory.newSkeletonCryomancer(depth, player, addToWorld);
+		case 2: return creatureFactory.newSkeletonPyromancer(depth, player, addToWorld);
 		default: return creatureFactory.newSkeleton(depth, player, addToWorld);
 		}
 	}

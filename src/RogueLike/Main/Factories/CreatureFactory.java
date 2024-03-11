@@ -20,7 +20,8 @@ import RogueLike.Main.Creatures.Containers.BasicChest;
 import RogueLike.Main.Creatures.Gremlins.Gremlin;
 import RogueLike.Main.Creatures.Gremlins.GremlinAlchemist;
 import RogueLike.Main.Creatures.Skeletons.Skeleton;
-import RogueLike.Main.Creatures.Skeletons.SkeletonMage;
+import RogueLike.Main.Creatures.Skeletons.SkeletonCryomancer;
+import RogueLike.Main.Creatures.Skeletons.SkeletonPyromancer;
 import RogueLike.Main.Creatures.Slimes.MagmaSlime;
 import RogueLike.Main.Creatures.Slimes.MagmaSlimeling;
 import RogueLike.Main.Creatures.Slimes.MetalSlime;
@@ -192,8 +193,16 @@ public ObjectFactory objectFactory;
 		return skeleton;
 	}
 	
-	public Creature newSkeletonMage(int depth, Creature player, boolean addToWorld) {
-		Creature skeleton = new SkeletonMage(objectFactory, player, "Skeleton Mage", 'k', ExtraColors.water, 19, depth);
+	public Creature newSkeletonCryomancer(int depth, Creature player, boolean addToWorld) {
+		Creature skeleton = new SkeletonCryomancer(objectFactory, player, "Skeleton Cryomancer", 'k', ExtraColors.water, 19, depth);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(skeleton, depth);
+		}
+		return skeleton;
+	}
+	
+	public Creature newSkeletonPyromancer(int depth, Creature player, boolean addToWorld) {
+		Creature skeleton = new SkeletonPyromancer(objectFactory, player, "Skeleton Pyromancer", 'k', ExtraColors.orange, 90, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(skeleton, depth);
 		}

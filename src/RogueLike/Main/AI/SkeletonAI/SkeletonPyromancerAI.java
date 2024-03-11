@@ -9,12 +9,12 @@ import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 
-public class SkeletonMageAI extends CreatureAI{
+public class SkeletonPyromancerAI extends CreatureAI{
 	private Creature player;
 	
 	private int spellCooldown = 0;
 	
-	public SkeletonMageAI(Creature creature, Creature player, ObjectFactory factory, World world) {
+	public SkeletonPyromancerAI(Creature creature, Creature player, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		this.player = player;
 	}
@@ -26,7 +26,7 @@ public class SkeletonMageAI extends CreatureAI{
 			actionQueue.add(1);
 			actionQueue.add(1000);
 		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible) && this.spellCooldown == 0) {
-			//Cast Ice Knife
+			//Cast Firebolt
 			actionQueue.add(2);
 			actionQueue.add(1000);
 		}else if(creature.canSee(player.x, player.y, player.z) && !player.affectedBy(Effect.invisible)) {
@@ -43,7 +43,7 @@ public class SkeletonMageAI extends CreatureAI{
 	public void decodeAction(int action) {
 		switch(action) {
 			case 1: this.wander(); System.out.println(this.toString() + " uses [Blunder]"); break;
-			case 2: this.castSpell(); System.out.println(this.toString() + " uses [Cast Ice Knife]"); this.spellCooldown = 4; break;
+			case 2: this.castSpell(); System.out.println(this.toString() + " uses [Cast Firebolt]"); this.spellCooldown = 6; break;
 			case 3: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
 			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
@@ -72,7 +72,7 @@ public class SkeletonMageAI extends CreatureAI{
 	}
 	
 	public void castSpell() {
-		player.addEffect((Effect)factory.effectFactory.iceKnife(creature).clone());
+		player.addEffect((Effect)factory.effectFactory.firebolt(creature).clone());
 	}
 	
 }
