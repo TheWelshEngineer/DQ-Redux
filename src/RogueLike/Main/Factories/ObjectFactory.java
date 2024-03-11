@@ -1545,9 +1545,10 @@ public class ObjectFactory {
 	}
 	
 	public Creature randomSkeleton(int depth, Creature player, boolean addToWorld) {
-		switch(ExtraMaths.diceRoll(1, 10)) {
+		switch(ExtraMaths.diceRoll(1, 15)) {
 		case 1: return creatureFactory.newSkeletonCryomancer(depth, player, addToWorld);
 		case 2: return creatureFactory.newSkeletonPyromancer(depth, player, addToWorld);
+		case 3: return creatureFactory.newSkeletonElectromancer(depth, player, addToWorld);
 		default: return creatureFactory.newSkeleton(depth, player, addToWorld);
 		}
 	}

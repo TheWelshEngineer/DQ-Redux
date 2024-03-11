@@ -21,6 +21,7 @@ import RogueLike.Main.Creatures.Gremlins.Gremlin;
 import RogueLike.Main.Creatures.Gremlins.GremlinAlchemist;
 import RogueLike.Main.Creatures.Skeletons.Skeleton;
 import RogueLike.Main.Creatures.Skeletons.SkeletonCryomancer;
+import RogueLike.Main.Creatures.Skeletons.SkeletonElectromancer;
 import RogueLike.Main.Creatures.Skeletons.SkeletonPyromancer;
 import RogueLike.Main.Creatures.Slimes.MagmaSlime;
 import RogueLike.Main.Creatures.Slimes.MagmaSlimeling;
@@ -203,6 +204,14 @@ public ObjectFactory objectFactory;
 	
 	public Creature newSkeletonPyromancer(int depth, Creature player, boolean addToWorld) {
 		Creature skeleton = new SkeletonPyromancer(objectFactory, player, "Skeleton Pyromancer", 'k', ExtraColors.orange, 90, depth);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(skeleton, depth);
+		}
+		return skeleton;
+	}
+	
+	public Creature newSkeletonElectromancer(int depth, Creature player, boolean addToWorld) {
+		Creature skeleton = new SkeletonElectromancer(objectFactory, player, "Skeleton Electromancer", 'k', ExtraColors.paralyzed, 91, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(skeleton, depth);
 		}
