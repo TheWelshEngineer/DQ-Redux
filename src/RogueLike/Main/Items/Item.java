@@ -817,25 +817,24 @@ public class Item implements Cloneable{
 	public void setIsFinesse(boolean value) {
 		isFinesse = value;
 	}
-	
-	/*private int isSimple;
-	public int isSimple() {
+	private boolean isSimple;
+	public boolean isSimple() {
 		return isSimple;
 	}
 	
-	public void modifyIsSimple(int amount) {
-		isSimple += amount;
+	public void modifyIsSimple(boolean value) {
+		isSimple = value;
 	}
 	
-	private int isMartial;
-	public int isMartial() {
+	private boolean isMartial;
+	public boolean isMartial() {
 		return isMartial;
 	}
 	
-	public void modifyIsMartial(int amount) {
-		isSimple += amount;
+	public void modifyIsMartial(boolean value) {
+		isMartial = value;
 	}
-	
+	/*
 	private int isFortitude;
 	public int isFortitude() {
 		return isFortitude;

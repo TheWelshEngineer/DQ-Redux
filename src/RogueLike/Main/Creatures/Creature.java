@@ -2201,10 +2201,6 @@ public class Creature implements Cloneable{
 		else if(other.isContainer() == true){
 			openContainer(other);
 		}else {
-			//TODO
-			if(this.weapon() != null && this.weapon().isExtraAttack()) {
-				attack(other);
-			}
 			attack(other);
 		}		
 	}
@@ -2238,22 +2234,25 @@ public class Creature implements Cloneable{
 	public void attack(Creature other) {
 
 		int amount = 0;
+		int attackBonus = 0;
 		if(weapon != null) {
-			int attackBonus = 0;
+			if((this.weapon.isSimple() && this.simpleWeaponsLevel() >= 2) || (this.weapon.isMartial() && this.martialWeaponsLevel() >= 2) || (this.weapon.isFinesse() && this.finesseWeaponsLevel() >= 2)) {
+				amount += this.proficiencyBonus();
+			}
 			if(weapon.usesStrength()) {
-				attackBonus = this.strengthModifier();
+				attackBonus += this.strengthModifier();
 			}else if(weapon.usesDexterity()){
-				attackBonus = this.dexterityModifier();
+				attackBonus += this.dexterityModifier();
 			}else if(weapon.usesIntelligence()){
-				attackBonus = this.intelligenceModifier();
+				attackBonus += this.intelligenceModifier();
 			}
 			if(weapon.isVersatile() && shield == null) {
-				amount = (int)(weapon.versatileDamageDice().roll())+attackBonus+weapon.upgradeLevel();
+				amount += (int)(weapon.versatileDamageDice().roll())+attackBonus+weapon.upgradeLevel();
 			}else {
-				amount = (int)(weapon.damageDice().roll())+attackBonus+weapon.upgradeLevel();
+				amount += (int)(weapon.damageDice().roll())+attackBonus+weapon.upgradeLevel();
 			}
 		}else {
-			amount = 1+strengthModifier();
+			amount += 1+strengthModifier();
 		}
 
 		if(amount < 1) {
@@ -2269,16 +2268,20 @@ public class Creature implements Cloneable{
 		int attackRoll = 0;
 		if(weapon != null) {
 			if(weapon.usesDexterity()) {
-				attackRoll = this.dexterityRoll()+weapon.upgradeLevel();
+				attackRoll += this.dexterityRoll()+weapon.upgradeLevel();
 			}else if(weapon.usesStrength()) {
-				attackRoll = this.strengthRoll()+weapon.upgradeLevel();
+				attackRoll += this.strengthRoll()+weapon.upgradeLevel();
 			}else if(weapon.usesIntelligence()) {
-				attackRoll = this.intelligenceRoll()+weapon.upgradeLevel();
+				attackRoll += this.intelligenceRoll()+weapon.upgradeLevel();
 			}else {
-				attackRoll = this.strengthRoll();
+				attackRoll += this.strengthRoll();
 			}
 		}else {
-			attackRoll = this.strengthRoll();
+			attackRoll += this.strengthRoll();
+		}
+		
+		if((this.weapon.isSimple() && this.simpleWeaponsLevel() >= 1) || (this.weapon.isMartial() && this.martialWeaponsLevel() >= 1) || (this.weapon.isFinesse() && this.finesseWeaponsLevel() >= 1)) {
+			attackRoll += this.proficiencyBonus();
 		}
 
 		if(affectedBy(Effect.invisible) == true) {
@@ -2290,7 +2293,11 @@ public class Creature implements Cloneable{
 		}
 		
 		if(attackRoll >= 20) {
-			amount *= 2;
+			if(this.weapon != null && this.weapon.isMartial() && this.martialWeaponsLevel() >= 3) {
+				amount *= 3;
+			}else {
+				amount *= 2;
+			}
 		}
 		
 		Damage damage = new Damage(amount, false, false, Damage.physical, factory().effectFactory, true);
@@ -2363,10 +2370,12 @@ public class Creature implements Cloneable{
 
 		
 
-		if(attackRoll >= other.armorClass()) {
+		if(attackRoll >= other.armorClass() || attackRoll >= 20) {
 			//doAction("attack the %s for %d damage", other.name, damage.amount());
 			doAction("attack the %s", other.name);
-
+			if(attackRoll >= 20) {
+				notify("It's a critical hit!");
+			}
 			//
 			
 			
@@ -2374,6 +2383,11 @@ public class Creature implements Cloneable{
 			other.setLastHit(this);
 			if(weapon != null) {
 				other.modifyHP(damage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
+				if(this.weapon.isSimple() && this.simpleWeaponsLevel() >= 3 && attackRoll >= 20) {
+					other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
+				}else if(this.weapon.isFinesse() && this.finesseWeaponsLevel() >= 3 && attackRoll >= 20) {
+					other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
+				}
 			}else {
 				other.modifyHP(damage, String.format("Killed by a %s", this.name));
 			}
@@ -2384,6 +2398,7 @@ public class Creature implements Cloneable{
 					other.modifyHP(electroDamage, String.format("Killed by a %s", this.name));
 				}
 			}
+			
 
 			if(other.hp > 0){
 				this.setLastTarget(other);
@@ -2481,19 +2496,22 @@ public class Creature implements Cloneable{
 	private void throwAttack(Item item, Creature other) {
 		modifyFood(-1);
 		int amount = 0;
+		int attackBonus = 0;
 		if(item.isThrownWeapon()) {
-			int attackBonus = 0;
-			if(weapon.usesStrength()) {
-				attackBonus = this.strengthModifier();
-			}else if(weapon.usesDexterity()){
-				attackBonus = this.dexterityModifier();
-			}else if(weapon.usesIntelligence()){
-				attackBonus = this.intelligenceModifier();
+			if((item.isSimple() && this.simpleWeaponsLevel() >= 2) || (item.isMartial() && this.martialWeaponsLevel() >= 2) || (item.isFinesse() && this.finesseWeaponsLevel() >= 2)) {
+				amount += this.proficiencyBonus();
 			}
-			amount = (int)(weapon.thrownDamageDice().roll())+attackBonus+weapon.upgradeLevel();
+			if(item.usesStrength()) {
+				attackBonus += this.strengthModifier();
+			}else if(item.usesDexterity()){
+				attackBonus += this.dexterityModifier();
+			}else if(item.usesIntelligence()){
+				attackBonus += this.intelligenceModifier();
+			}
+			amount += (int)(item.thrownDamageDice().roll())+attackBonus+item.upgradeLevel();
 		
 		}else {
-			amount = 1+strengthModifier();
+			amount += 1+strengthModifier();
 		}
 
 		if(amount < 1) {
@@ -2501,79 +2519,43 @@ public class Creature implements Cloneable{
 		}
 
 		Damage damage = new Damage(amount, false, false, Damage.physical, factory().effectFactory, true);
-		if(this.isPlayer()) {
-			if(weapon != null) {
-				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
-					damage = new FireDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
-					damage = new FrostDamage(amount, false, factory().effectFactory, true);
-				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
-					damage = new ShockDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
-					damage = new PoisonDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
-					damage = new AcidDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
-					damage = new MagicDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
-					damage = new ChaosDamage(amount, false, factory().effectFactory, true);
-				}else {
-					damage = new PhysicalDamage(amount, false, factory().effectFactory, true);
-				}
-			}
+		if(item.dealsFireDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.fire)) {
+			damage = new FireDamage(amount, false, factory().effectFactory, true);
+		}else if(item.dealsFrostDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.frost)) {
+			damage = new FrostDamage(amount, false, factory().effectFactory, true);
+		}if(item.dealsShockDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.shock)) {
+			damage = new ShockDamage(amount, false, factory().effectFactory, true);
+		}else if(item.dealsPoisonDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.poison)) {
+			damage = new PoisonDamage(amount, false, factory().effectFactory, true);
+		}else if(item.dealsAcidDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.acid)) {
+			damage = new AcidDamage(amount, false, factory().effectFactory, true);
+		}else if(item.dealsMagicDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.magic)) {
+			damage = new MagicDamage(amount, false, factory().effectFactory, true);
+		}else if(item.dealsChaosDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.chaos)) {
+			damage = new ChaosDamage(amount, false, factory().effectFactory, true);
 		}else {
-			if(weapon != null) {
-				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
-					damage = new FireDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
-					damage = new FrostDamage(amount, false, factory().effectFactory, true);
-				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
-					damage = new ShockDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
-					damage = new PoisonDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
-					damage = new AcidDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
-					damage = new MagicDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
-					damage = new ChaosDamage(amount, false, factory().effectFactory, true);
-				}else {
-					damage = new PhysicalDamage(amount, false, factory().effectFactory, true);
-				}
-			}else {
-				if(this.dealsFireDamage()) {
-					damage = new FireDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsFrostDamage()) {
-					damage = new FrostDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsShockDamage()) {
-					damage = new ShockDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsPoisonDamage()) {
-					damage = new PoisonDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsAcidDamage()) {
-					damage = new AcidDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsMagicDamage()) {
-					damage = new MagicDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsChaosDamage()) {
-					damage = new ChaosDamage(amount, false, factory().effectFactory, true);
-				}else {
-					damage = new PhysicalDamage(amount, false, factory().effectFactory, true);
-				}
-			}
+			damage = new PhysicalDamage(amount, false, factory().effectFactory, true);
 		}
+			
+
 
 		int attackRoll = 0;
 		if(item.isThrownWeapon()) {
-			if(weapon.usesDexterity()) {
-				attackRoll = this.dexterityRoll()+weapon.upgradeLevel();
-			}else if(weapon.usesStrength()) {
-				attackRoll = this.strengthRoll()+weapon.upgradeLevel();
-			}else if(weapon.usesIntelligence()) {
-				attackRoll = this.intelligenceRoll()+weapon.upgradeLevel();
+			if(item.usesDexterity()) {
+				attackRoll += this.dexterityRoll()+item.upgradeLevel();
+			}else if(item.usesStrength()) {
+				attackRoll += this.strengthRoll()+item.upgradeLevel();
+			}else if(item.usesIntelligence()) {
+				attackRoll += this.intelligenceRoll()+item.upgradeLevel();
 			}else {
-				attackRoll = this.strengthRoll();
+				attackRoll += this.strengthRoll();
 			}
 		}else {
-			attackRoll = this.strengthRoll();
+			attackRoll += this.strengthRoll();
+		}
+		
+		if((item.isSimple() && this.simpleWeaponsLevel() >= 1) || (item.isMartial() && this.martialWeaponsLevel() >= 1) || (item.isFinesse() && this.finesseWeaponsLevel() >= 1)) {
+			attackRoll += this.proficiencyBonus();
 		}
 
 		if(affectedBy(Effect.invisible) == true) {
@@ -2584,19 +2566,35 @@ public class Creature implements Cloneable{
 			attackRoll -= 5;
 		}
 		
+		if(attackRoll >= 20) {
+			if(item.isMartial() && this.martialWeaponsLevel() >= 3) {
+				amount *= 3;
+			}else {
+				amount *= 2;
+			}
+		}
+		
 		int electroAmount = this.proficiencyBonus();
-		if(this.weapon() != null) {
-			electroAmount += this.weapon().upgradeLevel();
+		if(item.upgradeLevel() > 0) {
+			electroAmount += item.upgradeLevel();
 		}
 		Damage electroDamage = new ShockDamage(electroAmount, false, this.ai.factory.effectFactory, true);
 
-		if(attackRoll >= other.armorClass()) {
+		if(attackRoll >= other.armorClass() || attackRoll >= 20) {
 			//doAction("throw a %s at the %s for %d damage", nameOf(item), other.name, damage.amount());
 			doAction("throw a %s at the %s", nameOf(item), other.name);
+			if(attackRoll >= 20) {
+				notify("It's a critical hit!");
+			}
 
 			other.setLastHit(this);
 			other.addEffect(item.quaffEffect());
 			other.modifyHP(damage, String.format("Killed by a %s using a %s", this.name, item.name()));
+			if(item.isSimple() && this.simpleWeaponsLevel() >= 3 && attackRoll >= 20) {
+				other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
+			}else if(item.isFinesse() && this.finesseWeaponsLevel() >= 3 && attackRoll >= 20) {
+				other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
+			}
 			if(this.affectedBy(Effect.electrocharged)) {
 				other.modifyHP(electroDamage, String.format("Killed by a %s using a %s", this.name, item.name()));
 			}
@@ -2643,29 +2641,36 @@ public class Creature implements Cloneable{
 		modifyFood(-1);
 
 		int amount = 0;
+		int attackBonus = 0;
 		if(weapon != null) {
-			int attackBonus = 0;
-			if(weapon.usesStrength()) {
-				attackBonus = this.strengthModifier();
-			}else if(weapon.usesDexterity()){
-				attackBonus = this.dexterityModifier();
-			}else if(weapon.usesIntelligence()){
-				attackBonus = this.intelligenceModifier();
+			if(this.rangedWeaponsLevel() >= 2) {
+				attackBonus += this.proficiencyBonus();
 			}
-			amount = (int)(weapon.rangedDamageDice().roll())+attackBonus+weapon.upgradeLevel();
+			if(weapon.usesStrength()) {
+				attackBonus += this.strengthModifier();
+			}else if(weapon.usesDexterity()){
+				attackBonus += this.dexterityModifier();
+			}else if(weapon.usesIntelligence()){
+				attackBonus += this.intelligenceModifier();
+			}
+			amount += (int)(weapon.rangedDamageDice().roll())+attackBonus+weapon.upgradeLevel();
 		}else {
 			amount = 1+this.dexterityModifier();
 		}
 		
 		int attackRoll = 0;
 		if(weapon.usesDexterity()) {
-			attackRoll = this.dexterityRoll()+weapon.upgradeLevel();
+			attackRoll += this.dexterityRoll()+weapon.upgradeLevel();
 		}else if(weapon.usesStrength()) {
-			attackRoll = this.strengthRoll()+weapon.upgradeLevel();
+			attackRoll += this.strengthRoll()+weapon.upgradeLevel();
 		}else if(weapon.usesIntelligence()) {
-			attackRoll = this.intelligenceRoll()+weapon.upgradeLevel();
+			attackRoll += this.intelligenceRoll()+weapon.upgradeLevel();
 		}else {
-			attackRoll = this.strengthRoll();
+			attackRoll += this.strengthRoll();
+		}
+		
+		if(this.rangedWeaponsLevel() >= 1) {
+			attackRoll += this.proficiencyBonus();
 		}
 
 		if(amount < 1) {
@@ -2754,13 +2759,32 @@ public class Creature implements Cloneable{
 		}
 		Damage electroDamage = new ShockDamage(electroAmount, false, this.ai.factory.effectFactory, true);
 		
-		if(attackRoll >= other.armorClass()) {
+		if(attackRoll >= other.armorClass() || attackRoll >= 20) {
 			//doAction("fire the %s at the %s for %d damage", nameOf(weapon), other.name, damage.amount());
 			doAction("fire the %s at the %s", nameOf(weapon), other.name);
+			if(attackRoll >= 20) {
+				notify("It's a critical hit!");
+			}
 
 			other.setLastHit(this);
 			if(weapon != null) {
+				if(this.rangedWeaponsLevel() >= 3 && attackRoll >= 20) {
+					if(weapon.usesArrowAmmunition()) {
+						Item arrows = this.factory().itemFactory.newArrows(0, 0);
+						arrows.setStackAmount(1);
+						other.inventory().add(arrows);
+					}else if(weapon.usesBoltAmmunition()) {
+						Item bolts = this.factory().itemFactory.newBolts(0, 0);
+						bolts.setStackAmount(1);
+						other.inventory().add(bolts);
+					}else if(weapon.usesPowderAmmunition()) {
+						Item powder = this.factory().itemFactory.newPowder(0, 0);
+						powder.setStackAmount(1);
+						other.inventory().add(powder);
+					}
+				}
 				other.modifyHP(damage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
+				
 			}else {
 				other.modifyHP(damage, String.format("Killed by a %s", this.name));
 			}
