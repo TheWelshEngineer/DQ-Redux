@@ -56,6 +56,7 @@ public class ObjectFactory {
 	public EnchantmentFactory enchantmentFactory = new EnchantmentFactory(effectFactory);
 	public ItemFactory itemFactory = new ItemFactory(this);
 	public CreatureFactory creatureFactory = new CreatureFactory(this);
+	public ParticleFactory particleFactory = new ParticleFactory();
 	
 	public ObjectFactory(World world) {
 		this.world = world;

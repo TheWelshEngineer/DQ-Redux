@@ -6,7 +6,7 @@ import RogueLike.Main.Particle;
 
 public class ParticleFactory {
 	
-	public Particle starburst(Color color, int duration) {
+	public Particle sunburst(Color color, int duration) {
 		return new Particle().changeColor(color).changeDuration(duration).changeGlyph((char)15);
 	}
 	
@@ -18,20 +18,38 @@ public class ParticleFactory {
 		return new Particle().changeColor(color).changeDuration(duration).changeGlyph((char)4);
 	}
 	
-	public Particle crossburst(Color color, int duration) {
-		return new Particle().changeColor(color).changeDuration(duration).changeGlyph(Character.toChars(0x203B)[0]);
+	public Particle fire(Color color, int duration) {
+		return new Particle().changeColor(color).changeDuration(duration).changeGlyph((char)(167+256));
 	}
 	
-	public Particle sparkles(Color color, int duration) {
-		return new Particle().changeColor(color).changeDuration(duration).changeGlyph(Character.toChars(2728)[0]);
+	public Particle frost(Color color, int duration) {
+		return new Particle().changeColor(color).changeDuration(duration).changeGlyph((char)(166+256));
 	}
 	
-	public Particle snowflake(Color color, int duration) {
-		return new Particle().changeColor(color).changeDuration(duration).changeGlyph(Character.toChars(2744)[0]);
+	public Particle crossbones(Color color, int duration) {
+		return new Particle().changeColor(color).changeDuration(duration).changeGlyph((char)(165+256));
 	}
 	
-	public Particle poison(Color color, int duration) {
-		return new Particle().changeColor(color).changeDuration(duration).changeGlyph(Character.toChars(2620)[0]);
+	public Particle shock(Color color, int duration) {
+		return new Particle().changeColor(color).changeDuration(duration).changeGlyph((char)(164+256));
 	}
+	
+	public Particle sparkle(Color color, int duration) {
+		return new Particle().changeColor(color).changeDuration(duration).changeGlyph((char)(163+256));
+	}
+	
+	public Particle vortex(Color color, int duration) {
+		return new Particle().changeColor(color).changeDuration(duration).changeGlyph((char)(162+256));
+	}
+	
+	public Particle droplet(Color color, int duration) {
+		return new Particle().changeColor(color).changeDuration(duration).changeGlyph((char)(161+256));
+	}
+	
+	public Particle blast(Color color, int duration) {
+		return new Particle().changeColor(color).changeDuration(duration).changeGlyph((char)(160+256));
+	}
+	
+
 
 }

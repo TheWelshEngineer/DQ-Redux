@@ -325,7 +325,6 @@ public class ExtendedAsciiPanel extends JPanel {
         g.drawImage(offscreenBuffer,0,0,this);
     }
     
-    //TODO HERE
     private void loadGlyphs(String[] sources) {
     	int sourceCount = sources.length;
     	glyphs = new BufferedImage[256*sourceCount];
