@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 import RogueLike.Main.Effect;
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Managers.MenuDecorationManager;
@@ -20,7 +21,7 @@ public class CharacterSheetScreen implements Screen{
 	}
 	
 	@Override
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		terminal.clear();
 		
 		Screen.generateBorders(terminal);

@@ -3,6 +3,7 @@ package RogueLike.Main.Screens;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
@@ -30,7 +31,7 @@ public class Zone1Screen implements Screen{
 		
 	}
 
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		terminal.clear();
 		int y = 9;
 		terminal.writeCenter("+||+ The Abandoned Depths +||+", y++);

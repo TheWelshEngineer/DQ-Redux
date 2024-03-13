@@ -20,7 +20,7 @@ public enum Tile {
 	BARS_NE((char)187, AsciiPanel.white, "A cage made of sturdy iron bars."),
 	BARS_SE((char)188, AsciiPanel.white, "A cage made of sturdy iron bars."),
 	GRASS_TALL((char)176, AsciiPanel.green, "Tall, thick grass blocks your view."),
-	FIRE('^', ExtraColors.orange, "A small fire is burning here."),
+	FIRE((char)(167+256), ExtraColors.orange, "A small fire is burning here."),
 	SMOKE((char)176, ExtraColors.smoke, "A dense cloud of smoke and ash is swirling here."),
 	PIT((char)220, ExtraColors.invisible, "A deep chasm opens here. You can't see the bottom.."),
 	ACID_GAS((char)176, ExtraColors.apple, "A cloud of caustic gas is swirling here."),

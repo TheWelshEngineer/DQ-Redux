@@ -2,6 +2,7 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 import asciiPanel.AsciiPanel;
@@ -17,7 +18,7 @@ public class IndexWandScreen implements Screen{
 	}
 	
 	@Override
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		terminal.clear();
 		terminal.writeCenter("== Index: Wands ==", 1);	
 		int y = 3;

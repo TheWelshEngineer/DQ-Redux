@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
@@ -213,7 +214,7 @@ public class ChooseAbilityScreen implements Screen{
 		playerAbilities.add(playerIntelligence);
 	}
 
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		changeMarkers(check);
 		terminal.clear();
 		Screen.generateBorders(terminal);

@@ -2,16 +2,17 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.MenuDecorationManager;
 import asciiPanel.AsciiPanel;
 
 public interface Screen {
 	
-	public void displayOutput(AsciiPanel terminal);
+	public void displayOutput(ExtendedAsciiPanel terminal);
 	
 	public Screen respondToUserInput(KeyEvent key);
 	
-	public static void generateBorders(AsciiPanel terminal) {
+	public static void generateBorders(ExtendedAsciiPanel terminal) {
 		for(int i = 0; i < terminal.getWidthInCharacters(); i++) {
 			terminal.write(MenuDecorationManager.menuBorderHorizontal, i, 0);
 			terminal.write(MenuDecorationManager.menuBorderHorizontal, i, terminal.getHeightInCharacters()-1);

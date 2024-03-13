@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.Effect;
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Tile;
@@ -24,7 +25,7 @@ public class GameplayScreen implements Screen{
 		inputAccepted = value;
 	}
 
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		
 		int left = getScrollX();
 		int top = getScrollY();
@@ -377,7 +378,7 @@ public class GameplayScreen implements Screen{
 	}
 	
 	//
-	private void displayMessages(AsciiPanel terminal, List<String> messages) {
+	private void displayMessages(ExtendedAsciiPanel terminal, List<String> messages) {
 		//screenHeight - messages.size();
 		int top = 24;
 		int messagesSize = messages.size();
@@ -396,7 +397,7 @@ public class GameplayScreen implements Screen{
 		
 	}
 	//player.x
-	private void displayTiles(AsciiPanel terminal, int left, int top) {
+	private void displayTiles(ExtendedAsciiPanel terminal, int left, int top) {
 		if(player.isReadingMagicMapping()) {
 			fov.updateMagicMapping(player.x, player.y, player.z, 1000);
 		}else if(player.affectedBy(Effect.levitating)) {

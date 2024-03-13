@@ -3,6 +3,7 @@ package RogueLike.Main.Screens;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 import asciiPanel.AsciiPanel;
@@ -23,7 +24,7 @@ public abstract class InventoryBasedScreen implements Screen{
 		
 	}
 	
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		ArrayList<String> lines = getList();
 		
 		int y = 26;

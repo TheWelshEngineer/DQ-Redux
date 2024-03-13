@@ -2,6 +2,7 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
@@ -13,7 +14,7 @@ public class HelpInteractionControlsScreen implements Screen{
 		this.fromMenu = fromMenu;
 	}
 	
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		terminal.clear();
 		Screen.generateBorders(terminal);
 		terminal.writeCenter("== Help: Interaction Controls ==", 1);

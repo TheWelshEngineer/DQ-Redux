@@ -2,6 +2,7 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
@@ -182,7 +183,7 @@ public class PlayerLevelUpStatsScreen implements Screen{
 	}
 
 	@Override
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		changeMarkers(check);
 		terminal.clear();
 		Screen.generateBorders(terminal);

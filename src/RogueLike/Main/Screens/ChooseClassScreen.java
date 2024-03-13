@@ -2,6 +2,7 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import asciiPanel.AsciiPanel;
 
 public class ChooseClassScreen implements Screen{
@@ -61,7 +62,7 @@ public class ChooseClassScreen implements Screen{
 		}
 	}
 
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		changeMarkers(check);
 		terminal.clear();
 		Screen.generateBorders(terminal);

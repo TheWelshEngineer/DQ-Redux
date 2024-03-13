@@ -156,7 +156,7 @@ public ObjectFactory objectFactory;
 		player.learnNameQuiet(startWandTest);
 		player.inventory().add(startWandTest);
 		
-		player.inventory().add(objectFactory.itemFactory.newScrollOfMagicMapping(0, player, false));
+		player.inventory().add(objectFactory.itemFactory.newPotionOfCombustion(0, false));
 		//player.inventory().add(objectFactory.itemFactory.newScrollOfMagicMapping(0, player, false));
 		//player.inventory().add(objectFactory.itemFactory.newScrollOfMagicMapping(0, player, false));
 		

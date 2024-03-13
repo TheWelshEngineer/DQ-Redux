@@ -2,12 +2,13 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
 public class TitleScreen implements Screen{
 
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		Screen.generateBorders(terminal);
 		int y = 1;
 		terminal.writeCenter(" _____                      __  ____                  _   ", y++);

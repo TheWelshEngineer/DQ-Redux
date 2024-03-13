@@ -3,6 +3,7 @@ package RogueLike.Main.Screens;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.Line;
 import RogueLike.Main.Point;
@@ -31,7 +32,7 @@ public abstract class TargetBasedScreen implements Screen{
 		this.sy = sy;
 	}
 	
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		for(Point p : new Line(sx, sy, sx+x, sy+y)) {
 			//if(p.x < 0 || p.x >= 80 || p.y < 0 || p.y >= 24) {
 				//continue;

@@ -18,6 +18,8 @@ public class World {
 	//
 	private Item[][][] items;
 	public List<Creature> creatures;
+	//
+	private Particle[][][] particles;
 	
 	private int width;
 	public int width() {
@@ -45,6 +47,8 @@ public class World {
 		this.subtiles = new Tile[width][height][depth];
 		//
 		this.gastiles = new Tile[width][height][depth];
+		//
+		this.particles = new Particle[width][height][depth];
 		
 	}
 	
@@ -77,7 +81,14 @@ public class World {
 		
 	}
 	
+	public Particle particle(int x, int y, int z) {
+		return particles[x][y][z];
+	}
+	
 	public char glyph(int x, int y, int z) {
+		if(particle(x,y,z) != null) {
+			return particle(x,y,z).glyph();
+		}
 		Creature creature = creature(x,y,z);
 		if(creature != null) {
 			return creature.glyph();
@@ -103,6 +114,9 @@ public class World {
 			return gastile(x,y,z).color();
 		}
 		//
+		if(particle(x,y,z) != null) {
+			return particle(x,y,z).color();
+		}
 		if(creature != null) {
 			return creature.color();
 		}
@@ -322,6 +336,27 @@ public class World {
 		return false;
 	}
 	
+	public void setParticleAtLocation(Particle particle, int x, int y, int z) {
+		particles[x][y][z] = particle;
+	}
+	
+	public void removeParticleAtLocation(int x, int y, int z) {
+		particles[x][y][z] = null;
+	}
+	
+	public void removeParticleByReference(Particle particle) {
+		for (int x = 0; x < width; x++){
+            for (int y = 0; y < height; y++){
+                for (int z = 0; z < depth; z++){
+                	if (particles[x][y][z] == particle) {
+                		particles[x][y][z] = null;
+                		return;
+                	}
+                }
+            }
+        }
+	}
+	
 	public void remove(int x, int y, int z) {
 		items[x][y][z] = null;
 	}
@@ -393,29 +428,37 @@ public class World {
 	    //
 	    for (int x = 0; x < width; x++){
             for (int y = 0; y < height; y++){
-                	if (tiles[x][y][player.z()].isDecaying() && ExtraMaths.d10() > 9) {
-                		changeTile(x,y,player.z(),Tile.FLOOR);
+                if (tiles[x][y][player.z()].isDecaying() && ExtraMaths.d10() > 9) {
+                	changeTile(x,y,player.z(),Tile.FLOOR);
+                }
+                if (subtiles[x][y][player.z()] != null && subtiles[x][y][player.z()].isDecaying() && ExtraMaths.d10() > 9) {
+                	changeSubTile(x,y,player.z(),null);
+                }
+                if (gastiles[x][y][player.z()] != null && gastiles[x][y][player.z()].isDecaying() && ExtraMaths.d10() > 9) {
+                	changeGasTile(x,y,player.z(),null);
+                }
+                if(particles[x][y][player.z()] != null) {
+                	particles[x][y][player.z()].update();
+                	if(particles[x][y][player.z()].isExpired()) {
+                		removeParticleByReference(particles[x][y][player.z()]);
                 	}
+                }
             }
         }
-	    
-	    for (int x = 0; x < width; x++){
-            for (int y = 0; y < height; y++){
-                	if (subtiles[x][y][player.z()] != null && subtiles[x][y][player.z()].isDecaying() && ExtraMaths.d10() > 9) {
-                		changeSubTile(x,y,player.z(),null);
-                	}
-            }
-        }
-	    
-	    for (int x = 0; x < width; x++){
-            for (int y = 0; y < height; y++){
-                	if (gastiles[x][y][player.z()] != null && gastiles[x][y][player.z()].isDecaying() && ExtraMaths.d10() > 9) {
-                		changeGasTile(x,y,player.z(),null);
-                	}
-            }
-        }
-	    //
 	}
 	
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

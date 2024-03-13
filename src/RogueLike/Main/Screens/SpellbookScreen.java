@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 import RogueLike.Main.Effect;
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Spellbook;
@@ -45,7 +46,7 @@ public class SpellbookScreen implements Screen{
 	}
 	
 	@Override
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		//
 		//
 		terminal.clear();

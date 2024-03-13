@@ -2,6 +2,7 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 import asciiPanel.AsciiPanel;
 
@@ -90,7 +91,7 @@ public class ChooseAncestryScreen implements Screen{
 		}
 	}
 
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		changeMarkers(check);
 		terminal.clear();
 		Screen.generateBorders(terminal);

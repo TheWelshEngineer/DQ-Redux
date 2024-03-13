@@ -18,7 +18,7 @@ import asciiPanel.AsciiPanel;
 public class applicationMain extends JFrame implements KeyListener{
 	private static final long serialVersionUID = 1060623638149583738L;
 	
-	public static AsciiPanel terminal;
+	public static ExtendedAsciiPanel terminal;
 	private Screen screen;
 	//
 	//private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -48,7 +48,7 @@ public class applicationMain extends JFrame implements KeyListener{
         //Dsun.java2d.uiScale.enabled=false
         //-Dsun.java2d.dpiaware=true
         //120, 48
-        terminal = new AsciiPanel(120, 48/*, AsciiFont.CP437_9x16*/);
+        terminal = new ExtendedAsciiPanel(120, 48, new String[] {"res/cp437.png","res/codePage_437_K.png"});
         //
         //System.out.println("Width");
         //System.out.println(terminal.getCharWidth());

@@ -3,6 +3,7 @@ package RogueLike.Main.Screens;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
@@ -25,7 +26,7 @@ public class SpellSelectScreen implements Screen{
 	}
 
 	@Override
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		ArrayList<String> lines = getList();
 		
 		int y = 26;

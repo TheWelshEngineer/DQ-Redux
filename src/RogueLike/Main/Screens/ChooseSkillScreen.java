@@ -3,6 +3,7 @@ package RogueLike.Main.Screens;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Managers.SkillManager;
@@ -444,7 +445,7 @@ public class ChooseSkillScreen implements Screen{
 
 	
 
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		updateMarkers(check);
 		terminal.clear();
 		Screen.generateBorders(terminal);

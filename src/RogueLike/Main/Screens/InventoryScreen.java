@@ -5,6 +5,7 @@ import java.util.List;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
@@ -48,7 +49,7 @@ public class InventoryScreen implements Screen{
 	}
 	
 	@Override
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput(ExtendedAsciiPanel terminal) {
 		//
 		//
 		terminal.clear();
