@@ -9,6 +9,7 @@ import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Damage.*;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
+import RogueLike.Main.Items.Trap;
 import RogueLike.Main.Managers.SkillManager;
 import RogueLike.Main.Screens.SpellTargetingScreen;
 import RogueLike.Main.Screens.SpellSelectScreen;
@@ -357,6 +358,9 @@ public class Creature implements Cloneable{
 		if(affectedBy(Effect.sundered) == true) {
 			returnArmorClass = 10;
 		}
+		if(this.armorTrainingLevel() >= 3) {
+			returnArmorClass += this.proficiencyBonus();
+		}
 		if(returnArmorClass < 0) {
 			returnArmorClass = 0;
 		}
@@ -387,6 +391,9 @@ public class Creature implements Cloneable{
 		}
 		if(affectedBy(Effect.illuminated) == true) {
 			returnVisionRadius += 10;
+		}
+		if(this.perceptionLevel() >= 2) {
+			returnVisionRadius += this.proficiencyBonus();
 		}
 		return returnVisionRadius; 
 	}
@@ -3020,7 +3027,7 @@ public class Creature implements Cloneable{
 			}else {
 				if(armor != null && armor.curse() != null) {
 					notify("Your "+nameOf(armor)+" is cursed! You can't take it off!");
-				}else if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
+				}else if((item.isMediumArmor() && this.armorTrainingLevel() < 1) || (item.isHeavyArmor() && this.armorTrainingLevel() < 2)) {
 					notify("You aren't skilled enough to use the "+nameOf(item)+".");
 				}else {
 					if(item.curse() != null) {
@@ -3062,7 +3069,7 @@ public class Creature implements Cloneable{
 			}else {
 				if(shield != null && shield.curse() != null) {
 					notify("Your "+nameOf(shield)+" is cursed! You can't put it down!");
-				}else if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
+				}else if(((this.armorTrainingLevel() < 1) || (item.isTowerShield() && this.armorTrainingLevel() < 2))) {
 					notify("You aren't skilled enough to use the "+nameOf(item)+".");
 				}else if(weapon != null && weapon.isTwoHanded()){
 					notify("The "+nameOf(item)+" is too unwieldy to use alongside your "+nameOf(weapon)+"!");
@@ -3516,7 +3523,8 @@ public class Creature implements Cloneable{
 			Item corpse = new Item('%', defaultColor, name + " corpse", null);
 			corpse.modifyFoodValue(maxHP * 10);
 			corpse.setIsStackable(true);
-			corpse.setID(maxItemIndex()+1+this.id());
+			corpse.setID(5000+1+this.id());
+			corpse.setIsCorpse(true);
 			world.addAtEmptySpace(corpse, x, y, z);
 		}
 		for(int i = 0; i < inventory.getItems().size(); i++) {
@@ -3557,6 +3565,16 @@ public class Creature implements Cloneable{
 			Damage orcHealOnEat = new Damage((int) Math.ceil(item.foodValue()/100), true, false, null, null, false);
 			modifyHP(orcHealOnEat, "");
 		}
+		if(item.isCorpse()) {
+			int effectChance = this.strengthRoll();
+			if(this.fortitudeLevel() >= 2) {
+				effectChance += this.proficiencyBonus();
+			}
+			if(effectChance < 16) {
+				notify("That food tasted.. strange.");
+				this.addEffect((Effect)this.ai().factory.effectFactory.corpseEffect().clone());
+			}
+		}
 		item.modifyStackAmount(-1);
 		if(item.stackAmount() <= 0 && (item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
 			if(item == quickslot_1) {
@@ -3578,6 +3596,10 @@ public class Creature implements Cloneable{
 	public void addEffect(Effect effect) {
 		if(effect == null) {
 			return;
+		}
+		if(effect.isNegative() && this.fortitudeLevel() >= 3) {
+			int oldDuration = effect.duration();
+			effect.setDuration((int)Math.ceil(oldDuration/2));
 		}
 		effect.start(this);
 		effects.add(effect);
@@ -3641,7 +3663,9 @@ public class Creature implements Cloneable{
 			changeColor(defaultColor);
 		}
 	}
-
+	
+	private int foodTimer = this.proficiencyBonus();
+	
 	public void modifyFood(int amount) {
 		food += amount;
 		if(food > maxFood) {
@@ -3652,10 +3676,17 @@ public class Creature implements Cloneable{
 			modifyHP(damage, "Killed by overeating");
 
 		}else if(food < 0 && isPlayer()) {
-			notify("You are starving!");
-			food = 0;
-			Damage damage = new Damage((int)(maxHP / 10), false, false, Damage.physical, factory().effectFactory, false);
-			modifyHP(damage, "Starved to death");
+			if(this.fortitudeLevel() >= 1) {
+				foodTimer--;
+			}
+			if((this.fortitudeLevel() >= 1 && foodTimer <= 0) || (this.fortitudeLevel() < 1)) {
+				foodTimer = this.proficiencyBonus();
+				notify("You are starving!");
+				food = 0;
+				Damage damage = new Damage((int)(maxHP / 10), false, false, Damage.physical, factory().effectFactory, false);
+				modifyHP(damage, "Starved to death");
+			}
+			
 		}
 
 	}
@@ -3828,9 +3859,15 @@ public class Creature implements Cloneable{
 		if(isPlayer() == true) {
 			search(18, true);
 		}
-		Item trap = world.item(x, y, z);
+		Trap trap = (Trap) world.item(x, y, z);
 		if(trap != null && trap.isTrap() && !isFlying && !affectedBy(Effect.levitating)) {
-			triggerTrap(trap);
+			if(this.perceptionLevel() >= 3) {
+				this.addEffect(trap.perceptionTrapEffect(trap.trapType()));
+				notify("You exploit the trap's mechanism to your benefit!");
+				world.remove(trap);
+			}else {
+				triggerTrap(trap);
+			}
 		}else {
 
 		}
@@ -4120,6 +4157,10 @@ public class Creature implements Cloneable{
 		int searchRadius = (int)(visionRadius / 3);
 		int failure = 0;
 		int success = 0;
+		int bonus = 0;
+		if(this.perceptionLevel() >= 1) {
+			bonus = this.proficiencyBonus();
+		}
 		for (int ox = -searchRadius; ox < searchRadius+1; ox++){
 			for (int oy = -searchRadius; oy < searchRadius+1; oy++){
 				int nx = x + ox;
@@ -4127,7 +4168,7 @@ public class Creature implements Cloneable{
 				if (ox == 0 && oy == 0 || item(nx, ny, z) != null) {
 					if(item(nx, ny, z) != null) {
 						if(item(nx, ny, z).isTrap() && !item(nx, ny, z).isTrapFound()) {
-							if(this.dexterityRoll() >= successChance) {
+							if(this.dexterityRoll()+bonus >= successChance) {
 								item(nx, ny, z).setColor(item(nx, ny, z).defaultColor());
 								item(nx, ny, z).changeGlyph(item(nx, ny, z).defaultGlyph());
 								item(nx, ny, z).setIsTrapFound(true);

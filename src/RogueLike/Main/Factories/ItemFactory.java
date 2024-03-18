@@ -22,6 +22,7 @@ import RogueLike.Main.Items.Scroll;
 import RogueLike.Main.Items.ThrownFinesseWeapon;
 import RogueLike.Main.Items.ThrownVersatileWeapon;
 import RogueLike.Main.Items.TowerShield;
+import RogueLike.Main.Items.Trap;
 import RogueLike.Main.Items.TwoHandedFinesseWeapon;
 import RogueLike.Main.Items.TwoHandedMeleeWeapon;
 import RogueLike.Main.Items.VersatileFinesseWeapon;
@@ -935,35 +936,23 @@ public class ItemFactory {
 	
 	//traps
 	public Item newFireTrap(int depth, int addToWorld) {
-		Item item = new Item('#', ExtraColors.orange, "Fire Trap", "Fire Trap");
-		item.setIsTrap(true);
-		item.setColor(ExtraColors.trap);
-		item.changeGlyph((char)250);
-		item.setQuaffEffect(objectFactory.effectFactory.fireball(3+depth+Dice.d6.roll()));
+		Item item = new Trap('#', ExtraColors.orange, "Fire Trap", "Fire Trap", Trap.fireTrap, objectFactory.effectFactory.fireball(3+depth+Dice.d6.roll()), objectFactory);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newFrostTrap(int depth, int addToWorld) {
-		Item item = new Item('#', ExtraColors.water, "Frostbite Trap", "Frostbite Trap");
-		item.setIsTrap(true);
-		item.setColor(ExtraColors.trap);
-		item.changeGlyph((char)250);
-		item.setQuaffEffect(objectFactory.effectFactory.frozen(3+depth+Dice.d6.roll()));
+	public Item newFrostbiteTrap(int depth, int addToWorld) {
+		Item item = new Trap('#', ExtraColors.water, "Frostbite Trap", "Frostbite Trap", Trap.frostbiteTrap, objectFactory.effectFactory.frozen(3+depth+Dice.d6.roll()), objectFactory);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newShockTrap(int depth, int addToWorld) {
-		Item item = new Item('#', ExtraColors.brightCyan, "Lightning Trap", "Lightning Trap");
-		item.setIsTrap(true);
-		item.setColor(ExtraColors.trap);
-		item.changeGlyph((char)250);
-		item.setQuaffEffect(objectFactory.effectFactory.electrified(3+depth+Dice.d6.roll()));
+	public Item newLightningTrap(int depth, int addToWorld) {
+		Item item = new Trap('#', ExtraColors.brightCyan, "Lightning Trap", "Lightning Trap", Trap.lightningTrap, objectFactory.effectFactory.electrified(3+depth+Dice.d6.roll()), objectFactory);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -971,23 +960,15 @@ public class ItemFactory {
 	}
 	
 	public Item newBlinkTrap(int depth, int addToWorld) {
-		Item item = new Item('#', ExtraColors.pink, "Blink Trap", "Blink Trap");
-		item.setIsTrap(true);
-		item.setColor(ExtraColors.trap);
-		item.changeGlyph((char)250);
-		item.setQuaffEffect(objectFactory.effectFactory.blink());
+		Item item = new Trap('#', ExtraColors.pink, "Blink Trap", "Blink Trap", Trap.blinkTrap, objectFactory.effectFactory.blink(), objectFactory);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newSummonTrap(int depth, int addToWorld, Creature player) {
-		Item item = new Item('#', ExtraColors.brightWhite, "Summoning Trap", "Summoning Trap");
-		item.setIsTrap(true);
-		item.setColor(ExtraColors.trap);
-		item.changeGlyph((char)250);
-		item.setQuaffEffect(objectFactory.effectFactory.summonMonstersScroll(player));
+	public Item newSummoningTrap(int depth, int addToWorld, Creature player) {
+		Item item = new Trap('#', ExtraColors.brightWhite, "Summoning Trap", "Summoning Trap", Trap.summoningTrap, objectFactory.effectFactory.summonMonstersScroll(player), objectFactory);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}

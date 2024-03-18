@@ -1305,9 +1305,9 @@ public class ObjectFactory {
 	
 	public Item randomTrap(int depth, int addToWorld, Creature player) {
 		switch(ExtraMaths.diceRoll(1, 5)) {
-		case 1: return itemFactory.newShockTrap(depth, addToWorld);
-		case 2: return itemFactory.newFrostTrap(depth, addToWorld);
-		case 3: return itemFactory.newSummonTrap(depth, addToWorld, player);
+		case 1: return itemFactory.newLightningTrap(depth, addToWorld);
+		case 2: return itemFactory.newFrostbiteTrap(depth, addToWorld);
+		case 3: return itemFactory.newSummoningTrap(depth, addToWorld, player);
 		case 4: return itemFactory.newBlinkTrap(depth, addToWorld);
 		case 5: return itemFactory.newFireTrap(depth, addToWorld);
 		default: return itemFactory.newFireTrap(depth, addToWorld);

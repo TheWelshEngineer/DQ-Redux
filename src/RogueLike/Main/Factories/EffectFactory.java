@@ -1804,5 +1804,18 @@ public class EffectFactory {
 		return map;
 	}
 	
+	//Generation Tables
+	public Effect corpseEffect() {
+		switch(Dice.d6.roll()) {
+		case 1: return paralysed(5);
+		case 2: return frozen(5);
+		case 3: return corroded(5);
+		case 4: return poisoned(5);
+		case 5: return bleeding(5);
+		case 6: return blinded(5);
+		default: return paralysed(5);
+		}
+	}
+	
 
 }

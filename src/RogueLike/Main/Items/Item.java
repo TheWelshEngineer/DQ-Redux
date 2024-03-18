@@ -965,6 +965,14 @@ public class Item implements Cloneable{
 		isNegativePotion = value;
 	}
 	
+	private boolean isCorpse;
+	public boolean isCorpse() {
+		return isCorpse;
+	}
+	public void setIsCorpse(boolean value) {
+		isCorpse = value;
+	}
+	
 	private boolean isEquippable;
 	public boolean isEquippable() {
 		return isEquippable;
