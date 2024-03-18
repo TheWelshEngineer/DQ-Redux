@@ -2291,12 +2291,16 @@ public class Creature implements Cloneable{
 			attackRoll += this.proficiencyBonus();
 		}
 
-		if(affectedBy(Effect.invisible) == true) {
-			attackRoll += 5;
-		}
-
 		if(other.affectedBy(Effect.invisible) == true) {
 			attackRoll -= 5;
+		}
+		
+		if(affectedBy(Effect.invisible) == true) {
+			if(this.stealthLevel() >= 3) {
+				attackRoll = 20;
+			}else {
+				attackRoll += 5;
+			}
 		}
 		
 		if(attackRoll >= 20) {
@@ -2565,12 +2569,16 @@ public class Creature implements Cloneable{
 			attackRoll += this.proficiencyBonus();
 		}
 
-		if(affectedBy(Effect.invisible) == true) {
-			attackRoll += 5;
-		}
-
 		if(other.affectedBy(Effect.invisible) == true) {
 			attackRoll -= 5;
+		}
+		
+		if(affectedBy(Effect.invisible) == true) {
+			if(this.stealthLevel() >= 3) {
+				attackRoll = 20;
+			}else {
+				attackRoll += 5;
+			}
 		}
 		
 		if(attackRoll >= 20) {
@@ -2749,12 +2757,17 @@ public class Creature implements Cloneable{
 			}
 		}
 
-		if(affectedBy(Effect.invisible) == true) {
-			attackRoll += 5;
-		}
+		
 
 		if(other.affectedBy(Effect.invisible) == true) {
 			attackRoll -= 5;
+		}
+		if(affectedBy(Effect.invisible) == true) {
+			if(this.stealthLevel() >= 3) {
+				attackRoll = 20;
+			}else {
+				attackRoll += 5;
+			}
 		}
 		if(this.isPlayer()) {
 			this.ammunition().modifyStackAmount(-1);
@@ -4160,6 +4173,17 @@ public class Creature implements Cloneable{
 		int bonus = 0;
 		if(this.perceptionLevel() >= 1) {
 			bonus = this.proficiencyBonus();
+		}
+		if(this.stealthLevel() >= 2) {
+			if(this.mana() >= (this.proficiencyBonus()*2)) {
+				Damage sneakCost = new Damage(this.proficiencyBonus()*2, false, false, null, null, false);
+				Effect sneak = (Effect)this.ai().factory.effectFactory.invisible(this.proficiencyBonus()).clone();
+				this.modifyMana(sneakCost);
+				this.addEffect(sneak);
+				notify("You blend into the shadows.");
+			}else {
+				notify("You don't have the energy to sneak..");
+			}
 		}
 		for (int ox = -searchRadius; ox < searchRadius+1; ox++){
 			for (int oy = -searchRadius; oy < searchRadius+1; oy++){

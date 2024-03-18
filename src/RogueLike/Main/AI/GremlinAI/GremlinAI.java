@@ -12,6 +12,7 @@ import RogueLike.Main.Factories.ObjectFactory;
 public class GremlinAI extends CreatureAI{
 	private Creature player;
 	private int arrowsLeft;
+	private int turnsWithoutPlayer = 0;
 	
 	public GremlinAI(Creature creature, Creature player, ObjectFactory factory, World world) {
 		super(creature, factory, world);
@@ -22,7 +23,11 @@ public class GremlinAI extends CreatureAI{
 	
 	public void selectAction() {
 		actionQueue = new ArrayList<Integer>();
-		if(canRangedWeaponAttack(player) && !player.affectedBy(Effect.invisible) && arrowsLeft > 0) {
+		if(turnsWithoutPlayer >= 20) {
+			//Fall Asleep
+			actionQueue.add(4);
+			actionQueue.add(1000);
+		}else if(canRangedWeaponAttack(player) && !player.affectedBy(Effect.invisible) && arrowsLeft > 0) {
 			//Shoot Arrows
 			actionQueue.add(1);
 			actionQueue.add(1000);
@@ -41,11 +46,29 @@ public class GremlinAI extends CreatureAI{
 		switch(action) {
 			case 1: this.shootArrows(); System.out.println(this.toString() + " uses [Shoot Arrows]"); break;
 			case 2: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
+			case 4: this.creature.sleep(); System.out.println(this.toString() + " uses [Fall Asleep]"); break;
 			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}
 	
 	public void onUpdate() {
+		if(creature.isAsleep()) {
+			if(this.creature.canSee(player.x(), player.y(), this.creature.z())) {
+				int playerStealthRoll = player.dexterityRoll();
+				int bonus = 0;
+				if(player.stealthLevel() >= 1) {
+					bonus = player.proficiencyBonus();
+				}
+				if(playerStealthRoll+bonus < this.creature.dexterityRoll()) {
+					this.creature.wakeup();
+					creature.doAction("wake up!");
+					
+				}
+			}else {
+				creature.doAction("snore gently");
+				return;
+			}
+		}
 		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
@@ -60,6 +83,9 @@ public class GremlinAI extends CreatureAI{
 			return;
 
 		}else {
+			if(!creature.canSee(player.x, player.y, player.z) || player.affectedBy(Effect.invisible)) {
+				turnsWithoutPlayer++;
+			}
 			decodeAction(actionQueue.get(0)); 
 		}
 	}

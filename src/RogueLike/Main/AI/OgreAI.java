@@ -9,6 +9,7 @@ import RogueLike.Main.Factories.ObjectFactory;
 
 public class OgreAI extends CreatureAI{
 	private Creature player;
+	private int turnsWithoutPlayer = 0;
 	
 	public OgreAI(Creature creature, Creature player, ObjectFactory factory, World world) {
 		super(creature, factory, world);
@@ -18,8 +19,12 @@ public class OgreAI extends CreatureAI{
 	
 	public void selectAction() {
 		actionQueue = new ArrayList<Integer>();
-		if(canUseBetterEquipment()) {
-			//Burst
+		if(turnsWithoutPlayer >= 20) {
+			//Fall Asleep
+			actionQueue.add(6);
+			actionQueue.add(1000);
+		}else if(canUseBetterEquipment()) {
+			//Swap Equipment
 			actionQueue.add(1);
 			actionQueue.add(1000);
 		}else if(canThrowAt(player) && !player.affectedBy(Effect.invisible)) {
@@ -47,11 +52,30 @@ public class OgreAI extends CreatureAI{
 			case 2: creature.throwItem(getWeaponToThrow(), player.x, player.y, player.z); System.out.println(this.toString() + " uses [Throw Attack]"); break;
 			case 3: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
 			case 4: creature.pickup(); System.out.println(this.toString() + " uses [Pick Up]"); break;
+			case 5: this.wander();; System.out.println(this.toString() + " uses [Wander]"); break;
+			case 6: creature.sleep(); System.out.println(this.toString() + " uses [Fall Asleep]"); break;
 			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}
 	
 	public void onUpdate() {
+		if(creature.isAsleep()) {
+			if(this.creature.canSee(player.x(), player.y(), this.creature.z())) {
+				int playerStealthRoll = player.dexterityRoll();
+				int bonus = 0;
+				if(player.stealthLevel() >= 1) {
+					bonus = player.proficiencyBonus();
+				}
+				if(playerStealthRoll+bonus < this.creature.dexterityRoll()) {
+					this.creature.wakeup();
+					creature.doAction("wake up!");
+					
+				}
+			}else {
+				creature.doAction("snore gently");
+				return;
+			}
+		}
 		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
 				creature.doAction("struggle to move!");
@@ -66,6 +90,9 @@ public class OgreAI extends CreatureAI{
 			return;
 
 		}else {
+			if(!creature.canSee(player.x, player.y, player.z) || player.affectedBy(Effect.invisible)) {
+				turnsWithoutPlayer++;
+			}
 			decodeAction(actionQueue.get(0));
 		}
 	}
