@@ -34,6 +34,919 @@ public class EffectFactory {
 		this.objectFactory = factory;
 	}
 	
+	//Spell Effects
+	
+	//Evocation Spells
+	public Effect magicMissile(Creature reference) {
+		Effect missile = new Effect(1, null, true, reference){
+			public void start(Creature creature) {
+				creature.doAction("get hit with a magic missile!");
+				creature.setLastHit(reference);
+				int critCheck = Dice.d20.roll()+reference.intelligenceModifier();
+				int damageAmount = Dice.d6.roll()+reference.intelligenceModifier();
+				if(reference.evocationLevel() >= 1) {
+					critCheck += reference.proficiencyBonus();
+				}
+				if(reference.evocationLevel() >= 2) {
+					damageAmount += reference.proficiencyBonus();
+				}
+				if(reference.evocationLevel() >= 3 && critCheck >= 20) {
+					int manaAmount = (int)Math.ceil(reference.maxMana()/2);
+					Damage manaRestore = new Damage(manaAmount, false, false, null, null, false);
+					reference.modifyMana(manaRestore);
+				}
+	        	Damage damage = new MagicDamage(damageAmount, false, getThis(), true);
+	        	creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.sparkle(ExtraColors.lilac, 2), creature.x(), creature.y(), creature.z());
+				creature.modifyHP(damage, String.format("Killed by %s using Magic Missile", reference.name()));
+			}
+		};
+		missile.setShowInMenu(false);
+		return missile;
+	}
+	
+	public Effect forceBlast(Creature reference) {
+		Effect repel = new Effect(1, null, true, reference){
+			public void start(Creature creature) {
+				int px = reference.x();
+				int py = reference.y();
+				int cx = creature.x();
+				int cy = creature.y();
+				if(creature == reference) {
+					double tempAmount = (ExtraMaths.diceRoll(1, 12));
+					int amount = (int) Math.round(tempAmount);
+					Damage damage = new PhysicalDamage(amount, false, getThis(), true);
+					creature.doAction("get crushed!");
+					creature.modifyHP(damage, "Killed by kinetic energy");
+				}else {
+					int push = 0;
+					for(int i = 0; i < 3; i++) { //TODO apply evocation
+						if(cx > px && cy < py) {
+							creature.moveBy(1, -1, 0, false);
+							push++;
+						}
+						if(cx > px && cy > py) {
+							creature.moveBy(1, 1, 0, false);
+							push++;
+						}
+						if(cx < px && cy < py) {
+							creature.moveBy(-1, -1, 0, false);
+							push++;
+						}
+						if(cx < px && cy > py) {
+							creature.moveBy(-1, 1, 0, false);
+							push++;
+						}
+						if(cx < px && cy == py) {
+							creature.moveBy(-1, 0, 0, false);
+							push++;
+						}
+						if(cx > px && cy == py) {
+							creature.moveBy(1, 0, 0, false);
+							push++;
+						}
+						if(cx == px && cy > py) {
+							creature.moveBy(0, 1, 0, false);
+							push++;
+						}
+						if(cx == px && cy < py) {
+							creature.moveBy(0, -1, 0, false);
+							push++;
+						}
+						creature.doAction("get thrown back!");
+						int amount = 0;
+						for(int j = 0; j < push+1; j++) {
+							amount += Dice.d4.roll();
+						}
+						
+						int attackRoll = Dice.d20.roll() + reference.intelligenceModifier();
+						if(reference.evocationLevel() >= 1) {
+							attackRoll += reference.proficiencyBonus();
+						}
+						if(reference.evocationLevel() >= 2) {
+							amount += reference.proficiencyBonus();
+						}
+						if(reference.evocationLevel() >= 3 && attackRoll >= 20) {
+							int manaAmount = (int)Math.ceil(reference.maxMana()/2);
+							Damage manaRestore = new Damage(manaAmount, false, false, null, null, false);
+							reference.modifyMana(manaRestore);
+						}
+						if(attackRoll >= creature.armorClass()) {
+							Damage damage = new MagicDamage(amount, false, getThis(), false);
+							creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.lilac, 2), creature.x(), creature.y(), creature.z());
+							creature.modifyHP(damage, "Killed by kinetic energy");
+						}
+					}
+				}
+			}
+        };
+        return repel;
+	}
+	
+	public Effect archmagesAegis(Creature reference) {
+		Effect archmagesAegis = new Effect(1, "Archmage's Aegis", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.evocationLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.evocationLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect arcaneWard_ = reference.ai().factory.effectFactory.arcaneWard(duration_);
+        		Effect confused_ = reference.ai().factory.effectFactory.confused(duration_);
+				creature.addEffect((Effect) arcaneWard_.clone());
+				for(int x = -2; x < 3; x++) {
+					for(int y = -2; y < 3; y++) {
+						if(reference.creature(x, y, reference.z()) != null && reference.creature(x, y, reference.z()) != reference) {
+							reference.creature(x, y, reference.z()).addEffect((Effect) confused_.clone());
+							creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtraColors.lilac, 2), x, y, creature.z());
+						}
+					}
+				}
+			}
+        };
+        archmagesAegis.setShowInMenu(false);
+		return archmagesAegis;
+	}
+	
+	public Effect findTraps() {
+		Effect findTraps = new Effect(0, null, false, null) {
+			public void start(Creature creature) {
+				int count = 0;
+				for(int x = -creature.visionRadius(); x < creature.visionRadius()+1; x++) {
+					for(int y = -creature.visionRadius(); y < creature.visionRadius()+1; y++) {
+						if(x < 0 || y < 0 || x > creature.world().width() || y > creature.world().height()) {
+							continue;
+						}
+						if(creature.world().item(x, y, creature.z()) != null && creature.world().item(x, y, creature.z()).isTrap()) {
+							count++;
+						}
+					}
+				}
+				if(count > 0) {
+					String trap = "trap";
+					if(count > 1) {
+						trap = "traps";
+					}
+					creature.notify(String.format("You sense %d %s nearby.", count, trap));
+				}else {
+					creature.notify("You do not sense any traps nearby");
+				}
+			}
+		};
+		return findTraps;
+	}
+	
+	//Pyromancy Spells
+	public Effect firebolt(Creature reference) {
+		Effect firebolt = new Effect(1, "Firebolt", true, null) {
+        	public void start(Creature creature) {
+				Damage damage = new FireDamage(Dice.d8.roll()+reference.intelligenceModifier(), false, getThis(), true);
+				if(reference.intelligenceRoll() >= creature.armorClass()) {
+					creature.doAction("get hit with a bolt of fire!");
+					creature.setLastHit(reference);
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtraColors.orange, 2), creature.x(), creature.y(), creature.z());
+					creature.modifyHP(damage, String.format("Killed by %s using Firebolt", reference.name()));
+				}else {
+					creature.notify(String.format("The %s's spell misses you.", reference.name()));
+					reference.notify(String.format("Your spell misses the %s.", creature.name()));
+				}
+			}
+        };
+        firebolt.setShowInMenu(false);
+		return firebolt;
+	}
+	
+	public Effect flashfire(Creature reference) {
+		Effect flashfire = new Effect(1, "Flashfire", true, null) {
+        	public void start(Creature creature) {
+				Damage damage = new FireDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
+				if(creature.affectedBy(Effect.ignited)) {
+					int amount = reference.intelligenceModifier();
+					Effect temp = null;
+					for(int i = 0; i < creature.effects().size(); i++) {
+						if(creature.effects().get(i).type() == Effect.ignited) {
+							temp = creature.effects().get(i);
+						}
+					}
+					for(int i = 0; i < temp.duration(); i++) {
+						amount += Dice.d4.roll();
+					}
+					damage = new FireDamage(amount, false, getThis(), false);
+				}
+				if(creature.dexterityRoll() >= reference.intelligenceSaveDC()) {
+					creature.doAction("get consumed by searing flames!");
+					creature.setLastHit(reference);
+					if(creature.affectedBy(Effect.ignited)) {
+						creature.cureEffectOfType(Effect.ignited);
+					}
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtraColors.orange, 2), creature.x(), creature.y(), creature.z());
+					creature.modifyHP(damage, String.format("Killed by %s using Flashfire", reference.name()));
+				}else {
+					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
+					reference.notify(String.format("The %s dodges your spell.", creature.name()));
+				}
+			}
+        };
+        flashfire.setShowInMenu(false);
+		return flashfire;
+	}
+	
+	public Effect brazierBarrier(Creature reference) {
+		Effect brazierBarrier = new Effect(1, "Brazier Barrier", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.pyromancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.pyromancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect magmaWard_ = reference.ai().factory.effectFactory.magmaWard(duration_);
+        		Effect illuminated_ = reference.ai().factory.effectFactory.illuminated(duration_);
+				creature.addEffect((Effect) magmaWard_.clone());
+				creature.addEffect((Effect) illuminated_.clone());
+			}
+        };
+        brazierBarrier.setShowInMenu(false);
+		return brazierBarrier;
+	}
+	
+	public Effect pyrotechnics(Creature reference) {
+		Effect pyrotechnics = new Effect(1, null, true, reference) {
+			public void start(Creature creature){
+                for (int ox = -2; ox < 3; ox++){
+                    for (int oy = -2; oy < 3; oy++){
+                        int nx = creature.x + ox;
+                        int ny = creature.y + oy;
+                        if(creature.tile(nx, ny, creature.z()).canHaveGas()) {
+                        	creature.world().changeGasTile(nx, ny, creature.z(), Tile.SMOKE);
+                        }
+                        if (creature.creature(nx, ny, creature.z) == null) {
+                            continue;
+                        }
+                        int duration_ = 5;
+                        if(reference.pyromancyLevel() >= 1) {
+                        	duration_ += reference.proficiencyBonus();
+                        }
+                        if(reference.pyromancyLevel() >= 2) {
+                        	duration_ += reference.proficiencyBonus();
+                        }
+                        Effect smoke = blinded(duration_);
+                        creature.creature(nx, ny, creature.z).addEffect(smoke);
+                    }
+                }
+            }
+		};
+		return pyrotechnics;
+	}
+	
+	//Cryomancy Spells
+	public Effect flashFreeze(Creature player) {
+		Effect freeze = new Effect(1, null, true, player) {
+			public void start(Creature creature) {
+				
+				int savingThrow = creature.frostSave();
+				int saveTarget = player.intelligenceSaveDC();
+				int duration = 2+Dice.d4.roll(); //TODO apply cryomancy
+				if(savingThrow < saveTarget) {
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
+					creature.addEffect(frozen(duration));
+				}else {
+					creature.doAction("resist the spell!");
+				}
+			}
+		};
+		return freeze;
+	}
+	
+	public Effect iceKnife(Creature reference) {
+		Effect iceKnife = new Effect(1, "Ice Knife", true, null) {
+        	public void start(Creature creature) {
+				Damage damage = new FrostDamage(Dice.d6.roll()+reference.intelligenceModifier(), false, getThis(), true);
+				if(reference.intelligenceRoll() >= creature.armorClass()) {
+					creature.doAction("get hit with a blade of ice!");
+					creature.setLastHit(reference);
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
+					creature.modifyHP(damage, String.format("Killed by %s using Ice Knife", reference.name()));
+				}else {
+					creature.notify(String.format("The %s's spell misses you.", reference.name()));
+					reference.notify(String.format("Your spell misses the %s.", creature.name()));
+				}
+				damage = new FrostDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
+				if(creature.dexterityRoll() < reference.intelligenceSaveDC()) {
+					creature.notify("You feel a biting frost creep over you!");
+					reference.notify(String.format("The %s is frostbitten by your spell!", creature.name()));
+					creature.setLastHit(reference);
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
+					creature.modifyHP(damage, String.format("Killed by %s using Ice Knife", reference.name()));
+				}else {
+					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
+					reference.notify(String.format("The %s dodges your spell.", creature.name()));
+				}
+			}
+        };
+        iceKnife.setShowInMenu(false);
+		return iceKnife;
+	}
+	
+	public Effect glaciate(Creature reference) {
+		Effect glaciate = new Effect(1, "Glaciate", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.cryomancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.cryomancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect chillWard_ = reference.ai().factory.effectFactory.chillWard(duration_);
+				creature.addEffect((Effect) chillWard_.clone());
+				for(int x = -1; x < 2; x++) {
+					for(int y = -1; y < 2; y++) {
+						if((creature.creature(creature.x()+x, creature.y()+y, creature.z()) == null)) {
+							Creature newWall = objectFactory.creatureFactory.newIceWall(0, reference, false);
+							creature.ai().world.addCreatureAtLocation(newWall, creature.x()+x, creature.y()+y, creature.z());
+						}
+					}
+				}
+				creature.notify("You summon a ring of ice!");
+			}
+        };
+        glaciate.setShowInMenu(false);
+		return glaciate;
+	}
+	
+	public Effect iceWall(Creature player) {
+		Effect wall = new Effect(1, null, false, player){
+			public void start(Creature creature) {
+				player.notify("You summon a wall of ice!");
+				Creature iceWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+				creature.become(iceWall);
+
+				int px = player.x();
+				int py = player.y();
+				int cx = creature.x();
+				int cy = creature.y();
+
+				if(cx > px && cy > py) {
+					//south west
+					//creature.moveBy(1, 1, 0);
+					if((creature.creature(cx+1, cy, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
+					}
+					if((creature.creature(cx+2, cy-1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-1, creature.z());
+					}
+					if((creature.creature(cx, cy+1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
+					}
+					if((creature.creature(cx-1, cy+2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+2, creature.z());
+					}
+
+					if((creature.creature(cx-1, cy+1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
+					}
+					if((creature.creature(cx-2, cy+2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
+					}
+
+					if((creature.creature(cx+1, cy-1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
+					}
+					if((creature.creature(cx+2, cy-2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
+					}
+				}
+
+				if(cx < px && cy < py) {
+					//north east
+					//creature.moveBy(-1, -1, 0);
+					if((creature.creature(cx-1, cy, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
+					}
+					if((creature.creature(cx-2, cy+1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+1, creature.z());
+					}
+					if((creature.creature(cx, cy-1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
+					}
+					if((creature.creature(cx+1, cy-2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-2, creature.z());
+					}
+
+					if((creature.creature(cx-1, cy+1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
+					}
+					if((creature.creature(cx-2, cy+2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
+					}
+
+					if((creature.creature(cx+1, cy-1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
+					}
+					if((creature.creature(cx+2, cy-2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
+					}
+				}
+
+				if((cx > px && cy < py)) {
+					//north west
+					//creature.moveBy(1, -1, 0);
+					if((creature.creature(cx+1, cy, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
+					}
+					if((creature.creature(cx+2, cy+1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+1, creature.z());
+					}
+					if((creature.creature(cx, cy-1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
+					}
+					if((creature.creature(cx-1, cy-2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-2, creature.z());
+					}
+
+					if((creature.creature(cx+1, cy+1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
+					}
+					if((creature.creature(cx+2, cy+2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
+					}
+
+					if((creature.creature(cx-1, cy-1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
+					}
+					if((creature.creature(cx-2, cy-2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
+					}
+				}
+
+				if((cx < px && cy > py)) {
+					//south east
+					//creature.moveBy(-1, 1, 0);
+					if((creature.creature(cx-1, cy, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
+					}
+					if((creature.creature(cx-2, cy-1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-1, creature.z());
+					}
+					if((creature.creature(cx, cy+1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
+					}
+					if((creature.creature(cx+1, cy+2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+2, creature.z());
+					}
+
+					if((creature.creature(cx+1, cy+1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
+					}
+					if((creature.creature(cx+2, cy+2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
+					}
+
+					if((creature.creature(cx-1, cy-1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
+					}
+					if((creature.creature(cx-2, cy-2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
+					}
+				}
+
+				if((cx > px && cy == py)||(cx < px && cy == py)) {
+					//creature.moveBy(1, 0, 0);
+					if((creature.creature(cx, cy+1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
+					}
+					if((creature.creature(cx, cy-1, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
+					}
+
+					if((creature.creature(cx, cy+2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+2, creature.z());
+					}
+					if((creature.creature(cx, cy-2, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-2, creature.z());
+					}
+				}
+
+
+				if((cx == px && cy < py)||(cx == px && cy > py)) {
+					//creature.moveBy(0, -1, 0);
+					if((creature.creature(cx+1, cy, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
+					}
+					if((creature.creature(cx-1, cy, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
+					}
+
+					if((creature.creature(cx+2, cy, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy, creature.z());
+					}
+					if((creature.creature(cx-2, cy, creature.z()) == null)) {
+						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
+						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy, creature.z());
+					}
+				}
+
+			}
+
+
+
+
+		};
+		return wall;
+	}
+	
+	//Electromancy Spells
+	public Effect chainLightning(Creature player) { //TODO CLEANUP
+		Effect lightning = new Effect(7, null, true, player){
+			public void start(Creature creature){
+				int playerDC = player.intelligenceSaveDC();
+				int creatureSave = creature.shockSave();
+				int damageCeiling = 8+player.intelligenceModifier();
+				
+				int tempAmount = (ExtraMaths.diceRoll(1, damageCeiling));
+				int amountHalf = (int) Math.round(tempAmount/2);
+				int amount = tempAmount;
+				boolean saved = false;
+				
+				if(creatureSave >= playerDC) {
+					amount = amountHalf;
+					saved = true;
+				}
+				if(amount < 1) {
+					amount = 1;
+				}
+				creature.doAction("get a shock!");
+				creature.setLastHit(player);
+				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), creature.x(), creature.y(), creature.z());
+				Damage damage = new ShockDamage(amount, false, getThis(), true);
+				creature.modifyHP(damage, "Killed by lightning magic");
+				
+				if(saved == false) {
+	                for (int ox = -2; ox < 3; ox++){
+	                    for (int oy = -2; oy < 3; oy++){
+	                        int nx = creature.x + ox;
+	                        int ny = creature.y + oy;
+	                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null || creature.creature(nx, ny, creature.z) == player) {
+	                            continue;
+	                        }
+	                        
+	                        
+	                        Creature target = creature.creature(nx, ny, creature.z);
+	                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), target.x(), target.y(), target.z());
+	                        int amountChain = (ExtraMaths.diceRoll(1, damageCeiling));
+	        				
+	                        target.doAction("get a shock!");
+	                        target.setLastHit(player);
+	                        Damage damageChain = new ShockDamage(amountChain, false, getThis(), true);
+	        				target.modifyHP(damageChain, "Killed by lightning magic");
+	
+	                    }
+	                }
+				}
+            }
+        };
+        return lightning;
+	}
+	
+	public Effect lightningLance(Creature reference) {
+		Effect lightningLance = new Effect(1, "Lightning Lance", false, reference) {
+        	public void start(Creature creature) {
+        		Line l = new Line(reference.x(), reference.y(), creature.x(), creature.y());
+        		ArrayList<Creature> targets = new ArrayList<Creature>();
+        		for(Point p : l) {
+        			//applicationMain.terminal.write((char)15, p.x, p.y, ExtraColors.paralyzed);
+        			if(creature.creature(p.x, p.y, creature.z()) != null && (p.x != reference.x() && p.y != reference.y())) {
+        				targets.add(creature.creature(p.x, p.y, creature.z()));
+        				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), p.x, p.y, creature.z());
+        			}
+        			if(creature.creature(p.x, p.y, creature.z()) == null) {
+        				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), p.x, p.y, creature.z());
+        			}
+        			
+        		}
+        		for(Creature c : targets) {
+        			int amount = Dice.d8.roll()+reference.intelligenceModifier();
+    				Damage damage = new ShockDamage(amount, false, creature.ai().factory.effectFactory, true);
+    				c.modifyHP(damage, String.format("Killed by %s using Lightning Lance", reference.name()));
+        		}
+			}
+        };
+        lightningLance.setShowInMenu(false);
+		return lightningLance;
+	}
+	
+	public Effect staticSurge(Creature reference) {
+		Effect staticSurge = new Effect(1, "Static Surge", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.electromancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.electromancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect arcWard_ = reference.ai().factory.effectFactory.arcWard(duration_);
+        		Effect electrocharged_ = reference.ai().factory.effectFactory.electrocharged(duration_);
+				creature.addEffect((Effect) arcWard_.clone());
+				creature.addEffect((Effect) electrocharged_.clone());
+			}
+        };
+        staticSurge.setShowInMenu(false);
+		return staticSurge;
+	}
+	
+	public Effect hasteSpell(Creature reference) {
+		Effect hasteSpell = new Effect(1, "Haste", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.electromancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.electromancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect haste_ = reference.ai().factory.effectFactory.haste(duration_);
+				creature.addEffect((Effect) haste_.clone());
+			}
+        };
+        hasteSpell.setShowInMenu(false);
+		return hasteSpell;
+	}
+	
+	//Alchemancy Spells
+	public Effect acidBlast(Creature reference) {
+		Effect acidBlast = new Effect(1, "Acid Blast", true, null) {
+        	public void start(Creature creature) {
+				Damage damage = new AcidDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
+				if(creature.affectedBy(Effect.corroded)) {
+					damage = new AcidDamage(Dice.d10.roll()+reference.intelligenceModifier(), false, getThis(), false);
+				}
+				if(reference.intelligenceRoll() >= creature.armorClass()) {
+					creature.doAction("get hit with a blast of acid!");
+					creature.setLastHit(reference);
+					if(creature.affectedBy(Effect.corroded)) {
+						creature.cureEffectOfType(Effect.corroded);
+					}
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.lime, 2), creature.x(), creature.y(), creature.z());
+					creature.modifyHP(damage, String.format("Killed by %s using Acid Blast", reference.name()));
+				}else {
+					creature.notify(String.format("The %s's spell misses you.", reference.name()));
+					reference.notify(String.format("Your spell misses the %s.", creature.name()));
+				}
+			}
+        };
+        acidBlast.setShowInMenu(false);
+		return acidBlast;
+	}
+	
+	public Effect toxicTransfusion(Creature reference) {
+		Effect toxicTransfusion = new Effect(1, "Toxic Transfusion", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.alchemancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.alchemancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect venomousWard_ = reference.ai().factory.effectFactory.venomousWard(duration_);
+        		Effect poisoned_ = reference.ai().factory.effectFactory.poisoned(duration_/2);
+        		Effect corroded_ = reference.ai().factory.effectFactory.corroded(duration_/2);
+				reference.addEffect((Effect) venomousWard_.clone());
+				Damage damage = new PoisonDamage(Dice.d6.roll()+reference.intelligenceModifier(), false, getThis(), false);
+
+				if(reference.intelligenceRoll() >= creature.armorClass()) {
+					creature.doAction("get hit with a splash of poison!");
+					creature.setLastHit(reference);
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.magenta, 2), creature.x(), creature.y(), creature.z());
+					creature.modifyHP(damage, String.format("Killed by %s using Toxic Transfusion", reference.name()));
+				}else {
+					creature.notify(String.format("The %s's spell misses you.", reference.name()));
+					reference.notify(String.format("Your spell misses the %s.", creature.name()));
+				}
+				if(creature.strengthRoll() < reference.intelligenceSaveDC()) {
+					creature.notify("You feel a searing toxin flood your veins!");
+					reference.notify(String.format("The %s is afflicted by your spell!", creature.name()));
+					creature.setLastHit(reference);
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.magenta, 2), creature.x(), creature.y(), creature.z());
+					creature.addEffect((Effect) poisoned_.clone());
+					creature.addEffect((Effect) corroded_.clone());
+				}else {
+					creature.notify(String.format("You resist the %s's spell.", reference.name()));
+					reference.notify(String.format("The %s resists your spell.", creature.name()));
+				}
+			}
+        };
+        toxicTransfusion.setShowInMenu(false);
+		return toxicTransfusion;
+	}
+	
+	public Effect refluxBarrier(Creature reference) {
+		Effect refluxBarrier = new Effect(1, "Reflux Barrier", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.alchemancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.alchemancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect causticWard_ = reference.ai().factory.effectFactory.causticWard(duration_);
+        		Effect restoration_ = reference.ai().factory.effectFactory.restoration();
+				creature.addEffect((Effect) causticWard_.clone());
+				creature.addEffect((Effect) restoration_.clone());
+			}
+        };
+        refluxBarrier.setShowInMenu(false);
+		return refluxBarrier;
+	}
+	
+	public Effect lifetap(Creature reference) {
+		Effect lifetap = new Effect(1, "Lifetap", false, reference) {
+        	public void start(Creature creature) {
+        		int amount_ = (int) creature.hp() / 2;
+        		Damage damage = new Damage(amount_, false, false, null, null, false);
+        		creature.modifyHP(damage, null);
+        		if(reference.alchemancyLevel() >= 1) {
+        			amount_ += reference.proficiencyBonus();
+        		}
+        		if(reference.alchemancyLevel() >= 2) {
+        			amount_ += reference.proficiencyBonus();
+        		}
+        		Damage manaRestore = new Damage(amount_, true, false, null, null, false);
+        		creature.modifyMana(manaRestore);
+			}
+        };
+        lifetap.setShowInMenu(false);
+		return lifetap;
+	}
+	
+	//Ferromancy Spells
+	public Effect armorStorm(Creature reference) {
+		Effect armorStorm = new Effect(1, "Armor Storm", false, reference) {
+        	public void start(Creature creature) {
+        		int stacks_ = reference.armorClass()-10;
+        		if(stacks_ <= 0) {
+        			stacks_ = 1;
+        		}
+        		int amount = 0;
+        		for(int i = 0; i < stacks_+1; i++) {
+        			amount += Dice.d4.roll();
+        		}
+        		if(reference.ferromancyLevel() >= 1) {
+        			amount += reference.proficiencyBonus();
+        		}
+        		if(reference.ferromancyLevel() >= 2) {
+        			amount += reference.proficiencyBonus();
+        		}
+        		Damage damage = new PhysicalDamage(amount, false, reference.ai().factory.effectFactory, true);
+        		creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.white, 2), creature.x(), creature.y(), creature.z());
+        		creature.modifyHP(damage, String.format("Killed by %s using Armor Storm", reference.name()));
+        		creature.setLastHit(reference);
+        		Effect sundered_ = reference.ai().factory.effectFactory.sundered(stacks_);
+				reference.addEffect((Effect) sundered_.clone());
+			}
+        };
+        armorStorm.setShowInMenu(false);
+		return armorStorm;
+	}
+	
+	public Effect weaponBolt(Creature reference) {
+		Effect weaponBolt = new Effect(1, "Weapon Bolt", false, reference) {
+        	public void start(Creature creature) {
+        		int amount = 0;
+        		if(reference.weapon() != null) {
+        			if(reference.weapon().isVersatile()) {
+        				amount = reference.weapon().versatileDamageDice().roll();
+        			}else if(reference.weapon().isRangedWeapon()){
+        				amount = reference.weapon().rangedDamageDice().roll();
+        			}else {
+        				amount = reference.weapon().damageDice().roll();
+        			}
+        			if(reference.weapon().upgradeLevel() > 0) {
+        				amount += reference.weapon().upgradeLevel();
+        			}
+        		}
+        		int attackRoll = reference.intelligenceSaveDC();
+        		
+        		if(reference.ferromancyLevel() >= 1) {
+        			attackRoll += reference.proficiencyBonus();
+        		}
+        		if(reference.ferromancyLevel() >= 2) {
+        			amount += reference.proficiencyBonus();
+        		}
+        		Damage damage = new MagicDamage(amount, false, reference.ai().factory.effectFactory, true);
+        		if(attackRoll >= creature.armorClass()) {
+					creature.doAction("get hit with a spectral weapon!");
+					creature.setLastHit(reference);
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.white, 2), creature.x(), creature.y(), creature.z());
+					creature.modifyHP(damage, String.format("Killed by %s using Weapon Bolt", reference.name()));
+				}else {
+					creature.notify(String.format("The %s's spell misses you.", reference.name()));
+					reference.notify(String.format("Your spell misses the %s.", creature.name()));
+				}
+			}
+        };
+        weaponBolt.setShowInMenu(false);
+		return weaponBolt;
+	}
+	
+	public Effect bladsWard(Creature reference) {
+		Effect bladsWard = new Effect(1, "Blad's Ward", false, reference) {
+        	public void start(Creature creature) {
+        		int duration_ = 10;
+        		if(reference.ferromancyLevel() >= 1) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		if(reference.ferromancyLevel() >= 2) {
+        			duration_ += reference.proficiencyBonus();
+        		}
+        		Effect bladeWard_ = reference.ai().factory.effectFactory.bladeWard(duration_);
+        		Effect giantStrength_ = reference.ai().factory.effectFactory.giantStrength(duration_);
+				creature.addEffect((Effect) bladeWard_.clone());
+				creature.addEffect((Effect) giantStrength_.clone());
+			}
+        };
+        bladsWard.setShowInMenu(false);
+		return bladsWard;
+	}
+	
+	public Effect infuseUpgrade(Creature reference) {
+		Effect infuseUpgrade = new Effect(1, "Infuse Upgrade", false, reference) {
+        	public void start(Creature creature) {
+        		int chance = reference.mana();
+        		Damage chanceMana = new Damage(chance, false, false, null, null, false);
+        		creature.modifyMana(chanceMana);
+        		
+        		if(reference.ferromancyLevel() >= 1) {
+        			chance += reference.proficiencyBonus();
+        		}
+        		if(reference.ferromancyLevel() >= 2) {
+        			chance += reference.proficiencyBonus();
+        		}
+        		
+        		if(Dice.d100.roll() <= chance) {
+        			creature.notify("You call forth upgrading magic!");
+        			Effect upgradeScroll_ = reference.ai().factory.effectFactory.upgradeScroll();
+    				creature.addEffect((Effect) upgradeScroll_.clone());
+        		}else {
+        			creature.notify("You fail to call forth upgrading magic..");
+        		}
+        		
+			}
+        };
+        infuseUpgrade.setShowInMenu(false);
+		return infuseUpgrade;
+	}
+	
+	
+	
+	
+	
+	
+	
 	public Effect maxHealth() {
 		Effect maxHealth = new Effect(1, null, false, null) {
 			public void start(Creature creature) {
@@ -153,200 +1066,21 @@ public class EffectFactory {
 		return corroded;
 	}
 	
-	public Effect firebolt(Creature reference) {
-		Effect firebolt = new Effect(1, "Firebolt", true, null) {
-        	public void start(Creature creature) {
-				Damage damage = new FireDamage(Dice.d8.roll()+reference.intelligenceModifier(), false, getThis(), true);
-				if(reference.intelligenceRoll() >= creature.armorClass()) {
-					creature.doAction("get hit with a bolt of fire!");
-					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtraColors.orange, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Firebolt", reference.name()));
-				}else {
-					creature.notify(String.format("The %s's spell misses you.", reference.name()));
-					reference.notify(String.format("Your spell misses the %s.", creature.name()));
-				}
-			}
-        };
-        firebolt.setShowInMenu(false);
-		return firebolt;
-	}
 	
-	public Effect acidBlast(Creature reference) {
-		Effect acidBlast = new Effect(1, "Acid Blast", true, null) {
-        	public void start(Creature creature) {
-				Damage damage = new AcidDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
-				if(creature.affectedBy(Effect.corroded)) {
-					damage = new AcidDamage(Dice.d10.roll()+reference.intelligenceModifier(), false, getThis(), false);
-				}
-				if(reference.intelligenceRoll() >= creature.armorClass()) {
-					creature.doAction("get hit with a blast of acid!");
-					creature.setLastHit(reference);
-					if(creature.affectedBy(Effect.corroded)) {
-						creature.cureEffectOfType(Effect.corroded);
-					}
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.lime, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Acid Blast", reference.name()));
-				}else {
-					creature.notify(String.format("The %s's spell misses you.", reference.name()));
-					reference.notify(String.format("Your spell misses the %s.", creature.name()));
-				}
-			}
-        };
-        acidBlast.setShowInMenu(false);
-		return acidBlast;
-	}
 	
-	public Effect flashfire(Creature reference) {
-		Effect flashfire = new Effect(1, "Flashfire", true, null) {
-        	public void start(Creature creature) {
-				Damage damage = new FireDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
-				if(creature.affectedBy(Effect.ignited)) {
-					int amount = reference.intelligenceModifier();
-					Effect temp = null;
-					for(int i = 0; i < creature.effects().size(); i++) {
-						if(creature.effects().get(i).type() == Effect.ignited) {
-							temp = creature.effects().get(i);
-						}
-					}
-					for(int i = 0; i < temp.duration(); i++) {
-						amount += Dice.d4.roll();
-					}
-					damage = new FireDamage(amount, false, getThis(), false);
-				}
-				if(creature.dexterityRoll() >= reference.intelligenceSaveDC()) {
-					creature.doAction("get consumed by searing flames!");
-					creature.setLastHit(reference);
-					if(creature.affectedBy(Effect.ignited)) {
-						creature.cureEffectOfType(Effect.ignited);
-					}
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtraColors.orange, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Flashfire", reference.name()));
-				}else {
-					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
-					reference.notify(String.format("The %s dodges your spell.", creature.name()));
-				}
-			}
-        };
-        flashfire.setShowInMenu(false);
-		return flashfire;
-	}
 	
-	public Effect iceKnife(Creature reference) {
-		Effect iceKnife = new Effect(1, "Ice Knife", true, null) {
-        	public void start(Creature creature) {
-				Damage damage = new FrostDamage(Dice.d6.roll()+reference.intelligenceModifier(), false, getThis(), true);
-				if(reference.intelligenceRoll() >= creature.armorClass()) {
-					creature.doAction("get hit with a blade of ice!");
-					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Ice Knife", reference.name()));
-				}else {
-					creature.notify(String.format("The %s's spell misses you.", reference.name()));
-					reference.notify(String.format("Your spell misses the %s.", creature.name()));
-				}
-				damage = new FrostDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
-				if(creature.dexterityRoll() < reference.intelligenceSaveDC()) {
-					creature.notify("You feel a biting frost creep over you!");
-					reference.notify(String.format("The %s is frostbitten by your spell!", creature.name()));
-					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Ice Knife", reference.name()));
-				}else {
-					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
-					reference.notify(String.format("The %s dodges your spell.", creature.name()));
-				}
-			}
-        };
-        iceKnife.setShowInMenu(false);
-		return iceKnife;
-	}
 	
-	public Effect lightningLance(Creature reference) {
-		Effect lightningLance = new Effect(1, "Lightning Lance", false, reference) {
-        	public void start(Creature creature) {
-        		Line l = new Line(reference.x(), reference.y(), creature.x(), creature.y());
-        		ArrayList<Creature> targets = new ArrayList<Creature>();
-        		for(Point p : l) {
-        			//applicationMain.terminal.write((char)15, p.x, p.y, ExtraColors.paralyzed);
-        			if(creature.creature(p.x, p.y, creature.z()) != null && (p.x != reference.x() && p.y != reference.y())) {
-        				targets.add(creature.creature(p.x, p.y, creature.z()));
-        				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), p.x, p.y, creature.z());
-        			}
-        			if(creature.creature(p.x, p.y, creature.z()) == null) {
-        				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), p.x, p.y, creature.z());
-        			}
-        			
-        		}
-        		for(Creature c : targets) {
-        			int amount = Dice.d8.roll()+reference.intelligenceModifier();
-    				Damage damage = new ShockDamage(amount, false, creature.ai().factory.effectFactory, true);
-    				c.modifyHP(damage, String.format("Killed by %s using Lightning Lance", reference.name()));
-        		}
-			}
-        };
-        lightningLance.setShowInMenu(false);
-		return lightningLance;
-	}
 	
-	public Effect glaciate(Creature reference) {
-		Effect glaciate = new Effect(1, "Glaciate", false, reference) {
-        	public void start(Creature creature) {
-        		int duration_ = 10;
-        		if(reference.cryomancyLevel() >= 1) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		if(reference.cryomancyLevel() >= 2) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		Effect chillWard_ = reference.ai().factory.effectFactory.chillWard(duration_);
-				creature.addEffect((Effect) chillWard_.clone());
-				for(int x = -1; x < 2; x++) {
-					for(int y = -1; y < 2; y++) {
-						if((creature.creature(creature.x()+x, creature.y()+y, creature.z()) == null)) {
-							Creature newWall = objectFactory.creatureFactory.newIceWall(0, reference, false);
-							creature.ai().world.addCreatureAtLocation(newWall, creature.x()+x, creature.y()+y, creature.z());
-						}
-					}
-				}
-				creature.notify("You summon a ring of ice!");
-			}
-        };
-        glaciate.setShowInMenu(false);
-		return glaciate;
-	}
 	
-	public Effect hasteSpell(Creature reference) {
-		Effect hasteSpell = new Effect(1, "Haste", false, reference) {
-        	public void start(Creature creature) {
-        		int duration_ = 10;
-        		if(reference.electromancyLevel() >= 1) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		if(reference.electromancyLevel() >= 2) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		Effect haste_ = reference.ai().factory.effectFactory.haste(duration_);
-				creature.addEffect((Effect) haste_.clone());
-			}
-        };
-        hasteSpell.setShowInMenu(false);
-		return hasteSpell;
-	}
 	
-	public Effect magicMissile(Creature reference) {
-		Effect missile = new Effect(1, null, true, reference){
-			public void start(Creature creature) {
-				creature.doAction("get hit with a magic missile!");
-				creature.setLastHit(reference);
-	        	Damage damage = new MagicDamage(Dice.d6.roll()+reference.intelligenceModifier(), false, getThis(), true);
-	        	creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.sparkle(ExtraColors.lilac, 2), creature.x(), creature.y(), creature.z());
-				creature.modifyHP(damage, String.format("Killed by %s using Magic Missile", reference.name()));
-			}
-		};
-		missile.setShowInMenu(false);
-		return missile;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public Effect causticVapor(int duration) {
 		Effect causticVapor = new Effect(1, null, true, null) {
@@ -370,34 +1104,7 @@ public class EffectFactory {
 		return causticVapor;
 	}
 	
-	public Effect pyrotechnics(Creature reference) {
-		Effect pyrotechnics = new Effect(1, null, true, reference) {
-			public void start(Creature creature){
-                for (int ox = -2; ox < 3; ox++){
-                    for (int oy = -2; oy < 3; oy++){
-                        int nx = creature.x + ox;
-                        int ny = creature.y + oy;
-                        if(creature.tile(nx, ny, creature.z()).canHaveGas()) {
-                        	creature.world().changeGasTile(nx, ny, creature.z(), Tile.SMOKE);
-                        }
-                        if (creature.creature(nx, ny, creature.z) == null) {
-                            continue;
-                        }
-                        int duration_ = 5;
-                        if(reference.pyromancyLevel() >= 1) {
-                        	duration_ += reference.proficiencyBonus();
-                        }
-                        if(reference.pyromancyLevel() >= 2) {
-                        	duration_ += reference.proficiencyBonus();
-                        }
-                        Effect smoke = blinded(duration_);
-                        creature.creature(nx, ny, creature.z).addEffect(smoke);
-                    }
-                }
-            }
-		};
-		return pyrotechnics;
-	}
+	
 	
 	public Effect mindVision(int duration) {
 		Effect mindVision = new Effect(duration, "Mind Vision", false, null, Effect.mindVision){
@@ -1062,654 +1769,33 @@ public class EffectFactory {
 		
 	}
 	
-	public Effect toxicTransfusion(Creature reference) {
-		Effect toxicTransfusion = new Effect(1, "Toxic Transfusion", false, reference) {
-        	public void start(Creature creature) {
-        		int duration_ = 10;
-        		if(reference.alchemancyLevel() >= 1) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		if(reference.alchemancyLevel() >= 2) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		Effect venomousWard_ = reference.ai().factory.effectFactory.venomousWard(duration_);
-        		Effect poisoned_ = reference.ai().factory.effectFactory.poisoned(duration_/2);
-        		Effect corroded_ = reference.ai().factory.effectFactory.corroded(duration_/2);
-				reference.addEffect((Effect) venomousWard_.clone());
-				Damage damage = new PoisonDamage(Dice.d6.roll()+reference.intelligenceModifier(), false, getThis(), false);
-
-				if(reference.intelligenceRoll() >= creature.armorClass()) {
-					creature.doAction("get hit with a splash of poison!");
-					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.magenta, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Toxic Transfusion", reference.name()));
-				}else {
-					creature.notify(String.format("The %s's spell misses you.", reference.name()));
-					reference.notify(String.format("Your spell misses the %s.", creature.name()));
-				}
-				if(creature.strengthRoll() < reference.intelligenceSaveDC()) {
-					creature.notify("You feel a searing toxin flood your veins!");
-					reference.notify(String.format("The %s is afflicted by your spell!", creature.name()));
-					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.magenta, 2), creature.x(), creature.y(), creature.z());
-					creature.addEffect((Effect) poisoned_.clone());
-					creature.addEffect((Effect) corroded_.clone());
-				}else {
-					creature.notify(String.format("You resist the %s's spell.", reference.name()));
-					reference.notify(String.format("The %s resists your spell.", creature.name()));
-				}
-			}
-        };
-        toxicTransfusion.setShowInMenu(false);
-		return toxicTransfusion;
-	}
 	
-	public Effect brazierBarrier(Creature reference) {
-		Effect brazierBarrier = new Effect(1, "Brazier Barrier", false, reference) {
-        	public void start(Creature creature) {
-        		int duration_ = 10;
-        		if(reference.pyromancyLevel() >= 1) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		if(reference.pyromancyLevel() >= 2) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		Effect magmaWard_ = reference.ai().factory.effectFactory.magmaWard(duration_);
-        		Effect illuminated_ = reference.ai().factory.effectFactory.illuminated(duration_);
-				creature.addEffect((Effect) magmaWard_.clone());
-				creature.addEffect((Effect) illuminated_.clone());
-			}
-        };
-        brazierBarrier.setShowInMenu(false);
-		return brazierBarrier;
-	}
 	
-	public Effect bladsWard(Creature reference) {
-		Effect bladsWard = new Effect(1, "Blad's Ward", false, reference) {
-        	public void start(Creature creature) {
-        		int duration_ = 10;
-        		if(reference.ferromancyLevel() >= 1) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		if(reference.ferromancyLevel() >= 2) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		Effect bladeWard_ = reference.ai().factory.effectFactory.bladeWard(duration_);
-        		Effect giantStrength_ = reference.ai().factory.effectFactory.giantStrength(duration_);
-				creature.addEffect((Effect) bladeWard_.clone());
-				creature.addEffect((Effect) giantStrength_.clone());
-			}
-        };
-        bladsWard.setShowInMenu(false);
-		return bladsWard;
-	}
 	
-	public Effect infuseUpgrade(Creature reference) {
-		Effect infuseUpgrade = new Effect(1, "Infuse Upgrade", false, reference) {
-        	public void start(Creature creature) {
-        		int chance = reference.mana();
-        		Damage chanceMana = new Damage(chance, false, false, null, null, false);
-        		creature.modifyMana(chanceMana);
-        		
-        		if(reference.ferromancyLevel() >= 1) {
-        			chance += reference.proficiencyBonus();
-        		}
-        		if(reference.ferromancyLevel() >= 2) {
-        			chance += reference.proficiencyBonus();
-        		}
-        		
-        		if(Dice.d100.roll() <= chance) {
-        			creature.notify("You call forth upgrading magic!");
-        			Effect upgradeScroll_ = reference.ai().factory.effectFactory.upgradeScroll();
-    				creature.addEffect((Effect) upgradeScroll_.clone());
-        		}else {
-        			creature.notify("You fail to call forth upgrading magic..");
-        		}
-        		
-			}
-        };
-        infuseUpgrade.setShowInMenu(false);
-		return infuseUpgrade;
-	}
 	
-	public Effect armorStorm(Creature reference) {
-		Effect armorStorm = new Effect(1, "Armor Storm", false, reference) {
-        	public void start(Creature creature) {
-        		int stacks_ = reference.armorClass()-10;
-        		if(stacks_ <= 0) {
-        			stacks_ = 1;
-        		}
-        		int amount = 0;
-        		for(int i = 0; i < stacks_+1; i++) {
-        			amount += Dice.d4.roll();
-        		}
-        		if(reference.ferromancyLevel() >= 1) {
-        			amount += reference.proficiencyBonus();
-        		}
-        		if(reference.ferromancyLevel() >= 2) {
-        			amount += reference.proficiencyBonus();
-        		}
-        		Damage damage = new PhysicalDamage(amount, false, reference.ai().factory.effectFactory, true);
-        		creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.white, 2), creature.x(), creature.y(), creature.z());
-        		creature.modifyHP(damage, String.format("Killed by %s using Armor Storm", reference.name()));
-        		creature.setLastHit(reference);
-        		Effect sundered_ = reference.ai().factory.effectFactory.sundered(stacks_);
-				reference.addEffect((Effect) sundered_.clone());
-			}
-        };
-        armorStorm.setShowInMenu(false);
-		return armorStorm;
-	}
 	
-	public Effect weaponBolt(Creature reference) {
-		Effect weaponBolt = new Effect(1, "Weapon Bolt", false, reference) {
-        	public void start(Creature creature) {
-        		int amount = 0;
-        		if(reference.weapon() != null) {
-        			if(reference.weapon().isVersatile()) {
-        				amount = reference.weapon().versatileDamageDice().roll();
-        			}else if(reference.weapon().isRangedWeapon()){
-        				amount = reference.weapon().rangedDamageDice().roll();
-        			}else {
-        				amount = reference.weapon().damageDice().roll();
-        			}
-        			if(reference.weapon().upgradeLevel() > 0) {
-        				amount += reference.weapon().upgradeLevel();
-        			}
-        		}
-        		int attackRoll = reference.intelligenceSaveDC();
-        		
-        		if(reference.ferromancyLevel() >= 1) {
-        			attackRoll += reference.proficiencyBonus();
-        		}
-        		if(reference.ferromancyLevel() >= 2) {
-        			amount += reference.proficiencyBonus();
-        		}
-        		Damage damage = new MagicDamage(amount, false, reference.ai().factory.effectFactory, true);
-        		if(attackRoll >= creature.armorClass()) {
-					creature.doAction("get hit with a spectral weapon!");
-					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.white, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Weapon Bolt", reference.name()));
-				}else {
-					creature.notify(String.format("The %s's spell misses you.", reference.name()));
-					reference.notify(String.format("Your spell misses the %s.", creature.name()));
-				}
-			}
-        };
-        weaponBolt.setShowInMenu(false);
-		return weaponBolt;
-	}
 	
-	public Effect archmagesAegis(Creature reference) {
-		Effect archmagesAegis = new Effect(1, "Archmage's Aegis", false, reference) {
-        	public void start(Creature creature) {
-        		int duration_ = 10;
-        		if(reference.evocationLevel() >= 1) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		if(reference.evocationLevel() >= 2) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		Effect arcaneWard_ = reference.ai().factory.effectFactory.arcaneWard(duration_);
-        		Effect confused_ = reference.ai().factory.effectFactory.confused(duration_);
-				creature.addEffect((Effect) arcaneWard_.clone());
-				for(int x = -2; x < 3; x++) {
-					for(int y = -2; y < 3; y++) {
-						if(reference.creature(x, y, reference.z()) != null && reference.creature(x, y, reference.z()) != reference) {
-							reference.creature(x, y, reference.z()).addEffect((Effect) confused_.clone());
-							creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtraColors.orange, 2), x, y, creature.z());
-						}
-					}
-				}
-			}
-        };
-        archmagesAegis.setShowInMenu(false);
-		return archmagesAegis;
-	}
 	
-	public Effect staticSurge(Creature reference) {
-		Effect staticSurge = new Effect(1, "Static Surge", false, reference) {
-        	public void start(Creature creature) {
-        		int duration_ = 10;
-        		if(reference.electromancyLevel() >= 1) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		if(reference.electromancyLevel() >= 2) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		Effect arcWard_ = reference.ai().factory.effectFactory.arcWard(duration_);
-        		Effect electrocharged_ = reference.ai().factory.effectFactory.electrocharged(duration_);
-				creature.addEffect((Effect) arcWard_.clone());
-				creature.addEffect((Effect) electrocharged_.clone());
-			}
-        };
-        staticSurge.setShowInMenu(false);
-		return staticSurge;
-	}
 	
-	public Effect refluxBarrier(Creature reference) {
-		Effect refluxBarrier = new Effect(1, "Reflux Barrier", false, reference) {
-        	public void start(Creature creature) {
-        		int duration_ = 10;
-        		if(reference.alchemancyLevel() >= 1) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		if(reference.alchemancyLevel() >= 2) {
-        			duration_ += reference.proficiencyBonus();
-        		}
-        		Effect causticWard_ = reference.ai().factory.effectFactory.causticWard(duration_);
-        		Effect restoration_ = reference.ai().factory.effectFactory.restoration();
-				creature.addEffect((Effect) causticWard_.clone());
-				creature.addEffect((Effect) restoration_.clone());
-			}
-        };
-        refluxBarrier.setShowInMenu(false);
-		return refluxBarrier;
-	}
 	
-	public Effect lifetap(Creature reference) {
-		Effect lifetap = new Effect(1, "Lifetap", false, reference) {
-        	public void start(Creature creature) {
-        		int amount_ = (int) creature.hp() / 2;
-        		Damage damage = new Damage(amount_, false, false, null, null, false);
-        		creature.modifyHP(damage, null);
-        		if(reference.alchemancyLevel() >= 1) {
-        			amount_ += reference.proficiencyBonus();
-        		}
-        		if(reference.alchemancyLevel() >= 2) {
-        			amount_ += reference.proficiencyBonus();
-        		}
-        		Damage manaRestore = new Damage(amount_, true, false, null, null, false);
-        		creature.modifyMana(manaRestore);
-			}
-        };
-        lifetap.setShowInMenu(false);
-		return lifetap;
-	}
 	
-	public Effect iceWall(Creature player) {
-		Effect wall = new Effect(1, null, false, player){
-			public void start(Creature creature) {
-				player.notify("You summon a wall of ice!");
-				Creature iceWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-				creature.become(iceWall);
-
-				int px = player.x();
-				int py = player.y();
-				int cx = creature.x();
-				int cy = creature.y();
-
-				if(cx > px && cy > py) {
-					//south west
-					//creature.moveBy(1, 1, 0);
-					if((creature.creature(cx+1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
-					}
-					if((creature.creature(cx+2, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-1, creature.z());
-					}
-					if((creature.creature(cx, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
-					}
-					if((creature.creature(cx-1, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+2, creature.z());
-					}
-
-					if((creature.creature(cx-1, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
-					}
-					if((creature.creature(cx-2, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
-					}
-
-					if((creature.creature(cx+1, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
-					}
-					if((creature.creature(cx+2, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
-					}
-				}
-
-				if(cx < px && cy < py) {
-					//north east
-					//creature.moveBy(-1, -1, 0);
-					if((creature.creature(cx-1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
-					}
-					if((creature.creature(cx-2, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+1, creature.z());
-					}
-					if((creature.creature(cx, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
-					}
-					if((creature.creature(cx+1, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-2, creature.z());
-					}
-
-					if((creature.creature(cx-1, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
-					}
-					if((creature.creature(cx-2, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
-					}
-
-					if((creature.creature(cx+1, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
-					}
-					if((creature.creature(cx+2, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
-					}
-				}
-
-				if((cx > px && cy < py)) {
-					//north west
-					//creature.moveBy(1, -1, 0);
-					if((creature.creature(cx+1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
-					}
-					if((creature.creature(cx+2, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+1, creature.z());
-					}
-					if((creature.creature(cx, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
-					}
-					if((creature.creature(cx-1, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-2, creature.z());
-					}
-
-					if((creature.creature(cx+1, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
-					}
-					if((creature.creature(cx+2, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
-					}
-
-					if((creature.creature(cx-1, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
-					}
-					if((creature.creature(cx-2, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
-					}
-				}
-
-				if((cx < px && cy > py)) {
-					//south east
-					//creature.moveBy(-1, 1, 0);
-					if((creature.creature(cx-1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
-					}
-					if((creature.creature(cx-2, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-1, creature.z());
-					}
-					if((creature.creature(cx, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
-					}
-					if((creature.creature(cx+1, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+2, creature.z());
-					}
-
-					if((creature.creature(cx+1, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
-					}
-					if((creature.creature(cx+2, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
-					}
-
-					if((creature.creature(cx-1, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
-					}
-					if((creature.creature(cx-2, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
-					}
-				}
-
-				if((cx > px && cy == py)||(cx < px && cy == py)) {
-					//creature.moveBy(1, 0, 0);
-					if((creature.creature(cx, cy+1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
-					}
-					if((creature.creature(cx, cy-1, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
-					}
-
-					if((creature.creature(cx, cy+2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx, cy+2, creature.z());
-					}
-					if((creature.creature(cx, cy-2, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx, cy-2, creature.z());
-					}
-				}
-
-
-				if((cx == px && cy < py)||(cx == px && cy > py)) {
-					//creature.moveBy(0, -1, 0);
-					if((creature.creature(cx+1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
-					}
-					if((creature.creature(cx-1, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
-					}
-
-					if((creature.creature(cx+2, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx+2, cy, creature.z());
-					}
-					if((creature.creature(cx-2, cy, creature.z()) == null)) {
-						Creature newWall = objectFactory.creatureFactory.newIceWall(0, player, false);
-						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy, creature.z());
-					}
-				}
-
-			}
-
-
-
-
-		};
-		return wall;
-	}
-
-	public Effect chainLightning(Creature player) { //TODO CLEANUP
-		Effect lightning = new Effect(7, null, true, player){
-			public void start(Creature creature){
-				int playerDC = player.intelligenceSaveDC();
-				int creatureSave = creature.shockSave();
-				int damageCeiling = 8+player.intelligenceModifier();
-				
-				int tempAmount = (ExtraMaths.diceRoll(1, damageCeiling));
-				int amountHalf = (int) Math.round(tempAmount/2);
-				int amount = tempAmount;
-				boolean saved = false;
-				
-				if(creatureSave >= playerDC) {
-					amount = amountHalf;
-					saved = true;
-				}
-				if(amount < 1) {
-					amount = 1;
-				}
-				creature.doAction("get a shock!");
-				creature.setLastHit(player);
-				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), creature.x(), creature.y(), creature.z());
-				Damage damage = new ShockDamage(amount, false, getThis(), true);
-				creature.modifyHP(damage, "Killed by lightning magic");
-				
-				if(saved == false) {
-	                for (int ox = -2; ox < 3; ox++){
-	                    for (int oy = -2; oy < 3; oy++){
-	                        int nx = creature.x + ox;
-	                        int ny = creature.y + oy;
-	                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null || creature.creature(nx, ny, creature.z) == player) {
-	                            continue;
-	                        }
-	                        
-	                        
-	                        Creature target = creature.creature(nx, ny, creature.z);
-	                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), target.x(), target.y(), target.z());
-	                        int amountChain = (ExtraMaths.diceRoll(1, damageCeiling));
-	        				
-	                        target.doAction("get a shock!");
-	                        target.setLastHit(player);
-	                        Damage damageChain = new ShockDamage(amountChain, false, getThis(), true);
-	        				target.modifyHP(damageChain, "Killed by lightning magic");
 	
-	                    }
-	                }
-				}
-            }
-        };
-        return lightning;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
 
-	public Effect flashFreeze(Creature player) {
-		Effect freeze = new Effect(1, null, true, player) {
-			public void start(Creature creature) {
-				
-				int savingThrow = creature.frostSave();
-				int saveTarget = player.intelligenceSaveDC();
-				int duration = 2+Dice.d4.roll(); //TODO apply cryomancy
-				if(savingThrow < saveTarget) {
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
-					creature.addEffect(frozen(duration));
-				}else {
-					creature.doAction("resist the spell!");
-				}
-			}
-		};
-		return freeze;
-	}
 	
-	public Effect repelWand(Creature player) {
-		Effect repel = new Effect(1, null, true, player){
-			public void start(Creature creature) {
-				int px = player.x();
-				int py = player.y();
-				int cx = creature.x();
-				int cy = creature.y();
-				if(creature == player) {
-					//int amount = Math.max(0, 15-creature.defenseValue());
-					
-					double tempAmount = (ExtraMaths.diceRoll(1, 12));
-					int amount = (int) Math.round(tempAmount);
-					Damage damage = new PhysicalDamage(amount, false, getThis(), true);
-					creature.doAction("get crushed!");
-					creature.modifyHP(damage, "Killed by kinetic energy");
-				}else {
-					int push = 0;
-					for(int i = 0; i < 3; i++) { //TODO apply evocation
-						if(cx > px && cy < py) {
-							creature.moveBy(1, -1, 0, false);
-							push++;
-						}
-						if(cx > px && cy > py) {
-							creature.moveBy(1, 1, 0, false);
-							push++;
-						}
-						if(cx < px && cy < py) {
-							creature.moveBy(-1, -1, 0, false);
-							push++;
-						}
-						if(cx < px && cy > py) {
-							creature.moveBy(-1, 1, 0, false);
-							push++;
-						}
-						if(cx < px && cy == py) {
-							creature.moveBy(-1, 0, 0, false);
-							push++;
-						}
-						if(cx > px && cy == py) {
-							creature.moveBy(1, 0, 0, false);
-							push++;
-						}
-						if(cx == px && cy > py) {
-							creature.moveBy(0, 1, 0, false);
-							push++;
-						}
-						if(cx == px && cy < py) {
-							creature.moveBy(0, -1, 0, false);
-							push++;
-						}
-						creature.doAction("get thrown back!");
-						int amount = 0;
-						for(int j = 0; j < push+1; j++) {
-							amount += Dice.d4.roll();
-						}
-						Damage damage = new MagicDamage(amount, false, getThis(), false);
-						creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.lilac, 2), creature.x(), creature.y(), creature.z());
-						creature.modifyHP(damage, "Killed by kinetic energy");
-					}
-				}
-			}
-        };
-        return repel;
-	}
+
 	
-	public Effect findTraps() {
-		Effect findTraps = new Effect(0, null, false, null) {
-			public void start(Creature creature) {
-				int count = 0;
-				for(int x = -creature.visionRadius(); x < creature.visionRadius()+1; x++) {
-					for(int y = -creature.visionRadius(); y < creature.visionRadius()+1; y++) {
-						if(x < 0 || y < 0 || x > creature.world().width() || y > creature.world().height()) {
-							continue;
-						}
-						if(creature.world().item(x, y, creature.z()) != null && creature.world().item(x, y, creature.z()).isTrap()) {
-							count++;
-						}
-					}
-				}
-				if(count > 0) {
-					String trap = "trap";
-					if(count > 1) {
-						trap = "traps";
-					}
-					creature.notify(String.format("You sense %d %s nearby.", count, trap));
-				}else {
-					creature.notify("You do not sense any traps nearby");
-				}
-			}
-		};
-		return findTraps;
-	}
+	
+	
+	
+	
 
 	public Effect enchantScroll() {
 		Effect enchant = new Effect(0, null, false, null) {

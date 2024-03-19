@@ -18,7 +18,7 @@ public class SpellFactory {
 	}
 	
 	public Spell forceBlast(Creature caster) {
-		Spell repel = new Spell("Force Blast", 1, 4, caster, effectFactory.repelWand(caster), false, false);
+		Spell repel = new Spell("Force Blast", 1, 4, caster, effectFactory.forceBlast(caster), false, false);
 		return repel;
 	}
 	
