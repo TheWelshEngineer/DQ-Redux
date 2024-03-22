@@ -12,6 +12,7 @@ DwarfQuest is an old-school roguelike developed by [Kathryn U.](https://github.c
 **Design & Development:**
 * [Kathryn U.](https://github.com/TheWelshEngineer)
 * [H. Roland R.](https://github.com/RolandReff)
+* [Julia I.](https://github.com/juliascythe)
 
 **Helper Method Library:**
 * [Ben T.](https://github.com/BenTaylor25)
