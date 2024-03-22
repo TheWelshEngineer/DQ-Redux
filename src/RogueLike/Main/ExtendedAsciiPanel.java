@@ -12,6 +12,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import asciiPanel.AsciiPanel;
+
 /**
  * This simulates a code page 437 ASCII terminal display.
  * @author Trystan Spangler
@@ -331,7 +333,7 @@ public class ExtendedAsciiPanel extends JPanel {
     	for(int j = 0; j < sourceCount; j++) {
     		System.out.println("Attempting to load: "+sources[j]);
     		try {
-                glyphSprite = ImageIO.read(new File(sources[j]));
+                glyphSprite = ImageIO.read(ExtendedAsciiPanel.class.getResource(sources[j]));
                 System.out.println("Loading: "+sources[j]);
             } catch (IOException e) {
                 System.err.println("loadGlyphs(): " + e.getMessage());
