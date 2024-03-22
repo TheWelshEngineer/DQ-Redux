@@ -326,18 +326,32 @@ public class EffectFactory {
 	}
 	
 	//Cryomancy Spells
-	public Effect flashFreeze(Creature player) {
-		Effect freeze = new Effect(1, null, true, player) {
+	public Effect flashFreeze(Creature reference) {
+		Effect freeze = new Effect(1, null, true, reference) {
 			public void start(Creature creature) {
 				
-				int savingThrow = creature.frostSave();
-				int saveTarget = player.intelligenceSaveDC();
-				int duration = 2+Dice.d4.roll(); //TODO apply cryomancy
+				int savingThrow = creature.dexterityRoll();
+				int saveTarget = reference.intelligenceSaveDC();
+				int damageAmount = Dice.d8.roll()+reference.intelligenceModifier();
+				if(reference.cryomancyLevel() >= 2) {
+					damageAmount += reference.proficiencyBonus();
+				}
+				int duration = 2;
+				if(reference.cryomancyLevel() >= 1) {
+					duration += reference.proficiencyBonus();
+				}
+				if(reference.cryomancyLevel() >= 2) {
+					duration += reference.proficiencyBonus();
+				}
 				if(savingThrow < saveTarget) {
+					creature.doAction("get blasted by freezing air!");
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
+					Damage damage = new FrostDamage(damageAmount, false, getThis(), false);
+					creature.modifyHP(damage, "Killed by icy magic");
 					creature.addEffect(frozen(duration));
 				}else {
-					creature.doAction("resist the spell!");
+					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
+					reference.notify(String.format("The %s dodges your spell.", creature.name()));
 				}
 			}
 		};
@@ -347,23 +361,44 @@ public class EffectFactory {
 	public Effect iceKnife(Creature reference) {
 		Effect iceKnife = new Effect(1, "Ice Knife", true, null) {
         	public void start(Creature creature) {
-				Damage damage = new FrostDamage(Dice.d6.roll()+reference.intelligenceModifier(), false, getThis(), true);
-				if(reference.intelligenceRoll() >= creature.armorClass()) {
+        		int attackRoll = reference.intelligenceRoll();
+        		if(reference.cryomancyLevel() >= 1) {
+        			attackRoll += reference.proficiencyBonus();
+        		}
+        		int hitDamageAmount = Dice.d6.roll()+reference.intelligenceModifier();
+				Damage hitDamage = new FrostDamage(hitDamageAmount, false, getThis(), true);
+				
+				int splashDamageAmount = Dice.d4.roll()+reference.intelligenceModifier();
+				Damage splashDamage = new FrostDamage(splashDamageAmount, false, getThis(), true);
+				if(reference.cryomancyLevel() >= 2) {
+					hitDamageAmount += reference.proficiencyBonus();
+					splashDamageAmount += reference.proficiencyBonus();
+				}
+				if(attackRoll >= 20) {
+					hitDamageAmount *= 2;
+				}
+				
+				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a blade of ice!");
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Ice Knife", reference.name()));
+					creature.modifyHP(hitDamage, String.format("Killed by %s using Ice Knife", reference.name()));
+					if(attackRoll >= 20 && reference.cryomancyLevel() >= 3) {
+						Effect cryoCrit = creature.ai().factory.effectFactory.frozen(reference.proficiencyBonus());
+						creature.addEffect((Effect) cryoCrit.clone());
+						creature.ai().factory.effectFactory.spreadEffect(creature, cryoCrit, 1);
+					}
 				}else {
 					creature.notify(String.format("The %s's spell misses you.", reference.name()));
 					reference.notify(String.format("Your spell misses the %s.", creature.name()));
 				}
-				damage = new FrostDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
 				if(creature.dexterityRoll() < reference.intelligenceSaveDC()) {
 					creature.notify("You feel a biting frost creep over you!");
 					reference.notify(String.format("The %s is frostbitten by your spell!", creature.name()));
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Ice Knife", reference.name()));
+					creature.modifyHP(splashDamage, String.format("Killed by %s using Ice Knife", reference.name()));
+					creature.ai().factory.effectFactory.spreadDamage(creature, splashDamage, String.format("Killed by %s using Ice Knife", reference.name()), 1);
 				}else {
 					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
 					reference.notify(String.format("The %s dodges your spell.", creature.name()));
@@ -1726,8 +1761,6 @@ public class EffectFactory {
 		Effect frozen = new Effect(duration, "Frozen", true, null, Effect.frozen){
 			public void start(Creature creature) {
 				creature.doAction("freeze solid!");
-				Damage damage = new FrostDamage(Dice.d8.roll(), false, getThis(), false);
-				creature.modifyHP(damage, "Killed by icy magic");
 			}
 			
 			public void end(Creature creature) {
@@ -1912,6 +1945,27 @@ public class EffectFactory {
 			}
 		};
 		return map;
+	}
+	
+	//Helper Methods
+	public void spreadEffect(Creature centre, Effect effect, int radius) {
+		for(int x = centre.x()-radius; x <= centre.x()+radius; x++) {
+			for(int y = centre.y()-radius; y <= centre.y()+radius; y++) {
+				if(centre.creature(x, y, centre.z()) != null && (x != centre.x() && y != centre.y())) {
+					centre.creature(x, y, centre.z()).addEffect((Effect) effect.clone());
+				}
+			}
+		}
+	}
+	
+	public void spreadDamage(Creature centre, Damage damage, String cause, int radius) {
+		for(int x = centre.x()-radius; x <= centre.x()+radius; x++) {
+			for(int y = centre.y()-radius; y <= centre.y()+radius; y++) {
+				if(centre.creature(x, y, centre.z()) != null && (x != centre.x() && y != centre.y())) {
+					centre.creature(x, y, centre.z()).modifyHP(damage, cause);
+				}
+			}
+		}
 	}
 	
 	//Generation Tables
