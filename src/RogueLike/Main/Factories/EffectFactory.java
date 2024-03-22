@@ -79,7 +79,7 @@ public class EffectFactory {
 					creature.modifyHP(damage, "Killed by kinetic energy");
 				}else {
 					int push = 0;
-					for(int i = 0; i < 3; i++) { //TODO apply evocation
+					for(int i = 0; i < 3; i++) {
 						if(cx > px && cy < py) {
 							creature.moveBy(1, -1, 0, false);
 							push++;
@@ -201,12 +201,26 @@ public class EffectFactory {
 	public Effect firebolt(Creature reference) {
 		Effect firebolt = new Effect(1, "Firebolt", true, null) {
         	public void start(Creature creature) {
-				Damage damage = new FireDamage(Dice.d8.roll()+reference.intelligenceModifier(), false, getThis(), true);
-				if(reference.intelligenceRoll() >= creature.armorClass()) {
+        		int attackRoll = reference.intelligenceRoll();
+        		if(reference.pyromancyLevel() >= 1) {
+        			attackRoll += reference.proficiencyBonus();
+        		}
+        		int damageAmount = Dice.d8.roll()+reference.intelligenceModifier();
+        		if(reference.pyromancyLevel() >= 2) {
+        			damageAmount += reference.proficiencyBonus();
+        		}
+        		if(attackRoll >= 20) {
+        			damageAmount *= 2;
+        		}
+				Damage damage = new FireDamage(damageAmount, false, getThis(), true);
+				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a bolt of fire!");
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtraColors.orange, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(damage, String.format("Killed by %s using Firebolt", reference.name()));
+					if(attackRoll >= 20 && reference.pyromancyLevel() >= 3) {
+						creature.addEffect((Effect) reference.ai().factory.effectFactory.ignited(reference.proficiencyBonus()*2).clone());
+					}
 				}else {
 					creature.notify(String.format("The %s's spell misses you.", reference.name()));
 					reference.notify(String.format("Your spell misses the %s.", creature.name()));
@@ -220,9 +234,11 @@ public class EffectFactory {
 	public Effect flashfire(Creature reference) {
 		Effect flashfire = new Effect(1, "Flashfire", true, null) {
         	public void start(Creature creature) {
-				Damage damage = new FireDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
+        		int damageAmount = Dice.d4.roll()+reference.intelligenceModifier();
+        		
+				
 				if(creature.affectedBy(Effect.ignited)) {
-					int amount = reference.intelligenceModifier();
+					damageAmount = reference.intelligenceModifier();
 					Effect temp = null;
 					for(int i = 0; i < creature.effects().size(); i++) {
 						if(creature.effects().get(i).type() == Effect.ignited) {
@@ -230,11 +246,19 @@ public class EffectFactory {
 						}
 					}
 					for(int i = 0; i < temp.duration(); i++) {
-						amount += Dice.d4.roll();
+						damageAmount += Dice.d4.roll();
 					}
-					damage = new FireDamage(amount, false, getThis(), false);
+					
 				}
-				if(creature.dexterityRoll() >= reference.intelligenceSaveDC()) {
+				
+				if(reference.pyromancyLevel() >= 2) {
+					damageAmount += reference.proficiencyBonus();
+				}
+				
+				Damage damage = new FireDamage(damageAmount, false, getThis(), true);
+				
+				int saveDC = reference.intelligenceSaveDC();
+				if(creature.dexterityRoll() < saveDC) {
 					creature.doAction("get consumed by searing flames!");
 					creature.setLastHit(reference);
 					if(creature.affectedBy(Effect.ignited)) {
