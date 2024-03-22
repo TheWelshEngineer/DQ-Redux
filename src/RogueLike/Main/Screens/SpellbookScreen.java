@@ -9,7 +9,6 @@ import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Spellbook;
 import RogueLike.Main.Creatures.Creature;
-import asciiPanel.AsciiPanel;
 
 public class SpellbookScreen implements Screen{
 	

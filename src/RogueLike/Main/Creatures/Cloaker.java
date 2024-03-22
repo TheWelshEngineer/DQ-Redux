@@ -5,7 +5,6 @@ import java.awt.Color;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.AI.CloakerAI;
 import RogueLike.Main.Factories.ObjectFactory;
-import RogueLike.Main.Items.Item;
 
 public class Cloaker extends Creature{
 	

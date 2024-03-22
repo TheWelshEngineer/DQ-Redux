@@ -12,7 +12,6 @@ import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Inventory;
-import asciiPanel.AsciiPanel;
 
 public class InventoryScreen implements Screen{
 	

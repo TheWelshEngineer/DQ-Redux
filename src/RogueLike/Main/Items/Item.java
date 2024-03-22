@@ -1313,7 +1313,7 @@ public class Item implements Cloneable{
 		trapType = type;
 	}
 	
-	public static Effect perceptionTrapEffect(ObjectFactory factory, String type) {
+	public Effect perceptionTrapEffect(ObjectFactory factory, String type) {
 		switch(type) {
 		case Trap.fireTrap: return factory.effectFactory.magmaWard(10);
 		case Trap.frostbiteTrap: return factory.effectFactory.chillWard(10);

@@ -2,7 +2,6 @@ package RogueLike.Main.Creatures.Containers;
 
 import java.awt.Color;
 
-import RogueLike.Main.ExtraColors;
 import RogueLike.Main.AI.ChestAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;

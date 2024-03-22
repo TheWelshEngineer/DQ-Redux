@@ -3,7 +3,6 @@ package RogueLike.Main.Screens;
 import java.awt.event.KeyEvent;
 
 import RogueLike.Main.ExtendedAsciiPanel;
-import asciiPanel.AsciiPanel;
 
 public class ChooseClassScreen implements Screen{
 	

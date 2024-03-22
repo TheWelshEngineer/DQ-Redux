@@ -6,7 +6,6 @@ import java.util.List;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.LevelUpController;
 import RogueLike.Main.Creatures.Creature;
-import asciiPanel.AsciiPanel;
 
 public class LevelUpScreen implements Screen{
 	private LevelUpController controller;

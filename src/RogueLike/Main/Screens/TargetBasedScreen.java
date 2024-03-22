@@ -1,15 +1,12 @@
 package RogueLike.Main.Screens;
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
-
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.Line;
 import RogueLike.Main.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
-import asciiPanel.AsciiPanel;
 
 public abstract class TargetBasedScreen implements Screen{
 	
@@ -23,7 +20,6 @@ public abstract class TargetBasedScreen implements Screen{
 	private int dy;
 	private int fx;
 	private int fy;
-	private int iteration;
 	
 	public TargetBasedScreen(Creature player, String caption, int sx, int sy) {
 		this.player = player;
@@ -37,7 +33,6 @@ public abstract class TargetBasedScreen implements Screen{
 			//if(p.x < 0 || p.x >= 80 || p.y < 0 || p.y >= 24) {
 				//continue;
 			//}
-			iteration++;
 			dx = p.x;
 			dy = p.y;
 			fx = player.gameplayScreen().getScrollX();

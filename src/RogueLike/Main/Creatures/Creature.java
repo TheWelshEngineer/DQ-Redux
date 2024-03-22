@@ -9,7 +9,6 @@ import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Damage.*;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
-import RogueLike.Main.Items.Trap;
 import RogueLike.Main.Managers.SkillManager;
 import RogueLike.Main.Screens.SpellTargetingScreen;
 import RogueLike.Main.Screens.SpellSelectScreen;

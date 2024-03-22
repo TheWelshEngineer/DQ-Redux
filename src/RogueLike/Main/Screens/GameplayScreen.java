@@ -16,7 +16,6 @@ import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
-import asciiPanel.AsciiPanel;
 
 public class GameplayScreen implements Screen{
 	

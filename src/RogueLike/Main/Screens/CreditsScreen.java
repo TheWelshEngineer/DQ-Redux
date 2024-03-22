@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
-import asciiPanel.AsciiPanel;
 
 public class CreditsScreen implements Screen{
 

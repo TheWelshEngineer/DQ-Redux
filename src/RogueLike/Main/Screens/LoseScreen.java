@@ -8,7 +8,6 @@ import java.io.IOException;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
-import asciiPanel.AsciiPanel;
 
 public class LoseScreen implements Screen {
 	public Creature player;

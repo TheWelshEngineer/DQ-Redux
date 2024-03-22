@@ -4,11 +4,9 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
-import asciiPanel.AsciiPanel;
 
 public class WinScreen implements Screen {
 	private Creature player;

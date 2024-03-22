@@ -6,7 +6,6 @@ import java.util.List;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Managers.KeybindManager;
-import asciiPanel.AsciiPanel;
 
 public class Zone1Screen implements Screen{
 	

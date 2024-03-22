@@ -3,7 +3,6 @@ package RogueLike.Main.AI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Effect;
-import RogueLike.Main.ExtraColors;
 import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;

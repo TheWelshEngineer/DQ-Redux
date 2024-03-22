@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 
 import RogueLike.Main.Screens.Screen;
 import RogueLike.Main.Screens.TitleScreen;
-import asciiPanel.AsciiPanel;
 //import asciiPanel.AsciiFont;
 
 //chapter 19 next

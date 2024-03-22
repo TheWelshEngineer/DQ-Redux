@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.MenuDecorationManager;
-import asciiPanel.AsciiPanel;
 
 public interface Screen {
 	

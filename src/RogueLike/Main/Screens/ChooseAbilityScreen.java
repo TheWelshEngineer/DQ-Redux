@@ -7,7 +7,6 @@ import java.util.List;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Managers.KeybindManager;
-import asciiPanel.AsciiPanel;
 
 public class ChooseAbilityScreen implements Screen{
 	

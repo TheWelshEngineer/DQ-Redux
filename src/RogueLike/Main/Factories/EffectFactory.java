@@ -10,8 +10,6 @@ import RogueLike.Main.Line;
 import RogueLike.Main.Particle;
 import RogueLike.Main.Point;
 import RogueLike.Main.Tile;
-import RogueLike.Main.World;
-import RogueLike.Main.applicationMain;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.AcidDamage;
 import RogueLike.Main.Damage.ChaosDamage;

@@ -15,10 +15,6 @@ public class Trap extends Item{
 	public static final String blinkTrap = "Blink Trap";
 	public static final String summoningTrap = "Summoning Trap";
 	
-	
-	
-	private ObjectFactory factory;
-	
 	public Trap(char glyph, Color color, String name, String appearance, String type, Effect effect, ObjectFactory factory) {
 		super(glyph, color, name, appearance);
 		this.setIsTrap(true);
@@ -26,7 +22,6 @@ public class Trap extends Item{
 		this.setTrapType(type);
 		this.setColor(ExtraColors.trap);
 		this.changeGlyph((char)250);
-		this.factory = factory;
 		
 	}
 	

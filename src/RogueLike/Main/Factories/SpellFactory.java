@@ -1,6 +1,5 @@
 package RogueLike.Main.Factories;
 
-import RogueLike.Main.Effect;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Creatures.Creature;
 

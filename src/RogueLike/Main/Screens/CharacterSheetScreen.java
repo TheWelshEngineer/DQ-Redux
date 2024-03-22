@@ -7,8 +7,6 @@ import RogueLike.Main.Effect;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
-import RogueLike.Main.Managers.MenuDecorationManager;
-import asciiPanel.AsciiPanel;
 
 public class CharacterSheetScreen implements Screen{
 	

@@ -7,7 +7,6 @@ import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Managers.SkillManager;
-import asciiPanel.AsciiPanel;
 
 public class ChooseSkillScreen implements Screen{
 	

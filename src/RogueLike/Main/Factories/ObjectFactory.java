@@ -12,18 +12,9 @@ import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.ExtraMaths;
-import RogueLike.Main.FieldOfView;
-import RogueLike.Main.Skill;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
-import RogueLike.Main.AI.ChestAI;
-import RogueLike.Main.AI.CloakerAI;
-import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.Creatures.*;
-import RogueLike.Main.Creatures.Slimes.*;
-import RogueLike.Main.Creatures.Gremlins.*;
-import RogueLike.Main.Creatures.Constructs.*;
-import RogueLike.Main.Creatures.Containers.BasicChest;
 import RogueLike.Main.Enchantments.*;
 import RogueLike.Main.Items.*;
 

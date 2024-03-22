@@ -5,7 +5,6 @@ import java.awt.event.KeyEvent;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
-import asciiPanel.AsciiPanel;
 
 public class IndexRingScreen implements Screen{
 	

@@ -7,7 +7,6 @@ import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
-import asciiPanel.AsciiPanel;
 
 public class SpellSelectScreen implements Screen{
 	
