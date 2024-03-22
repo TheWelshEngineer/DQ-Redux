@@ -132,7 +132,29 @@ public ObjectFactory objectFactory;
 			player.setHPScaleAmount(player.hpScaleLow());
 			player.setManaScaleAmount(player.manaScaleHigh());
 			
-		}else {
+		}else if(playerClass == "Ranger") {
+			player.setPlayerClass(playerClass);
+			Item startBowRanger = objectFactory.itemFactory.newShortbow(0, false);
+			player.learnNameQuiet(startBowRanger);
+			player.inventory().add(startBowRanger);
+			player.equip(startBowRanger);
+			Item startWeaponRanger = objectFactory.itemFactory.newClub(0, false);
+			player.learnNameQuiet(startWeaponRanger);
+			player.inventory().add(startWeaponRanger);
+			Item startArmorRanger = objectFactory.itemFactory.newPaddedClothArmor(0, false);
+			player.learnNameQuiet(startArmorRanger);
+			player.inventory().add(startArmorRanger);
+			player.equip(startArmorRanger);
+			Item startItemRanger = objectFactory.itemFactory.newArrows(0, 0);
+			startItemRanger.setStackAmount(20);
+			player.learnNameQuiet(startItemRanger);
+			player.inventory().add(startItemRanger);
+			player.equip(startItemRanger);
+			
+			player.setHPScaleAmount(player.hpScaleMedium());
+			player.setManaScaleAmount(player.manaScaleMedium());
+			
+		}else{
 			
 		}
 	
@@ -152,7 +174,7 @@ public ObjectFactory objectFactory;
 		}
 
 		//Test Items
-		Item startWandTest = objectFactory.itemFactory.newLightningLanceWand(0, player, false);
+		Item startWandTest = objectFactory.itemFactory.newAcidBlastWand(0, player, false);
 		player.learnNameQuiet(startWandTest);
 		player.inventory().add(startWandTest);
 		

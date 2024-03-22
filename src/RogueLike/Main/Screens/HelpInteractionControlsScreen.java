@@ -21,6 +21,7 @@ public class HelpInteractionControlsScreen implements Screen{
 		
 		int y = 3;
 		int x = 42;
+		terminal.write(String.format("[%s]: Open your inventory", KeybindManager.keybindText(KeybindManager.menuInventory)), x, y++);
         terminal.write(String.format("[%s]: Pick up an item from your feet", KeybindManager.keybindText(KeybindManager.interactionPickUpItem)), x, y++);
         terminal.write(String.format("[%s]: Drop an item at your feet", KeybindManager.keybindText(KeybindManager.interactionDropItem)), x, y++);
         terminal.write(String.format("[%s]: Examine an item in your inventory", KeybindManager.keybindText(KeybindManager.interactionExamineItem)), x, y++);
@@ -32,8 +33,8 @@ public class HelpInteractionControlsScreen implements Screen{
         terminal.write(String.format("[%s]: Look at something further away", KeybindManager.keybindText(KeybindManager.interactionLook)), x, y++);
         terminal.write(String.format("[%s]: Search for hidden things around you", KeybindManager.keybindText(KeybindManager.interactionSearch)), x, y++);
         terminal.write(String.format("[%s]: Open the character sheet", KeybindManager.keybindText(KeybindManager.menuCharacterSheet)), x, y++);
-        terminal.write(String.format("[%s]: Open the character sheet", KeybindManager.keybindText(KeybindManager.interactionLevelUp)), x, y++);
-        terminal.write(String.format("[%s]: Open the character sheet", KeybindManager.keybindText(KeybindManager.menuHelp)), x, y++);
+        terminal.write(String.format("[%s]: Spend ability and skill points", KeybindManager.keybindText(KeybindManager.interactionLevelUp)), x, y++);
+        terminal.write(String.format("[%s]: Open the help menu", KeybindManager.keybindText(KeybindManager.menuHelp)), x, y++);
         terminal.write(String.format("[%s]: Use the item in your first quickslot", KeybindManager.keybindText(KeybindManager.interactionQuickslot_1)), x, y++);
         terminal.write(String.format("[%s]: Use the item in your second quickslot", KeybindManager.keybindText(KeybindManager.interactionQuickslot_2)), x, y++);
         terminal.write(String.format("[%s]: Use the item in your third quickslot", KeybindManager.keybindText(KeybindManager.interactionQuickslot_3)), x, y++);

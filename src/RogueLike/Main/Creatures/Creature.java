@@ -2287,7 +2287,7 @@ public class Creature implements Cloneable{
 			attackRoll += this.strengthRoll();
 		}
 		
-		if((this.weapon.isSimple() && this.simpleWeaponsLevel() >= 1) || (this.weapon.isMartial() && this.martialWeaponsLevel() >= 1) || (this.weapon.isFinesse() && this.finesseWeaponsLevel() >= 1)) {
+		if(this.weapon() != null && ((this.weapon.isSimple() && this.simpleWeaponsLevel() >= 1) || (this.weapon.isMartial() && this.martialWeaponsLevel() >= 1) || (this.weapon.isFinesse() && this.finesseWeaponsLevel() >= 1))) {
 			attackRoll += this.proficiencyBonus();
 		}
 
@@ -3872,10 +3872,10 @@ public class Creature implements Cloneable{
 		if(isPlayer() == true) {
 			search(18, true);
 		}
-		Trap trap = (Trap) world.item(x, y, z);
+		Item trap = world.item(x, y, z);
 		if(trap != null && trap.isTrap() && !isFlying && !affectedBy(Effect.levitating)) {
 			if(this.perceptionLevel() >= 3) {
-				this.addEffect(trap.perceptionTrapEffect(trap.trapType()));
+				this.addEffect(trap.perceptionTrapEffect(this.ai().factory, trap.trapType()));
 				notify("You exploit the trap's mechanism to your benefit!");
 				world.remove(trap);
 			}else {

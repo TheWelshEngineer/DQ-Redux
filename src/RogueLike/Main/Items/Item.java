@@ -10,6 +10,7 @@ import RogueLike.Main.Effect;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Enchantments.Enchantment;
+import RogueLike.Main.Factories.ObjectFactory;
 
 
 
@@ -1302,6 +1303,25 @@ public class Item implements Cloneable{
 		}
 		
 		return details;
+	}
+	
+	private String trapType;
+	public String trapType() {
+		return trapType;
+	}
+	public void setTrapType(String type) {
+		trapType = type;
+	}
+	
+	public static Effect perceptionTrapEffect(ObjectFactory factory, String type) {
+		switch(type) {
+		case Trap.fireTrap: return factory.effectFactory.magmaWard(10);
+		case Trap.frostbiteTrap: return factory.effectFactory.chillWard(10);
+		case Trap.lightningTrap: return factory.effectFactory.arcWard(10);
+		case Trap.blinkTrap: return factory.effectFactory.bounce();
+		case Trap.summoningTrap: return factory.effectFactory.invisible(10);
+		default: return factory.effectFactory.magmaWard(10);
+		}
 	}
 	
 	public Item(char glyph, Color color, String name, String appearance) {

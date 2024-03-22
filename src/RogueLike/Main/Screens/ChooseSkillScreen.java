@@ -69,9 +69,16 @@ public class ChooseSkillScreen implements Screen{
 		}else if(playerClass == "Mage") {
 			playerEvocation = true;
 			playerSkills[8].modifyLevel(1, false);
+			playerSimpleWeapons = true;
+			playerSkills[0].modifyLevel(1, false);
+			evocationUp = ' ';
+			simpleUp = ' ';
+		}else if(playerClass == "Ranger") {
+			playerRangedWeapons = true;
+			playerSkills[5].modifyLevel(1, false);
 			playerPerception = true;
 			playerSkills[7].modifyLevel(1, false);
-			evocationUp = ' ';
+			rangedUp = ' ';
 			perceptionUp = ' ';
 		}
 		updateMarkers(check);
@@ -251,13 +258,13 @@ public class ChooseSkillScreen implements Screen{
 		updateAlchemancyMarker(check);
 		updateFerromancyMarker(check);
 		switch(check) {
-		case 0: if(playerSimpleWeapons == false && skillPoints > 0) {
+		case 0: if(playerSimpleWeapons == false && skillPoints > 0 && playerClass != "Mage") {
 					simpleUp = '+';
 					simpleDown = ' ';
-				}else if(playerSimpleWeapons == true) {
+				}else  if(playerSimpleWeapons == true && playerClass != "Mage") {
 					simpleUp = ' ';
 					simpleDown = '-';
-				}else if(skillPoints == 0) {
+				}else if(skillPoints == 0 || playerClass == "Mage") {
 					simpleUp = ' ';
 					simpleDown = ' ';
 				}else {
@@ -316,13 +323,13 @@ public class ChooseSkillScreen implements Screen{
 					finesseUp = '+';
 					finesseDown = '-';
 				}break;
-		case 5: if(playerRangedWeapons == false && skillPoints > 0) {
+		case 5: if(playerRangedWeapons == false && skillPoints > 0 && playerClass != "Ranger") {
 					rangedUp = '+';
 					rangedDown = ' ';
-				}else if(playerRangedWeapons == true) {
+				}else  if(playerRangedWeapons == true && playerClass != "Ranger") {
 					rangedUp = ' ';
 					rangedDown = '-';
-				}else if(skillPoints == 0) {
+				}else if(skillPoints == 0 || playerClass == "Ranger") {
 					rangedUp = ' ';
 					rangedDown = ' ';
 				}else {
@@ -342,13 +349,13 @@ public class ChooseSkillScreen implements Screen{
 					stealthUp = '+';
 					stealthDown = '-';
 				}break;
-		case 7: if(playerPerception == false && skillPoints > 0 && playerClass != "Mage") {
+		case 7: if(playerPerception == false && skillPoints > 0 && playerClass != "Ranger") {
 					perceptionUp = '+';
 					perceptionDown = ' ';
-				}else if(playerPerception == true && playerClass != "Mage") {
+				}else if(playerPerception == true && playerClass != "Ranger") {
 					perceptionUp = ' ';
 					perceptionDown = '-';
-				}else if(skillPoints == 0 || playerClass == "Mage") {
+				}else if(skillPoints == 0 || playerClass == "Ranger") {
 					perceptionUp = ' ';
 					perceptionDown = ' ';
 				}else {
@@ -572,7 +579,7 @@ public class ChooseSkillScreen implements Screen{
 		
 		case KeybindManager.navigateMenuRight:
 			if(check == 0) {
-				if(skillPoints > 0 && !playerSimpleWeapons) {
+				if(skillPoints > 0 && playerClass != "Mage" && !playerSimpleWeapons) {
 					playerSkills[0].modifyLevel(1, false);
 					playerSimpleWeapons = true;
 					modifyPoints(-1); 
@@ -602,7 +609,7 @@ public class ChooseSkillScreen implements Screen{
 					modifyPoints(-1);
 				}
 			}else if(check == 5) {
-				if(skillPoints > 0 && !playerRangedWeapons) {
+				if(skillPoints > 0&& playerClass != "Ranger" && !playerRangedWeapons) {
 					playerSkills[5].modifyLevel(1, false);
 					playerRangedWeapons = true;
 					modifyPoints(-1);
@@ -614,7 +621,7 @@ public class ChooseSkillScreen implements Screen{
 					modifyPoints(-1);
 				}
 			}else if(check == 7) {
-				if(skillPoints > 0 && playerClass != "Mage" && !playerPerception) {
+				if(skillPoints > 0 && playerClass != "Ranger" && !playerPerception) {
 					playerSkills[7].modifyLevel(1, false);
 					playerPerception = true;
 					modifyPoints(-1);
@@ -661,7 +668,7 @@ public class ChooseSkillScreen implements Screen{
 			
 		case KeybindManager.navigateMenuLeft:
 			if(check == 0) {
-				if(playerSimpleWeapons) {
+				if(playerSimpleWeapons && playerClass != "Mage") {
 					playerSimpleWeapons = false;
 					playerSkills[0].modifyLevel(1, true);
 					modifyPoints(1); 
@@ -691,7 +698,7 @@ public class ChooseSkillScreen implements Screen{
 					modifyPoints(1);
 				} 
 			}else if(check == 5) {
-				if(playerRangedWeapons) {
+				if(playerRangedWeapons && playerClass != "Ranger") {
 					playerRangedWeapons = false;
 					playerSkills[5].modifyLevel(1, true);
 					modifyPoints(1); 
@@ -703,7 +710,7 @@ public class ChooseSkillScreen implements Screen{
 					modifyPoints(1);
 				} 
 			}else if(check == 7) {
-				if(playerPerception && playerClass != "Mage") {
+				if(playerPerception && playerClass != "Ranger") {
 					playerPerception = false;
 					playerSkills[7].modifyLevel(1, true);
 					modifyPoints(1); 
@@ -751,15 +758,6 @@ public class ChooseSkillScreen implements Screen{
 			
 		case KeybindManager.navigateMenuConfirm: 
 			if(skillPoints < 1) {
-				System.out.println("static skills");
-				for(Skill s : SkillManager.getDefaultSkillArray()) {
-					System.out.println(s.toString());
-				}
-				System.out.println("====");
-				System.out.println("choose skills");
-				for(Skill s : playerSkills) {
-					System.out.println(s.toString());
-				}
 				//TODO
 				return new Zone1Screen(playerClass, playerAbilities, playerSkills, playerName, playerAncestry); 
 			}else {

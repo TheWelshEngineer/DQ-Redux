@@ -36,6 +36,8 @@ public class ChooseClassScreen implements Screen{
 	public char rogueRight = '<';
 	public char mageLeft = '>';
 	public char mageRight = '<';
+	public char rangerLeft = '>';
+	public char rangerRight = '<';
 	
 	public void changeMarkers(int check) {
 		if(check == 0) {
@@ -45,6 +47,8 @@ public class ChooseClassScreen implements Screen{
 			rogueRight = ' ';
 			mageLeft = ' ';
 			mageRight = ' ';
+			rangerLeft = ' ';
+			rangerRight = ' ';
 		}else if(check == 1) {
 			warriorLeft = ' ';
 			warriorRight = ' ';
@@ -52,6 +56,8 @@ public class ChooseClassScreen implements Screen{
 			rogueRight = '<';
 			mageLeft = ' ';
 			mageRight = ' ';
+			rangerLeft = ' ';
+			rangerRight = ' ';
 		}else if(check == 2) {
 			warriorLeft = ' ';
 			warriorRight = ' ';
@@ -59,6 +65,17 @@ public class ChooseClassScreen implements Screen{
 			rogueRight = ' ';
 			mageLeft = '>';
 			mageRight = '<';
+			rangerLeft = ' ';
+			rangerRight = ' ';
+		}else if(check == 3) {
+			warriorLeft = ' ';
+			warriorRight = ' ';
+			rogueLeft = ' ';
+			rogueRight = ' ';
+			mageLeft = ' ';
+			mageRight = ' ';
+			rangerLeft = '>';
+			rangerRight = '<';
 		}
 	}
 
@@ -76,6 +93,8 @@ public class ChooseClassScreen implements Screen{
 		terminal.write(String.format("%c %c Rogue   %c    %c", borderVertical, rogueLeft, rogueRight, borderVertical), 5, y++);
 		terminal.write(String.format("%c                %c", borderVertical, borderVertical), 5, y++);
 		terminal.write(String.format("%c %c Mage    %c    %c", borderVertical, mageLeft, mageRight, borderVertical), 5, y++);
+		terminal.write(String.format("%c                %c", borderVertical, borderVertical), 5, y++);
+		terminal.write(String.format("%c %c Ranger  %c    %c", borderVertical, rangerLeft, rangerRight, borderVertical), 5, y++);
 		//terminal.write(String.format("%c                %c", borderVertical, borderVertical), 5, y++);
 		terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 5, y++);
 		
@@ -132,7 +151,7 @@ public class ChooseClassScreen implements Screen{
 			terminal.writeCenter("+||+ Starting Skills +||+", y+=1);
 			y++;
 			terminal.writeCenter("+ Evocation (I)", y+=1);
-			terminal.writeCenter("+ Perception (I)", y+=1);
+			terminal.writeCenter("+ Simple Weapons (I)", y+=1);
 			terminal.writeCenter("+ 2x Level I skills of your choice", y+=1);
 			y++;
 			terminal.writeCenter("+||+ Starting Equipment +||+", y+=1);
@@ -140,6 +159,28 @@ public class ChooseClassScreen implements Screen{
 			terminal.writeCenter("+ Club", y+=1);
 			terminal.writeCenter("+ Padded Armor", y+=1);
 			terminal.writeCenter("+ Wand of Magic Missile", y+=1);
+			terminal.writeCenter("+ Ration of Food", y+=1);
+		}else if(check == 3) {
+			terminal.writeCenter("+||+ Ranger +||+", y+=4);
+			y++;
+			terminal.writeCenter("Wandering the outskirts of civilisation, rangers", y+=1);
+			terminal.writeCenter("are masters of survival, hunting, and bushcraft.", y+=1);
+			terminal.writeCenter("Possessed of keen eyesight and keener aim,", y+=1);
+			terminal.writeCenter("many threats have been ended by rangers without", y+=1);
+			terminal.writeCenter("the knowledge of the villages they protect.", y+=1);
+			y++;
+			terminal.writeCenter("+||+ Starting Skills +||+", y+=1);
+			y++;
+			terminal.writeCenter("+ Ranged Weapons (I)", y+=1);
+			terminal.writeCenter("+ Perception (I)", y+=1);
+			terminal.writeCenter("+ 2x Level I skills of your choice", y+=1);
+			y++;
+			terminal.writeCenter("+||+ Starting Equipment +||+", y+=1);
+			y++;
+			terminal.writeCenter("+ Club", y+=1);
+			terminal.writeCenter("+ Padded Armor", y+=1);
+			terminal.writeCenter("+ Shortbow", y+=1);
+			terminal.writeCenter("+ 20x Arrows", y+=1);
 			terminal.writeCenter("+ Ration of Food", y+=1);
 		}
 
@@ -151,11 +192,13 @@ public class ChooseClassScreen implements Screen{
 		switch(key.getKeyCode()) {
 		case KeyEvent.VK_UP:
 			if(check == 0) {
-				check = 2;
+				check = 3;
 			}else if(check == 1) {
 				check = 0;
 			}else if(check == 2) {
 				check = 1;
+			}else if(check == 3) {
+				check = 2;
 			}
 			return this;
 			
@@ -165,6 +208,8 @@ public class ChooseClassScreen implements Screen{
 			}else if(check == 1) {
 				check = 2;
 			}else if(check == 2) {
+				check = 3;
+			}else if(check == 3) {
 				check = 0;
 			}
 			return this;
@@ -176,6 +221,8 @@ public class ChooseClassScreen implements Screen{
 				return new ChooseAbilityScreen("Rogue", playerAncestry);
 			}else if(check == 2) {
 				return new ChooseAbilityScreen("Mage", playerAncestry);
+			}else if(check == 3) {
+				return new ChooseAbilityScreen("Ranger", playerAncestry);
 			}
 		case KeyEvent.VK_ESCAPE: return new ChooseAncestryScreen();
 		}
