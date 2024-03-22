@@ -49,7 +49,7 @@ public class GremlinSkirmisherAI extends CreatureAI{
 			case 1: this.hunt(player); System.out.println(this.toString() + " uses [Fast Hunt Player]"); break;
 			case 2: this.comboAttack(); System.out.println(this.toString() + " uses [Combo Attack]"); break;
 			case 3: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
-			case 5: this.creature.sleep();; System.out.println(this.toString() + " uses [Fall Asleep]"); break;
+			case 5: this.creature.sleep(); turnsWithoutPlayer = 0; System.out.println(this.toString() + " uses [Fall Asleep]"); break;
 			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}

@@ -48,7 +48,7 @@ public class CloakerAI extends CreatureAI{
 			case 2: this.becomeInvisible(); System.out.println(this.toString() + " uses [Become Invisible]"); break;
 			case 3: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
 			case 4: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
-			case 5: this.creature.sleep(); System.out.println(this.toString() + " uses [Fall Asleep]"); break;
+			case 5: this.creature.sleep(); turnsWithoutPlayer = 0; System.out.println(this.toString() + " uses [Fall Asleep]"); break;
 			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}

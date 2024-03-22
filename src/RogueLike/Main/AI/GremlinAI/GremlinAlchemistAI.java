@@ -50,7 +50,7 @@ public class GremlinAlchemistAI extends CreatureAI{
 			case 1: this.brewPotion(); System.out.println(this.toString() + " uses [Brew Potion]"); break;
 			case 2: this.throwPotion(); System.out.println(this.toString() + " uses [Throw Potion]"); break;
 			case 3: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
-			case 5: this.creature.sleep();; System.out.println(this.toString() + " uses [Fall Asleep]"); break;
+			case 5: this.creature.sleep(); turnsWithoutPlayer = 0; System.out.println(this.toString() + " uses [Fall Asleep]"); break;
 			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}

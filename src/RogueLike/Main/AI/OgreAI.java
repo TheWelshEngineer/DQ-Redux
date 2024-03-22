@@ -53,7 +53,7 @@ public class OgreAI extends CreatureAI{
 			case 3: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
 			case 4: creature.pickup(); System.out.println(this.toString() + " uses [Pick Up]"); break;
 			case 5: this.wander();; System.out.println(this.toString() + " uses [Wander]"); break;
-			case 6: creature.sleep(); System.out.println(this.toString() + " uses [Fall Asleep]"); break;
+			case 6: creature.sleep(); turnsWithoutPlayer = 0; System.out.println(this.toString() + " uses [Fall Asleep]"); break;
 			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}

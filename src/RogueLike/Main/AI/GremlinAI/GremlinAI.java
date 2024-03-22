@@ -46,7 +46,7 @@ public class GremlinAI extends CreatureAI{
 		switch(action) {
 			case 1: this.shootArrows(); System.out.println(this.toString() + " uses [Shoot Arrows]"); break;
 			case 2: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
-			case 4: this.creature.sleep(); System.out.println(this.toString() + " uses [Fall Asleep]"); break;
+			case 4: this.creature.sleep(); turnsWithoutPlayer = 0; System.out.println(this.toString() + " uses [Fall Asleep]"); break;
 			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}

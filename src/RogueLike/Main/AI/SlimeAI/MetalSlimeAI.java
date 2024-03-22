@@ -47,7 +47,7 @@ public class MetalSlimeAI extends CreatureAI{
 		switch(action) {
 			case 1: this.burst(); System.out.println(this.toString() + " uses [Burst]"); break;
 			case 2: this.hunt(player); System.out.println(this.toString() + " uses [Hunt Player]"); break;
-			case 4: this.creature.sleep();; System.out.println(this.toString() + " uses [Fall Asleep]"); break;
+			case 4: this.creature.sleep(); turnsWithoutPlayer = 0; System.out.println(this.toString() + " uses [Fall Asleep]"); break;
 			default: this.wander(); System.out.println(this.toString() + " uses [Wander]"); break;
 		}
 	}
@@ -88,7 +88,7 @@ public class MetalSlimeAI extends CreatureAI{
                 }
             }
             creature.doAction("split into slimelings!");
-            Damage damage = new Damage(creature.hp(), false, true, Damage.physical, factory.effectFactory, false);
+            Damage damage = new Damage(creature.hp(), false, true, Damage.chaos, factory.effectFactory, false);
             creature.modifyHP(damage, "");
 		}
 	}

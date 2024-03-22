@@ -52,7 +52,7 @@ public class TitleScreen implements Screen{
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
-		terminal.writeCenter(String.format("-- beta v05-02-2024 -- Press [%s] to Start --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 45);
+		terminal.writeCenter(String.format("-- version: rc-6 -- Press [%s] to Start --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 45);
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {
