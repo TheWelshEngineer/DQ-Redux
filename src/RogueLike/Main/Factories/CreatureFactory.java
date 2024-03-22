@@ -3,6 +3,7 @@ package RogueLike.Main.Factories;
 import java.util.List;
 
 import RogueLike.Main.Dice;
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
@@ -30,7 +31,6 @@ import RogueLike.Main.Creatures.Slimes.MetalSlimeling;
 import RogueLike.Main.Creatures.Slimes.PinkSlime;
 import RogueLike.Main.Creatures.Slimes.PinkSlimeling;
 import RogueLike.Main.Items.Item;
-import asciiPanel.AsciiPanel;
 
 public class CreatureFactory {
 	
@@ -189,7 +189,7 @@ public ObjectFactory objectFactory;
 	
 	//Fungi
 	public Creature newFungus(int depth, boolean addToWorld) {
-		Creature fungus = new Fungus(objectFactory, "Fungus", 'f', AsciiPanel.green, 1, depth);
+		Creature fungus = new Fungus(objectFactory, "Fungus", 'f', ExtendedAsciiPanel.green, 1, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(fungus, depth);
 		}
@@ -198,7 +198,7 @@ public ObjectFactory objectFactory;
 	
 	//Bats
 	public Creature newBat(int depth, boolean addToWorld) {
-		Creature bat = new Bat(objectFactory, "Bat", 'b', AsciiPanel.magenta, 2, depth);
+		Creature bat = new Bat(objectFactory, "Bat", 'b', ExtendedAsciiPanel.magenta, 2, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(bat, depth);
 		}
@@ -208,7 +208,7 @@ public ObjectFactory objectFactory;
 	
 	//Skeletons
 	public Creature newSkeleton(int depth, Creature player, boolean addToWorld) {
-		Creature skeleton = new Skeleton(objectFactory, player, "Skeleton", 'k', AsciiPanel.white, 3, depth);
+		Creature skeleton = new Skeleton(objectFactory, player, "Skeleton", 'k', ExtendedAsciiPanel.white, 3, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(skeleton, depth);
 		}
@@ -291,7 +291,7 @@ public ObjectFactory objectFactory;
 	
 	//Ogres
 	public Creature newOgre(int depth, Creature player, boolean addToWorld) {
-		Creature ogre = new Ogre(objectFactory, player, "Ogre", 'O', AsciiPanel.brightGreen, 7, depth);
+		Creature ogre = new Ogre(objectFactory, player, "Ogre", 'O', ExtendedAsciiPanel.brightGreen, 7, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(ogre, depth);
 		}
@@ -325,7 +325,7 @@ public ObjectFactory objectFactory;
 	
 	//Cloaker
 	public Creature newCloaker(int depth, Creature player, boolean addToWorld) {
-		Creature cloaker = new Cloaker(objectFactory, player, "Cloaker", 'c', AsciiPanel.brightBlack, 10, depth);
+		Creature cloaker = new Cloaker(objectFactory, player, "Cloaker", 'c', ExtendedAsciiPanel.brightBlack, 10, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(cloaker, depth);
 		}

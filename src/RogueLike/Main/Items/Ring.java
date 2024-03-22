@@ -1,7 +1,7 @@
 package RogueLike.Main.Items;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Factories.ObjectFactory;
-import asciiPanel.AsciiPanel;
 
 public class Ring extends Item{
 	
@@ -17,7 +17,7 @@ public class Ring extends Item{
 	 * @param id The unique identifying integer of the item.
 	 */
 	public Ring(ObjectFactory factory, char glyph, String name, int appearance, int goldValue, int id) {
-		super(glyph, AsciiPanel.white, name, null);
+		super(glyph, ExtendedAsciiPanel.white, name, null);
 		this.setAppearance(factory.ringAppearances.get(appearance));
 		this.setColor(factory.ringColors.get(this.getAppearance()));
 		this.setBaseGoldValue(goldValue);

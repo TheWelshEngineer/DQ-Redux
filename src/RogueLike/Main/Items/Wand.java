@@ -1,8 +1,8 @@
 package RogueLike.Main.Items;
 
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Factories.ObjectFactory;
-import asciiPanel.AsciiPanel;
 
 public class Wand extends Item{
 	
@@ -18,7 +18,7 @@ public class Wand extends Item{
 	 * @param id The unique identifying integer of the item.
 	 */
 	public Wand(ObjectFactory factory, char glyph, String name, int appearance, Spell spell, int goldValue, int id) {
-		super(glyph, AsciiPanel.white, name, null);
+		super(glyph, ExtendedAsciiPanel.white, name, null);
 		this.setAppearance(factory.wandAppearances.get(appearance));
 		this.addWrittenSpell(spell);
 		this.setColor(factory.wandColors.get(this.getAppearance()));

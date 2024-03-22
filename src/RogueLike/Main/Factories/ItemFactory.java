@@ -1,6 +1,7 @@
 package RogueLike.Main.Factories;
 
 import RogueLike.Main.Dice;
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
@@ -28,8 +29,6 @@ import RogueLike.Main.Items.TwoHandedMeleeWeapon;
 import RogueLike.Main.Items.VersatileFinesseWeapon;
 import RogueLike.Main.Items.VersatileMeleeWeapon;
 import RogueLike.Main.Items.Wand;
-import asciiPanel.AsciiPanel;
-
 public class ItemFactory {
 	
 	public ObjectFactory objectFactory;
@@ -53,7 +52,7 @@ public class ItemFactory {
 	
 	//Rock
 	public Item newRock(int depth, int addToWorld) {
-		Item rock = new Item(',', AsciiPanel.yellow, "Rock", "Rock");
+		Item rock = new Item(',', ExtendedAsciiPanel.yellow, "Rock", "Rock");
 		rock.setIsStackable(true);
 		rock.setID(0);
 		if(addToWorld > 0) {
@@ -91,7 +90,7 @@ public class ItemFactory {
 	
 	//Keys
 	public Item newIronKey(int depth, boolean addToWorld) {
-		Item key = new IronKey((char)157, AsciiPanel.white, "Iron Key", null, depth, 100);
+		Item key = new IronKey((char)157, ExtendedAsciiPanel.white, "Iron Key", null, depth, 100);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(key, depth);
 		}
@@ -100,7 +99,7 @@ public class ItemFactory {
 	
 	//Victory Item
 	public Item newVictoryItem(int depth, int addToWorld) {
-		Item item = new Item('*', AsciiPanel.brightWhite, "Eitak's Ancient Axe", "Eitak's Ancient Axe");
+		Item item = new Item('*', ExtendedAsciiPanel.brightWhite, "Eitak's Ancient Axe", "Eitak's Ancient Axe");
 		item.setID(200);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
@@ -156,7 +155,7 @@ public class ItemFactory {
 	
 	//Simple Weapons
 	public Item newClub(int depth, boolean addToWorld) {
-		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Club", null, Dice.d4, 10, 400);
+		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Club", null, Dice.d4, 10, 400);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -164,7 +163,7 @@ public class ItemFactory {
 	}
 	
 	public Item newDart(int depth, boolean addToWorld) {
-		Item item = new BasicThrownWeapon(')', AsciiPanel.brightWhite, "Dart", null, Dice.d1, Dice.d4, 10, 401);
+		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Dart", null, Dice.d1, Dice.d4, 10, 401);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -172,7 +171,7 @@ public class ItemFactory {
 	}
 	
 	public Item newQuarterstaff(int depth, boolean addToWorld) {
-		Item item = new VersatileMeleeWeapon(')', AsciiPanel.brightWhite, "Quarterstaff", null, Dice.d6, Dice.d8, 20, 402);
+		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Quarterstaff", null, Dice.d6, Dice.d8, 20, 402);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -180,7 +179,7 @@ public class ItemFactory {
 	}
 	
 	public Item newSpear(int depth, boolean addToWorld) {
-		Item item = new ThrownVersatileWeapon(')', AsciiPanel.brightWhite, "Spear", null, Dice.d4, Dice.d6, Dice.d8, 10, 403);
+		Item item = new ThrownVersatileWeapon(')', ExtendedAsciiPanel.brightWhite, "Spear", null, Dice.d4, Dice.d6, Dice.d8, 10, 403);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -188,7 +187,7 @@ public class ItemFactory {
 	}
 	
 	public Item newGreatclub(int depth, boolean addToWorld) {
-		Item item = new TwoHandedMeleeWeapon(')', AsciiPanel.brightWhite, "Greatclub", null, Dice.d10, 20, 404);
+		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatclub", null, Dice.d10, 20, 404);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -196,7 +195,7 @@ public class ItemFactory {
 	}
 	
 	public Item newThrowingAxe(int depth, boolean addToWorld) {
-		Item item = new BasicThrownWeapon(')', AsciiPanel.brightWhite, "Throwing Axe", null, Dice.d6, Dice.d8, 10, 405);
+		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Axe", null, Dice.d6, Dice.d8, 10, 405);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -204,7 +203,7 @@ public class ItemFactory {
 	}
 	
 	public Item newMattock(int depth, boolean addToWorld) {
-		Item item = new VersatileMeleeWeapon(')', AsciiPanel.brightWhite, "Mattock", null, Dice.d8, Dice.d10, 150, 406);
+		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mattock", null, Dice.d8, Dice.d10, 150, 406);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -212,7 +211,7 @@ public class ItemFactory {
 	}
 	
 	public Item newMaul(int depth, boolean addToWorld) {
-		Item item = new TwoHandedMeleeWeapon(')', AsciiPanel.brightWhite, "Maul", null, Dice.d12, 20, 407);
+		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Maul", null, Dice.d12, 20, 407);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -221,63 +220,63 @@ public class ItemFactory {
 	
 	//Martial Weapons
 	public Item newShortsword(int depth, boolean addToWorld) {
-		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Shortsword", null, Dice.d6, 10, 500);
+		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Shortsword", null, Dice.d6, 10, 500);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newKnuckleduster(int depth, boolean addToWorld) {
-		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Knuckleduster", null, Dice.d4, 10, 501);
+		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Knuckleduster", null, Dice.d4, 10, 501);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newMace(int depth, boolean addToWorld) {
-		Item item = new VersatileMeleeWeapon(')', AsciiPanel.brightWhite, "Mace", null, Dice.d6, Dice.d8, 20, 502);
+		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mace", null, Dice.d6, Dice.d8, 20, 502);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newThrowingHammer(int depth, boolean addToWorld) {
-		Item item = new BasicThrownWeapon(')', AsciiPanel.brightWhite, "Throwing Hammer", null, Dice.d4, Dice.d6, 10, 503);
+		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Hammer", null, Dice.d4, Dice.d6, 10, 503);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLongsword(int depth, boolean addToWorld) {
-		Item item = new BasicMeleeWeapon(')', AsciiPanel.brightWhite, "Longsword", null, Dice.d8, 10, 504);
+		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Longsword", null, Dice.d8, 10, 504);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newHalberd(int depth, boolean addToWorld) {
-		Item item = new TwoHandedMeleeWeapon(')', AsciiPanel.brightWhite, "Halberd", null, Dice.d10, 20, 505);
+		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Halberd", null, Dice.d10, 20, 505);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newWarhammer(int depth, boolean addToWorld) {
-		Item item = new VersatileMeleeWeapon(')', AsciiPanel.brightWhite, "Warhammer", null, Dice.d8, Dice.d10, 20, 506);
+		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Warhammer", null, Dice.d8, Dice.d10, 20, 506);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newJavelin(int depth, boolean addToWorld) {
-		Item item = new BasicThrownWeapon(')', AsciiPanel.brightWhite, "Javelin", null, Dice.d6, Dice.d10, 10, 507);
+		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Javelin", null, Dice.d6, Dice.d10, 10, 507);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newGreatsword(int depth, boolean addToWorld) {
-		Item item = new TwoHandedMeleeWeapon(')', AsciiPanel.brightWhite, "Greatsword", null, Dice.d12, 20, 508);
+		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatsword", null, Dice.d12, 20, 508);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -286,49 +285,49 @@ public class ItemFactory {
 	
 	//Finesse Weapons
 	public Item newDagger(int depth, boolean addToWorld) {
-		Item item = new ThrownFinesseWeapon(')', AsciiPanel.brightWhite, "Dagger", null, Dice.d4, Dice.d4, 20, 600);
+		Item item = new ThrownFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Dagger", null, Dice.d4, Dice.d4, 20, 600);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newRapier(int depth, boolean addToWorld) {
-		Item item = new BasicFinesseWeapon(')', AsciiPanel.brightWhite, "Rapier", null, Dice.d6, 20, 601);
+		Item item = new BasicFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Rapier", null, Dice.d6, 20, 601);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newFalchion(int depth, boolean addToWorld) {
-		Item item = new VersatileFinesseWeapon(')', AsciiPanel.brightWhite, "Falchion", null, Dice.d6, Dice.d8, 20, 602);
+		Item item = new VersatileFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Falchion", null, Dice.d6, Dice.d8, 20, 602);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newBoomerang(int depth, boolean addToWorld) {
-		Item item = new ThrownFinesseWeapon(')', AsciiPanel.brightWhite, "Boomerang", null, Dice.d4, Dice.d8, 20, 603);
+		Item item = new ThrownFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Boomerang", null, Dice.d4, Dice.d8, 20, 603);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newGlaive(int depth, boolean addToWorld) {
-		Item item = new TwoHandedFinesseWeapon(')', AsciiPanel.brightWhite, "Glaive", null, Dice.d10, 20, 604);
+		Item item = new TwoHandedFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Glaive", null, Dice.d10, 20, 604);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newFlamberge(int depth, boolean addToWorld) {
-		Item item = new VersatileFinesseWeapon(')', AsciiPanel.brightWhite, "Flamberge", null, Dice.d8, Dice.d10, 20, 605);
+		Item item = new VersatileFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Flamberge", null, Dice.d8, Dice.d10, 20, 605);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newPairedBlades(int depth, boolean addToWorld) {
-		Item item = new TwoHandedFinesseWeapon(')', AsciiPanel.brightWhite, "Paired Blades", null, Dice.d6x2, 20, 606);
+		Item item = new TwoHandedFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Paired Blades", null, Dice.d6x2, 20, 606);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -337,35 +336,35 @@ public class ItemFactory {
 	
 	//Ranged Weapons
 	public Item newShortbow(int depth, boolean addToWorld) {
-		Item item = new ArrowsRangedWeapon('}', AsciiPanel.brightWhite, "Shortbow", null, Dice.d6, 250, 700);
+		Item item = new ArrowsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Shortbow", null, Dice.d6, 250, 700);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLongbow(int depth, boolean addToWorld) {
-		Item item = new ArrowsRangedWeapon('}', AsciiPanel.brightWhite, "Longbow", null, Dice.d8, 500, 701);
+		Item item = new ArrowsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Longbow", null, Dice.d8, 500, 701);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLightCrossbow(int depth, boolean addToWorld) {
-		Item item = new BoltsRangedWeapon('}', AsciiPanel.brightWhite, "Light Crossbow", null, Dice.d8, 250, 702);
+		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Light Crossbow", null, Dice.d8, 250, 702);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newHeavyCrossbow(int depth, boolean addToWorld) {
-		Item item = new BoltsRangedWeapon('}', AsciiPanel.brightWhite, "Heavy Crossbow", null, Dice.d10, 500, 703);
+		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Heavy Crossbow", null, Dice.d10, 500, 703);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newHandCrossbow(int depth, boolean addToWorld) {
-		Item item = new BoltsRangedWeapon('}', AsciiPanel.brightWhite, "Hand Crossbow", null, Dice.d4x2, 500, 704);
+		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Hand Crossbow", null, Dice.d4x2, 500, 704);
 		item.setIsTwoHanded(false);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
@@ -373,7 +372,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newPistol(int depth, boolean addToWorld) {
-		Item item = new PowderRangedWeapon('}', AsciiPanel.brightWhite, "Flintlock Pistol", null, Dice.d10, 750, 705);
+		Item item = new PowderRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Flintlock Pistol", null, Dice.d10, 750, 705);
 		item.setIsTwoHanded(false);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
@@ -381,7 +380,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newCaliver(int depth, boolean addToWorld) {
-		Item item = new PowderRangedWeapon('}', AsciiPanel.brightWhite, "Flintlock Caliver", null, Dice.d12, 1000, 706);
+		Item item = new PowderRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Flintlock Caliver", null, Dice.d12, 1000, 706);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -390,84 +389,84 @@ public class ItemFactory {
 	
 	//Armor
 	public Item newPaddedClothArmor(int depth, boolean addToWorld) {
-		Item item = new LightArmor((char)203, AsciiPanel.brightWhite, "Padded Cloth Armor", null, 11, 50, 800);
+		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Padded Cloth Armor", null, 11, 50, 800);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLeatherArmor(int depth, boolean addToWorld) {
-		Item item = new LightArmor((char)203, AsciiPanel.brightWhite, "Leather Armor", null, 11, 100, 801);
+		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Leather Armor", null, 11, 100, 801);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newStuddedLeatherArmor(int depth, boolean addToWorld) {
-		Item item = new LightArmor((char)203, AsciiPanel.brightWhite, "Studded Leather Armor", null, 12, 450, 802);
+		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Studded Leather Armor", null, 12, 450, 802);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newHideArmor(int depth, boolean addToWorld) {
-		Item item = new MediumArmor((char)203, AsciiPanel.brightWhite, "Hide Armor", null, 12, 100, 803);
+		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Hide Armor", null, 12, 100, 803);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newChainmailArmor(int depth, boolean addToWorld) {
-		Item item = new MediumArmor((char)203, AsciiPanel.brightWhite, "Chainmail Tunic", null, 13, 500, 804);
+		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Chainmail Tunic", null, 13, 500, 804);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newScaleArmor(int depth, boolean addToWorld) {
-		Item item = new MediumArmor((char)203, AsciiPanel.brightWhite, "Scale Mail", null, 14, 500, 805);
+		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Scale Mail", null, 14, 500, 805);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newBreastplate(int depth, boolean addToWorld) {
-		Item item = new MediumArmor((char)203, AsciiPanel.brightWhite, "Breastplate", null, 14, 800, 806);
+		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Breastplate", null, 14, 800, 806);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newHalfPlate(int depth, boolean addToWorld) {
-		Item item = new MediumArmor((char)203, AsciiPanel.brightWhite, "Half-Plate Armor", null, 15, 1500, 807);
+		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Half-Plate Armor", null, 15, 1500, 807);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newPlateArmor(int depth, boolean addToWorld) {
-		Item item = new HeavyArmor((char)203, AsciiPanel.brightWhite, "Plate Armor", null, 18, 3000, 808);
+		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Plate Armor", null, 18, 3000, 808);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newRingMail(int depth, boolean addToWorld) {
-		Item item = new HeavyArmor((char)203, AsciiPanel.brightWhite, "Ringmail Armor", null, 14, 300, 809);
+		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Ringmail Armor", null, 14, 300, 809);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newChainArmor(int depth, boolean addToWorld) {
-		Item item = new HeavyArmor((char)203, AsciiPanel.brightWhite, "Chainmail Armor", null, 16, 750, 810);
+		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Chainmail Armor", null, 16, 750, 810);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newSplintArmor(int depth, boolean addToWorld) {
-		Item item = new HeavyArmor((char)203, AsciiPanel.brightWhite, "Splint Armor", null, 17, 1200, 811);
+		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Splint Armor", null, 17, 1200, 811);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -476,21 +475,21 @@ public class ItemFactory {
 	
 	//Shields
 	public Item newRoundShield(int depth, boolean addToWorld) {
-		Item item = new BasicShield((char)232, AsciiPanel.brightWhite, "Round Shield", null, 2, 100, 900);
+		Item item = new BasicShield((char)232, ExtendedAsciiPanel.brightWhite, "Round Shield", null, 2, 100, 900);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newKiteShield(int depth, boolean addToWorld) {
-		Item item = new BasicShield((char)232, AsciiPanel.brightWhite, "Kite Shield", null, 3, 200, 901);
+		Item item = new BasicShield((char)232, ExtendedAsciiPanel.brightWhite, "Kite Shield", null, 3, 200, 901);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newTowerShield(int depth, boolean addToWorld) {
-		Item item = new TowerShield((char)232, AsciiPanel.brightWhite, "Tower Shield", null, 4, 400, 902);
+		Item item = new TowerShield((char)232, ExtendedAsciiPanel.brightWhite, "Tower Shield", null, 4, 400, 902);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}

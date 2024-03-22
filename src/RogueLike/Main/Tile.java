@@ -2,24 +2,22 @@ package RogueLike.Main;
 
 import java.awt.Color;
 
-import asciiPanel.AsciiPanel;
-
 public enum Tile {
 	FLOOR((char)250, /*AsciiPanel.yellow*/ new Color(173, 146, 125), "A rocky cave floor."),
 	WALL((char)177, /*AsciiPanel.yellow*/ new Color(173, 146, 125), "A rocky cave wall. Looks breakable."),
-	BOUNDS('x', AsciiPanel.brightBlack, "Beyond the edge of the world."),
-	STAIRS_UP((char)30, AsciiPanel.white, "A rough stone staircase that goes up."),
-	STAIRS_DOWN((char)31, AsciiPanel.white, "A rough stone staircase that goes down."),
-	UNKNOWN(' ', AsciiPanel.white, "You don't know what is there."),
+	BOUNDS('x', ExtendedAsciiPanel.brightBlack, "Beyond the edge of the world."),
+	STAIRS_UP((char)30, ExtendedAsciiPanel.white, "A rough stone staircase that goes up."),
+	STAIRS_DOWN((char)31, ExtendedAsciiPanel.white, "A rough stone staircase that goes down."),
+	UNKNOWN(' ', ExtendedAsciiPanel.white, "You don't know what is there."),
 	STAIRS_EXIT((char)30, ExtraColors.orange, "A rough stone staircase that leads out of the caves."),
-	BARS_VERTICAL((char)186, AsciiPanel.white, "A cage made of sturdy iron bars."),
-	BARS_HORIZONTAL((char)205, AsciiPanel.white, "A cage made of sturdy iron bars."),
+	BARS_VERTICAL((char)186, ExtendedAsciiPanel.white, "A cage made of sturdy iron bars."),
+	BARS_HORIZONTAL((char)205, ExtendedAsciiPanel.white, "A cage made of sturdy iron bars."),
 	BARS_DOOR((char)205, ExtraColors.brown, "A tough wooden door with a heavy lock."),
-	BARS_NW((char)201, AsciiPanel.white, "A cage made of sturdy iron bars."),
-	BARS_SW((char)200, AsciiPanel.white, "A cage made of sturdy iron bars."),
-	BARS_NE((char)187, AsciiPanel.white, "A cage made of sturdy iron bars."),
-	BARS_SE((char)188, AsciiPanel.white, "A cage made of sturdy iron bars."),
-	GRASS_TALL((char)176, AsciiPanel.green, "Tall, thick grass blocks your view."),
+	BARS_NW((char)201, ExtendedAsciiPanel.white, "A cage made of sturdy iron bars."),
+	BARS_SW((char)200, ExtendedAsciiPanel.white, "A cage made of sturdy iron bars."),
+	BARS_NE((char)187, ExtendedAsciiPanel.white, "A cage made of sturdy iron bars."),
+	BARS_SE((char)188, ExtendedAsciiPanel.white, "A cage made of sturdy iron bars."),
+	GRASS_TALL((char)176, ExtendedAsciiPanel.green, "Tall, thick grass blocks your view."),
 	FIRE((char)(167+256), ExtraColors.orange, "A small fire is burning here."),
 	SMOKE((char)176, ExtraColors.smoke, "A dense cloud of smoke and ash is swirling here."),
 	PIT((char)220, ExtraColors.invisible, "A deep chasm opens here. You can't see the bottom.."),
@@ -27,7 +25,7 @@ public enum Tile {
 	PARALYZE_GAS((char)176, ExtraColors.paralyzed, "A cloud of paralytic gas is swirling here."),
 	CONFUSE_GAS((char)176, ExtraColors.pink, "A cloud of confusion gas is swirling here."),
 	MIXED_GAS((char)176, ExtraColors.orange, "A cloud of alchemical murk is swirling here."),
-	FUNGUS_WALL((char)177, AsciiPanel.green, "A wall of tangled cave fungus. Looks like you could chop through it."),
+	FUNGUS_WALL((char)177, ExtendedAsciiPanel.green, "A wall of tangled cave fungus. Looks like you could chop through it."),
 	
 	
 	

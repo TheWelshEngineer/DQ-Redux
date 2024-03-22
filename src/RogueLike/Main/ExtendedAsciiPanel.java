@@ -7,12 +7,9 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ByteLookupTable;
 import java.awt.image.LookupOp;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
-import asciiPanel.AsciiPanel;
 
 /**
  * This simulates a code page 437 ASCII terminal display.

@@ -2,8 +2,8 @@ package RogueLike.Main.Items;
 
 import RogueLike.Main.Description;
 import RogueLike.Main.Effect;
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Factories.ObjectFactory;
-import asciiPanel.AsciiPanel;
 
 public class Potion extends Item{
 	
@@ -21,7 +21,7 @@ public class Potion extends Item{
 	 * @param id The unique identifying integer of the item.
 	 */
 	public Potion(ObjectFactory factory, char glyph, String name, int appearance, String inventoryStatusEffectName, Effect statusEffect, boolean negative, int goldValue, int id) {
-		super(glyph, AsciiPanel.white, name, null);
+		super(glyph, ExtendedAsciiPanel.white, name, null);
 		this.setAppearance(factory.potionAppearances.get(appearance));
 		Description description = factory.potionColors.get(this.getAppearance());
 		description.setPotionEffectName(inventoryStatusEffectName.toLowerCase());

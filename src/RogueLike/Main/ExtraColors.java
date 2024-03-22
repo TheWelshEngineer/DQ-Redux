@@ -2,9 +2,7 @@ package RogueLike.Main;
 
 import java.awt.Color;
 
-import asciiPanel.AsciiPanel;
-
-public class ExtraColors extends AsciiPanel{
+public class ExtraColors extends ExtendedAsciiPanel{
 	
 	/**
 	 * 
