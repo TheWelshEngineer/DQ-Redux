@@ -8,6 +8,7 @@ public class KeybindManager {
 
 
 	public static int applyKeymap(int inputKeycode) {
+		// TODO distinguish between menus and gameplay
         return keymap.getOrDefault(inputKeycode, inputKeycode);
 	}
 
@@ -70,11 +71,9 @@ public class KeybindManager {
 		String representation = KeyEvent.getKeyText(keyCode);
 		return representation.toUpperCase();
 	}
-	public static Map<Integer, Integer> keymap = Map.of();
+	public static Map<Integer, Integer> keymap = new HashMap<>();
 
 	public static boolean addKeybind(int source, int destination) {
-		if (keymap.containsKey(source)) return false;
-
 		keymap.put(source, destination);
 
 		// If there isn't already a reverse keybind, send it to /dev/null
@@ -83,6 +82,10 @@ public class KeybindManager {
 		}
 
 		return true;
+	}
+
+	public static void clearKeybinds() {
+		keymap = new HashMap<>();
 	}
 
 }

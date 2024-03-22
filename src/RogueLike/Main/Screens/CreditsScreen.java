@@ -16,9 +16,11 @@ public class CreditsScreen implements Screen{
 		terminal.writeCenter("----------------", y++);
 		terminal.writeCenter("Kathryn U.", y++);
 		terminal.writeCenter("H. Roland R.", y++);
+		terminal.writeCenter("Julia I.", y++);
 		y++;
 		terminal.writeCenter("GitHub: TheWelshEngineer", y++);
 		terminal.writeCenter("GitHub: RolandReff", y++);
+		terminal.writeCenter("GitHub: JuliaScythe", y++);
 		y+=3;
 		terminal.writeCenter("Helper Method Library:", y++);
 		terminal.writeCenter("----------------", y++);

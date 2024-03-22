@@ -1,6 +1,8 @@
 package RogueLike.Main.Managers;
 
+import java.awt.event.KeyEvent;
 import java.io.*;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -54,7 +56,7 @@ public class ConfigManager {
                 }
                 line = line.strip();
 
-
+                if (line.startsWith(";")) continue; // Skip comments
 
                 if (line.startsWith("[")) {
                     // Start a new section with the appropriate title
@@ -75,7 +77,35 @@ public class ConfigManager {
     };
 
     public static void applyConfig(Config config) {
-        System.out.println(config);
+        // Apply the keybinds section
+        if (config.sections.containsKey("keybinds")) {
+            ConfigSection keybindSection = config.sections.get("keybinds");
+            keybindSection.values.forEach((k, v) -> {
+                try {
+                    Class<?> c = KeybindManager.class;
+                    Field f = c.getDeclaredField(k);
+                    int destVal = f.getInt(null);
+                    int sourceVal = -1;
+                    // If we can parse the input as an int, do it and be done with this
+                    if (v.matches("\\d+")) {
+                        sourceVal = Integer.parseInt(v);
+                    } else {
+
+                        Class<?> c_k = KeyEvent.class;
+                        //TODO add VK_ prefixing
+                        Field f_k = c_k.getDeclaredField(v.toUpperCase());
+                        sourceVal = f_k.getInt(null);
+                    }
+
+                    KeybindManager.addKeybind(sourceVal, destVal);
+
+                } catch (NoSuchFieldException e) {
+                    System.out.println("Unknown keybind " + k);
+                } catch (IllegalAccessException e) {
+                    System.out.println(e);
+                }
+            });
+        }
     }
 
 
