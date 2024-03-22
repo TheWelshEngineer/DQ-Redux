@@ -7,6 +7,7 @@ import RogueLike.Main.Effect;
 import RogueLike.Main.ExtraColors;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Line;
+import RogueLike.Main.Particle;
 import RogueLike.Main.Point;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
@@ -398,7 +399,7 @@ public class EffectFactory {
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(splashDamage, String.format("Killed by %s using Ice Knife", reference.name()));
-					creature.ai().factory.effectFactory.spreadDamage(creature, splashDamage, String.format("Killed by %s using Ice Knife", reference.name()), 1);
+					creature.ai().factory.effectFactory.spreadDamage(creature, splashDamage, String.format("Killed by %s using Ice Knife", reference.name()), 1, creature.ai().factory.particleFactory.frost(ExtraColors.water, 2));
 				}else {
 					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
 					reference.notify(String.format("The %s dodges your spell.", creature.name()));
@@ -657,52 +658,32 @@ public class EffectFactory {
 	}
 	
 	//Electromancy Spells
-	public Effect chainLightning(Creature player) { //TODO CLEANUP
-		Effect lightning = new Effect(7, null, true, player){
+	public Effect chainLightning(Creature reference) {
+		Effect lightning = new Effect(7, null, true, reference){
 			public void start(Creature creature){
-				int playerDC = player.intelligenceSaveDC();
-				int creatureSave = creature.shockSave();
-				int damageCeiling = 8+player.intelligenceModifier();
-				
-				int tempAmount = (ExtraMaths.diceRoll(1, damageCeiling));
-				int amountHalf = (int) Math.round(tempAmount/2);
-				int amount = tempAmount;
+				int saveDC = reference.intelligenceSaveDC();
+				int creatureSave = creature.dexterityRoll();
+				int damageAmount = Dice.d8.roll()+reference.intelligenceModifier();
+				if(reference.electromancyLevel() >= 2) {
+					damageAmount += reference.proficiencyBonus();
+				}
 				boolean saved = false;
 				
-				if(creatureSave >= playerDC) {
-					amount = amountHalf;
+				if(creatureSave >= saveDC) {
+					damageAmount /= 2;
 					saved = true;
 				}
-				if(amount < 1) {
-					amount = 1;
+				if(damageAmount < 1) {
+					damageAmount = 1;
 				}
 				creature.doAction("get a shock!");
-				creature.setLastHit(player);
+				creature.setLastHit(reference);
 				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), creature.x(), creature.y(), creature.z());
-				Damage damage = new ShockDamage(amount, false, getThis(), true);
-				creature.modifyHP(damage, "Killed by lightning magic");
+				Damage damage = new ShockDamage(damageAmount, false, getThis(), true);
+				creature.modifyHP(damage, String.format("Killed by %s using Chain Lightning", reference.name()));
 				
 				if(saved == false) {
-	                for (int ox = -2; ox < 3; ox++){
-	                    for (int oy = -2; oy < 3; oy++){
-	                        int nx = creature.x + ox;
-	                        int ny = creature.y + oy;
-	                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null || creature.creature(nx, ny, creature.z) == player) {
-	                            continue;
-	                        }
-	                        
-	                        
-	                        Creature target = creature.creature(nx, ny, creature.z);
-	                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), target.x(), target.y(), target.z());
-	                        int amountChain = (ExtraMaths.diceRoll(1, damageCeiling));
-	        				
-	                        target.doAction("get a shock!");
-	                        target.setLastHit(player);
-	                        Damage damageChain = new ShockDamage(amountChain, false, getThis(), true);
-	        				target.modifyHP(damageChain, "Killed by lightning magic");
-	
-	                    }
-	                }
+	                creature.ai().factory.effectFactory.spreadDamage(creature, damage, String.format("Killed by %s using Chain Lightning", reference.name()), 2, creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2));
 				}
             }
         };
@@ -727,8 +708,15 @@ public class EffectFactory {
         		}
         		for(Creature c : targets) {
         			int amount = Dice.d8.roll()+reference.intelligenceModifier();
+        			if(reference.electromancyLevel() >= 2) {
+        				amount += reference.proficiencyBonus();
+        			}
     				Damage damage = new ShockDamage(amount, false, creature.ai().factory.effectFactory, true);
-    				c.modifyHP(damage, String.format("Killed by %s using Lightning Lance", reference.name()));
+    				if(c.dexterityRoll() < reference.intelligenceSaveDC()) {
+    					c.doAction("get hit with a lance of electricity!");
+    					c.modifyHP(damage, String.format("Killed by %s using Lightning Lance", reference.name()));
+    				}
+    				
         		}
 			}
         };
@@ -778,11 +766,27 @@ public class EffectFactory {
 	public Effect acidBlast(Creature reference) {
 		Effect acidBlast = new Effect(1, "Acid Blast", true, null) {
         	public void start(Creature creature) {
-				Damage damage = new AcidDamage(Dice.d4.roll()+reference.intelligenceModifier(), false, getThis(), true);
+        		int attackRoll = reference.intelligenceRoll();
+        		if(reference.alchemancyLevel() >= 1) {
+        			attackRoll += reference.proficiencyBonus();
+        		}
+        		
+        		int damageAmount = Dice.d4.roll()+reference.intelligenceModifier();
+				
 				if(creature.affectedBy(Effect.corroded)) {
-					damage = new AcidDamage(Dice.d10.roll()+reference.intelligenceModifier(), false, getThis(), false);
+					damageAmount = Dice.d10.roll()+reference.intelligenceModifier(); 
 				}
-				if(reference.intelligenceRoll() >= creature.armorClass()) {
+				
+				if(reference.alchemancyLevel() >= 2) {
+					damageAmount += reference.proficiencyBonus();
+				}
+				
+				if(attackRoll >= 20) {
+					damageAmount *= 2;
+				}
+				
+				Damage damage = new AcidDamage(damageAmount, false, getThis(), true);
+				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a blast of acid!");
 					creature.setLastHit(reference);
 					if(creature.affectedBy(Effect.corroded)) {
@@ -790,6 +794,10 @@ public class EffectFactory {
 					}
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.lime, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(damage, String.format("Killed by %s using Acid Blast", reference.name()));
+					if(attackRoll >= 20 && reference.alchemancyLevel() >= 3) {
+						reference.addEffect(reference.ai().factory.effectFactory.restoration());
+						reference.modifyHP(new Damage(5*reference.proficiencyBonus(), true, false, null, null, false), null);
+					}
 				}else {
 					creature.notify(String.format("The %s's spell misses you.", reference.name()));
 					reference.notify(String.format("Your spell misses the %s.", creature.name()));
@@ -803,24 +811,37 @@ public class EffectFactory {
 	public Effect toxicTransfusion(Creature reference) {
 		Effect toxicTransfusion = new Effect(1, "Toxic Transfusion", false, reference) {
         	public void start(Creature creature) {
+        		int attackRoll = reference.intelligenceRoll();
+        		int damageAmount = Dice.d6.roll()+reference.intelligenceModifier();
         		int duration_ = 10;
         		if(reference.alchemancyLevel() >= 1) {
         			duration_ += reference.proficiencyBonus();
+        			attackRoll += reference.proficiencyBonus();
         		}
         		if(reference.alchemancyLevel() >= 2) {
         			duration_ += reference.proficiencyBonus();
+        			damageAmount += reference.proficiencyBonus();
+        		}
+        		if(attackRoll >= 20) {
+        			damageAmount *= 2;
         		}
         		Effect venomousWard_ = reference.ai().factory.effectFactory.venomousWard(duration_);
         		Effect poisoned_ = reference.ai().factory.effectFactory.poisoned(duration_/2);
         		Effect corroded_ = reference.ai().factory.effectFactory.corroded(duration_/2);
 				reference.addEffect((Effect) venomousWard_.clone());
-				Damage damage = new PoisonDamage(Dice.d6.roll()+reference.intelligenceModifier(), false, getThis(), false);
+				
+				
+				Damage damage = new PoisonDamage(damageAmount, false, getThis(), false);
 
-				if(reference.intelligenceRoll() >= creature.armorClass()) {
+				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a splash of poison!");
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.magenta, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(damage, String.format("Killed by %s using Toxic Transfusion", reference.name()));
+					if(attackRoll >= 20 && reference.alchemancyLevel() >= 3) {
+						reference.addEffect(reference.ai().factory.effectFactory.restoration());
+						reference.modifyHP(new Damage(5*reference.proficiencyBonus(), true, false, null, null, false), null);
+					}
 				}else {
 					creature.notify(String.format("The %s's spell misses you.", reference.name()));
 					reference.notify(String.format("Your spell misses the %s.", creature.name()));
@@ -1958,10 +1979,11 @@ public class EffectFactory {
 		}
 	}
 	
-	public void spreadDamage(Creature centre, Damage damage, String cause, int radius) {
+	public void spreadDamage(Creature centre, Damage damage, String cause, int radius, Particle particle) {
 		for(int x = centre.x()-radius; x <= centre.x()+radius; x++) {
 			for(int y = centre.y()-radius; y <= centre.y()+radius; y++) {
 				if(centre.creature(x, y, centre.z()) != null && (x != centre.x() && y != centre.y())) {
+					centre.world().setParticleAtLocation(particle, x, y, centre.z());
 					centre.creature(x, y, centre.z()).modifyHP(damage, cause);
 				}
 			}
