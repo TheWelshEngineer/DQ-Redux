@@ -907,26 +907,42 @@ public class EffectFactory {
 	public Effect armorStorm(Creature reference) {
 		Effect armorStorm = new Effect(1, "Armor Storm", false, reference) {
         	public void start(Creature creature) {
+        		int attackRoll = reference.intelligenceRoll();
         		int stacks_ = reference.armorClass()-10;
         		if(stacks_ <= 0) {
         			stacks_ = 1;
         		}
-        		int amount = 0;
+        		int damageAmount = 0;
         		for(int i = 0; i < stacks_+1; i++) {
-        			amount += Dice.d4.roll();
+        			damageAmount += Dice.d4.roll();
         		}
         		if(reference.ferromancyLevel() >= 1) {
-        			amount += reference.proficiencyBonus();
+        			attackRoll += reference.proficiencyBonus();
         		}
         		if(reference.ferromancyLevel() >= 2) {
-        			amount += reference.proficiencyBonus();
+        			damageAmount += reference.proficiencyBonus();
         		}
-        		Damage damage = new PhysicalDamage(amount, false, reference.ai().factory.effectFactory, true);
-        		creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.white, 2), creature.x(), creature.y(), creature.z());
-        		creature.modifyHP(damage, String.format("Killed by %s using Armor Storm", reference.name()));
-        		creature.setLastHit(reference);
-        		Effect sundered_ = reference.ai().factory.effectFactory.sundered(stacks_);
-				reference.addEffect((Effect) sundered_.clone());
+        		if(attackRoll >= 20) {
+        			damageAmount *= 2;
+        		}
+        		
+        		if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
+        			Damage damage = new PhysicalDamage(damageAmount, false, reference.ai().factory.effectFactory, true);
+            		creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.white, 2), creature.x(), creature.y(), creature.z());
+            		creature.doAction("get torn apart by metal shards!");
+            		creature.modifyHP(damage, String.format("Killed by %s using Armor Storm", reference.name()));
+            		creature.setLastHit(reference);
+            		Effect sundered_ = reference.ai().factory.effectFactory.sundered(stacks_);
+    				reference.addEffect((Effect) sundered_.clone());
+    				if(attackRoll >= 20 && reference.ferromancyLevel() >= 3) {
+    					Effect giantStrength_ = reference.ai().factory.effectFactory.giantStrength(reference.proficiencyBonus());
+        				reference.addEffect((Effect) giantStrength_.clone());
+    				}
+        		}else {
+        			creature.notify(String.format("The %s's spell misses you.", reference.name()));
+					reference.notify(String.format("Your spell misses the %s.", creature.name()));
+        		}
+        		
 			}
         };
         armorStorm.setShowInMenu(false);
@@ -936,17 +952,17 @@ public class EffectFactory {
 	public Effect weaponBolt(Creature reference) {
 		Effect weaponBolt = new Effect(1, "Weapon Bolt", false, reference) {
         	public void start(Creature creature) {
-        		int amount = 0;
+        		int damageAmount = 0;
         		if(reference.weapon() != null) {
         			if(reference.weapon().isVersatile()) {
-        				amount = reference.weapon().versatileDamageDice().roll();
+        				damageAmount = reference.weapon().versatileDamageDice().roll();
         			}else if(reference.weapon().isRangedWeapon()){
-        				amount = reference.weapon().rangedDamageDice().roll();
+        				damageAmount = reference.weapon().rangedDamageDice().roll();
         			}else {
-        				amount = reference.weapon().damageDice().roll();
+        				damageAmount = reference.weapon().damageDice().roll();
         			}
         			if(reference.weapon().upgradeLevel() > 0) {
-        				amount += reference.weapon().upgradeLevel();
+        				damageAmount += reference.weapon().upgradeLevel();
         			}
         		}
         		int attackRoll = reference.intelligenceSaveDC();
@@ -955,14 +971,22 @@ public class EffectFactory {
         			attackRoll += reference.proficiencyBonus();
         		}
         		if(reference.ferromancyLevel() >= 2) {
-        			amount += reference.proficiencyBonus();
+        			damageAmount += reference.proficiencyBonus();
         		}
-        		Damage damage = new MagicDamage(amount, false, reference.ai().factory.effectFactory, true);
-        		if(attackRoll >= creature.armorClass()) {
+        		if(attackRoll >= 20) {
+        			damageAmount *= 2;
+        		}
+        		
+        		Damage damage = new MagicDamage(damageAmount, false, reference.ai().factory.effectFactory, true);
+        		if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a spectral weapon!");
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.white, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(damage, String.format("Killed by %s using Weapon Bolt", reference.name()));
+					if(attackRoll >= 20 && reference.ferromancyLevel() >= 3) {
+    					Effect giantStrength_ = reference.ai().factory.effectFactory.giantStrength(reference.proficiencyBonus());
+        				reference.addEffect((Effect) giantStrength_.clone());
+    				}
 				}else {
 					creature.notify(String.format("The %s's spell misses you.", reference.name()));
 					reference.notify(String.format("Your spell misses the %s.", creature.name()));
