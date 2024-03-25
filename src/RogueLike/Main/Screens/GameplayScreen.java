@@ -350,7 +350,7 @@ public class GameplayScreen implements Screen{
 	private void createWorld() {
 		//IMPORTANT: World Width // World Height // World Depth
 		world = new WorldBuilder(120, 60, 15)
-				.makeCaves()
+				.generateWorld()
 				.build();
 	}
 	

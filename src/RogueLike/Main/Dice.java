@@ -41,6 +41,12 @@ public class Dice {
 	public static Dice d10x2 = new Dice(1,10,2);
 	public static Dice d12x2 = new Dice(1,12,2);
 	
+	public static Dice d4x3 = new Dice(1,4,3);
+	public static Dice d6x3 = new Dice(1,6,3);
+	public static Dice d8x3 = new Dice(1,8,3);
+	public static Dice d10x3 = new Dice(1,10,3);
+	public static Dice d12x3 = new Dice(1,12,3);
+	
 	public Dice(int lowerBound, int upperBound, int amount) {
 		this.lowerBound = lowerBound;
 		this.upperBound = upperBound;

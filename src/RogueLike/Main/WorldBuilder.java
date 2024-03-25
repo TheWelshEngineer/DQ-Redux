@@ -196,11 +196,28 @@ public class WorldBuilder {
 		return this;
 	}
 	
+//	private WorldBuilder addMerchantLevel(int depth) {
+//		for(int x = 0; x < width; x++) {
+//			for(int y = 0; y < height; y++) {
+//				if(((x >= ((width/2)-5))&&(x <= ((width/2)+5)))&&((y <= ((height/2)-5))&&(y >= ((height/2)+5)))) {
+//					tiles[x][y][depth] = Tile.FLOOR; //TODO goes infinite???????????
+//					System.out.println(true);
+//				}else {
+//					tiles[x][y][depth] = Tile.WALL;
+//				}
+//			}
+//		}
+//		return this;
+//	}
 	
-	public WorldBuilder makeCaves() {
+	
+	public WorldBuilder generateWorld() {
 		return randomiseTiles()
 				.smooth(9)
 				.createRegions()
+				//temp
+				//.addMerchantLevel(1)
+				//
 				.connectRegions()
 				//temp
 				.addExitStairs();

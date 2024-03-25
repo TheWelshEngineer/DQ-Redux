@@ -349,8 +349,10 @@ public class InventoryScreen implements Screen{
 							terminal.write(String.format("Traits: %s", traits), x, z++);
 							terminal.write(String.format("%s", traits2.replaceFirst(".$", "").replaceFirst(".$", "")), x+8, z++);
 						}else {
+							if(!traits.equals("")) {
+								terminal.write(String.format("Traits: %s", traits.replaceFirst(".$", "").replaceFirst(".$", "")), x, z++);
+							}
 							
-							terminal.write(String.format("Traits: %s", traits.replaceFirst(".$", "").replaceFirst(".$", "")), x, z++);
 						}
 						z++;
 					}
