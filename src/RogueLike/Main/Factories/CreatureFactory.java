@@ -174,7 +174,7 @@ public ObjectFactory objectFactory;
 
 		//Test Items
 		Item startWandTest = objectFactory.itemFactory.newAcidBlastWand(0, player, false);
-		player.learnNameQuiet(startWandTest);
+		//player.learnNameQuiet(startWandTest);
 		player.inventory().add(startWandTest);
 		
 		player.inventory().add(objectFactory.itemFactory.newScrollOfSummonMonsters(0, player, false));

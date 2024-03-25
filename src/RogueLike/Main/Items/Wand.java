@@ -1,5 +1,6 @@
 package RogueLike.Main.Items;
 
+import RogueLike.Main.Description;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Factories.ObjectFactory;
@@ -21,7 +22,10 @@ public class Wand extends Item{
 		super(glyph, ExtendedAsciiPanel.white, name, null);
 		this.setAppearance(factory.wandAppearances.get(appearance));
 		this.addWrittenSpell(spell);
-		this.setColor(factory.wandColors.get(this.getAppearance()));
+		Description description = factory.wandColors.get(this.getAppearance());
+		description.setWandSpellName(spell.name().toLowerCase());
+		this.setDescription(description);
+		this.setColor(description.getColor());
 		this.setBaseGoldValue(goldValue);
 		this.setCurrentGoldValue(this.baseGoldValue());
 		this.setIsWand(true);

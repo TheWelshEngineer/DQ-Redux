@@ -480,6 +480,15 @@ public class InventoryScreen implements Screen{
 							terminal.write(item.getDescription().getPotionDescriptionUnknown(), x, z++);
 						}
 					}
+					if(item.isWand()) {
+						if(item.isIdentified()) {
+							terminal.write(item.getDescription().getWandDescriptionBase(), x, z++);
+							terminal.write(item.getDescription().getWandDescriptionKnown(), x, z++);
+						}else {
+							terminal.write(item.getDescription().getWandDescriptionBase(), x, z++);
+							terminal.write(item.getDescription().getWandDescriptionUnknown(), x, z++);
+						}
+					}
 					
 					
 					
