@@ -7,6 +7,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import RogueLike.Main.Managers.ConfigManager;
+import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Screens.Screen;
 import RogueLike.Main.Screens.TitleScreen;
 //import asciiPanel.AsciiFont;
@@ -23,6 +25,7 @@ public class applicationMain extends JFrame implements KeyListener{
 	//
 	public applicationMain(){
         super();
+        ConfigManager.init(); // Loads and applies configuration options
         //
         //System.setProperty("sun.java2d.uiScale", "1.0");
         //System.setProperty("sun.java2d.uiScale.enabled", "false");
@@ -67,6 +70,7 @@ public class applicationMain extends JFrame implements KeyListener{
     }
 
     public void keyPressed(KeyEvent e) {
+        e.setKeyCode(KeybindManager.applyKeymap(e.getKeyCode()));
         screen = screen.respondToUserInput(e);
         repaint();
     }
