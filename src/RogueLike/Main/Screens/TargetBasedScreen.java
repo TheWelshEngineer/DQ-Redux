@@ -2,7 +2,6 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.ExtraColors;
 import RogueLike.Main.Line;
 import RogueLike.Main.Point;
 import RogueLike.Main.Creatures.Creature;
@@ -73,27 +72,27 @@ public abstract class TargetBasedScreen implements Screen{
 			if(p.x == sx+x && p.y == sy+y) {
 				if(player.creature(player.x()+x, player.y()+y, player.z) != null) {
 					char c = player.creature(player.x()+x, player.y()+y, player.z).glyph();
-					terminal.write(c, p.x, p.y, ExtraColors.brightRed);
+					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightRed);
 				}else if(player.item(player.x()+x, player.y()+y, player.z) != null && !player.item(player.x()+x, player.y()+y, player.z).isTrap()) {
 					char c = player.item(player.x()+x, player.y()+y, player.z).glyph();
-					terminal.write(c, p.x, p.y, ExtraColors.brightRed);
+					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightRed);
 				}else{
 					char c = (char)15;
-					terminal.write(c, p.x, p.y, ExtraColors.brightRed);
+					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightRed);
 				}
 			}else if(p.x == sx && p.y == sy){
-				terminal.write(player.glyph(), p.x, p.y, ExtraColors.brightWhite);
+				terminal.write(player.glyph(), p.x, p.y, ExtendedAsciiPanel.brightWhite);
 			}else {
 				//System.out.println(dx + " " + (dy));
 				if(player.creature(dx+fx, dy+fy, player.z) != null) {
 					char c = player.creature(dx+fx, dy+fy, player.z).glyph();
-					terminal.write(c, p.x, p.y, ExtraColors.brightCyan);
+					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightCyan);
 				}else if(player.item(dx+fx, dy+fy, player.z) != null && !player.item(dx+fx, dy+fy, player.z).isTrap()) {
 					char c = player.item(dx+fx, dy+fy, player.z).glyph();
-					terminal.write(c, p.x, p.y, ExtraColors.brightCyan);
+					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightCyan);
 				}else{
 					char c = (char)15;
-					terminal.write(c, p.x, p.y, ExtraColors.brightCyan);
+					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightCyan);
 				}
 				
 			}

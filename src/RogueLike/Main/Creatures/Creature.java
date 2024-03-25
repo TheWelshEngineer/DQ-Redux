@@ -2226,7 +2226,7 @@ public class Creature implements Cloneable{
 	public void hide() {
 		setIsDisguised(true);
 		changeName("Chest");
-		changeColor(ExtraColors.mimic);
+		changeColor(ExtendedAsciiPanel.mimic);
 	}
 
 	public void sleep() {
@@ -3671,7 +3671,7 @@ public class Creature implements Cloneable{
 	}
 
 	public void updateInvisibility() {
-		if(!affectedBy(Effect.invisible) && color == ExtraColors.invisible) {
+		if(!affectedBy(Effect.invisible) && color == ExtendedAsciiPanel.invisible) {
 			changeColor(defaultColor);
 		}
 	}

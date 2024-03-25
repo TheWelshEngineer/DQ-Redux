@@ -11,7 +11,6 @@ import RogueLike.Main.Description;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.ExtraColors;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
@@ -63,17 +62,17 @@ public class ObjectFactory {
 	private void setUpPotionAppearances() {
 		potionColors = new HashMap<String, Description>();
 		potionColors.put("Crimson Potion", new Description("crimson", ExtendedAsciiPanel.brightRed));
-		potionColors.put("Golden Potion", new Description("golden", ExtraColors.gold));
-		potionColors.put("Lime Potion", new Description("lime", ExtraColors.lime));
-		potionColors.put("Cyan Potion", new Description("cyan", ExtraColors.cyan));
-		potionColors.put("Cobalt Potion", new Description("cobalt", ExtraColors.cobalt));
-		potionColors.put("Magenta Potion", new Description("magenta", ExtraColors.pink));
-		potionColors.put("Charcoal Potion", new Description("charcoal", ExtraColors.brightBlack));
-		potionColors.put("Silver Potion", new Description("silver", ExtraColors.white));
-		potionColors.put("Cloudy Potion", new Description("cloudy", ExtraColors.brightWhite));
-		potionColors.put("Pink Potion", new Description("pink", ExtraColors.brightPink));
-		potionColors.put("Emerald Potion", new Description("emerald", ExtraColors.brightGreen));
-		potionColors.put("Amber Potion", new Description("amber", ExtraColors.orange));
+		potionColors.put("Golden Potion", new Description("golden", ExtendedAsciiPanel.gold));
+		potionColors.put("Lime Potion", new Description("lime", ExtendedAsciiPanel.lime));
+		potionColors.put("Cyan Potion", new Description("cyan", ExtendedAsciiPanel.cyan));
+		potionColors.put("Cobalt Potion", new Description("cobalt", ExtendedAsciiPanel.cobalt));
+		potionColors.put("Magenta Potion", new Description("magenta", ExtendedAsciiPanel.pink));
+		potionColors.put("Charcoal Potion", new Description("charcoal", ExtendedAsciiPanel.brightBlack));
+		potionColors.put("Silver Potion", new Description("silver", ExtendedAsciiPanel.white));
+		potionColors.put("Cloudy Potion", new Description("cloudy", ExtendedAsciiPanel.brightWhite));
+		potionColors.put("Pink Potion", new Description("pink", ExtendedAsciiPanel.brightPink));
+		potionColors.put("Emerald Potion", new Description("emerald", ExtendedAsciiPanel.brightGreen));
+		potionColors.put("Amber Potion", new Description("amber", ExtendedAsciiPanel.orange));
 		
 		potionAppearances = new ArrayList<String>(potionColors.keySet());
 		Collections.shuffle(potionAppearances);
@@ -99,31 +98,31 @@ public class ObjectFactory {
 	
 	private void setUpWandAppearances() {
 		wandColors = new HashMap<String, Color>();
-		wandColors.put("Oak Wand", ExtraColors.paper); 
-		wandColors.put("Ash Wand", ExtraColors.brightGreen);
-		wandColors.put("Thorn Wand", ExtraColors.brightMagenta);
-		wandColors.put("Beech Wand", ExtraColors.brown);
-		wandColors.put("Cherry Wand", ExtraColors.pink);
-		wandColors.put("Willow Wand", ExtraColors.water);
-		wandColors.put("Maple Wand", ExtraColors.orange);
+		wandColors.put("Oak Wand", ExtendedAsciiPanel.paper); 
+		wandColors.put("Ash Wand", ExtendedAsciiPanel.brightGreen);
+		wandColors.put("Thorn Wand", ExtendedAsciiPanel.brightMagenta);
+		wandColors.put("Beech Wand", ExtendedAsciiPanel.brown);
+		wandColors.put("Cherry Wand", ExtendedAsciiPanel.pink);
+		wandColors.put("Willow Wand", ExtendedAsciiPanel.water);
+		wandColors.put("Maple Wand", ExtendedAsciiPanel.orange);
 		wandColors.put("Birch Wand", ExtendedAsciiPanel.white);
-		wandColors.put("Rowan Wand", ExtraColors.apple);
-		wandColors.put("Cedar Wand", ExtraColors.magenta);
-		wandColors.put("Bamboo Wand", ExtraColors.green);
-		wandColors.put("Pine Wand", ExtraColors.smoke);
-		wandColors.put("Stone Wand", ExtraColors.brightBlack);
-		wandColors.put("Crystal Wand", ExtraColors.water);
-		wandColors.put("Applewood Wand", ExtraColors.brightRed);
-		wandColors.put("Yew Wand", ExtraColors.brightYellow);
-		wandColors.put("Alder Wand", ExtraColors.brightPink);
-		wandColors.put("Baobab Wand", ExtraColors.brightBlue);
-		wandColors.put("Redwood Wand", ExtraColors.brightRed);
-		wandColors.put("Sequoia Wand", ExtraColors.yellow);
-		wandColors.put("Pear Wand", ExtraColors.paralyzed);
-		wandColors.put("Lavender Wand", ExtraColors.lilac); //21
-		wandColors.put("Heartwood Wand", ExtraColors.kathryn); //22
-		wandColors.put("Copper Wand", ExtraColors.copper); //23
-		wandColors.put("Driftwood Wand", ExtraColors.seafoam); //24
+		wandColors.put("Rowan Wand", ExtendedAsciiPanel.apple);
+		wandColors.put("Cedar Wand", ExtendedAsciiPanel.magenta);
+		wandColors.put("Bamboo Wand", ExtendedAsciiPanel.green);
+		wandColors.put("Pine Wand", ExtendedAsciiPanel.smoke);
+		wandColors.put("Stone Wand", ExtendedAsciiPanel.brightBlack);
+		wandColors.put("Crystal Wand", ExtendedAsciiPanel.water);
+		wandColors.put("Applewood Wand", ExtendedAsciiPanel.brightRed);
+		wandColors.put("Yew Wand", ExtendedAsciiPanel.brightYellow);
+		wandColors.put("Alder Wand", ExtendedAsciiPanel.brightPink);
+		wandColors.put("Baobab Wand", ExtendedAsciiPanel.brightBlue);
+		wandColors.put("Redwood Wand", ExtendedAsciiPanel.brightRed);
+		wandColors.put("Sequoia Wand", ExtendedAsciiPanel.yellow);
+		wandColors.put("Pear Wand", ExtendedAsciiPanel.paralyzed);
+		wandColors.put("Lavender Wand", ExtendedAsciiPanel.lilac); //21
+		wandColors.put("Heartwood Wand", ExtendedAsciiPanel.kathryn); //22
+		wandColors.put("Copper Wand", ExtendedAsciiPanel.copper); //23
+		wandColors.put("Driftwood Wand", ExtendedAsciiPanel.seafoam); //24
 		
 		wandAppearances = new ArrayList<String>(wandColors.keySet());
 		Collections.shuffle(wandAppearances);
@@ -150,20 +149,20 @@ public class ObjectFactory {
 	private void setUpRingAppearances() {
 		ringColors = new HashMap<String, Color>();
 		ringColors.put("Diamond Ring", ExtendedAsciiPanel.brightWhite);
-		ringColors.put("Ruby Ring", ExtraColors.brightRed);
-		ringColors.put("Emerald Ring", ExtraColors.lime);
-		ringColors.put("Quartz Ring", ExtraColors.brightPink);
-		ringColors.put("Topaz Ring", ExtraColors.orange);
-		ringColors.put("Sapphire Ring", ExtraColors.brightBlue);
-		ringColors.put("Amethyst Ring", ExtraColors.lilac);
+		ringColors.put("Ruby Ring", ExtendedAsciiPanel.brightRed);
+		ringColors.put("Emerald Ring", ExtendedAsciiPanel.lime);
+		ringColors.put("Quartz Ring", ExtendedAsciiPanel.brightPink);
+		ringColors.put("Topaz Ring", ExtendedAsciiPanel.orange);
+		ringColors.put("Sapphire Ring", ExtendedAsciiPanel.brightBlue);
+		ringColors.put("Amethyst Ring", ExtendedAsciiPanel.lilac);
 		ringColors.put("Silver Ring", ExtendedAsciiPanel.white);
 		ringColors.put("Opal Ring", ExtendedAsciiPanel.brightBlack);
-		ringColors.put("Rusted Ring", ExtraColors.brown);
-		ringColors.put("Golden Ring", ExtraColors.brightYellow);
-		ringColors.put("Garnet Ring", ExtraColors.red);
-		ringColors.put("Amber Ring", ExtraColors.yellow);
-		ringColors.put("Turquoise Ring", ExtraColors.brightCyan);
-		ringColors.put("Tungsten Ring", ExtraColors.black);
+		ringColors.put("Rusted Ring", ExtendedAsciiPanel.brown);
+		ringColors.put("Golden Ring", ExtendedAsciiPanel.brightYellow);
+		ringColors.put("Garnet Ring", ExtendedAsciiPanel.red);
+		ringColors.put("Amber Ring", ExtendedAsciiPanel.yellow);
+		ringColors.put("Turquoise Ring", ExtendedAsciiPanel.brightCyan);
+		ringColors.put("Tungsten Ring", ExtendedAsciiPanel.black);
 		
 		ringAppearances = new ArrayList<String>(ringColors.keySet());
 		Collections.shuffle(ringAppearances);
@@ -192,11 +191,11 @@ public class ObjectFactory {
 	private void setUpScrollAppearances() {
 		scrollColors = new HashMap<String, Color>();
 		scrollColors.put("Scroll of rune LATA", ExtendedAsciiPanel.brightRed);
-		scrollColors.put("Scroll of rune MAELA", ExtraColors.gold);
-		scrollColors.put("Scroll of rune GJALDA", ExtraColors.lime);
+		scrollColors.put("Scroll of rune MAELA", ExtendedAsciiPanel.gold);
+		scrollColors.put("Scroll of rune GJALDA", ExtendedAsciiPanel.lime);
 		scrollColors.put("Scroll of rune SKJOLDR", ExtendedAsciiPanel.cyan);
-		scrollColors.put("Scroll of rune KYN", ExtraColors.cobalt);
-		scrollColors.put("Scroll of rune MYSS", ExtraColors.pink);
+		scrollColors.put("Scroll of rune KYN", ExtendedAsciiPanel.cobalt);
+		scrollColors.put("Scroll of rune MYSS", ExtendedAsciiPanel.pink);
 		scrollColors.put("Scroll of rune LEYSA", ExtendedAsciiPanel.brightBlack);
 		scrollColors.put("Scroll of rune DJUPR", ExtendedAsciiPanel.white);
 		scrollColors.put("Scroll of rune MOEDR", ExtendedAsciiPanel.brightWhite);

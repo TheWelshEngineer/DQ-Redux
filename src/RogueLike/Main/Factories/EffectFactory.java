@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
-import RogueLike.Main.ExtraColors;
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Line;
 import RogueLike.Main.Particle;
@@ -55,7 +55,7 @@ public class EffectFactory {
 					reference.modifyMana(manaRestore);
 				}
 	        	Damage damage = new MagicDamage(damageAmount, false, getThis(), true);
-	        	creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.sparkle(ExtraColors.lilac, 2), creature.x(), creature.y(), creature.z());
+	        	creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.sparkle(ExtendedAsciiPanel.lilac, 2), creature.x(), creature.y(), creature.z());
 				creature.modifyHP(damage, String.format("Killed by %s using Magic Missile", reference.name()));
 			}
 		};
@@ -131,7 +131,7 @@ public class EffectFactory {
 						}
 						if(attackRoll >= creature.armorClass()) {
 							Damage damage = new MagicDamage(amount, false, getThis(), false);
-							creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.lilac, 2), creature.x(), creature.y(), creature.z());
+							creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtendedAsciiPanel.lilac, 2), creature.x(), creature.y(), creature.z());
 							creature.modifyHP(damage, "Killed by kinetic energy");
 						}
 					}
@@ -158,7 +158,7 @@ public class EffectFactory {
 					for(int y = -2; y < 3; y++) {
 						if(reference.creature(x, y, reference.z()) != null && reference.creature(x, y, reference.z()) != reference) {
 							reference.creature(x, y, reference.z()).addEffect((Effect) confused_.clone());
-							creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtraColors.lilac, 2), x, y, creature.z());
+							creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.lilac, 2), x, y, creature.z());
 						}
 					}
 				}
@@ -215,7 +215,7 @@ public class EffectFactory {
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a bolt of fire!");
 					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtraColors.orange, 2), creature.x(), creature.y(), creature.z());
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtendedAsciiPanel.orange, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(damage, String.format("Killed by %s using Firebolt", reference.name()));
 					if(attackRoll >= 20 && reference.pyromancyLevel() >= 3) {
 						creature.addEffect((Effect) reference.ai().factory.effectFactory.ignited(reference.proficiencyBonus()*2).clone());
@@ -263,7 +263,7 @@ public class EffectFactory {
 					if(creature.affectedBy(Effect.ignited)) {
 						creature.cureEffectOfType(Effect.ignited);
 					}
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtraColors.orange, 2), creature.x(), creature.y(), creature.z());
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtendedAsciiPanel.orange, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(damage, String.format("Killed by %s using Flashfire", reference.name()));
 				}else {
 					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
@@ -344,7 +344,7 @@ public class EffectFactory {
 				}
 				if(savingThrow < saveTarget) {
 					creature.doAction("get blasted by freezing air!");
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
 					Damage damage = new FrostDamage(damageAmount, false, getThis(), false);
 					creature.modifyHP(damage, "Killed by icy magic");
 					creature.addEffect(frozen(duration));
@@ -380,7 +380,7 @@ public class EffectFactory {
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a blade of ice!");
 					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(hitDamage, String.format("Killed by %s using Ice Knife", reference.name()));
 					if(attackRoll >= 20 && reference.cryomancyLevel() >= 3) {
 						Effect cryoCrit = creature.ai().factory.effectFactory.frozen(reference.proficiencyBonus());
@@ -395,9 +395,9 @@ public class EffectFactory {
 					creature.notify("You feel a biting frost creep over you!");
 					reference.notify(String.format("The %s is frostbitten by your spell!", creature.name()));
 					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), creature.x(), creature.y(), creature.z());
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(splashDamage, String.format("Killed by %s using Ice Knife", reference.name()));
-					creature.ai().factory.effectFactory.spreadDamage(creature, splashDamage, String.format("Killed by %s using Ice Knife", reference.name()), 1, creature.ai().factory.particleFactory.frost(ExtraColors.water, 2));
+					creature.ai().factory.effectFactory.spreadDamage(creature, splashDamage, String.format("Killed by %s using Ice Knife", reference.name()), 1, creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2));
 				}else {
 					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
 					reference.notify(String.format("The %s dodges your spell.", creature.name()));
@@ -676,12 +676,12 @@ public class EffectFactory {
 				}
 				creature.doAction("get a shock!");
 				creature.setLastHit(reference);
-				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), creature.x(), creature.y(), creature.z());
+				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), creature.x(), creature.y(), creature.z());
 				Damage damage = new ShockDamage(damageAmount, false, getThis(), true);
 				creature.modifyHP(damage, String.format("Killed by %s using Chain Lightning", reference.name()));
 				
 				if(saved == false) {
-	                creature.ai().factory.effectFactory.spreadDamage(creature, damage, String.format("Killed by %s using Chain Lightning", reference.name()), 2, creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2));
+	                creature.ai().factory.effectFactory.spreadDamage(creature, damage, String.format("Killed by %s using Chain Lightning", reference.name()), 2, creature.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2));
 				}
             }
         };
@@ -697,10 +697,10 @@ public class EffectFactory {
         			//applicationMain.terminal.write((char)15, p.x, p.y, ExtraColors.paralyzed);
         			if(creature.creature(p.x, p.y, creature.z()) != null && (p.x != reference.x() && p.y != reference.y())) {
         				targets.add(creature.creature(p.x, p.y, creature.z()));
-        				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), p.x, p.y, creature.z());
+        				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), p.x, p.y, creature.z());
         			}
         			if(creature.creature(p.x, p.y, creature.z()) == null) {
-        				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), p.x, p.y, creature.z());
+        				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), p.x, p.y, creature.z());
         			}
         			
         		}
@@ -790,7 +790,7 @@ public class EffectFactory {
 					if(creature.affectedBy(Effect.corroded)) {
 						creature.cureEffectOfType(Effect.corroded);
 					}
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.lime, 2), creature.x(), creature.y(), creature.z());
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.lime, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(damage, String.format("Killed by %s using Acid Blast", reference.name()));
 					if(attackRoll >= 20 && reference.alchemancyLevel() >= 3) {
 						reference.addEffect(reference.ai().factory.effectFactory.restoration());
@@ -834,7 +834,7 @@ public class EffectFactory {
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a splash of poison!");
 					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.magenta, 2), creature.x(), creature.y(), creature.z());
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.magenta, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(damage, String.format("Killed by %s using Toxic Transfusion", reference.name()));
 					if(attackRoll >= 20 && reference.alchemancyLevel() >= 3) {
 						reference.addEffect(reference.ai().factory.effectFactory.restoration());
@@ -848,7 +848,7 @@ public class EffectFactory {
 					creature.notify("You feel a searing toxin flood your veins!");
 					reference.notify(String.format("The %s is afflicted by your spell!", creature.name()));
 					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.magenta, 2), creature.x(), creature.y(), creature.z());
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.magenta, 2), creature.x(), creature.y(), creature.z());
 					creature.addEffect((Effect) poisoned_.clone());
 					creature.addEffect((Effect) corroded_.clone());
 				}else {
@@ -926,7 +926,7 @@ public class EffectFactory {
         		
         		if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
         			Damage damage = new PhysicalDamage(damageAmount, false, reference.ai().factory.effectFactory, true);
-            		creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.white, 2), creature.x(), creature.y(), creature.z());
+            		creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
             		creature.doAction("get torn apart by metal shards!");
             		creature.modifyHP(damage, String.format("Killed by %s using Armor Storm", reference.name()));
             		creature.setLastHit(reference);
@@ -979,7 +979,7 @@ public class EffectFactory {
         		if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a spectral weapon!");
 					creature.setLastHit(reference);
-					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtraColors.white, 2), creature.x(), creature.y(), creature.z());
+					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
 					creature.modifyHP(damage, String.format("Killed by %s using Weapon Bolt", reference.name()));
 					if(attackRoll >= 20 && reference.ferromancyLevel() >= 3) {
     					Effect giantStrength_ = reference.ai().factory.effectFactory.giantStrength(reference.proficiencyBonus());
@@ -1425,7 +1425,7 @@ public class EffectFactory {
                         
                         
                         Creature target = creature.creature(nx, ny, creature.z);
-                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtraColors.lilac, 2), target.x(), target.y(), target.z());
+                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.lilac, 2), target.x(), target.y(), target.z());
                         Effect magicBurst = blink();
                 		target.addEffect(magicBurst);
 
@@ -1454,7 +1454,7 @@ public class EffectFactory {
                         
                         
                         Creature target = creature.creature(nx, ny, creature.z);
-                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.magenta, 2), target.x(), target.y(), target.z());
+                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.magenta, 2), target.x(), target.y(), target.z());
                         Effect venomBurst = poisoned((int)duration/2);
                 		target.addEffect(venomBurst);
 
@@ -1483,7 +1483,7 @@ public class EffectFactory {
                         
                         
                         Creature target = creature.creature(nx, ny, creature.z);
-                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtraColors.green, 2), target.x(), target.y(), target.z());
+                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.green, 2), target.x(), target.y(), target.z());
                         Effect chaosBurst = devoured((int)duration/2);
                 		target.addEffect(chaosBurst);
 
@@ -1512,7 +1512,7 @@ public class EffectFactory {
                         
                         
                         Creature target = creature.creature(nx, ny, creature.z);
-                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.droplet(ExtraColors.red, 2), target.x(), target.y(), target.z());
+                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.droplet(ExtendedAsciiPanel.red, 2), target.x(), target.y(), target.z());
                         Effect bladeBurst = bleeding((int)duration/2);
                 		target.addEffect(bladeBurst);
 
@@ -1541,7 +1541,7 @@ public class EffectFactory {
                         
                         
                         Creature target = creature.creature(nx, ny, creature.z);
-                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtraColors.lime, 2), target.x(), target.y(), target.z());
+                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.lime, 2), target.x(), target.y(), target.z());
                         Effect acidBurst = corroded((int)duration/2);
                 		target.addEffect(acidBurst);
 
@@ -1570,7 +1570,7 @@ public class EffectFactory {
                         
                         
                         Creature target = creature.creature(nx, ny, creature.z);
-                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtraColors.water, 2), target.x(), target.y(), target.z());
+                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), target.x(), target.y(), target.z());
                         Effect chillBurst = frozen((int)duration/2);
                 		target.addEffect(chillBurst);
 
@@ -1599,7 +1599,7 @@ public class EffectFactory {
                         
                         
                         Creature target = creature.creature(nx, ny, creature.z);
-                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtraColors.orange, 2), target.x(), target.y(), target.z());
+                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtendedAsciiPanel.orange, 2), target.x(), target.y(), target.z());
                         Effect magmaBurst = ignited((int)duration/2);
                         
                 		target.addEffect(magmaBurst);
@@ -1682,7 +1682,7 @@ public class EffectFactory {
                         
                         
                         Creature target = creature.creature(nx, ny, creature.z);
-                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtraColors.paralyzed, 2), target.x(), target.y(), target.z());
+                        creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), target.x(), target.y(), target.z());
                         
                         //int amountChain = Math.max(0, 5-target.shockDefenseValue());
                         
@@ -1708,12 +1708,12 @@ public class EffectFactory {
 	public Effect invisible(int duration) {
 		Effect invisible = new Effect(duration, "Invisible", false, null, Effect.invisible) {
 			public void start(Creature creature) {
-				creature.changeColor(ExtraColors.invisible);
+				creature.changeColor(ExtendedAsciiPanel.invisible);
 				creature.doAction("become transparent");
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				creature.changeColor(ExtraColors.invisible);
+				creature.changeColor(ExtendedAsciiPanel.invisible);
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.invisible)) {
@@ -1744,7 +1744,7 @@ public class EffectFactory {
 		Effect blink = new Effect(8, null, false, null) {
 			public void start(Creature creature){
 	            creature.doAction("fade out");
-	            creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtraColors.pink, 2), creature.x(), creature.y(), creature.z());
+	            creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.pink, 2), creature.x(), creature.y(), creature.z());
 	            int mx = 0;
 	            int my = 0;
 	            
@@ -1759,7 +1759,7 @@ public class EffectFactory {
 	            creature.moveBy(mx, my, 0, false);
 	            
 	            creature.doAction("fade in");
-	            creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtraColors.pink, 2), creature.x(), creature.y(), creature.z());
+	            creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.pink, 2), creature.x(), creature.y(), creature.z());
 	        }
 		};
 		return blink;
@@ -1957,7 +1957,7 @@ public class EffectFactory {
                         bat.z = creature.z;
                         
                         creature.summon(bat);
-                        bat.world().setParticleAtLocation(bat.ai().factory.particleFactory.vortex(ExtraColors.white, 2), bat.x(), bat.y(), bat.z());
+                        bat.world().setParticleAtLocation(bat.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.white, 2), bat.x(), bat.y(), bat.z());
                     }
                 }
                 if(creature.isTileSpell()) {

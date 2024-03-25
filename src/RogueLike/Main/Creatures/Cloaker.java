@@ -2,7 +2,7 @@ package RogueLike.Main.Creatures;
 
 import java.awt.Color;
 
-import RogueLike.Main.ExtraColors;
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.AI.CloakerAI;
 import RogueLike.Main.Factories.ObjectFactory;
 
@@ -21,7 +21,7 @@ public class Cloaker extends Creature{
 		this.setID(id);
 		CloakerAI ai = new CloakerAI(this, player, factory, factory.world);
 		ai.becomeInvisible();
-		this.changeColor(ExtraColors.invisible);
+		this.changeColor(ExtendedAsciiPanel.invisible);
 		this.creatureTypes.add("Monstrosity");
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	

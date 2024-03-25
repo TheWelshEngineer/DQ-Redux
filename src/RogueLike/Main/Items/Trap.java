@@ -3,7 +3,7 @@ package RogueLike.Main.Items;
 import java.awt.Color;
 
 import RogueLike.Main.Effect;
-import RogueLike.Main.ExtraColors;
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Factories.ObjectFactory;
 
 public class Trap extends Item{
@@ -20,7 +20,7 @@ public class Trap extends Item{
 		this.setIsTrap(true);
 		this.setQuaffEffect(effect);
 		this.setTrapType(type);
-		this.setColor(ExtraColors.trap);
+		this.setColor(ExtendedAsciiPanel.trap);
 		this.changeGlyph((char)250);
 		
 	}

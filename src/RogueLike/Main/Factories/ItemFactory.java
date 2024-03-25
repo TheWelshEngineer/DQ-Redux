@@ -2,7 +2,6 @@ package RogueLike.Main.Factories;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.ExtraColors;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.ArrowsRangedWeapon;
@@ -39,7 +38,7 @@ public class ItemFactory {
 	
 	//Gold
 	public Item newGold(int depth, boolean addToWorld) {
-		Item item = new Item((char)155, ExtraColors.brightYellow, "Gold", "Gold");
+		Item item = new Item((char)155, ExtendedAsciiPanel.brightYellow, "Gold", "Gold");
 		item.setIsGold(true);
 		item.setBaseGoldValue(ExtraMaths.diceRoll(ExtraMaths.d12(), ExtraMaths.d100()+12)*(depth+1));
 		item.setCurrentGoldValue(item.baseGoldValue());
@@ -63,7 +62,7 @@ public class ItemFactory {
 	
 	//Food
 	public Item newRations(int depth, int addToWorld) {
-		Item item = new Item((char)233, ExtraColors.paper, "Ration of Food", "Ration of Food");
+		Item item = new Item((char)233, ExtendedAsciiPanel.paper, "Ration of Food", "Ration of Food");
 		item.modifyFoodValue(300);
 		item.setIsStackable(true);
 		item.setBaseGoldValue(5);
@@ -76,7 +75,7 @@ public class ItemFactory {
 	}
 	
 	public Item newPasty(int depth, int addToWorld) {
-		Item item = new Item((char)233, ExtraColors.paper, "Dwarven Pasty", "Dwarven Pasty");
+		Item item = new Item((char)233, ExtendedAsciiPanel.smoke, "Dwarven Pasty", "Dwarven Pasty");
 		item.modifyFoodValue(600);
 		item.setIsStackable(true);
 		item.setBaseGoldValue(15);
@@ -109,7 +108,7 @@ public class ItemFactory {
 	
 	//Ammunition
 	public Item newArrows(int depth, int addToWorld) {
-		Item item = new Item((char)24, ExtraColors.white, "Arrow", "Arrow");
+		Item item = new Item((char)24, ExtendedAsciiPanel.white, "Arrow", "Arrow");
 		item.setIsAmmunition(true);
 		item.modifyAmmunitionAmount(10);
 		item.setIsArrowAmmunition(true);
@@ -124,7 +123,7 @@ public class ItemFactory {
 	}
 	
 	public Item newBolts(int depth, int addToWorld) {
-		Item item = new Item((char)24, ExtraColors.white, "Crossbow Bolt", "Crossbow Bolt");
+		Item item = new Item((char)24, ExtendedAsciiPanel.white, "Crossbow Bolt", "Crossbow Bolt");
 		item.setIsAmmunition(true);
 		item.modifyAmmunitionAmount(10);
 		item.setIsBoltAmmunition(true);
@@ -139,7 +138,7 @@ public class ItemFactory {
 	}
 	
 	public Item newPowder(int depth, int addToWorld) {
-		Item item = new Item((char)24, ExtraColors.white, "Flintlock Bullet", "Flintlock Bullet");
+		Item item = new Item((char)24, ExtendedAsciiPanel.white, "Flintlock Bullet", "Flintlock Bullet");
 		item.setIsAmmunition(true);
 		item.modifyAmmunitionAmount(10);
 		item.setIsPowderAmmunition(true);
@@ -935,7 +934,7 @@ public class ItemFactory {
 	
 	//traps
 	public Item newFireTrap(int depth, int addToWorld) {
-		Item item = new Trap('#', ExtraColors.orange, "Fire Trap", "Fire Trap", Trap.fireTrap, objectFactory.effectFactory.fireball(3+depth+Dice.d6.roll()), objectFactory);
+		Item item = new Trap('#', ExtendedAsciiPanel.orange, "Fire Trap", "Fire Trap", Trap.fireTrap, objectFactory.effectFactory.fireball(3+depth+Dice.d6.roll()), objectFactory);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -943,7 +942,7 @@ public class ItemFactory {
 	}
 	
 	public Item newFrostbiteTrap(int depth, int addToWorld) {
-		Item item = new Trap('#', ExtraColors.water, "Frostbite Trap", "Frostbite Trap", Trap.frostbiteTrap, objectFactory.effectFactory.frozen(3+depth+Dice.d6.roll()), objectFactory);
+		Item item = new Trap('#', ExtendedAsciiPanel.water, "Frostbite Trap", "Frostbite Trap", Trap.frostbiteTrap, objectFactory.effectFactory.frozen(3+depth+Dice.d6.roll()), objectFactory);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -951,7 +950,7 @@ public class ItemFactory {
 	}
 	
 	public Item newLightningTrap(int depth, int addToWorld) {
-		Item item = new Trap('#', ExtraColors.brightCyan, "Lightning Trap", "Lightning Trap", Trap.lightningTrap, objectFactory.effectFactory.electrified(3+depth+Dice.d6.roll()), objectFactory);
+		Item item = new Trap('#', ExtendedAsciiPanel.brightCyan, "Lightning Trap", "Lightning Trap", Trap.lightningTrap, objectFactory.effectFactory.electrified(3+depth+Dice.d6.roll()), objectFactory);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -959,7 +958,7 @@ public class ItemFactory {
 	}
 	
 	public Item newBlinkTrap(int depth, int addToWorld) {
-		Item item = new Trap('#', ExtraColors.pink, "Blink Trap", "Blink Trap", Trap.blinkTrap, objectFactory.effectFactory.blink(), objectFactory);
+		Item item = new Trap('#', ExtendedAsciiPanel.pink, "Blink Trap", "Blink Trap", Trap.blinkTrap, objectFactory.effectFactory.blink(), objectFactory);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -967,7 +966,7 @@ public class ItemFactory {
 	}
 	
 	public Item newSummoningTrap(int depth, int addToWorld, Creature player) {
-		Item item = new Trap('#', ExtraColors.brightWhite, "Summoning Trap", "Summoning Trap", Trap.summoningTrap, objectFactory.effectFactory.summonMonstersScroll(player), objectFactory);
+		Item item = new Trap('#', ExtendedAsciiPanel.brightWhite, "Summoning Trap", "Summoning Trap", Trap.summoningTrap, objectFactory.effectFactory.summonMonstersScroll(player), objectFactory);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}

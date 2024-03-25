@@ -4,7 +4,6 @@ import java.util.List;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.ExtraColors;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
 import RogueLike.Main.AI.ChestAI;
@@ -43,7 +42,7 @@ public ObjectFactory objectFactory;
 	//Player
 	public Creature newPlayer(List<String> messages, FieldOfView fov, String playerClass, List<Integer> startingStats, Skill[] startingSkills, String playerName, String playerAncestry) {
 		//world, name, glyph, color, maxHP 20, maxMana, base armorclass, strength, dexterity, intelligence, visionRadius, inventorySize) {
-		Creature player = new Creature(objectFactory.world, "player", '@', ExtraColors.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
+		Creature player = new Creature(objectFactory.world, "player", '@', ExtendedAsciiPanel.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
 		player.setID(0);
 		new PlayerAI(player, messages, fov, objectFactory, objectFactory.world);
 		
@@ -216,7 +215,7 @@ public ObjectFactory objectFactory;
 	}
 	
 	public Creature newSkeletonCryomancer(int depth, Creature player, boolean addToWorld) {
-		Creature skeleton = new SkeletonCryomancer(objectFactory, player, "Skeleton Cryomancer", 'k', ExtraColors.water, 19, depth);
+		Creature skeleton = new SkeletonCryomancer(objectFactory, player, "Skeleton Cryomancer", 'k', ExtendedAsciiPanel.water, 19, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(skeleton, depth);
 		}
@@ -224,7 +223,7 @@ public ObjectFactory objectFactory;
 	}
 	
 	public Creature newSkeletonPyromancer(int depth, Creature player, boolean addToWorld) {
-		Creature skeleton = new SkeletonPyromancer(objectFactory, player, "Skeleton Pyromancer", 'k', ExtraColors.orange, 90, depth);
+		Creature skeleton = new SkeletonPyromancer(objectFactory, player, "Skeleton Pyromancer", 'k', ExtendedAsciiPanel.orange, 90, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(skeleton, depth);
 		}
@@ -232,7 +231,7 @@ public ObjectFactory objectFactory;
 	}
 	
 	public Creature newSkeletonElectromancer(int depth, Creature player, boolean addToWorld) {
-		Creature skeleton = new SkeletonElectromancer(objectFactory, player, "Skeleton Electromancer", 'k', ExtraColors.paralyzed, 91, depth);
+		Creature skeleton = new SkeletonElectromancer(objectFactory, player, "Skeleton Electromancer", 'k', ExtendedAsciiPanel.paralyzed, 91, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(skeleton, depth);
 		}
@@ -241,7 +240,7 @@ public ObjectFactory objectFactory;
 	
 	//Slimes
 	public Creature newPinkSlime(int depth, Creature player, boolean addToWorld) {
-		Creature slime = new PinkSlime(objectFactory, player, "Pink Slime", 'S', ExtraColors.brightPink, 5, depth);
+		Creature slime = new PinkSlime(objectFactory, player, "Pink Slime", 'S', ExtendedAsciiPanel.brightPink, 5, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(slime, depth);
 		}
@@ -249,7 +248,7 @@ public ObjectFactory objectFactory;
 	}
 	
 	public Creature newMetalSlime(int depth, Creature player, boolean addToWorld) {
-		Creature slime = new MetalSlime(objectFactory, player, "Metal Slime", 'S', ExtraColors.white, 15, depth);
+		Creature slime = new MetalSlime(objectFactory, player, "Metal Slime", 'S', ExtendedAsciiPanel.white, 15, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(slime, depth);
 		}
@@ -257,7 +256,7 @@ public ObjectFactory objectFactory;
 	}
 	
 	public Creature newMagmaSlime(int depth, Creature player, boolean addToWorld) {
-		Creature slime = new MagmaSlime(objectFactory, player, "Magma Slime", 'S', ExtraColors.orange, 17, depth);
+		Creature slime = new MagmaSlime(objectFactory, player, "Magma Slime", 'S', ExtendedAsciiPanel.orange, 17, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(slime, depth);
 		}
@@ -266,7 +265,7 @@ public ObjectFactory objectFactory;
 	
 	//Slimelings
 	public Creature newPinkSlimeling(int depth, Creature player, boolean addToWorld) {
-		Creature slimeling = new PinkSlimeling(objectFactory, player, "Pink Slimeling", 's', ExtraColors.brightPink, 6, depth);
+		Creature slimeling = new PinkSlimeling(objectFactory, player, "Pink Slimeling", 's', ExtendedAsciiPanel.brightPink, 6, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(slimeling, depth);
 		}
@@ -274,7 +273,7 @@ public ObjectFactory objectFactory;
 	}
 	
 	public Creature newMetalSlimeling(int depth, Creature player, boolean addToWorld) {
-		Creature slimeling = new MetalSlimeling(objectFactory, player, "Metal Slimeling", 's', ExtraColors.white, 16, depth);
+		Creature slimeling = new MetalSlimeling(objectFactory, player, "Metal Slimeling", 's', ExtendedAsciiPanel.white, 16, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(slimeling, depth);
 		}
@@ -282,7 +281,7 @@ public ObjectFactory objectFactory;
 	}
 	
 	public Creature newMagmaSlimeling(int depth, Creature player, boolean addToWorld) {
-		Creature slimeling = new MagmaSlimeling(objectFactory, player, "Magma Slimeling", 's', ExtraColors.orange, 18, depth);
+		Creature slimeling = new MagmaSlimeling(objectFactory, player, "Magma Slimeling", 's', ExtendedAsciiPanel.orange, 18, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(slimeling, depth);
 		}
@@ -300,7 +299,7 @@ public ObjectFactory objectFactory;
 	
 	//Gremlins
 	public Creature newGremlin(int depth, Creature player, boolean addToWorld) {
-		Creature gremlin = new Gremlin(objectFactory, player, "Gremlin", 'g', ExtraColors.cobalt, 8, depth);
+		Creature gremlin = new Gremlin(objectFactory, player, "Gremlin", 'g', ExtendedAsciiPanel.cobalt, 8, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(gremlin, depth);
 		}
@@ -308,7 +307,7 @@ public ObjectFactory objectFactory;
 	}
 	
 	public Creature newGremlinSkirmisher(int depth, Creature player, boolean addToWorld) {
-		Creature gremlin = new Gremlin(objectFactory, player, "Gremlin Skirmisher", 'g', ExtraColors.red, 9, depth);
+		Creature gremlin = new Gremlin(objectFactory, player, "Gremlin Skirmisher", 'g', ExtendedAsciiPanel.red, 9, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(gremlin, depth);
 		}
@@ -316,7 +315,7 @@ public ObjectFactory objectFactory;
 	}
 	
 	public Creature newGremlinAlchemist(int depth, Creature player, boolean addToWorld) {
-		Creature alchemist = new GremlinAlchemist(objectFactory, player, "Gremlin Alchemist", 'g', ExtraColors.orange, 4, depth);
+		Creature alchemist = new GremlinAlchemist(objectFactory, player, "Gremlin Alchemist", 'g', ExtendedAsciiPanel.orange, 4, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(alchemist, depth);
 		}
@@ -334,7 +333,7 @@ public ObjectFactory objectFactory;
 	
 	//Constructs
 	public Creature newAnimatedArmor(int depth, Creature player, boolean addToWorld) {
-		Creature animatedArmor = new AnimatedArmor(objectFactory, player, "Animated Armor", (char)203, ExtraColors.lilac, 11, depth);
+		Creature animatedArmor = new AnimatedArmor(objectFactory, player, "Animated Armor", (char)203, ExtendedAsciiPanel.lilac, 11, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(animatedArmor, depth);
 		}
@@ -342,7 +341,7 @@ public ObjectFactory objectFactory;
 	}
 	
 	public Creature newAnimatedWeapon(int depth, Creature player, boolean addToWorld) {
-		Creature animatedWeapon = new AnimatedWeapon(objectFactory, player, "Animated Weapon", ')', ExtraColors.lilac, 12, depth);
+		Creature animatedWeapon = new AnimatedWeapon(objectFactory, player, "Animated Weapon", ')', ExtendedAsciiPanel.lilac, 12, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(animatedWeapon, depth);
 		}
@@ -351,7 +350,7 @@ public ObjectFactory objectFactory;
 	
 	//Mimic
 	public Creature newMimic(int depth, Creature player, boolean addToWorld) {
-		Creature mimic = new Mimic(objectFactory, player, "Mimic", (char)127, ExtraColors.apple, 13, depth);
+		Creature mimic = new Mimic(objectFactory, player, "Mimic", (char)127, ExtendedAsciiPanel.apple, 13, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(mimic, depth);
 		}
@@ -360,7 +359,7 @@ public ObjectFactory objectFactory;
 	
 	//Chest
 	public Creature newChest(int depth, Creature player, boolean addToWorld) {
-		Creature chest = new BasicChest(objectFactory, player, "Chest", (char)127, ExtraColors.brown, depth, Dice.d12.roll());
+		Creature chest = new BasicChest(objectFactory, player, "Chest", (char)127, ExtendedAsciiPanel.brown, depth, Dice.d12.roll());
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(chest, depth);
 		}
@@ -369,7 +368,7 @@ public ObjectFactory objectFactory;
 	
 	//Spell Creatures
 	public Creature newIceWall(int depth, Creature player, boolean addToWorld) {
-		Creature icewall = new Creature(objectFactory.world, "Ice Wall", (char)177, ExtraColors.water, 15, 10, 16, 16, 1, 1, 1, 20);
+		Creature icewall = new Creature(objectFactory.world, "Ice Wall", (char)177, ExtendedAsciiPanel.water, 15, 10, 16, 16, 1, 1, 1, 20);
 		icewall.setID(14);
 		new ChestAI(icewall, objectFactory, objectFactory.world);
 		icewall.setImmuneFrostDamage(true);
@@ -384,7 +383,7 @@ public ObjectFactory objectFactory;
 	
 	//Technical Creatures
 	public Creature newMarker(int depth, Creature player, boolean addToWorld) {
-		Creature marker = new Creature(objectFactory.world, " ", 'M', ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
+		Creature marker = new Creature(objectFactory.world, " ", 'M', ExtendedAsciiPanel.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(marker, objectFactory, objectFactory.world);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(marker, depth);
@@ -394,7 +393,7 @@ public ObjectFactory objectFactory;
 	}
 	
 	public Creature newTileSpell(int depth, Creature player, boolean addToWorld) {
-		Creature tileSpell = new Creature(objectFactory.world, " ", 'T', ExtraColors.brown, 1, 1, 10, 1, 1, 1, 1, 1);
+		Creature tileSpell = new Creature(objectFactory.world, " ", 'T', ExtendedAsciiPanel.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(tileSpell, objectFactory, objectFactory.world);
 		tileSpell.setIsFlying(true);
 		tileSpell.modifyIsTileSpell(true);
