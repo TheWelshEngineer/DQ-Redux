@@ -10,7 +10,7 @@ import java.util.Properties;
 public class ConfigManager {
 
     public static Config config;
-    private static final String CONFIG_PATH = "config.ini";
+    private static final String CONFIG_PATH = "src/RogueLike/Main/Managers/config.ini";
 
 
     public static void init() {
