@@ -178,7 +178,9 @@ public ObjectFactory objectFactory;
 		player.inventory().add(startWandTest);
 		
 		player.inventory().add(objectFactory.itemFactory.newScrollOfSummonMonsters(0, player, false));
-		//player.inventory().add(objectFactory.itemFactory.newScrollOfMagicMapping(0, player, false));
+		player.inventory().add(objectFactory.itemFactory.newPotionOfInvisibility(0, false));
+		player.inventory().add(objectFactory.itemFactory.newPotionOfGiantStrength(0, false));
+		player.inventory().add(objectFactory.itemFactory.newPotionOfPoison(0, false));
 		
 		//
 		player.stackItems();
