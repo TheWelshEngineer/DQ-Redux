@@ -2010,6 +2010,26 @@ public class Creature implements Cloneable{
 	public void modifyGold(int amount) {
 		gold += amount;
 	}
+	
+	public int equipmentValue() {
+		int value = 0;
+		if(weapon != null) {
+			value += weapon.currentGoldValue();
+		}
+		if(armor != null) {
+			value += armor.currentGoldValue();
+		}
+		if(shield != null) {
+			value += shield.currentGoldValue();
+		}
+		if(ring != null) {
+			value += ring.currentGoldValue();
+		}
+		if(ammunition != null) {
+			value += ammunition.currentGoldValue();
+		}
+		return value;
+	}
 
 	public void become(Creature other) {
 		this.world().replaceCreature(this, other);
@@ -2200,7 +2220,7 @@ public class Creature implements Cloneable{
 
 
 		Creature other = world.creature(x+mx, y+my, z+mz);
-		modifyFood(-1);
+		modifyFood(-2);
 		if(other == null) {
 			ai.onEnter(x+mx, y+my, z+mz, tile);
 		}

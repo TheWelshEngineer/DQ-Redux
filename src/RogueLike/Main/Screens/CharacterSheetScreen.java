@@ -18,6 +18,10 @@ public class CharacterSheetScreen implements Screen{
 		this.effects = player.effects();
 	}
 	
+	private String details = "";
+	private String details2 = "";
+	private String details3 = "";
+	
 	private String nameCheck = ">> ";
 	private String levelCheck = ">> ";
 	private String xpCheck = ">> ";
@@ -74,6 +78,10 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
+				//
+				details = "That's you!";
+				details2 = "";
+				details3 = "";
 				break;
 			case 1:
 				nameCheck = "";
@@ -89,6 +97,28 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
+				//
+				details = String.format("You are a level %d %s %s.", player.level(), player.playerAncestry(), player.playerClass());
+				if(player.playerClass().equals("Rogue")) {
+					details2 = "As a Rogue, you regenerate health and mana at a roughly even rate.";
+				}else if(player.playerClass().equals("Ranger")) {
+					details2 = "As a Ranger, you regenerate health and mana at a roughly even rate.";
+				}else if(player.playerClass().equals("Warrior")) {
+					details2 = "As a Warrior, your health regenerates quickly, at the expense of your mana.";
+				}else if(player.playerClass().equals("Mage")) {
+					details2 = "As a Mage, your mana regenerates quickly, at the expense of your health.";
+				}
+				if(player.playerAncestry().equals("Human")) {
+					details3 = "As a Human, you began your quest with an addtional skill point.";
+				}else if(player.playerAncestry().equals("Elf")) {
+					details3 = "As an Elf, you gain 25% more maximum mana upon levelling up.";
+				}else if(player.playerAncestry().equals("Dwarf")) {
+					details3 = "As a Dwarf, you are resistant to Poison damage, and your base armor class is increased by 1.";
+				}else if(player.playerAncestry().equals("Orc")) {
+					details3 = "As an Orc, you regenerate health whenever you eat, based on the quality of the food item you ate.";
+				}else if(player.playerAncestry().equals("Dragonborn")) {
+					details3 = "As a Dragonborn, you are resistant to Fire damage, and began your quest with a Wand of Firebolt.";
+				}
 				break;
 			case 2:
 				nameCheck = "";
@@ -104,6 +134,10 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
+				//
+				details = String.format("You require %d more experience points to level up.", player.level(), player.playerClass());
+				details2 = String.format("You have %d available attribute points.", player.attributePoints());
+				details3 = String.format("You have %d available attribute points.", player.attributePoints());
 				break;
 			case 3:
 				nameCheck = "";
@@ -119,6 +153,9 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
+				details = String.format("You are carrying %d gold pieces in your purse.", player.gold());
+				details2 = String.format("You are wielding equipment worth %d gold pieces.", player.equipmentValue());
+				details3 = "";
 				break;
 			case 4:
 				nameCheck = "";
@@ -134,6 +171,9 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
+				details = String.format("You have %d health points remaining, out of a maximum of %d.", player.hp(), player.maxHP());
+				details2 = "";
+				details3 = "";
 				break;
 			case 5:
 				nameCheck = "";
@@ -149,6 +189,9 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
+				details = String.format("You have %d mana points remaining, out of a maximum of %d.", player.mana(), player.maxMana());
+				details2 = "";
+				details3 = "";
 				break;
 			case 6:
 				nameCheck = "";
@@ -164,6 +207,9 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
+				details = String.format("You are %s. You'll probably need to eat after %d turns of exploration.", player.hungerAsString(), player.food()/2);
+				details2 = "";
+				details3 = "";
 				break;
 			case 7:
 				nameCheck = "";
@@ -179,6 +225,9 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
+				details = String.format("You have %d total points of Strength, granting a +%s modifier to Strength rolls.", player.strength(), player.strengthModifier());
+				details2 = String.format("You have %d natural points of Strength, out of a maximum of 30.", player.baseStrength());
+				details3 = "";
 				break;
 			case 8:
 				nameCheck = "";
@@ -194,6 +243,9 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
+				details = String.format("You have %d total points of Dexterity, granting a +%s modifier to Dexterity rolls.", player.dexterity(), player.dexterityModifier());
+				details2 = String.format("You have %d natural points of Dexterity, out of a maximum of 30.", player.baseDexterity());
+				details3 = "";
 				break;
 			case 9:
 				nameCheck = "";
@@ -209,6 +261,9 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
+				details = String.format("You have %d total points of Intelligence, granting a +%s modifier to Intelligence rolls.", player.intelligence(), player.intelligenceModifier());
+				details2 = String.format("You have %d natural points of Intelligence, out of a maximum of 30.", player.baseIntelligence());
+				details3 = "";
 				break;
 			case 10:
 				nameCheck = "";
@@ -224,6 +279,7 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = ">> ";
 				proficiencyCheck = "";
 				visionCheck = "";
+				//TODO details
 				break;
 			case 11:
 				nameCheck = "";
@@ -444,6 +500,10 @@ public class CharacterSheetScreen implements Screen{
         terminal.write(String.format("%sAcid: %s", acidCheck, acidStatus()), x4, y4++);
         terminal.write(String.format("%sMagic: %s", magicCheck, magicStatus()), x4, y4++);
         terminal.write(String.format("%sChaos: %s", chaosCheck, chaosStatus()), x4, y4++);
+        
+        terminal.write(details, x, 31);
+        terminal.write(details2, x, 32);
+        terminal.write(details3, x, 33);
     
         terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
 		
