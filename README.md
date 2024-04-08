@@ -1,6 +1,6 @@
 # DwarfQuest Redux
 
-DwarfQuest is an old-school roguelike developed by [Kathryn U.](https://github.com/TheWelshEngineer) and [H. Roland R.](https://github.com/RolandReff), evoking the feeling of 80s text-based and ASCII GUI RPGs using a derivative of the [AsciiPanel](https://github.com/trystan/AsciiPanel) library developed by [Trystan Spangler](https://github.com/trystan) to emulate the ASCII graphics of early PC games.
+DwarfQuest is an old-school roguelike developed by [Kathryn U.](https://github.com/TheWelshEngineer), [H. Roland R.](https://github.com/RolandReff), and [Julia I.](https://github.com/juliascythe), evoking the feeling of 80s text-based and ASCII GUI RPGs using a derivative of the [AsciiPanel](https://github.com/trystan/AsciiPanel) library developed by [Trystan Spangler](https://github.com/trystan) to emulate the ASCII graphics of early PC games.
 
 100th commit: 22:33, 24/02/2024!
 
