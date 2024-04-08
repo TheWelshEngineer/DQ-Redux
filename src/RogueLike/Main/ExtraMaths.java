@@ -34,6 +34,14 @@ public class ExtraMaths {
 		return output;
 	}
 	
+	public static String modifierToString(int modifier) {
+		if(modifier >= 0) {
+			return String.format("+%d", modifier);
+		}else {
+			return String.format("%d", modifier);
+		}
+	}
+	
 	public static int diceRoll(int lowerBound, int upperBound) {
 		Random rand = new Random();
 		int diceRoll = rand.nextInt((upperBound - lowerBound)+1)+lowerBound;

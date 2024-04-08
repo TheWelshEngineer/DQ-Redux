@@ -222,9 +222,9 @@ public class ChooseAbilityScreen implements Screen{
 		
 		terminal.writeCenter(String.format("-- Points remaining: %d --", abilityPoints), y);
 		
-		terminal.writeCenter(String.format("%c %c Strength ( %d / +%d ) %c %c", strDown, strLeft, playerStrength, strengthModifier(), strRight, strUp), y+=3);
-		terminal.writeCenter(String.format("%c %c Dexterity ( %d / +%d ) %c %c", dexDown, dexLeft, playerDexterity, dexterityModifier(), dexRight, dexUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Intelligence ( %d / +%d ) %c %c", intDown, intLeft, playerIntelligence, intelligenceModifier(), intRight, intUp), y+=2);
+		terminal.writeCenter(String.format("%c %c Strength ( %d / %s ) %c %c", strDown, strLeft, playerStrength, ExtraMaths.modifierToString(strengthModifier()), strRight, strUp), y+=3);
+		terminal.writeCenter(String.format("%c %c Dexterity ( %d / %s ) %c %c", dexDown, dexLeft, playerDexterity, ExtraMaths.modifierToString(dexterityModifier()), dexRight, dexUp), y+=2);
+		terminal.writeCenter(String.format("%c %c Intelligence ( %d / %s ) %c %c", intDown, intLeft, playerIntelligence, ExtraMaths.modifierToString(intelligenceModifier()), intRight, intUp), y+=2);
 		if(check == 0) {
 			terminal.writeCenter("Strength represents the physical power of your body.", y+=6);
 			terminal.writeCenter("Strength increases the damage dealt by simple and martial weapons,", y+=1);

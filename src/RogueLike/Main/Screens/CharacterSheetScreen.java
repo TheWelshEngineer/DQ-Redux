@@ -5,6 +5,7 @@ import java.util.List;
 
 import RogueLike.Main.Effect;
 import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 
@@ -135,9 +136,9 @@ public class CharacterSheetScreen implements Screen{
 				proficiencyCheck = "";
 				visionCheck = "";
 				//
-				details = String.format("You require %d more experience points to level up.", player.level(), player.playerClass());
+				details = String.format("You require %d more experience points to level up.", player.xpToNextLevel(), player.playerClass());
 				details2 = String.format("You have %d available attribute points.", player.attributePoints());
-				details3 = String.format("You have %d available attribute points.", player.attributePoints());
+				details3 = String.format("You have %d available skill points.", player.skillPoints());
 				break;
 			case 3:
 				nameCheck = "";
@@ -225,7 +226,7 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
-				details = String.format("You have %d total points of Strength, granting a +%s modifier to Strength rolls.", player.strength(), player.strengthModifier());
+				details = String.format("You have %d total points of Strength, granting a %s modifier to Strength rolls.", player.strength(), ExtraMaths.modifierToString(player.strengthModifier()));
 				details2 = String.format("You have %d natural points of Strength, out of a maximum of 30.", player.baseStrength());
 				details3 = "";
 				break;
@@ -243,7 +244,7 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
-				details = String.format("You have %d total points of Dexterity, granting a +%s modifier to Dexterity rolls.", player.dexterity(), player.dexterityModifier());
+				details = String.format("You have %d total points of Dexterity, granting a %s modifier to Dexterity rolls.", player.dexterity(), ExtraMaths.modifierToString(player.dexterityModifier()));
 				details2 = String.format("You have %d natural points of Dexterity, out of a maximum of 30.", player.baseDexterity());
 				details3 = "";
 				break;
@@ -261,7 +262,7 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
-				details = String.format("You have %d total points of Intelligence, granting a +%s modifier to Intelligence rolls.", player.intelligence(), player.intelligenceModifier());
+				details = String.format("You have %d total points of Intelligence, granting a %s modifier to Intelligence rolls.", player.intelligence(), ExtraMaths.modifierToString(player.intelligenceModifier()));
 				details2 = String.format("You have %d natural points of Intelligence, out of a maximum of 30.", player.baseIntelligence());
 				details3 = "";
 				break;
@@ -279,7 +280,9 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = ">> ";
 				proficiencyCheck = "";
 				visionCheck = "";
-				//TODO details
+				details = String.format("You have a total Armor Class of %d.", player.armorClass());
+				details2 = String.format("You have a natural Armor Class of %d.", player.baseArmorClass());
+				details3 = "";
 				break;
 			case 11:
 				nameCheck = "";
@@ -295,6 +298,9 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = ">> ";
 				visionCheck = "";
+				details = String.format("As a level %d adventurer, you have a +%d proficiency bonus.", player.level(), player.proficiencyBonus());
+				details2 = "";
+				details3 = "";
 				break;
 			case 12:
 				nameCheck = "";
@@ -310,6 +316,9 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = ">> ";
+				details = String.format("You have a vision radius of %d tiles.", player.visionRadius());
+				details2 = "";
+				details3 = "";
 				break;
 			default: break;
 			}
@@ -447,9 +456,9 @@ public class CharacterSheetScreen implements Screen{
         terminal.write(String.format("%sMana: %d/%d", manaCheck, player.mana(), player.maxMana()), x, y++);
         terminal.write(String.format("%sHunger: %s", hungerCheck, player.hungerAsString()), x, y++);
         y++;
-        terminal.write(String.format("%sStrength: %d (%d)", strengthCheck, player.strength(), player.strengthModifier()), x, y++);
-        terminal.write(String.format("%sDexterity: %d (%d)", dexterityCheck, player.dexterity(), player.dexterityModifier()), x, y++);
-        terminal.write(String.format("%sIntelligence: %d (%d)", intelligenceCheck, player.intelligence(), player.intelligenceModifier()), x, y++);
+        terminal.write(String.format("%sStrength: %d (%s)", strengthCheck, player.strength(), ExtraMaths.modifierToString(player.strengthModifier())), x, y++);
+        terminal.write(String.format("%sDexterity: %d (%s)", dexterityCheck, player.dexterity(), ExtraMaths.modifierToString(player.dexterityModifier())), x, y++);
+        terminal.write(String.format("%sIntelligence: %d (%s)", intelligenceCheck, player.intelligence(), ExtraMaths.modifierToString(player.intelligenceModifier())), x, y++);
         y++;
         terminal.write(String.format("%sArmor Class: %d", armorCheck, player.armorClass()), x, y++);
         terminal.write(String.format("%sProficiency Bonus: +%s", proficiencyCheck, player.proficiencyBonus()), x, y++);
