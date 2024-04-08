@@ -29,6 +29,7 @@ import RogueLike.Main.Creatures.Slimes.MetalSlime;
 import RogueLike.Main.Creatures.Slimes.MetalSlimeling;
 import RogueLike.Main.Creatures.Slimes.PinkSlime;
 import RogueLike.Main.Creatures.Slimes.PinkSlimeling;
+import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Items.Item;
 
 public class CreatureFactory {
@@ -37,6 +38,38 @@ public ObjectFactory objectFactory;
 	
 	public CreatureFactory(ObjectFactory factory) {
 		this.objectFactory = factory;
+	}
+	
+	public static Creature modifyCreatureDamageDealt(Creature creature, String prefix, String damageType) {
+		creature.setName(String.format("%s %s", prefix, creature.name()));
+		
+		switch(damageType) {
+		case Damage.fire: creature.setDealsFireDamage(true); break;
+		case Damage.frost: creature.setDealsFrostDamage(true); break;
+		case Damage.shock: creature.setDealsShockDamage(true); break;
+		case Damage.poison: creature.setDealsPoisonDamage(true); break;
+		case Damage.acid: creature.setDealsAcidDamage(true); break;
+		case Damage.magic: creature.setDealsMagicDamage(true); break;
+		case Damage.chaos: creature.setDealsChaosDamage(true); break;
+		default: creature.setDealsFireDamage(true); break;
+		}
+		return creature;
+	}
+	
+	public static Creature modifyCreatureResistsDamage(Creature creature, String prefix, String damageType) {
+		creature.setName(String.format("%s %s", prefix, creature.name()));
+		
+		switch(damageType) {
+		case Damage.fire: creature.setResistsFireDamage(true); break;
+		case Damage.frost: creature.setResistsFrostDamage(true); break;
+		case Damage.shock: creature.setResistsShockDamage(true); break;
+		case Damage.poison: creature.setResistsPoisonDamage(true); break;
+		case Damage.acid: creature.setResistsAcidDamage(true); break;
+		case Damage.magic: creature.setResistsMagicDamage(true); break;
+		case Damage.chaos: creature.setResistsChaosDamage(true); break;
+		default: creature.setResistsFireDamage(true); break;
+		}
+		return creature;
 	}
 	
 	//Player

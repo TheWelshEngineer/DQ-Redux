@@ -1472,7 +1472,7 @@ public class Creature implements Cloneable{
 		return defaultName;
 	}
 
-	public void changeName(String newName) {
+	public void setName(String newName) {
 		name = newName;
 	}
 
@@ -2238,14 +2238,14 @@ public class Creature implements Cloneable{
 
 	public void reveal() {
 		setIsDisguised(false);
-		changeName(defaultName());
+		setName(defaultName());
 		changeColor(defaultColor());
 		doAction("reveal itself!");
 	}
 
 	public void hide() {
 		setIsDisguised(true);
-		changeName("Chest");
+		setName("Chest");
 		changeColor(ExtendedAsciiPanel.mimic);
 	}
 

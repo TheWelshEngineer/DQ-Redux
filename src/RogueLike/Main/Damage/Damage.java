@@ -5,14 +5,14 @@ import RogueLike.Main.Factories.EffectFactory;
 
 public class Damage {
 	
-	public static String physical = "Physical";
-	public static String fire = "Fire";
-	public static String frost = "Frost";
-	public static String shock = "Shock";
-	public static String poison = "Poison";
-	public static String acid = "Acid";
-	public static String magic = "Magic";
-	public static String chaos = "Chaos";
+	public final static String physical = "Physical";
+	public final static String fire = "Fire";
+	public final static String frost = "Frost";
+	public final static String shock = "Shock";
+	public final static String poison = "Poison";
+	public final static String acid = "Acid";
+	public final static String magic = "Magic";
+	public final static String chaos = "Chaos";
 	
 	private String typeString;
 	public String typeString() {
