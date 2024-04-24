@@ -21,7 +21,9 @@ public class ConfigManager {
             System.out.println("Config file not found!");
         }
 
-        applyConfig(config);
+        if (config != null) {
+            applyConfig(config);
+        }
     }
 
     public static class ConfigSection {
