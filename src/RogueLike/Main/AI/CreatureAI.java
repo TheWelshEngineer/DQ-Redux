@@ -246,7 +246,7 @@ public class CreatureAI {
 	protected Item getWeaponToThrow() {
 		Item toThrow = null;
 		for(Item item : creature.inventory().getItems()){
-			if(item == null || creature.weapon() == item || creature.armor() == item || creature.shield() == item || creature.ring() == item) {
+			if(item == null || item.thrownDamageDice() != null || creature.weapon() == item || creature.armor() == item || creature.shield() == item || creature.ring() == item) {
 				continue;
 			}
 			if(toThrow == null || item.thrownDamageDice().toInt() > toThrow.damageDice().toInt()) {
