@@ -4294,15 +4294,15 @@ public class Creature implements Cloneable{
 	}
 
 	public String hungerAsString() {
-		if(food() < maxFood() * 0.1) {
+		if(food() <= maxFood() * 0.1) {
 			return "Starving";
-		}else if(food() < maxFood() * 0.2) {
+		}else if(food() <= maxFood() * 0.2) {
 			return "Hungry";
-		}else if(food() < maxFood() * 0.5) {
+		}else if(food() <= maxFood() * 0.5) {
 			return "Satisfied";
-		}else if(food() < maxFood() * 0.8) {
+		}else if(food() <= maxFood() * 0.8) {
 			return "Stuffed";
-		}else if(food() < maxFood() * 0.9) {
+		}else if(food() <= maxFood() * 0.9) {
 			return "Full";
 		}else if(food() <= maxFood()) {
 			return "Full";

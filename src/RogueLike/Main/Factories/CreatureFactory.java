@@ -29,6 +29,8 @@ import RogueLike.Main.Creatures.Slimes.MetalSlime;
 import RogueLike.Main.Creatures.Slimes.MetalSlimeling;
 import RogueLike.Main.Creatures.Slimes.PinkSlime;
 import RogueLike.Main.Creatures.Slimes.PinkSlimeling;
+import RogueLike.Main.Creatures.Slimes.ThundercloudSlime;
+import RogueLike.Main.Creatures.Slimes.ThundercloudSlimeling;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Items.Item;
 
@@ -298,6 +300,14 @@ public ObjectFactory objectFactory;
 		return slime;	
 	}
 	
+	public Creature newThundercloudSlime(int depth, Creature player, boolean addToWorld) {
+		Creature slime = new ThundercloudSlime(objectFactory, player, "Thundercloud Slime", 'S', ExtendedAsciiPanel.paralyzed, 87, depth);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(slime, depth);
+		}
+		return slime;	
+	}
+	
 	//Slimelings
 	public Creature newPinkSlimeling(int depth, Creature player, boolean addToWorld) {
 		Creature slimeling = new PinkSlimeling(objectFactory, player, "Pink Slimeling", 's', ExtendedAsciiPanel.brightPink, 6, depth);
@@ -317,6 +327,14 @@ public ObjectFactory objectFactory;
 	
 	public Creature newMagmaSlimeling(int depth, Creature player, boolean addToWorld) {
 		Creature slimeling = new MagmaSlimeling(objectFactory, player, "Magma Slimeling", 's', ExtendedAsciiPanel.orange, 18, depth);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(slimeling, depth);
+		}
+		return slimeling;
+	}
+	
+	public Creature newThundercloudSlimeling(int depth, Creature player, boolean addToWorld) {
+		Creature slimeling = new ThundercloudSlimeling(objectFactory, player, "Thundercloud Slimeling", 's', ExtendedAsciiPanel.paralyzed, 88, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(slimeling, depth);
 		}

@@ -35,8 +35,38 @@ public class GameplayScreen implements Screen{
 		//health bar
 		terminal.writeCenter("====================================================================================================================", 21);
 		terminal.writeCenter("====================================================================================================================", 47);
-		String stats = String.format("+||+ Depth: %2d (%d | %d) // Level: %2d%s // XP: %d/%d // Health: %3d/%3d // Mana: %d/%d // Hunger: %s +||+", player.z()+1, player.x()+1, player.y()+1, player.level(), canLevelUp(), player.xp(), player.xpToNextLevel(), player.hp(), player.maxHP(), player.mana(), player.maxMana(), player.hungerAsString());
+		//
+		String stats = "+||+                                                                                                          +||+";
 		terminal.writeCenter(stats, 22);
+		//
+		String depth = String.format("Depth: %d (%d,%d)", player.z()+1, player.x()+1, player.y()+1);
+		terminal.write(depth, 9, 22);
+		String level = String.format(" Level: %d%s ", player.level(), canLevelUp());
+		if(player.attributePoints() > 0 || player.skillPoints() > 0) {
+			terminal.write(level, 29, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.green);
+		}else {
+			terminal.write(level, 29, 22);
+		}
+		String xp = String.format("XP: %d/%d", player.xp(), player.xpToNextLevel());
+		terminal.write(xp, 45, 22);
+		String health = String.format(" Health: %d/%d ", player.hp(), player.maxHP());
+		if(player.hp() <= player.maxHP()*0.2) {
+			terminal.write(health, 59, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.red);
+		}else {
+			terminal.write(health, 59, 22);
+		}
+		String mana = String.format(" Mana: %d/%d ", player.mana(), player.maxMana());
+		if(player.mana() <= player.maxMana()*0.2) {
+			terminal.write(mana, 78, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.red);
+		}else {
+			terminal.write(mana, 78, 22);
+		}
+		String hunger = String.format(" Hunger: %s ", player.hungerAsString());
+		if(player.food() <= player.maxFood()*0.1) {
+			terminal.write(hunger, 95, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.red);
+		}else {
+			terminal.write(hunger, 95, 22);
+		}
 		//
 		int y = 24;
 		terminal.write("== Status Effects ==", 95, y++);
