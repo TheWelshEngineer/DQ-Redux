@@ -4193,7 +4193,7 @@ public class Creature implements Cloneable{
 		if(this.perceptionLevel() >= 1) {
 			bonus = this.proficiencyBonus();
 		}
-		if(this.stealthLevel() >= 2) {
+		if(this.stealthLevel() >= 2 && !passive) {
 			if(this.mana() >= (this.proficiencyBonus()*2)) {
 				Damage sneakCost = new Damage(this.proficiencyBonus()*2, false, false, null, null, false);
 				Effect sneak = (Effect)this.ai().factory.effectFactory.invisible(this.proficiencyBonus()).clone();

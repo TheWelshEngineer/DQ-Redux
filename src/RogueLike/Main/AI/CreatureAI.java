@@ -262,7 +262,13 @@ public class CreatureAI {
 	}
 	
 	protected boolean canUseBetterEquipment() {
-		int currentWeaponRating = creature.weapon() == null ? 0 : creature.weapon().damageDice().toInt() + creature.weapon().rangedDamageDice().toInt();
+		int currentWeaponRating = 0;
+		if(creature.weapon() != null) {
+			currentWeaponRating += creature.weapon().damageDice().toInt();
+			if(creature.weapon().rangedDamageDice() != null) {
+				currentWeaponRating += creature.weapon().rangedDamageDice().toInt();
+			}
+		}
 		int currentArmorRating = creature.armor() == null ? 0 : creature.armor().armorClass();
 		
 		for(Item item : creature.inventory().getItems()) {
@@ -270,9 +276,17 @@ public class CreatureAI {
 				continue;
 			}
 			
+			int itemWeaponRating = 0;
+			if(item.damageDice() != null) {
+				itemWeaponRating += item.damageDice().toInt();
+				if(item.rangedDamageDice() != null) {
+					itemWeaponRating += item.rangedDamageDice().toInt();
+				}
+			}
+			
 			boolean isArmor = item.isArmor();
 			
-			if(item.damageDice().toInt() + item.rangedDamageDice().toInt() > currentWeaponRating || isArmor && item.armorClass() > currentArmorRating) {
+			if(!isArmor && itemWeaponRating > currentWeaponRating || isArmor && item.armorClass() > currentArmorRating) {
 				return true;
 			}
 		}
@@ -280,17 +294,30 @@ public class CreatureAI {
 	}
 	
 	protected void useBetterEquipment() {
-		int currentWeaponRating = creature.weapon() == null ? 0 : creature.weapon().damageDice().toInt() + creature.weapon().rangedDamageDice().toInt();
-		double currentArmorRating = creature.armor() == null ? 0 : creature.armor().armorClass();
+		int currentWeaponRating = 0;
+		if(creature.weapon() != null) {
+			currentWeaponRating += creature.weapon().damageDice().toInt();
+			if(creature.weapon().rangedDamageDice() != null) {
+				currentWeaponRating += creature.weapon().rangedDamageDice().toInt();
+			}
+		}
+		int currentArmorRating = creature.armor() == null ? 0 : creature.armor().armorClass();
 		
 		for(Item item : creature.inventory().getItems()) {
 			if(item == null) {
 				continue;
 			}
+			int itemWeaponRating = 0;
+			if(item.damageDice() != null) {
+				itemWeaponRating += item.damageDice().toInt();
+				if(item.rangedDamageDice() != null) {
+					itemWeaponRating += item.rangedDamageDice().toInt();
+				}
+			}
 			
 			boolean isArmor = item.isArmor();
 			
-			if(item.damageDice().toInt() + item.rangedDamageDice().toInt() > currentWeaponRating || isArmor && item.armorClass() > currentArmorRating) {
+			if(!isArmor && itemWeaponRating > currentWeaponRating || isArmor && item.armorClass() > currentArmorRating) {
 				creature.equip(item);
 			}
 		}
