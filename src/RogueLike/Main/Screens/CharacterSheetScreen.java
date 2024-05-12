@@ -208,7 +208,7 @@ public class CharacterSheetScreen implements Screen{
 				armorCheck = "";
 				proficiencyCheck = "";
 				visionCheck = "";
-				details = String.format("You are %s. You'll probably need to eat after %d turns of exploration.", player.hungerAsString(), player.food()/2);
+				details = String.format("You are %s. You'll probably next need to eat after %d turns of exploration.", player.hungerAsString(), player.food()/2);
 				details2 = "";
 				details3 = "";
 				break;
@@ -347,6 +347,19 @@ public class CharacterSheetScreen implements Screen{
 					acidCheck = "";
 					magicCheck = "";
 					chaosCheck = "";
+					//
+					if(physicalStatus().equals("Immune")) {
+						details = String.format("You are immune to Physical damage, taking no damage of this type.");
+					}else if(physicalStatus().equals("Resistant")) {
+						details = String.format("You are resistant to Physical damage, taking half damage of this type.");
+					}else if(physicalStatus().equals("Weakness")) {
+						details = String.format("You are vulnerable to Physical damage, taking double damage of this type.");
+					}else {
+						details = String.format("You are damaged normally by Physical damage.");
+					}
+					details2 = "";
+					details3 = "";
+					//
 					break;
 				case 1:
 					physicalCheck = "";
@@ -357,6 +370,19 @@ public class CharacterSheetScreen implements Screen{
 					acidCheck = "";
 					magicCheck = "";
 					chaosCheck = "";
+					//
+					if(fireStatus().equals("Immune")) {
+						details = String.format("You are immune to Fire damage, taking no damage of this type.");
+					}else if(fireStatus().equals("Resistant")) {
+						details = String.format("You are resistant to Fire damage, taking half damage of this type.");
+					}else if(fireStatus().equals("Weakness")) {
+						details = String.format("You are vulnerable to Fire damage, taking double damage of this type.");
+					}else {
+						details = String.format("You are damaged normally by Fire damage.");
+					}
+					details2 = "";
+					details3 = "";
+					//
 					break;
 				case 2:
 					physicalCheck = "";
@@ -367,6 +393,19 @@ public class CharacterSheetScreen implements Screen{
 					acidCheck = "";
 					magicCheck = "";
 					chaosCheck = "";
+					//
+					if(frostStatus().equals("Immune")) {
+						details = String.format("You are immune to Frost damage, taking no damage of this type.");
+					}else if(frostStatus().equals("Resistant")) {
+						details = String.format("You are resistant to Frost damage, taking half damage of this type.");
+					}else if(frostStatus().equals("Weakness")) {
+						details = String.format("You are vulnerable to Frost damage, taking double damage of this type.");
+					}else {
+						details = String.format("You are damaged normally by Frost damage.");
+					}
+					details2 = "";
+					details3 = "";
+					//
 					break;
 				case 3:
 					physicalCheck = "";
@@ -377,6 +416,19 @@ public class CharacterSheetScreen implements Screen{
 					acidCheck = "";
 					magicCheck = "";
 					chaosCheck = "";
+					//
+					if(shockStatus().equals("Immune")) {
+						details = String.format("You are immune to Shock damage, taking no damage of this type.");
+					}else if(shockStatus().equals("Resistant")) {
+						details = String.format("You are resistant to Shock damage, taking half damage of this type.");
+					}else if(shockStatus().equals("Weakness")) {
+						details = String.format("You are vulnerable to Shock damage, taking double damage of this type.");
+					}else {
+						details = String.format("You are damaged normally by Shock damage.");
+					}
+					details2 = "";
+					details3 = "";
+					//
 					break;
 				case 4:
 					physicalCheck = "";
@@ -387,6 +439,19 @@ public class CharacterSheetScreen implements Screen{
 					acidCheck = "";
 					magicCheck = "";
 					chaosCheck = "";
+					//
+					if(poisonStatus().equals("Immune")) {
+						details = String.format("You are immune to Poison damage, taking no damage of this type.");
+					}else if(poisonStatus().equals("Resistant")) {
+						details = String.format("You are resistant to Poison damage, taking half damage of this type.");
+					}else if(poisonStatus().equals("Weakness")) {
+						details = String.format("You are vulnerable to Poison damage, taking double damage of this type.");
+					}else {
+						details = String.format("You are damaged normally by Poison damage.");
+					}
+					details2 = "";
+					details3 = "";
+					//
 					break;
 				case 5:
 					physicalCheck = "";
@@ -397,6 +462,19 @@ public class CharacterSheetScreen implements Screen{
 					acidCheck = ">> ";
 					magicCheck = "";
 					chaosCheck = "";
+					//
+					if(acidStatus().equals("Immune")) {
+						details = String.format("You are immune to Acid damage, taking no damage of this type.");
+					}else if(acidStatus().equals("Resistant")) {
+						details = String.format("You are resistant to Acid damage, taking half damage of this type.");
+					}else if(acidStatus().equals("Weakness")) {
+						details = String.format("You are vulnerable to Acid damage, taking double damage of this type.");
+					}else {
+						details = String.format("You are damaged normally by Acid damage.");
+					}
+					details2 = "";
+					details3 = "";
+					//
 					break;
 				case 6:
 					physicalCheck = "";
@@ -407,6 +485,19 @@ public class CharacterSheetScreen implements Screen{
 					acidCheck = "";
 					magicCheck = ">> ";
 					chaosCheck = "";
+					//
+					if(magicStatus().equals("Immune")) {
+						details = String.format("You are immune to Magic damage, taking no damage of this type.");
+					}else if(magicStatus().equals("Resistant")) {
+						details = String.format("You are resistant to Magic damage, taking half damage of this type.");
+					}else if(magicStatus().equals("Weakness")) {
+						details = String.format("You are vulnerable to Magic damage, taking double damage of this type.");
+					}else {
+						details = String.format("You are damaged normally by Magic damage.");
+					}
+					details2 = "";
+					details3 = "";
+					//
 					break;
 				case 7:
 					physicalCheck = "";
@@ -417,6 +508,19 @@ public class CharacterSheetScreen implements Screen{
 					acidCheck = "";
 					magicCheck = "";
 					chaosCheck = ">> ";
+					//
+					if(chaosStatus().equals("Immune")) {
+						details = String.format("You are immune to Chaos damage, taking no damage of this type.");
+					}else if(chaosStatus().equals("Resistant")) {
+						details = String.format("You are resistant to Chaos damage, taking half damage of this type.");
+					}else if(chaosStatus().equals("Weakness")) {
+						details = String.format("You are vulnerable to Chaos damage, taking double damage of this type.");
+					}else {
+						details = String.format("You are damaged normally by Chaos damage.");
+					}
+					details2 = "";
+					details3 = "";
+					//
 					break;
 				default: break;
 				}
@@ -468,6 +572,97 @@ public class CharacterSheetScreen implements Screen{
         for(int i = 0; i < 14; i++) {
         	if(cX == 1 && cY == i) {
         		terminal.write(String.format(">> %s", player.skills()[i].toStringCharacterSheet()), x2, y2++);
+        		switch(i) {
+        		case 0:
+        			if(player.skills()[i].level() >= 1) {
+        				details = String.format("Simple Weapons I: You add your proficiency bonus (+%s) to attack rolls made with Simple Weapons.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 2) {
+        				details2 = String.format("Simple Weapons II: You add your proficiency bonus (+%s) to damage rolls made with Simple Weapons.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 3) {
+        				details3 = String.format("Simple Weapons III: Critical hits with Simple Weapons Paralyse the target for %s turns.", player.proficiencyBonus());
+        			}
+        			break;
+        		case 1:
+        			if(player.skills()[i].level() >= 1) {
+        				details = String.format("Martial Weapons I: You add your proficiency bonus (+%s) to attack rolls made with Martial Weapons.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 2) {
+        				details2 = String.format("Martial Weapons II: You add your proficiency bonus (+%s) to damage rolls made with Martial Weapons.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 3) {
+        				details3 = String.format("Martial Weapons III: Critical hits with Martial Weapons deal 3x damage (up from 2x).");
+        			}
+        			break;
+        		case 2:
+        			if(player.skills()[i].level() >= 1) {
+        				details = String.format("Armor Training I: You can equip Medium Armor and Shields.");
+        			}
+        			if(player.skills()[i].level() >= 2) {
+        				details2 = String.format("Armor Training II: You can equip Heavy Armor and Tower Shields.");
+        			}
+        			if(player.skills()[i].level() >= 3) {
+        				details3 = String.format("Armor Training III: You gain a bonus to your total Armor Class equal to your proficiency bonus (+%s).", player.proficiencyBonus());
+        			}
+        			break;
+        		case 3:
+        			if(player.skills()[i].level() >= 1) {
+        				details = String.format("Fortitude I: When starving, you take damage every %s turns instead of every turn.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 2) {
+        				details2 = String.format("Fortitude II: You add your proficiency bonus (+%s) to checks made to avoid any negative effects from eating corpses.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 3) {
+        				details3 = String.format("Fortitude III: The duration of negative effects applied to you is halves.");
+        			}
+        			break;
+        		case 4:
+        			if(player.skills()[i].level() >= 1) {
+        				details = String.format("Finesse Weapons I: You add your proficiency bonus (+%s) to attack rolls made with Finesse Weapons.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 2) {
+        				details2 = String.format("Finesse Weapons II: You add your proficiency bonus (+%s) to damage rolls made with Finesse Weapons.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 3) {
+        				details3 = String.format("Finesse Weapons III: Critical hits with Finesse Weapons apply Bleeding to the target for %s turns.", player.proficiencyBonus());
+        			}
+        			break;
+        		case 5:
+        			if(player.skills()[i].level() >= 1) {
+        				details = String.format("Ranged Weapons I: You add your proficiency bonus (+%s) to attack rolls made with Ranged Weapons.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 2) {
+        				details2 = String.format("Ranged Weapons II: You add your proficiency bonus (+%s) to damage rolls made with Ranged Weapons.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 3) {
+        				details3 = String.format("Ranged Weapons III: Attacks with Ranged Weapons refund the spent ammunition upon the target's death.");
+        			}
+        			break;
+        		case 6:
+        			if(player.skills()[i].level() >= 1) {
+        				details = String.format("Stealth I: You add your proficiency bonus (+%s) to checks made to avoid waking sleeping monsters.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 2) {
+        				details2 = String.format("Stealth II: Whenever you Search, you expend %s Mana to become Invisible for %d turns.", player.proficiencyBonus(), player.proficiencyBonus()*2);
+        			}
+        			if(player.skills()[i].level() >= 3) {
+        				details3 = String.format("Stealth III: Attacks you make whilst Invisible are always considered to be critical hits.", player.proficiencyBonus());
+        			}
+        			break;
+        		case 7:
+        			if(player.skills()[i].level() >= 1) {
+        				details = String.format("Perception I: You add your proficiency bonus (+%s) to checks made to detect traps.", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 2) {
+        				details2 = String.format("Perception II: You gain a bonus to your Vision Radius equal to your proficiency bonus (+%s).", player.proficiencyBonus());
+        			}
+        			if(player.skills()[i].level() >= 3) {
+        				details3 = String.format("Perception III: When you trigger a revealed trap, you instead gain a positive effect based on the trap's type.", player.proficiencyBonus());
+        			}
+        			break;
+        		default: details = ""; details2 = ""; details3 = ""; break;
+        		}
         	}else {
         		terminal.write(String.format("%s", player.skills()[i].toStringCharacterSheet()), x2, y2++);
         	}
