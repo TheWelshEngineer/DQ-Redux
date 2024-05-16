@@ -611,7 +611,7 @@ public class CharacterSheetScreen implements Screen{
         				details = String.format("Fortitude I: When starving, you take damage every %s turns instead of every turn.", player.proficiencyBonus());
         			}
         			if(player.skills()[i].level() >= 2) {
-        				details2 = String.format("Fortitude II: You add your proficiency bonus (+%s) to checks made to avoid any negative effects from eating corpses.", player.proficiencyBonus());
+        				details2 = String.format("Fortitude II: You add your proficiency bonus (+%s) to checks made to avoid negative effects from eating corpses.", player.proficiencyBonus());
         			}
         			if(player.skills()[i].level() >= 3) {
         				details3 = String.format("Fortitude III: The duration of negative effects applied to you is halves.");
