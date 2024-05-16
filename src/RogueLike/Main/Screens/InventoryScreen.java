@@ -580,7 +580,7 @@ public class InventoryScreen implements Screen{
 				
 				if(checkIfSelected(i, check) && inventory.get(i).isQuickslottable()) {
 					terminal.writeCenter(String.format("-- [%s-%s]: Equip to quickslot 1-6 | [%s]: Drop | [%s]: Throw --", KeybindManager.keybindText(KeybindManager.interactionQuickslot_1), KeybindManager.keybindText(KeybindManager.interactionQuickslot_6), KeybindManager.keybindText(KeybindManager.interactionDropItem), KeybindManager.keybindText(KeybindManager.interactionThrowItem)), 38);
-				}else {
+				}else if(checkIfSelected(i, check)){
 					terminal.writeCenter(String.format("-- [%s]: Drop | [%s]: Throw --", KeybindManager.keybindText(KeybindManager.interactionDropItem), KeybindManager.keybindText(KeybindManager.interactionThrowItem)), 38);
 				}
 				
@@ -713,6 +713,9 @@ public class InventoryScreen implements Screen{
 			}else {
 				return this;
 			}
+			
+		case KeybindManager.interactionThrowItem:
+			return new ThrowAtScreen(player, sx, sy, inventory.get(check));
 			
 		case KeybindManager.interactionReadSpell:
 			if(inventory.get(check).writtenSpells().size() > 0) {
