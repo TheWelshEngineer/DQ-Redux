@@ -145,12 +145,12 @@ public class GameplayScreen implements Screen{
 	        case KeybindManager.movementDownStairs: 
 	        	//player.moveBy( 0, 0, 1, false); inputAccepted = true;
 	        	player.ai().playerAIMoveDownStairs();
-	        	if(player.z()+1 == 6 && player.hasVisitedZone2() == false) {
-	        		subscreen = new Zone2Screen();
-	        	}
-	        	if(player.z()+1 == 11 && player.hasVisitedZone3() == false) {
-	        		
-	        	}
+//	        	if(player.z()+1 == 6 && player.hasVisitedZone2() == false) {
+//	        		subscreen = new Zone2Screen();
+//	        	}
+//	        	if(player.z()+1 == 11 && player.hasVisitedZone3() == false) {
+//	        		
+//	        	}
 	        	break;
 	        //
 	        // Interaction Controls
