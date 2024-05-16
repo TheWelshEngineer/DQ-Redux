@@ -2098,9 +2098,6 @@ public class Creature implements Cloneable{
 
 
 	//item id max
-	public int maxItemIndex() {
-		return 86;
-	}
 
 	public Creature(World world, String name, char glyph, Color color, int maxHP, int maxMana, int armorclass, int strength, int dexterity, int intelligence, int visionRadius, int inventorySize) {
 		this.world = world;
@@ -2875,8 +2872,7 @@ public class Creature implements Cloneable{
 	}
 
 	public void pickup() {
-		Item item = world.item(x, y, z);
-		item.setOwner(this);
+		Item item = world.item(x, y, z);	
 		if((inventory.isFull() && !item.isGold()) || item == null || item.isTrap()) {
 			doAction("grab fruitlessly at the ground");
 		}else if(item.isGold()){
@@ -2884,7 +2880,7 @@ public class Creature implements Cloneable{
 			doAction(String.format("pick up %d gold", item.currentGoldValue()));
 			world.remove(item);
 		}else {
-		
+			item.setOwner(this);
 			doAction("pick up a %s", nameOf(item));
 			world.remove(x, y, z);
 			if(nameOf(item) == item.name()) {
@@ -3798,7 +3794,7 @@ public class Creature implements Cloneable{
 	}
 	//jump
 	public void stackItems() {
-		for(int i = 0; i < maxItemIndex()+17; i++) {
+		for(int i = 0; i < 10000; i++) {
 			List<Item> stacked = new ArrayList<Item>();
 			List<Item> stackedDone = new ArrayList<Item>();
 
