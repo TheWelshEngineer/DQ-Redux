@@ -1,17 +1,15 @@
 package RogueLike.Main.Screens;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
-import RogueLike.Main.Dice;
-import RogueLike.Main.Effect;
-import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.*;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
-import RogueLike.Main.Inventory;
 
 public class InventoryScreen implements Screen{
 	
@@ -282,79 +280,69 @@ public class InventoryScreen implements Screen{
 							
 						}
 						z++;
-						
-						String traits = "";
-						String traits2 = "";
-						String enchanted = "";
+
+						ArrayList<String> traits = new ArrayList<>();
+
 						if(item.enchantment() != null && item.isIdentified()) {
-							enchanted = "Enchanted, ";
+							traits.add("Enchanted");
 						}
-						String upgraded = "";
 						if(item.upgradeLevel() > 0 && item.isIdentified()) {
-							upgraded = String.format("Upgraded (+%d), ", item.upgradeLevel());
+							traits.add(String.format("Upgraded (+%d), ", item.upgradeLevel()));
 						}
-						String cursed = "";
 						if(item.curse() != null && item.isCurseKnown()) {
-							cursed = "Cursed, ";
+							traits.add("Cursed");
 						}
-						String versatile = "";
 						if(item.isVersatile()) {
-							versatile = "Versatile, ";
+							traits.add("Versatile");
 						}
-						String twohanded = "";
 						if(item.isTwoHanded()) {
-							twohanded = "Two-Handed, ";
+							traits.add("Two-Handed");
 						}
-						String thrown = "";
 						if(item.isThrownWeapon()) {
-							thrown = "Thrown, ";
+							traits.add("Thrown");
 						}
-						String strength = "";
 						if(item.usesStrength()) {
-							strength = "Uses Strength, ";
+							traits.add("Uses Strength");
 						}
-						String dexterity = "";
 						if(item.usesDexterity()) {
-							dexterity = "Uses Dexterity, ";
+							traits.add("Uses Dexterity");
 						}
-						String intelligence = "";
 						if(item.usesIntelligence()) {
-							intelligence = "Uses Intelligence, ";
+							traits.add("Uses Intelligence");
 						}
-						String ranged = "";
 						if(item.isRangedWeapon()) {
-							ranged = "Ranged Weapon, ";
+							traits.add("Ranged Weapon");
 						}
-						String flintlock = "";
 						if(item.usesPowderAmmunition()) {
-							flintlock = "Flintlock Weapon, ";
+							traits.add("Flintlock Weapon");
 						}
-						String arrows = "";
 						if(item.usesArrowAmmunition()) {
-							arrows = "Uses Arrows, ";
+							traits.add("Uses Arrows");
 						}
-						String bolts = "";
 						if(item.usesBoltAmmunition()) {
-							bolts = "Uses Bolts, ";
+							traits.add("Uses Bolts");
 						}
-						String powder = "";
 						if(item.usesPowderAmmunition()) {
-							powder = "Uses Powder, ";
+							traits.add("Uses Powder");
 						}
-						
-						traits = String.format("%s%s%s%s%s%s%s%s%s%s%s%s%s%s", enchanted, upgraded, cursed, versatile, twohanded, thrown, strength, dexterity, intelligence, ranged, flintlock, arrows, bolts, powder);
-						if(x+traits.length() > 120) {
-							traits = String.format("%s%s%s%s%s%s%s", enchanted, upgraded, cursed, versatile, twohanded, thrown, strength);
-							traits2 = String.format("%s%s%s%s%s%s%s", dexterity, intelligence, ranged, flintlock, arrows, bolts, powder);
-							terminal.write(String.format("Traits: %s", traits), x, z++);
-							terminal.write(String.format("%s", traits2.replaceFirst(".$", "").replaceFirst(".$", "")), x+8, z++);
-						}else {
-							if(!traits.equals("")) {
-								terminal.write(String.format("Traits: %s", traits.replaceFirst(".$", "").replaceFirst(".$", "")), x, z++);
+
+						// write out the traits, if any
+						if (!traits.isEmpty()) {
+							final int traits_indent = "Traits: ".length();
+							int maxLength = 120 - (x + traits_indent);
+							ArrayList<String> traits_lines = TextUtils.joinStringsWithLineBreaks(traits, ", ", maxLength);
+
+							for (int j=0; j<traits_lines.size(); j++) {
+								if (j == 0) {
+									terminal.write("Traits: " + traits_lines.get(j), x, z++);
+								}
+								else {
+									// write the line indented
+									terminal.write(traits_lines.get(j), x+traits_indent, z++);
+								}
 							}
-							
+							z++;
 						}
-						z++;
 					}
 					
 					if(item.isArmor() || item.isShield()) {
