@@ -292,6 +292,18 @@ public class InventoryScreen implements Screen{
 						if(item.curse() != null && item.isCurseKnown()) {
 							traits.add("Cursed");
 						}
+						if (item.isSimple()) {
+							traits.add("Simple");
+						}
+						if (item.isMartial()) {
+							traits.add("Martial");
+						}
+						if (item.isFinesse()) {
+							traits.add("Finesse");
+						}
+						if (item.isRangedWeapon()) {
+							traits.add("Ranged");
+						}
 						if(item.isVersatile()) {
 							traits.add("Versatile");
 						}
