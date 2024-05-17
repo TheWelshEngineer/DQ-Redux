@@ -322,9 +322,6 @@ public class InventoryScreen implements Screen{
 						if(item.usesIntelligence()) {
 							traits.add("Uses Intelligence");
 						}
-						if(item.isRangedWeapon()) {
-							traits.add("Ranged Weapon");
-						}
 						if(item.usesPowderAmmunition()) {
 							traits.add("Flintlock Weapon");
 						}
