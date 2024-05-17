@@ -358,7 +358,7 @@ public class InventoryScreen implements Screen{
 					}
 					
 					if(item.isArmor() || item.isShield()) {
-						String armor = "";
+						String armor;
 						if(item.isIdentified()) {
 							armor = String.format("Armor Class: %d", item.armorClass()+item.upgradeLevel());
 						}else {
@@ -366,46 +366,49 @@ public class InventoryScreen implements Screen{
 						}
 						terminal.write(armor, x, z++);
 						
-						String traits = "";
-						//String traits2 = "";
-						String enchanted = "";
+						ArrayList<String> traits = new ArrayList<>();
 						if(item.enchantment() != null && item.isIdentified()) {
-							enchanted = "Enchanted, ";
+							traits.add("Enchanted");
 						}
-						String upgraded = "";
 						if(item.upgradeLevel() > 0 && item.isIdentified()) {
-							upgraded = String.format("Upgraded (+%d), ", item.upgradeLevel());
+							traits.add(String.format("Upgraded (+%d)", item.upgradeLevel()));
 						}
-						String cursed = "";
 						if(item.curse() != null && item.isCurseKnown()) {
-							cursed = "Cursed, ";
+							traits.add("Cursed");
 						}
-						String light = "";
 						if(item.isLightArmor()) {
-							light = "Light Armor, ";
+							traits.add("Light Armor");
 						}
-						String medium = "";
 						if(item.isMediumArmor()) {
-							medium = "Medium Armor, ";
+							traits.add("Medium Armor");
 						}
-						String heavy = "";
 						if(item.isHeavyArmor()) {
-							heavy = "Heavy Armor, ";
+							traits.add("Heavy Armor");
 						}
-						String shield = "";
 						if(item.isShield()) {
-							shield = "Shield, ";
+							traits.add("Shield");
 						}
-						String tower = "";
 						if(item.isTowerShield()) {
-							tower = "Tower Shield, ";
+							traits.add("Tower Shield");
 						}
-						
-						traits = String.format("%s%s%s%s%s%s%s%s", enchanted, upgraded, cursed, light, medium, heavy, shield, tower);
-						terminal.write(String.format("Traits: %s", traits.replaceFirst(".$", "").replaceFirst(".$", "")), x, z++);
+
+						// write out the traits, if any
+						if (!traits.isEmpty()) {
+							final int traits_indent = "Traits: ".length();
+							int maxLength = 120 - (x + traits_indent);
+							ArrayList<String> traits_lines = TextUtils.joinStringsWithLineBreaks(traits, ", ", maxLength);
+
+							for (int j=0; j<traits_lines.size(); j++) {
+								if (j == 0) {
+									terminal.write("Traits: " + traits_lines.get(j), x, z++);
+								}
+								else {
+									// write the line indented
+									terminal.write(traits_lines.get(j), x+traits_indent, z++);
+								}
+							}
+						}
 						z++;
-						
-						
 					}
 					
 					if(item.strengthRequirement() > 0 || item.dexterityRequirement() > 0 || item.intelligenceRequirement() > 0) {
