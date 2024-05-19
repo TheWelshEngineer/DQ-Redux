@@ -30,7 +30,7 @@ public class GameplayScreen implements Screen{
 		int top = getScrollY();
 		
 		displayTiles(terminal, left, top);
-		displayMessages(terminal, messages);
+		displayMessages(terminal, player.getMessages());
 		
 		//health bar
 		terminal.writeCenter("====================================================================================================================", 21);
@@ -262,7 +262,6 @@ public class GameplayScreen implements Screen{
 	private int screenHeight;
 	public Creature player;
 	public List<Effect> effects;
-	private List<String> messages;
 	private FieldOfView fov;
 	private Screen subscreen;
 	public String playerClass;
@@ -291,7 +290,6 @@ public class GameplayScreen implements Screen{
 		this.playerAncestry = playerAncestry;
 		screenWidth = 120; //80
 		screenHeight = 21; //21
-		messages = new ArrayList<String>();
 		createWorld();
 		fov = new FieldOfView(world);
 		ObjectFactory factory = new ObjectFactory(world);
@@ -305,7 +303,7 @@ public class GameplayScreen implements Screen{
 	
 	
 	public void createCreatures(ObjectFactory factory) {
-		player = factory.creatureFactory.newPlayer(messages, fov, this.playerClass, this.startingStats, this.startingSkills, this.playerName, this.playerAncestry);
+		player = factory.creatureFactory.newPlayer(fov, this.playerClass, this.startingStats, this.startingSkills, this.playerName, this.playerAncestry);
 		
 		factory.setUpPotionIndex();
 		factory.setUpWandIndex(player);

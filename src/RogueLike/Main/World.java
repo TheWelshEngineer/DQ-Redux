@@ -35,6 +35,9 @@ public class World {
 	public int depth() {
 		return depth;
 	}
+
+	private int turnNumber;
+	public int turnNumber() {return turnNumber; }
 	
 	public World(Tile[][][] tiles2) {
 		this.tiles = tiles2;
@@ -413,6 +416,7 @@ public class World {
 	}
 	
 	public void updateOnCurrentFloor(Creature player) {
+		turnNumber ++;
 		List<Creature> toUpdate = new ArrayList<Creature>(creatures);
 		if(player.ai().actionQueue().isEmpty() == true) {
 			//player.ai().playerAIMoveIdle();

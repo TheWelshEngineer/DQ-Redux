@@ -75,11 +75,11 @@ public ObjectFactory objectFactory;
 	}
 	
 	//Player
-	public Creature newPlayer(List<String> messages, FieldOfView fov, String playerClass, List<Integer> startingStats, Skill[] startingSkills, String playerName, String playerAncestry) {
+	public Creature newPlayer(FieldOfView fov, String playerClass, List<Integer> startingStats, Skill[] startingSkills, String playerName, String playerAncestry) {
 		//world, name, glyph, color, maxHP 20, maxMana, base armorclass, strength, dexterity, intelligence, visionRadius, inventorySize) {
 		Creature player = new Creature(objectFactory.world, "player", '@', ExtendedAsciiPanel.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
 		player.setID(0);
-		new PlayerAI(player, messages, fov, objectFactory, objectFactory.world);
+		new PlayerAI(player, fov, objectFactory, objectFactory.world);
 		
 		player.setPlayerName(playerName);
 		player.setPlayerAncestry(playerAncestry);

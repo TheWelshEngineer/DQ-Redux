@@ -6,6 +6,7 @@ import java.util.List;
 
 import RogueLike.Main.*;
 import RogueLike.Main.AI.CreatureAI;
+import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.Damage.*;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
@@ -4304,6 +4305,18 @@ public class Creature implements Cloneable{
 			return "Full";
 		}else{
 			return "";
+		}
+	}
+
+	public List<String> getMessages() {
+		if ((ai instanceof PlayerAI)) {
+			return ((PlayerAI) ai).messagesThisTurn();
+		}
+		else {
+			// This feels like an ugly way of handling it.
+			// Should we maybe make a Player subclass of Creature and put this method on it?
+			// Or pass out a handle to the messages on creation of the PlayerAI, as before?
+			throw new IllegalStateException("Only the player has messages!");
 		}
 	}
 }

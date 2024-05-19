@@ -1,7 +1,6 @@
 package RogueLike.Main.AI;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Tile;
@@ -12,13 +11,14 @@ import RogueLike.Main.Items.Item;
 
 public class PlayerAI extends CreatureAI{
 	
-	private List<String> messages;
+	private final HashMap<Integer, ArrayList<String>> messagesByTurn;
 	private FieldOfView fov;
+	private int MAX_TURNS_IN_LOG = 100; // TODO: make this configurable
 	
-	public PlayerAI(Creature creature, List<String> messages, FieldOfView fov, ObjectFactory factory, World world) {
+	public PlayerAI(Creature creature, FieldOfView fov, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		actionQueue = new ArrayList<Integer>();
-		this.messages = messages;
+		this.messagesByTurn = new HashMap<>();
 		this.fov = fov;
 		
 	}
@@ -63,6 +63,7 @@ public class PlayerAI extends CreatureAI{
 	
 	public void onUpdate() {
 		decodeAction(actionQueue.get(0));
+		clearMessagesOlderThan(MAX_TURNS_IN_LOG);
 	}
 	
 	public void onEnter(int x, int y, int z, Tile tile) {
@@ -106,7 +107,14 @@ public class PlayerAI extends CreatureAI{
 	}
 	
 	public void onNotify(String message) {
-		messages.add(message);
+		if (messagesByTurn.containsKey(world.turnNumber())) {
+			messagesByTurn.get(world.turnNumber()).add(message);
+		}
+		else {
+			ArrayList<String> messages = new ArrayList<>();
+			messages.add(message);
+			messagesByTurn.put(world.turnNumber(), messages);
+		}
 	}
 	
 	public boolean canSee(int wx, int wy, int wz) {
@@ -131,4 +139,20 @@ public class PlayerAI extends CreatureAI{
 		creature.gainMaxMana();
 	}
 
+	public List<String> messagesThisTurn() {
+		return messagesByTurn.getOrDefault(world.turnNumber(), new ArrayList<>());
+	}
+
+	private void clearMessagesOlderThan(int numTurns) {
+		// do this in two passes bc modifying the set you're iterating over is scary
+		ArrayList<Integer> turnsToRemove = new ArrayList<>();
+		for (Integer key: messagesByTurn.keySet()) {
+			if (key > numTurns) {
+				turnsToRemove.add(key);
+			}
+		}
+		for (Integer toRemove: turnsToRemove) {
+			messagesByTurn.remove(toRemove);
+		}
+	}
 }
