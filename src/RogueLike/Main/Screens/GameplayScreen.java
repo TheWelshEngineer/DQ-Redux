@@ -199,7 +199,8 @@ public class GameplayScreen implements Screen{
 	        case KeybindManager.menuCharacterSheet: subscreen = new CharacterSheetScreen(player); break;
 	        case KeybindManager.menuIndex: subscreen = new IndexPotionScreen(player, player.factory()); break;
 	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); break;
-	        //
+			case KeybindManager.menuActionLog: subscreen = new ActionLogScreen(playerNotifications, world.turnNumber()); break;
+			//
 	        //case KeyEvent.VK_A: subscreen = new SpellbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = true; break;
 	        //
 	        //case KeyEvent.VK_M: subscreen = new FeatbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = 1; break;
@@ -304,8 +305,6 @@ public class GameplayScreen implements Screen{
 		
 	}
 
-	
-	
 	public void createCreatures(ObjectFactory factory) {
 		player = factory.creatureFactory.newPlayer(fov, this.playerNotifications, this.playerClass, this.startingStats, this.startingSkills, this.playerName, this.playerAncestry);
 		
@@ -424,8 +423,6 @@ public class GameplayScreen implements Screen{
 			terminal.write(messages.get(i), 3, y);
 			
 		}
-		messages.clear();
-		
 	}
 	//player.x
 	private void displayTiles(ExtendedAsciiPanel terminal, int left, int top) {

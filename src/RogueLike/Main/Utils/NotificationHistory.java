@@ -1,7 +1,10 @@
 package RogueLike.Main.Utils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class NotificationHistory {
     private final HashMap<Integer, ArrayList<String>> messagesByTurn;
@@ -40,5 +43,9 @@ public class NotificationHistory {
         for (Integer turnToRemove: turnsToRemove) {
             messagesByTurn.remove(turnToRemove);
         }
+    }
+
+    public List<Integer> storedTurns() {
+        return (messagesByTurn.keySet().stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
     }
 }
