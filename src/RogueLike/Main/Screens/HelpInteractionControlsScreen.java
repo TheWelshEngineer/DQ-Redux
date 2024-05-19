@@ -32,6 +32,7 @@ public class HelpInteractionControlsScreen implements Screen{
         terminal.write(String.format("[%s]: Look at something further away", KeybindManager.keybindText(KeybindManager.interactionLook)), x, y++);
         terminal.write(String.format("[%s]: Search for hidden things around you", KeybindManager.keybindText(KeybindManager.interactionSearch)), x, y++);
         terminal.write(String.format("[%s]: Open the character sheet", KeybindManager.keybindText(KeybindManager.menuCharacterSheet)), x, y++);
+        terminal.write(String.format("[%s]: View the action log", KeybindManager.keybindText(KeybindManager.menuActionLog)), x, y++);
         terminal.write(String.format("[%s]: Spend ability and skill points", KeybindManager.keybindText(KeybindManager.interactionLevelUp)), x, y++);
         terminal.write(String.format("[%s]: Open the help menu", KeybindManager.keybindText(KeybindManager.menuHelp)), x, y++);
         terminal.write(String.format("[%s]: Use the item in your first quickslot", KeybindManager.keybindText(KeybindManager.interactionQuickslot_1)), x, y++);
