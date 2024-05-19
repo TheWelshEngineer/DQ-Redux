@@ -4,6 +4,7 @@ import java.util.*;
 
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Tile;
+import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
@@ -11,16 +12,14 @@ import RogueLike.Main.Items.Item;
 
 public class PlayerAI extends CreatureAI{
 	
-	private final HashMap<Integer, ArrayList<String>> messagesByTurn;
 	private FieldOfView fov;
-	private int MAX_TURNS_IN_LOG = 100; // TODO: make this configurable
+	private final NotificationHistory notificationsHandle;
 	
-	public PlayerAI(Creature creature, FieldOfView fov, ObjectFactory factory, World world) {
+	public PlayerAI(Creature creature, NotificationHistory notificationsHandle, FieldOfView fov, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		actionQueue = new ArrayList<Integer>();
-		this.messagesByTurn = new HashMap<>();
 		this.fov = fov;
-		
+		this.notificationsHandle = notificationsHandle;
 	}
 	
 
@@ -63,7 +62,7 @@ public class PlayerAI extends CreatureAI{
 	
 	public void onUpdate() {
 		decodeAction(actionQueue.get(0));
-		clearMessagesOlderThan(MAX_TURNS_IN_LOG);
+
 	}
 	
 	public void onEnter(int x, int y, int z, Tile tile) {
@@ -107,14 +106,7 @@ public class PlayerAI extends CreatureAI{
 	}
 	
 	public void onNotify(String message) {
-		if (messagesByTurn.containsKey(world.turnNumber())) {
-			messagesByTurn.get(world.turnNumber()).add(message);
-		}
-		else {
-			ArrayList<String> messages = new ArrayList<>();
-			messages.add(message);
-			messagesByTurn.put(world.turnNumber(), messages);
-		}
+		notificationsHandle.addNotification(message, world.turnNumber());
 	}
 	
 	public boolean canSee(int wx, int wy, int wz) {
@@ -137,22 +129,5 @@ public class PlayerAI extends CreatureAI{
 		creature.modifySkillPoints(1);
 		creature.gainMaxHP();
 		creature.gainMaxMana();
-	}
-
-	public List<String> messagesThisTurn() {
-		return messagesByTurn.getOrDefault(world.turnNumber(), new ArrayList<>());
-	}
-
-	private void clearMessagesOlderThan(int numTurns) {
-		// do this in two passes bc modifying the set you're iterating over is scary
-		ArrayList<Integer> turnsToRemove = new ArrayList<>();
-		for (Integer key: messagesByTurn.keySet()) {
-			if (key > numTurns) {
-				turnsToRemove.add(key);
-			}
-		}
-		for (Integer toRemove: turnsToRemove) {
-			messagesByTurn.remove(toRemove);
-		}
 	}
 }

@@ -33,6 +33,7 @@ import RogueLike.Main.Creatures.Slimes.ThundercloudSlime;
 import RogueLike.Main.Creatures.Slimes.ThundercloudSlimeling;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Items.Item;
+import RogueLike.Main.Utils.NotificationHistory;
 
 public class CreatureFactory {
 	
@@ -75,11 +76,11 @@ public ObjectFactory objectFactory;
 	}
 	
 	//Player
-	public Creature newPlayer(FieldOfView fov, String playerClass, List<Integer> startingStats, Skill[] startingSkills, String playerName, String playerAncestry) {
+	public Creature newPlayer(FieldOfView fov, NotificationHistory notificationsHandle, String playerClass, List<Integer> startingStats, Skill[] startingSkills, String playerName, String playerAncestry) {
 		//world, name, glyph, color, maxHP 20, maxMana, base armorclass, strength, dexterity, intelligence, visionRadius, inventorySize) {
 		Creature player = new Creature(objectFactory.world, "player", '@', ExtendedAsciiPanel.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
 		player.setID(0);
-		new PlayerAI(player, fov, objectFactory, objectFactory.world);
+		new PlayerAI(player, notificationsHandle, fov, objectFactory, objectFactory.world);
 		
 		player.setPlayerName(playerName);
 		player.setPlayerAncestry(playerAncestry);

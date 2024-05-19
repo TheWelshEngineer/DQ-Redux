@@ -10,6 +10,7 @@ import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Tile;
+import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Creatures.Creature;
@@ -30,7 +31,7 @@ public class GameplayScreen implements Screen{
 		int top = getScrollY();
 		
 		displayTiles(terminal, left, top);
-		displayMessages(terminal, player.getMessages());
+		displayMessages(terminal, playerNotifications.getNotificationsOnTurn(world.turnNumber()));
 		
 		//health bar
 		terminal.writeCenter("====================================================================================================================", 21);
@@ -262,6 +263,7 @@ public class GameplayScreen implements Screen{
 	private int screenHeight;
 	public Creature player;
 	public List<Effect> effects;
+	private NotificationHistory playerNotifications;
 	private FieldOfView fov;
 	private Screen subscreen;
 	public String playerClass;
@@ -290,6 +292,8 @@ public class GameplayScreen implements Screen{
 		this.playerAncestry = playerAncestry;
 		screenWidth = 120; //80
 		screenHeight = 21; //21
+		// TODO: make the max notification history length configurable
+		playerNotifications = new NotificationHistory(100);
 		createWorld();
 		fov = new FieldOfView(world);
 		ObjectFactory factory = new ObjectFactory(world);
@@ -303,7 +307,7 @@ public class GameplayScreen implements Screen{
 	
 	
 	public void createCreatures(ObjectFactory factory) {
-		player = factory.creatureFactory.newPlayer(fov, this.playerClass, this.startingStats, this.startingSkills, this.playerName, this.playerAncestry);
+		player = factory.creatureFactory.newPlayer(fov, this.playerNotifications, this.playerClass, this.startingStats, this.startingSkills, this.playerName, this.playerAncestry);
 		
 		factory.setUpPotionIndex();
 		factory.setUpWandIndex(player);
