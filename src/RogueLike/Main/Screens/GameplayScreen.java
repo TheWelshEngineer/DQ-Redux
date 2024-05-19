@@ -31,6 +31,7 @@ public class GameplayScreen implements Screen{
 		int top = getScrollY();
 		
 		displayTiles(terminal, left, top);
+		playerNotifications.clearOldMessages(world.turnNumber());
 		displayMessages(terminal, playerNotifications.getNotificationsOnTurn(world.turnNumber()));
 		
 		//health bar
