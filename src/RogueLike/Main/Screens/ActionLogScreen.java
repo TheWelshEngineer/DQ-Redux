@@ -13,7 +13,7 @@ public class ActionLogScreen implements Screen {
     private final int currentTurn;
     private final List<TerminalText> logLines;
     private int startLine;
-    private final int maxLinesToDisplay = 36;
+    private final int MAX_LINES_TO_DISPLAY = 36;
 
     public ActionLogScreen(NotificationHistory notificationHistory, int currentTurn) {
         this.notificationHistory = notificationHistory;
@@ -40,12 +40,12 @@ public class ActionLogScreen implements Screen {
             if (startLine > 0) {
                 terminal.write('^', arrowsX, topY-1, ExtendedAsciiPanel.brightWhite);
             }
-            if (startLine + maxLinesToDisplay < logLines.size()) {
-                terminal.write('v', arrowsX, topY + maxLinesToDisplay, ExtendedAsciiPanel.brightWhite);
+            if (startLine + MAX_LINES_TO_DISPLAY < logLines.size()) {
+                terminal.write('v', arrowsX, topY + MAX_LINES_TO_DISPLAY, ExtendedAsciiPanel.brightWhite);
             }
 
             // write out the log lines
-            for (int yOffset = 0; yOffset < maxLinesToDisplay; yOffset++) {
+            for (int yOffset = 0; yOffset < MAX_LINES_TO_DISPLAY; yOffset++) {
                 // index should never be negative as startLine should never be negative
                 int index = yOffset + startLine;
                 if (index >= logLines.size()) break;
@@ -53,7 +53,7 @@ public class ActionLogScreen implements Screen {
             }
         }
 
-        terminal.writeCenter("-- [ESCAPE]: Back --", topY + maxLinesToDisplay + bottomPadding);
+        terminal.writeCenter("-- [ESCAPE]: Back --", topY + MAX_LINES_TO_DISPLAY + bottomPadding);
     }
 
     private List<TerminalText> getLines() {
@@ -68,13 +68,22 @@ public class ActionLogScreen implements Screen {
     }
 
     public Screen respondToUserInput(KeyEvent key) {
+        final int FAST_SCROLL_LINES = 5;
+        final int SLOW_SCROLL_LINES = 1;
         switch(key.getKeyCode()) {
             case KeybindManager.navigateMenuBack: return null;
             case KeybindManager.navigateMenuUp:
-                if (startLine > 0) startLine--;
+                startLine = Math.max(0, startLine - SLOW_SCROLL_LINES);
+                break;
+            case KeybindManager.navigateMenuLeft:
+                //TODO: rather than scrolling by a fixed amount, maybe we should scroll by one turn?
+                startLine = Math.max(0, startLine - FAST_SCROLL_LINES);
                 break;
             case KeybindManager.navigateMenuDown:
-                if (startLine + maxLinesToDisplay < logLines.size()) startLine++;
+                startLine = Math.min(logLines.size() - MAX_LINES_TO_DISPLAY, startLine + SLOW_SCROLL_LINES);
+                break;
+            case KeybindManager.navigateMenuRight:
+                startLine = Math.min(logLines.size() - MAX_LINES_TO_DISPLAY, startLine + FAST_SCROLL_LINES);
                 break;
         }
         return this;
