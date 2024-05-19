@@ -48,4 +48,8 @@ public class NotificationHistory {
     public List<Integer> storedTurns() {
         return (messagesByTurn.keySet().stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
     }
+
+    public int getTurnLimit() {
+        return maxLength;
+    }
 }
