@@ -11,36 +11,19 @@ public class Damage {
 		return (Effect) statusEffect.clone();
 	}
 
-	private EffectFactory effectFactory;
-	public EffectFactory effectFactory() {
-		return effectFactory;
-	}
-	public void setEffectFactory(EffectFactory factory) {
-		effectFactory = factory;
-	}
-	
-	private int amount;
+	private final int amount;
 	public int amount() {
 		return amount;
-	}
-	public void setAmount(int value) {
-		amount = value;
-	}
-	public void modifyAmount(int value) {
-		amount += value;
 	}
 	
 	public final boolean isSilent;
 	public final boolean applyStatus;
 	
-	public Damage(int value, boolean silent, DamageType type, EffectFactory factory, boolean applyStatus) {
-
+	public Damage(int value, boolean silent, DamageType type, EffectFactory effectFactory, boolean applyStatus) {
 		amount = value;
 		isSilent = silent;
 		this.type = type;
-		effectFactory = factory;
 		this.applyStatus = applyStatus;
-
 
 		switch (type) {
 			case ACID: statusEffect = effectFactory.corroded(value); break;
