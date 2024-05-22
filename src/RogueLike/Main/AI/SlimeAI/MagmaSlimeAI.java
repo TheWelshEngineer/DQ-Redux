@@ -90,8 +90,8 @@ public class MagmaSlimeAI extends CreatureAI{
             }
             creature.addEffect((Effect)factory.effectFactory.fireball(5).clone());
             creature.doAction("explode into slimelings!");
-            Damage damage = new Damage(creature.hp(), true, DamageType.PHYSICAL, factory.effectFactory, false);
-            creature.modifyHP(damage, "");
+            Damage damage = new Damage(creature.hp(), true, DamageType.TRUE, factory.effectFactory, false);
+            creature.damage(damage, "");
 		}
 	}
 	

@@ -98,8 +98,8 @@ public class ThundercloudSlimeAI extends CreatureAI{
                 }
             }
             creature.doAction("split into slimelings!");
-            Damage damage = new Damage(creature.hp(), true, DamageType.PHYSICAL, factory.effectFactory, false);
-            creature.modifyHP(damage, "");
+            Damage damage = new Damage(creature.hp(), true, DamageType.TRUE, factory.effectFactory, false);
+            creature.damage(damage, "");
 		}
 	}
 	

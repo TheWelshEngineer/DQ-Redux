@@ -51,9 +51,7 @@ public class Damage {
 			case PHYSICAL: statusEffect = effectFactory.bleeding(value); break;
 			case POISON: statusEffect = effectFactory.poisoned(value); break;
 			case SHOCK: statusEffect = effectFactory.electrified(value); break;
-			// and the no-effect damage types:
-			case TRUE:
-			case HEALING: statusEffect = null; break; // TODO: or a "no effect" effect instead?
+			case TRUE: statusEffect = null; break; // TODO: or a "no effect" effect instead?
 			default: throw new IllegalArgumentException(type.toString());
 		}
 	}

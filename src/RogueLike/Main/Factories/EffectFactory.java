@@ -48,7 +48,7 @@ public class EffectFactory {
 				}
 	        	Damage damage = new Damage(damageAmount, false, DamageType.MAGIC, getThis(), true);
 	        	creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.sparkle(ExtendedAsciiPanel.lilac, 2), creature.x(), creature.y(), creature.z());
-				creature.modifyHP(damage, String.format("Killed by %s using Magic Missile", reference.name()));
+				creature.damage(damage, String.format("Killed by %s using Magic Missile", reference.name()));
 			}
 		};
 		missile.setShowInMenu(false);
@@ -67,7 +67,7 @@ public class EffectFactory {
 					int amount = (int) Math.round(tempAmount);
 					Damage damage = new Damage(amount, false, DamageType.PHYSICAL, getThis(), true);
 					creature.doAction("get crushed!");
-					creature.modifyHP(damage, "Killed by kinetic energy");
+					creature.damage(damage, "Killed by kinetic energy");
 				}else {
 					int push = 0;
 					for(int i = 0; i < 3; i++) {
@@ -123,7 +123,7 @@ public class EffectFactory {
 						if(attackRoll >= creature.armorClass()) {
 							Damage damage = new Damage(amount, false, DamageType.MAGIC, getThis(), false);
 							creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtendedAsciiPanel.lilac, 2), creature.x(), creature.y(), creature.z());
-							creature.modifyHP(damage, "Killed by kinetic energy");
+							creature.damage(damage, "Killed by kinetic energy");
 						}
 					}
 				}
@@ -207,7 +207,7 @@ public class EffectFactory {
 					creature.doAction("get hit with a bolt of fire!");
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtendedAsciiPanel.orange, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Firebolt", reference.name()));
+					creature.damage(damage, String.format("Killed by %s using Firebolt", reference.name()));
 					if(attackRoll >= 20 && reference.pyromancyLevel() >= 3) {
 						creature.addEffect((Effect) reference.ai().factory.effectFactory.ignited(reference.proficiencyBonus()*2).clone());
 					}
@@ -255,7 +255,7 @@ public class EffectFactory {
 						creature.cureEffectOfType(Effect.ignited);
 					}
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtendedAsciiPanel.orange, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Flashfire", reference.name()));
+					creature.damage(damage, String.format("Killed by %s using Flashfire", reference.name()));
 				}else {
 					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
 					reference.notify(String.format("The %s dodges your spell.", creature.name()));
@@ -337,7 +337,7 @@ public class EffectFactory {
 					creature.doAction("get blasted by freezing air!");
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
 					Damage damage = new Damage(damageAmount, false, DamageType.FROST, getThis(), false);
-					creature.modifyHP(damage, "Killed by icy magic");
+					creature.damage(damage, "Killed by icy magic");
 					creature.addEffect(frozen(duration));
 				}else {
 					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
@@ -372,7 +372,7 @@ public class EffectFactory {
 					creature.doAction("get hit with a blade of ice!");
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(hitDamage, String.format("Killed by %s using Ice Knife", reference.name()));
+					creature.damage(hitDamage, String.format("Killed by %s using Ice Knife", reference.name()));
 					if(attackRoll >= 20 && reference.cryomancyLevel() >= 3) {
 						Effect cryoCrit = creature.ai().factory.effectFactory.frozen(reference.proficiencyBonus());
 						creature.addEffect((Effect) cryoCrit.clone());
@@ -387,7 +387,7 @@ public class EffectFactory {
 					reference.notify(String.format("The %s is frostbitten by your spell!", creature.name()));
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(splashDamage, String.format("Killed by %s using Ice Knife", reference.name()));
+					creature.damage(splashDamage, String.format("Killed by %s using Ice Knife", reference.name()));
 					creature.ai().factory.effectFactory.spreadDamage(creature, splashDamage, String.format("Killed by %s using Ice Knife", reference.name()), 1, creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2));
 				}else {
 					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
@@ -669,7 +669,7 @@ public class EffectFactory {
 				creature.setLastHit(reference);
 				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), creature.x(), creature.y(), creature.z());
 				Damage damage = new Damage(damageAmount, false, DamageType.SHOCK, getThis(), true);
-				creature.modifyHP(damage, String.format("Killed by %s using Chain Lightning", reference.name()));
+				creature.damage(damage, String.format("Killed by %s using Chain Lightning", reference.name()));
 				
 				if(saved == false) {
 	                creature.ai().factory.effectFactory.spreadDamage(creature, damage, String.format("Killed by %s using Chain Lightning", reference.name()), 2, creature.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2));
@@ -703,7 +703,7 @@ public class EffectFactory {
     				Damage damage = new Damage(amount, false, DamageType.SHOCK, creature.ai().factory.effectFactory, true);
     				if(c.dexterityRoll() < reference.intelligenceSaveDC()) {
     					c.doAction("get hit with a lance of electricity!");
-    					c.modifyHP(damage, String.format("Killed by %s using Lightning Lance", reference.name()));
+    					c.damage(damage, String.format("Killed by %s using Lightning Lance", reference.name()));
     				}
     				
         		}
@@ -782,10 +782,10 @@ public class EffectFactory {
 						creature.cureEffectOfType(Effect.corroded);
 					}
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.lime, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Acid Blast", reference.name()));
+					creature.damage(damage, String.format("Killed by %s using Acid Blast", reference.name()));
 					if(attackRoll >= 20 && reference.alchemancyLevel() >= 3) {
 						reference.addEffect(reference.ai().factory.effectFactory.restoration());
-						reference.modifyHP(new Damage(5*reference.proficiencyBonus(), false, DamageType.HEALING, null, false), null);
+						reference.heal(5 * reference.proficiencyBonus());
 					}
 				}else {
 					creature.notify(String.format("The %s's spell misses you.", reference.name()));
@@ -826,10 +826,10 @@ public class EffectFactory {
 					creature.doAction("get hit with a splash of poison!");
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.magenta, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Toxic Transfusion", reference.name()));
+					creature.damage(damage, String.format("Killed by %s using Toxic Transfusion", reference.name()));
 					if(attackRoll >= 20 && reference.alchemancyLevel() >= 3) {
 						reference.addEffect(reference.ai().factory.effectFactory.restoration());
-						reference.modifyHP(new Damage(5*reference.proficiencyBonus(), false, DamageType.HEALING, null, false), null);
+						reference.heal(5 * reference.proficiencyBonus());
 					}
 				}else {
 					creature.notify(String.format("The %s's spell misses you.", reference.name()));
@@ -876,8 +876,8 @@ public class EffectFactory {
 		Effect lifetap = new Effect(1, "Lifetap", false, reference) {
         	public void start(Creature creature) {
         		int amount_ = (int) creature.hp() / 2;
-        		Damage damage = new Damage(amount_, false, DamageType.TRUE, null, false);
-        		creature.modifyHP(damage, null); //TODO: cause of death?
+        		Damage drainDamage = new Damage(amount_, false, DamageType.TRUE, null, false);
+        		creature.damage(drainDamage, null); //TODO: cause of death?
         		if(reference.alchemancyLevel() >= 1) {
         			amount_ += reference.proficiencyBonus();
         		}
@@ -918,7 +918,7 @@ public class EffectFactory {
         			Damage damage = new Damage(damageAmount, false, DamageType.PHYSICAL, reference.ai().factory.effectFactory, true);
             		creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
             		creature.doAction("get torn apart by metal shards!");
-            		creature.modifyHP(damage, String.format("Killed by %s using Armor Storm", reference.name()));
+            		creature.damage(damage, String.format("Killed by %s using Armor Storm", reference.name()));
             		creature.setLastHit(reference);
             		Effect sundered_ = reference.ai().factory.effectFactory.sundered(stacks_);
     				reference.addEffect((Effect) sundered_.clone());
@@ -970,7 +970,7 @@ public class EffectFactory {
 					creature.doAction("get hit with a spectral weapon!");
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
-					creature.modifyHP(damage, String.format("Killed by %s using Weapon Bolt", reference.name()));
+					creature.damage(damage, String.format("Killed by %s using Weapon Bolt", reference.name()));
 					if(attackRoll >= 20 && reference.ferromancyLevel() >= 3) {
     					Effect giantStrength_ = reference.ai().factory.effectFactory.giantStrength(reference.proficiencyBonus());
         				reference.addEffect((Effect) giantStrength_.clone());
@@ -1044,8 +1044,7 @@ public class EffectFactory {
 				if(creature.hp() == creature.maxHP()) {
 					return;
 				}
-				Damage damage = new Damage((creature.maxHP() - creature.hp()), false, DamageType.HEALING, getThis(), false);
-				creature.modifyHP(damage, "");
+				creature.heal(creature.maxHP() - creature.hp());
 				//creature.doAction("look healthier");
 			}
 		};
@@ -1074,7 +1073,7 @@ public class EffectFactory {
 			public void update(Creature creature) {
 				super.update(creature);
 				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.POISON, getThis(), false);
-				creature.modifyHP(damage, "Killed by poison");
+				creature.damage(damage, "Killed by poison");
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.poisoned)) {
@@ -1095,7 +1094,7 @@ public class EffectFactory {
 			public void update(Creature creature) {
 				super.update(creature);
 				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.POISON, getThis(), false);
-				creature.modifyHP(damage, "Killed by bleeding");
+				creature.damage(damage, "Killed by bleeding");
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.bleeding)) {
@@ -1141,7 +1140,7 @@ public class EffectFactory {
 			public void update(Creature creature) {
 				super.update(creature);
 				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.ACID, getThis(), false);
-				creature.modifyHP(damage, "Killed by acid");
+				creature.damage(damage, "Killed by acid");
 				creature.notify("The acid burns you!");	
 			}
 			public void end(Creature creature) {
@@ -1297,7 +1296,7 @@ public class EffectFactory {
 			public void update(Creature creature) {
 				super.update(creature);
 				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.CHAOS, getThis(), false);
-				creature.modifyHP(damage, "Killed by a devouring curse");
+				creature.damage(damage, "Killed by a devouring curse");
 				creature.loseMana(Dice.d4.roll(), false);
 			}
 			public void end(Creature creature) {
@@ -1679,7 +1678,7 @@ public class EffectFactory {
                         target.doAction("get a shock!");
                         target.setLastHit(creature);
                         Damage damage = new Damage(amountChain, false, DamageType.SHOCK, getThis(), true);
-        				target.modifyHP(damage, "Killed by lightning magic");
+        				target.damage(damage, "Killed by lightning magic");
         				target.loseMana(amountChain, false);
 
                     }
@@ -1820,7 +1819,7 @@ public class EffectFactory {
 			public void start(Creature creature) {
 				creature.doAction("get a shock!");
 				Damage damage = new Damage(Dice.d6.roll(), false, DamageType.SHOCK, getThis(), false);
-				creature.modifyHP(damage, "Killed by shocking magic");
+				creature.damage(damage, "Killed by shocking magic");
 			}
 			public void update(Creature creature) {
 				super.update(creature);
@@ -1843,7 +1842,7 @@ public class EffectFactory {
 				super.update(creature);
 				creature.doAction("burn up!");
 				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.FIRE, getThis(), false);
-				creature.modifyHP(damage, "Burned to death");
+				creature.damage(damage, "Burned to death");
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.ignited)) {
@@ -1992,7 +1991,7 @@ public class EffectFactory {
 			for(int y = centre.y()-radius; y <= centre.y()+radius; y++) {
 				if(centre.creature(x, y, centre.z()) != null && (x != centre.x() && y != centre.y())) {
 					centre.world().setParticleAtLocation(particle, x, y, centre.z());
-					centre.creature(x, y, centre.z()).modifyHP(damage, cause);
+					centre.creature(x, y, centre.z()).damage(damage, cause);
 				}
 			}
 		}

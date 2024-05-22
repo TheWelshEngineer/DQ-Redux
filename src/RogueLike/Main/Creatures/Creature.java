@@ -185,64 +185,52 @@ public class Creature implements Cloneable{
 		return hp;
 	}
 
-	public void modifyHP(Damage damage, String causeOfDeath) {
-		if(damage.type == DamageType.HEALING) {
-			int amount = damage.amount();
-			hp += amount;
-			if(!damage.isSilent) {
-				if(this.isPlayer()) {
-					this.notify("You recover %d health.", amount);
-				}else {
-					this.doAction("recover %d health", amount);
-				}
-			}
-		}else {
-			int amount = damage.amount();
-			int amountTemp = damage.amount();
-			boolean applyStatus = true;
+	public void damage(Damage damage, String causeOfDeath) {
+		int amount = damage.amount();
+		int amountTemp = damage.amount();
+		boolean applyStatus = true;
 
-			if((this.resistances()).contains(damage.type)){
-				amount = (int)Math.floor(amountTemp*0.5);
-			}
-			
-			if((this.weaknesses()).contains(damage.type)){
-				amount = (int)Math.floor(amountTemp*2);
-			}
+		if (amount < 0) amount = 0;
 
-			if((this.imumnities()).contains(damage.type)){
-				amount = 0;
-				applyStatus = false;
-			}
-
-			hp -= amount;
-			if(amount > 0) {
-				setHPCooldown(5);
-			}
-			if(!damage.isSilent && amount > 0) {
-				if(this.isPlayer()) {
-					this.notify("You take %d %s damage.", amount, damage.type.toString().toLowerCase());
-				}else {
-					this.doAction("take %d %s damage", amount, damage.type.toString().toLowerCase());
-				}
-			}else if (!damage.isSilent && amount == 0) {
-				if(this.isPlayer()) {
-					this.notify("You ignore the %s damage.", damage.type.toString().toLowerCase());
-				}else {
-					this.doAction("seem to ignore the %s damage", damage.type.toString().toLowerCase());
-				}
-			}
-			
-			if(applyStatus && damage.applyStatus && Dice.d20.roll() == 1 && damage.statusEffect() != null) {
-				this.addEffect((Effect) damage.statusEffect().clone());
-			}
-
+		if((this.resistances()).contains(damage.type)){
+			amount = (int)Math.floor(amountTemp*0.5);
 		}
-		//hp += damage.amount();
+
+		if((this.weaknesses()).contains(damage.type)){
+			amount = (int)Math.floor(amountTemp*2);
+		}
+
+		if((this.imumnities()).contains(damage.type)){
+			amount = 0;
+			applyStatus = false;
+		}
+
+		hp -= amount;
+		if(amount > 0) {
+			setHPCooldown(5);
+		}
+		if(!damage.isSilent && amount > 0) {
+			if(this.isPlayer()) {
+				this.notify("You take %d %s damage.", amount, damage.type.toString().toLowerCase());
+			}else {
+				this.doAction("take %d %s damage", amount, damage.type.toString().toLowerCase());
+			}
+		}else if (!damage.isSilent && amount == 0) {
+			if(this.isPlayer()) {
+				this.notify("You ignore the %s damage.", damage.type.toString().toLowerCase());
+			}else {
+				this.doAction("seem to ignore the %s damage", damage.type.toString().toLowerCase());
+			}
+		}
+
+		if(applyStatus && damage.applyStatus && Dice.d20.roll() == 1 && damage.statusEffect() != null) {
+			this.addEffect((Effect) damage.statusEffect().clone());
+		}
+
+
 		this.causeOfDeath = causeOfDeath;
 
-		if(hp > maxHP) {
-			hp = maxHP;
-		}else if(hp <= 0 && !isDead) {
+		if(hp <= 0 && !isDead) {
 			setIsDead(true);
 			doActionWhenDead("die");
 			if(lastHit != null) {
@@ -250,6 +238,26 @@ public class Creature implements Cloneable{
 			}
 			leaveCorpse();
 			world.remove(this);
+		}
+	}
+
+	public void heal(int amount) {
+		heal(amount, false);
+	}
+	public void heal(int amount, boolean isSilent) {
+		if (amount < 0) amount = 0;
+
+		hp += amount;
+		if(!isSilent) {
+			if(this.isPlayer()) {
+				this.notify("You recover %d health.", amount);
+			}else {
+				this.doAction("recover %d health", amount);
+			}
+		}
+
+		if(hp > maxHP) {
+			hp = maxHP;
 		}
 	}
 
@@ -1327,8 +1335,7 @@ public class Creature implements Cloneable{
 			xp = 0;
 			doAction("advance to level %d", level);
 			ai.onGainLevel();
-			Damage levelUpHealth = new Damage(level*2, false, DamageType.HEALING, factory().effectFactory, false);
-			modifyHP(levelUpHealth, "");
+			heal(level * 2);
 		}
 	}
 
@@ -2158,20 +2165,20 @@ public class Creature implements Cloneable{
 			
 			other.setLastHit(this);
 			if(weapon != null) {
-				other.modifyHP(damage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
+				other.damage(damage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
 				if(this.weapon.isSimple() && this.simpleWeaponsLevel() >= 3 && attackRoll >= 20) {
 					other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
 				}else if(this.weapon.isFinesse() && this.finesseWeaponsLevel() >= 3 && attackRoll >= 20) {
 					other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
 				}
 			}else {
-				other.modifyHP(damage, String.format("Killed by a %s", this.name));
+				other.damage(damage, String.format("Killed by a %s", this.name));
 			}
 			if(this.affectedBy(Effect.electrocharged)) {
 				if(weapon != null) {
-					other.modifyHP(electroDamage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
+					other.damage(electroDamage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
 				}else {
-					other.modifyHP(electroDamage, String.format("Killed by a %s", this.name));
+					other.damage(electroDamage, String.format("Killed by a %s", this.name));
 				}
 			}
 			
@@ -2350,14 +2357,14 @@ public class Creature implements Cloneable{
 
 			other.setLastHit(this);
 			other.addEffect(item.quaffEffect());
-			other.modifyHP(damage, String.format("Killed by a %s using a %s", this.name, item.name()));
+			other.damage(damage, String.format("Killed by a %s using a %s", this.name, item.name()));
 			if(item.isSimple() && this.simpleWeaponsLevel() >= 3 && attackRoll >= 20) {
 				other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
 			}else if(item.isFinesse() && this.finesseWeaponsLevel() >= 3 && attackRoll >= 20) {
 				other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
 			}
 			if(this.affectedBy(Effect.electrocharged)) {
-				other.modifyHP(electroDamage, String.format("Killed by a %s using a %s", this.name, item.name()));
+				other.damage(electroDamage, String.format("Killed by a %s using a %s", this.name, item.name()));
 			}
 			if(other.hp > 0){
 				this.setLastTarget(other);
@@ -2496,16 +2503,16 @@ public class Creature implements Cloneable{
 						other.inventory().add(powder);
 					}
 				}
-				other.modifyHP(damage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
+				other.damage(damage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
 				
 			}else {
-				other.modifyHP(damage, String.format("Killed by a %s", this.name));
+				other.damage(damage, String.format("Killed by a %s", this.name));
 			}
 			if(this.affectedBy(Effect.electrocharged)) {
 				if(weapon != null) {
-					other.modifyHP(electroDamage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
+					other.damage(electroDamage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
 				}else {
-					other.modifyHP(electroDamage, String.format("Killed by a %s", this.name));
+					other.damage(electroDamage, String.format("Killed by a %s", this.name));
 				}
 			}
 			if(other.hp > 0){
@@ -3267,8 +3274,7 @@ public class Creature implements Cloneable{
 		addEffect(item.quaffEffect());
 		modifyFood(item.foodValue());
 		if(playerAncestry == "Orc") {
-			Damage orcHealOnEat = new Damage((int) Math.ceil(item.foodValue()/100), true, DamageType.HEALING, null, false);
-			modifyHP(orcHealOnEat, "");
+			heal((int) Math.ceil(item.foodValue()/100), true);
 		}
 		if(item.isCorpse()) {
 			int effectChance = this.strengthRoll();
@@ -3377,8 +3383,8 @@ public class Creature implements Cloneable{
 			//maxFood = maxFood + food / 2;
 			food = maxFood;
 			notify("You can't believe you can eat that much!");
-			Damage damage = new Damage(2, false, DamageType.PHYSICAL, factory().effectFactory, false);
-			modifyHP(damage, "Killed by overeating");
+			Damage overeatDamage = new Damage(2, false, DamageType.PHYSICAL, factory().effectFactory, false);
+			damage(overeatDamage, "Killed by overeating");
 
 		}else if(food < 0 && isPlayer()) {
 			if(this.fortitudeLevel() >= 1) {
@@ -3388,8 +3394,8 @@ public class Creature implements Cloneable{
 				foodTimer = this.proficiencyBonus();
 				notify("You are starving!");
 				food = 0;
-				Damage damage = new Damage((int)(maxHP / 10), false, DamageType.PHYSICAL, factory().effectFactory, false);
-				modifyHP(damage, "Starved to death");
+				Damage starveDamage = new Damage((int)(maxHP / 10), false, DamageType.PHYSICAL, factory().effectFactory, false);
+				damage(starveDamage, "Starved to death");
 			}
 			
 		}
@@ -3582,9 +3588,8 @@ public class Creature implements Cloneable{
 	private void regenerateHealth() {
 		regenHPCooldown -= 1;
 		if(regenHPCooldown <= 0) {
-			int regen = (int)Math.ceil(this.maxHP()*this.healthRegenPercentage());
-			Damage amount = new Damage(regen, true, DamageType.HEALING, factory().effectFactory, false);
-			modifyHP(amount, "");
+			int amount = (int)Math.ceil(this.maxHP()*this.healthRegenPercentage());
+			heal(amount, true);
 			modifyFood(-1);
 			regenHPCooldown = 3;
 		}

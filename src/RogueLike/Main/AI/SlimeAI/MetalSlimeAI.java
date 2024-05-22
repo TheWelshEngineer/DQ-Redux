@@ -89,8 +89,8 @@ public class MetalSlimeAI extends CreatureAI{
                 }
             }
             creature.doAction("split into slimelings!");
-            Damage damage = new Damage(creature.hp(), true, DamageType.CHAOS, factory.effectFactory, false);
-            creature.modifyHP(damage, "");
+            Damage damage = new Damage(creature.hp(), true, DamageType.TRUE, factory.effectFactory, false);
+            creature.damage(damage, "");
 		}
 	}
 	
