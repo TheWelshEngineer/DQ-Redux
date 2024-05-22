@@ -8,6 +8,7 @@ import java.util.List;
 import RogueLike.Main.*;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
 
@@ -187,38 +188,8 @@ public class InventoryScreen implements Screen{
 								symbol = "+";
 							}
 							terminal.write(String.format("Accuracy Bonus: %s%d", symbol, attackbonus), x, z++);
-							
-							String type = "Physical";
-							if(item.dealsFireDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.fire))) {
-								type = "Fire";
-							}
-							if(item.dealsFrostDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.frost))) {
-								type = "Frost";
-							}
-							if(item.dealsShockDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.shock))) {
-								type = "Shock";
-							}
-							if(item.dealsPoisonDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.poison))) {
-								type = "Poison";
-							}
-							if(item.dealsAcidDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.acid))) {
-								type = "Acid";
-							}
-							if(item.dealsMagicDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.magic))) {
-								type = "Magic";
-							}
-							if(item.dealsChaosDamage() || (item.enchantment() != null && item.enchantment().damageTypeString().equals(Damage.chaos))) {
-								type = "Chaos";
-							}
-							terminal.write(String.format("Damage Type: %s", type), x, z++);
-							
-							
-							
-							
-							
-							
-							
-							
+							terminal.write(String.format("Damage Type: %s", item.effectiveDamageType()), x, z++);
+
 						}else {
 							String damage = "";
 							Integer bonus = 0;

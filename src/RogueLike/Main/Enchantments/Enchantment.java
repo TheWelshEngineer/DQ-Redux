@@ -3,6 +3,7 @@ package RogueLike.Main.Enchantments;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Items.Item;
 
 public class Enchantment {
@@ -35,14 +36,8 @@ public class Enchantment {
 		return Dice.d100.roll() >= (100 - activationChance - bonus);
 	}
 	
-	private String damageTypeString = null;
-	public String damageTypeString() {
-		return damageTypeString;
-	}
-	public void setDamageTypeString(String type) {
-		damageTypeString = type;
-	}
-	
+	public final DamageType damageType;
+
 	private Effect effect;
 	public Effect effect() {
 		return (Effect) effect.clone();
@@ -67,19 +62,16 @@ public class Enchantment {
 		creature.addEffect(effect());
 	}
 	
-	public Enchantment(String name, Effect effect, int duration, Item host, String type) {
+	public Enchantment(String name, Effect effect, int duration, Item host, DamageType type) {
 		this.name = name;
 		this.effect = effect;
-		this.damageTypeString = type;
+		this.damageType = type;
 		this.hostItem = host;
 		this.baseEffectDuration = duration;
 	}
 	
 	public Enchantment(String name, Effect effect, int duration, Item host) {
-		this.name = name;
-		this.effect = effect;
-		this.hostItem = host;
-		this.baseEffectDuration = duration;
+		this(name, effect, duration, host, null);
 	}
 
 }

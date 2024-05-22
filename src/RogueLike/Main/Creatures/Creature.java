@@ -7,6 +7,7 @@ import java.util.List;
 import RogueLike.Main.*;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Damage.*;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.SkillManager;
@@ -185,10 +186,10 @@ public class Creature implements Cloneable{
 	}
 
 	public void modifyHP(Damage damage, String causeOfDeath) {
-		if(damage.isHealing() == true) {
+		if(damage.type == DamageType.HEALING) {
 			int amount = damage.amount();
 			hp += amount;
-			if(!damage.isSilent()) {
+			if(!damage.isSilent) {
 				if(this.isPlayer()) {
 					this.notify("You recover %d health.", amount);
 				}else {
@@ -200,15 +201,15 @@ public class Creature implements Cloneable{
 			int amountTemp = damage.amount();
 			boolean applyStatus = true;
 
-			if((this.resistances()).contains(damage.typeString())){
+			if((this.resistances()).contains(damage.type)){
 				amount = (int)Math.floor(amountTemp*0.5);
 			}
 			
-			if((this.weaknesses()).contains(damage.typeString())){
+			if((this.weaknesses()).contains(damage.type)){
 				amount = (int)Math.floor(amountTemp*2);
 			}
 
-			if((this.imumnities()).contains(damage.typeString())){
+			if((this.imumnities()).contains(damage.type)){
 				amount = 0;
 				applyStatus = false;
 			}
@@ -217,21 +218,21 @@ public class Creature implements Cloneable{
 			if(amount > 0) {
 				setHPCooldown(5);
 			}
-			if(!damage.isSilent() && amount > 0) {
+			if(!damage.isSilent && amount > 0) {
 				if(this.isPlayer()) {
-					this.notify("You take %d %s damage.", amount, damage.typeString().toLowerCase());
+					this.notify("You take %d %s damage.", amount, damage.type.toString().toLowerCase());
 				}else {
-					this.doAction("take %d %s damage", amount, damage.typeString().toLowerCase());
+					this.doAction("take %d %s damage", amount, damage.type.toString().toLowerCase());
 				}
-			}else if (!damage.isSilent() && amount == 0) {
+			}else if (!damage.isSilent && amount == 0) {
 				if(this.isPlayer()) {
-					this.notify("You ignore the %s damage.", damage.typeString().toLowerCase());
+					this.notify("You ignore the %s damage.", damage.type.toString().toLowerCase());
 				}else {
-					this.doAction("seem to ignore the %s damage", damage.typeString().toLowerCase());
+					this.doAction("seem to ignore the %s damage", damage.type.toString().toLowerCase());
 				}
 			}
 			
-			if(applyStatus && damage.canApplyStatus() && Dice.d20.roll() == 1 && damage.statusEffect() != null) {
+			if(applyStatus && damage.applyStatus && Dice.d20.roll() == 1 && damage.statusEffect() != null) {
 				this.addEffect((Effect) damage.statusEffect().clone());
 			}
 
@@ -274,12 +275,13 @@ public class Creature implements Cloneable{
 
 	public void modifyMana(Damage value) {
 		int amount = value.amount();
-		if(value.isHealing()) {
+		if(value.type == DamageType.MANA_GAIN) {
 			mana += amount;
 			if(mana > maxMana) {
 				mana = maxMana;
 			}
 		}else {
+			assert value.type == DamageType.MANA_LOSS;
 			mana -= amount;
 			if(amount > 0) {
 				setManaCooldown(5);
@@ -288,8 +290,8 @@ public class Creature implements Cloneable{
 				mana = 0;
 			}
 		}
-		if(this.isPlayer() && !value.isSilent()) {
-			if(value.isHealing()) {
+		if(this.isPlayer() && !value.isSilent) {
+			if(value.type == DamageType.MANA_GAIN) {
 				this.notify("You recover %d mana.", amount);
 			}else {
 				this.notify("You lose %d mana.", amount);
@@ -1047,89 +1049,89 @@ public class Creature implements Cloneable{
 		weakToChaosDamage = value;
 	}
 
-	public ArrayList<String> resistances(){
-		ArrayList<String> resistances = new ArrayList<String>();	
+	public ArrayList<DamageType> resistances(){
+		ArrayList<DamageType> resistances = new ArrayList<>();
 		if(resistsPhysicalDamage()){
-			resistances.add(Damage.physical);
+			resistances.add(DamageType.PHYSICAL);
 		}
 		if(resistsFireDamage()){
-			resistances.add(Damage.fire);
+			resistances.add(DamageType.FIRE);
 		}
 		if(resistsFrostDamage()){
-			resistances.add(Damage.frost);
+			resistances.add(DamageType.FROST);
 		}
 		if(resistsShockDamage()){
-			resistances.add(Damage.shock);
+			resistances.add(DamageType.SHOCK);
 		}
 		if(resistsPoisonDamage()){
-			resistances.add(Damage.poison);
+			resistances.add(DamageType.POISON);
 		}
 		if(resistsAcidDamage()){
-			resistances.add(Damage.acid);
+			resistances.add(DamageType.ACID);
 		}
 		if(resistsMagicDamage()){
-			resistances.add(Damage.magic);
+			resistances.add(DamageType.MAGIC);
 		}
 		if(resistsChaosDamage()){
-			resistances.add(Damage.chaos);
+			resistances.add(DamageType.CHAOS);
 		}
 		return resistances;
 	}
 
-	public ArrayList<String> imumnities(){
-		ArrayList<String> immunities = new ArrayList<String>();	
+	public ArrayList<DamageType> imumnities(){
+		ArrayList<DamageType> immunities = new ArrayList<DamageType>();
 		if(immunePhysicalDamage()){
-			immunities.add(Damage.physical);
+			immunities.add(DamageType.PHYSICAL);
 		}
 		if(immuneFireDamage()){
-			immunities.add(Damage.fire);
+			immunities.add(DamageType.FIRE);
 		}
 		if(immuneFrostDamage()){
-			immunities.add(Damage.frost);
+			immunities.add(DamageType.FROST);
 		}
 		if(immuneShockDamage()){
-			immunities.add(Damage.shock);
+			immunities.add(DamageType.SHOCK);
 		}
 		if(immunePoisonDamage()){
-			immunities.add(Damage.poison);
+			immunities.add(DamageType.POISON);
 		}
 		if(immuneAcidDamage()){
-			immunities.add(Damage.acid);
+			immunities.add(DamageType.ACID);
 		}
 		if(immuneMagicDamage()){
-			immunities.add(Damage.magic);
+			immunities.add(DamageType.MAGIC);
 		}
 		if(immuneChaosDamage()){
-			immunities.add(Damage.chaos);
+			immunities.add(DamageType.CHAOS);
 		}
 		return immunities;
 	}
 	
-	public ArrayList<String> weaknesses(){
-		ArrayList<String> weaknesses = new ArrayList<String>();	
+	public ArrayList<DamageType> weaknesses(){
+		ArrayList<DamageType> weaknesses = new ArrayList<>();
 		if(weakToPhysicalDamage()){
-			weaknesses.add(Damage.physical);
+			weaknesses.add(DamageType.PHYSICAL);
 		}
 		if(weakToFireDamage()){
-			weaknesses.add(Damage.fire);
+			weaknesses.add(DamageType.FIRE);
 		}
 		if(weakToFrostDamage()){
-			weaknesses.add(Damage.frost);
+			weaknesses.add(DamageType.FROST);
 		}
 		if(weakToShockDamage()){
-			weaknesses.add(Damage.shock);
+			weaknesses.add(DamageType.SHOCK);
 		}
 		if(weakToPoisonDamage()){
-			weaknesses.add(Damage.poison);
+			weaknesses.add(DamageType.POISON);
 		}
 		if(weakToAcidDamage()){
-			weaknesses.add(Damage.acid);
+			weaknesses.add(DamageType.ACID);
 		}
 		if(weakToMagicDamage()){
-			weaknesses.add(Damage.magic);
+			weaknesses.add(DamageType.MAGIC);
 		}
 		if(weakToChaosDamage()){
-			weaknesses.add(Damage.chaos);
+			weaknesses.add(DamageType.CHAOS);
 		}
 		return weaknesses;
 	}
@@ -1251,214 +1253,14 @@ public class Creature implements Cloneable{
 
 
 
-	private boolean dealsFireDamage;
-	public boolean dealsFireDamage() {
-		boolean weaponDeals = false;
-		if(weapon != null) {
-			weaponDeals = weapon.dealsFireDamage();
-		}
-		boolean armorDeals = false;
-		if(armor != null) {
-			armorDeals = armor.dealsFireDamage();
-		}
-		boolean ringDeals = false;
-		if(ring != null) {
-			ringDeals = ring.dealsFireDamage();
-		}
-		boolean shieldDeals = false;
-		if(shield != null) {
-			shieldDeals = shield.dealsFireDamage();
-		}
-		
-		int returnDealsFire = (dealsFireDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
-		if(returnDealsFire > 0) {
-			return true;
-		}else {
-			return false;
-		}
+	private DamageType unarmedDamageType;
+	public void setUnarmedDamageType(DamageType unarmedDamageType) {
+		this.unarmedDamageType = unarmedDamageType;
 	}
-	public void setDealsFireDamage(boolean value) {
-		dealsFireDamage = value;
-	}
-
-	private boolean dealsFrostDamage;
-	public boolean dealsFrostDamage() {
-		boolean weaponDeals = false;
-		if(weapon != null) {
-			weaponDeals = weapon.dealsFrostDamage();
-		}
-		boolean armorDeals = false;
-		if(armor != null) {
-			armorDeals = armor.dealsFrostDamage();
-		}
-		boolean ringDeals = false;
-		if(ring != null) {
-			ringDeals = ring.dealsFrostDamage();
-		}
-		boolean shieldDeals = false;
-		if(shield != null) {
-			shieldDeals = shield.dealsFrostDamage();
-		}
-		
-		int returnDealsFrost = (dealsFrostDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
-		if(returnDealsFrost > 0) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	public void setDealsFrostDamage(boolean value) {
-		dealsFrostDamage = value;
-	}
-
-	private boolean dealsShockDamage;
-	public boolean dealsShockDamage() {
-		boolean weaponDeals = false;
-		if(weapon != null) {
-			weaponDeals = weapon.dealsShockDamage();
-		}
-		boolean armorDeals = false;
-		if(armor != null) {
-			armorDeals = armor.dealsShockDamage();
-		}
-		boolean ringDeals = false;
-		if(ring != null) {
-			ringDeals = ring.dealsShockDamage();
-		}
-		boolean shieldDeals = false;
-		if(shield != null) {
-			shieldDeals = shield.dealsShockDamage();
-		}
-		
-		int returnDealsShock = (dealsShockDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
-		if(returnDealsShock > 0) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	public void setDealsShockDamage(boolean value) {
-		dealsShockDamage = value;
-	}
-
-	private boolean dealsPoisonDamage;
-	public boolean dealsPoisonDamage() {
-		boolean weaponDeals = false;
-		if(weapon != null) {
-			weaponDeals = weapon.dealsPoisonDamage();
-		}
-		boolean armorDeals = false;
-		if(armor != null) {
-			armorDeals = armor.dealsPoisonDamage();
-		}
-		boolean ringDeals = false;
-		if(ring != null) {
-			ringDeals = ring.dealsPoisonDamage();
-		}
-		boolean shieldDeals = false;
-		if(shield != null) {
-			shieldDeals = shield.dealsPoisonDamage();
-		}
-		
-		int returnDealsPoison = (dealsPoisonDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
-		if(returnDealsPoison > 0) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	public void setDealsPoisonDamage(boolean value) {
-		dealsPoisonDamage = value;
-	}
-
-	private boolean dealsAcidDamage;
-	public boolean dealsAcidDamage() {
-		boolean weaponDeals = false;
-		if(weapon != null) {
-			weaponDeals = weapon.dealsAcidDamage();
-		}
-		boolean armorDeals = false;
-		if(armor != null) {
-			armorDeals = armor.dealsAcidDamage();
-		}
-		boolean ringDeals = false;
-		if(ring != null) {
-			ringDeals = ring.dealsAcidDamage();
-		}
-		boolean shieldDeals = false;
-		if(shield != null) {
-			shieldDeals = shield.dealsAcidDamage();
-		}
-		
-		int returnDealsAcid = (dealsAcidDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
-		if(returnDealsAcid > 0) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	public void setDealsAcidDamage(boolean value) {
-		dealsAcidDamage = value;
-	}
-
-	private boolean dealsMagicDamage;
-	public boolean dealsMagicDamage() {
-		boolean weaponDeals = false;
-		if(weapon != null) {
-			weaponDeals = weapon.dealsMagicDamage();
-		}
-		boolean armorDeals = false;
-		if(armor != null) {
-			armorDeals = armor.dealsMagicDamage();
-		}
-		boolean ringDeals = false;
-		if(ring != null) {
-			ringDeals = ring.dealsMagicDamage();
-		}
-		boolean shieldDeals = false;
-		if(shield != null) {
-			shieldDeals = shield.dealsMagicDamage();
-		}
-		
-		int returnDealsMagic = (dealsMagicDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
-		if(returnDealsMagic > 0) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	public void setDealsMagicDamage(boolean value) {
-		dealsMagicDamage = value;
-	}
-
-	private boolean dealsChaosDamage;
-	public boolean dealsChaosDamage() {
-		boolean weaponDeals = false;
-		if(weapon != null) {
-			weaponDeals = weapon.dealsChaosDamage();
-		}
-		boolean armorDeals = false;
-		if(armor != null) {
-			armorDeals = armor.dealsChaosDamage();
-		}
-		boolean ringDeals = false;
-		if(ring != null) {
-			ringDeals = ring.dealsChaosDamage();
-		}
-		boolean shieldDeals = false;
-		if(shield != null) {
-			shieldDeals = shield.dealsChaosDamage();
-		}
-		
-		int returnDealsChaos = (dealsChaosDamage ? 1 : 0) + (weaponDeals ? 1 : 0) + (armorDeals ? 1 : 0) + (ringDeals ? 1 : 0) + (shieldDeals ? 1 : 0);
-		if(returnDealsChaos > 0) {
-			return true;
-		}else {
-			return false;
-		}
-	}
-	public void setDealsChaosDamage(boolean value) {
-		dealsChaosDamage = value;
+	public DamageType unarmedDamageType() {
+		// TODO: I've removed the ability for equipment to override the base unarmed damage type here. We may want
+		//  to add this back in later.
+		return unarmedDamageType;
 	}
 
 
@@ -1528,7 +1330,7 @@ public class Creature implements Cloneable{
 			xp = 0;
 			doAction("advance to level %d", level);
 			ai.onGainLevel();
-			Damage levelUpHealth = new Damage(level*2, true, false, null, factory().effectFactory, false);
+			Damage levelUpHealth = new Damage(level*2, false, DamageType.HEALING, factory().effectFactory, false);
 			modifyHP(levelUpHealth, "");
 		}
 	}
@@ -2133,6 +1935,7 @@ public class Creature implements Cloneable{
 		//this.proficiencyBonus = 2;
 		this.hpScaleAmount = hpScaleMedium();
 		this.manaScaleAmount = manaScaleMedium();
+		this.unarmedDamageType = DamageType.PHYSICAL;
 	}
 
 
@@ -2286,7 +2089,7 @@ public class Creature implements Cloneable{
 		if(this.weapon() != null) {
 			electroAmount += this.weapon().upgradeLevel();
 		}
-		Damage electroDamage = new ShockDamage(electroAmount, false, this.ai.factory.effectFactory, true);
+		Damage electroDamage = new Damage(electroAmount, false, DamageType.SHOCK, this.ai.factory.effectFactory, true);
 		
 		int attackRoll = 0;
 		if(weapon != null) {
@@ -2327,66 +2130,15 @@ public class Creature implements Cloneable{
 			}
 		}
 		
-		Damage damage = new Damage(amount, false, false, Damage.physical, factory().effectFactory, true);
-		if(this.isPlayer()) {
-			if(weapon != null) {
-				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
-					damage = new FireDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
-					damage = new FrostDamage(amount, false, factory().effectFactory, true);
-				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
-					damage = new ShockDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
-					damage = new PoisonDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
-					damage = new AcidDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
-					damage = new MagicDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
-					damage = new ChaosDamage(amount, false, factory().effectFactory, true);
-				}else {
-					damage = new PhysicalDamage(amount, false, factory().effectFactory, true);
-				}
-			}
-		}else {
-			if(weapon != null) {
-				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
-					damage = new FireDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
-					damage = new FrostDamage(amount, false, factory().effectFactory, true);
-				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
-					damage = new ShockDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
-					damage = new PoisonDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
-					damage = new AcidDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
-					damage = new MagicDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
-					damage = new ChaosDamage(amount, false, factory().effectFactory, true);
-				}else {
-					damage = new PhysicalDamage(amount, false, factory().effectFactory, true);
-				}
-			}else {
-				if(this.dealsFireDamage()) {
-					damage = new FireDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsFrostDamage()) {
-					damage = new FrostDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsShockDamage()) {
-					damage = new ShockDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsPoisonDamage()) {
-					damage = new PoisonDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsAcidDamage()) {
-					damage = new AcidDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsMagicDamage()) {
-					damage = new MagicDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsChaosDamage()) {
-					damage = new ChaosDamage(amount, false, factory().effectFactory, true);
-				}else {
-					damage = new PhysicalDamage(amount, false, factory().effectFactory, true);
-				}
-			}
+		DamageType damageType;
+		if(weapon != null) {
+			damageType = weapon.effectiveDamageType();
 		}
+		else {
+			// no weapon, use unarmed damage type
+			damageType = unarmedDamageType();
+		}
+		Damage damage = new Damage(amount, false, damageType, factory().effectFactory, true);
 
 
 
@@ -2545,26 +2297,7 @@ public class Creature implements Cloneable{
 			amount = 1;
 		}
 
-		Damage damage = new Damage(amount, false, false, Damage.physical, factory().effectFactory, true);
-		if(item.dealsFireDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.fire)) {
-			damage = new FireDamage(amount, false, factory().effectFactory, true);
-		}else if(item.dealsFrostDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.frost)) {
-			damage = new FrostDamage(amount, false, factory().effectFactory, true);
-		}if(item.dealsShockDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.shock)) {
-			damage = new ShockDamage(amount, false, factory().effectFactory, true);
-		}else if(item.dealsPoisonDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.poison)) {
-			damage = new PoisonDamage(amount, false, factory().effectFactory, true);
-		}else if(item.dealsAcidDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.acid)) {
-			damage = new AcidDamage(amount, false, factory().effectFactory, true);
-		}else if(item.dealsMagicDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.magic)) {
-			damage = new MagicDamage(amount, false, factory().effectFactory, true);
-		}else if(item.dealsChaosDamage() || (item.enchantment() != null && item.enchantment().damageTypeString() == Damage.chaos)) {
-			damage = new ChaosDamage(amount, false, factory().effectFactory, true);
-		}else {
-			damage = new PhysicalDamage(amount, false, factory().effectFactory, true);
-		}
-			
-
+		Damage damage = new Damage(amount, false, item.effectiveDamageType(), factory().effectFactory, true);
 
 		int attackRoll = 0;
 		if(item.isThrownWeapon()) {
@@ -2609,7 +2342,7 @@ public class Creature implements Cloneable{
 		if(item.upgradeLevel() > 0) {
 			electroAmount += item.upgradeLevel();
 		}
-		Damage electroDamage = new ShockDamage(electroAmount, false, this.ai.factory.effectFactory, true);
+		Damage electroDamage = new Damage(electroAmount, false, DamageType.SHOCK, this.ai.factory.effectFactory, true);
 
 		if(attackRoll >= other.armorClass() || attackRoll >= 20) {
 			//doAction("throw a %s at the %s for %d damage", nameOf(item), other.name, damage.amount());
@@ -2712,68 +2445,15 @@ public class Creature implements Cloneable{
 			amount *= 2;
 		}
 
-		Damage damage = new Damage(amount, false, false, Damage.physical, factory().effectFactory, true);
-		if(this.isPlayer()) {
-			if(weapon != null) {
-				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
-					damage = new FireDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
-					damage = new FrostDamage(amount, false, factory().effectFactory, true);
-				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
-					damage = new ShockDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
-					damage = new PoisonDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
-					damage = new AcidDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
-					damage = new MagicDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
-					damage = new ChaosDamage(amount, false, factory().effectFactory, true);
-				}else {
-					damage = new PhysicalDamage(amount, false, factory().effectFactory, true);
-				}
-			}
-		}else {
-			if(weapon != null) {
-				if(weapon.dealsFireDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.fire)) {
-					damage = new FireDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsFrostDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.frost)) {
-					damage = new FrostDamage(amount, false, factory().effectFactory, true);
-				}if(weapon.dealsShockDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.shock)) {
-					damage = new ShockDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsPoisonDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.poison)) {
-					damage = new PoisonDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsAcidDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.acid)) {
-					damage = new AcidDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsMagicDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.magic)) {
-					damage = new MagicDamage(amount, false, factory().effectFactory, true);
-				}else if(weapon.dealsChaosDamage() || (weapon.enchantment() != null && weapon.enchantment().damageTypeString() == Damage.chaos)) {
-					damage = new ChaosDamage(amount, false, factory().effectFactory, true);
-				}else {
-					damage = new PhysicalDamage(amount, false, factory().effectFactory, true);
-				}
-			}else {
-				if(this.dealsFireDamage()) {
-					damage = new FireDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsFrostDamage()) {
-					damage = new FrostDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsShockDamage()) {
-					damage = new ShockDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsPoisonDamage()) {
-					damage = new PoisonDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsAcidDamage()) {
-					damage = new AcidDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsMagicDamage()) {
-					damage = new MagicDamage(amount, false, factory().effectFactory, true);
-				}else if(this.dealsChaosDamage()) {
-					damage = new ChaosDamage(amount, false, factory().effectFactory, true);
-				}else {
-					damage = new PhysicalDamage(amount, false, factory().effectFactory, true);
-				}
-			}
+		DamageType damageType;
+		if (weapon != null) {
+			damageType = weapon.effectiveDamageType();
 		}
+		else {
+			damageType = this.unarmedDamageType();
+		}
+		Damage damage = new Damage(amount, false, damageType, factory().effectFactory, true);
 
-		
 
 		if(other.affectedBy(Effect.invisible) == true) {
 			attackRoll -= 5;
@@ -2793,7 +2473,7 @@ public class Creature implements Cloneable{
 		if(this.weapon() != null) {
 			electroAmount += this.weapon().upgradeLevel();
 		}
-		Damage electroDamage = new ShockDamage(electroAmount, false, this.ai.factory.effectFactory, true);
+		Damage electroDamage = new Damage(electroAmount, false, DamageType.SHOCK, this.ai.factory.effectFactory, true);
 		
 		if(attackRoll >= other.armorClass() || attackRoll >= 20) {
 			//doAction("fire the %s at the %s for %d damage", nameOf(weapon), other.name, damage.amount());
@@ -3590,7 +3270,7 @@ public class Creature implements Cloneable{
 		addEffect(item.quaffEffect());
 		modifyFood(item.foodValue());
 		if(playerAncestry == "Orc") {
-			Damage orcHealOnEat = new Damage((int) Math.ceil(item.foodValue()/100), true, false, null, null, false);
+			Damage orcHealOnEat = new Damage((int) Math.ceil(item.foodValue()/100), true, DamageType.HEALING, null, false);
 			modifyHP(orcHealOnEat, "");
 		}
 		if(item.isCorpse()) {
@@ -3700,7 +3380,7 @@ public class Creature implements Cloneable{
 			//maxFood = maxFood + food / 2;
 			food = maxFood;
 			notify("You can't believe you can eat that much!");
-			Damage damage = new Damage(2, false, false, Damage.physical, factory().effectFactory, false);
+			Damage damage = new Damage(2, false, DamageType.PHYSICAL, factory().effectFactory, false);
 			modifyHP(damage, "Killed by overeating");
 
 		}else if(food < 0 && isPlayer()) {
@@ -3711,7 +3391,7 @@ public class Creature implements Cloneable{
 				foodTimer = this.proficiencyBonus();
 				notify("You are starving!");
 				food = 0;
-				Damage damage = new Damage((int)(maxHP / 10), false, false, Damage.physical, factory().effectFactory, false);
+				Damage damage = new Damage((int)(maxHP / 10), false, DamageType.PHYSICAL, factory().effectFactory, false);
 				modifyHP(damage, "Starved to death");
 			}
 			
@@ -3906,7 +3586,7 @@ public class Creature implements Cloneable{
 		regenHPCooldown -= 1;
 		if(regenHPCooldown <= 0) {
 			int regen = (int)Math.ceil(this.maxHP()*this.healthRegenPercentage());
-			Damage amount = new Damage(regen, true, true, null, factory().effectFactory, false);
+			Damage amount = new Damage(regen, true, DamageType.HEALING, factory().effectFactory, false);
 			modifyHP(amount, "");
 			modifyFood(-1);
 			regenHPCooldown = 3;
@@ -3917,7 +3597,7 @@ public class Creature implements Cloneable{
 		regenManaCooldown -= 1;
 		if(regenManaCooldown <= 0) {
 			int regen = (int)Math.ceil(this.maxHP()*this.manaRegenPercentage());
-			Damage amount = new Damage(regen, true, true, null, factory().effectFactory, false);
+			Damage amount = new Damage(regen, true, DamageType.MANA_GAIN, factory().effectFactory, false);
 			modifyMana(amount);
 			regenManaCooldown = 3;
 		}
@@ -4022,7 +3702,7 @@ public class Creature implements Cloneable{
 			if(other != null) {
 				doAction("point and mutter at nothing in particular...");
 				if(spell.manaCost() > 0) {
-					Damage amount = new Damage(spell.manaCost(), false, false, null, factory().effectFactory, false);
+					Damage amount = new Damage(spell.manaCost(), false, DamageType.MANA_LOSS, factory().effectFactory, false);
 					modifyMana(amount);
 				}
 				return;
@@ -4042,7 +3722,7 @@ public class Creature implements Cloneable{
 			//
 			//other.setLastHit(this);
 			if(spell.manaCost() > 0) {
-				Damage amount = new Damage(spell.manaCost(), false, false, null, factory().effectFactory, false);
+				Damage amount = new Damage(spell.manaCost(), false, DamageType.MANA_LOSS, factory().effectFactory, false);
 				modifyMana(amount);
 			}
 			if(item != null) {
@@ -4080,7 +3760,7 @@ public class Creature implements Cloneable{
 			if(other == null || other.isContainer() == true || other.isDisguised() == true) {
 				doAction("point and mutter at nothing in particular...");
 				if(spell.manaCost() > 0) {
-					Damage amount = new Damage(spell.manaCost(), false, false, null, factory().effectFactory, false);
+					Damage amount = new Damage(spell.manaCost(), false, DamageType.MANA_LOSS, factory().effectFactory, false);
 					modifyMana(amount);
 				}
 				return;
@@ -4095,7 +3775,7 @@ public class Creature implements Cloneable{
 			other.addEffect(spell.effect());
 			//other.setLastHit(this);
 			if(spell.manaCost() > 0) {
-				Damage amount = new Damage(spell.manaCost(), false, false, null, factory().effectFactory, false);
+				Damage amount = new Damage(spell.manaCost(), false, DamageType.MANA_LOSS, factory().effectFactory, false);
 				modifyMana(amount);
 			}
 			if(item != null) {
@@ -4191,7 +3871,7 @@ public class Creature implements Cloneable{
 		}
 		if(this.stealthLevel() >= 2 && !passive) {
 			if(this.mana() >= (this.proficiencyBonus()*2)) {
-				Damage sneakCost = new Damage(this.proficiencyBonus()*2, false, false, null, null, false);
+				Damage sneakCost = new Damage(this.proficiencyBonus()*2, false, DamageType.MANA_LOSS, null, false);
 				Effect sneak = (Effect)this.ai().factory.effectFactory.invisible(this.proficiencyBonus()).clone();
 				this.modifyMana(sneakCost);
 				this.addEffect(sneak);

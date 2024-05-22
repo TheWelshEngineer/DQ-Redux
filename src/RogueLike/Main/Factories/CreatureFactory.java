@@ -3,6 +3,7 @@ package RogueLike.Main.Factories;
 import java.util.List;
 
 import RogueLike.Main.Dice;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
@@ -42,34 +43,25 @@ public ObjectFactory objectFactory;
 		this.objectFactory = factory;
 	}
 	
-	public static Creature modifyCreatureDamageDealt(Creature creature, String prefix, String damageType) {
+	public static Creature modifyCreatureDamageDealt(Creature creature, String prefix, DamageType damageType) {
 		creature.setName(String.format("%s %s", prefix, creature.name()));
-		
-		switch(damageType) {
-		case Damage.fire: creature.setDealsFireDamage(true); break;
-		case Damage.frost: creature.setDealsFrostDamage(true); break;
-		case Damage.shock: creature.setDealsShockDamage(true); break;
-		case Damage.poison: creature.setDealsPoisonDamage(true); break;
-		case Damage.acid: creature.setDealsAcidDamage(true); break;
-		case Damage.magic: creature.setDealsMagicDamage(true); break;
-		case Damage.chaos: creature.setDealsChaosDamage(true); break;
-		default: creature.setDealsFireDamage(true); break;
-		}
+		creature.setUnarmedDamageType(damageType);
 		return creature;
 	}
 	
-	public static Creature modifyCreatureResistsDamage(Creature creature, String prefix, String damageType) {
+	public static Creature modifyCreatureResistsDamage(Creature creature, String prefix, DamageType damageType) {
 		creature.setName(String.format("%s %s", prefix, creature.name()));
-		
+
+		// TODO: turn this into a field on Creature?
 		switch(damageType) {
-		case Damage.fire: creature.setResistsFireDamage(true); break;
-		case Damage.frost: creature.setResistsFrostDamage(true); break;
-		case Damage.shock: creature.setResistsShockDamage(true); break;
-		case Damage.poison: creature.setResistsPoisonDamage(true); break;
-		case Damage.acid: creature.setResistsAcidDamage(true); break;
-		case Damage.magic: creature.setResistsMagicDamage(true); break;
-		case Damage.chaos: creature.setResistsChaosDamage(true); break;
-		default: creature.setResistsFireDamage(true); break;
+			case FIRE: creature.setResistsFireDamage(true); break;
+			case FROST: creature.setResistsFrostDamage(true); break;
+			case SHOCK: creature.setResistsShockDamage(true); break;
+			case POISON: creature.setResistsPoisonDamage(true); break;
+			case ACID: creature.setResistsAcidDamage(true); break;
+			case MAGIC: creature.setResistsMagicDamage(true); break;
+			case CHAOS: creature.setResistsChaosDamage(true); break;
+			default: throw new IllegalArgumentException(damageType.toString());
 		}
 		return creature;
 	}

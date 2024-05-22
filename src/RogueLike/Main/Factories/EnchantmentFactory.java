@@ -1,6 +1,7 @@
 package RogueLike.Main.Factories;
 
 import RogueLike.Main.Dice;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Enchantments.Enchantment;
@@ -22,17 +23,17 @@ public class EnchantmentFactory {
 	
 	// Weapon enchantments
 	public Enchantment fireWeaponEnchantment(Item host) {
-		Enchantment enchantment = new Enchantment("Blazing", effectFactory.ignited(5 + host.upgradeLevel()), 5, host, Damage.fire);
+		Enchantment enchantment = new Enchantment("Blazing", effectFactory.ignited(5 + host.upgradeLevel()), 5, host, DamageType.FIRE);
 		return enchantment;
 	}
 	
 	public Enchantment frostWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Freezing", effectFactory.frozen(3 + host.upgradeLevel()), 3, host, Damage.frost);
+		Enchantment enchantment  = new Enchantment("Freezing", effectFactory.frozen(3 + host.upgradeLevel()), 3, host, DamageType.FROST);
 		return enchantment;
 	}
 	
 	public Enchantment shockWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Shocking", effectFactory.electrified(5 + host.upgradeLevel()), 5, host, Damage.shock);
+		Enchantment enchantment  = new Enchantment("Shocking", effectFactory.electrified(5 + host.upgradeLevel()), 5, host, DamageType.SHOCK);
 		return enchantment;
 	}
 	
@@ -47,17 +48,17 @@ public class EnchantmentFactory {
 	}
 	
 	public Enchantment poisonWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Toxic", effectFactory.poisoned(5 + host.upgradeLevel()), 5, host, Damage.poison);
+		Enchantment enchantment  = new Enchantment("Toxic", effectFactory.poisoned(5 + host.upgradeLevel()), 5, host, DamageType.POISON);
 		return enchantment;
 	}
 	
 	public Enchantment acidWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Caustic", effectFactory.corroded(5 + host.upgradeLevel()), 5, host, Damage.acid);
+		Enchantment enchantment  = new Enchantment("Caustic", effectFactory.corroded(5 + host.upgradeLevel()), 5, host, DamageType.ACID);
 		return enchantment;
 	}
 	
 	public Enchantment chaosWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Corrupting", effectFactory.devoured(5 + host.upgradeLevel()), 5, host, Damage.chaos);
+		Enchantment enchantment  = new Enchantment("Corrupting", effectFactory.devoured(5 + host.upgradeLevel()), 5, host, DamageType.CHAOS);
 		return enchantment;
 	}
 	

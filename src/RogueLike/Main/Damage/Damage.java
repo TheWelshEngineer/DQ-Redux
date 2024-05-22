@@ -1,35 +1,16 @@
 package RogueLike.Main.Damage;
 
 import RogueLike.Main.Effect;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Factories.EffectFactory;
 
 public class Damage {
-	
-	public final static String physical = "Physical";
-	public final static String fire = "Fire";
-	public final static String frost = "Frost";
-	public final static String shock = "Shock";
-	public final static String poison = "Poison";
-	public final static String acid = "Acid";
-	public final static String magic = "Magic";
-	public final static String chaos = "Chaos";
-	
-	private String typeString;
-	public String typeString() {
-		return typeString;
-	}
-	public void setTypeString(String value) {
-		typeString = value;
-	}
-	
-	private Effect statusEffect;
+	public final DamageType type;
+	private final Effect statusEffect;
 	public Effect statusEffect() {
 		return (Effect) statusEffect.clone();
 	}
-	public void setStatusEffect(Effect effect) {
-		statusEffect = (Effect) effect.clone();
-	}
-	
+
 	private EffectFactory effectFactory;
 	public EffectFactory effectFactory() {
 		return effectFactory;
@@ -49,62 +30,34 @@ public class Damage {
 		amount += value;
 	}
 	
-	private boolean isHealing;
-	public boolean isHealing() {
-		return isHealing;
-	}
+	public final boolean isSilent;
+	public final boolean applyStatus;
 	
-	private boolean isSilent;
-	public boolean isSilent() {
-		return isSilent;
-	}
-	
-	private boolean applyStatus;
-	public boolean canApplyStatus() {
-		return applyStatus;
-	}
-	
-	
+	public Damage(int value, boolean silent, DamageType type, EffectFactory factory, boolean applyStatus) {
 
-	public boolean isPhysical() {
-		return (typeString.equals(Damage.physical));
-	}
-
-	public boolean isFire() {
-		return (typeString.equals(Damage.fire));
-	}
-	
-	public boolean isFrost() {
-		return (typeString.equals(Damage.frost));
-	}
-	
-	public boolean isShock() {
-		return (typeString.equals(Damage.shock));
-	}
-	
-	public boolean isPoison() {
-		return (typeString.equals(Damage.poison));
-	}
-	
-	public boolean isAcid() {
-		return (typeString.equals(Damage.acid));
-	}
-	
-	public boolean isMagic() {
-		return (typeString.equals(Damage.magic));
-	}
-	
-	public boolean isChaos() {
-		return (typeString.equals(Damage.chaos));
-	}
-	
-	public Damage(int value, boolean healing, boolean silent, String type, EffectFactory factory, boolean applyStatus) {
 		amount = value;
-		isHealing = healing;
 		isSilent = silent;
-		typeString = type;
+		this.type = type;
 		effectFactory = factory;
 		this.applyStatus = applyStatus;
+
+
+		switch (type) {
+			case ACID: statusEffect = effectFactory.corroded(value); break;
+			case CHAOS: statusEffect = effectFactory.devoured(value); break;
+			case FIRE: statusEffect = effectFactory.ignited(value); break;
+			case FROST: statusEffect = effectFactory.frozen(value); break;
+			case MAGIC: statusEffect = effectFactory.confused(value); break;
+			case PHYSICAL: statusEffect = effectFactory.bleeding(value); break;
+			case POISON: statusEffect = effectFactory.poisoned(value); break;
+			case SHOCK: statusEffect = effectFactory.electrified(value); break;
+			// and the no-effect damage types:
+			case TRUE:
+			case MANA_GAIN:
+			case MANA_LOSS:
+			case HEALING: statusEffect = null; break; // TODO: or a "no effect" effect instead?
+			default: throw new IllegalArgumentException(type.toString());
+		}
 	}
 	
 

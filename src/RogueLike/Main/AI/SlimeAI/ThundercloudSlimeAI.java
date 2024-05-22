@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
@@ -97,7 +98,7 @@ public class ThundercloudSlimeAI extends CreatureAI{
                 }
             }
             creature.doAction("split into slimelings!");
-            Damage damage = new Damage(creature.hp(), false, true, Damage.physical, factory.effectFactory, false);
+            Damage damage = new Damage(creature.hp(), true, DamageType.PHYSICAL, factory.effectFactory, false);
             creature.modifyHP(damage, "");
 		}
 	}

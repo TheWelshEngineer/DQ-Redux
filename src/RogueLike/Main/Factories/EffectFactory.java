@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Line;
@@ -11,15 +12,7 @@ import RogueLike.Main.Particle;
 import RogueLike.Main.Point;
 import RogueLike.Main.Tile;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Damage.AcidDamage;
-import RogueLike.Main.Damage.ChaosDamage;
 import RogueLike.Main.Damage.Damage;
-import RogueLike.Main.Damage.FireDamage;
-import RogueLike.Main.Damage.FrostDamage;
-import RogueLike.Main.Damage.MagicDamage;
-import RogueLike.Main.Damage.PhysicalDamage;
-import RogueLike.Main.Damage.PoisonDamage;
-import RogueLike.Main.Damage.ShockDamage;
 
 public class EffectFactory {
 	
@@ -51,10 +44,10 @@ public class EffectFactory {
 				}
 				if(reference.evocationLevel() >= 3 && critCheck >= 20) {
 					int manaAmount = (int)Math.ceil(reference.maxMana()/2);
-					Damage manaRestore = new Damage(manaAmount, false, false, null, null, false);
+					Damage manaRestore = new Damage(manaAmount, false, DamageType.MANA_GAIN, null, false);
 					reference.modifyMana(manaRestore);
 				}
-	        	Damage damage = new MagicDamage(damageAmount, false, getThis(), true);
+	        	Damage damage = new Damage(damageAmount, false, DamageType.MAGIC, getThis(), true);
 	        	creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.sparkle(ExtendedAsciiPanel.lilac, 2), creature.x(), creature.y(), creature.z());
 				creature.modifyHP(damage, String.format("Killed by %s using Magic Missile", reference.name()));
 			}
@@ -73,7 +66,7 @@ public class EffectFactory {
 				if(creature == reference) {
 					double tempAmount = (ExtraMaths.diceRoll(1, 12));
 					int amount = (int) Math.round(tempAmount);
-					Damage damage = new PhysicalDamage(amount, false, getThis(), true);
+					Damage damage = new Damage(amount, false, DamageType.PHYSICAL, getThis(), true);
 					creature.doAction("get crushed!");
 					creature.modifyHP(damage, "Killed by kinetic energy");
 				}else {
@@ -126,11 +119,11 @@ public class EffectFactory {
 						}
 						if(reference.evocationLevel() >= 3 && attackRoll >= 20) {
 							int manaAmount = (int)Math.ceil(reference.maxMana()/2);
-							Damage manaRestore = new Damage(manaAmount, false, false, null, null, false);
+							Damage manaRestore = new Damage(manaAmount, false, DamageType.MANA_GAIN, null, false);
 							reference.modifyMana(manaRestore);
 						}
 						if(attackRoll >= creature.armorClass()) {
-							Damage damage = new MagicDamage(amount, false, getThis(), false);
+							Damage damage = new Damage(amount, false, DamageType.MAGIC, getThis(), false);
 							creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtendedAsciiPanel.lilac, 2), creature.x(), creature.y(), creature.z());
 							creature.modifyHP(damage, "Killed by kinetic energy");
 						}
@@ -211,7 +204,7 @@ public class EffectFactory {
         		if(attackRoll >= 20) {
         			damageAmount *= 2;
         		}
-				Damage damage = new FireDamage(damageAmount, false, getThis(), true);
+				Damage damage = new Damage(damageAmount, false, DamageType.FIRE, getThis(), true);
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a bolt of fire!");
 					creature.setLastHit(reference);
@@ -253,9 +246,9 @@ public class EffectFactory {
 				if(reference.pyromancyLevel() >= 2) {
 					damageAmount += reference.proficiencyBonus();
 				}
-				
-				Damage damage = new FireDamage(damageAmount, false, getThis(), true);
-				
+
+				Damage damage = new Damage(damageAmount, false, DamageType.FIRE, getThis(), true);
+
 				int saveDC = reference.intelligenceSaveDC();
 				if(creature.dexterityRoll() < saveDC) {
 					creature.doAction("get consumed by searing flames!");
@@ -345,7 +338,7 @@ public class EffectFactory {
 				if(savingThrow < saveTarget) {
 					creature.doAction("get blasted by freezing air!");
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
-					Damage damage = new FrostDamage(damageAmount, false, getThis(), false);
+					Damage damage = new Damage(damageAmount, false, DamageType.FROST, getThis(), false);
 					creature.modifyHP(damage, "Killed by icy magic");
 					creature.addEffect(frozen(duration));
 				}else {
@@ -365,10 +358,10 @@ public class EffectFactory {
         			attackRoll += reference.proficiencyBonus();
         		}
         		int hitDamageAmount = Dice.d6.roll()+reference.intelligenceModifier();
-				Damage hitDamage = new FrostDamage(hitDamageAmount, false, getThis(), true);
+				Damage hitDamage = new Damage(hitDamageAmount, false, DamageType.FROST, getThis(), true);
 				
 				int splashDamageAmount = Dice.d4.roll()+reference.intelligenceModifier();
-				Damage splashDamage = new FrostDamage(splashDamageAmount, false, getThis(), true);
+				Damage splashDamage = new Damage(splashDamageAmount, false, DamageType.FROST, getThis(), true);
 				if(reference.cryomancyLevel() >= 2) {
 					hitDamageAmount += reference.proficiencyBonus();
 					splashDamageAmount += reference.proficiencyBonus();
@@ -677,7 +670,7 @@ public class EffectFactory {
 				creature.doAction("get a shock!");
 				creature.setLastHit(reference);
 				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), creature.x(), creature.y(), creature.z());
-				Damage damage = new ShockDamage(damageAmount, false, getThis(), true);
+				Damage damage = new Damage(damageAmount, false, DamageType.SHOCK, getThis(), true);
 				creature.modifyHP(damage, String.format("Killed by %s using Chain Lightning", reference.name()));
 				
 				if(saved == false) {
@@ -709,7 +702,7 @@ public class EffectFactory {
         			if(reference.electromancyLevel() >= 2) {
         				amount += reference.proficiencyBonus();
         			}
-    				Damage damage = new ShockDamage(amount, false, creature.ai().factory.effectFactory, true);
+    				Damage damage = new Damage(amount, false, DamageType.SHOCK, creature.ai().factory.effectFactory, true);
     				if(c.dexterityRoll() < reference.intelligenceSaveDC()) {
     					c.doAction("get hit with a lance of electricity!");
     					c.modifyHP(damage, String.format("Killed by %s using Lightning Lance", reference.name()));
@@ -783,7 +776,7 @@ public class EffectFactory {
 					damageAmount *= 2;
 				}
 				
-				Damage damage = new AcidDamage(damageAmount, false, getThis(), true);
+				Damage damage = new Damage(damageAmount, false, DamageType.ACID, getThis(), true);
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a blast of acid!");
 					creature.setLastHit(reference);
@@ -794,7 +787,7 @@ public class EffectFactory {
 					creature.modifyHP(damage, String.format("Killed by %s using Acid Blast", reference.name()));
 					if(attackRoll >= 20 && reference.alchemancyLevel() >= 3) {
 						reference.addEffect(reference.ai().factory.effectFactory.restoration());
-						reference.modifyHP(new Damage(5*reference.proficiencyBonus(), true, false, null, null, false), null);
+						reference.modifyHP(new Damage(5*reference.proficiencyBonus(), false, DamageType.HEALING, null, false), null);
 					}
 				}else {
 					creature.notify(String.format("The %s's spell misses you.", reference.name()));
@@ -829,7 +822,7 @@ public class EffectFactory {
 				reference.addEffect((Effect) venomousWard_.clone());
 				
 				
-				Damage damage = new PoisonDamage(damageAmount, false, getThis(), false);
+				Damage damage = new Damage(damageAmount, false, DamageType.POISON, getThis(), false);
 
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a splash of poison!");
@@ -838,7 +831,7 @@ public class EffectFactory {
 					creature.modifyHP(damage, String.format("Killed by %s using Toxic Transfusion", reference.name()));
 					if(attackRoll >= 20 && reference.alchemancyLevel() >= 3) {
 						reference.addEffect(reference.ai().factory.effectFactory.restoration());
-						reference.modifyHP(new Damage(5*reference.proficiencyBonus(), true, false, null, null, false), null);
+						reference.modifyHP(new Damage(5*reference.proficiencyBonus(), false, DamageType.HEALING, null, false), null);
 					}
 				}else {
 					creature.notify(String.format("The %s's spell misses you.", reference.name()));
@@ -885,15 +878,15 @@ public class EffectFactory {
 		Effect lifetap = new Effect(1, "Lifetap", false, reference) {
         	public void start(Creature creature) {
         		int amount_ = (int) creature.hp() / 2;
-        		Damage damage = new Damage(amount_, false, false, null, null, false);
-        		creature.modifyHP(damage, null);
+        		Damage damage = new Damage(amount_, false, DamageType.TRUE, null, false);
+        		creature.modifyHP(damage, null); //TODO: cause of death?
         		if(reference.alchemancyLevel() >= 1) {
         			amount_ += reference.proficiencyBonus();
         		}
         		if(reference.alchemancyLevel() >= 2) {
         			amount_ += reference.proficiencyBonus();
         		}
-        		Damage manaRestore = new Damage(amount_, true, false, null, null, false);
+        		Damage manaRestore = new Damage(amount_, true, DamageType.MANA_GAIN, null, false);
         		creature.modifyMana(manaRestore);
 			}
         };
@@ -925,7 +918,7 @@ public class EffectFactory {
         		}
         		
         		if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
-        			Damage damage = new PhysicalDamage(damageAmount, false, reference.ai().factory.effectFactory, true);
+        			Damage damage = new Damage(damageAmount, false, DamageType.PHYSICAL, reference.ai().factory.effectFactory, true);
             		creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
             		creature.doAction("get torn apart by metal shards!");
             		creature.modifyHP(damage, String.format("Killed by %s using Armor Storm", reference.name()));
@@ -975,7 +968,7 @@ public class EffectFactory {
         			damageAmount *= 2;
         		}
         		
-        		Damage damage = new MagicDamage(damageAmount, false, reference.ai().factory.effectFactory, true);
+        		Damage damage = new Damage(damageAmount, false, DamageType.MAGIC, reference.ai().factory.effectFactory, true);
         		if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction("get hit with a spectral weapon!");
 					creature.setLastHit(reference);
@@ -1019,7 +1012,7 @@ public class EffectFactory {
 		Effect infuseUpgrade = new Effect(1, "Infuse Upgrade", false, reference) {
         	public void start(Creature creature) {
         		int chance = reference.mana();
-        		Damage chanceMana = new Damage(chance, false, false, null, null, false);
+        		Damage chanceMana = new Damage(chance, false, DamageType.MANA_GAIN, null, false);
         		creature.modifyMana(chanceMana);
         		
         		if(reference.ferromancyLevel() >= 1) {
@@ -1055,7 +1048,7 @@ public class EffectFactory {
 				if(creature.hp() == creature.maxHP()) {
 					return;
 				}
-				Damage damage = new Damage((creature.maxHP() - creature.hp()), true, false, null, getThis(), false);
+				Damage damage = new Damage((creature.maxHP() - creature.hp()), false, DamageType.HEALING, getThis(), false);
 				creature.modifyHP(damage, "");
 				//creature.doAction("look healthier");
 			}
@@ -1069,7 +1062,7 @@ public class EffectFactory {
 				if(creature.mana() == creature.maxMana()) {
 					return;
 				}
-				Damage damage = new Damage((creature.maxMana() - creature.mana()), true, false, null, getThis(), false);
+				Damage damage = new Damage((creature.maxMana() - creature.mana()), false, DamageType.MANA_GAIN, getThis(), false);
 				creature.modifyMana(damage);
 				creature.doAction("look energised");
 			}
@@ -1085,7 +1078,7 @@ public class EffectFactory {
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new PoisonDamage(Dice.d4.roll(), false, getThis(), false);
+				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.POISON, getThis(), false);
 				creature.modifyHP(damage, "Killed by poison");
 			}
 			public void end(Creature creature) {
@@ -1106,7 +1099,7 @@ public class EffectFactory {
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new PhysicalDamage(Dice.d4.roll(), false, getThis(), false);
+				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.POISON, getThis(), false);
 				creature.modifyHP(damage, "Killed by bleeding");
 			}
 			public void end(Creature creature) {
@@ -1152,7 +1145,7 @@ public class EffectFactory {
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new AcidDamage(Dice.d4.roll(), false, getThis(), false);
+				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.ACID, getThis(), false);
 				creature.modifyHP(damage, "Killed by acid");
 				creature.notify("The acid burns you!");	
 			}
@@ -1308,9 +1301,9 @@ public class EffectFactory {
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new ChaosDamage(Dice.d4.roll(), false, getThis(), false);
+				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.CHAOS, getThis(), false);
 				creature.modifyHP(damage, "Killed by a devouring curse");
-				Damage damage2 = new Damage(Dice.d4.roll(), false, false, null, getThis(), false);
+				Damage damage2 = new Damage(Dice.d4.roll(), false, DamageType.MANA_GAIN, getThis(), false);
 				creature.modifyMana(damage2);
 			}
 			public void end(Creature creature) {
@@ -1691,7 +1684,7 @@ public class EffectFactory {
         				
                         target.doAction("get a shock!");
                         target.setLastHit(creature);
-                        Damage damage = new ShockDamage(amountChain, false, getThis(), true);
+                        Damage damage = new Damage(amountChain, false, DamageType.SHOCK, getThis(), true);
         				target.modifyHP(damage, "Killed by lightning magic");
         				target.modifyMana(damage);
 
@@ -1832,12 +1825,12 @@ public class EffectFactory {
 		Effect electrified = new Effect(duration, "Electrified", true, null, Effect.electrified) {
 			public void start(Creature creature) {
 				creature.doAction("get a shock!");
-				Damage damage = new ShockDamage(Dice.d6.roll(), false, getThis(), false);
+				Damage damage = new Damage(Dice.d6.roll(), false, DamageType.SHOCK, getThis(), false);
 				creature.modifyHP(damage, "Killed by shocking magic");
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new Damage(Dice.d4.roll(), false, false, null, getThis(), false);
+				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.MANA_LOSS, getThis(), false);
 				creature.modifyMana(damage);
 			}
 			public void end(Creature creature) {
@@ -1856,7 +1849,7 @@ public class EffectFactory {
 			public void update(Creature creature) {
 				super.update(creature);
 				creature.doAction("burn up!");
-				Damage damage = new FireDamage(Dice.d4.roll(), false, getThis(), false);
+				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.FIRE, getThis(), false);
 				creature.modifyHP(damage, "Burned to death");
 			}
 			public void end(Creature creature) {

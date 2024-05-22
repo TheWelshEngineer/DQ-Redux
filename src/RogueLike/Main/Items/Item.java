@@ -7,6 +7,7 @@ import java.util.List;
 import RogueLike.Main.Description;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Enchantments.Enchantment;
@@ -272,61 +273,21 @@ public class Item implements Cloneable{
 	public void setRangedDamageDice(Dice dice) {
 		rangedDamageDice = dice;
 	}
-	
-	private boolean dealsFireDamage;
-	public boolean dealsFireDamage() {
-		return dealsFireDamage;
+
+
+	private DamageType baseDamageType;
+	public DamageType baseDamageType() {
+		return baseDamageType;
 	}
-	public void setDealsFireDamage(boolean value) {
-		dealsFireDamage = value;
+	public DamageType effectiveDamageType() {
+		// enchantment damage type supersedes base weapon damage type
+		if (this.enchantment != null && this.enchantment.damageType != null) {
+			return this.enchantment.damageType;
+		}
+		return this.baseDamageType;
 	}
-	
-	private boolean dealsFrostDamage;
-	public boolean dealsFrostDamage() {
-		return dealsFrostDamage;
-	}
-	public void setDealsFrostDamage(boolean value) {
-		dealsFrostDamage = value;
-	}
-	
-	private boolean dealsShockDamage;
-	public boolean dealsShockDamage() {
-		return dealsShockDamage;
-	}
-	public void setDealsShockDamage(boolean value) {
-		dealsShockDamage = value;
-	}
-	
-	private boolean dealsPoisonDamage;
-	public boolean dealsPoisonDamage() {
-		return dealsPoisonDamage;
-	}
-	public void setDealsPoisonDamage(boolean value) {
-		dealsPoisonDamage = value;
-	}
-	
-	private boolean dealsAcidDamage;
-	public boolean dealsAcidDamage() {
-		return dealsAcidDamage;
-	}
-	public void setDealsAcidDamage(boolean value) {
-		dealsAcidDamage = value;
-	}
-	
-	private boolean dealsMagicDamage;
-	public boolean dealsMagicDamage() {
-		return dealsMagicDamage;
-	}
-	public void setDealsMagicDamage(boolean value) {
-		dealsMagicDamage = value;
-	}
-	
-	private boolean dealsChaosDamage;
-	public boolean dealsChaosDamage() {
-		return dealsChaosDamage;
-	}
-	public void setDealsChaosDamage(boolean value) {
-		dealsChaosDamage = value;
+	public void setBaseDamageType(DamageType baseDamageType) {
+		this.baseDamageType = baseDamageType;
 	}
 	
 	/*private double defenseValue;
@@ -1332,6 +1293,7 @@ public class Item implements Cloneable{
 		this.name = name;
 		this.defaultName = name;
 		this.thrownDamageDice = Dice.d1;
+		this.baseDamageType = DamageType.PHYSICAL;
 		this.writtenSpells = new ArrayList<Spell>();
 		this.appearance = appearance;
 		this.stackAmount = 1;
