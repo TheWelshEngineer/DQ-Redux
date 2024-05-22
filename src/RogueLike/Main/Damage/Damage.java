@@ -53,8 +53,6 @@ public class Damage {
 			case SHOCK: statusEffect = effectFactory.electrified(value); break;
 			// and the no-effect damage types:
 			case TRUE:
-			case MANA_GAIN:
-			case MANA_LOSS:
 			case HEALING: statusEffect = null; break; // TODO: or a "no effect" effect instead?
 			default: throw new IllegalArgumentException(type.toString());
 		}

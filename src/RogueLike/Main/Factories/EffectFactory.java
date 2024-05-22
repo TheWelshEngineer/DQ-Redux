@@ -44,8 +44,7 @@ public class EffectFactory {
 				}
 				if(reference.evocationLevel() >= 3 && critCheck >= 20) {
 					int manaAmount = (int)Math.ceil(reference.maxMana()/2);
-					Damage manaRestore = new Damage(manaAmount, false, DamageType.MANA_GAIN, null, false);
-					reference.modifyMana(manaRestore);
+					reference.gainMana(manaAmount, false);
 				}
 	        	Damage damage = new Damage(damageAmount, false, DamageType.MAGIC, getThis(), true);
 	        	creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.sparkle(ExtendedAsciiPanel.lilac, 2), creature.x(), creature.y(), creature.z());
@@ -119,8 +118,7 @@ public class EffectFactory {
 						}
 						if(reference.evocationLevel() >= 3 && attackRoll >= 20) {
 							int manaAmount = (int)Math.ceil(reference.maxMana()/2);
-							Damage manaRestore = new Damage(manaAmount, false, DamageType.MANA_GAIN, null, false);
-							reference.modifyMana(manaRestore);
+							reference.gainMana(manaAmount, false);
 						}
 						if(attackRoll >= creature.armorClass()) {
 							Damage damage = new Damage(amount, false, DamageType.MAGIC, getThis(), false);
@@ -886,8 +884,7 @@ public class EffectFactory {
         		if(reference.alchemancyLevel() >= 2) {
         			amount_ += reference.proficiencyBonus();
         		}
-        		Damage manaRestore = new Damage(amount_, true, DamageType.MANA_GAIN, null, false);
-        		creature.modifyMana(manaRestore);
+        		creature.gainMana(amount_, true);
 			}
         };
         lifetap.setShowInMenu(false);
@@ -1012,8 +1009,7 @@ public class EffectFactory {
 		Effect infuseUpgrade = new Effect(1, "Infuse Upgrade", false, reference) {
         	public void start(Creature creature) {
         		int chance = reference.mana();
-        		Damage chanceMana = new Damage(chance, false, DamageType.MANA_GAIN, null, false);
-        		creature.modifyMana(chanceMana);
+        		creature.loseMana(chance, false);
         		
         		if(reference.ferromancyLevel() >= 1) {
         			chance += reference.proficiencyBonus();
@@ -1062,8 +1058,7 @@ public class EffectFactory {
 				if(creature.mana() == creature.maxMana()) {
 					return;
 				}
-				Damage damage = new Damage((creature.maxMana() - creature.mana()), false, DamageType.MANA_GAIN, getThis(), false);
-				creature.modifyMana(damage);
+				creature.gainMana(creature.maxMana() - creature.mana(), false);
 				creature.doAction("look energised");
 			}
 		};
@@ -1303,8 +1298,7 @@ public class EffectFactory {
 				super.update(creature);
 				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.CHAOS, getThis(), false);
 				creature.modifyHP(damage, "Killed by a devouring curse");
-				Damage damage2 = new Damage(Dice.d4.roll(), false, DamageType.MANA_GAIN, getThis(), false);
-				creature.modifyMana(damage2);
+				creature.loseMana(Dice.d4.roll(), false);
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.devoured)) {
@@ -1686,7 +1680,7 @@ public class EffectFactory {
                         target.setLastHit(creature);
                         Damage damage = new Damage(amountChain, false, DamageType.SHOCK, getThis(), true);
         				target.modifyHP(damage, "Killed by lightning magic");
-        				target.modifyMana(damage);
+        				target.loseMana(amountChain, false);
 
                     }
                 }
@@ -1830,8 +1824,7 @@ public class EffectFactory {
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.MANA_LOSS, getThis(), false);
-				creature.modifyMana(damage);
+				creature.loseMana(Dice.d4.roll(), false);
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.electrified)) {

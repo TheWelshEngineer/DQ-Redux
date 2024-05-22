@@ -10,11 +10,9 @@ public enum DamageType {
     POISON("Poison"),
     SHOCK("Shock"),
     TRUE("True"),
-    // TODO: I'm not sure about keeping HEALING, MANA_LOSS, and MANA_GAIN as DamageTypes; it seems like it'll need
-    //  a lot of special-casing when we could just split modifyHP into heal() and damage()!
+    // TODO: I'm not sure about keeping HEALING as a DamageType; it seems like it'll need
+    //  unnecessary special-casing when we could just split modifyHP into heal() and damage() and be clearer!
     HEALING("Healing"),
-    MANA_LOSS("Mana loss"),
-    MANA_GAIN("Mana gain"),
     ;
     private final String name;
     DamageType(String name) {

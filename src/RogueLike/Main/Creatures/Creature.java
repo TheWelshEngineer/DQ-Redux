@@ -273,32 +273,29 @@ public class Creature implements Cloneable{
 		return mana;
 	}
 
-	public void modifyMana(Damage value) {
-		int amount = value.amount();
-		if(value.type == DamageType.MANA_GAIN) {
-			mana += amount;
-			if(mana > maxMana) {
-				mana = maxMana;
-			}
-		}else {
-			assert value.type == DamageType.MANA_LOSS;
-			mana -= amount;
-			if(amount > 0) {
-				setManaCooldown(5);
-			}
-			if(mana < 0) {
-				mana = 0;
-			}
+	public void gainMana(int amount, boolean isSilent) {
+		if (amount <= 0) return; // gain must be positive
+
+		mana += amount;
+		if (mana > maxMana) {
+			mana = maxMana;
 		}
-		if(this.isPlayer() && !value.isSilent) {
-			if(value.type == DamageType.MANA_GAIN) {
-				this.notify("You recover %d mana.", amount);
-			}else {
-				this.notify("You lose %d mana.", amount);
-			}
 
-		}else {
+		if (this.isPlayer() && !isSilent) {
+			this.notify("You recover %d mana.", amount);
+		}
+	}
 
+	public void loseMana(int amount, boolean isSilent) {
+		if (amount >= 0) return; // gain must be positive
+
+		mana -= amount;
+		if (mana > maxMana) {
+			mana = maxMana;
+		}
+
+		if (this.isPlayer() && !isSilent) {
+			this.notify("You lose %d mana.", amount);
 		}
 	}
 
@@ -3597,8 +3594,7 @@ public class Creature implements Cloneable{
 		regenManaCooldown -= 1;
 		if(regenManaCooldown <= 0) {
 			int regen = (int)Math.ceil(this.maxHP()*this.manaRegenPercentage());
-			Damage amount = new Damage(regen, true, DamageType.MANA_GAIN, factory().effectFactory, false);
-			modifyMana(amount);
+			gainMana(regen, true);
 			regenManaCooldown = 3;
 		}
 	}
@@ -3702,8 +3698,7 @@ public class Creature implements Cloneable{
 			if(other != null) {
 				doAction("point and mutter at nothing in particular...");
 				if(spell.manaCost() > 0) {
-					Damage amount = new Damage(spell.manaCost(), false, DamageType.MANA_LOSS, factory().effectFactory, false);
-					modifyMana(amount);
+					loseMana(spell.manaCost(), false);
 				}
 				return;
 			}
@@ -3722,8 +3717,7 @@ public class Creature implements Cloneable{
 			//
 			//other.setLastHit(this);
 			if(spell.manaCost() > 0) {
-				Damage amount = new Damage(spell.manaCost(), false, DamageType.MANA_LOSS, factory().effectFactory, false);
-				modifyMana(amount);
+				loseMana(spell.manaCost(), false);
 			}
 			if(item != null) {
 				if(item.isWand() && (this.nameOf(item) != item.name())) {
@@ -3760,8 +3754,7 @@ public class Creature implements Cloneable{
 			if(other == null || other.isContainer() == true || other.isDisguised() == true) {
 				doAction("point and mutter at nothing in particular...");
 				if(spell.manaCost() > 0) {
-					Damage amount = new Damage(spell.manaCost(), false, DamageType.MANA_LOSS, factory().effectFactory, false);
-					modifyMana(amount);
+					loseMana(spell.manaCost(), false);
 				}
 				return;
 			}
@@ -3775,8 +3768,7 @@ public class Creature implements Cloneable{
 			other.addEffect(spell.effect());
 			//other.setLastHit(this);
 			if(spell.manaCost() > 0) {
-				Damage amount = new Damage(spell.manaCost(), false, DamageType.MANA_LOSS, factory().effectFactory, false);
-				modifyMana(amount);
+				loseMana(spell.manaCost(), false);
 			}
 			if(item != null) {
 				if(item.isWand() && (this.nameOf(item) != item.name())) {
@@ -3871,9 +3863,8 @@ public class Creature implements Cloneable{
 		}
 		if(this.stealthLevel() >= 2 && !passive) {
 			if(this.mana() >= (this.proficiencyBonus()*2)) {
-				Damage sneakCost = new Damage(this.proficiencyBonus()*2, false, DamageType.MANA_LOSS, null, false);
 				Effect sneak = (Effect)this.ai().factory.effectFactory.invisible(this.proficiencyBonus()).clone();
-				this.modifyMana(sneakCost);
+				this.loseMana(this.proficiencyBonus()*2, false);
 				this.addEffect(sneak);
 				notify("You blend into the shadows.");
 			}else {
