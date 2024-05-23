@@ -27,7 +27,7 @@ public class ThundercloudSlime extends Creature{
 		this.scaleStrengthWithDepth(depth);	
 		this.scaleDexterityWithDepth(depth);	
 		this.scaleIntelligenceWithDepth(depth);
-		this.setImmuneShockDamage(true);
+		this.addImmunityTo(DamageType.SHOCK);
 		this.setUnarmedDamageType(DamageType.SHOCK);
 	}
 

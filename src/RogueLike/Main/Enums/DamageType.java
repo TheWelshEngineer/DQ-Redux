@@ -1,5 +1,7 @@
 package RogueLike.Main.Enums;
 
+import java.util.List;
+
 public enum DamageType {
     ACID("Acid"),
     CHAOS("Chaos"),
@@ -20,4 +22,7 @@ public enum DamageType {
     public String toString() {
         return name;
     }
+
+    // TRUE is not resistable, and shouldn't show up in lists of damage modifiers
+    public static final DamageType[] RESISTABLE_TYPES = {ACID, CHAOS, FIRE, FROST, MAGIC, PHYSICAL, POISON, SHOCK};
 }

@@ -27,7 +27,7 @@ public class MagmaSlimeling extends Creature{
 		this.scaleStrengthWithDepth(depth);	
 		this.scaleDexterityWithDepth(depth);	
 		this.scaleIntelligenceWithDepth(depth);
-		this.setImmuneFireDamage(true);
+		this.addImmunityTo(DamageType.FIRE);
 		this.setUnarmedDamageType(DamageType.FIRE);
 	}
 

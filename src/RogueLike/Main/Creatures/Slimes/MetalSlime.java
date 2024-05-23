@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import RogueLike.Main.AI.SlimeAI.MetalSlimeAI;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Factories.ObjectFactory;
 
 public class MetalSlime extends Creature{
@@ -26,9 +27,9 @@ public class MetalSlime extends Creature{
 		this.scaleStrengthWithDepth(depth);	
 		this.scaleDexterityWithDepth(depth);	
 		this.scaleIntelligenceWithDepth(depth);
-		this.setResistsPhysicalDamage(true);
-		this.setImmunePoisonDamage(true);
-		this.setWeakToAcidDamage(true);
+		this.addResistanceTo(DamageType.PHYSICAL);
+		this.addImmunityTo(DamageType.POISON);
+		this.addWeaknessTo(DamageType.ACID);
 	}
 
 }

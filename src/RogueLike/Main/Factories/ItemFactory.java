@@ -1,6 +1,7 @@
 package RogueLike.Main.Factories;
 
 import RogueLike.Main.Dice;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
@@ -530,7 +531,7 @@ public class ItemFactory {
 	}
 	public Item newFireResistanceRing(int depth, boolean addToWorld) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Fire Resistance", 4, 250, 1004);
-		item.setResistsFireDamage(true);
+		item.addResistance(DamageType.FIRE);
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -538,7 +539,7 @@ public class ItemFactory {
 	}
 	public Item newFrostResistanceRing(int depth, boolean addToWorld) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Frost Resistance", 5, 250, 1005);
-		item.setResistsFrostDamage(true);
+		item.addResistance(DamageType.FROST);
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -546,7 +547,7 @@ public class ItemFactory {
 	}
 	public Item newShockResistanceRing(int depth, boolean addToWorld) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Shock Resistance", 6, 250, 1006);
-		item.setResistsShockDamage(true);
+		item.addResistance(DamageType.SHOCK);
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -554,7 +555,7 @@ public class ItemFactory {
 	}
 	public Item newPoisonResistanceRing(int depth, boolean addToWorld) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Poison Resistance", 7, 250, 1007);
-		item.setResistsPoisonDamage(true);
+		item.addResistance(DamageType.POISON);
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -562,7 +563,7 @@ public class ItemFactory {
 	}
 	public Item newAcidResistanceRing(int depth, boolean addToWorld) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Acid Resistance", 8, 250, 1008);
-		item.setResistsAcidDamage(true);
+		item.addResistance(DamageType.ACID);
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -570,7 +571,7 @@ public class ItemFactory {
 	}
 	public Item newMagicResistanceRing(int depth, boolean addToWorld) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Magic Resistance", 9, 250, 1009);
-		item.setResistsMagicDamage(true);
+		item.addResistance(DamageType.MAGIC);
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -578,7 +579,7 @@ public class ItemFactory {
 	}
 	public Item newChaosResistanceRing(int depth, boolean addToWorld) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Chaos Resistance", 10, 250, 1010);
-		item.setResistsChaosDamage(true);
+		item.addResistance(DamageType.CHAOS);
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}

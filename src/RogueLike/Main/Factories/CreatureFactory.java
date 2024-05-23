@@ -52,17 +52,8 @@ public ObjectFactory objectFactory;
 	public static Creature modifyCreatureResistsDamage(Creature creature, String prefix, DamageType damageType) {
 		creature.setName(String.format("%s %s", prefix, creature.name()));
 
-		// TODO: turn this into a field on Creature?
-		switch(damageType) {
-			case FIRE: creature.setResistsFireDamage(true); break;
-			case FROST: creature.setResistsFrostDamage(true); break;
-			case SHOCK: creature.setResistsShockDamage(true); break;
-			case POISON: creature.setResistsPoisonDamage(true); break;
-			case ACID: creature.setResistsAcidDamage(true); break;
-			case MAGIC: creature.setResistsMagicDamage(true); break;
-			case CHAOS: creature.setResistsChaosDamage(true); break;
-			default: throw new IllegalArgumentException(damageType.toString());
-		}
+		creature.addResistanceTo(damageType);
+
 		return creature;
 	}
 	
@@ -97,10 +88,10 @@ public ObjectFactory objectFactory;
 		//Ancestry Traits
 		if(playerAncestry == "Dwarf") {
 			player.modifyBaseArmorClass(1);
-			player.setResistsPoisonDamage(true);
+			player.addResistanceTo(DamageType.POISON);
 		}
 		if(playerAncestry == "Dragonborn") {
-			player.setResistsFireDamage(true);
+			player.addResistanceTo(DamageType.FIRE);
 		}
 		
 		//Class Equipment
@@ -416,7 +407,7 @@ public ObjectFactory objectFactory;
 		Creature icewall = new Creature(objectFactory.world, "Ice Wall", (char)177, ExtendedAsciiPanel.water, 15, 10, 16, 16, 1, 1, 1, 20);
 		icewall.setID(14);
 		new ChestAI(icewall, objectFactory, objectFactory.world);
-		icewall.setImmuneFrostDamage(true);
+		icewall.addImmunityTo(DamageType.FROST);
 		icewall.setHasNoCorpse(true);
 		icewall.setHasNoXP(true);
 		icewall.creatureTypes.add("Elemental");

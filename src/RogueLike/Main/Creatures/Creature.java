@@ -2,6 +2,7 @@ package RogueLike.Main.Creatures;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import RogueLike.Main.*;
@@ -192,15 +193,15 @@ public class Creature implements Cloneable{
 
 		if (amount < 0) amount = 0;
 
-		if((this.resistances()).contains(damage.type)){
+		if(this.isResistantTo(damage.type)){
 			amount = (int)Math.floor(amountTemp*0.5);
 		}
 
-		if((this.weaknesses()).contains(damage.type)){
+		if(this.isWeakTo(damage.type)){
 			amount = (int)Math.floor(amountTemp*2);
 		}
 
-		if((this.imumnities()).contains(damage.type)){
+		if(this.isImmuneTo(damage.type)){
 			amount = 0;
 			applyStatus = false;
 		}
@@ -650,495 +651,36 @@ public class Creature implements Cloneable{
 		return equipmentArrayList;
 	}
 
-	private boolean resistsPhysicalDamage;
-	public boolean resistsPhysicalDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.resistsPhysicalDamage())){
-				return true;
-			}
-		}
-		return resistsPhysicalDamage;
-	}
+	private EnumSet<DamageType> resistances;
+	private EnumSet<DamageType> weaknesses;
+	private EnumSet<DamageType> immunities;
 
-	public void setResistsPhysicalDamage(boolean value) {
-		resistsPhysicalDamage = value;
+	public void addResistanceTo(DamageType damageType) {
+		resistances.add(damageType);
 	}
-
-	private boolean immunePhysicalDamage;
-	public boolean immunePhysicalDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.immunePhysicalDamage())){
-				return true;
-			}
+	public void addWeaknessTo(DamageType damageType) {
+		weaknesses.add(damageType);
+	}
+	public void addImmunityTo(DamageType damageType) {
+		immunities.add(damageType);
+	}
+	public boolean isImmuneTo(DamageType damageType) {
+		for (Item equipment: getequipmentArrayList()) {
+			if (equipment!=null && equipment.grantsImmunityTo(damageType)) return true;
 		}
-		return immunePhysicalDamage;
+		return immunities.contains(damageType);
 	}
-
-	public void setImmunePhysicalDamage(boolean value) {
-		immunePhysicalDamage = value;
-	}
-	
-	private boolean weakToPhysicalDamage;
-	public boolean weakToPhysicalDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.weakToPhysicalDamage())){
-				return true;
-			}
+	public boolean isWeakTo(DamageType damageType) {
+		for (Item equipment: getequipmentArrayList()) {
+			if (equipment!=null && equipment.grantsWeaknessTo(damageType)) return true;
 		}
-		return weakToPhysicalDamage;
+		return weaknesses.contains(damageType);
 	}
-
-	public void setWeakToPhysicalDamage(boolean value) {
-		weakToPhysicalDamage = value;
-	}
-
-	private boolean resistsFireDamage;
-	public boolean resistsFireDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.resistsFireDamage())){
-				return true;
-			}
+	public boolean isResistantTo(DamageType damageType) {
+		for (Item equipment: getequipmentArrayList()) {
+			if (equipment!=null && equipment.grantsResistanceTo(damageType)) return true;
 		}
-		return resistsFireDamage;
-	}
-
-	public void setResistsFireDamage(boolean value) {
-		resistsFireDamage = value;
-	}
-	
-	private boolean immuneFireDamage;
-	public boolean immuneFireDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.immuneFireDamage())){
-				return true;
-			}
-		}
-		return immuneFireDamage;
-	}
-
-	public void setImmuneFireDamage(boolean value) {
-		immuneFireDamage = value;
-	}
-	
-	private boolean weakToFireDamage;
-	public boolean weakToFireDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.weakToFireDamage())){
-				return true;
-			}
-		}
-		return weakToFireDamage;
-	}
-
-	public void setWeakToFireDamage(boolean value) {
-		weakToFireDamage = value;
-	}
-
-	private boolean resistsFrostDamage;
-	public boolean resistsFrostDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.resistsFrostDamage())){
-				return true;
-			}
-		}
-		return resistsFrostDamage;
-	}
-
-	public void setResistsFrostDamage(boolean value) {
-		resistsFrostDamage = value;
-	}
-	private boolean immuneFrostDamage;
-	public boolean immuneFrostDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.immuneFrostDamage())){
-				return true;
-			}
-		}
-		return immuneFrostDamage;
-	}
-
-	public void setImmuneFrostDamage(boolean value) {
-		immuneFrostDamage = value;
-	}
-	
-	private boolean weakToFrostDamage;
-	public boolean weakToFrostDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.weakToFrostDamage())){
-				return true;
-			}
-		}
-		return weakToFrostDamage;
-	}
-
-	public void setWeakToFrostDamage(boolean value) {
-		weakToFrostDamage = value;
-	}
-
-	private boolean resistsShockDamage;
-	public boolean resistsShockDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.resistsShockDamage())){
-				return true;
-			}
-		}
-		return resistsShockDamage;
-	}
-
-	public void setResistsShockDamage(boolean value) {
-		resistsShockDamage = value;
-	}
-	private boolean immuneShockDamage;
-	public boolean immuneShockDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.immuneShockDamage())){
-				return true;
-			}
-		}
-		return immuneShockDamage;
-	}
-	
-	public void setImmuneShockDamage(boolean value) {
-		immuneShockDamage = value;
-	}
-	
-	private boolean weakToShockDamage;
-	public boolean weakToShockDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.weakToShockDamage())){
-				return true;
-			}
-		}
-		return weakToShockDamage;
-	}
-
-	public void setWeakToShockDamage(boolean value) {
-		weakToShockDamage = value;
-	}
-
-	private boolean resistsPoisonDamage;
-	public boolean resistsPoisonDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.resistsPoisonDamage())){
-				return true;
-			}
-		}
-		return resistsPoisonDamage;
-	}
-
-	public void setResistsPoisonDamage(boolean value) {
-		resistsPoisonDamage = value;
-	}
-	private boolean immunePoisonDamage;
-	public boolean immunePoisonDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.immunePoisonDamage())){
-				return true;
-			}
-		}
-		return immunePoisonDamage;
-	}
-
-	public void setImmunePoisonDamage(boolean value) {
-		immunePoisonDamage = value;
-	}
-	
-	private boolean weakToPoisonDamage;
-	public boolean weakToPoisonDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.weakToPoisonDamage())){
-				return true;
-			}
-		}
-		return weakToPoisonDamage;
-	}
-
-	public void setWeakToPoisonDamage(boolean value) {
-		weakToPoisonDamage = value;
-	}
-
-	private boolean resistsAcidDamage;
-	public boolean resistsAcidDamage() {
-			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.resistsAcidDamage())){
-				return true;
-			}
-		}
-		return resistsAcidDamage;
-	}
-
-	public void setResistsAcidDamage(boolean value) {
-		resistsAcidDamage = value;
-	}
-
-	private boolean immuneAcidDamage;
-	public boolean immuneAcidDamage() {
-			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.immuneAcidDamage())){
-				return true;
-			}
-		}
-		return immuneAcidDamage;
-	}
-
-	public void setImmuneAcidDamage(boolean value) {
-		immuneAcidDamage = value;
-	}
-	
-	private boolean weakToAcidDamage;
-	public boolean weakToAcidDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.weakToAcidDamage())){
-				return true;
-			}
-		}
-		return weakToAcidDamage;
-	}
-
-	public void setWeakToAcidDamage(boolean value) {
-		weakToAcidDamage = value;
-	}
-
-	private boolean resistsMagicDamage;
-	public boolean resistsMagicDamage() {
-			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.resistsMagicDamage())){
-				return true;
-			}
-		}
-		return resistsMagicDamage;
-	}
-
-	public void setResistsMagicDamage(boolean value) {
-		resistsMagicDamage = value;
-	}
-	
-	private boolean immuneMagicDamage;
-	public boolean immuneMagicDamage() {
-			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.immuneMagicDamage())){
-				return true;
-			}
-		}
-		return immuneMagicDamage;
-	}
-
-	public void setImmuneMagicDamage(boolean value) {
-		immuneMagicDamage = value;
-	}
-	
-	private boolean weakToMagicDamage;
-	public boolean weakToMagicDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.weakToMagicDamage())){
-				return true;
-			}
-		}
-		return weakToMagicDamage;
-	}
-
-	public void setWeakToMagicDamage(boolean value) {
-		weakToMagicDamage = value;
-	}
-
-	private boolean resistsChaosDamage;
-	public boolean resistsChaosDamage() {
-			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.resistsChaosDamage())){
-				return true;
-			}
-		}
-		return resistsChaosDamage;
-	}
-
-	public void setResistsChaosDamage(boolean value) {
-		resistsChaosDamage = value;
-	}
-	private boolean immuneChaosDamage;
-	public boolean immuneChaosDamage() {
-			ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.immuneChaosDamage())){
-				return true;
-			}
-		}
-		return immuneChaosDamage;
-	}
-
-	public void setImmuneChaosDamage(boolean value) {
-		immuneChaosDamage = value;
-	}
-	
-	private boolean weakToChaosDamage;
-	public boolean weakToChaosDamage() {
-		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
-		equipmentArrayList = this.getequipmentArrayList();
-		
-		for (Item equipment: equipmentArrayList){
-			if ((equipment != null) && (equipment.weakToChaosDamage())){
-				return true;
-			}
-		}
-		return weakToChaosDamage;
-	}
-
-	public void setWeakToChaosDamage(boolean value) {
-		weakToChaosDamage = value;
-	}
-
-	public ArrayList<DamageType> resistances(){
-		ArrayList<DamageType> resistances = new ArrayList<>();
-		if(resistsPhysicalDamage()){
-			resistances.add(DamageType.PHYSICAL);
-		}
-		if(resistsFireDamage()){
-			resistances.add(DamageType.FIRE);
-		}
-		if(resistsFrostDamage()){
-			resistances.add(DamageType.FROST);
-		}
-		if(resistsShockDamage()){
-			resistances.add(DamageType.SHOCK);
-		}
-		if(resistsPoisonDamage()){
-			resistances.add(DamageType.POISON);
-		}
-		if(resistsAcidDamage()){
-			resistances.add(DamageType.ACID);
-		}
-		if(resistsMagicDamage()){
-			resistances.add(DamageType.MAGIC);
-		}
-		if(resistsChaosDamage()){
-			resistances.add(DamageType.CHAOS);
-		}
-		return resistances;
-	}
-
-	public ArrayList<DamageType> imumnities(){
-		ArrayList<DamageType> immunities = new ArrayList<DamageType>();
-		if(immunePhysicalDamage()){
-			immunities.add(DamageType.PHYSICAL);
-		}
-		if(immuneFireDamage()){
-			immunities.add(DamageType.FIRE);
-		}
-		if(immuneFrostDamage()){
-			immunities.add(DamageType.FROST);
-		}
-		if(immuneShockDamage()){
-			immunities.add(DamageType.SHOCK);
-		}
-		if(immunePoisonDamage()){
-			immunities.add(DamageType.POISON);
-		}
-		if(immuneAcidDamage()){
-			immunities.add(DamageType.ACID);
-		}
-		if(immuneMagicDamage()){
-			immunities.add(DamageType.MAGIC);
-		}
-		if(immuneChaosDamage()){
-			immunities.add(DamageType.CHAOS);
-		}
-		return immunities;
-	}
-	
-	public ArrayList<DamageType> weaknesses(){
-		ArrayList<DamageType> weaknesses = new ArrayList<>();
-		if(weakToPhysicalDamage()){
-			weaknesses.add(DamageType.PHYSICAL);
-		}
-		if(weakToFireDamage()){
-			weaknesses.add(DamageType.FIRE);
-		}
-		if(weakToFrostDamage()){
-			weaknesses.add(DamageType.FROST);
-		}
-		if(weakToShockDamage()){
-			weaknesses.add(DamageType.SHOCK);
-		}
-		if(weakToPoisonDamage()){
-			weaknesses.add(DamageType.POISON);
-		}
-		if(weakToAcidDamage()){
-			weaknesses.add(DamageType.ACID);
-		}
-		if(weakToMagicDamage()){
-			weaknesses.add(DamageType.MAGIC);
-		}
-		if(weakToChaosDamage()){
-			weaknesses.add(DamageType.CHAOS);
-		}
-		return weaknesses;
+		return resistances.contains(damageType);
 	}
 
 	private Skill[] skills = SkillManager.getDefaultSkillArray();
@@ -1940,6 +1482,9 @@ public class Creature implements Cloneable{
 		this.hpScaleAmount = hpScaleMedium();
 		this.manaScaleAmount = manaScaleMedium();
 		this.unarmedDamageType = DamageType.PHYSICAL;
+		this.weaknesses = EnumSet.noneOf(DamageType.class);
+		this.resistances = EnumSet.noneOf(DamageType.class);
+		this.immunities = EnumSet.noneOf(DamageType.class);
 	}
 
 

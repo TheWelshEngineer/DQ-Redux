@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import RogueLike.Main.AI.SkeletonAI.SkeletonCryomancerAI;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 
@@ -30,7 +31,7 @@ public class SkeletonCryomancer extends Creature{
 		this.scaleStrengthWithDepth(depth);	
 		this.scaleDexterityWithDepth(depth);	
 		this.scaleIntelligenceWithDepth(depth);
-		this.setImmuneFrostDamage(true);
+		this.addImmunityTo(DamageType.FROST);
 	}
 
 }
