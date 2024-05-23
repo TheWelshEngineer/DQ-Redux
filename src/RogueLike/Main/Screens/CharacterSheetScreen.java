@@ -505,7 +505,11 @@ public class CharacterSheetScreen implements Screen{
         terminal.write("== Damage Resistances ==", x4, y4++);
 		for (DamageType damageType: DamageType.RESISTABLE_TYPES) {
 			terminal.write(
-				String.format("%s%s: %s", damageTypeSelected == damageType ? ">> " : "", damageType, damageTypeStatus(damageType)), x4, y4++);
+				String.format("%s%s: %s", damageTypeSelected == damageType ? ">> " : "", damageType, damageTypeStatus(damageType)),
+				x4,
+				y4++,
+				hasModifierFor(damageType) ? terminal.getDefaultForegroundColor() : ExtendedAsciiPanel.brightBlack
+			);
 		}
         
         terminal.write(details, x, 31);
@@ -521,6 +525,14 @@ public class CharacterSheetScreen implements Screen{
 		else if (player.isResistantTo(damageType)) return "Resistant";
 		else if (player.isWeakTo(damageType)) return "Weakness";
 		else return "No modifier";
+	}
+
+	public boolean hasModifierFor(DamageType damageType) {
+		return (
+			player.isImmuneTo(damageType)
+			|| player.isWeakTo(damageType)
+			|| player.isResistantTo(damageType)
+		);
 	}
 
 	public String damageTypeLongString(DamageType damageType) {
