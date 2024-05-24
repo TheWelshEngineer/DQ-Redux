@@ -181,6 +181,9 @@ public class CharacterSheetScreen implements Screen{
 			// note that moveSelectionVertical doesn't require cY to be in-bounds
 			moveSelectionVertical(-1);
 		}
+		if (!selectedElement().isSelectable()) {
+			moveSelectionVertical(-1);
+		}
 	}
 
 	private int trueModulo(int dividend, int divisor) {
