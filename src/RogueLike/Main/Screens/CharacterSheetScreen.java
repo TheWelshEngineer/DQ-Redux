@@ -6,26 +6,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import RogueLike.Main.Effect;
 import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Screens.CharacterSheet.*;
 import RogueLike.Main.Screens.CharacterSheet.Skills.*;
-import RogueLike.Main.TextUtils;
-
-import javax.print.attribute.standard.Finishings;
 
 public class CharacterSheetScreen implements Screen{
 
 	protected Creature player;
-	protected List<Effect> effects;
 
 	public CharacterSheetScreen(Creature player) {
 		this.player = player;
-		this.effects = player.effects();
 
 		elements = new ArrayList<>();
 		elements.add( // column 1: stats
@@ -79,8 +72,10 @@ public class CharacterSheetScreen implements Screen{
 			)
 		);
 		elements.add( // column 3: current effects
-			// TODO add this again
-			new ArrayList<>()
+			player.effects().stream()
+				.filter(effect -> effect.name() != null && effect.showInMenu())
+				.map(EffectElement::new)
+				.collect(Collectors.toList())
 		);
 		elements.add( // column 4: damage modifiers
 			Arrays.stream(DamageType.RESISTABLE_TYPES).map(
@@ -122,28 +117,6 @@ public class CharacterSheetScreen implements Screen{
 			}
 		}
 
-//        for(Effect effect : effects) {
-//        	if(effect.name() != null) {
-//        		String turns = "turn";
-//        		if(effect.duration() > 1) {
-//        			turns = "turns";
-//        		}
-//        		char effectIcon = (char)30;
-//        		if(effect.isNegative()) {
-//        			effectIcon = (char)31;
-//        		}
-//        		if(effect.showInMenu()) {
-//        			if(cX == 2 && cY == effects.indexOf(effect)) {
-//        				terminal.write(String.format(">> %c %s: %d %s", effectIcon, effect.name(), effect.duration(), turns), x3, y3++);
-//        			}else {
-//        				terminal.write(String.format("%c %s: %d %s", effectIcon, effect.name(), effect.duration(), turns), x3, y3++);
-//        			}
-//
-//        		}
-//
-//        	}
-//		}
-
         terminal.write(selectedElement.details1(), column_x[0], 31);
         terminal.write(selectedElement.details2(), column_x[0], 32);
         terminal.write(selectedElement.details3(), column_x[0], 33);
@@ -151,20 +124,11 @@ public class CharacterSheetScreen implements Screen{
         terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
 	}
 
-	public boolean hasModifierFor(DamageType damageType) {
-		return (
-			player.isImmuneTo(damageType)
-			|| player.isWeakTo(damageType)
-			|| player.isResistantTo(damageType)
-		);
-	}
-
 	private void moveSelectionVertical(int direction) {
 		var currentColumn = elements.get(cX);
 		if (currentColumn.isEmpty()) {
 			throw new IllegalStateException(String.format("Empty column at cX=%d shouldn't be selected.", cX));
 		}
-		int initialY = cY;
 		// Keep moving down until we hit a selectable element.
 		// Can't loop infinitely:
 		//  - We start in column 0 which has selectable elements.
