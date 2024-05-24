@@ -66,8 +66,16 @@ public class CharacterSheetScreen implements Screen{
 				new ArmorTrainingSkillElement(player),
 				new FortitudeSkillElement(player),
 				new StealthSkillElement(player),
-				new PerceptionSkillElement(player)
-				// TODO add the magic skills in here oop
+				new PerceptionSkillElement(player),
+				//
+				new SpacerElement(),
+				//
+				new EvocationSkillElement(player),
+				new PyromancySkillElement(player),
+				new CryomancySkillElement(player),
+				new ElectromancySkillElement(player),
+				new AlchemancySkillElement(player),
+				new FerromancySkillElement(player)
 			)
 		);
 		elements.add( // column 3: current effects

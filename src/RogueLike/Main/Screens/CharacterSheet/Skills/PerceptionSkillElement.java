@@ -11,7 +11,7 @@ public class PerceptionSkillElement extends SkillElement {
 
     @Override
     protected int skillIndex() {
-        return 5;
+        return 7;
     }
 
     @Override
