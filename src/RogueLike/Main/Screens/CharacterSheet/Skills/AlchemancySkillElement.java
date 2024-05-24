@@ -11,7 +11,7 @@ public class AlchemancySkillElement extends SkillElement {
 
     @Override
     protected int skillIndex() {
-        return 11;
+        return 12;
     }
 
     @Override

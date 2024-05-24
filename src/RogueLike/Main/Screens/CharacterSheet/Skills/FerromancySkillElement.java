@@ -11,7 +11,7 @@ public class FerromancySkillElement extends SkillElement {
 
     @Override
     protected int skillIndex() {
-        return 10;
+        return 13;
     }
 
     @Override
