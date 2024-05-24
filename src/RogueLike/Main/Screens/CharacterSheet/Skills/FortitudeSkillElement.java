@@ -26,6 +26,6 @@ public class FortitudeSkillElement extends SkillElement {
 
     @Override
     protected String descriptionLevel3() {
-        return String.format("Fortitude III: The duration of negative effects applied to you is halves.");
+        return "Fortitude III: The duration of negative effects applied to you is halves.";
     }
 }

@@ -26,6 +26,6 @@ public class StealthSkillElement extends SkillElement {
 
     @Override
     protected String descriptionLevel3() {
-        return String.format("Stealth III: Attacks you make whilst Invisible are always considered to be critical hits.", player.proficiencyBonus());
+        return "Stealth III: Attacks you make whilst Invisible are always considered to be critical hits.";
     }
 }

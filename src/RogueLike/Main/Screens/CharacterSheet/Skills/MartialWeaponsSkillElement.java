@@ -26,6 +26,6 @@ public class MartialWeaponsSkillElement extends SkillElement {
 
     @Override
     protected String descriptionLevel3() {
-        return String.format("Martial Weapons III: Critical hits with Martial Weapons deal 3x damage (up from 2x).");
+        return "Martial Weapons III: Critical hits with Martial Weapons deal 3x damage (up from 2x).";
     }
 }

@@ -16,12 +16,12 @@ public class ArmorTrainingSkillElement extends SkillElement {
 
     @Override
     protected String descriptionLevel1() {
-        return String.format("Armor Training I: You can equip Medium Armor and Shields.");
+        return "Armor Training I: You can equip Medium Armor and Shields.";
     }
 
     @Override
     protected String descriptionLevel2() {
-        return String.format("Armor Training II: You can equip Heavy Armor and Tower Shields.");
+        return "Armor Training II: You can equip Heavy Armor and Tower Shields.";
     }
 
     @Override

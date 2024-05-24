@@ -26,6 +26,6 @@ public class PerceptionSkillElement extends SkillElement {
 
     @Override
     protected String descriptionLevel3() {
-        return String.format("Perception III: When you trigger a revealed trap, you instead gain a positive effect based on the trap's type.", player.proficiencyBonus());
+        return "Perception III: When you trigger a revealed trap, you instead gain a positive effect based on the trap's type.";
     }
 }

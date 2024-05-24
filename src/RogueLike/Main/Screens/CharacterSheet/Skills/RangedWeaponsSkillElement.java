@@ -26,6 +26,6 @@ public class RangedWeaponsSkillElement extends SkillElement {
 
     @Override
     protected String descriptionLevel3() {
-        return String.format("Ranged Weapons III: Attacks with Ranged Weapons refund the spent ammunition upon the target's death.");
+        return "Ranged Weapons III: Attacks with Ranged Weapons refund the spent ammunition upon the target's death.";
     }
 }
