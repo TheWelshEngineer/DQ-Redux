@@ -74,6 +74,10 @@ public class TextUtils {
     public static String wordWrap(String string, int maxLength, int subsequentIndent) {
         ArrayList<String> newLines = new ArrayList<>();
         for (String line: string.split("\n")) {
+            // Need to specifically handle empty lines here, as joinStringsWithLineBreaks() will just discard them
+            if (line.isEmpty()) {
+                newLines.add("");
+            }
             newLines.addAll(TextUtils.joinStringsWithLineBreaks(List.of(line.split(" ")), " ", maxLength, subsequentIndent));
         }
 

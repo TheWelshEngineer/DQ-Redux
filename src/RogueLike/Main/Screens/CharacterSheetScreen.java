@@ -122,7 +122,7 @@ public class CharacterSheetScreen implements Screen{
 		int maxWidth = terminal.getWidthInCharacters() - (column_x[0] + rightPadding);
 		terminal.writeMultiline(TextUtils.wordWrap(selectedElement.details(), maxWidth, 4), column_x[0], 31);
 
-        terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
+        terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 42);
 	}
 
 	private void moveSelectionVertical(int direction) {

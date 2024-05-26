@@ -25,6 +25,11 @@ public abstract class SkillElement extends CharacterSheetElement {
     protected abstract String descriptionLevel3();
 
     @Override
+    public String details() {
+        return String.format("%s\n\n%s\n\n%s", details1(), details2(), details3());
+    }
+
+    @Override
     public String details1() {
         return player.skills()[skillIndex()].level() >= 1 ? descriptionLevel1() : "";
     }
