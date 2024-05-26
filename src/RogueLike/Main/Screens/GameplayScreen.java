@@ -7,6 +7,7 @@ import java.util.List;
 
 import RogueLike.Main.Effect;
 import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.Factories.ItemFactory;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Tile;
@@ -400,7 +401,7 @@ public class GameplayScreen implements Screen{
 	
 	private Screen userExits() {
 		for(Item item : player.inventory().getItems()) {
-			if(item != null && item.name().equals("ancient axe")) {
+			if(item != null && item.id() == ItemFactory.VICTORY_ITEM_ID) {
 				return new WinScreen(player);
 			}
 		}

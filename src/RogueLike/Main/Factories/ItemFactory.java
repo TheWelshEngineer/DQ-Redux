@@ -30,6 +30,7 @@ import RogueLike.Main.Items.VersatileFinesseWeapon;
 import RogueLike.Main.Items.VersatileMeleeWeapon;
 import RogueLike.Main.Items.Wand;
 public class ItemFactory {
+	public static final int VICTORY_ITEM_ID = 200;
 	
 	public ObjectFactory objectFactory;
 	
@@ -100,7 +101,7 @@ public class ItemFactory {
 	//Victory Item
 	public Item newVictoryItem(int depth, int addToWorld) {
 		Item item = new Item('*', ExtendedAsciiPanel.brightWhite, "Eitak's Ancient Axe", "Eitak's Ancient Axe");
-		item.setID(200);
+		item.setID(VICTORY_ITEM_ID);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
