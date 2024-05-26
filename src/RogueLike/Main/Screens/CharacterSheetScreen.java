@@ -12,6 +12,7 @@ import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Screens.CharacterSheet.*;
 import RogueLike.Main.Screens.CharacterSheet.Skills.*;
+import RogueLike.Main.TextUtils;
 
 public class CharacterSheetScreen implements Screen{
 
@@ -117,9 +118,9 @@ public class CharacterSheetScreen implements Screen{
 			}
 		}
 
-        terminal.write(selectedElement.details1(), column_x[0], 31);
-        terminal.write(selectedElement.details2(), column_x[0], 32);
-        terminal.write(selectedElement.details3(), column_x[0], 33);
+		int rightPadding = 4;
+		int maxWidth = terminal.getWidthInCharacters() - (column_x[0] + rightPadding);
+		terminal.writeMultiline(TextUtils.wordWrap(selectedElement.details(), maxWidth, 4), column_x[0], 31);
 
         terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
 	}
