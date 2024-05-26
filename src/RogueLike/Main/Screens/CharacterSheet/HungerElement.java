@@ -15,7 +15,7 @@ public class HungerElement extends CharacterSheetElement {
     }
 
     @Override
-    public String details1() {
+    public String details() {
         return String.format("You are %s. You'll probably next need to eat after %d turns of exploration.", player.hungerAsString(), player.food()/2);
     }
 }

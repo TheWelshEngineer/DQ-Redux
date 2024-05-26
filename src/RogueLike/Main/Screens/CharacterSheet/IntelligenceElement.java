@@ -15,13 +15,8 @@ public class IntelligenceElement extends CharacterSheetElement {
     }
 
     @Override
-    public String details1() {
-        return String.format("You have %d total points of Intelligence, granting a %+d modifier to Intelligence rolls.", player.intelligence(), player.intelligenceModifier());
+    public String details() {
+        return String.format("You have %d total points of Intelligence, granting a %+d modifier to Intelligence rolls.\n", player.intelligence(), player.intelligenceModifier())
+            + String.format("You have %d natural points of Intelligence, out of a maximum of 30.", player.baseIntelligence());
     }
-
-    @Override
-    public String details2() {
-        return String.format("You have %d natural points of Intelligence, out of a maximum of 30.", player.baseIntelligence());
-    }
-
 }

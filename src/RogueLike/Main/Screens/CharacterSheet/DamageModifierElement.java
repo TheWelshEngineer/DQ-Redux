@@ -18,7 +18,7 @@ public class DamageModifierElement extends CharacterSheetElement {
     }
 
     @Override
-    public String details1() {
+    public String details() {
         if (player.isImmuneTo(damageType)) {
             return String.format("You are immune to %s damage, taking no damage of this type.", damageType);
         }

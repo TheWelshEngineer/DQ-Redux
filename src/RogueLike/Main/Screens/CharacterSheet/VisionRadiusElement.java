@@ -15,7 +15,7 @@ public class VisionRadiusElement extends CharacterSheetElement {
     }
 
     @Override
-    public String details1() {
+    public String details() {
         return String.format("You have a vision radius of %d tiles.", player.visionRadius());
     }
 }
