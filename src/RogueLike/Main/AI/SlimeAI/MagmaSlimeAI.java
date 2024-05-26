@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
@@ -89,8 +90,8 @@ public class MagmaSlimeAI extends CreatureAI{
             }
             creature.addEffect((Effect)factory.effectFactory.fireball(5).clone());
             creature.doAction("explode into slimelings!");
-            Damage damage = new Damage(creature.hp(), false, true, Damage.physical, factory.effectFactory, false);
-            creature.modifyHP(damage, "");
+            Damage damage = new Damage(creature.hp(), true, DamageType.TRUE, factory.effectFactory, false);
+            creature.damage(damage, "");
 		}
 	}
 	

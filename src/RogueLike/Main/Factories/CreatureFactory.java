@@ -3,6 +3,7 @@ package RogueLike.Main.Factories;
 import java.util.List;
 
 import RogueLike.Main.Dice;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
@@ -43,35 +44,17 @@ public ObjectFactory objectFactory;
 		this.objectFactory = factory;
 	}
 	
-	public static Creature modifyCreatureDamageDealt(Creature creature, String prefix, String damageType) {
+	public static Creature modifyCreatureDamageDealt(Creature creature, String prefix, DamageType damageType) {
 		creature.setName(String.format("%s %s", prefix, creature.name()));
-		
-		switch(damageType) {
-		case Damage.fire: creature.setDealsFireDamage(true); break;
-		case Damage.frost: creature.setDealsFrostDamage(true); break;
-		case Damage.shock: creature.setDealsShockDamage(true); break;
-		case Damage.poison: creature.setDealsPoisonDamage(true); break;
-		case Damage.acid: creature.setDealsAcidDamage(true); break;
-		case Damage.magic: creature.setDealsMagicDamage(true); break;
-		case Damage.chaos: creature.setDealsChaosDamage(true); break;
-		default: creature.setDealsFireDamage(true); break;
-		}
+		creature.setUnarmedDamageType(damageType);
 		return creature;
 	}
 	
-	public static Creature modifyCreatureResistsDamage(Creature creature, String prefix, String damageType) {
+	public static Creature modifyCreatureResistsDamage(Creature creature, String prefix, DamageType damageType) {
 		creature.setName(String.format("%s %s", prefix, creature.name()));
-		
-		switch(damageType) {
-		case Damage.fire: creature.setResistsFireDamage(true); break;
-		case Damage.frost: creature.setResistsFrostDamage(true); break;
-		case Damage.shock: creature.setResistsShockDamage(true); break;
-		case Damage.poison: creature.setResistsPoisonDamage(true); break;
-		case Damage.acid: creature.setResistsAcidDamage(true); break;
-		case Damage.magic: creature.setResistsMagicDamage(true); break;
-		case Damage.chaos: creature.setResistsChaosDamage(true); break;
-		default: creature.setResistsFireDamage(true); break;
-		}
+
+		creature.addResistanceTo(damageType);
+
 		return creature;
 	}
 	
@@ -106,10 +89,10 @@ public ObjectFactory objectFactory;
 		//Ancestry Traits
 		if(playerAncestry == "Dwarf") {
 			player.modifyBaseArmorClass(1);
-			player.setResistsPoisonDamage(true);
+			player.addResistanceTo(DamageType.POISON);
 		}
 		if(playerAncestry == "Dragonborn") {
-			player.setResistsFireDamage(true);
+			player.addResistanceTo(DamageType.FIRE);
 		}
 		
 		//Class Equipment
@@ -425,7 +408,7 @@ public ObjectFactory objectFactory;
 		Creature icewall = new Creature(objectFactory.world, "Ice Wall", (char)177, ExtendedAsciiPanel.water, 15, 10, 16, 16, 1, 1, 1, 20);
 		icewall.setID(14);
 		new ChestAI(icewall, objectFactory, objectFactory.world);
-		icewall.setImmuneFrostDamage(true);
+		icewall.addImmunityTo(DamageType.FROST);
 		icewall.setHasNoCorpse(true);
 		icewall.setHasNoXP(true);
 		icewall.creatureTypes.add("Elemental");

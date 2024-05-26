@@ -4,10 +4,12 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 import RogueLike.Main.Effect;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
+import RogueLike.Main.TextUtils;
 
 public class CharacterSheetScreen implements Screen{
 	
@@ -39,29 +41,16 @@ public class CharacterSheetScreen implements Screen{
 	private String armorCheck = ">> ";
 	private String proficiencyCheck = ">> ";
 	private String visionCheck = ">> ";
-	
-	private String physicalCheck = ">> ";
-	private String fireCheck = ">> ";
-	private String frostCheck = ">> ";
-	private String shockCheck = ">> ";
-	private String poisonCheck = ">> ";
-	private String acidCheck = ">> ";
-	private String magicCheck = ">> ";
-	private String chaosCheck = ">> ";
+
+	private DamageType damageTypeSelected = null;
 	
 	int cX = 0;
 	int cY = 0;
 	
 	private String updateSelected(int cX, int cY) {
+		// TODO: yeowch this needs a big ol' refactor
 		if(cX != 3) {
-			physicalCheck = "";
-			fireCheck = "";
-			frostCheck = "";
-			shockCheck = "";
-			poisonCheck = "";
-			acidCheck = "";
-			magicCheck = "";
-			chaosCheck = "";
+			damageTypeSelected = null;
 		}
 		if(cX == 0) {
 			switch(cY) {
@@ -337,193 +326,11 @@ public class CharacterSheetScreen implements Screen{
 			proficiencyCheck = "";
 			visionCheck = "";
 			if(cX == 3) {
-				switch(cY) {
-				case 0:
-					physicalCheck = ">> ";
-					fireCheck = "";
-					frostCheck = "";
-					shockCheck = "";
-					poisonCheck = "";
-					acidCheck = "";
-					magicCheck = "";
-					chaosCheck = "";
-					//
-					if(physicalStatus().equals("Immune")) {
-						details = String.format("You are immune to Physical damage, taking no damage of this type.");
-					}else if(physicalStatus().equals("Resistant")) {
-						details = String.format("You are resistant to Physical damage, taking half damage of this type.");
-					}else if(physicalStatus().equals("Weakness")) {
-						details = String.format("You are vulnerable to Physical damage, taking double damage of this type.");
-					}else {
-						details = String.format("You are damaged normally by Physical damage.");
-					}
-					details2 = "";
-					details3 = "";
-					//
-					break;
-				case 1:
-					physicalCheck = "";
-					fireCheck = ">> ";
-					frostCheck = "";
-					shockCheck = "";
-					poisonCheck = "";
-					acidCheck = "";
-					magicCheck = "";
-					chaosCheck = "";
-					//
-					if(fireStatus().equals("Immune")) {
-						details = String.format("You are immune to Fire damage, taking no damage of this type.");
-					}else if(fireStatus().equals("Resistant")) {
-						details = String.format("You are resistant to Fire damage, taking half damage of this type.");
-					}else if(fireStatus().equals("Weakness")) {
-						details = String.format("You are vulnerable to Fire damage, taking double damage of this type.");
-					}else {
-						details = String.format("You are damaged normally by Fire damage.");
-					}
-					details2 = "";
-					details3 = "";
-					//
-					break;
-				case 2:
-					physicalCheck = "";
-					fireCheck = "";
-					frostCheck = ">> ";
-					shockCheck = "";
-					poisonCheck = "";
-					acidCheck = "";
-					magicCheck = "";
-					chaosCheck = "";
-					//
-					if(frostStatus().equals("Immune")) {
-						details = String.format("You are immune to Frost damage, taking no damage of this type.");
-					}else if(frostStatus().equals("Resistant")) {
-						details = String.format("You are resistant to Frost damage, taking half damage of this type.");
-					}else if(frostStatus().equals("Weakness")) {
-						details = String.format("You are vulnerable to Frost damage, taking double damage of this type.");
-					}else {
-						details = String.format("You are damaged normally by Frost damage.");
-					}
-					details2 = "";
-					details3 = "";
-					//
-					break;
-				case 3:
-					physicalCheck = "";
-					fireCheck = "";
-					frostCheck = "";
-					shockCheck = ">> ";
-					poisonCheck = "";
-					acidCheck = "";
-					magicCheck = "";
-					chaosCheck = "";
-					//
-					if(shockStatus().equals("Immune")) {
-						details = String.format("You are immune to Shock damage, taking no damage of this type.");
-					}else if(shockStatus().equals("Resistant")) {
-						details = String.format("You are resistant to Shock damage, taking half damage of this type.");
-					}else if(shockStatus().equals("Weakness")) {
-						details = String.format("You are vulnerable to Shock damage, taking double damage of this type.");
-					}else {
-						details = String.format("You are damaged normally by Shock damage.");
-					}
-					details2 = "";
-					details3 = "";
-					//
-					break;
-				case 4:
-					physicalCheck = "";
-					fireCheck = "";
-					frostCheck = "";
-					shockCheck = "";
-					poisonCheck = ">> ";
-					acidCheck = "";
-					magicCheck = "";
-					chaosCheck = "";
-					//
-					if(poisonStatus().equals("Immune")) {
-						details = String.format("You are immune to Poison damage, taking no damage of this type.");
-					}else if(poisonStatus().equals("Resistant")) {
-						details = String.format("You are resistant to Poison damage, taking half damage of this type.");
-					}else if(poisonStatus().equals("Weakness")) {
-						details = String.format("You are vulnerable to Poison damage, taking double damage of this type.");
-					}else {
-						details = String.format("You are damaged normally by Poison damage.");
-					}
-					details2 = "";
-					details3 = "";
-					//
-					break;
-				case 5:
-					physicalCheck = "";
-					fireCheck = "";
-					frostCheck = "";
-					shockCheck = "";
-					poisonCheck = "";
-					acidCheck = ">> ";
-					magicCheck = "";
-					chaosCheck = "";
-					//
-					if(acidStatus().equals("Immune")) {
-						details = String.format("You are immune to Acid damage, taking no damage of this type.");
-					}else if(acidStatus().equals("Resistant")) {
-						details = String.format("You are resistant to Acid damage, taking half damage of this type.");
-					}else if(acidStatus().equals("Weakness")) {
-						details = String.format("You are vulnerable to Acid damage, taking double damage of this type.");
-					}else {
-						details = String.format("You are damaged normally by Acid damage.");
-					}
-					details2 = "";
-					details3 = "";
-					//
-					break;
-				case 6:
-					physicalCheck = "";
-					fireCheck = "";
-					frostCheck = "";
-					shockCheck = "";
-					poisonCheck = "";
-					acidCheck = "";
-					magicCheck = ">> ";
-					chaosCheck = "";
-					//
-					if(magicStatus().equals("Immune")) {
-						details = String.format("You are immune to Magic damage, taking no damage of this type.");
-					}else if(magicStatus().equals("Resistant")) {
-						details = String.format("You are resistant to Magic damage, taking half damage of this type.");
-					}else if(magicStatus().equals("Weakness")) {
-						details = String.format("You are vulnerable to Magic damage, taking double damage of this type.");
-					}else {
-						details = String.format("You are damaged normally by Magic damage.");
-					}
-					details2 = "";
-					details3 = "";
-					//
-					break;
-				case 7:
-					physicalCheck = "";
-					fireCheck = "";
-					frostCheck = "";
-					shockCheck = "";
-					poisonCheck = "";
-					acidCheck = "";
-					magicCheck = "";
-					chaosCheck = ">> ";
-					//
-					if(chaosStatus().equals("Immune")) {
-						details = String.format("You are immune to Chaos damage, taking no damage of this type.");
-					}else if(chaosStatus().equals("Resistant")) {
-						details = String.format("You are resistant to Chaos damage, taking half damage of this type.");
-					}else if(chaosStatus().equals("Weakness")) {
-						details = String.format("You are vulnerable to Chaos damage, taking double damage of this type.");
-					}else {
-						details = String.format("You are damaged normally by Chaos damage.");
-					}
-					details2 = "";
-					details3 = "";
-					//
-					break;
-				default: break;
-				}
+				// damage type column
+				damageTypeSelected = DamageType.RESISTABLE_TYPES[cY];
+				details = damageTypeLongString(damageTypeSelected);
+				details2 = "";
+				details3 = "";
 			}
 		}
 		return null;
@@ -696,14 +503,14 @@ public class CharacterSheetScreen implements Screen{
         
         
         terminal.write("== Damage Resistances ==", x4, y4++);
-        terminal.write(String.format("%sPhysical: %s", physicalCheck, physicalStatus()), x4, y4++);
-        terminal.write(String.format("%sFire: %s", fireCheck, fireStatus()), x4, y4++);
-        terminal.write(String.format("%sFrost: %s", frostCheck, frostStatus()), x4, y4++);
-        terminal.write(String.format("%sShock: %s", shockCheck, shockStatus()), x4, y4++);
-        terminal.write(String.format("%sPoison: %s", poisonCheck, poisonStatus()), x4, y4++);
-        terminal.write(String.format("%sAcid: %s", acidCheck, acidStatus()), x4, y4++);
-        terminal.write(String.format("%sMagic: %s", magicCheck, magicStatus()), x4, y4++);
-        terminal.write(String.format("%sChaos: %s", chaosCheck, chaosStatus()), x4, y4++);
+		for (DamageType damageType: DamageType.RESISTABLE_TYPES) {
+			terminal.write(
+				String.format("%s%s: %s", damageTypeSelected == damageType ? ">> " : "", damageType, damageTypeStatus(damageType)),
+				x4,
+				y4++,
+				hasModifierFor(damageType) ? terminal.getDefaultForegroundColor() : ExtendedAsciiPanel.brightBlack
+			);
+		}
         
         terminal.write(details, x, 31);
         terminal.write(details2, x, 32);
@@ -712,94 +519,34 @@ public class CharacterSheetScreen implements Screen{
         terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
 		
 	}
-	
-	public String physicalStatus() {
-		if(player.immunePhysicalDamage()) {
-			return "Immune";
-		}else if(player.resistsPhysicalDamage()) {
-			return "Resistant";
-		}else if(player.weakToPhysicalDamage()) {
-			return "Weakness";
-		}else {
-			return "No modifier";
-		}
+
+	public String damageTypeStatus(DamageType damageType) {
+		if (player.isImmuneTo(damageType)) return "Immune";
+		else if (player.isResistantTo(damageType)) return "Resistant";
+		else if (player.isWeakTo(damageType)) return "Weakness";
+		else return "No modifier";
 	}
-	public String fireStatus() {
-		if(player.immuneFireDamage()) {
-			return "Immune";
-		}else if(player.resistsFireDamage()) {
-			return "Resistant";
-		}else if(player.weakToFireDamage()) {
-			return "Weakness";
-		}else {
-			return "No modifier";
-		}
+
+	public boolean hasModifierFor(DamageType damageType) {
+		return (
+			player.isImmuneTo(damageType)
+			|| player.isWeakTo(damageType)
+			|| player.isResistantTo(damageType)
+		);
 	}
-	public String frostStatus() {
-		if(player.immuneFrostDamage()) {
-			return "Immune";
-		}else if(player.resistsFrostDamage()) {
-			return "Resistant";
-		}else if(player.weakToFrostDamage()) {
-			return "Weakness";
-		}else {
-			return "No modifier";
+
+	public String damageTypeLongString(DamageType damageType) {
+		String typeStr = TextUtils.sentenceCase(damageType.toString());
+		if (player.isImmuneTo(damageType)) {
+			return String.format("You are immune to %s damage, taking no damage of this type.", typeStr);
 		}
-	}
-	public String shockStatus() {
-		if(player.immuneShockDamage()) {
-			return "Immune";
-		}else if(player.resistsShockDamage()) {
-			return "Resistant";
-		}else if(player.weakToShockDamage()) {
-			return "Weakness";
-		}else {
-			return "No modifier";
+		else if (player.isResistantTo(damageType)) {
+			return String.format("You are resistant to %s damage, taking half damage of this type.", typeStr);
 		}
-	}
-	public String poisonStatus() {
-		if(player.immunePoisonDamage()) {
-			return "Immune";
-		}else if(player.resistsPoisonDamage()) {
-			return "Resistant";
-		}else if(player.weakToPoisonDamage()) {
-			return "Weakness";
-		}else {
-			return "No modifier";
+		else if (player.isWeakTo(damageType)) {
+			return String.format("You are vulnerable to %s damage, taking double damage of this type.", typeStr);
 		}
-	}
-	public String acidStatus() {
-		if(player.immuneAcidDamage()) {
-			return "Immune";
-		}else if(player.resistsAcidDamage()) {
-			return "Resistant";
-		}else if(player.weakToAcidDamage()) {
-			return "Weakness";
-		}else {
-			return "No modifier";
-		}
-	}
-	public String magicStatus() {
-		if(player.immuneMagicDamage()) {
-			return "Immune";
-		}else if(player.resistsMagicDamage()) {
-			return "Resistant";
-		}else if(player.weakToMagicDamage()) {
-			return "Weakness";
-		}else {
-			return "No modifier";
-		}
-	}
-	public String chaosStatus() {
-		if(player.immuneChaosDamage()) {
-			return "Immune";
-		}else if(player.resistsChaosDamage()) {
-			return "Resistant";
-		}else if(player.weakToChaosDamage()) {
-			return "Weakness";
-		}else {
-			return "No modifier";
-		}
+		else return String.format("You are damaged normally by %s damage.", typeStr);
 	}
 
 	@Override

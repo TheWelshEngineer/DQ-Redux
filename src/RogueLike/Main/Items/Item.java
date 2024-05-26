@@ -2,11 +2,13 @@ package RogueLike.Main.Items;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import RogueLike.Main.Description;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Spell;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Enchantments.Enchantment;
@@ -15,7 +17,6 @@ import RogueLike.Main.Factories.ObjectFactory;
 
 
 public class Item implements Cloneable{
-	
 	private char glyph;
 	public char glyph() {
 		return glyph;
@@ -272,61 +273,21 @@ public class Item implements Cloneable{
 	public void setRangedDamageDice(Dice dice) {
 		rangedDamageDice = dice;
 	}
-	
-	private boolean dealsFireDamage;
-	public boolean dealsFireDamage() {
-		return dealsFireDamage;
+
+
+	private DamageType baseDamageType;
+	public DamageType baseDamageType() {
+		return baseDamageType;
 	}
-	public void setDealsFireDamage(boolean value) {
-		dealsFireDamage = value;
+	public DamageType effectiveDamageType() {
+		// enchantment damage type supersedes base weapon damage type
+		if (this.enchantment != null && this.enchantment.damageType != null) {
+			return this.enchantment.damageType;
+		}
+		return this.baseDamageType;
 	}
-	
-	private boolean dealsFrostDamage;
-	public boolean dealsFrostDamage() {
-		return dealsFrostDamage;
-	}
-	public void setDealsFrostDamage(boolean value) {
-		dealsFrostDamage = value;
-	}
-	
-	private boolean dealsShockDamage;
-	public boolean dealsShockDamage() {
-		return dealsShockDamage;
-	}
-	public void setDealsShockDamage(boolean value) {
-		dealsShockDamage = value;
-	}
-	
-	private boolean dealsPoisonDamage;
-	public boolean dealsPoisonDamage() {
-		return dealsPoisonDamage;
-	}
-	public void setDealsPoisonDamage(boolean value) {
-		dealsPoisonDamage = value;
-	}
-	
-	private boolean dealsAcidDamage;
-	public boolean dealsAcidDamage() {
-		return dealsAcidDamage;
-	}
-	public void setDealsAcidDamage(boolean value) {
-		dealsAcidDamage = value;
-	}
-	
-	private boolean dealsMagicDamage;
-	public boolean dealsMagicDamage() {
-		return dealsMagicDamage;
-	}
-	public void setDealsMagicDamage(boolean value) {
-		dealsMagicDamage = value;
-	}
-	
-	private boolean dealsChaosDamage;
-	public boolean dealsChaosDamage() {
-		return dealsChaosDamage;
-	}
-	public void setDealsChaosDamage(boolean value) {
-		dealsChaosDamage = value;
+	public void setBaseDamageType(DamageType baseDamageType) {
+		this.baseDamageType = baseDamageType;
 	}
 	
 	/*private double defenseValue;
@@ -440,181 +401,29 @@ public class Item implements Cloneable{
 	public void modifySaveBonusChaos(double amount) {
 		saveBonusChaos += amount;
 	}
-	
-	private boolean resistsPhysicalDamage;
-	public boolean resistsPhysicalDamage() {
-		return resistsPhysicalDamage;
+
+	private final EnumSet<DamageType> resistances;
+	private final EnumSet<DamageType> weaknesses;
+	private final EnumSet<DamageType> immunities;
+
+	public boolean grantsResistanceTo(DamageType damageType) {
+		return resistances.contains(damageType);
 	}
-	public void setResistsPhysicalDamage(boolean value) {
-		resistsPhysicalDamage = value;
+	public boolean grantsWeaknessTo(DamageType damageType) {
+		return weaknesses.contains(damageType);
 	}
-	private boolean immunePhysicalDamage;
-	public boolean immunePhysicalDamage() {
-		return immunePhysicalDamage;
+	public boolean grantsImmunityTo(DamageType damageType) {
+		return immunities.contains(damageType);
 	}
-	public void setImmunePhysicalDamage(boolean value) {
-		immunePhysicalDamage = value;
+
+	public void addResistance(DamageType damageType) {
+		resistances.add(damageType);
 	}
-	private boolean weakToPhysicalDamage;
-	public boolean weakToPhysicalDamage() {
-		return weakToPhysicalDamage;
+	public void addWeakness(DamageType damageType) {
+		weaknesses.add(damageType);
 	}
-	public void setWeakToPhysicalDamage(boolean value) {
-		weakToPhysicalDamage = value;
-	}
-	
-	private boolean resistsFireDamage;
-	public boolean resistsFireDamage() {
-		return resistsFireDamage;
-	}
-	public void setResistsFireDamage(boolean value) {
-		resistsFireDamage = value;
-	}
-	private boolean immuneFireDamage;
-	public boolean immuneFireDamage() {
-		return immuneFireDamage;
-	}
-	public void setImmuneFireDamage(boolean value) {
-		immuneFireDamage = value;
-	}
-	private boolean weakToFireDamage;
-	public boolean weakToFireDamage() {
-		return weakToFireDamage;
-	}
-	public void setWeakToFireDamage(boolean value) {
-		weakToFireDamage = value;
-	}
-	
-	private boolean resistsFrostDamage;
-	public boolean resistsFrostDamage() {
-		return resistsFrostDamage;
-	}
-	public void setResistsFrostDamage(boolean value) {
-		resistsFrostDamage = value;
-	}
-	private boolean immuneFrostDamage;
-	public boolean immuneFrostDamage() {
-		return immuneFrostDamage;
-	}
-	public void setImmuneFrostDamage(boolean value) {
-		immuneFrostDamage = value;
-	}
-	private boolean weakToFrostDamage;
-	public boolean weakToFrostDamage() {
-		return weakToFrostDamage;
-	}
-	public void setWeakToFrostDamage(boolean value) {
-		weakToFrostDamage = value;
-	}
-	
-	private boolean resistsShockDamage;
-	public boolean resistsShockDamage() {
-		return resistsShockDamage;
-	}
-	public void setResistsShockDamage(boolean value) {
-		resistsShockDamage = value;
-	}
-	private boolean immuneShockDamage;
-	public boolean immuneShockDamage() {
-		return immuneShockDamage;
-	}
-	public void setImmuneShockDamage(boolean value) {
-		immuneShockDamage = value;
-	}
-	private boolean weakToShockDamage;
-	public boolean weakToShockDamage() {
-		return weakToShockDamage;
-	}
-	public void setWeakToShockDamage(boolean value) {
-		weakToShockDamage = value;
-	}
-	
-	private boolean resistsPoisonDamage;
-	public boolean resistsPoisonDamage() {
-		return resistsPoisonDamage;
-	}
-	public void setResistsPoisonDamage(boolean value) {
-		resistsPoisonDamage = value;
-	}
-	private boolean immunePoisonDamage;
-	public boolean immunePoisonDamage() {
-		return immunePoisonDamage;
-	}
-	public void setImmunePoisonDamage(boolean value) {
-		immunePoisonDamage = value;
-	}
-	private boolean weakToPoisonDamage;
-	public boolean weakToPoisonDamage() {
-		return weakToPoisonDamage;
-	}
-	public void setWeakToPoisonDamage(boolean value) {
-		weakToPoisonDamage = value;
-	}
-	
-	private boolean resistsAcidDamage;
-	public boolean resistsAcidDamage() {
-		return resistsAcidDamage;
-	}
-	public void setResistsAcidDamage(boolean value) {
-		resistsAcidDamage = value;
-	}
-	private boolean immuneAcidDamage;
-	public boolean immuneAcidDamage() {
-		return immuneAcidDamage;
-	}
-	public void setImmuneAcidDamage(boolean value) {
-		immuneAcidDamage = value;
-	}
-	private boolean weakToAcidDamage;
-	public boolean weakToAcidDamage() {
-		return weakToAcidDamage;
-	}
-	public void setWeakToAcidDamage(boolean value) {
-		weakToAcidDamage = value;
-	}
-	
-	private boolean resistsMagicDamage;
-	public boolean resistsMagicDamage() {
-		return resistsMagicDamage;
-	}
-	public void setResistsMagicDamage(boolean value) {
-		resistsMagicDamage = value;
-	}
-	private boolean immuneMagicDamage;
-	public boolean immuneMagicDamage() {
-		return immuneMagicDamage;
-	}
-	public void setImmuneMagicDamage(boolean value) {
-		immuneMagicDamage = value;
-	}
-	private boolean weakToMagicDamage;
-	public boolean weakToMagicDamage() {
-		return weakToMagicDamage;
-	}
-	public void setWeakToMagicDamage(boolean value) {
-		weakToMagicDamage = value;
-	}
-	
-	private boolean resistsChaosDamage;
-	public boolean resistsChaosDamage() {
-		return resistsChaosDamage;
-	}
-	public void setResistsChaosDamage(boolean value) {
-		resistsChaosDamage = value;
-	}
-	private boolean immuneChaosDamage;
-	public boolean immuneChaosDamage() {
-		return immuneChaosDamage;
-	}
-	public void setImmuneChaosDamage(boolean value) {
-		immuneChaosDamage = value;
-	}
-	private boolean weakToChaosDamage;
-	public boolean weakToChaosDamage() {
-		return weakToChaosDamage;
-	}
-	public void setWeakToChaosDamage(boolean value) {
-		weakToChaosDamage = value;
+	public void addImmunity(DamageType damageType) {
+		immunities.add(damageType);
 	}
 	
 	private Effect quaffEffect;
@@ -1332,9 +1141,13 @@ public class Item implements Cloneable{
 		this.name = name;
 		this.defaultName = name;
 		this.thrownDamageDice = Dice.d1;
+		this.baseDamageType = DamageType.PHYSICAL;
 		this.writtenSpells = new ArrayList<Spell>();
 		this.appearance = appearance;
 		this.stackAmount = 1;
+		this.weaknesses = EnumSet.noneOf(DamageType.class);
+		this.resistances = EnumSet.noneOf(DamageType.class);
+		this.immunities = EnumSet.noneOf(DamageType.class);
 	}
 	
 	public Object clone(){

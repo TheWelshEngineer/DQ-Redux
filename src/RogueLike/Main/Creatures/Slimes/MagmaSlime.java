@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import RogueLike.Main.AI.SlimeAI.MagmaSlimeAI;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Factories.ObjectFactory;
 
 public class MagmaSlime extends Creature{
@@ -26,8 +27,8 @@ public class MagmaSlime extends Creature{
 		this.scaleStrengthWithDepth(depth);	
 		this.scaleDexterityWithDepth(depth);	
 		this.scaleIntelligenceWithDepth(depth);
-		this.setImmuneFireDamage(true);
-		this.setDealsFireDamage(true);
+		this.addImmunityTo(DamageType.FIRE);
+		this.setUnarmedDamageType(DamageType.FIRE);
 	}
 
 }

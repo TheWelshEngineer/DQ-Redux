@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import RogueLike.Main.AI.SlimeAI.SlimelingAI;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Factories.ObjectFactory;
 
 public class ThundercloudSlimeling extends Creature{
@@ -26,8 +27,8 @@ public class ThundercloudSlimeling extends Creature{
 		this.scaleStrengthWithDepth(depth);	
 		this.scaleDexterityWithDepth(depth);	
 		this.scaleIntelligenceWithDepth(depth);
-		this.setImmuneShockDamage(true);
-		this.setDealsShockDamage(true);
+		this.addImmunityTo(DamageType.SHOCK);
+		this.setUnarmedDamageType(DamageType.SHOCK);
 	}
 
 }
