@@ -20,7 +20,22 @@ public class SkillManager {
 	public static Skill ferromancyDefault = new Skill(13, "Ferromancy", 0);
 	
 	public static Skill[] getDefaultSkillArray() {
-		return new Skill[]{new Skill(0, "Simple Weapons", 0), new Skill(1, "Martial Weapons", 0), new Skill(2, "Armor Training", 0), new Skill(3, "Fortitude", 0), new Skill(4, "Finesse Weapons", 0), new Skill(5, "Ranged Weapons", 0), new Skill(6, "Stealth", 0), new Skill(7, "Perception", 0), new Skill(8, "Evocation", 0), new Skill(9, "Pyromancy", 0), new Skill(10, "Cryomancy", 0), new Skill(11, "Electromancy", 0), new Skill(12, "Alchemancy", 0), new Skill(13, "Ferromancy", 0)};
+		return new Skill[]{
+			new Skill(0, "Simple Weapons", 0),
+			new Skill(1, "Martial Weapons", 0),
+			new Skill(2, "Armor Training", 0),
+			new Skill(3, "Fortitude", 0),
+			new Skill(4, "Finesse Weapons", 0),
+			new Skill(5, "Ranged Weapons", 0),
+			new Skill(6, "Stealth", 0),
+			new Skill(7, "Perception", 0),
+			new Skill(8, "Evocation", 0),
+			new Skill(9, "Pyromancy", 0),
+			new Skill(10, "Cryomancy", 0),
+			new Skill(11, "Electromancy", 0),
+			new Skill(12, "Alchemancy", 0),
+			new Skill(13, "Ferromancy", 0)
+		};
 	}
 
 }

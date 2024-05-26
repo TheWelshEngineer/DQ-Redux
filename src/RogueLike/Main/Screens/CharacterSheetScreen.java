@@ -1,636 +1,187 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import RogueLike.Main.Effect;
 import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
-import RogueLike.Main.TextUtils;
+import RogueLike.Main.Screens.CharacterSheet.*;
+import RogueLike.Main.Screens.CharacterSheet.Skills.*;
 
 public class CharacterSheetScreen implements Screen{
-	
+
 	protected Creature player;
-	protected List<Effect> effects;
-	
+
 	public CharacterSheetScreen(Creature player) {
 		this.player = player;
-		this.effects = player.effects();
-	}
-	
-	private String details = "";
-	private String details2 = "";
-	private String details3 = "";
-	
-	private String nameCheck = ">> ";
-	private String levelCheck = ">> ";
-	private String xpCheck = ">> ";
-	private String goldCheck = ">> ";
-	
-	private String healthCheck = ">> ";
-	private String manaCheck = ">> ";
-	private String hungerCheck = ">> ";
-	
-	private String strengthCheck = ">> ";
-	private String dexterityCheck = ">> ";
-	private String intelligenceCheck = ">> ";
-	
-	private String armorCheck = ">> ";
-	private String proficiencyCheck = ">> ";
-	private String visionCheck = ">> ";
 
-	private DamageType damageTypeSelected = null;
-	
-	int cX = 0;
-	int cY = 0;
-	
-	private String updateSelected(int cX, int cY) {
-		// TODO: yeowch this needs a big ol' refactor
-		if(cX != 3) {
-			damageTypeSelected = null;
-		}
-		if(cX == 0) {
-			switch(cY) {
-			case 0:
-				nameCheck = ">> ";
-				levelCheck = "";
-				xpCheck = "";
-				goldCheck = "";
-				healthCheck = "";
-				manaCheck = "";
-				hungerCheck = "";
-				strengthCheck = "";
-				dexterityCheck = "";
-				intelligenceCheck = "";
-				armorCheck = "";
-				proficiencyCheck = "";
-				visionCheck = "";
+		elements = new ArrayList<>();
+		elements.add( // column 1: stats
+			List.of(
+				new NameElement(player),
+				new LevelElement(player),
+				new ExpElement(player),
+				new GoldElement(player),
 				//
-				details = "That's you!";
-				details2 = "";
-				details3 = "";
-				break;
-			case 1:
-				nameCheck = "";
-				levelCheck = ">> ";
-				xpCheck = "";
-				goldCheck = "";
-				healthCheck = "";
-				manaCheck = "";
-				hungerCheck = "";
-				strengthCheck = "";
-				dexterityCheck = "";
-				intelligenceCheck = "";
-				armorCheck = "";
-				proficiencyCheck = "";
-				visionCheck = "";
+				new SpacerElement(),
 				//
-				details = String.format("You are a level %d %s %s.", player.level(), player.playerAncestry(), player.playerClass());
-				if(player.playerClass().equals("Rogue")) {
-					details2 = "As a Rogue, you regenerate health and mana at a roughly even rate.";
-				}else if(player.playerClass().equals("Ranger")) {
-					details2 = "As a Ranger, you regenerate health and mana at a roughly even rate.";
-				}else if(player.playerClass().equals("Warrior")) {
-					details2 = "As a Warrior, your health regenerates quickly, at the expense of your mana.";
-				}else if(player.playerClass().equals("Mage")) {
-					details2 = "As a Mage, your mana regenerates quickly, at the expense of your health.";
-				}
-				if(player.playerAncestry().equals("Human")) {
-					details3 = "As a Human, you began your quest with an addtional skill point.";
-				}else if(player.playerAncestry().equals("Elf")) {
-					details3 = "As an Elf, you gain 25% more maximum mana upon levelling up.";
-				}else if(player.playerAncestry().equals("Dwarf")) {
-					details3 = "As a Dwarf, you are resistant to Poison damage, and your base armor class is increased by 1.";
-				}else if(player.playerAncestry().equals("Orc")) {
-					details3 = "As an Orc, you regenerate health whenever you eat, based on the quality of the food item you ate.";
-				}else if(player.playerAncestry().equals("Dragonborn")) {
-					details3 = "As a Dragonborn, you are resistant to Fire damage, and began your quest with a Wand of Firebolt.";
-				}
-				break;
-			case 2:
-				nameCheck = "";
-				levelCheck = "";
-				xpCheck = ">> ";
-				goldCheck = "";
-				healthCheck = "";
-				manaCheck = "";
-				hungerCheck = "";
-				strengthCheck = "";
-				dexterityCheck = "";
-				intelligenceCheck = "";
-				armorCheck = "";
-				proficiencyCheck = "";
-				visionCheck = "";
+				new HealthElement(player),
+				new ManaElement(player),
+				new HungerElement(player),
 				//
-				details = String.format("You require %d more experience points to level up.", player.xpToNextLevel(), player.playerClass());
-				details2 = String.format("You have %d available attribute points.", player.attributePoints());
-				details3 = String.format("You have %d available skill points.", player.skillPoints());
-				break;
-			case 3:
-				nameCheck = "";
-				levelCheck = "";
-				xpCheck = "";
-				goldCheck = ">> ";
-				healthCheck = "";
-				manaCheck = "";
-				hungerCheck = "";
-				strengthCheck = "";
-				dexterityCheck = "";
-				intelligenceCheck = "";
-				armorCheck = "";
-				proficiencyCheck = "";
-				visionCheck = "";
-				details = String.format("You are carrying %d gold pieces in your purse.", player.gold());
-				details2 = String.format("You are wielding equipment worth %d gold pieces.", player.equipmentValue());
-				details3 = "";
-				break;
-			case 4:
-				nameCheck = "";
-				levelCheck = "";
-				xpCheck = "";
-				goldCheck = "";
-				healthCheck = ">> ";
-				manaCheck = "";
-				hungerCheck = "";
-				strengthCheck = "";
-				dexterityCheck = "";
-				intelligenceCheck = "";
-				armorCheck = "";
-				proficiencyCheck = "";
-				visionCheck = "";
-				details = String.format("You have %d health points remaining, out of a maximum of %d.", player.hp(), player.maxHP());
-				details2 = "";
-				details3 = "";
-				break;
-			case 5:
-				nameCheck = "";
-				levelCheck = "";
-				xpCheck = "";
-				goldCheck = "";
-				healthCheck = "";
-				manaCheck = ">> ";
-				hungerCheck = "";
-				strengthCheck = "";
-				dexterityCheck = "";
-				intelligenceCheck = "";
-				armorCheck = "";
-				proficiencyCheck = "";
-				visionCheck = "";
-				details = String.format("You have %d mana points remaining, out of a maximum of %d.", player.mana(), player.maxMana());
-				details2 = "";
-				details3 = "";
-				break;
-			case 6:
-				nameCheck = "";
-				levelCheck = "";
-				xpCheck = "";
-				goldCheck = "";
-				healthCheck = "";
-				manaCheck = "";
-				hungerCheck = ">> ";
-				strengthCheck = "";
-				dexterityCheck = "";
-				intelligenceCheck = "";
-				armorCheck = "";
-				proficiencyCheck = "";
-				visionCheck = "";
-				details = String.format("You are %s. You'll probably next need to eat after %d turns of exploration.", player.hungerAsString(), player.food()/2);
-				details2 = "";
-				details3 = "";
-				break;
-			case 7:
-				nameCheck = "";
-				levelCheck = "";
-				xpCheck = "";
-				goldCheck = "";
-				healthCheck = "";
-				manaCheck = "";
-				hungerCheck = "";
-				strengthCheck = ">> ";
-				dexterityCheck = "";
-				intelligenceCheck = "";
-				armorCheck = "";
-				proficiencyCheck = "";
-				visionCheck = "";
-				details = String.format("You have %d total points of Strength, granting a %s modifier to Strength rolls.", player.strength(), ExtraMaths.modifierToString(player.strengthModifier()));
-				details2 = String.format("You have %d natural points of Strength, out of a maximum of 30.", player.baseStrength());
-				details3 = "";
-				break;
-			case 8:
-				nameCheck = "";
-				levelCheck = "";
-				xpCheck = "";
-				goldCheck = "";
-				healthCheck = "";
-				manaCheck = "";
-				hungerCheck = "";
-				strengthCheck = "";
-				dexterityCheck = ">> ";
-				intelligenceCheck = "";
-				armorCheck = "";
-				proficiencyCheck = "";
-				visionCheck = "";
-				details = String.format("You have %d total points of Dexterity, granting a %s modifier to Dexterity rolls.", player.dexterity(), ExtraMaths.modifierToString(player.dexterityModifier()));
-				details2 = String.format("You have %d natural points of Dexterity, out of a maximum of 30.", player.baseDexterity());
-				details3 = "";
-				break;
-			case 9:
-				nameCheck = "";
-				levelCheck = "";
-				xpCheck = "";
-				goldCheck = "";
-				healthCheck = "";
-				manaCheck = "";
-				hungerCheck = "";
-				strengthCheck = "";
-				dexterityCheck = "";
-				intelligenceCheck = ">> ";
-				armorCheck = "";
-				proficiencyCheck = "";
-				visionCheck = "";
-				details = String.format("You have %d total points of Intelligence, granting a %s modifier to Intelligence rolls.", player.intelligence(), ExtraMaths.modifierToString(player.intelligenceModifier()));
-				details2 = String.format("You have %d natural points of Intelligence, out of a maximum of 30.", player.baseIntelligence());
-				details3 = "";
-				break;
-			case 10:
-				nameCheck = "";
-				levelCheck = "";
-				xpCheck = "";
-				goldCheck = "";
-				healthCheck = "";
-				manaCheck = "";
-				hungerCheck = "";
-				strengthCheck = "";
-				dexterityCheck = "";
-				intelligenceCheck = "";
-				armorCheck = ">> ";
-				proficiencyCheck = "";
-				visionCheck = "";
-				details = String.format("You have a total Armor Class of %d.", player.armorClass());
-				details2 = String.format("You have a natural Armor Class of %d.", player.baseArmorClass());
-				details3 = "";
-				break;
-			case 11:
-				nameCheck = "";
-				levelCheck = "";
-				xpCheck = "";
-				goldCheck = "";
-				healthCheck = "";
-				manaCheck = "";
-				hungerCheck = "";
-				strengthCheck = "";
-				dexterityCheck = "";
-				intelligenceCheck = "";
-				armorCheck = "";
-				proficiencyCheck = ">> ";
-				visionCheck = "";
-				details = String.format("As a level %d adventurer, you have a +%d proficiency bonus.", player.level(), player.proficiencyBonus());
-				details2 = "";
-				details3 = "";
-				break;
-			case 12:
-				nameCheck = "";
-				levelCheck = "";
-				xpCheck = "";
-				goldCheck = "";
-				healthCheck = "";
-				manaCheck = "";
-				hungerCheck = "";
-				strengthCheck = "";
-				dexterityCheck = "";
-				intelligenceCheck = "";
-				armorCheck = "";
-				proficiencyCheck = "";
-				visionCheck = ">> ";
-				details = String.format("You have a vision radius of %d tiles.", player.visionRadius());
-				details2 = "";
-				details3 = "";
-				break;
-			default: break;
-			}
-		}else {
-			nameCheck = "";
-			levelCheck = "";
-			xpCheck = "";
-			goldCheck = "";
-			healthCheck = "";
-			manaCheck = "";
-			hungerCheck = "";
-			strengthCheck = "";
-			dexterityCheck = "";
-			intelligenceCheck = "";
-			armorCheck = "";
-			proficiencyCheck = "";
-			visionCheck = "";
-			if(cX == 3) {
-				// damage type column
-				damageTypeSelected = DamageType.RESISTABLE_TYPES[cY];
-				details = damageTypeLongString(damageTypeSelected);
-				details2 = "";
-				details3 = "";
-			}
-		}
-		return null;
-	}
-	
-	@Override
-	public void displayOutput(ExtendedAsciiPanel terminal) {
-		terminal.clear();
-		
-		Screen.generateBorders(terminal);
-		
-		this.updateSelected(cX, cY);
-		
-		terminal.writeCenter("== Character Sheet ==", 1);	
-		int y = 3;
-		int y2 = 3;
-		int y3 = 3;
-		int y4 = 3;
-		
-		int x = 5;
-		int x2 = 32;
-		int x3 = 59;
-		int x4 = 89;
-		
-		
-		
-		terminal.write("== Stats ==", x, y++);	
-		terminal.write(String.format("%s%s", nameCheck, player.playerName()), x, y++);
-		terminal.write(String.format("%sLevel %d %s %s", levelCheck, player.level(), player.playerAncestry(), player.playerClass()), x, y++);
-		terminal.write(String.format("%sXP: %d/%d", xpCheck, player.xp(), player.xpToNextLevel()), x, y++);
-		terminal.write(String.format("%sGold: %d gold", goldCheck, player.gold()), x, y++);
-		y++;
-        terminal.write(String.format("%sHealth: %d/%d", healthCheck, player.hp(), player.maxHP()), x, y++);
-        terminal.write(String.format("%sMana: %d/%d", manaCheck, player.mana(), player.maxMana()), x, y++);
-        terminal.write(String.format("%sHunger: %s", hungerCheck, player.hungerAsString()), x, y++);
-        y++;
-        terminal.write(String.format("%sStrength: %d (%s)", strengthCheck, player.strength(), ExtraMaths.modifierToString(player.strengthModifier())), x, y++);
-        terminal.write(String.format("%sDexterity: %d (%s)", dexterityCheck, player.dexterity(), ExtraMaths.modifierToString(player.dexterityModifier())), x, y++);
-        terminal.write(String.format("%sIntelligence: %d (%s)", intelligenceCheck, player.intelligence(), ExtraMaths.modifierToString(player.intelligenceModifier())), x, y++);
-        y++;
-        terminal.write(String.format("%sArmor Class: %d", armorCheck, player.armorClass()), x, y++);
-        terminal.write(String.format("%sProficiency Bonus: +%s", proficiencyCheck, player.proficiencyBonus()), x, y++);
-        terminal.write(String.format("%sVision Radius: %d tiles", visionCheck, player.visionRadius()), x, y++);
-        y++;
-        terminal.write("== Skills ==", x2, y2++);
-        for(int i = 0; i < 14; i++) {
-        	if(cX == 1 && cY == i) {
-        		terminal.write(String.format(">> %s", player.skills()[i].toStringCharacterSheet()), x2, y2++);
-        		switch(i) {
-        		case 0:
-        			if(player.skills()[i].level() >= 1) {
-        				details = String.format("Simple Weapons I: You add your proficiency bonus (+%s) to attack rolls made with Simple Weapons.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 2) {
-        				details2 = String.format("Simple Weapons II: You add your proficiency bonus (+%s) to damage rolls made with Simple Weapons.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 3) {
-        				details3 = String.format("Simple Weapons III: Critical hits with Simple Weapons Paralyse the target for %s turns.", player.proficiencyBonus());
-        			}
-        			break;
-        		case 1:
-        			if(player.skills()[i].level() >= 1) {
-        				details = String.format("Martial Weapons I: You add your proficiency bonus (+%s) to attack rolls made with Martial Weapons.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 2) {
-        				details2 = String.format("Martial Weapons II: You add your proficiency bonus (+%s) to damage rolls made with Martial Weapons.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 3) {
-        				details3 = String.format("Martial Weapons III: Critical hits with Martial Weapons deal 3x damage (up from 2x).");
-        			}
-        			break;
-        		case 2:
-        			if(player.skills()[i].level() >= 1) {
-        				details = String.format("Armor Training I: You can equip Medium Armor and Shields.");
-        			}
-        			if(player.skills()[i].level() >= 2) {
-        				details2 = String.format("Armor Training II: You can equip Heavy Armor and Tower Shields.");
-        			}
-        			if(player.skills()[i].level() >= 3) {
-        				details3 = String.format("Armor Training III: You gain a bonus to your total Armor Class equal to your proficiency bonus (+%s).", player.proficiencyBonus());
-        			}
-        			break;
-        		case 3:
-        			if(player.skills()[i].level() >= 1) {
-        				details = String.format("Fortitude I: When starving, you take damage every %s turns instead of every turn.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 2) {
-        				details2 = String.format("Fortitude II: You add your proficiency bonus (+%s) to checks made to avoid negative effects from eating corpses.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 3) {
-        				details3 = String.format("Fortitude III: The duration of negative effects applied to you is halves.");
-        			}
-        			break;
-        		case 4:
-        			if(player.skills()[i].level() >= 1) {
-        				details = String.format("Finesse Weapons I: You add your proficiency bonus (+%s) to attack rolls made with Finesse Weapons.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 2) {
-        				details2 = String.format("Finesse Weapons II: You add your proficiency bonus (+%s) to damage rolls made with Finesse Weapons.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 3) {
-        				details3 = String.format("Finesse Weapons III: Critical hits with Finesse Weapons apply Bleeding to the target for %s turns.", player.proficiencyBonus());
-        			}
-        			break;
-        		case 5:
-        			if(player.skills()[i].level() >= 1) {
-        				details = String.format("Ranged Weapons I: You add your proficiency bonus (+%s) to attack rolls made with Ranged Weapons.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 2) {
-        				details2 = String.format("Ranged Weapons II: You add your proficiency bonus (+%s) to damage rolls made with Ranged Weapons.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 3) {
-        				details3 = String.format("Ranged Weapons III: Attacks with Ranged Weapons refund the spent ammunition upon the target's death.");
-        			}
-        			break;
-        		case 6:
-        			if(player.skills()[i].level() >= 1) {
-        				details = String.format("Stealth I: You add your proficiency bonus (+%s) to checks made to avoid waking sleeping monsters.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 2) {
-        				details2 = String.format("Stealth II: Whenever you Search, you expend %s Mana to become Invisible for %d turns.", player.proficiencyBonus(), player.proficiencyBonus()*2);
-        			}
-        			if(player.skills()[i].level() >= 3) {
-        				details3 = String.format("Stealth III: Attacks you make whilst Invisible are always considered to be critical hits.", player.proficiencyBonus());
-        			}
-        			break;
-        		case 7:
-        			if(player.skills()[i].level() >= 1) {
-        				details = String.format("Perception I: You add your proficiency bonus (+%s) to checks made to detect traps.", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 2) {
-        				details2 = String.format("Perception II: You gain a bonus to your Vision Radius equal to your proficiency bonus (+%s).", player.proficiencyBonus());
-        			}
-        			if(player.skills()[i].level() >= 3) {
-        				details3 = String.format("Perception III: When you trigger a revealed trap, you instead gain a positive effect based on the trap's type.", player.proficiencyBonus());
-        			}
-        			break;
-        		default: details = ""; details2 = ""; details3 = ""; break;
-        		}
-        	}else {
-        		terminal.write(String.format("%s", player.skills()[i].toStringCharacterSheet()), x2, y2++);
-        	}
-        }
-        y++;
-        y++;
-        terminal.write("== Status Effects ==", x3, y3++);
-        y++;
-        for(Effect effect : effects) {
-        	if(effect.name() != null) {
-        		String turns = "turn";
-        		if(effect.duration() > 1) {
-        			turns = "turns";
-        		}
-        		char effectIcon = (char)30;
-        		if(effect.isNegative()) {
-        			effectIcon = (char)31;
-        		}
-        		if(effect.showInMenu()) {
-        			if(cX == 2 && cY == effects.indexOf(effect)) {
-        				terminal.write(String.format(">> %c %s: %d %s", effectIcon, effect.name(), effect.duration(), turns), x3, y3++);
-        			}else {
-        				terminal.write(String.format("%c %s: %d %s", effectIcon, effect.name(), effect.duration(), turns), x3, y3++);
-        			}
-        			
-        		}
-        		
-        	}
-		}
-        
-        
-        
-        terminal.write("== Damage Resistances ==", x4, y4++);
-		for (DamageType damageType: DamageType.RESISTABLE_TYPES) {
-			terminal.write(
-				String.format("%s%s: %s", damageTypeSelected == damageType ? ">> " : "", damageType, damageTypeStatus(damageType)),
-				x4,
-				y4++,
-				hasModifierFor(damageType) ? terminal.getDefaultForegroundColor() : ExtendedAsciiPanel.brightBlack
-			);
-		}
-        
-        terminal.write(details, x, 31);
-        terminal.write(details2, x, 32);
-        terminal.write(details3, x, 33);
-    
-        terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
-		
-	}
-
-	public String damageTypeStatus(DamageType damageType) {
-		if (player.isImmuneTo(damageType)) return "Immune";
-		else if (player.isResistantTo(damageType)) return "Resistant";
-		else if (player.isWeakTo(damageType)) return "Weakness";
-		else return "No modifier";
-	}
-
-	public boolean hasModifierFor(DamageType damageType) {
-		return (
-			player.isImmuneTo(damageType)
-			|| player.isWeakTo(damageType)
-			|| player.isResistantTo(damageType)
+				new SpacerElement(),
+				//
+				new StrengthElement(player),
+				new DexterityElement(player),
+				new IntelligenceElement(player),
+				//
+				new SpacerElement(),
+				//
+				new ArmorClassElement(player),
+				new ProficiencyBonusElement(player),
+				new VisionRadiusElement(player)
+			)
+		);
+		elements.add( // column 2: skills
+			List.of(
+				new SimpleWeaponsSkillElement(player),
+				new MartialWeaponsSkillElement(player),
+				new FinesseWeaponsSkillElement(player),
+				new RangedWeaponsSkillElement(player),
+				//
+				new SpacerElement(),
+				//
+				new ArmorTrainingSkillElement(player),
+				new FortitudeSkillElement(player),
+				new StealthSkillElement(player),
+				new PerceptionSkillElement(player),
+				//
+				new SpacerElement(),
+				//
+				new EvocationSkillElement(player),
+				new PyromancySkillElement(player),
+				new CryomancySkillElement(player),
+				new ElectromancySkillElement(player),
+				new AlchemancySkillElement(player),
+				new FerromancySkillElement(player)
+			)
+		);
+		elements.add( // column 3: current effects
+			player.effects().stream()
+				.filter(effect -> effect.name() != null && effect.showInMenu())
+				.map(EffectElement::new)
+				.collect(Collectors.toList())
+		);
+		elements.add( // column 4: damage modifiers
+			Arrays.stream(DamageType.RESISTABLE_TYPES).map(
+				type -> new DamageModifierElement(player, type)
+			).collect(Collectors.toList())
 		);
 	}
 
-	public String damageTypeLongString(DamageType damageType) {
-		String typeStr = TextUtils.sentenceCase(damageType.toString());
-		if (player.isImmuneTo(damageType)) {
-			return String.format("You are immune to %s damage, taking no damage of this type.", typeStr);
+	private final List<List<CharacterSheetElement>> elements;
+
+	int cX = 0;
+	int cY = 0;
+
+	private CharacterSheetElement selectedElement() {
+		return elements.get(cX).get(cY);
+	}
+
+	@Override
+	public void displayOutput(ExtendedAsciiPanel terminal) {
+		terminal.clear();
+
+		Screen.generateBorders(terminal);
+
+		terminal.writeCenter("== Character Sheet ==", 1);
+		int[] column_start_y = {3, 3, 3, 3};
+		int[] column_x = {5, 32, 59, 89};
+		String[] column_headers = {"Stats", "Skills", "Status Effects", "Damage Resistances"};
+
+		CharacterSheetElement selectedElement = selectedElement();
+
+		for (int column_no = 0; column_no < 4; column_no++) {
+			int x = column_x[column_no];
+			int y = column_start_y[column_no];
+			terminal.write(String.format("== %s ==", column_headers[column_no]), x, y++);
+
+			for (CharacterSheetElement element: elements.get(column_no)) {
+				String selector = element == selectedElement ? ">> " : "";
+				terminal.write(selector + element.header(), x, y++);
+			}
 		}
-		else if (player.isResistantTo(damageType)) {
-			return String.format("You are resistant to %s damage, taking half damage of this type.", typeStr);
+
+        terminal.write(selectedElement.details1(), column_x[0], 31);
+        terminal.write(selectedElement.details2(), column_x[0], 32);
+        terminal.write(selectedElement.details3(), column_x[0], 33);
+
+        terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
+	}
+
+	private void moveSelectionVertical(int direction) {
+		var currentColumn = elements.get(cX);
+		if (currentColumn.isEmpty()) {
+			throw new IllegalStateException(String.format("Empty column at cX=%d shouldn't be selected.", cX));
 		}
-		else if (player.isWeakTo(damageType)) {
-			return String.format("You are vulnerable to %s damage, taking double damage of this type.", typeStr);
+		// Keep moving down until we hit a selectable element.
+		// Can't loop infinitely:
+		//  - We start in column 0 which has selectable elements.
+		//  - moveSelectionHorizontal checks that the column it's moving into has a selectable element.
+		do {
+			cY = trueModulo(cY+direction, currentColumn.size());
+		} while (!selectedElement().isSelectable());
+	}
+
+	private void moveSelectionHorizontal(int direction) {
+		int numColumns = elements.size(); // i.e. size on the x-axis
+		// Keep moving until we hit a column with selectable elements.
+		// Can't loop infinitely as column 0 always has selectable elements.
+		do {
+			cX = trueModulo(cX+direction, numColumns);
+		} while (elements.get(cX).stream().noneMatch(CharacterSheetElement::isSelectable));
+
+		// now ensure that our y-position is within bounds
+		var column = elements.get(cX);
+		if (cY >= column.size()) {
+			cY = column.size();
+			// note that moveSelectionVertical doesn't require cY to be in-bounds
+			moveSelectionVertical(-1);
 		}
-		else return String.format("You are damaged normally by %s damage.", typeStr);
+		if (!selectedElement().isSelectable()) {
+			moveSelectionVertical(-1);
+		}
+	}
+
+	private int trueModulo(int dividend, int divisor) {
+		int javaModulo = dividend % divisor;
+		if (javaModulo < 0) {
+			return javaModulo + divisor;
+		}
+		else {
+			return javaModulo;
+		}
 	}
 
 	@Override
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
 		case KeybindManager.navigateMenuLeft:
-			if(cX == 0) {
-				cX = 3;
-			}else {
-				if(effects.size() == 0 && cX == 3) {
-					cX = 1;
-				}else {
-					cX--;
-				}
-			}
-			cY = 0;
+			moveSelectionHorizontal(-1);
 			return this;
 		case KeybindManager.navigateMenuRight:
-			if(cX == 3) {
-				cX = 0;
-			}else {
-				if(effects.size() == 0 && cX == 1) {
-					cX = 3;
-				}else {
-					cX++;
-				}
-			}
-			cY = 0;
+			moveSelectionHorizontal(1);
 			return this;
 		case KeybindManager.navigateMenuUp:
-			if(cX == 0) {
-				if(cY == 0) {
-					cY = 12;
-				}else {
-					cY--;
-				}
-			}else if(cX == 1) {
-				if(cY == 0) {
-					cY = 13;
-				}else {
-					cY--;
-				}
-			}else if(cX == 2) {
-				if(cY == 0) {
-					cY = effects.size()-1;
-				}else {
-					cY--;
-				}
-			}else if(cX == 3) {
-				if(cY == 0) {
-					cY = 7;
-				}else {
-					cY--;
-				}
-			}
+			moveSelectionVertical(-1);
 			return this;
 		case KeybindManager.navigateMenuDown:
-			if(cX == 0) {
-				if(cY == 12) {
-					cY = 0;
-				}else {
-					cY++;
-				}
-			}else if(cX == 1) {
-				if(cY == 13) {
-					cY = 0;
-				}else {
-					cY++;
-				}
-			}
-			else if(cX == 2) {
-				if(cY == effects.size()-1) {
-					cY = 0;
-				}else {
-					cY++;
-				}
-			}else if(cX == 3) {
-				if(cY == 7) {
-					cY = 0;
-				}else {
-					cY++;
-				}
-			}
-			//TODO other columns
+			moveSelectionVertical(1);
 			return this;
 		case KeybindManager.navigateMenuBack:
 			return null;
