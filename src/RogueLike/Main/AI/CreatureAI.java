@@ -456,6 +456,4 @@ public class CreatureAI {
 		actionQueue.add(20);
 		actionQueue.add(1000);
 	}
-	
-
 }

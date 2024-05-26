@@ -10,6 +10,7 @@ import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Tile;
+import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Creatures.Creature;
@@ -30,7 +31,8 @@ public class GameplayScreen implements Screen{
 		int top = getScrollY();
 		
 		displayTiles(terminal, left, top);
-		displayMessages(terminal, messages);
+		playerNotifications.clearOldMessages(world.turnNumber());
+		displayMessages(terminal, playerNotifications.getNotificationsOnTurn(world.turnNumber()));
 		
 		//health bar
 		terminal.writeCenter("====================================================================================================================", 21);
@@ -198,7 +200,8 @@ public class GameplayScreen implements Screen{
 	        case KeybindManager.menuCharacterSheet: subscreen = new CharacterSheetScreen(player); break;
 	        case KeybindManager.menuIndex: subscreen = new IndexPotionScreen(player, player.factory()); break;
 	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); break;
-	        //
+			case KeybindManager.menuActionLog: subscreen = new ActionLogScreen(playerNotifications, world.turnNumber()); break;
+			//
 	        //case KeyEvent.VK_A: subscreen = new SpellbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = true; break;
 	        //
 	        //case KeyEvent.VK_M: subscreen = new FeatbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = 1; break;
@@ -262,7 +265,7 @@ public class GameplayScreen implements Screen{
 	private int screenHeight;
 	public Creature player;
 	public List<Effect> effects;
-	private List<String> messages;
+	private NotificationHistory playerNotifications;
 	private FieldOfView fov;
 	private Screen subscreen;
 	public String playerClass;
@@ -291,7 +294,8 @@ public class GameplayScreen implements Screen{
 		this.playerAncestry = playerAncestry;
 		screenWidth = 120; //80
 		screenHeight = 21; //21
-		messages = new ArrayList<String>();
+		// TODO: make the max notification history length configurable
+		playerNotifications = new NotificationHistory(100);
 		createWorld();
 		fov = new FieldOfView(world);
 		ObjectFactory factory = new ObjectFactory(world);
@@ -302,10 +306,8 @@ public class GameplayScreen implements Screen{
 		
 	}
 
-	
-	
 	public void createCreatures(ObjectFactory factory) {
-		player = factory.creatureFactory.newPlayer(messages, fov, this.playerClass, this.startingStats, this.startingSkills, this.playerName, this.playerAncestry);
+		player = factory.creatureFactory.newPlayer(fov, this.playerNotifications, this.playerClass, this.startingStats, this.startingSkills, this.playerName, this.playerAncestry);
 		
 		factory.setUpPotionIndex();
 		factory.setUpWandIndex(player);
@@ -422,8 +424,6 @@ public class GameplayScreen implements Screen{
 			terminal.write(messages.get(i), 3, y);
 			
 		}
-		messages.clear();
-		
 	}
 	//player.x
 	private void displayTiles(ExtendedAsciiPanel terminal, int left, int top) {

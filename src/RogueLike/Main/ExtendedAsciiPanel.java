@@ -1,5 +1,7 @@
 package RogueLike.Main;
 
+import RogueLike.Main.Screens.TerminalText;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -728,6 +730,18 @@ public class ExtendedAsciiPanel extends JPanel {
     }
 
     /**
+     * Write a TerminalText to the specified position.
+     * This updates the cursor's position but not the default foreground or background colors.
+     * @param text       the TerminalText to write
+     * @param x          the distance from the left to begin writing from
+     * @param y          the distance from the top to begin writing from
+     * @return this for convenient chaining of method calls
+     */
+    public ExtendedAsciiPanel write(TerminalText text, int x, int y) {
+        return write(text.text, x, y, text.foreground, text.background);
+    }
+
+    /**
      * Write a string to the specified position with the specified foreground and background colors.
      * This updates the cursor's position but not the default foreground or background colors.
      * @param string     the string to write
@@ -740,7 +754,7 @@ public class ExtendedAsciiPanel extends JPanel {
     public ExtendedAsciiPanel write(String string, int x, int y, Color foreground, Color background) {
         if (string == null)
             throw new NullPointerException("string must not be null." );
-        
+
         if (x + string.length() >= widthInCharacters)
             throw new IllegalArgumentException("x + string.length() " + (x + string.length()) + " must be less than " + widthInCharacters + "." );
 

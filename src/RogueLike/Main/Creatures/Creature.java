@@ -6,6 +6,7 @@ import java.util.List;
 
 import RogueLike.Main.*;
 import RogueLike.Main.AI.CreatureAI;
+import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.Damage.*;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;

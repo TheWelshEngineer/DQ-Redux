@@ -1,10 +1,10 @@
 package RogueLike.Main.AI;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Tile;
+import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
@@ -12,15 +12,14 @@ import RogueLike.Main.Items.Item;
 
 public class PlayerAI extends CreatureAI{
 	
-	private List<String> messages;
 	private FieldOfView fov;
+	private final NotificationHistory notificationsHandle;
 	
-	public PlayerAI(Creature creature, List<String> messages, FieldOfView fov, ObjectFactory factory, World world) {
+	public PlayerAI(Creature creature, NotificationHistory notificationsHandle, FieldOfView fov, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		actionQueue = new ArrayList<Integer>();
-		this.messages = messages;
 		this.fov = fov;
-		
+		this.notificationsHandle = notificationsHandle;
 	}
 	
 
@@ -63,6 +62,7 @@ public class PlayerAI extends CreatureAI{
 	
 	public void onUpdate() {
 		decodeAction(actionQueue.get(0));
+
 	}
 	
 	public void onEnter(int x, int y, int z, Tile tile) {
@@ -106,7 +106,7 @@ public class PlayerAI extends CreatureAI{
 	}
 	
 	public void onNotify(String message) {
-		messages.add(message);
+		notificationsHandle.addNotification(message, world.turnNumber());
 	}
 	
 	public boolean canSee(int wx, int wy, int wz) {
@@ -130,5 +130,4 @@ public class PlayerAI extends CreatureAI{
 		creature.gainMaxHP();
 		creature.gainMaxMana();
 	}
-
 }

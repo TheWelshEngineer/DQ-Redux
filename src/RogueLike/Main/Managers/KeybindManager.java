@@ -50,6 +50,7 @@ public class KeybindManager {
 	public static final int menuIndex = KeyEvent.VK_I;
 	public static final int menuCharacterSheet = KeyEvent.VK_C;
 
+	public static final int menuActionLog = KeyEvent.VK_A;
 	public static final int navigateMenuConfirm = KeyEvent.VK_ENTER;
 	public static final int navigateMenuBack = KeyEvent.VK_ESCAPE;
 	public static final int navigateMenuUp = KeyEvent.VK_UP;
