@@ -525,7 +525,10 @@ public class Creature implements Cloneable{
 			default: throw new IllegalArgumentException(damageType.toString());
 		}
 
-		return baseSaveBonus + equipmentBonus + wardBonus;
+		int resistanceBonus = isResistantTo(damageType) ? 5 : 0;
+		// TODO: how do we handle immunity here?
+
+		return baseSaveBonus + equipmentBonus + wardBonus + resistanceBonus;
 	}
 	public int rollSaveAgainst(DamageType damageType) {
 		return Dice.d20.roll() + saveBonus(damageType);
