@@ -1,15 +1,14 @@
 package RogueLike.Main.Creatures;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
 
 import RogueLike.Main.*;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.Damage.*;
 import RogueLike.Main.Enums.DamageType;
+import RogueLike.Main.Factories.EffectFactory;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.SkillManager;
@@ -500,147 +499,40 @@ public class Creature implements Cloneable{
 		return roll;
 	}
 
-	private int saveBonusPoison;
-	public int saveBonusPoison() {
-		int returnSaveBonusPoison = saveBonusPoison + (weapon == null ? 0 : weapon.saveBonusPoison()) + (armor == null ? 0 : armor.saveBonusPoison()) + (ring == null ? 0 : ring.saveBonusPoison()) + (shield == null ? 0 : shield.saveBonusPoison());
-		return returnSaveBonusPoison;
+	private final EnumMap<DamageType, Integer> saveBonuses;
+	public void setSaveBonus(DamageType damageType, int bonus) {
+		saveBonuses.put(damageType, bonus);
 	}
-	
-	public void setSaveBonusPoison(int value) {
-		saveBonusPoison = value;
-	}
+	public int saveBonus(DamageType damageType) {
+		int baseSaveBonus = saveBonuses.getOrDefault(damageType, 0);
 
-	public int poisonSave() {
-		int roll = (ExtraMaths.d20())+saveBonusPoison();
-		return roll;
-	}
+		int equipmentBonus = getequipmentArrayList().stream()
+			.filter(Objects::nonNull)
+			.map(eq -> eq.saveBonus(damageType))
+			.reduce(0, Integer::sum);
 
-	private int saveBonusFire;
-	public int saveBonusFire() {
-		int returnSaveBonusFire = saveBonusFire + (weapon == null ? 0 : weapon.saveBonusFire()) + (armor == null ? 0 : armor.saveBonusFire()) + (ring == null ? 0 : ring.saveBonusFire()) + (shield == null ? 0 : shield.saveBonusFire());
-		if(affectedBy(Effect.magmaWard) == true) {
-			returnSaveBonusFire += 5;
+		int wardBonus;
+		switch (damageType) {
+			case ACID: wardBonus = affectedBy(Effect.causticWard) ? 5 : 0; break;
+			case CHAOS: wardBonus = affectedBy(Effect.eldritchWard) ? 5 : 0; break;
+			case FIRE: wardBonus = affectedBy(Effect.magmaWard) ? 5 : 0; break;
+			case FROST: wardBonus = affectedBy(Effect.chillWard) ? 5 : 0; break;
+			case MAGIC: wardBonus = affectedBy(Effect.arcaneWard) ? 5 : 0; break;
+			case PHYSICAL: wardBonus = affectedBy(Effect.bladeWard) ? 5 : 0; break;
+			case POISON: wardBonus = affectedBy(Effect.venomousWard) ? 5 : 0; break;
+			case SHOCK: wardBonus = affectedBy(Effect.arcWard) ? 5 : 0; break;
+			case TRUE: wardBonus = 0; break;
+			default: throw new IllegalArgumentException(damageType.toString());
 		}
-		return returnSaveBonusFire;
-	}
-	
-	public void setSaveBonusFire(int value) {
-		saveBonusFire = value;
-	}
 
-	public int fireSave() {
-		int roll = (ExtraMaths.d20())+saveBonusFire();
-		return roll;
-	}
+		int resistanceBonus = isResistantTo(damageType) ? 5 : 0;
+		// TODO: how do we handle immunity here?
 
-	private int saveBonusFrost;
-	public int saveBonusFrost() {
-		int returnSaveBonusFrost = saveBonusFrost + (weapon == null ? 0 : weapon.saveBonusFrost()) + (armor == null ? 0 : armor.saveBonusFrost()) + (ring == null ? 0 : ring.saveBonusFrost()) + (shield == null ? 0 : shield.saveBonusFrost());
-		if(affectedBy(Effect.chillWard)) {
-			returnSaveBonusFrost += 5;
-		}
-		return returnSaveBonusFrost;
+		return baseSaveBonus + equipmentBonus + wardBonus + resistanceBonus;
 	}
-	
-	public void setSaveBonusFrost(int value) {
-		saveBonusFrost = value;
+	public int rollSaveAgainst(DamageType damageType) {
+		return Dice.d20.roll() + saveBonus(damageType);
 	}
-
-	public int frostSave() {
-		int roll = (ExtraMaths.d20())+saveBonusFrost();
-		return roll;
-	}
-
-	private int saveBonusShock;
-	public int saveBonusShock() {
-		int returnSaveBonusShock = saveBonusShock + (weapon == null ? 0 : weapon.saveBonusShock()) + (armor == null ? 0 : armor.saveBonusShock()) + (ring == null ? 0 : ring.saveBonusShock()) + (shield == null ? 0 : shield.saveBonusShock());
-		if(affectedBy(Effect.arcWard)) {
-			returnSaveBonusShock += 5;
-		}
-		return returnSaveBonusShock;
-	}
-	
-	public void setSaveBonusShock(int value) {
-		saveBonusShock = value;
-	}
-
-	public int shockSave() {
-		int roll = (ExtraMaths.d20())+saveBonusShock();
-		return roll;
-	}
-	
-	private int saveBonusAcid;
-	public int saveBonusAcid() {
-		int returnSaveBonusAcid = saveBonusAcid + (weapon == null ? 0 : weapon.saveBonusAcid()) + (armor == null ? 0 : armor.saveBonusAcid()) + (ring == null ? 0 : ring.saveBonusAcid()) + (shield == null ? 0 : shield.saveBonusAcid());
-		//if(arcWard() == true) {
-			//returnSaveBonusShock += 5;
-		//}
-		return returnSaveBonusAcid;
-	}
-	
-	public void setSaveBonusAcid(int value) {
-		saveBonusAcid = value;
-	}
-
-	public int acidSave() {
-		int roll = (ExtraMaths.d20())+saveBonusAcid();
-		return roll;
-	}
-	
-	private int saveBonusPhysical;
-	public int saveBonusPhysical() {
-		int returnSaveBonusPhysical = saveBonusPhysical + (weapon == null ? 0 : weapon.saveBonusPhysical()) + (armor == null ? 0 : armor.saveBonusPhysical()) + (ring == null ? 0 : ring.saveBonusPhysical()) + (shield == null ? 0 : shield.saveBonusPhysical());
-		//if(arcWard() == true) {
-			//returnSaveBonusShock += 5;
-		//}
-		return returnSaveBonusPhysical;
-	}
-	
-	public void setSaveBonusPhysical(int value) {
-		saveBonusPhysical = value;
-	}
-
-	public int physicalSave() {
-		int roll = (ExtraMaths.d20())+saveBonusPhysical();
-		return roll;
-	}
-	
-	private int saveBonusMagic;
-	public int saveBonusMagic() {
-		int returnSaveBonusMagic = saveBonusMagic + (weapon == null ? 0 : weapon.saveBonusMagic()) + (armor == null ? 0 : armor.saveBonusMagic()) + (ring == null ? 0 : ring.saveBonusMagic()) + (shield == null ? 0 : shield.saveBonusMagic());
-		//if(arcWard() == true) {
-			//returnSaveBonusShock += 5;
-		//}
-		return returnSaveBonusMagic;
-	}
-	
-	public void setSaveBonusMagic(int value) {
-		saveBonusMagic = value;
-	}
-
-	public int magicSave() {
-		int roll = (ExtraMaths.d20())+saveBonusMagic();
-		return roll;
-	}
-	
-	private int saveBonusChaos;
-	public int saveBonusChaos() {
-		int returnSaveBonusChaos = saveBonusChaos + (weapon == null ? 0 : weapon.saveBonusChaos()) + (armor == null ? 0 : armor.saveBonusChaos()) + (ring == null ? 0 : ring.saveBonusChaos()) + (shield == null ? 0 : shield.saveBonusChaos());
-		//if(arcWard() == true) {
-			//returnSaveBonusShock += 5;
-		//}
-		return returnSaveBonusChaos;
-	}
-	
-	public void setSaveBonusChaos(int value) {
-		saveBonusChaos = value;
-	}
-
-	public int chaosSave() {
-		int roll = (ExtraMaths.d20())+saveBonusChaos();
-		return roll;
-	}
-	
 
 	public ArrayList<Item> getequipmentArrayList(){
 		ArrayList<Item> equipmentArrayList = new ArrayList<Item>();
@@ -1486,6 +1378,7 @@ public class Creature implements Cloneable{
 		this.weaknesses = EnumSet.noneOf(DamageType.class);
 		this.resistances = EnumSet.noneOf(DamageType.class);
 		this.immunities = EnumSet.noneOf(DamageType.class);
+		saveBonuses = new EnumMap<>(DamageType.class);
 	}
 
 

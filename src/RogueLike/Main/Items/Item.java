@@ -2,6 +2,7 @@ package RogueLike.Main.Items;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -330,76 +331,12 @@ public class Item implements Cloneable{
 		shockDefenseValue += amount;
 	}*/
 	
-	private int saveBonusPoison;
-	public int saveBonusPoison() {
-		return saveBonusPoison;
+	private final EnumMap<DamageType, Integer> saveBonuses;
+	public int saveBonus(DamageType damageType) {
+		return saveBonuses.getOrDefault(damageType, 0);
 	}
-	
-	public void modifySaveBonusPoison(double amount) {
-		saveBonusPoison += amount;
-	}
-	
-	private int saveBonusFire;
-	public int saveBonusFire() {
-		return saveBonusFire;
-	}
-	
-	public void modifySaveBonusFire(double amount) {
-		saveBonusFire += amount;
-	}
-	
-	private int saveBonusFrost;
-	public int saveBonusFrost() {
-		return saveBonusFrost;
-	}
-	
-	public void modifySaveBonusFrost(double amount) {
-		saveBonusFrost += amount;
-	}
-	
-	private int saveBonusShock;
-	public int saveBonusShock() {
-		return saveBonusShock;
-	}
-	
-	public void modifySaveBonusShock(double amount) {
-		saveBonusShock += amount;
-	}
-	
-	private int saveBonusAcid;
-	public int saveBonusAcid() {
-		return saveBonusAcid;
-	}
-	
-	public void modifySaveBonusAcid(double amount) {
-		saveBonusAcid += amount;
-	}
-	
-	private int saveBonusPhysical;
-	public int saveBonusPhysical() {
-		return saveBonusPhysical;
-	}
-	
-	public void modifySaveBonusPhysical(double amount) {
-		saveBonusPhysical += amount;
-	}
-	
-	private int saveBonusMagic;
-	public int saveBonusMagic() {
-		return saveBonusMagic;
-	}
-	
-	public void modifySaveBonusMagic(double amount) {
-		saveBonusMagic += amount;
-	}
-	
-	private int saveBonusChaos;
-	public int saveBonusChaos() {
-		return saveBonusChaos;
-	}
-	
-	public void modifySaveBonusChaos(double amount) {
-		saveBonusChaos += amount;
+	public void setSaveBonus(DamageType damageType, int bonus) {
+		saveBonuses.put(damageType, bonus);
 	}
 
 	private final EnumSet<DamageType> resistances;
@@ -1148,6 +1085,7 @@ public class Item implements Cloneable{
 		this.weaknesses = EnumSet.noneOf(DamageType.class);
 		this.resistances = EnumSet.noneOf(DamageType.class);
 		this.immunities = EnumSet.noneOf(DamageType.class);
+		this.saveBonuses = new EnumMap<>(DamageType.class);
 	}
 	
 	public Object clone(){
