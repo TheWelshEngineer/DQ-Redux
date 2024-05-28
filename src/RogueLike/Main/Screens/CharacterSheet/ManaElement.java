@@ -15,7 +15,7 @@ public class ManaElement extends CharacterSheetElement {
     }
 
     @Override
-    public String details1() {
+    public String details() {
         return String.format("You have %d mana points remaining, out of a maximum of %d.", player.hp(), player.maxHP());
     }
 }

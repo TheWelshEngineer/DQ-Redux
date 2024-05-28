@@ -771,6 +771,7 @@ public class ExtendedAsciiPanel extends JPanel {
             background = defaultBackgroundColor;
 
         for (int i = 0; i < string.length(); i++) {
+
             write(string.charAt(i), x + i, y, foreground, background);
         }
         return this;
@@ -851,6 +852,21 @@ public class ExtendedAsciiPanel extends JPanel {
         for (int i = 0; i < string.length(); i++) {
             write(string.charAt(i), x + i, y, foreground, background);
         }
+        return this;
+    }
+
+    /**
+     * Write a multiline string to the terminal at the specified position.
+     * @param string The multiline string to write, with `\n` denoting newlines.
+     * @param x the distance from the left to begin writing each line from.
+     * @param y the distance from the top to begin writing from.
+     * @return this, for convenient chaining of method calls.
+     */
+    public ExtendedAsciiPanel writeMultiline(String string, int x, int y) {
+        for (String line: string.split("\n")) {
+            write(line, x, y++);
+        }
+
         return this;
     }
 }

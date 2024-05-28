@@ -14,7 +14,7 @@ public class NameElement extends CharacterSheetElement {
     }
 
     @Override
-    public String details1() {
+    public String details() {
         return "That's you!";
     }
 }

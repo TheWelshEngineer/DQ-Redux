@@ -14,4 +14,9 @@ public class EffectElement extends CharacterSheetElement {
         String turns = effect.duration() == 1 ? "turn" : "turns";
         return String.format("%c %s: %d %s", effectIcon, effect.name(), effect.duration(), turns);
     }
+
+    @Override
+    public String details() {
+        return ""; // TODO add effect descriptions?
+    }
 }

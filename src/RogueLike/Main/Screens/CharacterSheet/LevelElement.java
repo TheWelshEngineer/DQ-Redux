@@ -15,12 +15,13 @@ public class LevelElement extends CharacterSheetElement {
     }
 
     @Override
-    public String details1() {
-        return String.format("You are a level %d %s %s.", player.level(), player.playerAncestry(), player.playerClass());
+    public String details() {
+        return String.format("You are a level %d %s %s.\n", player.level(), player.playerAncestry(), player.playerClass())
+            + details2() + "\n"
+            + details3();
     }
 
-    @Override
-    public String details2() {
+    private String details2() {
         if (player.playerClass().equals("Rogue")) {
             return "As a Rogue, you regenerate health and mana at a roughly even rate.";
         } else if (player.playerClass().equals("Ranger")) {
@@ -33,9 +34,7 @@ public class LevelElement extends CharacterSheetElement {
             throw new IllegalStateException(player.playerClass());
         }
     }
-
-    @Override
-    public String details3() {
+    private String details3() {
         if (player.playerAncestry().equals("Human")) {
             return "As a Human, you began your quest with an addtional skill point.";
         } else if (player.playerAncestry().equals("Elf")) {

@@ -15,13 +15,8 @@ public class StrengthElement extends CharacterSheetElement {
     }
 
     @Override
-    public String details1() {
-        return String.format("You have %d total points of Strength, granting a %+d modifier to Strength rolls.", player.strength(), player.strengthModifier());
+    public String details() {
+        return String.format("You have %d total points of Strength, granting a %+d modifier to Strength rolls.\n", player.strength(), player.strengthModifier())
+            + String.format("You have %d natural points of Strength, out of a maximum of 30.", player.baseStrength());
     }
-
-    @Override
-    public String details2() {
-        return String.format("You have %d natural points of Strength, out of a maximum of 30.", player.baseStrength());
-    }
-
 }
