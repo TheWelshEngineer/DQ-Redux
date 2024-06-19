@@ -569,7 +569,7 @@ public class Item implements Cloneable{
 		return isSimple;
 	}
 	
-	public void modifyIsSimple(boolean value) {
+	public void setIsSimple(boolean value) {
 		isSimple = value;
 	}
 	
@@ -578,7 +578,7 @@ public class Item implements Cloneable{
 		return isMartial;
 	}
 	
-	public void modifyIsMartial(boolean value) {
+	public void setIsMartial(boolean value) {
 		isMartial = value;
 	}
 	/*

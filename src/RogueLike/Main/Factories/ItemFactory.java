@@ -157,6 +157,7 @@ public class ItemFactory {
 	//Simple Weapons
 	public Item newClub(int depth, boolean addToWorld) {
 		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Club", null, Dice.d4, 10, 400);
+		item.setIsSimple(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -165,6 +166,7 @@ public class ItemFactory {
 	
 	public Item newDart(int depth, boolean addToWorld) {
 		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Dart", null, Dice.d1, Dice.d4, 10, 401);
+		item.setIsSimple(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -173,6 +175,7 @@ public class ItemFactory {
 	
 	public Item newQuarterstaff(int depth, boolean addToWorld) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Quarterstaff", null, Dice.d6, Dice.d8, 20, 402);
+		item.setIsSimple(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -181,6 +184,7 @@ public class ItemFactory {
 	
 	public Item newSpear(int depth, boolean addToWorld) {
 		Item item = new ThrownVersatileWeapon(')', ExtendedAsciiPanel.brightWhite, "Spear", null, Dice.d4, Dice.d6, Dice.d8, 10, 403);
+		item.setIsSimple(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -189,6 +193,7 @@ public class ItemFactory {
 	
 	public Item newGreatclub(int depth, boolean addToWorld) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatclub", null, Dice.d10, 20, 404);
+		item.setIsSimple(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -197,6 +202,7 @@ public class ItemFactory {
 	
 	public Item newThrowingAxe(int depth, boolean addToWorld) {
 		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Axe", null, Dice.d6, Dice.d8, 10, 405);
+		item.setIsSimple(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -205,6 +211,7 @@ public class ItemFactory {
 	
 	public Item newMattock(int depth, boolean addToWorld) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mattock", null, Dice.d8, Dice.d10, 150, 406);
+		item.setIsSimple(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -213,6 +220,7 @@ public class ItemFactory {
 	
 	public Item newMaul(int depth, boolean addToWorld) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Maul", null, Dice.d12, 20, 407);
+		item.setIsSimple(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -222,6 +230,7 @@ public class ItemFactory {
 	//Martial Weapons
 	public Item newShortsword(int depth, boolean addToWorld) {
 		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Shortsword", null, Dice.d6, 10, 500);
+		item.setIsMartial(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -229,6 +238,7 @@ public class ItemFactory {
 	}
 	public Item newKnuckleduster(int depth, boolean addToWorld) {
 		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Knuckleduster", null, Dice.d4, 10, 501);
+		item.setIsMartial(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -236,6 +246,7 @@ public class ItemFactory {
 	}
 	public Item newMace(int depth, boolean addToWorld) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mace", null, Dice.d6, Dice.d8, 20, 502);
+		item.setIsMartial(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -243,6 +254,7 @@ public class ItemFactory {
 	}
 	public Item newThrowingHammer(int depth, boolean addToWorld) {
 		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Hammer", null, Dice.d4, Dice.d6, 10, 503);
+		item.setIsMartial(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -250,6 +262,7 @@ public class ItemFactory {
 	}
 	public Item newLongsword(int depth, boolean addToWorld) {
 		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Longsword", null, Dice.d8, 10, 504);
+		item.setIsMartial(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -257,6 +270,7 @@ public class ItemFactory {
 	}
 	public Item newHalberd(int depth, boolean addToWorld) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Halberd", null, Dice.d10, 20, 505);
+		item.setIsMartial(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -264,6 +278,7 @@ public class ItemFactory {
 	}
 	public Item newWarhammer(int depth, boolean addToWorld) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Warhammer", null, Dice.d8, Dice.d10, 20, 506);
+		item.setIsMartial(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -271,6 +286,7 @@ public class ItemFactory {
 	}
 	public Item newJavelin(int depth, boolean addToWorld) {
 		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Javelin", null, Dice.d6, Dice.d10, 10, 507);
+		item.setIsMartial(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -278,6 +294,7 @@ public class ItemFactory {
 	}
 	public Item newGreatsword(int depth, boolean addToWorld) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatsword", null, Dice.d12, 20, 508);
+		item.setIsMartial(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}

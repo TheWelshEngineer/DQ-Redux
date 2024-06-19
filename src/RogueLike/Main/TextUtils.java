@@ -6,7 +6,8 @@ import java.util.List;
 
 public class TextUtils {
     public static class LineTooLongException extends IllegalArgumentException {
-        public LineTooLongException(String line, int maxLength) {
+        private static final long serialVersionUID = 1L;
+		public LineTooLongException(String line, int maxLength) {
             super(String.format("Line too long (%d > %d): '%s'", line.length(), maxLength, line));
         }
     }

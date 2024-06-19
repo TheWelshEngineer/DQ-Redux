@@ -26,7 +26,7 @@ public class CharacterSheetScreen implements Screen{
 			List.of(
 				new NameElement(player),
 				new LevelElement(player),
-				new ExpElement(player),
+				new XPElement(player),
 				new GoldElement(player),
 				//
 				new SpacerElement(),

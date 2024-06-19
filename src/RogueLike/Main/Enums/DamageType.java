@@ -24,5 +24,5 @@ public enum DamageType {
     }
 
     // TRUE is not resistable, and shouldn't show up in lists of damage modifiers
-    public static final DamageType[] RESISTABLE_TYPES = {ACID, CHAOS, FIRE, FROST, MAGIC, PHYSICAL, POISON, SHOCK};
+    public static final DamageType[] RESISTABLE_TYPES = {PHYSICAL, FIRE, FROST, SHOCK, POISON, ACID, MAGIC, CHAOS};
 }

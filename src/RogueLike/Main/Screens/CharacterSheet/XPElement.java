@@ -2,10 +2,10 @@ package RogueLike.Main.Screens.CharacterSheet;
 
 import RogueLike.Main.Creatures.Creature;
 
-public class ExpElement extends CharacterSheetElement {
+public class XPElement extends CharacterSheetElement {
     private final Creature player;
 
-    public ExpElement(Creature player) {
+    public XPElement(Creature player) {
         this.player = player;
     }
 

@@ -15,7 +15,7 @@ public abstract class SkillElement extends CharacterSheetElement {
 
     @Override
     public String header() {
-        return String.format("%s %s", skill.name(), ExtraMaths.toRomanNumerals(skill.level()));
+        return String.format("%s: %s", skill.name(), ExtraMaths.toRomanNumerals(skill.level()));
     }
 
     protected abstract int skillIndex();
