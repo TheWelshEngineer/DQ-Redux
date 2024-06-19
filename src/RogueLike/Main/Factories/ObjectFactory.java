@@ -1487,16 +1487,23 @@ public class ObjectFactory {
 	
 	public Creature randomLesserMonster(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		case 1: return creatureFactory.newFungus(depth, addToWorld);
-		case 2: return creatureFactory.newFungus(depth, addToWorld);
-		case 3: return creatureFactory.newFungus(depth, addToWorld);
-		case 4: return creatureFactory.newFungus(depth, addToWorld);
-		case 5: return creatureFactory.newFungus(depth, addToWorld);
+		case 1: return randomFungus(depth, player, addToWorld);
+		case 2: return randomFungus(depth, player, addToWorld);
+		case 3: return randomFungus(depth, player, addToWorld);
+		case 4: return randomFungus(depth, player, addToWorld);
+		case 5: return randomFungus(depth, player, addToWorld);
 		case 6: return creatureFactory.newBat(depth, addToWorld);
 		case 7: return creatureFactory.newBat(depth, addToWorld);
 		case 8: return creatureFactory.newBat(depth, addToWorld);
 		case 9: return randomSlime(depth, player, addToWorld);
 		case 10: return randomSlime(depth, player, addToWorld);
+		default: return creatureFactory.newFungus(depth, addToWorld);
+		}
+	}
+	
+	public Creature randomFungus(int depth, Creature player, boolean addToWorld) {
+		switch(ExtraMaths.diceRoll(1, 10)) {
+		case 1: return creatureFactory.newBloodFungus(depth, player, addToWorld);
 		default: return creatureFactory.newFungus(depth, addToWorld);
 		}
 	}

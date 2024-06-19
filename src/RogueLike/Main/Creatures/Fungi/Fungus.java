@@ -1,8 +1,9 @@
-package RogueLike.Main.Creatures;
+package RogueLike.Main.Creatures.Fungi;
 
 import java.awt.Color;
 
-import RogueLike.Main.AI.FungusAI;
+import RogueLike.Main.AI.FungusAI.FungusAI;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 
 public class Fungus extends Creature{

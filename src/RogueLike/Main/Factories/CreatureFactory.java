@@ -12,12 +12,13 @@ import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.Creatures.Bat;
 import RogueLike.Main.Creatures.Cloaker;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Creatures.Fungus;
 import RogueLike.Main.Creatures.Mimic;
 import RogueLike.Main.Creatures.Ogre;
 import RogueLike.Main.Creatures.Constructs.AnimatedArmor;
 import RogueLike.Main.Creatures.Constructs.AnimatedWeapon;
 import RogueLike.Main.Creatures.Containers.BasicChest;
+import RogueLike.Main.Creatures.Fungi.BloodFungus;
+import RogueLike.Main.Creatures.Fungi.Fungus;
 import RogueLike.Main.Creatures.Gremlins.Gremlin;
 import RogueLike.Main.Creatures.Gremlins.GremlinAlchemist;
 import RogueLike.Main.Creatures.Skeletons.Skeleton;
@@ -210,6 +211,13 @@ public ObjectFactory objectFactory;
 	//Fungi
 	public Creature newFungus(int depth, boolean addToWorld) {
 		Creature fungus = new Fungus(objectFactory, "Fungus", 'f', ExtendedAsciiPanel.green, 100, depth);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(fungus, depth);
+		}
+		return fungus;
+	}
+	public Creature newBloodFungus(int depth, Creature player, boolean addToWorld) {
+		Creature fungus = new BloodFungus(objectFactory, player, "Blood Fungus", 'f', ExtendedAsciiPanel.red, 101, depth);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(fungus, depth);
 		}
