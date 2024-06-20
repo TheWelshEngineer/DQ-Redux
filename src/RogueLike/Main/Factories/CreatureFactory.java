@@ -12,6 +12,7 @@ import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.Creatures.Bat;
 import RogueLike.Main.Creatures.Cloaker;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Creatures.CreatureModifier;
 import RogueLike.Main.Creatures.Mimic;
 import RogueLike.Main.Creatures.Ogre;
 import RogueLike.Main.Creatures.Constructs.AnimatedArmor;
@@ -40,21 +41,23 @@ import RogueLike.Main.Utils.NotificationHistory;
 public class CreatureFactory {
 	
 public ObjectFactory objectFactory;
+public ModifierFactory modifierFactory;
 	
 	public CreatureFactory(ObjectFactory factory) {
 		this.objectFactory = factory;
+		this.modifierFactory = new ModifierFactory();
 	}
 	
-	public static Creature modifyCreatureDamageDealt(Creature creature, String prefix, DamageType damageType) {
-		creature.setName(String.format("%s %s", prefix, creature.name()));
-		creature.setUnarmedDamageType(damageType);
+	public Creature modifyCreatureDamageDealt(Creature creature, CreatureModifier modifier) {
+		creature.setName(String.format("%s %s", modifier.prefix(), creature.name()));
+		creature.setUnarmedDamageType(modifier.damageType());
 		return creature;
 	}
 	
-	public static Creature modifyCreatureResistsDamage(Creature creature, String prefix, DamageType damageType) {
-		creature.setName(String.format("%s %s", prefix, creature.name()));
+	public Creature modifyCreatureResistsDamage(Creature creature, CreatureModifier modifier) {
+		creature.setName(String.format("%s %s", creature.name(), modifier.suffix()));
 
-		creature.addResistanceTo(damageType);
+		creature.addResistanceTo(modifier.damageType());
 
 		return creature;
 	}
@@ -62,7 +65,7 @@ public ObjectFactory objectFactory;
 	//Player
 	public Creature newPlayer(FieldOfView fov, NotificationHistory notificationsHandle, String playerClass, List<Integer> startingStats, Skill[] startingSkills, String playerName, String playerAncestry) {
 		//world, name, glyph, color, maxHP 20, maxMana, base armorclass, strength, dexterity, intelligence, visionRadius, inventorySize) {
-		Creature player = new Creature(objectFactory.world, "player", '@', ExtendedAsciiPanel.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
+		Creature player = new Creature(objectFactory.world, "Player", '@', ExtendedAsciiPanel.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
 		player.setID(0);
 		new PlayerAI(player, notificationsHandle, fov, objectFactory, objectFactory.world);
 		

@@ -1486,19 +1486,27 @@ public class ObjectFactory {
 	}
 	
 	public Creature randomLesserMonster(int depth, Creature player, boolean addToWorld) {
+		Creature creature;
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		case 1: return randomFungus(depth, player, addToWorld);
-		case 2: return randomFungus(depth, player, addToWorld);
-		case 3: return randomFungus(depth, player, addToWorld);
-		case 4: return randomFungus(depth, player, addToWorld);
-		case 5: return randomFungus(depth, player, addToWorld);
-		case 6: return creatureFactory.newBat(depth, addToWorld);
-		case 7: return creatureFactory.newBat(depth, addToWorld);
-		case 8: return creatureFactory.newBat(depth, addToWorld);
-		case 9: return randomSlime(depth, player, addToWorld);
-		case 10: return randomSlime(depth, player, addToWorld);
-		default: return creatureFactory.newFungus(depth, addToWorld);
+		case 1: creature = randomFungus(depth, player, addToWorld);
+		case 2: creature = randomFungus(depth, player, addToWorld);
+		case 3: creature = randomFungus(depth, player, addToWorld);
+		case 4: creature = randomFungus(depth, player, addToWorld);
+		case 5: creature = randomFungus(depth, player, addToWorld);
+		case 6: creature = creatureFactory.newBat(depth, addToWorld);
+		case 7: creature = creatureFactory.newBat(depth, addToWorld);
+		case 8: creature = creatureFactory.newBat(depth, addToWorld);
+		case 9: creature = randomSlime(depth, player, addToWorld);
+		case 10: creature = randomSlime(depth, player, addToWorld);
+		default: creature = creatureFactory.newFungus(depth, addToWorld);
 		}
+		if(ExtraMaths.diceRoll(1, 50) == 1) {
+			creature = creatureFactory.modifyCreatureDamageDealt(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+		}
+		if(ExtraMaths.diceRoll(1, 50) == 1) {
+			creature = creatureFactory.modifyCreatureResistsDamage(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+		}
+		return creature;
 	}
 	
 	public Creature randomFungus(int depth, Creature player, boolean addToWorld) {
@@ -1518,19 +1526,27 @@ public class ObjectFactory {
 	}
 	
 	public Creature randomMediumMonster(int depth, Creature player, boolean addToWorld) {
+		Creature creature;
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		case 1: return randomSkeleton(depth, player, addToWorld);
-		case 2: return randomSkeleton(depth, player, addToWorld);
-		case 3: return randomSlime(depth, player, addToWorld);
-		case 4: return randomSlime(depth, player, addToWorld);
-		case 5: return randomGremlin(depth, player, addToWorld);
-		case 6: return randomGremlin(depth, player, addToWorld);
-		case 7: return randomConstruct(depth, player, addToWorld);
-		case 8: return randomConstruct(depth, player, addToWorld);
-		case 9: return creatureFactory.newGremlinSkirmisher(depth, player, addToWorld);
-		case 10: return creatureFactory.newGremlinAlchemist(depth, player, addToWorld);
-		default: return randomSkeleton(depth, player, addToWorld);
+		case 1: creature = randomSkeleton(depth, player, addToWorld);
+		case 2: creature = randomSkeleton(depth, player, addToWorld);
+		case 3: creature = randomSlime(depth, player, addToWorld);
+		case 4: creature = randomSlime(depth, player, addToWorld);
+		case 5: creature = randomGremlin(depth, player, addToWorld);
+		case 6: creature = randomGremlin(depth, player, addToWorld);
+		case 7: creature = randomConstruct(depth, player, addToWorld);
+		case 8: creature = randomConstruct(depth, player, addToWorld);
+		case 9: creature = creatureFactory.newGremlinSkirmisher(depth, player, addToWorld);
+		case 10: creature = creatureFactory.newGremlinAlchemist(depth, player, addToWorld);
+		default: creature = randomSkeleton(depth, player, addToWorld);
 		}
+		if(ExtraMaths.diceRoll(1, 50) == 1) {
+			creature = creatureFactory.modifyCreatureDamageDealt(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+		}
+		if(ExtraMaths.diceRoll(1, 50) == 1) {
+			creature = creatureFactory.modifyCreatureResistsDamage(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+		}
+		return creature;
 	}
 	
 	public Creature randomConstruct(int depth, Creature player, boolean addToWorld) {
@@ -1560,19 +1576,28 @@ public class ObjectFactory {
 	}
 	
 	public Creature randomGreaterMonster(int depth, Creature player, boolean addToWorld) {
+		Creature creature;
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		case 1: return randomSkeleton(depth, player, addToWorld);
-		case 2: return randomSkeleton(depth, player, addToWorld);
-		case 3: return randomGremlin(depth, player, addToWorld);
-		case 4: return randomGremlin(depth, player, addToWorld);
-		case 5: return randomGremlin(depth, player, addToWorld);
-		case 6: return randomConstruct(depth, player, addToWorld);
-		case 7: return randomConstruct(depth, player, addToWorld);
-		case 8: return creatureFactory.newMimic(depth, player, addToWorld);
-		case 9: return creatureFactory.newCloaker(depth, player, addToWorld);
-		case 10: return creatureFactory.newOgre(depth, player, addToWorld);
-		default: return randomSkeleton(depth, player, addToWorld);
+		case 1: creature = randomSkeleton(depth, player, addToWorld);
+		case 2: creature = randomSkeleton(depth, player, addToWorld);
+		case 3: creature = randomGremlin(depth, player, addToWorld);
+		case 4: creature = randomGremlin(depth, player, addToWorld);
+		case 5: creature = randomGremlin(depth, player, addToWorld);
+		case 6: creature = randomConstruct(depth, player, addToWorld);
+		case 7: creature = randomConstruct(depth, player, addToWorld);
+		case 8: creature = creatureFactory.newMimic(depth, player, addToWorld);
+		case 9: creature = creatureFactory.newCloaker(depth, player, addToWorld);
+		case 10: creature = creatureFactory.newOgre(depth, player, addToWorld);
+		default: creature = randomSkeleton(depth, player, addToWorld);
 		}
+		
+		if(ExtraMaths.diceRoll(1, 50) == 1) {
+			creature = creatureFactory.modifyCreatureDamageDealt(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+		}
+		if(ExtraMaths.diceRoll(1, 50) == 1) {
+			creature = creatureFactory.modifyCreatureResistsDamage(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+		}
+		return creature;
 	}
 	
 	public Creature randomChest(int depth, Creature player, boolean addToWorld) {
