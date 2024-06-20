@@ -1488,17 +1488,17 @@ public class ObjectFactory {
 	public Creature randomLesserMonster(int depth, Creature player, boolean addToWorld) {
 		Creature creature;
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		case 1: creature = randomFungus(depth, player, addToWorld);
-		case 2: creature = randomFungus(depth, player, addToWorld);
-		case 3: creature = randomFungus(depth, player, addToWorld);
-		case 4: creature = randomFungus(depth, player, addToWorld);
-		case 5: creature = randomFungus(depth, player, addToWorld);
-		case 6: creature = creatureFactory.newBat(depth, addToWorld);
-		case 7: creature = creatureFactory.newBat(depth, addToWorld);
-		case 8: creature = creatureFactory.newBat(depth, addToWorld);
-		case 9: creature = randomSlime(depth, player, addToWorld);
-		case 10: creature = randomSlime(depth, player, addToWorld);
-		default: creature = creatureFactory.newFungus(depth, addToWorld);
+		case 1: creature = randomFungus(depth, player, addToWorld); break;
+		case 2: creature = randomFungus(depth, player, addToWorld); break;
+		case 3: creature = randomFungus(depth, player, addToWorld); break;
+		case 4: creature = randomFungus(depth, player, addToWorld); break;
+		case 5: creature = randomFungus(depth, player, addToWorld); break;
+		case 6: creature = creatureFactory.newBat(depth, addToWorld); break;
+		case 7: creature = creatureFactory.newBat(depth, addToWorld); break;
+		case 8: creature = creatureFactory.newBat(depth, addToWorld); break;
+		case 9: creature = randomSlime(depth, player, addToWorld); break;
+		case 10: creature = randomSlime(depth, player, addToWorld); break;
+		default: creature = creatureFactory.newFungus(depth, addToWorld); break;
 		}
 		if(ExtraMaths.diceRoll(1, 50) == 1) {
 			creature = creatureFactory.modifyCreatureDamageDealt(creature, creatureFactory.modifierFactory.randomCreatureModifier());
@@ -1528,17 +1528,17 @@ public class ObjectFactory {
 	public Creature randomMediumMonster(int depth, Creature player, boolean addToWorld) {
 		Creature creature;
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		case 1: creature = randomSkeleton(depth, player, addToWorld);
-		case 2: creature = randomSkeleton(depth, player, addToWorld);
-		case 3: creature = randomSlime(depth, player, addToWorld);
-		case 4: creature = randomSlime(depth, player, addToWorld);
-		case 5: creature = randomGremlin(depth, player, addToWorld);
-		case 6: creature = randomGremlin(depth, player, addToWorld);
-		case 7: creature = randomConstruct(depth, player, addToWorld);
-		case 8: creature = randomConstruct(depth, player, addToWorld);
-		case 9: creature = creatureFactory.newGremlinSkirmisher(depth, player, addToWorld);
-		case 10: creature = creatureFactory.newGremlinAlchemist(depth, player, addToWorld);
-		default: creature = randomSkeleton(depth, player, addToWorld);
+		case 1: creature = randomSkeleton(depth, player, addToWorld); break;
+		case 2: creature = randomSkeleton(depth, player, addToWorld); break;
+		case 3: creature = randomSlime(depth, player, addToWorld); break;
+		case 4: creature = randomSlime(depth, player, addToWorld); break;
+		case 5: creature = randomGremlin(depth, player, addToWorld); break;
+		case 6: creature = randomGremlin(depth, player, addToWorld); break;
+		case 7: creature = randomConstruct(depth, player, addToWorld); break;
+		case 8: creature = randomConstruct(depth, player, addToWorld); break;
+		case 9: creature = creatureFactory.newGremlinSkirmisher(depth, player, addToWorld); break;
+		case 10: creature = creatureFactory.newGremlinAlchemist(depth, player, addToWorld); break;
+		default: creature = randomSkeleton(depth, player, addToWorld); break;
 		}
 		if(ExtraMaths.diceRoll(1, 50) == 1) {
 			creature = creatureFactory.modifyCreatureDamageDealt(creature, creatureFactory.modifierFactory.randomCreatureModifier());
@@ -1578,17 +1578,17 @@ public class ObjectFactory {
 	public Creature randomGreaterMonster(int depth, Creature player, boolean addToWorld) {
 		Creature creature;
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		case 1: creature = randomSkeleton(depth, player, addToWorld);
-		case 2: creature = randomSkeleton(depth, player, addToWorld);
-		case 3: creature = randomGremlin(depth, player, addToWorld);
-		case 4: creature = randomGremlin(depth, player, addToWorld);
-		case 5: creature = randomGremlin(depth, player, addToWorld);
-		case 6: creature = randomConstruct(depth, player, addToWorld);
-		case 7: creature = randomConstruct(depth, player, addToWorld);
-		case 8: creature = creatureFactory.newMimic(depth, player, addToWorld);
-		case 9: creature = creatureFactory.newCloaker(depth, player, addToWorld);
-		case 10: creature = creatureFactory.newOgre(depth, player, addToWorld);
-		default: creature = randomSkeleton(depth, player, addToWorld);
+		case 1: creature = randomSkeleton(depth, player, addToWorld); break;
+		case 2: creature = randomSkeleton(depth, player, addToWorld); break;
+		case 3: creature = randomGremlin(depth, player, addToWorld); break;
+		case 4: creature = randomGremlin(depth, player, addToWorld); break;
+		case 5: creature = randomGremlin(depth, player, addToWorld); break;
+		case 6: creature = randomConstruct(depth, player, addToWorld); break;
+		case 7: creature = randomConstruct(depth, player, addToWorld); break;
+		case 8: creature = creatureFactory.newMimic(depth, player, addToWorld); break;
+		case 9: creature = creatureFactory.newCloaker(depth, player, addToWorld); break;
+		case 10: creature = creatureFactory.newOgre(depth, player, addToWorld); break;
+		default: creature = randomSkeleton(depth, player, addToWorld); break;
 		}
 		
 		if(ExtraMaths.diceRoll(1, 50) == 1) {

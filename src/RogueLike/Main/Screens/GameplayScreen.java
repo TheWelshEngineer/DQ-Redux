@@ -326,16 +326,22 @@ public class GameplayScreen implements Screen{
 			}
 			
 			for(int i = 0; i < 70; i++) {
-				factory.randomLesserMonster(z, player, true);
-			}
-			if(z > 1) {
-				for(int i = 0; i < 35; i++) {
-					factory.randomMediumMonster(z, player, true);
-				}
+				Creature creature = factory.randomLesserMonster(z, player, false);
+				System.out.println(creature);
+				world.addAtEmptyLocation(creature, z);
 			}
 			if(z > 3) {
+				for(int i = 0; i < 35; i++) {
+					Creature creature = factory.randomMediumMonster(z, player, false);
+					System.out.println(creature);
+					world.addAtEmptyLocation(creature, z);
+				}
+			}
+			if(z > 5) {
 				for(int i = 0; i < 18; i++) {
-					factory.randomGreaterMonster(z, player, true);
+					Creature creature = factory.randomGreaterMonster(z, player, false);
+					System.out.println(creature);
+					world.addAtEmptyLocation(creature, z);
 				}
 			}
 
