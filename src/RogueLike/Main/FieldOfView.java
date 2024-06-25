@@ -1,5 +1,8 @@
 package RogueLike.Main;
 
+import RogueLike.Main.AoE.Line;
+import RogueLike.Main.AoE.Point;
+
 public class FieldOfView {
     private World world;
     private int depth;

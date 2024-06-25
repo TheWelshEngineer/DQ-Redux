@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import RogueLike.Main.AoE.Point;
+
 public class WorldBuilder {
 	private int width;
 	private int height;

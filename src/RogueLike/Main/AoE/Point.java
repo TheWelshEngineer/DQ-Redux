@@ -1,4 +1,4 @@
-package RogueLike.Main;
+package RogueLike.Main.AoE;
 
 import java.util.ArrayList;
 import java.util.Collections;

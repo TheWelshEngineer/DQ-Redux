@@ -196,7 +196,7 @@ public ModifierFactory modifierFactory;
 		}
 
 		//Test Items
-		Item startWandTest = objectFactory.itemFactory.newAcidBlastWand(0, player, false);
+		Item startWandTest = objectFactory.itemFactory.newArchmagesAegisWand(0, player, false);
 		//player.learnNameQuiet(startWandTest);
 		player.inventory().add(startWandTest);
 		

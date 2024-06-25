@@ -1,7 +1,7 @@
 package RogueLike.Main.Screens;
 
-import RogueLike.Main.Line;
-import RogueLike.Main.Point;
+import RogueLike.Main.AoE.Line;
+import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 

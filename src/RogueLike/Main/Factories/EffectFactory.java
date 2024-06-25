@@ -7,10 +7,9 @@ import RogueLike.Main.Effect;
 import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
-import RogueLike.Main.Line;
 import RogueLike.Main.Particle;
-import RogueLike.Main.Point;
 import RogueLike.Main.Tile;
+import RogueLike.Main.AoE.*;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
 
@@ -145,13 +144,10 @@ public class EffectFactory {
         		Effect arcaneWard_ = reference.ai().factory.effectFactory.arcaneWard(duration_);
         		Effect confused_ = reference.ai().factory.effectFactory.confused(duration_);
 				creature.addEffect((Effect) arcaneWard_.clone());
-				for(int x = -2; x < 3; x++) {
-					for(int y = -2; y < 3; y++) {
-						if(reference.creature(x, y, reference.z()) != null && reference.creature(x, y, reference.z()) != reference) {
-							reference.creature(x, y, reference.z()).addEffect((Effect) confused_.clone());
-							creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.lilac, 2), x, y, creature.z());
-						}
-					}
+				
+				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 2).affectedCreaturesExceptCenter(creature)) {
+					c.addEffect((Effect) confused_.clone());
+					c.world().setParticleAtLocation(c.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.lilac, 2), c.x(), c.y(), c.z());
 				}
 			}
         };

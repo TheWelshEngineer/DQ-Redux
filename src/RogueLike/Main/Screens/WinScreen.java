@@ -23,24 +23,24 @@ public class WinScreen implements Screen {
 
     public void displayOutput(ExtendedAsciiPanel terminal) {
     	Screen.generateBorders(terminal);
-    	if(player.weaponName() != null) {
-    		weaponName = player.weaponName();
+    	if(player.weapon() != null) {
+    		weaponName = player.weapon().name();
     	}
     	
-    	if(player.armorName() != null) {
-    		armorName = player.armorName();
+    	if(player.armor() != null) {
+    		armorName = player.armor().name();
     	}
     	
-    	if(player.shieldName() != null) {
-    		shieldName = player.shieldName();
+    	if(player.shield() != null) {
+    		shieldName = player.shield().name();
     	}
     	
-    	if(player.ringName() != null) {
-    		ringName = player.ringName();
+    	if(player.ring() != null) {
+    		ringName = player.ring().name();
     	}
     	
-    	if(player.ammunitionName() != null) {
-    		ammunitionName = player.ammunitionName();
+    	if(player.ammunition() != null) {
+    		ammunitionName = player.ammunition().name();
     	}
     	
         terminal.writeCenter("Victory!", 3);

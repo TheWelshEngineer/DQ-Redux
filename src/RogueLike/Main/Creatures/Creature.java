@@ -6,6 +6,8 @@ import java.util.*;
 import RogueLike.Main.*;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.AI.PlayerAI;
+import RogueLike.Main.AoE.Line;
+import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Damage.*;
 import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Factories.EffectFactory;
