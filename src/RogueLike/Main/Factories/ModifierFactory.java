@@ -3,7 +3,7 @@ package RogueLike.Main.Factories;
 import RogueLike.Main.Dice;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.CreatureModifier;
-import RogueLike.Main.Enums.DamageType;
+import RogueLike.Main.Damage.DamageType;
 
 public class ModifierFactory {
 	

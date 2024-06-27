@@ -9,7 +9,6 @@ import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AoE.Line;
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Damage.*;
-import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Factories.EffectFactory;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
@@ -3011,7 +3010,7 @@ public class Creature implements Cloneable{
 		if(isPlayer() == true) {
 			search(18, true);
 		}
-		Item trap = world.item(x, y, z);
+		Item trap = this.item(x, y, z);
 		if(trap != null && trap.isTrap() && !isFlying && !affectedBy(Effect.levitating)) {
 			if(this.perceptionLevel() >= 3) {
 				this.addEffect(trap.perceptionTrapEffect(this.ai().factory, trap.trapType()));

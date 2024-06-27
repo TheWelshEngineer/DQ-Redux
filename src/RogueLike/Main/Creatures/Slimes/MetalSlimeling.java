@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import RogueLike.Main.AI.SlimeAI.SlimelingAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Enums.DamageType;
+import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Factories.ObjectFactory;
 
 public class MetalSlimeling extends Creature{

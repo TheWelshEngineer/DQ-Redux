@@ -1,10 +1,10 @@
 package RogueLike.Main.Factories;
 
 import RogueLike.Main.Dice;
-import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Items.ArrowsRangedWeapon;
 import RogueLike.Main.Items.BasicFinesseWeapon;
 import RogueLike.Main.Items.BasicMeleeWeapon;

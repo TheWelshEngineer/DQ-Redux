@@ -1,5 +1,6 @@
 package RogueLike.Main;
 
+import RogueLike.Main.AoE.AoE;
 import RogueLike.Main.Creatures.Creature;
 
 public class Spell implements Cloneable{
@@ -46,6 +47,11 @@ public class Spell implements Cloneable{
 		
 	}
 	
+	private AoE aoe;
+	public AoE aoe() {
+		return aoe;
+	}
+	
 	public void makeEffectNegative() {
 		effect.setIsNegative(true);
 	}
@@ -54,7 +60,7 @@ public class Spell implements Cloneable{
 		effect.setType(type);
 	}
 	
-	public Spell(String name, int id, int manaCost, Creature caster, Effect effect, boolean selfCast, boolean tileCast) {
+	public Spell(String name, int id, int manaCost, Creature caster, Effect effect, boolean selfCast, boolean tileCast, AoE aoe) {
 		this.name = name;
 		this.id = id;
 		this.manaCost = manaCost;
@@ -62,6 +68,7 @@ public class Spell implements Cloneable{
 		this.effect = effect;
 		this.isSelfCast = selfCast;
 		this.castOnTile = tileCast;
+		this.aoe = aoe;
 	}
 	
 	public Object clone(){

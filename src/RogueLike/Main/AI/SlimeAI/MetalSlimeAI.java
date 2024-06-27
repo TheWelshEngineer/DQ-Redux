@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
-import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
+import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Factories.ObjectFactory;
 
 public class MetalSlimeAI extends CreatureAI{

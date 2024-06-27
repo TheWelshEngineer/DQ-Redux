@@ -8,7 +8,7 @@ import java.util.List;
 import RogueLike.Main.*;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
-import RogueLike.Main.Enums.DamageType;
+import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
 
@@ -323,6 +323,51 @@ public class InventoryScreen implements Screen{
 							}
 							z++;
 						}
+					}
+					
+					if(item.isWand()) {
+						String spell;
+						if(item.isIdentified()) {
+							spell = String.format("Spell: %s", item.writtenSpells().get(0).name());
+						}else {
+							spell = "Spell: Unknown";
+						}
+						terminal.write(spell, x, z++);
+						
+						String range;
+						if(item.isIdentified()) {
+							Spell wandSpell = item.writtenSpells().get(0);
+							if(wandSpell.aoe() != null) {
+								if(wandSpell.aoe().size() > 0) {
+									range = String.format("Range: %s (%d)", wandSpell.aoe().sizeWord(), wandSpell.aoe().size());
+								}else {
+									range = String.format("Range: %s (Sight)", wandSpell.aoe().sizeWord());
+								}
+							}else if(wandSpell.isSelfCast()) {
+								range = "Range: Self";
+							}else {
+								range = "Range: Single Target (Sight)";
+							}
+						}else {
+							range = "Range: Unknown";
+						}
+						terminal.write(range, x, z++);
+						
+						String targets;
+						if(item.isIdentified()) {
+							Spell wandSpell = item.writtenSpells().get(0);
+							if(wandSpell.castOnTile()) {
+								targets = "Targets: Empty Tiles";
+							}else if(!wandSpell.isSelfCast()) {
+								targets = "Targets: Creatures";
+							}else {
+								targets = "Targets: Self";
+							}
+						}else {
+							targets = "Targets: Unknown";
+						}
+						terminal.write(targets, x, z++);
+						
 					}
 					
 					if(item.isArmor() || item.isShield()) {

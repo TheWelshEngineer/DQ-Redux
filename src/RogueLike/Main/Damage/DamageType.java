@@ -1,4 +1,4 @@
-package RogueLike.Main.Enums;
+package RogueLike.Main.Damage;
 
 import java.util.List;
 

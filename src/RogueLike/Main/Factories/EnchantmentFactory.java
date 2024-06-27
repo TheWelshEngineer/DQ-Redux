@@ -1,9 +1,9 @@
 package RogueLike.Main.Factories;
 
 import RogueLike.Main.Dice;
-import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Damage.Damage;
+import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Enchantments.Enchantment;
 import RogueLike.Main.Items.Item;
 

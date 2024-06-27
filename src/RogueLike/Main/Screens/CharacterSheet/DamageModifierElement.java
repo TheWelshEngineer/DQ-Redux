@@ -1,7 +1,7 @@
 package RogueLike.Main.Screens.CharacterSheet;
 
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Enums.DamageType;
+import RogueLike.Main.Damage.DamageType;
 
 public class DamageModifierElement extends CharacterSheetElement {
     private final Creature player;

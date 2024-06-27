@@ -6,7 +6,7 @@ import java.util.List;
 
 import RogueLike.Main.Creatures.Creature;
 
-public class Square implements Iterable<Point>{
+public class Square extends AoE implements Iterable<Point>{
 	private List<Point> points;
 	public List<Point> getPoints(){
 		return points;
@@ -19,12 +19,18 @@ public class Square implements Iterable<Point>{
 	
 	public Square(int x, int y, int z, int radius) {
 		points = new ArrayList<Point>();
-		
+		size = radius;
+		sizeWord = "Square";
 		for(int dy = -radius; dy < radius+1; dy++) {
 			for(int dx = -radius; dx < radius+1; dx++) {
 				points.add(new Point(x+dx, y+dy, z));
 			}
 		}
+	}
+	
+	public Square(int radius) {
+		size = radius;
+		sizeWord = "Square";
 	}
 	
 	public ArrayList<Creature> affectedCreatures(Creature reference){

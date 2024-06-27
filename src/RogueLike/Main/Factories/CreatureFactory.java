@@ -3,7 +3,6 @@ package RogueLike.Main.Factories;
 import java.util.List;
 
 import RogueLike.Main.Dice;
-import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
@@ -35,6 +34,7 @@ import RogueLike.Main.Creatures.Slimes.PinkSlimeling;
 import RogueLike.Main.Creatures.Slimes.ThundercloudSlime;
 import RogueLike.Main.Creatures.Slimes.ThundercloudSlimeling;
 import RogueLike.Main.Damage.Damage;
+import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Utils.NotificationHistory;
 
@@ -197,13 +197,21 @@ public ModifierFactory modifierFactory;
 
 		//Test Items
 		Item startWandTest = objectFactory.itemFactory.newArchmagesAegisWand(0, player, false);
-		//player.learnNameQuiet(startWandTest);
+		player.learnNameQuiet(startWandTest);
+		player.inventory().add(startWandTest);
+		startWandTest = objectFactory.itemFactory.newLightningLanceWand(0, player, false);
+		player.learnNameQuiet(startWandTest);
+		player.inventory().add(startWandTest);
+		startWandTest = objectFactory.itemFactory.newIceWallWand(0, player, false);
+		player.learnNameQuiet(startWandTest);
+		player.inventory().add(startWandTest);
+		startWandTest = objectFactory.itemFactory.newPyrotechnicsWand(0, player, false);
+		player.learnNameQuiet(startWandTest);
+		player.inventory().add(startWandTest);
+		startWandTest = objectFactory.itemFactory.newToxicTransfusionWand(0, player, false);
+		player.learnNameQuiet(startWandTest);
 		player.inventory().add(startWandTest);
 		
-		player.inventory().add(objectFactory.itemFactory.newScrollOfSummonMonsters(0, player, false));
-		player.inventory().add(objectFactory.itemFactory.newPotionOfInvisibility(0, false));
-		player.inventory().add(objectFactory.itemFactory.newPotionOfGiantStrength(0, false));
-		player.inventory().add(objectFactory.itemFactory.newPotionOfPoison(0, false));
 		
 		//
 		player.stackItems();

@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import RogueLike.Main.AI.SkeletonAI.SkeletonPyromancerAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Enums.DamageType;
+import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 

@@ -5,7 +5,7 @@ import java.awt.Color;
 import RogueLike.Main.AI.FungusAI.BloodFungusAI;
 import RogueLike.Main.AI.FungusAI.FungusAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Enums.DamageType;
+import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Factories.ObjectFactory;
 
 public class BloodFungus extends Creature{

@@ -1,6 +1,6 @@
 package RogueLike.Main.Creatures;
 
-import RogueLike.Main.Enums.DamageType;
+import RogueLike.Main.Damage.DamageType;
 
 public class CreatureModifier {
 	

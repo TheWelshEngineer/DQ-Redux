@@ -1,7 +1,6 @@
 package RogueLike.Main.Damage;
 
 import RogueLike.Main.Effect;
-import RogueLike.Main.Enums.DamageType;
 import RogueLike.Main.Factories.EffectFactory;
 
 public class Damage {
