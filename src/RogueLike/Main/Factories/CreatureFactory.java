@@ -196,21 +196,21 @@ public ModifierFactory modifierFactory;
 		}
 
 		//Test Items
-		Item startWandTest = objectFactory.itemFactory.newArchmagesAegisWand(0, player, false);
-		player.learnNameQuiet(startWandTest);
-		player.inventory().add(startWandTest);
-		startWandTest = objectFactory.itemFactory.newLightningLanceWand(0, player, false);
-		player.learnNameQuiet(startWandTest);
-		player.inventory().add(startWandTest);
-		startWandTest = objectFactory.itemFactory.newIceWallWand(0, player, false);
-		player.learnNameQuiet(startWandTest);
-		player.inventory().add(startWandTest);
-		startWandTest = objectFactory.itemFactory.newPyrotechnicsWand(0, player, false);
-		player.learnNameQuiet(startWandTest);
-		player.inventory().add(startWandTest);
-		startWandTest = objectFactory.itemFactory.newToxicTransfusionWand(0, player, false);
-		player.learnNameQuiet(startWandTest);
-		player.inventory().add(startWandTest);
+//		Item startWandTest = objectFactory.itemFactory.newArchmagesAegisWand(0, player, false);
+//		player.learnNameQuiet(startWandTest);
+//		player.inventory().add(startWandTest);
+//		startWandTest = objectFactory.itemFactory.newLightningLanceWand(0, player, false);
+//		player.learnNameQuiet(startWandTest);
+//		player.inventory().add(startWandTest);
+//		startWandTest = objectFactory.itemFactory.newIceWallWand(0, player, false);
+//		player.learnNameQuiet(startWandTest);
+//		player.inventory().add(startWandTest);
+//		startWandTest = objectFactory.itemFactory.newPyrotechnicsWand(0, player, false);
+//		player.learnNameQuiet(startWandTest);
+//		player.inventory().add(startWandTest);
+//		startWandTest = objectFactory.itemFactory.newToxicTransfusionWand(0, player, false);
+//		player.learnNameQuiet(startWandTest);
+//		player.inventory().add(startWandTest);
 		
 		
 		//

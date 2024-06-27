@@ -248,7 +248,7 @@ public class ObjectFactory {
 	//structures
 	
 	public Effect generateSmallCell(Creature player) {
-		Effect generate = new Effect(7, "Arc Ward", false, null){
+		Effect generate = new Effect(7, "Arc Ward", false, null, ' ', null){
 			public void start(Creature creature){
 				if(creature.y() == 60 || creature.y() == 59) {
 					creature.moveBy(0, -2, 0, false);
@@ -381,7 +381,7 @@ public class ObjectFactory {
 	}
 	
 	public Effect generatePotionRoom(Creature player) {
-		Effect generate = new Effect(7, "Arc Ward", false, null){
+		Effect generate = new Effect(7, "Arc Ward", false, null, ' ', null){
 			public void start(Creature creature){
 				if(creature.y() == 60 || creature.y() == 59) {
 					creature.moveBy(0, -2, 0, false);
@@ -580,7 +580,7 @@ public class ObjectFactory {
 	}
 	
 	public Effect generateGrassPatch(Creature player) {
-		Effect generate = new Effect(1, "Arc Ward", false, null){
+		Effect generate = new Effect(1, "Arc Ward", false, null, ' ', null){
 			public void start(Creature creature){
 				for (int ox = -2; ox < 3; ox++){
 					for (int oy = -2; oy < 3; oy++){
@@ -878,7 +878,7 @@ public class ObjectFactory {
 	}
 	
 	public Effect generatePit(Creature player) {
-		Effect generate = new Effect(1, "Arc Ward", false, null){
+		Effect generate = new Effect(1, "Arc Ward", false, null, ' ', null){
 			public void start(Creature creature){
 				if(creature.z() == world.depth()-1) {
 					world.remove(creature);

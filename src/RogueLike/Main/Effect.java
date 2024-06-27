@@ -1,5 +1,7 @@
 package RogueLike.Main;
 
+import java.awt.Color;
+
 import RogueLike.Main.Creatures.Creature;
 
 public class Effect implements Cloneable{
@@ -122,21 +124,40 @@ public class Effect implements Cloneable{
 		this.type = type;
 	}
 	
-	public Effect(int duration, String name, boolean negative, Creature other) {
+	private char glyph;
+	public char glyph() {
+		return glyph;
+	}
+	public void setGlyph(char glyph) {
+		this.glyph = glyph;
+	}
+	private Color color;
+	public Color color() {
+		return color;
+	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	public Effect(int duration, String name, boolean negative, Creature other, char glyph, Color color) {
 		this.duration = duration;
 		this.durationBase = duration;
 		this.name = name;
 		this.isNegative = negative;
 		this.other = other;
+		this.glyph = glyph;
+		this.color = color;
 	}
 	
-	public Effect(int duration, String name, boolean negative, Creature other, String type) {
+	public Effect(int duration, String name, boolean negative, Creature other, String type, char glyph, Color color) {
 		this.duration = duration;
 		this.durationBase = duration;
 		this.name = name;
 		this.isNegative = negative;
 		this.other = other;
 		this.type = type;
+		this.glyph = glyph;
+		this.color = color;
 	}
 	
 	public Effect(int duration, String name, boolean negative, Creature other, int innerDuration) {

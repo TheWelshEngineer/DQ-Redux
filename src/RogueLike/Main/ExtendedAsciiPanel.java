@@ -122,6 +122,10 @@ public class ExtendedAsciiPanel extends JPanel {
 	public static Color kathryn = new Color(135, 41, 89);
 	public static Color seafoam = new Color(69, 130, 95);
 	public static Color paleRed = new Color(140, 56, 66);
+	
+	public static char getGlyphFromPage(int glyphID, int page) {
+		return (char) (glyphID + (256*(page-1)));
+	}
 
 	private Image offscreenBuffer;
 	private Graphics offscreenGraphics;
