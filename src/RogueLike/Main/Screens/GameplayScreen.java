@@ -80,12 +80,16 @@ public class GameplayScreen implements Screen{
         		if(y2 > 46) {
         			y2 = 46;
         		}
-        		char effectIcon = (char)30;
+        		char effectTypeIcon = (char)30;
+        		Color effectTypeColor = ExtendedAsciiPanel.brightGreen;
         		if(effect.isNegative()) {
-        			effectIcon = (char)31;
+        			effectTypeIcon = (char)31;
+        			effectTypeColor = ExtendedAsciiPanel.brightRed;
         		}
         		if(effect.showInMenu()) {
-        			terminal.write(String.format("%c %s (%d)", effectIcon, effect.name(), effect.duration()), 95, y2);
+        			terminal.write(String.format("    %s (%d)", effect.name(), effect.duration()), 95, y2);
+        			terminal.write(String.format("%c ", effect.glyph()), 95, y2, effect.color());
+        			terminal.write(String.format(" %c", effectTypeIcon), 96, y2, effectTypeColor);
         		}
         		y++;
         	}

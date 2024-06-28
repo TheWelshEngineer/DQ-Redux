@@ -2823,7 +2823,7 @@ public class Creature implements Cloneable{
 			//maxFood = maxFood + food / 2;
 			food = maxFood;
 			notify("You can't believe you can eat that much!");
-			Damage overeatDamage = new Damage(2, false, DamageType.PHYSICAL, factory().effectFactory, false);
+			Damage overeatDamage = new Damage(2, false, DamageType.TRUE, factory().effectFactory, false);
 			damage(overeatDamage, "Killed by overeating");
 
 		}else if(food < 0 && isPlayer()) {
@@ -2834,7 +2834,7 @@ public class Creature implements Cloneable{
 				foodTimer = this.proficiencyBonus();
 				notify("You are starving!");
 				food = 0;
-				Damage starveDamage = new Damage((int)(maxHP / 10), false, DamageType.PHYSICAL, factory().effectFactory, false);
+				Damage starveDamage = new Damage((int)(maxHP / 10), false, DamageType.TRUE, factory().effectFactory, false);
 				damage(starveDamage, "Starved to death");
 			}
 			
