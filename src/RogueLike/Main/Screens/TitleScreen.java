@@ -52,11 +52,22 @@ public class TitleScreen implements Screen{
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
-		terminal.writeCenter(String.format("-- version: rc-6 -- Press [%s] to Start --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 45);
+		terminal.writeCenter(
+			String.format(
+				"-- version: rc-6 -- Press [%s] to Start -- Press [%s] to Exit --",
+				KeybindManager.keybindText(KeybindManager.navigateMenuConfirm),
+				KeybindManager.keybindText(KeybindManager.navigateMenuBack)
+			),
+			45
+		);
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {
-		return key.getKeyCode() == KeybindManager.navigateMenuConfirm ? new MainMenuScreen() : this;
+		switch (key.getKeyCode()) {
+			case KeybindManager.navigateMenuConfirm: return new MainMenuScreen();
+			case KeybindManager.navigateMenuBack: System.exit(0);
+			default: return this;
+		}
 	}
 	
 
