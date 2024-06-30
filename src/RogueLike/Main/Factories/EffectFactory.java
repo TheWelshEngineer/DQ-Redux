@@ -1234,9 +1234,9 @@ public class EffectFactory {
 				if(!creature.affectedBy(Effect.illuminated) == false) {
 					creature.doAction("stop glowing");
 				}
-
 			}
 		};
+		illuminated.setDescription("You are glowing with a bright light, illuminating your surroundings and letting you see farther.");
 		return illuminated;
 	}
 	
@@ -1513,11 +1513,8 @@ public class EffectFactory {
                         int ny = creature.y + oy;
                         if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null) {
                             continue;
+							// TODO: this `continue` does nothing?
                         }
-                        
-                        
-                       
-
                     }
                 }
             }
@@ -1525,6 +1522,7 @@ public class EffectFactory {
 				creature.doAction("feel the flaming shield burn out");
 			}
         };
+		magmaWard.setDescription("A shield of flames protects you, igniting any creatures that come too close.");
 		return magmaWard;
 	}
 	
