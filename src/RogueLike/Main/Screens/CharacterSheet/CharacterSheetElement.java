@@ -1,7 +1,13 @@
 package RogueLike.Main.Screens.CharacterSheet;
 
+import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.Screens.TerminalText;
+
 public abstract class CharacterSheetElement {
-    public abstract String header();
+    protected abstract String header();
+    public TerminalText formattedHeader(ExtendedAsciiPanel terminal) {
+        return new TerminalText(header(), terminal.getDefaultForegroundColor(), terminal.getDefaultBackgroundColor());
+    };
 
     public abstract String details();
 

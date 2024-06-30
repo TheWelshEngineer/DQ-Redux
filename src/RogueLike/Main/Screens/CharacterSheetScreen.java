@@ -114,7 +114,8 @@ public class CharacterSheetScreen implements Screen{
 
 			for (CharacterSheetElement element: elements.get(column_no)) {
 				String selector = element == selectedElement ? ">> " : "";
-				terminal.write(selector + element.header(), x, y++);
+				terminal.write(selector, x, y);
+				terminal.write(element.formattedHeader(terminal),x + selector.length(), y++);
 			}
 		}
 

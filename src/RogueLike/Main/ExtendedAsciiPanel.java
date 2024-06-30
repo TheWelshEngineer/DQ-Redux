@@ -1,5 +1,6 @@
 package RogueLike.Main;
 
+import RogueLike.Main.Screens.TerminalChar;
 import RogueLike.Main.Screens.TerminalText;
 
 import java.awt.Color;
@@ -742,7 +743,10 @@ public class ExtendedAsciiPanel extends JPanel {
      * @return this for convenient chaining of method calls
      */
     public ExtendedAsciiPanel write(TerminalText text, int x, int y) {
-        return write(text.text, x, y, text.foreground, text.background);
+        for (TerminalChar c: text) {
+            write(c.glyph, x++, y, c.foreground, c.background);
+        }
+        return this;
     }
 
     /**
