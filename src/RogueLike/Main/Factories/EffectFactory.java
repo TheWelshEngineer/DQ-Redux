@@ -1211,7 +1211,7 @@ public class EffectFactory {
 	}
 	
 	public Effect blinded(int duration) {
-		Effect blinded = new Effect(duration, "Blinded", true, null, Effect.blinded, ExtendedAsciiPanel.getGlyphFromPage(15, 1), ExtendedAsciiPanel.black) {
+		Effect blinded = new Effect(duration, "Blinded", true, null, Effect.blinded, ExtendedAsciiPanel.getGlyphFromPage(15, 1), ExtendedAsciiPanel.invisible) {
 			public void start(Creature creature) {
 				creature.doAction("become blinded!");
 			}
@@ -1601,7 +1601,7 @@ public class EffectFactory {
 	}
 	
 	public Effect invisible(int duration) {
-		Effect invisible = new Effect(duration, "Invisible", false, null, Effect.invisible, ExtendedAsciiPanel.getGlyphFromPage(163, 2), ExtendedAsciiPanel.black) {
+		Effect invisible = new Effect(duration, "Invisible", false, null, Effect.invisible, ExtendedAsciiPanel.getGlyphFromPage(163, 2), ExtendedAsciiPanel.invisible) {
 			public void start(Creature creature) {
 				creature.changeColor(ExtendedAsciiPanel.invisible);
 				creature.doAction("become transparent");
