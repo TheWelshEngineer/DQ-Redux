@@ -138,6 +138,10 @@ public class Effect implements Cloneable{
 	public void setColor(Color color) {
 		this.color = color;
 	}
+
+	private String description = "";
+	public String description() {return description;}
+	public void setDescription(String description) {this.description = description;}
 	
 	public Effect(int duration, String name, boolean negative, Creature other, char glyph, Color color) {
 		this.duration = duration;

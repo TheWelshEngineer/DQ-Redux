@@ -627,12 +627,7 @@ public class EffectFactory {
 						creature.ai().world.addCreatureAtLocation(newWall, cx-2, cy, creature.z());
 					}
 				}
-
 			}
-
-
-
-
 		};
 		return wall;
 	}
@@ -924,7 +919,6 @@ public class EffectFactory {
         			creature.notify(String.format("The %s's spell misses you.", reference.name()));
 					reference.notify(String.format("Your spell misses the %s.", creature.name()));
         		}
-        		
 			}
         };
         armorStorm.setShowInMenu(false);
@@ -1019,18 +1013,11 @@ public class EffectFactory {
         		}else {
         			creature.notify("You fail to call forth upgrading magic..");
         		}
-        		
 			}
         };
         infuseUpgrade.setShowInMenu(false);
 		return infuseUpgrade;
 	}
-	
-	
-	
-	
-	
-	
 	
 	public Effect maxHealth() {
 		Effect maxHealth = new Effect(1, null, false, null, ' ', null) {
@@ -1073,9 +1060,9 @@ public class EffectFactory {
 				if(!creature.affectedBy(Effect.poisoned)) {
 					creature.doAction("recover from poison");
 				}
-
 			}
 		};
+		poisoned.setDescription("You have been poisoned, and are taking poison damage every turn!");
 		return poisoned;
 	}
 	
@@ -1094,9 +1081,9 @@ public class EffectFactory {
 				if(!creature.affectedBy(Effect.bleeding)) {
 					creature.doAction("stem the bleeding");
 				}
-
 			}
 		};
+		bleeding.setDescription("You are bleeding, taking physical damage every turn!");
 		return bleeding;
 	}
 	
@@ -1109,6 +1096,7 @@ public class EffectFactory {
 				creature.doAction("return to normal strength");
 			}
 		};
+		giantStrength.setDescription("The strength of giants flows through your muscles, granting you a bonus to your strength and armor class.");
 		return giantStrength;
 	}
 	
@@ -1121,6 +1109,7 @@ public class EffectFactory {
 				creature.doAction("return to a normal appearance");
 			}
 		};
+		beastForm.setDescription("You've been temporarily transfigured into a bestial form, granting you a bonus to your dexterity and vision radius.");
 		return beastForm;
 	}
 	
@@ -1142,27 +1131,11 @@ public class EffectFactory {
 				if(!creature.affectedBy(Effect.corroded) == false) {
     				creature.doAction("recover from the acid burns");
 				}
-				
-				
 			}
         };
+		corroded.setDescription("You've been covered in burning acid, which eats away at you with acid damage every turn!");
 		return corroded;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public Effect causticVapor(int duration) {
@@ -1186,8 +1159,7 @@ public class EffectFactory {
 		};
 		return causticVapor;
 	}
-	
-	
+
 	
 	public Effect mindVision(int duration) {
 		Effect mindVision = new Effect(duration, "Mind Vision", false, null, Effect.mindVision, ExtendedAsciiPanel.getGlyphFromPage(163, 2), ExtendedAsciiPanel.pink){
@@ -1197,6 +1169,7 @@ public class EffectFactory {
             public void end(Creature creature){
             }
         };
+		mindVision.setDescription("Your senses have been expanded beyond the physical, allowing you to telepathically sense the presence of other creatures at any distance.");
         return mindVision;
 	}
 	
@@ -1216,12 +1189,13 @@ public class EffectFactory {
 				creature.doAction("become blinded!");
 			}
 			public void end(Creature creature) {
-				if(!creature.affectedBy(Effect.blinded) == false) {
+				if(creature.affectedBy(Effect.blinded)) {
 					creature.doAction("return to seeing normally");
 				}
 
 			}
 		};
+		blinded.setDescription("You've been temporarily blinded, and can barely see!");
 		return blinded;
 	}
 	
@@ -1234,9 +1208,9 @@ public class EffectFactory {
 				if(!creature.affectedBy(Effect.illuminated) == false) {
 					creature.doAction("stop glowing");
 				}
-
 			}
 		};
+		illuminated.setDescription("You are glowing with a bright light, illuminating your surroundings and letting you see farther.");
 		return illuminated;
 	}
 	
@@ -1246,12 +1220,12 @@ public class EffectFactory {
 				creature.doAction("begin to vibrate with energy!");
 			}
 			public void end(Creature creature) {
-				if(!creature.affectedBy(Effect.haste) == false) {
+				if(creature.affectedBy(Effect.haste)) {
 					creature.doAction("slow down to normal speed");
 				}
-
 			}
 		};
+		haste.setDescription("Energy flows through you, allowing you to move at superhuman speeds.");
 		return haste; //TODO finish + implement
 	}
 	
@@ -1261,12 +1235,12 @@ public class EffectFactory {
 				creature.doAction("become infused with electricity!");
 			}
 			public void end(Creature creature) {
-				if(!creature.affectedBy(Effect.electrocharged) == false) {
+				if(creature.affectedBy(Effect.electrocharged)) {
 					creature.doAction("feel the electrical infusion fade away");
 				}
-
 			}
 		};
+		electrocharged.setDescription("You are infused with electrical energy, shocking your enemies for bonus electrical damage with every attack.");
 		return electrocharged;
 	}
 	
@@ -1279,6 +1253,7 @@ public class EffectFactory {
             	creature.doAction("float back down to the floor");
             }
         };
+		levitating.setDescription("You are floating in the air, allowing you to glide across pits and trapped floors safely.");
 		return levitating;
 	}
 	
@@ -1300,6 +1275,7 @@ public class EffectFactory {
 
 			}
 		};
+		devoured.setDescription("A devouring curse is eating away at your life force, draining your health and mana every turn!");
 		return devoured;
 	}
 	
@@ -1321,6 +1297,7 @@ public class EffectFactory {
 
 			}
 		};
+		confused.setDescription("You are disoriented, and can't control which direction you move!");
 		return confused;
 	}
 	
@@ -1391,6 +1368,7 @@ public class EffectFactory {
 	}
 	
 	public Effect arcaneWard(int duration) {
+		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect arcaneWard = new Effect(duration, "Arcane Ward", false, null, Effect.arcaneWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.lilac){
 			public void start(Creature creature){
 				creature.doAction("raise a magical shield!");
@@ -1403,10 +1381,12 @@ public class EffectFactory {
 				creature.doAction("let the shielding magic dissipate");
 			}
         };
+		arcaneWard.setDescription("An arcane shield surrounds you.");
 		return arcaneWard;
 	}
 	
 	public Effect venomousWard(int duration) {
+		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect venomousWard = new Effect(duration, "Venomous Ward", false, null, Effect.venomousWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.magenta){
 			public void start(Creature creature){
 				creature.doAction("become coated in protective poison!");
@@ -1419,10 +1399,12 @@ public class EffectFactory {
 				creature.doAction("feel the poisonous barrier fade");
 			}
         };
+		venomousWard.setDescription("A shield of protective poison surrounds you.");
 		return venomousWard;
 	}
 	
 	public Effect eldritchWard(int duration) {
+		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect eldritchWard = new Effect(duration, "Eldritch Ward", false, null, Effect.eldritchWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.brightMagenta){
 			public void start(Creature creature){
 				creature.doAction("become shrouded by chaotic energy!");
@@ -1448,10 +1430,12 @@ public class EffectFactory {
 				creature.doAction("feel the chaotic energy fade away");
 			}
         };
+		eldritchWard.setDescription("A shroud of chaotic energy protects you.");
 		return eldritchWard;
 	}
 	
 	public Effect bladeWard(int duration) {
+		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect bladeWard = new Effect(duration, "Blade Ward", false, null, Effect.bladeWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.white){
 			public void start(Creature creature){
 				creature.doAction("become surrounded by metal shards!");
@@ -1464,11 +1448,13 @@ public class EffectFactory {
 				creature.doAction("return the metal shards to the earth");
 			}
         };
+		bladeWard.setDescription("A swarm of metal shards shields you.");
 		return bladeWard;
 	}
 	
 	public Effect causticWard(int duration) {
-		Effect causticWard = new Effect(duration, "Venomous Ward", false, null, Effect.causticWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.lime){
+		// TODO the ongoing portion of this effect essentially does nothing at the moment
+		Effect causticWard = new Effect(duration, "Caustic Ward", false, null, Effect.causticWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.lime){
 			public void start(Creature creature){
 				creature.doAction("become veiled in protective acid!");
 				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 1).affectedCreaturesExceptCenter(creature)) {
@@ -1480,10 +1466,12 @@ public class EffectFactory {
 				creature.doAction("feel the acidic veil fade");
 			}
         };
+		causticWard.setDescription("A veil of protective acid shields you.");
 		return causticWard;
 	}
 	
 	public Effect chillWard(int duration) {
+		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect chillWard = new Effect(duration, "Chill Ward", false, null, Effect.chillWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.water){
 			public void start(Creature creature){
 				creature.doAction("become wreathed in freezing air!");
@@ -1496,10 +1484,12 @@ public class EffectFactory {
 				creature.doAction("feel the freezing winds fade away");
 			}
         };
+		chillWard.setDescription("You are shielded by freezing winds.");
 		return chillWard;
 	}
 	
 	public Effect magmaWard(int duration) {
+		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect magmaWard = new Effect(duration, "Magma Ward", false, null, Effect.magmaWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.orange){
 			public void start(Creature creature){
 				creature.doAction("become shielded by flames!");
@@ -1508,16 +1498,13 @@ public class EffectFactory {
              		c.addEffect(ignited((int)duration/2));
 				}
                 for (int ox = -1; ox < 2; ox++){
+					// TODO: this loop does nothing?
                     for (int oy = -1; oy < 2; oy++){
                         int nx = creature.x + ox;
                         int ny = creature.y + oy;
                         if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null) {
                             continue;
                         }
-                        
-                        
-                       
-
                     }
                 }
             }
@@ -1525,6 +1512,7 @@ public class EffectFactory {
 				creature.doAction("feel the flaming shield burn out");
 			}
         };
+		magmaWard.setDescription("A shield of flames protects you.");
 		return magmaWard;
 	}
 	
@@ -1582,6 +1570,7 @@ public class EffectFactory {
 	}
 	
 	public Effect arcWard(int duration) {
+		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect arcWard = new Effect(duration, "Arc Ward", false, null, Effect.arcWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.brightCyan){
 			public void start(Creature creature){
 				creature.doAction("become shrouded in lightning!");
@@ -1597,6 +1586,7 @@ public class EffectFactory {
 				creature.doAction("feel the lightning shroud dissipate");
 			}
         };
+		arcWard.setDescription("A shield of crackling lightning protects you.");
 		return arcWard;
 	}
 	
@@ -1615,9 +1605,9 @@ public class EffectFactory {
 					creature.changeColor(creature.defaultColor());
 					creature.doAction("become visible");
 				}
-				
 			}
 		};
+		invisible.setDescription("A complex set of arcane energies hides you from mortal sight. Attacking or casting a spell will disrupt the fragile balance of this effect, making you visible once more.");
 		return invisible;
 	}
 	
@@ -1632,6 +1622,7 @@ public class EffectFactory {
 				}
 			}
 		};
+		paralyzed.setDescription("Your muscles have seized up, preventing you from moving!");
 		return paralyzed;
 	}
 	
@@ -1705,7 +1696,9 @@ public class EffectFactory {
 				if(!creature.affectedBy(Effect.frozen)) {
 					creature.doAction("defrost");
 				}
-			}};
+			}
+		};
+		frozen.setDescription("You are frozen solid, and are completely unable to move!");
 		return frozen;
 	}
 	
@@ -1719,7 +1712,9 @@ public class EffectFactory {
 				if(!creature.affectedBy(Effect.sundered)) {
 					creature.doAction("recover defenses");
 				}
-			}};
+			}
+		};
+		sundered.setDescription("Your armor has been sundered, leaving you defenseless!");
 		return sundered;
 	}
 	
@@ -1738,7 +1733,9 @@ public class EffectFactory {
 				if(!creature.affectedBy(Effect.electrified)) {
 					creature.doAction("recover from a shock");
 				}
-			}};
+			}
+		};
+		electrified.setDescription("An electric shock has disrupted your magical reserves, draining your mana every turn!");
 		return electrified;
 	}
 	
@@ -1758,38 +1755,13 @@ public class EffectFactory {
 					creature.doAction("put the flames out");
 				}
 
-			}};
+			}
+		};
+		ignited.setDescription("You have been set on fire, and you are taking fire damage every turn!");
 		return ignited;
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
-
-	
-	
-	
-	
-	
 
 	public Effect enchantScroll() {
 		Effect enchant = new Effect(0, null, false, null, ' ', null) {
@@ -1817,7 +1789,6 @@ public class EffectFactory {
 		};
 		return upgrade;
 	}
-	
 	
 	
 	public Effect summonMonstersScroll(Creature player) {
@@ -1918,6 +1889,4 @@ public class EffectFactory {
 		default: return paralysed(5);
 		}
 	}
-	
-
 }

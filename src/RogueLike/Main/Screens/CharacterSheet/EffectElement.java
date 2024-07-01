@@ -29,6 +29,6 @@ public class EffectElement extends CharacterSheetElement {
 
     @Override
     public String details() {
-        return ""; // TODO add effect descriptions?
+        return effect.description();
     }
 }
