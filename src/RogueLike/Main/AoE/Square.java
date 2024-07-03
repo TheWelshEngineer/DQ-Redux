@@ -33,6 +33,16 @@ public class Square extends AoE implements Iterable<Point>{
 		sizeWord = "Square";
 	}
 	
+	public Square generatePoints(int x, int y, int z) {
+		points = new ArrayList<Point>();
+		for(int dy = -size; dy < size+1; dy++) {
+			for(int dx = -size; dx < size+1; dx++) {
+				points.add(new Point(x+dx, y+dy, z));
+			}
+		}
+		return this;
+	}
+	
 	public ArrayList<Creature> affectedCreatures(Creature reference){
 		ArrayList<Creature> creatures = new ArrayList<Creature>();
 		for(Point p : points) {

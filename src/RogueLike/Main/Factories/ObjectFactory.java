@@ -380,6 +380,139 @@ public class ObjectFactory {
 		return generate;
 	}
 	
+	public Effect generatePitItem(Creature player) {
+		Effect generate = new Effect(7, "Arc Ward", false, null, ' ', null){
+			public void start(Creature creature){
+				if(creature.y() == 60 || creature.y() == 59) {
+					creature.moveBy(0, -2, 0, false);
+				}
+				if(creature.y() == 0) {
+					creature.moveBy(0, 1, 0, false);
+				}
+
+                for (int ox = -1; ox < 2; ox++){
+                    for (int oy = -1; oy < 2; oy++){
+                        int nx = creature.x + ox;
+                        int ny = creature.y + oy;
+                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) != null) {
+                            continue;
+                        }
+                    }
+                }
+                int check = 0;
+            	
+            	 for (int ox = -1; ox < 2; ox++){
+                     for (int oy = -1; oy < 2; oy++){
+                         int nx = creature.x + ox;
+                         int ny = creature.y + oy;
+                         if (ox == 0 && oy == 0) {
+                        	 
+                             
+                         }
+                         if(ox == -1 && oy == -1) {
+                        	 if(creature.item(nx, ny, creature.z()) != null) {
+                        		 creature.world().remove(nx, ny, creature.z());
+                        	 }
+                        	 if(creature.world().tile(nx, ny, creature.z()) == Tile.FLOOR) {
+                        		 //creature.world().changeTile(nx, ny, creature.z(), Tile.BARS_NW);
+                        		 check += 1;
+                        	 }
+                        	 //creature.world().changeTile(creature.x()-1, creature.y()-1, creature.z(), Tile.BARS_NW);
+                         }
+                         if(ox == 1 && oy == -1) {
+                        	 if(creature.item(nx, ny, creature.z()) != null) {
+                        		 creature.world().remove(nx, ny, creature.z());
+                        	 }
+                        	 if(creature.world().tile(nx, ny, creature.z()) == Tile.FLOOR) {
+                        		 //creature.world().changeTile(nx, ny, creature.z(), Tile.BARS_NE);
+                        		 check += 1;
+                        	 }
+                        	 //creature.world().changeTile(creature.x()+1, creature.y()-1, creature.z(), Tile.BARS_NE);
+                         }
+                         if(ox == -1 && oy == 1) {
+                        	 if(creature.item(nx, ny, creature.z()) != null) {
+                        		 creature.world().remove(nx, ny, creature.z());
+                        	 }
+                        	 if(creature.world().tile(nx, ny, creature.z()) == Tile.FLOOR) {
+                        		 //creature.world().changeTile(nx, ny, creature.z(), Tile.BARS_SW);
+                        		 check += 1;
+                        	 }
+                        	 //creature.world().changeTile(creature.x()-1, creature.y()+1, creature.z(), Tile.BARS_SW);
+                         }
+                         if(ox == 1 && oy == 1) {
+                        	 if(creature.item(nx, ny, creature.z()) != null) {
+                        		 creature.world().remove(nx, ny, creature.z());
+                        	 }
+                        	 if(creature.world().tile(nx, ny, creature.z()) == Tile.FLOOR) {
+                        		 //creature.world().changeTile(nx, ny, creature.z(), Tile.BARS_SE);
+                        		 check += 1;
+                        	 }
+                        	 //creature.world().changeTile(creature.x()+1, creature.y()+1, creature.z(), Tile.BARS_SE);
+                         }
+                         if(ox == -1 && oy == 0) {
+                        	 if(creature.item(nx, ny, creature.z()) != null) {
+                        		 creature.world().remove(nx, ny, creature.z());
+                        	 }
+                        	 if(creature.world().tile(nx, ny, creature.z()) == Tile.FLOOR) {
+                        		 //creature.world().changeTile(nx, ny, creature.z(), Tile.BARS_VERTICAL);
+                        		 check += 1;
+                        	 }
+                        	 //creature.world().changeTile(creature.x()-1, creature.y(), creature.z(), Tile.BARS_VERTICAL);
+                         }
+                         if(ox == 1 && oy == 0) {
+                        	 if(creature.item(nx, ny, creature.z()) != null) {
+                        		 creature.world().remove(nx, ny, creature.z());
+                        	 }
+                        	 if(creature.world().tile(nx, ny, creature.z()) == Tile.FLOOR) {
+                        		 //creature.world().changeTile(nx, ny, creature.z(), Tile.BARS_VERTICAL);
+                        		 check += 1;
+                        	 }
+                        	 //creature.world().changeTile(creature.x()+1, creature.y(), creature.z(), Tile.BARS_VERTICAL);
+                         }
+                         if(ox == 0 && oy == -1) {
+                        	 if(creature.item(nx, ny, creature.z()) != null) {
+                        		 creature.world().remove(nx, ny, creature.z());
+                        	 }
+                        	 if(creature.world().tile(nx, ny, creature.z()) == Tile.FLOOR) {
+                        		 //creature.world().changeTile(nx, ny, creature.z(), Tile.BARS_HORIZONTAL);
+                        		 check += 1;
+                        	 }
+                        	 //creature.world().changeTile(creature.x(), creature.y()-1, creature.z(), Tile.BARS_HORIZONTAL);
+                         }
+                         if(ox == 0 && oy == 1) {
+                        	 if(creature.item(nx, ny, creature.z()) != null) {
+                        		 creature.world().remove(nx, ny, creature.z());
+                        	 }
+                        	 if(creature.world().tile(nx, ny, creature.z()) == Tile.FLOOR) {
+                        		 //creature.world().changeTile(nx, ny, creature.z(), Tile.BARS_DOOR);
+                        		 check += 1;
+                        	 }
+                        	 //creature.world().changeTile(creature.x(), creature.y()+1, creature.z(), Tile.BARS_DOOR);
+                         }
+                     }
+                    
+                 }
+            	 if(check >= 8) {
+            		 creature.world().changeTile(creature.x()-1, creature.y()-1, creature.z(), Tile.PIT);
+            		 creature.world().changeTile(creature.x()+1, creature.y()-1, creature.z(), Tile.PIT);
+            		 creature.world().changeTile(creature.x()-1, creature.y()+1, creature.z(), Tile.PIT);
+            		 creature.world().changeTile(creature.x()+1, creature.y()+1, creature.z(), Tile.PIT);
+            		 creature.world().changeTile(creature.x()-1, creature.y(), creature.z(), Tile.PIT);
+            		 creature.world().changeTile(creature.x()+1, creature.y(), creature.z(), Tile.PIT);
+            		 creature.world().changeTile(creature.x(), creature.y()-1, creature.z(), Tile.PIT);
+            		 creature.world().changeTile(creature.x(), creature.y()+1, creature.z(), Tile.PIT);
+            		 itemFactory.newPotionOfLevitation(creature.z(), true);
+            		 if(creature.item(creature.x(), creature.y(), creature.z()) != null) {
+                		 creature.world().remove(creature.x(), creature.y(), creature.z());
+                	 }
+            		 creature.world().addAtEmptySpace(randomMagicItem(creature.z(), player, false), creature.x(), creature.y(), creature.z());
+                 }
+                world.remove(creature); 
+            }
+        };
+		return generate;
+	}
+	
 	public Effect generatePotionRoom(Creature player) {
 		Effect generate = new Effect(7, "Arc Ward", false, null, ' ', null){
 			public void start(Creature creature){
@@ -1181,12 +1314,13 @@ public class ObjectFactory {
 	
 	//generators
 	public Effect randomStructure(Creature player) {
-		switch(ExtraMaths.diceRoll(1, 5)) {
+		switch(ExtraMaths.diceRoll(1, 6)) {
 		case 1: return generateGrassPatch(player);
 		case 2: return generateGrassPatch(player);
 		case 3: return generateSmallCell(player);
 		case 4: return generatePotionRoom(player);
 		case 5: return generatePit(player);
+		case 6: return generatePitItem(player);
 		default: return generateGrassPatch(player);
 		}
 	}
@@ -1194,9 +1328,9 @@ public class ObjectFactory {
 	public Item randomWeapon(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
 		case 1: return randomSimpleWeapon(depth, addToWorld);
-		case 2: return randomSimpleWeapon(depth, addToWorld);
-		case 3: return randomSimpleWeapon(depth, addToWorld);
-		case 4: return randomSimpleWeapon(depth, addToWorld);
+		case 2: return randomMartialWeapon(depth, addToWorld);
+		case 3: return randomFinesseWeapon(depth, addToWorld);
+		case 4: return randomRangedWeapon(depth, addToWorld);
 		default: return randomSimpleWeapon(depth, addToWorld);
 		}
 	}
@@ -1492,7 +1626,7 @@ public class ObjectFactory {
 		case 2: creature = randomFungus(depth, player, addToWorld); break;
 		case 3: creature = randomFungus(depth, player, addToWorld); break;
 		case 4: creature = randomFungus(depth, player, addToWorld); break;
-		case 5: creature = randomFungus(depth, player, addToWorld); break;
+		case 5: creature = randomSlime(depth, player, addToWorld); break;
 		case 6: creature = creatureFactory.newBat(depth, addToWorld); break;
 		case 7: creature = creatureFactory.newBat(depth, addToWorld); break;
 		case 8: creature = creatureFactory.newBat(depth, addToWorld); break;

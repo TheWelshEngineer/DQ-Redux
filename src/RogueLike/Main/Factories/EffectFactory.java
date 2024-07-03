@@ -1226,7 +1226,7 @@ public class EffectFactory {
 			}
 		};
 		haste.setDescription("Energy flows through you, allowing you to move at superhuman speeds.");
-		return haste; //TODO finish + implement
+		return haste;
 	}
 	
 	public Effect electrocharged(int duration) {
@@ -1497,16 +1497,6 @@ public class EffectFactory {
                     creature.world().setParticleAtLocation(c.ai().factory.particleFactory.fire(ExtendedAsciiPanel.orange, 2), c.x(), c.y(), c.z());
              		c.addEffect(ignited((int)duration/2));
 				}
-                for (int ox = -1; ox < 2; ox++){
-					// TODO: this loop does nothing?
-                    for (int oy = -1; oy < 2; oy++){
-                        int nx = creature.x + ox;
-                        int ny = creature.y + oy;
-                        if (ox == 0 && oy == 0 || creature.creature(nx, ny, creature.z) == null) {
-                            continue;
-                        }
-                    }
-                }
             }
 			public void end(Creature creature) {
 				creature.doAction("feel the flaming shield burn out");

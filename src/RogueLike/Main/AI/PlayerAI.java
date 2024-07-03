@@ -43,7 +43,6 @@ public class PlayerAI extends CreatureAI{
 			case 8: this.creature.moveBy(1, 1, 0, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move/Attack Southeast]"); break;
 			case 9: this.creature.idle(); System.out.println(this.toString() + " uses [Idle]"); break;
 			//
-			//TODO nonmovement player actions
 			case 10: if(this.itemToProcess() != null){this.creature.drop(itemToProcess); System.out.println(this.toString() + " uses [Drop "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
 			case 11: if(this.itemToProcess() != null){this.creature.eat(itemToProcess); System.out.println(this.toString() + " uses [Eat "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
 			case 12: if(this.itemToProcess() != null){this.creature.equip(itemToProcess); System.out.println(this.toString() + " uses [Equip "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;

@@ -176,6 +176,8 @@ public class ItemFactory {
 	public Item newQuarterstaff(int depth, boolean addToWorld) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Quarterstaff", null, Dice.d6, Dice.d8, 20, 402);
 		item.setIsSimple(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(12);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -185,6 +187,8 @@ public class ItemFactory {
 	public Item newSpear(int depth, boolean addToWorld) {
 		Item item = new ThrownVersatileWeapon(')', ExtendedAsciiPanel.brightWhite, "Spear", null, Dice.d4, Dice.d6, Dice.d8, 10, 403);
 		item.setIsSimple(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(12);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -194,6 +198,8 @@ public class ItemFactory {
 	public Item newGreatclub(int depth, boolean addToWorld) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatclub", null, Dice.d10, 20, 404);
 		item.setIsSimple(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(14);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -203,6 +209,8 @@ public class ItemFactory {
 	public Item newThrowingAxe(int depth, boolean addToWorld) {
 		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Axe", null, Dice.d6, Dice.d8, 10, 405);
 		item.setIsSimple(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(14);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -212,6 +220,8 @@ public class ItemFactory {
 	public Item newMattock(int depth, boolean addToWorld) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mattock", null, Dice.d8, Dice.d10, 150, 406);
 		item.setIsSimple(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(16);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -221,6 +231,8 @@ public class ItemFactory {
 	public Item newMaul(int depth, boolean addToWorld) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Maul", null, Dice.d12, 20, 407);
 		item.setIsSimple(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(18);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -247,6 +259,8 @@ public class ItemFactory {
 	public Item newMace(int depth, boolean addToWorld) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mace", null, Dice.d6, Dice.d8, 20, 502);
 		item.setIsMartial(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(12);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -255,6 +269,8 @@ public class ItemFactory {
 	public Item newThrowingHammer(int depth, boolean addToWorld) {
 		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Hammer", null, Dice.d4, Dice.d6, 10, 503);
 		item.setIsMartial(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(12);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -263,6 +279,8 @@ public class ItemFactory {
 	public Item newLongsword(int depth, boolean addToWorld) {
 		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Longsword", null, Dice.d8, 10, 504);
 		item.setIsMartial(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(14);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -271,6 +289,8 @@ public class ItemFactory {
 	public Item newHalberd(int depth, boolean addToWorld) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Halberd", null, Dice.d10, 20, 505);
 		item.setIsMartial(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(14);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -279,6 +299,8 @@ public class ItemFactory {
 	public Item newWarhammer(int depth, boolean addToWorld) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Warhammer", null, Dice.d8, Dice.d10, 20, 506);
 		item.setIsMartial(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(14);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -287,6 +309,8 @@ public class ItemFactory {
 	public Item newJavelin(int depth, boolean addToWorld) {
 		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Javelin", null, Dice.d6, Dice.d10, 10, 507);
 		item.setIsMartial(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(16);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -295,6 +319,8 @@ public class ItemFactory {
 	public Item newGreatsword(int depth, boolean addToWorld) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatsword", null, Dice.d12, 20, 508);
 		item.setIsMartial(true);
+		item.setUsesStrength(true);
+		item.setStrengthRequirement(18);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -318,6 +344,8 @@ public class ItemFactory {
 	}
 	public Item newFalchion(int depth, boolean addToWorld) {
 		Item item = new VersatileFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Falchion", null, Dice.d6, Dice.d8, 20, 602);
+		item.setUsesDexterity(true);
+		item.setDexterityRequirement(12);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -325,6 +353,8 @@ public class ItemFactory {
 	}
 	public Item newBoomerang(int depth, boolean addToWorld) {
 		Item item = new ThrownFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Boomerang", null, Dice.d4, Dice.d8, 20, 603);
+		item.setUsesDexterity(true);
+		item.setDexterityRequirement(14);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -332,6 +362,8 @@ public class ItemFactory {
 	}
 	public Item newGlaive(int depth, boolean addToWorld) {
 		Item item = new TwoHandedFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Glaive", null, Dice.d10, 20, 604);
+		item.setUsesDexterity(true);
+		item.setDexterityRequirement(14);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -339,6 +371,8 @@ public class ItemFactory {
 	}
 	public Item newFlamberge(int depth, boolean addToWorld) {
 		Item item = new VersatileFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Flamberge", null, Dice.d8, Dice.d10, 20, 605);
+		item.setUsesDexterity(true);
+		item.setDexterityRequirement(16);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -346,6 +380,8 @@ public class ItemFactory {
 	}
 	public Item newPairedBlades(int depth, boolean addToWorld) {
 		Item item = new TwoHandedFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Paired Blades", null, Dice.d6x2, 20, 606);
+		item.setUsesDexterity(true);
+		item.setDexterityRequirement(18);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -362,6 +398,8 @@ public class ItemFactory {
 	}
 	public Item newLongbow(int depth, boolean addToWorld) {
 		Item item = new ArrowsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Longbow", null, Dice.d8, 500, 701);
+		item.setUsesDexterity(true);
+		item.setDexterityRequirement(12);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -369,6 +407,8 @@ public class ItemFactory {
 	}
 	public Item newLightCrossbow(int depth, boolean addToWorld) {
 		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Light Crossbow", null, Dice.d8, 250, 702);
+		item.setUsesDexterity(true);
+		item.setDexterityRequirement(12);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -376,6 +416,8 @@ public class ItemFactory {
 	}
 	public Item newHeavyCrossbow(int depth, boolean addToWorld) {
 		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Heavy Crossbow", null, Dice.d10, 500, 703);
+		item.setUsesDexterity(true);
+		item.setDexterityRequirement(14);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -384,6 +426,8 @@ public class ItemFactory {
 	public Item newHandCrossbow(int depth, boolean addToWorld) {
 		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Hand Crossbow", null, Dice.d4x2, 500, 704);
 		item.setIsTwoHanded(false);
+		item.setUsesDexterity(true);
+		item.setDexterityRequirement(16);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -392,6 +436,8 @@ public class ItemFactory {
 	public Item newPistol(int depth, boolean addToWorld) {
 		Item item = new PowderRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Flintlock Pistol", null, Dice.d10, 750, 705);
 		item.setIsTwoHanded(false);
+		item.setUsesDexterity(true);
+		item.setDexterityRequirement(16);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -399,6 +445,8 @@ public class ItemFactory {
 	}
 	public Item newCaliver(int depth, boolean addToWorld) {
 		Item item = new PowderRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Flintlock Caliver", null, Dice.d12, 1000, 706);
+		item.setUsesDexterity(true);
+		item.setDexterityRequirement(18);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}

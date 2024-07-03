@@ -319,33 +319,27 @@ public class GameplayScreen implements Screen{
 		factory.setUpRingIndex(player);
 		factory.setUpScrollIndex(player);
 		for(int z = 0; z < world.depth(); z++) {
-			//temp
 			for(int i = 0; i < 20; i++) { // 20
 				factory.creatureFactory.newMarker(z, player, true);
 			}
-			//
 			for(int i = 0; i < 18; i++) {
 				factory.randomChest(z, player, true);
-				//factory.newGoldChest(z, player, true);
 			}
 			
-			for(int i = 0; i < 70; i++) {
-				Creature creature = factory.randomLesserMonster(z, player, false);
-				System.out.println(creature);
-				world.addAtEmptyLocation(creature, z);
+			for(int i = 0; i < 85; i++) {
+				Creature creature = factory.randomLesserMonster(z, player, true);
+				//System.out.println(creature);
 			}
 			if(z > 3) {
-				for(int i = 0; i < 35; i++) {
-					Creature creature = factory.randomMediumMonster(z, player, false);
-					System.out.println(creature);
-					world.addAtEmptyLocation(creature, z);
+				for(int i = 0; i < 50; i++) {
+					Creature creature = factory.randomMediumMonster(z, player, true);
+					//System.out.println(creature);
 				}
 			}
 			if(z > 5) {
-				for(int i = 0; i < 18; i++) {
-					Creature creature = factory.randomGreaterMonster(z, player, false);
-					System.out.println(creature);
-					world.addAtEmptyLocation(creature, z);
+				for(int i = 0; i < 30; i++) {
+					Creature creature = factory.randomGreaterMonster(z, player, true);
+					//System.out.println(creature);
 				}
 			}
 

@@ -593,7 +593,7 @@ public class ChooseSkillScreen implements Screen{
 				if(skillPoints > 0 && playerClass != "Warrior" && !playerArmorTraining) {
 					playerSkills[2].modifyLevel(1, false);
 					playerArmorTraining = true;
-					modifyPoints(-1); //TODO
+					modifyPoints(-1);
 				}
 			}else if(check == 3) {
 				if(skillPoints > 0 && !playerFortitude) {
@@ -676,13 +676,13 @@ public class ChooseSkillScreen implements Screen{
 				if(playerMartialWeapons && playerClass != "Warrior") {
 					playerMartialWeapons = false;
 					playerSkills[1].modifyLevel(1, true);
-					modifyPoints(1); //TODO
+					modifyPoints(1);
 				}
 			}else if(check == 2) {
 				if(playerArmorTraining && playerClass != "Warrior") {
 					playerArmorTraining = false;
 					playerSkills[2].modifyLevel(1, true);
-					modifyPoints(1); //TODO
+					modifyPoints(1);
 				}
 			}else if(check == 3) {
 				if(playerFortitude) {
@@ -757,7 +757,6 @@ public class ChooseSkillScreen implements Screen{
 			
 		case KeybindManager.navigateMenuConfirm: 
 			if(skillPoints < 1) {
-				//TODO
 				return new Zone1Screen(playerClass, playerAbilities, playerSkills, playerName, playerAncestry); 
 			}else {
 				return this;

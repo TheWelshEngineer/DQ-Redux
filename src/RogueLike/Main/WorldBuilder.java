@@ -202,10 +202,11 @@ public class WorldBuilder {
 //		for(int x = 0; x < width; x++) {
 //			for(int y = 0; y < height; y++) {
 //				if(((x >= ((width/2)-5))&&(x <= ((width/2)+5)))&&((y <= ((height/2)-5))&&(y >= ((height/2)+5)))) {
-//					tiles[x][y][depth] = Tile.FLOOR; //TODO goes infinite???????????
-//					System.out.println(true);
+//					//tiles[x][y][depth] = Tile.FLOOR; //TODO goes infinite???????????
+//					System.out.println("floor");
 //				}else {
-//					tiles[x][y][depth] = Tile.WALL;
+//					//tiles[x][y][depth] = Tile.WALL;
+//					System.out.println("wall");
 //				}
 //			}
 //		}
@@ -219,9 +220,7 @@ public class WorldBuilder {
 				.createRegions()
 				//temp
 				//.addMerchantLevel(1)
-				//
 				.connectRegions()
-				//temp
 				.addExitStairs();
 				
 	}

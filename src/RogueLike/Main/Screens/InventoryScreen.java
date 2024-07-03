@@ -108,7 +108,6 @@ public class InventoryScreen implements Screen{
 
 					}
 					
-					//TODO
 					String itemDetails = String.format(">> %c %s x%d%s", item.glyph(), player.nameOf(item), item.stackAmount(), equipped, check);
 					if(item.enchantment() != null && item.curse() == null && item.isWeapon() && item.isIdentified() && (item.defaultName().length() > 8) && item == player.weapon()) {
 						itemDetails = String.format(">> %c %s%cx%d%s", inventory.get(i).glyph(), player.nameOf(inventory.get(i)), (char)255, inventory.get(i).stackAmount(), equipped, check);

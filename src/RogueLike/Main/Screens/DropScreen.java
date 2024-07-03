@@ -21,8 +21,6 @@ public class DropScreen extends InventoryBasedScreen{
 
 	@Override
 	protected Screen use(Item item) {
-		//player.drop(item);
-		//TODO
 		player.ai().playerAIDropItem(item);
 		return null;
 	}

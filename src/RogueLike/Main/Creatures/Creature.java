@@ -527,7 +527,9 @@ public class Creature implements Cloneable{
 		}
 
 		int resistanceBonus = isResistantTo(damageType) ? 5 : 0;
-		// TODO: how do we handle immunity here?
+		if(isImmuneTo(damageType)) {
+			resistanceBonus += 100;
+		}
 
 		return baseSaveBonus + equipmentBonus + wardBonus + resistanceBonus;
 	}
@@ -592,7 +594,6 @@ public class Creature implements Cloneable{
 		}
 		skills[id].modifyLevel(amount, decrease);
 	}
-	//TODO
 	
 	public Skill simpleWeapons() {
 		return skills[0];
@@ -1678,7 +1679,6 @@ public class Creature implements Cloneable{
 
 		wx = end.x;
 		wy = end.y;
-		//TODO
 		Creature c = creature(wx, wy, wz);
 		if(item.curse() != null && (item == weapon || item == armor || item == shield || item == ring || item == ammunition || item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
 			notify("Your "+nameOf(item)+" is cursed! You can't let go of it!");
@@ -2005,7 +2005,11 @@ public class Creature implements Cloneable{
 			world.remove(item);
 		}else {
 			item.setOwner(this);
-			doAction("pick up a %s", nameOf(item));
+			if(item.stackAmount() > 1) {
+				doAction(String.format("pick up %d %ss", item.stackAmount(), nameOf(item)));
+			}else {
+				doAction("pick up a %s", nameOf(item));
+			}
 			world.remove(x, y, z);
 			if(nameOf(item) == item.name()) {
 				item.setIsIdentified(true);
@@ -2072,7 +2076,11 @@ public class Creature implements Cloneable{
 			if(isDead) {
 				doActionWhenDead("drop a " + nameOf(item));
 			}
-			doAction("drop a " + nameOf(item));
+			if(item.stackAmount() > 1) {
+				doAction(String.format("drops %d %ss", item.stackAmount(), nameOf(item)));
+			}else {
+				doAction("drop a " + nameOf(item));
+			}
 			unequip(item);
 			inventory.remove(item);
 		} else {
@@ -2334,7 +2342,6 @@ public class Creature implements Cloneable{
 			}
 		}
 	}
-	//TODO
 	public void equipToQuickslot(Item item, int slot) {
 		if(!item.isQuickslottable()) {
 			return;
@@ -2706,7 +2713,7 @@ public class Creature implements Cloneable{
 		doAction("eat a "+nameOf(item));
 		consume(item);
 	}
-//TODO consume
+	
 	private void consume(Item item) {
 		if(item.foodValue() < 0) {
 			notify("Gross!");
