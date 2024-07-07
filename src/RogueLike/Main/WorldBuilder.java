@@ -22,7 +22,6 @@ public class WorldBuilder {
 		this.tiles = new Tile[width][height][depth];
 		this.regions = new int[width][height][depth];
 		this.nextRegion = 1;
-		
 	}
 	
 	public World build() {
@@ -134,7 +133,9 @@ public class WorldBuilder {
 	public WorldBuilder connectRegions(){
 		System.out.println("Connecting regions");
         for (int z = 0; z < depth-1; z++){
-            connectRegionsDown(z);
+			if (!specialDepths.contains(z) && !specialDepths.contains(z+1)) {
+				connectRegionsDown(z);
+			}
         }
         return this;
     }
@@ -219,20 +220,68 @@ public class WorldBuilder {
 					blueprint[x][y] = Tile.FLOOR;
 				}
 			}
-			
-			
-			
-			
-			
 			break;
+
 		default: break;
 		}
-		
-		
-		
-		
-		
+
 		return blueprint;
+	}
+
+	private WorldBuilder postGenerateBlueprint(String type, int depth) {
+		switch(type) {
+			case "merchant":
+				int lowerX = (width/2)-5;
+				int lowerY = (height/2)-5;
+				int upperX = (width/2)+5;
+				int upperY = (height/2)+5;
+
+				forceAddStairsUp(lowerX, lowerY, depth);
+				System.out.printf("Force-generated stairs up for merchant at (%d, %d).%n", lowerX, lowerY);
+				forceAddStairsDown(upperX-1, upperY-1, depth);
+				System.out.printf("Force-generated stairs down for merchant at (%d, %d).%n", upperX-1, upperY-1);
+
+				break;
+
+			default: break;
+		}
+		return this;
+	}
+
+	private void forceAddStairsUp(int x, int y, int z) {
+		int surrounding_floor_radius = 7;
+		tiles[x][y][z] = Tile.STAIRS_UP;
+		setTilesCircle(Tile.FLOOR, x, y, surrounding_floor_radius, z-1);
+		tiles[x][y][z-1] = Tile.STAIRS_DOWN;
+	}
+
+	private void forceAddStairsDown(int x, int y, int z) {
+		int surrounding_floor_radius = 7;
+		tiles[x][y][z] = Tile.STAIRS_DOWN;
+		setTilesCircle(Tile.FLOOR, x, y, surrounding_floor_radius, z+1);
+		tiles[x][y][z+1] = Tile.STAIRS_UP;
+	}
+
+	/***
+	 * Set tiles in a circle of radius r around a given center point.
+	 * @param tile The tile type to fill the circle with.
+	 * @param x The x-coordinate of the circle's center.
+	 * @param y The x-coordinate of the circle's center.
+	 * @param r The radius of the circle.
+	 * @param depth The depth at which to generate the circle.
+	 */
+	private void setTilesCircle(Tile tile, int x, int y, int r, int depth) {
+		for (int dx=-r; dx<=r; dx++) {
+			for (int dy=-r; dy<=r; dy++) {
+				if (isInBounds(x+dx, y+dy) && dx*dx + dy*dy <= r*r) {
+					tiles[x+dx][y+dy][depth] = tile;
+				}
+			}
+		}
+	}
+
+	private boolean isInBounds(int x, int y) {
+		return x >= 0 && x < width && y >= 0 && y < height;
 	}
 	
 	private WorldBuilder addCustomDepthGeneration(int depth, Tile[][] blueprint) {
@@ -257,6 +306,7 @@ public class WorldBuilder {
 				//
 				.createRegions()
 				.connectRegions()
+				.postGenerateBlueprint("merchant", 1)
 				.addExitStairs();
 				
 	}
