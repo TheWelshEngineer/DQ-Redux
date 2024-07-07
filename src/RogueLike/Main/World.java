@@ -133,6 +133,10 @@ public class World {
 		if(creature != null) {
 			return creature.color();
 		}
+		Entity entity = entity(x,y,z);
+		if (entity != null) {
+			return entity.color();
+		}
 		if(item(x,y,z) != null) {
 			return item(x,y,z).color();
 		}

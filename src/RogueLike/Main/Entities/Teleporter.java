@@ -7,6 +7,8 @@ import RogueLike.Main.Factories.ParticleFactory;
 import RogueLike.Main.Particle;
 import RogueLike.Main.World;
 
+import java.awt.*;
+
 public class Teleporter extends Entity {
 	public final int targetX;
 	public final int targetY;
@@ -20,6 +22,11 @@ public class Teleporter extends Entity {
 	@Override
 	public char glyph() {
 		return ExtendedAsciiPanel.getGlyphFromPage(21, 1);
+	}
+
+	@Override
+	public Color color() {
+		return ExtendedAsciiPanel.magenta;
 	}
 
 	@Override

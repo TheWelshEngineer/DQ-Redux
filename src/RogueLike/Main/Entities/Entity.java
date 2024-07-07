@@ -2,7 +2,10 @@ package RogueLike.Main.Entities;
 
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.World;
+
+import java.awt.*;
 
 public abstract class Entity {
 	// TODO: Should Creature extend this?
@@ -12,6 +15,7 @@ public abstract class Entity {
 	public final World world;
 
 	public abstract char glyph();
+	public abstract Color color();
 
 	public Entity(int x, int y, int z, World world) {
 		this.x = x;
@@ -26,4 +30,5 @@ public abstract class Entity {
 	public int z() {return z;}
 
 	public void onSteppedOnBy(Creature other) {}
+
 }
