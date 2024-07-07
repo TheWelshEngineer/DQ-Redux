@@ -50,29 +50,20 @@ public class WorldBuilder {
 					for (int z = 0; z < depth; z++) {
 						int floors = 0;
 						int rocks = 0;
-	
 						for (int ox = -1; ox < 2; ox++) {
 							for (int oy = -1; oy < 2; oy++) {
 								if (x + ox < 0 || x + ox >= width || y + oy < 0 || y + oy >= height) {
 									continue;
 								}
-							
 								if (tiles[x + ox][y + oy][z] == Tile.FLOOR) {
 									floors++;
 								}
 								else {
 									rocks++;
-								}
-									
+								}	
 							}
 						}
 						tiles2[x][y][z] = floors >= rocks ? Tile.FLOOR : Tile.WALL;
-
-						
-						
-						
-						
-						
 					}
 				}
 			}
@@ -83,13 +74,11 @@ public class WorldBuilder {
 	
 	private WorldBuilder createRegions(){
 		regions = new int[width][height][depth];
-		
 		for (int z = 0; z < depth; z++){
 			for (int x = 0; x < width; x++){
 				for (int y = 0; y < height; y++){
 					if (tiles[x][y][z] != Tile.WALL && regions[x][y][z] == 0){
 						int size = fillRegion(nextRegion++, x, y, z);
-						
 						if (size < 25)
 							removeRegion(nextRegion - 1, z);
 					}
@@ -198,28 +187,62 @@ public class WorldBuilder {
 		return this;
 	}
 	
-//	private WorldBuilder addMerchantLevel(int depth) {
-//		for(int x = 0; x < width; x++) {
-//			for(int y = 0; y < height; y++) {
-//				if(((x >= ((width/2)-5))&&(x <= ((width/2)+5)))&&((y <= ((height/2)-5))&&(y >= ((height/2)+5)))) {
-//					//tiles[x][y][depth] = Tile.FLOOR; //TODO goes infinite???????????
-//					System.out.println("floor");
-//				}else {
-//					//tiles[x][y][depth] = Tile.WALL;
-//					System.out.println("wall");
-//				}
-//			}
-//		}
-//		return this;
-//	}
+	private Tile[][] generateDepthBlueprint(String type){
+		Tile[][] blueprint = new Tile[width][height];
+		
+		switch(type) {
+		case "merchant":
+			int lowerX = (width/2)-5;
+			int lowerY = (height/2)-5;
+			int upperX = (width/2)+5;
+			int upperY = (height/2)+5;
+			System.out.println("Initialising merchant blueprint");
+			for(int x = 0; x < width; x++) {
+				for(int y = 0; y < height; y++) {
+					blueprint[x][y] = Tile.WALL;
+				}
+			}
+			System.out.println("Generating merchant blueprint");
+			for(int x = lowerX; x < upperX; x++) {
+				for(int y = lowerY; x < upperY; y++) {
+					blueprint[x][y] = Tile.FLOOR;
+				}
+			}
+			
+			
+			
+			
+			
+			break;
+		default: break;
+		}
+		
+		
+		
+		
+		
+		return blueprint;
+	}
+	
+	private WorldBuilder addCustomDepthGeneration(int depth, Tile[][] blueprint) {
+		System.out.println("Applying merchant blueprint");
+		for(int x = 0; x < width; x++) {
+			for(int y = 0; y < height; y++) {
+				tiles[x][y][depth] = blueprint[x][y];
+			}
+		}
+		System.out.println(String.format("Merchant blueprint applied to depth: %d", depth));
+		return this;
+	}
 	
 	
 	public WorldBuilder generateWorld() {
 		return randomiseTiles()
 				.smooth(9)
+				//
+				.addCustomDepthGeneration(1, generateDepthBlueprint("merchant"))
+				//
 				.createRegions()
-				//temp
-				//.addMerchantLevel(1)
 				.connectRegions()
 				.addExitStairs();
 				
