@@ -142,8 +142,12 @@ public class MerchantFloor extends Blueprint {
 		);
 		// merchant -> stairs teleporter
 		// TODO: Smarter handling for overlapping teleporters (i.e. shunt one over a bit to fit?)
-		// For now, we just don't add it if it overlaps
-		if (!teleporters.containsKey(new Point(returnX, returnY, depth))) {
+		if (
+			// For now, we just don't add it if it overlaps another teleporter
+			!teleporters.containsKey(new Point(returnX, returnY, depth))
+			// or if it overlaps the stairs
+			&& builder.getTile(returnX, returnY, depth) != Tile.STAIRS_DOWN
+		) {
 			teleporters.put(
 				new Point(returnX, returnY, depth),
 				new Point(centerX, centerY + 1, depth)
