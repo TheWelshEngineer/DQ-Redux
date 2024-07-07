@@ -6,6 +6,7 @@ import java.util.List;
 
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Worldgen.Blueprint;
+import RogueLike.Main.Worldgen.Blueprints.CaveFloor;
 import RogueLike.Main.Worldgen.Blueprints.MerchantFloor;
 
 public class WorldBuilder {
@@ -41,54 +42,6 @@ public class WorldBuilder {
 		blueprint.onAdd();
 	}
 
-	private WorldBuilder randomiseTiles() {
-		System.out.println("Randomising inital generation");
-		for(int x = 0; x < width; x++) {
-			for(int y = 0; y < height; y++) {
-				for(int z = 0; z < depth; z++) {
-					tiles[x][y][z] = Math.random() < 0.5 ? Tile.FLOOR : Tile.WALL;
-					
-				}
-				
-			}
-		}
-		System.out.println("Initial generation randomised");
-		return this;
-	}
-	
-	private WorldBuilder smooth(int times) {
-		System.out.println("Smoothing generation");
-		Tile[][][] tiles2 = new Tile[width][height][depth];
-		for (int time = 0; time < times; time++) {
-
-			for (int x = 0; x < width; x++) {
-				for (int y = 0; y < height; y++) {
-					for (int z = 0; z < depth; z++) {
-						int floors = 0;
-						int rocks = 0;
-						for (int ox = -1; ox < 2; ox++) {
-							for (int oy = -1; oy < 2; oy++) {
-								if (x + ox < 0 || x + ox >= width || y + oy < 0 || y + oy >= height) {
-									continue;
-								}
-								if (tiles[x + ox][y + oy][z] == Tile.FLOOR) {
-									floors++;
-								}
-								else {
-									rocks++;
-								}	
-							}
-						}
-						tiles2[x][y][z] = floors >= rocks ? Tile.FLOOR : Tile.WALL;
-					}
-				}
-			}
-			tiles = tiles2;
-		}
-		System.out.println("Generation smoothed");
-		return this;
-	}
-	
 	private WorldBuilder createRegions(){
 		System.out.println("Creating regions");
 		regions = new int[width][height][depth];
@@ -230,24 +183,17 @@ public class WorldBuilder {
 		}
 	}
 
-	private boolean isInBounds(int x, int y) {
+	public boolean isInBounds(int x, int y) {
 		return x >= 0 && x < width && y >= 0 && y < height;
-	}
-	
-	private WorldBuilder addCustomDepthGeneration(int depth, Tile[][] blueprint) {
-		System.out.println("Applying merchant blueprint");
-		for(int x = 0; x < width; x++) {
-			for(int y = 0; y < height; y++) {
-				tiles[x][y][depth] = blueprint[x][y];
-			}
-		}
-		specialDepths.add(depth);
-		System.out.println(String.format("Merchant blueprint applied to depth: %d", depth));
-		return this;
 	}
 
 	private WorldBuilder addAllBlueprints() {
-		addBlueprint(new MerchantFloor(this, 1));
+		for (int z=0; z<depth; z++) {
+			switch(z) {
+				case 1: addBlueprint(new MerchantFloor(this, 1)); break;
+				default: addBlueprint(new CaveFloor(this, z)); break;
+			}
+		}
 		return this;
 	}
 
@@ -269,8 +215,6 @@ public class WorldBuilder {
 	public WorldBuilder generateWorld() {
 		System.out.println("Generating world");
 		return addAllBlueprints()
-				.randomiseTiles()
-				.smooth(9)
 				.blueprintsGenerateTiles()
 				.blueprintsPostGenerateTiles()
 				.createRegions()

@@ -57,5 +57,8 @@ public class MerchantFloor extends Blueprint {
 		builder.setTile(lowerX, lowerY, depth-1, Tile.STAIRS_DOWN);
 	}
 
+	@Override
+	public void onPostRegionConnection() {}
+
 
 }

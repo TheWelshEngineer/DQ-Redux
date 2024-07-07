@@ -9,9 +9,9 @@ public abstract class Blueprint {
 	public Blueprint(WorldBuilder builder) {
 		this.builder = builder;
 	}
-
-	public void onAdd() {}
-	public void onTileGeneration() {}
-	public void onPostTileGeneration() {}
-	public void onPostRegionConnection() {}
+;
+	public abstract void onAdd();
+	public abstract void onTileGeneration();
+	public abstract void onPostTileGeneration();
+	public abstract void onPostRegionConnection();
 }
