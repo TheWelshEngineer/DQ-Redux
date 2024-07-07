@@ -319,6 +319,9 @@ public class GameplayScreen implements Screen{
 		factory.setUpRingIndex(player);
 		factory.setUpScrollIndex(player);
 		for(int z = 0; z < world.depth(); z++) {
+			if (world.specialDepths().contains(z)) {
+				continue;  // no generation on special depths
+			}
 			for(int i = 0; i < 20; i++) { // 20
 				factory.creatureFactory.newMarker(z, player, true);
 			}
@@ -353,6 +356,10 @@ public class GameplayScreen implements Screen{
 	
 	private void createItems(ObjectFactory factory) {
 		for(int z = 0; z < world.depth(); z++) {
+			if (world.specialDepths().contains(z)) {
+				continue;  // no generation on special depths
+			}
+
 			for(int i = 0; i < world.width() * world.height() / 25; i++) {
 				factory.itemFactory.newRock(z, 1);
 			}

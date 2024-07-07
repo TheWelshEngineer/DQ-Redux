@@ -37,13 +37,16 @@ public class World {
 		return depth;
 	}
 
+	private final List<Integer> specialDepths;
+	public List<Integer> specialDepths() {return specialDepths;}
+
 	private int turnNumber;
 	public int turnNumber() {return turnNumber; }
 	
-	public World(Tile[][][] tiles2) {
-		this.tiles = tiles2;
-		this.width = tiles2.length;
-		this.height = tiles2[0].length;
+	public World(Tile[][][] tiles, List<Integer> specialDepths) {
+		this.tiles = tiles;
+		this.width = tiles.length;
+		this.height = tiles[0].length;
 		this.depth = tiles[0][0].length;
 		this.creatures = new ArrayList<Creature>();
 		this.items = new Item[width][height][depth];
@@ -53,7 +56,7 @@ public class World {
 		this.gastiles = new Tile[width][height][depth];
 		//
 		this.particles = new Particle[width][height][depth];
-		
+		this.specialDepths = specialDepths;
 	}
 	
 	public Tile tile(int x, int y, int z) {
