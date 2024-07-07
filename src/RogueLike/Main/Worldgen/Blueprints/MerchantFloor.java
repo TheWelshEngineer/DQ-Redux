@@ -1,13 +1,14 @@
 package RogueLike.Main.Worldgen.Blueprints;
 
+import RogueLike.Main.AoE.Line;
 import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Entities.Teleporter;
 import RogueLike.Main.Tile;
+import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Worldgen.Blueprint;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class MerchantFloor extends Blueprint {
 	private final int depth;
@@ -15,6 +16,10 @@ public class MerchantFloor extends Blueprint {
 	private final int lowerY;
 	private final int upperX;
 	private final int upperY;
+
+	private final HashMap<Point, Point> teleporters = new HashMap<>();
+	private final int roomCenterX;
+	private final int roomCenterY;
 
 	public MerchantFloor(WorldBuilder builder, int depth) {
 		super(builder);
@@ -24,6 +29,8 @@ public class MerchantFloor extends Blueprint {
 		this.lowerY = (builder.height()/2)-5;
 		this.upperX = (builder.width()/2)+5;
 		this.upperY = (builder.height()/2)+5;
+		this.roomCenterX = (builder.width()/2);
+		this.roomCenterY = (builder.height()/2);
 	}
 
 	private boolean isAboveMerchantRoom(int x, int y, int margin) {
@@ -89,7 +96,7 @@ public class MerchantFloor extends Blueprint {
 
 	private void generateStairsUpRoom(int centerX, int centerY) {
 		// Carve out floor area
-		System.out.printf("Stairs up generated at (%d, %d) %n", centerX, centerY);
+		System.out.printf("Generating stairs room at (%d, %d, %d) %n", centerX, centerY, depth);
 		for (int dx = -1; dx <= 1; dx++) {
 			for (int dy = -1; dy <= 3; dy ++) {
 				builder.setTile(centerX + dx, centerY + dy, depth, Tile.FLOOR);
@@ -98,10 +105,62 @@ public class MerchantFloor extends Blueprint {
 		// Add the stairs
 		builder.setTile(centerX, centerY, depth, Tile.STAIRS_UP);
 		builder.setTile(centerX, centerY, depth-1, Tile.STAIRS_DOWN);
+
+		// Add the teleporter
+		// TODO: this is a Janky usage of Line - maybe have this be a dedicated utility function?
+		// Find the closest point in the central room to the stairs room
+		Line line = new Line(centerX, centerY, roomCenterX, roomCenterY);
+		int targetX = -1;
+		int targetY = -1;
+		for (Point point: line) {
+			if (isAboveMerchantRoom(point.x, point.y, -1)) {
+				targetX = point.x;
+				targetY = point.y;
+				break;
+			}
+		}
+		if (targetX == -1 ) {
+			throw new IllegalStateException("No point was in the room!");
+		}
+		int returnX = -1;
+		int returnY = -1;
+		for (Point point: line) {
+			if (isAboveMerchantRoom(point.x, point.y, 0)) {
+				returnX = point.x;
+				returnY = point.y;
+				break;
+			}
+		}
+		if (returnX == -1 ) {
+			throw new IllegalStateException("No point was in the room!");
+		}
+
+		// stairs -> merchant teleporter
+		teleporters.put(
+			new Point(centerX, centerY + 2, depth),
+			new Point(targetX, targetY, depth)
+		);
+		// merchant -> stairs teleporter
+		// TODO: Smarter handling for overlapping teleporters (i.e. shunt one over a bit to fit?)
+		// For now, we just don't add it if it overlaps
+		if (!teleporters.containsKey(new Point(returnX, returnY, depth))) {
+			teleporters.put(
+				new Point(returnX, returnY, depth),
+				new Point(centerX, centerY + 1, depth)
+			);
+		}
 	}
 
 	@Override
 	public void onPostTileGeneration() {}
 
+	public void onBuildWorld(World world) {
+		teleporters.forEach((source, target) -> {
+			System.out.printf("Adding teleporter from %s to %s%n", source, target);
+			world.forceAdd(
+				new Teleporter(source.x, source.y, depth, target.x, target.y)
+			);
+		});
+	}
 
 }

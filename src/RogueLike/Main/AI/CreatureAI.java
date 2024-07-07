@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import RogueLike.Main.Effect;
+import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.LevelUpController;
 import RogueLike.Main.Path;
@@ -119,6 +120,11 @@ public class CreatureAI {
 				creature.x = x;
 				creature.y = y;
 				creature.z = z;
+
+				Entity entity = world.entity(x, y, z);
+				if (entity != null) {
+					entity.onSteppedOnBy(creature);
+				}
 			}
 			
 		}

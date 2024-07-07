@@ -34,7 +34,9 @@ public class WorldBuilder {
 	public void markDepthAsSpecial(int depth) {specialDepths.add(depth);}
 
 	public World build() {
-		return new World(tiles, specialDepths);
+		World world = new World(tiles, specialDepths);
+		blueprints.forEach(bp -> bp.onBuildWorld(world));
+		return world;
 	}
 
 	private void addBlueprint(Blueprint blueprint) {

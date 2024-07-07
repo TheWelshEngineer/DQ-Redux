@@ -1,6 +1,7 @@
 package RogueLike.Main.Worldgen.Blueprints;
 
 import RogueLike.Main.Tile;
+import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Worldgen.Blueprint;
 
@@ -71,5 +72,10 @@ public class CaveFloor extends Blueprint {
 	@Override
 	public void onPostRegionConnection() {
 
+	}
+
+	@Override
+	public void onBuildWorld(World world) {
+		// TODO: maybe move creature/item generation into here??
 	}
 }

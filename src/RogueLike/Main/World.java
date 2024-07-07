@@ -8,6 +8,7 @@ import java.util.List;
 
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.Items.Item;
 
 public class World {
@@ -19,6 +20,7 @@ public class World {
 	//
 	private Item[][][] items;
 	public List<Creature> creatures;
+	public List<Entity> entities;
 	//
 	private Particle[][][] particles;
 	
@@ -48,7 +50,8 @@ public class World {
 		this.width = tiles.length;
 		this.height = tiles[0].length;
 		this.depth = tiles[0][0].length;
-		this.creatures = new ArrayList<Creature>();
+		this.creatures = new ArrayList<>();
+		this.entities = new ArrayList<>();
 		this.items = new Item[width][height][depth];
 		//
 		this.subtiles = new Tile[width][height][depth];
@@ -85,7 +88,6 @@ public class World {
 	
 	public Item item(int x, int y, int z) {
 		return items[x][y][z];
-		
 	}
 	
 	public Particle particle(int x, int y, int z) {
@@ -102,6 +104,10 @@ public class World {
 		}
 		if(item(x,y,z) != null) {
 			return item(x,y,z).glyph();
+		}
+		Entity entity = entity(x,y,z);
+		if (entity != null) {
+			return entity.glyph();
 		}
 		if(subtile(x,y,z) != null) {
 			return subtile(x,y,z).glyph();
@@ -217,7 +223,7 @@ public class World {
 			//e.printStackTrace();
 		}
 	}
-	
+
 	public Creature creature(int x, int y, int z){
 		for (Creature c : creatures){
 			if (c.x == x && c.y == y && c.z == z)
@@ -225,7 +231,15 @@ public class World {
 		}
 		return null;
 	}
-	
+
+	public Entity entity(int x, int y, int z){
+		for (Entity e : entities){
+			if (e.x == x && e.y == y && e.z == z)
+				return e;
+		}
+		return null;
+	}
+
 	public void addAtEmptyLocation(Creature creature, int z){
 		int x;
 		int y;
@@ -253,7 +267,7 @@ public class World {
 		} 
 		//|| !tile(x,y,z).isStairs() BUGGED
 		while (!tile(x,y,z).isStairsExit());
-		
+
 		creature.x = x;
 		creature.y = y;
 		creature.z = z;
@@ -342,6 +356,10 @@ public class World {
 			}
 		}
 		return false;
+	}
+
+	public void forceAdd(Entity entity) {
+		entities.add(entity);
 	}
 	
 	public void setParticleAtLocation(Particle particle, int x, int y, int z) {
