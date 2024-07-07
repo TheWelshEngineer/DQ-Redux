@@ -73,7 +73,7 @@ public abstract class TargetBasedScreen implements Screen{
 				if(player.creature(player.x()+x, player.y()+y, player.z) != null) {
 					char c = player.creature(player.x()+x, player.y()+y, player.z).glyph();
 					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightRed);
-				}else if(player.item(player.x()+x, player.y()+y, player.z) != null && !player.item(player.x()+x, player.y()+y, player.z).isTrap()) {
+				}else if(player.item(player.x()+x, player.y()+y, player.z) != null) {
 					char c = player.item(player.x()+x, player.y()+y, player.z).glyph();
 					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightRed);
 				}else{
@@ -87,7 +87,7 @@ public abstract class TargetBasedScreen implements Screen{
 				if(player.creature(dx+fx, dy+fy, player.z) != null) {
 					char c = player.creature(dx+fx, dy+fy, player.z).glyph();
 					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightCyan);
-				}else if(player.item(dx+fx, dy+fy, player.z) != null && !player.item(dx+fx, dy+fy, player.z).isTrap()) {
+				}else if(player.item(dx+fx, dy+fy, player.z) != null) {
 					char c = player.item(dx+fx, dy+fy, player.z).glyph();
 					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightCyan);
 				}else{

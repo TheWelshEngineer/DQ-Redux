@@ -1,10 +1,8 @@
 package RogueLike.Main.Entities;
 
-import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Factories.ParticleFactory;
-import RogueLike.Main.Particle;
 import RogueLike.Main.World;
 
 import java.awt.*;
@@ -13,8 +11,8 @@ public class Teleporter extends Entity {
 	public final int targetX;
 	public final int targetY;
 
-	public Teleporter(int x, int y, int z, World world, int targetX, int targetY) {
-		super(x, y, z, world);
+	public Teleporter(World world, int x, int y, int z, int targetX, int targetY) {
+		super(world, x, y, z);
 		this.targetX = targetX;
 		this.targetY = targetY;
 	}
@@ -27,6 +25,11 @@ public class Teleporter extends Entity {
 	@Override
 	public Color color() {
 		return ExtendedAsciiPanel.magenta;
+	}
+
+	@Override
+	public String name() {
+		return "teleporter";
 	}
 
 	@Override

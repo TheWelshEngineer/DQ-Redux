@@ -39,6 +39,9 @@ public class World {
 		return depth;
 	}
 
+	private Creature player;
+	public Creature player() {return player;}
+
 	private final List<Integer> specialDepths;
 	public List<Integer> specialDepths() {return specialDepths;}
 
@@ -260,22 +263,25 @@ public class World {
 		creature.z = z;
 		creatures.add(creature);
 	}
-	
-	public void addAtSpawnLocation(Creature creature, int z){
-		int x;
-		int y;
-		
-		do {
-			x = (int)(Math.random() * width);
-			y = (int)(Math.random() * height);
-		} 
-		//|| !tile(x,y,z).isStairs() BUGGED
-		while (!tile(x,y,z).isStairsExit());
 
-		creature.x = x;
-		creature.y = y;
-		creature.z = z;
-		creatures.add(creature);
+	private Point getPlayerSpawnPoint() {
+		for (int x=0; x<width; x++) {
+			for (int y=0; y<height; y++) {
+				if (tiles[x][y][0].isStairsExit()) {
+					return new Point(x, y, 0);
+				}
+			}
+		}
+		throw new IllegalStateException("Spawn point not found.");
+	}
+
+	public void addPlayer(Creature player){
+		Point spawnpoint = getPlayerSpawnPoint();
+		player.x = spawnpoint.x;
+		player.y = spawnpoint.y;
+		player.z = spawnpoint.z;
+		creatures.add(player);
+		this.player = player;
 		System.out.println("Player spawned");
 	}
 	
@@ -288,15 +294,28 @@ public class World {
 		}
 		//creatures.add(pet);
 	}
-	
-	public void addAtEmptyLocation(Item item, int depth){
+
+	public Point getEmptyLocationForTrap(int depth) {
 		int x;
 		int y;
-		
+
 		do {
 			x = (int)(Math.random() * width);
 			y = (int)(Math.random() * height);
-		} 
+		}
+		while (tile(x,y,depth).noItems() || tile(x,y,depth).isBars() || creature(x,y,depth) != null || item(x,y,depth) != null);
+
+		return new Point(x, y, depth);
+	}
+
+	public void addAtEmptyLocation(Item item, int depth){
+		int x;
+		int y;
+
+		do {
+			x = (int)(Math.random() * width);
+			y = (int)(Math.random() * height);
+		}
 		//!tile(x,y,depth).isGround()
 		while (tile(x,y,depth).noItems() || tile(x,y,depth).isBars() || creature(x,y,depth) != null || item(x,y,depth) != null);
 		
@@ -326,27 +345,27 @@ public class World {
 		replacement.z = rz;
 		creatures.add(replacement);
 	}
-	
+
 	public boolean addAtEmptySpace(Item item, int x, int y, int z){
 		if (item == null)
 			return true;
-		
+
 		List<Point> points = new ArrayList<Point>();
 		List<Point> checked = new ArrayList<Point>();
-		
+
 		points.add(new Point(x, y, z));
-		
+
 		while (!points.isEmpty()){
 			Point p = points.remove(0);
 			checked.add(p);
-			
+
 			if (!tile(p.x, p.y, p.z).isGround())
 				continue;
 			//if (tile(p.x, p.y, p.z).isStairs())
-				//continue;
+			//continue;
 			//if (tile(p.x, p.y, p.z).isGrass())
-				//continue;
-				
+			//continue;
+
 			if (items[p.x][p.y][p.z] == null && !tile(p.x, p.y, p.z).isStairs() && !tile(p.x, p.y, p.z).noItems()){
 				items[p.x][p.y][p.z] = item;
 				Creature c = this.creature(p.x, p.y, p.z);
@@ -362,7 +381,7 @@ public class World {
 		return false;
 	}
 
-	public void forceAdd(Entity entity) {
+	public void add(Entity entity) {
 		entities.add(entity);
 	}
 	
@@ -403,9 +422,13 @@ public class World {
             }
         }
 	}
-	
+
 	public void remove(Creature other) {
 		creatures.remove(other);
+	}
+
+	public void remove(Entity other) {
+		entities.remove(other);
 	}
 	
 	public void update() {

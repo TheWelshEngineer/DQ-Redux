@@ -2,7 +2,6 @@ package RogueLike.Main.Entities;
 
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.World;
 
 import java.awt.*;
@@ -16,8 +15,9 @@ public abstract class Entity {
 
 	public abstract char glyph();
 	public abstract Color color();
+	public abstract String name();
 
-	public Entity(int x, int y, int z, World world) {
+	public Entity(World world, int x, int y, int z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;

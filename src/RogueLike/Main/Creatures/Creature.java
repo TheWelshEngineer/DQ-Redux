@@ -9,6 +9,8 @@ import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AoE.Line;
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Damage.*;
+import RogueLike.Main.Entities.Entity;
+import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.Factories.EffectFactory;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
@@ -1997,7 +1999,7 @@ public class Creature implements Cloneable{
 
 	public void pickup() {
 		Item item = world.item(x, y, z);	
-		if((inventory.isFull() && !item.isGold()) || item == null || item.isTrap()) {
+		if((inventory.isFull() && !item.isGold()) || item == null) {
 			doAction("grab fruitlessly at the ground");
 		}else if(item.isGold()){
 			this.modifyGold(item.currentGoldValue());
@@ -3017,19 +3019,6 @@ public class Creature implements Cloneable{
 		if(isPlayer() == true) {
 			search(18, true);
 		}
-		Item trap = this.item(x, y, z);
-		if(trap != null && trap.isTrap() && !isFlying && !affectedBy(Effect.levitating)) {
-			if(this.perceptionLevel() >= 3) {
-				this.addEffect(trap.perceptionTrapEffect(this.ai().factory, trap.trapType()));
-				notify("You exploit the trap's mechanism to your benefit!");
-				world.remove(trap);
-			}else {
-				triggerTrap(trap);
-			}
-		}else {
-
-		}
-		
 	}
 	//jump
 	private void regenerateHealth() {
@@ -3307,7 +3296,6 @@ public class Creature implements Cloneable{
 
 	public void search(int successChance, boolean passive) {
 		int searchRadius = (int)(visionRadius / 3);
-		int failure = 0;
 		int success = 0;
 		int bonus = 0;
 		if(this.perceptionLevel() >= 1) {
@@ -3327,33 +3315,22 @@ public class Creature implements Cloneable{
 			for (int oy = -searchRadius; oy < searchRadius+1; oy++){
 				int nx = x + ox;
 				int ny = y + oy;
-				if (ox == 0 && oy == 0 || item(nx, ny, z) != null) {
-					if(item(nx, ny, z) != null) {
-						if(item(nx, ny, z).isTrap() && !item(nx, ny, z).isTrapFound()) {
-							if(this.dexterityRoll()+bonus >= successChance) {
-								item(nx, ny, z).setColor(item(nx, ny, z).defaultColor());
-								item(nx, ny, z).changeGlyph(item(nx, ny, z).defaultGlyph());
-								item(nx, ny, z).setIsTrapFound(true);
-								notify("You spotted a "+item(nx, ny, z).name()+"!");
-								failure = 0;
-								success++;
-							}else {
-								failure++;
-							}
-						}else {
-							
-						}
-					}else {
-						failure++;
+				Entity entity = world.entity(nx, ny, z);
+
+				if (entity instanceof Trap) {
+					Trap trap = (Trap) entity;
+					if(this.dexterityRoll()+bonus >= successChance) {
+						trap.reveal();
+						notify("You spotted a "+trap.name()+"!");
+						success++;
 					}
 				}
-
 			}
 		}
-		if(passive == false) {
+		if(!passive) {
 			modifyFood(-10);
 		}
-		if(failure > 0 && success == 0 && passive == false) {
+		if(success == 0 && !passive) {
 			notify("You didn't spot anything.");
 		}
 	}

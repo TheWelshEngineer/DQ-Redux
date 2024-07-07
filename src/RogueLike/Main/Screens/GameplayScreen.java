@@ -5,7 +5,10 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Effect;
+import RogueLike.Main.Entities.Entity;
+import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Factories.ItemFactory;
 import RogueLike.Main.FieldOfView;
@@ -364,7 +367,8 @@ public class GameplayScreen implements Screen{
 				factory.itemFactory.newRock(z, 1);
 			}
 			for(int i = 0; i < 35; i++) {
-				factory.randomTrap(z, 1, player);
+				Point where = world.getEmptyLocationForTrap(z);
+				factory.createRandomTrap(where);
 			}
 			for(int i = 0; i < 6; i++) {//6
 				factory.randomFood(z, 1);
@@ -450,12 +454,10 @@ public class GameplayScreen implements Screen{
 		if(player.isReadingMagicMapping()) {
 			for(int x = 0; x < world.width(); x++) {
 				for(int y = 0; y < world.height(); y++) {
-					if(world.item(x, y, player.z) != null && world.item(x, y, player.z).isTrap()) {
-						world.item(x, y, player.z).setColor(world.item(x, y, player.z).defaultColor());
-						world.item(x, y, player.z).changeGlyph(world.item(x, y, player.z).defaultGlyph());
-						world.item(x, y, player.z).setIsTrapFound(true);
+					Entity entity = world.entity(x, y, player.z);
+					if (entity instanceof Trap) {
+						((Trap) entity).reveal();
 					}
-					
 				}
 			}
 		}
