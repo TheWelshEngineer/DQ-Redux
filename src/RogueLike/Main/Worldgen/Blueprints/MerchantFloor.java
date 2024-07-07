@@ -158,7 +158,7 @@ public class MerchantFloor extends Blueprint {
 		teleporters.forEach((source, target) -> {
 			System.out.printf("Adding teleporter from %s to %s%n", source, target);
 			world.forceAdd(
-				new Teleporter(source.x, source.y, depth, target.x, target.y)
+				new Teleporter(source.x, source.y, depth, world, target.x, target.y)
 			);
 		});
 	}

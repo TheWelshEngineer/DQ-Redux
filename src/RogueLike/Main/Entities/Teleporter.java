@@ -3,13 +3,16 @@ package RogueLike.Main.Entities;
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.Factories.ParticleFactory;
+import RogueLike.Main.Particle;
+import RogueLike.Main.World;
 
 public class Teleporter extends Entity {
 	public final int targetX;
 	public final int targetY;
 
-	public Teleporter(int x, int y, int z, int targetX, int targetY) {
-		super(x, y, z);
+	public Teleporter(int x, int y, int z, World world, int targetX, int targetY) {
+		super(x, y, z, world);
 		this.targetX = targetX;
 		this.targetY = targetY;
 	}
@@ -25,8 +28,11 @@ public class Teleporter extends Entity {
 			int mx = targetX - other.x;
 			int my = targetY - other.y;
 			other.moveBy(mx, my, 0, false);
-
 			other.notify("The world warps around you as you are teleported!");
+
+			ParticleFactory factory = new ParticleFactory();
+			world.setParticleAtLocation(factory.vortex(ExtendedAsciiPanel.white, 2), x, y, z);
+			world.setParticleAtLocation(factory.vortex(ExtendedAsciiPanel.white, 2), targetX, targetY, z);
 		}
 	}
 }
