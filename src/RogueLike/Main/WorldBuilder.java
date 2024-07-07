@@ -204,7 +204,7 @@ public class WorldBuilder {
 			}
 			System.out.println("Generating merchant blueprint");
 			for(int x = lowerX; x < upperX; x++) {
-				for(int y = lowerY; x < upperY; y++) {
+				for(int y = lowerY; y < upperY; y++) {
 					blueprint[x][y] = Tile.FLOOR;
 				}
 			}
