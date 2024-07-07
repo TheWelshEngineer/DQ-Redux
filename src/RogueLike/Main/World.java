@@ -255,6 +255,7 @@ public class World {
 		creature.y = y;
 		creature.z = z;
 		creatures.add(creature);
+		System.out.println("Player spawned");
 	}
 	
 	public void add(Creature pet) {

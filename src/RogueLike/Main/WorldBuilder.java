@@ -29,6 +29,7 @@ public class WorldBuilder {
 	}
 	
 	private WorldBuilder randomiseTiles() {
+		System.out.println("Randomising inital generation");
 		for(int x = 0; x < width; x++) {
 			for(int y = 0; y < height; y++) {
 				for(int z = 0; z < depth; z++) {
@@ -38,10 +39,12 @@ public class WorldBuilder {
 				
 			}
 		}
+		System.out.println("Initial generation randomised");
 		return this;
 	}
 	
 	private WorldBuilder smooth(int times) {
+		System.out.println("Smoothing generation");
 		Tile[][][] tiles2 = new Tile[width][height][depth];
 		for (int time = 0; time < times; time++) {
 
@@ -69,10 +72,12 @@ public class WorldBuilder {
 			}
 			tiles = tiles2;
 		}
+		System.out.println("Generation smoothed");
 		return this;
 	}
 	
 	private WorldBuilder createRegions(){
+		System.out.println("Creating regions");
 		regions = new int[width][height][depth];
 		for (int z = 0; z < depth; z++){
 			for (int x = 0; x < width; x++){
@@ -85,6 +90,7 @@ public class WorldBuilder {
 				}
 			}
 		}
+		System.out.println("Regions created");
 		return this;
 	}
 	
@@ -125,6 +131,7 @@ public class WorldBuilder {
 	}
 	
 	public WorldBuilder connectRegions(){
+		System.out.println("Connecting regions");
         for (int z = 0; z < depth-1; z++){
             connectRegionsDown(z);
         }
@@ -133,7 +140,7 @@ public class WorldBuilder {
 	
 	private void connectRegionsDown(int z) {
 		List<String> connected = new ArrayList<String>();
-		
+		System.out.println("Beginning to connect regions");
 		for(int x = 0; x < width; x++) {
 			for(int y = 0; y < height; y++) {
 				String region = regions[x][y][z] + "," + regions[x][y][z+1];
@@ -143,6 +150,7 @@ public class WorldBuilder {
 				}
 			}
 		}
+		System.out.println("Regions connected");
 	}
 	
 	private void connectRegionsDown(int z, int r1, int r2) {
@@ -175,6 +183,7 @@ public class WorldBuilder {
 	}
 	
 	private WorldBuilder addExitStairs() {
+		System.out.println("Adding exit stairs");
 		int x = -1;
 		int y = -1;
 		
@@ -184,6 +193,7 @@ public class WorldBuilder {
 		}while(tiles[x][y][0] != Tile.FLOOR);
 													
 		tiles[x][y][0] = Tile.STAIRS_EXIT;
+		System.out.println("Exit stairs added");
 		return this;
 	}
 	
@@ -237,6 +247,7 @@ public class WorldBuilder {
 	
 	
 	public WorldBuilder generateWorld() {
+		System.out.println("Generating world");
 		return randomiseTiles()
 				.smooth(9)
 				//
