@@ -167,6 +167,47 @@ public class WorldBuilder {
 		return this;
 	}
 
+	/**
+	 * Change all bars tiles to the appropriate one, depending on where other adjacent bars tiles are.
+	 */
+	private WorldBuilder rectifyBars() {
+		for (int x=0; x<width; x++) {
+			for (int y=0; y<height; y++) {
+				for (int z=0; z<depth; z++) {
+					if (tiles[x][y][z].isBars()) {
+						boolean barsN = isInBounds(x, y+1) && tiles[x][y+1][z].isBars();
+						boolean barsS = isInBounds(x, y-1) && tiles[x][y-1][z].isBars();
+						boolean barsE = isInBounds(x-1, y) && tiles[x-1][y][z].isBars();
+						boolean barsW = isInBounds(x+1, y) && tiles[x+1][y][z].isBars();
+
+						if (barsN && barsS && !barsW && !barsE) {
+							tiles[x][y][z] = Tile.BARS_VERTICAL;
+						}
+						else if (barsW && barsE && !barsN && !barsS) {
+							tiles[x][y][z] = Tile.BARS_HORIZONTAL;
+						}
+						else if (barsN && barsE && !barsW && !barsS) {
+							tiles[x][y][z] = Tile.BARS_NE;
+						}
+						else if (barsN && barsW && !barsE && !barsS) {
+							tiles[x][y][z] = Tile.BARS_NW;
+						}
+						else if (barsS && barsE && !barsW && !barsN) {
+							tiles[x][y][z] = Tile.BARS_SE;
+						}
+						else if (barsS && barsW && !barsE && !barsN) {
+							tiles[x][y][z] = Tile.BARS_SW;
+						}
+						else {
+							tiles[x][y][z] = Tile.BARS_CROSS;
+						}
+					}
+				}
+			}
+		}
+		return this;
+	}
+
 	/***
 	 * Set tiles in a circle of radius r around a given center point.
 	 * @param tile The tile type to fill the circle with.
@@ -222,8 +263,8 @@ public class WorldBuilder {
 				.createRegions()
 				.connectRegions()
 				.blueprintsPostRegionConnection()
-				.addExitStairs();
-				
+				.addExitStairs()
+				.rectifyBars();
 	}
 
 

@@ -25,10 +25,11 @@ public class MerchantFloor extends Blueprint {
 		super(builder);
 		this.depth=depth;
 
-		this.lowerX = (builder.width()/2)-5;
-		this.lowerY = (builder.height()/2)-5;
-		this.upperX = (builder.width()/2)+5;
-		this.upperY = (builder.height()/2)+5;
+		int mainRoomRadius = 5;
+		this.lowerX = (builder.width()/2)-mainRoomRadius;
+		this.lowerY = (builder.height()/2)-mainRoomRadius;
+		this.upperX = (builder.width()/2)+mainRoomRadius;
+		this.upperY = (builder.height()/2)+mainRoomRadius;
 		this.roomCenterX = (builder.width()/2);
 		this.roomCenterY = (builder.height()/2);
 	}
@@ -53,6 +54,13 @@ public class MerchantFloor extends Blueprint {
 		for(int x = 0; x < builder.width(); x++) {
 			for(int y = 0; y < builder.height(); y++) {
 				builder.setTile(x, y, depth, Tile.WALL);
+			}
+		}
+
+		// Create bars around the central room
+		for(int x = lowerX-1; x < upperX+1; x++) {
+			for(int y = lowerY-1; y < upperY+1; y++) {
+				builder.setTile(x, y, depth, Tile.BARS_CROSS);
 			}
 		}
 
@@ -95,8 +103,14 @@ public class MerchantFloor extends Blueprint {
 	}
 
 	private void generateStairsUpRoom(int centerX, int centerY) {
-		// Carve out floor area
 		System.out.printf("Generating stairs room at (%d, %d, %d) %n", centerX, centerY, depth);
+		// Set bars around room area before carving out floor
+		for (int dx = -2; dx <= 2; dx++) {
+			for (int dy = -2; dy <= 4; dy ++) {
+				builder.setTile(centerX + dx, centerY + dy, depth, Tile.BARS_CROSS);
+			}
+		}
+		// Carve out floor area
 		for (int dx = -1; dx <= 1; dx++) {
 			for (int dy = -1; dy <= 3; dy ++) {
 				builder.setTile(centerX + dx, centerY + dy, depth, Tile.FLOOR);

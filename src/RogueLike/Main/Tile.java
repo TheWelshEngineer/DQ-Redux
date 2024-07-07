@@ -12,6 +12,7 @@ public enum Tile {
 	STAIRS_EXIT((char)30, ExtendedAsciiPanel.orange, "A rough stone staircase that leads out of the caves."),
 	BARS_VERTICAL((char)186, ExtendedAsciiPanel.white, "A cage made of sturdy iron bars."),
 	BARS_HORIZONTAL((char)205, ExtendedAsciiPanel.white, "A cage made of sturdy iron bars."),
+	BARS_CROSS((char)206, ExtendedAsciiPanel.white, "A cage made of sturdy iron bars."),
 	BARS_DOOR((char)205, ExtendedAsciiPanel.brown, "A tough wooden door with a heavy lock."),
 	BARS_NW((char)201, ExtendedAsciiPanel.white, "A cage made of sturdy iron bars."),
 	BARS_SW((char)200, ExtendedAsciiPanel.white, "A cage made of sturdy iron bars."),
@@ -102,11 +103,11 @@ public enum Tile {
 	}
 	
 	public boolean noItems() {
-		return this == WALL || this == FIRE || this == GRASS_TALL || this == BOUNDS || this == BARS_VERTICAL || this == BARS_HORIZONTAL || this == BARS_NW || this == BARS_SW || this == BARS_NE || this == BARS_SE || this == BARS_DOOR || this == PIT || this == STAIRS_UP || this == STAIRS_DOWN || this == STAIRS_EXIT ;
+		return this == WALL || this == FIRE || this == GRASS_TALL || this == BOUNDS || this.isBars() || this == PIT || this == STAIRS_UP || this == STAIRS_DOWN || this == STAIRS_EXIT ;
 	}
 	
 	public boolean noWall() {
-		return this == FIRE || this == GRASS_TALL || this == BOUNDS || this == BARS_VERTICAL || this == BARS_HORIZONTAL || this == BARS_NW || this == BARS_SW || this == BARS_NE || this == BARS_SE || this == BARS_DOOR || this == PIT || this == STAIRS_UP || this == STAIRS_DOWN || this == STAIRS_EXIT;
+		return this == FIRE || this == GRASS_TALL || this == BOUNDS || this.isBars() || this == PIT || this == STAIRS_UP || this == STAIRS_DOWN || this == STAIRS_EXIT;
 	}
 	
 	public boolean isGround() {
@@ -118,7 +119,7 @@ public enum Tile {
 	}
 	
 	public boolean isBars() {
-		return this == BARS_VERTICAL || this == BARS_HORIZONTAL || this == BARS_NW || this == BARS_SW || this == BARS_NE || this == BARS_SE || this == BARS_DOOR;
+		return this == BARS_VERTICAL || this == BARS_HORIZONTAL || this == BARS_NW || this == BARS_SW || this == BARS_NE || this == BARS_SE || this == BARS_DOOR || this == BARS_CROSS;
 	}
 	
 	public boolean isBarsDoor() {
