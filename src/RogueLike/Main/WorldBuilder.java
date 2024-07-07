@@ -13,6 +13,7 @@ public class WorldBuilder {
 	private Tile[][][] tiles;
 	private int[][][] regions;
 	private int nextRegion;
+	private final List<Integer> specialDepths = new ArrayList<>();
 	
 	public WorldBuilder(int width, int height, int depth) {
 		this.width = width;
@@ -25,7 +26,7 @@ public class WorldBuilder {
 	}
 	
 	public World build() {
-		return new World(tiles);
+		return new World(tiles, specialDepths);
 	}
 	
 	private WorldBuilder randomiseTiles() {
@@ -231,6 +232,7 @@ public class WorldBuilder {
 				tiles[x][y][depth] = blueprint[x][y];
 			}
 		}
+		specialDepths.add(depth);
 		System.out.println(String.format("Merchant blueprint applied to depth: %d", depth));
 		return this;
 	}
