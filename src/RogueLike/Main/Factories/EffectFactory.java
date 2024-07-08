@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
+import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Particle;
@@ -163,7 +164,7 @@ public class EffectFactory {
 					if(p.x < 0 || p.y < 0 || p.x > creature.world().width() || p.y > creature.world().height()) {
 						continue;
 					}
-					if(creature.world().item(p.x, p.y, p.z) != null && creature.world().item(p.x, p.y, p.z).isTrap()) {
+					if (creature.world().entity(p.x, p.y, p.z) instanceof Trap) {
 						count++;
 					}
 				}

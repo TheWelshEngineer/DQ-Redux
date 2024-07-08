@@ -3,6 +3,8 @@ package RogueLike.Main.AI.FungusAI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Effect;
+import RogueLike.Main.Entities.Entity;
+import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
@@ -58,9 +60,9 @@ public class BloodFungusAI extends CreatureAI{
 			return;
 			
 		}
-		if(creature.item(x,y,creature.z) != null && creature.item(x,y,creature.z).isTrap()) {
+		// Don't spread onto traps
+		if (world.entity(x, y, creature.z) instanceof Trap) {
 			return;
-			
 		}
 		creature.doAction("spawn a child");		
 		Creature child = factory.creatureFactory.newBloodFungus(creature.z, player, true);

@@ -71,13 +71,13 @@ public class Point {
 				points.add(new Point(nx, ny, z));
 			}
 		}
-		
+
 		Collections.shuffle(points);
 		return points;
-		
-		
-		
 	}
 
-
+	@Override
+	public String toString() {
+		return String.format("Point(%d, %d, %d)", x, y, z);
+	}
 }

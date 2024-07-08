@@ -34,7 +34,6 @@ import RogueLike.Main.Creatures.Slimes.PinkSlime;
 import RogueLike.Main.Creatures.Slimes.PinkSlimeling;
 import RogueLike.Main.Creatures.Slimes.ThundercloudSlime;
 import RogueLike.Main.Creatures.Slimes.ThundercloudSlimeling;
-import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Utils.NotificationHistory;
@@ -214,7 +213,7 @@ public ModifierFactory modifierFactory;
 		
 		//
 		player.stackItems();
-		objectFactory.world.addAtSpawnLocation(player, 0);
+		objectFactory.world.addPlayer(player);
 		return player;
 	}
 	
