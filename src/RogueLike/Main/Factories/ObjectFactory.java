@@ -7,9 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Description;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
+import RogueLike.Main.Entities.Traps.*;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Tile;
@@ -1426,15 +1428,17 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomTrap(int depth, int addToWorld, Creature player) {
+	public void createRandomTrap(Point where) {
+		RogueLike.Main.Entities.Trap trap;
 		switch(ExtraMaths.diceRoll(1, 5)) {
-		case 1: return itemFactory.newLightningTrap(depth, addToWorld);
-		case 2: return itemFactory.newFrostbiteTrap(depth, addToWorld);
-		case 3: return itemFactory.newSummoningTrap(depth, addToWorld, player);
-		case 4: return itemFactory.newBlinkTrap(depth, addToWorld);
-		case 5: return itemFactory.newFireTrap(depth, addToWorld);
-		default: return itemFactory.newFireTrap(depth, addToWorld);
+			case 1: trap = new LightningTrap(where.x, where.y, where.z, world); break;
+			case 2: trap = new FrostbiteTrap(where.x, where.y, where.z, world); break;
+			case 3: trap = new SummoningTrap(where.x, where.y, where.z, world); break;
+			case 4: trap = new BlinkTrap(where.x, where.y, where.z, world); break;
+			case 5: trap = new FireTrap(where.x, where.y, where.z, world); break;
+			default: throw new IllegalArgumentException();
 		}
+		world.add(trap);
 	}
 	
 	public Item randomAmmunition(int depth, int addToWorld) {

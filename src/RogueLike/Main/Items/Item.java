@@ -818,23 +818,7 @@ public class Item implements Cloneable{
 		isInQuickslot5 = false;
 		isInQuickslot6 = false;
 	}
-	
-	private boolean isTrap;
-	public boolean isTrap() {
-		return isTrap;
-	}
-	public void setIsTrap(boolean value) {
-		isTrap = value;
-	}
-	
-	private boolean isTrapFound;
-	public boolean isTrapFound() {
-		return isTrapFound;
-	}
-	public void setIsTrapFound(boolean value) {
-		isTrapFound = value;
-	}
-	
+
 	private boolean isWand;
 	public boolean isWand() {
 		return isWand;
@@ -1049,25 +1033,6 @@ public class Item implements Cloneable{
 		}
 		
 		return details;
-	}
-	
-	private String trapType;
-	public String trapType() {
-		return trapType;
-	}
-	public void setTrapType(String type) {
-		trapType = type;
-	}
-	
-	public Effect perceptionTrapEffect(ObjectFactory factory, String type) {
-		switch(type) {
-		case Trap.fireTrap: return factory.effectFactory.magmaWard(10);
-		case Trap.frostbiteTrap: return factory.effectFactory.chillWard(10);
-		case Trap.lightningTrap: return factory.effectFactory.arcWard(10);
-		case Trap.blinkTrap: return factory.effectFactory.bounce();
-		case Trap.summoningTrap: return factory.effectFactory.invisible(10);
-		default: return factory.effectFactory.magmaWard(10);
-		}
 	}
 	
 	public Item(char glyph, Color color, String name, String appearance) {

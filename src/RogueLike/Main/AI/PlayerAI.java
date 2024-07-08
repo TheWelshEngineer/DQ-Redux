@@ -2,6 +2,7 @@ package RogueLike.Main.AI;
 
 import java.util.*;
 
+import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Tile;
 import RogueLike.Main.Utils.NotificationHistory;
@@ -96,6 +97,11 @@ public class PlayerAI extends CreatureAI{
 			creature.x = x;
 			creature.y = y;
 			creature.z = z;
+
+			Entity entity = world.entity(x, y, z);
+			if (entity != null) {
+				entity.onSteppedOnBy(creature);
+			}
 		}
 		else if(tile.isDiggable()) {
 			creature.dig(x, y, z);
