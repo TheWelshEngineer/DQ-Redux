@@ -158,7 +158,7 @@ public class ItemFactory {
 	
 	//Simple Weapons
 	public Item newClub(int depth, boolean addToWorld) {
-		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Club", null, Dice.d4, 10, 400);
+		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Club", null, Dice.d4, 25, 400);
 		item.setIsSimple(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
@@ -167,7 +167,7 @@ public class ItemFactory {
 	}
 	
 	public Item newDart(int depth, boolean addToWorld) {
-		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Dart", null, Dice.d1, Dice.d4, 10, 401);
+		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Dart", null, Dice.d1, Dice.d4, 25, 401);
 		item.setIsSimple(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
@@ -176,7 +176,7 @@ public class ItemFactory {
 	}
 	
 	public Item newQuarterstaff(int depth, boolean addToWorld) {
-		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Quarterstaff", null, Dice.d6, Dice.d8, 20, 402);
+		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Quarterstaff", null, Dice.d6, Dice.d8, 75, 402);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(12);
@@ -187,7 +187,7 @@ public class ItemFactory {
 	}
 	
 	public Item newSpear(int depth, boolean addToWorld) {
-		Item item = new ThrownVersatileWeapon(')', ExtendedAsciiPanel.brightWhite, "Spear", null, Dice.d4, Dice.d6, Dice.d8, 10, 403);
+		Item item = new ThrownVersatileWeapon(')', ExtendedAsciiPanel.brightWhite, "Spear", null, Dice.d4, Dice.d6, Dice.d8, 75, 403);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(12);
@@ -198,7 +198,7 @@ public class ItemFactory {
 	}
 	
 	public Item newGreatclub(int depth, boolean addToWorld) {
-		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatclub", null, Dice.d10, 20, 404);
+		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatclub", null, Dice.d10, 125, 404);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(14);
@@ -209,7 +209,7 @@ public class ItemFactory {
 	}
 	
 	public Item newThrowingAxe(int depth, boolean addToWorld) {
-		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Axe", null, Dice.d6, Dice.d8, 10, 405);
+		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Axe", null, Dice.d6, Dice.d8, 125, 405);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(14);
@@ -220,7 +220,7 @@ public class ItemFactory {
 	}
 	
 	public Item newMattock(int depth, boolean addToWorld) {
-		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mattock", null, Dice.d8, Dice.d10, 150, 406);
+		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mattock", null, Dice.d8, Dice.d10, 250, 406);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(16);
@@ -231,7 +231,7 @@ public class ItemFactory {
 	}
 	
 	public Item newMaul(int depth, boolean addToWorld) {
-		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Maul", null, Dice.d12, 20, 407);
+		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Maul", null, Dice.d12, 500, 407);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(18);
@@ -243,7 +243,7 @@ public class ItemFactory {
 	
 	//Martial Weapons
 	public Item newShortsword(int depth, boolean addToWorld) {
-		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Shortsword", null, Dice.d6, 10, 500);
+		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Shortsword", null, Dice.d6, 25, 500);
 		item.setIsMartial(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
@@ -251,7 +251,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newKnuckleduster(int depth, boolean addToWorld) {
-		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Knuckleduster", null, Dice.d4, 10, 501);
+		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Knuckleduster", null, Dice.d4, 25, 501);
 		item.setIsMartial(true);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
@@ -259,7 +259,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newMace(int depth, boolean addToWorld) {
-		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mace", null, Dice.d6, Dice.d8, 20, 502);
+		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mace", null, Dice.d6, Dice.d8, 75, 502);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(12);
@@ -269,7 +269,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newThrowingHammer(int depth, boolean addToWorld) {
-		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Hammer", null, Dice.d4, Dice.d6, 10, 503);
+		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Hammer", null, Dice.d4, Dice.d6, 75, 503);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(12);
@@ -279,7 +279,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newLongsword(int depth, boolean addToWorld) {
-		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Longsword", null, Dice.d8, 10, 504);
+		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Longsword", null, Dice.d8, 125, 504);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(14);
@@ -289,7 +289,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newHalberd(int depth, boolean addToWorld) {
-		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Halberd", null, Dice.d10, 20, 505);
+		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Halberd", null, Dice.d10, 125, 505);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(14);
@@ -299,7 +299,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newWarhammer(int depth, boolean addToWorld) {
-		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Warhammer", null, Dice.d8, Dice.d10, 20, 506);
+		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Warhammer", null, Dice.d8, Dice.d10, 125, 506);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(14);
@@ -309,7 +309,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newJavelin(int depth, boolean addToWorld) {
-		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Javelin", null, Dice.d6, Dice.d10, 10, 507);
+		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Javelin", null, Dice.d6, Dice.d10, 250, 507);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(16);
@@ -319,7 +319,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newGreatsword(int depth, boolean addToWorld) {
-		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatsword", null, Dice.d12, 20, 508);
+		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatsword", null, Dice.d12, 500, 508);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(18);
@@ -331,21 +331,21 @@ public class ItemFactory {
 	
 	//Finesse Weapons
 	public Item newDagger(int depth, boolean addToWorld) {
-		Item item = new ThrownFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Dagger", null, Dice.d4, Dice.d4, 20, 600);
+		Item item = new ThrownFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Dagger", null, Dice.d4, Dice.d4, 25, 600);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newRapier(int depth, boolean addToWorld) {
-		Item item = new BasicFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Rapier", null, Dice.d6, 20, 601);
+		Item item = new BasicFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Rapier", null, Dice.d6, 25, 601);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newFalchion(int depth, boolean addToWorld) {
-		Item item = new VersatileFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Falchion", null, Dice.d6, Dice.d8, 20, 602);
+		Item item = new VersatileFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Falchion", null, Dice.d6, Dice.d8, 75, 602);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(12);
 		if(addToWorld) {
@@ -354,7 +354,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newBoomerang(int depth, boolean addToWorld) {
-		Item item = new ThrownFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Boomerang", null, Dice.d4, Dice.d8, 20, 603);
+		Item item = new ThrownFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Boomerang", null, Dice.d4, Dice.d8, 125, 603);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(14);
 		if(addToWorld) {
@@ -363,7 +363,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newGlaive(int depth, boolean addToWorld) {
-		Item item = new TwoHandedFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Glaive", null, Dice.d10, 20, 604);
+		Item item = new TwoHandedFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Glaive", null, Dice.d10, 125, 604);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(14);
 		if(addToWorld) {
@@ -372,7 +372,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newFlamberge(int depth, boolean addToWorld) {
-		Item item = new VersatileFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Flamberge", null, Dice.d8, Dice.d10, 20, 605);
+		Item item = new VersatileFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Flamberge", null, Dice.d8, Dice.d10, 250, 605);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(16);
 		if(addToWorld) {
@@ -381,7 +381,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newPairedBlades(int depth, boolean addToWorld) {
-		Item item = new TwoHandedFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Paired Blades", null, Dice.d6x2, 20, 606);
+		Item item = new TwoHandedFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Paired Blades", null, Dice.d6x2, 500, 606);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(18);
 		if(addToWorld) {
@@ -392,14 +392,14 @@ public class ItemFactory {
 	
 	//Ranged Weapons
 	public Item newShortbow(int depth, boolean addToWorld) {
-		Item item = new ArrowsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Shortbow", null, Dice.d6, 250, 700);
+		Item item = new ArrowsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Shortbow", null, Dice.d6, 25, 700);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLongbow(int depth, boolean addToWorld) {
-		Item item = new ArrowsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Longbow", null, Dice.d8, 500, 701);
+		Item item = new ArrowsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Longbow", null, Dice.d8, 75, 701);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(12);
 		if(addToWorld) {
@@ -408,7 +408,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newLightCrossbow(int depth, boolean addToWorld) {
-		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Light Crossbow", null, Dice.d8, 250, 702);
+		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Light Crossbow", null, Dice.d8, 75, 702);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(12);
 		if(addToWorld) {
@@ -417,7 +417,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newHeavyCrossbow(int depth, boolean addToWorld) {
-		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Heavy Crossbow", null, Dice.d10, 500, 703);
+		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Heavy Crossbow", null, Dice.d10, 125, 703);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(14);
 		if(addToWorld) {
@@ -426,7 +426,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newHandCrossbow(int depth, boolean addToWorld) {
-		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Hand Crossbow", null, Dice.d4x2, 500, 704);
+		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Hand Crossbow", null, Dice.d4x2, 250, 704);
 		item.setIsTwoHanded(false);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(16);
@@ -436,7 +436,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newPistol(int depth, boolean addToWorld) {
-		Item item = new PowderRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Flintlock Pistol", null, Dice.d10, 750, 705);
+		Item item = new PowderRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Flintlock Pistol", null, Dice.d10, 250, 705);
 		item.setIsTwoHanded(false);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(16);
@@ -446,7 +446,7 @@ public class ItemFactory {
 		return item;
 	}
 	public Item newCaliver(int depth, boolean addToWorld) {
-		Item item = new PowderRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Flintlock Caliver", null, Dice.d12, 1000, 706);
+		Item item = new PowderRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Flintlock Caliver", null, Dice.d12, 500, 706);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(18);
 		if(addToWorld) {
@@ -457,84 +457,84 @@ public class ItemFactory {
 	
 	//Armor
 	public Item newPaddedClothArmor(int depth, boolean addToWorld) {
-		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Padded Cloth Armor", null, 11, 50, 800);
+		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Padded Cloth Armor", null, 11, 25, 800);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLeatherArmor(int depth, boolean addToWorld) {
-		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Leather Armor", null, 11, 100, 801);
+		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Leather Armor", null, 11, 25, 801);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newStuddedLeatherArmor(int depth, boolean addToWorld) {
-		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Studded Leather Armor", null, 12, 450, 802);
+		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Studded Leather Armor", null, 12, 75, 802);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newHideArmor(int depth, boolean addToWorld) {
-		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Hide Armor", null, 12, 100, 803);
+		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Hide Armor", null, 12, 75, 803);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newChainmailArmor(int depth, boolean addToWorld) {
-		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Chainmail Tunic", null, 13, 500, 804);
+		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Chainmail Tunic", null, 13, 125, 804);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newScaleArmor(int depth, boolean addToWorld) {
-		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Scale Mail", null, 14, 500, 805);
+		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Scale Mail", null, 14, 125, 805);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newBreastplate(int depth, boolean addToWorld) {
-		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Breastplate", null, 14, 800, 806);
+		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Breastplate", null, 14, 125, 806);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newHalfPlate(int depth, boolean addToWorld) {
-		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Half-Plate Armor", null, 15, 1500, 807);
+		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Half-Plate Armor", null, 15, 250, 807);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newPlateArmor(int depth, boolean addToWorld) {
-		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Plate Armor", null, 18, 3000, 808);
+		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Plate Armor", null, 18, 750, 808);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newRingMail(int depth, boolean addToWorld) {
-		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Ringmail Armor", null, 14, 300, 809);
+		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Ringmail Armor", null, 14, 125, 809);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newChainArmor(int depth, boolean addToWorld) {
-		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Chainmail Armor", null, 16, 750, 810);
+		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Chainmail Armor", null, 16, 500, 810);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newSplintArmor(int depth, boolean addToWorld) {
-		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Splint Armor", null, 17, 1200, 811);
+		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Splint Armor", null, 17, 750, 811);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -543,21 +543,21 @@ public class ItemFactory {
 	
 	//Shields
 	public Item newRoundShield(int depth, boolean addToWorld) {
-		Item item = new BasicShield((char)232, ExtendedAsciiPanel.brightWhite, "Round Shield", null, 2, 100, 900);
+		Item item = new BasicShield((char)232, ExtendedAsciiPanel.brightWhite, "Round Shield", null, 2, 75, 900);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newKiteShield(int depth, boolean addToWorld) {
-		Item item = new BasicShield((char)232, ExtendedAsciiPanel.brightWhite, "Kite Shield", null, 3, 200, 901);
+		Item item = new BasicShield((char)232, ExtendedAsciiPanel.brightWhite, "Kite Shield", null, 3, 250, 901);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newTowerShield(int depth, boolean addToWorld) {
-		Item item = new TowerShield((char)232, ExtendedAsciiPanel.brightWhite, "Tower Shield", null, 4, 400, 902);
+		Item item = new TowerShield((char)232, ExtendedAsciiPanel.brightWhite, "Tower Shield", null, 4, 500, 902);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -819,28 +819,28 @@ public class ItemFactory {
 	//Wands
 	//Evocation Wands
 	public Item newMagicMissileWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Magic Missile", 1, objectFactory.spellFactory.magicMissile(reference), 250, 1300);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Magic Missile", 1, objectFactory.spellFactory.magicMissile(reference), 500, 1300);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newForceBlastWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Force Blast", 2, objectFactory.spellFactory.forceBlast(reference), 250, 1301);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Force Blast", 2, objectFactory.spellFactory.forceBlast(reference), 500, 1301);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newArchmagesAegisWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Archmage's Aegis", 3, objectFactory.spellFactory.archmagesAegis(reference), 250, 1302);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Archmage's Aegis", 3, objectFactory.spellFactory.archmagesAegis(reference), 500, 1302);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newFindTrapsWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Find Traps", 4, objectFactory.spellFactory.findTraps(reference), 250, 1303);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Find Traps", 4, objectFactory.spellFactory.findTraps(reference), 500, 1303);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -849,14 +849,14 @@ public class ItemFactory {
 	
 	//Pyromancy Wands
 	public Item newFireboltWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Firebolt", 5, objectFactory.spellFactory.firebolt(reference), 250, 1400);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Firebolt", 5, objectFactory.spellFactory.firebolt(reference), 500, 1400);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newBrazierBarrierWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Brazier Barrier", 6, objectFactory.spellFactory.brazierBarrier(reference), 250, 1401);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Brazier Barrier", 6, objectFactory.spellFactory.brazierBarrier(reference), 500, 1401);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -864,7 +864,7 @@ public class ItemFactory {
 	}
 	
 	public Item newPyrotechnicsWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Pyrotechnics", 7, objectFactory.spellFactory.pyrotechnics(reference), 250, 1402);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Pyrotechnics", 7, objectFactory.spellFactory.pyrotechnics(reference), 500, 1402);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -872,7 +872,7 @@ public class ItemFactory {
 	}
 	
 	public Item newFlashfireWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flashfire", 8, objectFactory.spellFactory.flashfire(reference), 250, 1403);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flashfire", 8, objectFactory.spellFactory.flashfire(reference), 500, 1403);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -881,28 +881,28 @@ public class ItemFactory {
 	
 	//Cryomancy Wands
 	public Item newFlashFreezeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flash Freeze", 9, objectFactory.spellFactory.flashFreeze(reference), 250, 1500);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flash Freeze", 9, objectFactory.spellFactory.flashFreeze(reference), 500, 1500);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newIceWallWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Wall", 10, objectFactory.spellFactory.iceWall(reference), 250, 1501);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Wall", 10, objectFactory.spellFactory.iceWall(reference), 500, 1501);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newIceKnifeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Knife", 11, objectFactory.spellFactory.iceKnife(reference), 250, 1502);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Knife", 11, objectFactory.spellFactory.iceKnife(reference), 500, 1502);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newGlaciateWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Glaciate", 12, objectFactory.spellFactory.glaciate(reference), 250, 1503);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Glaciate", 12, objectFactory.spellFactory.glaciate(reference), 500, 1503);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -911,28 +911,28 @@ public class ItemFactory {
 	
 	//Electromancy Wands
 	public Item newChainLightningWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Chain Lightning", 13, objectFactory.spellFactory.chainLightning(reference), 250, 1600);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Chain Lightning", 13, objectFactory.spellFactory.chainLightning(reference), 500, 1600);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLightningLanceWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lightning Lance", 14, objectFactory.spellFactory.lightningLance(reference), 250, 1601);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lightning Lance", 14, objectFactory.spellFactory.lightningLance(reference), 500, 1601);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newStaticSurgeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Static Surge", 15, objectFactory.spellFactory.staticSurge(reference), 250, 1602);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Static Surge", 15, objectFactory.spellFactory.staticSurge(reference), 500, 1602);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newHasteWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Haste", 16, objectFactory.spellFactory.haste(reference), 250, 1603);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Haste", 16, objectFactory.spellFactory.haste(reference), 500, 1603);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -941,28 +941,28 @@ public class ItemFactory {
 	
 	//Alchemancy Wands
 	public Item newAcidBlastWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Acid Blast", 17, objectFactory.spellFactory.acidBlast(reference), 250, 1700);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Acid Blast", 17, objectFactory.spellFactory.acidBlast(reference), 500, 1700);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newToxicTransfusionWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Toxic Transfusion", 18, objectFactory.spellFactory.toxicTransfusion(reference), 250, 1701);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Toxic Transfusion", 18, objectFactory.spellFactory.toxicTransfusion(reference), 500, 1701);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newRefluxBarrierWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Reflux Barrier", 19, objectFactory.spellFactory.refluxBarrier(reference), 250, 1702);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Reflux Barrier", 19, objectFactory.spellFactory.refluxBarrier(reference), 500, 1702);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLifetapWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lifetap", 20, objectFactory.spellFactory.lifetap(reference), 250, 1703);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lifetap", 20, objectFactory.spellFactory.lifetap(reference), 500, 1703);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -971,28 +971,28 @@ public class ItemFactory {
 	
 	//Ferromancy Wands
 	public Item newArmorStormWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Armor Storm", 21, objectFactory.spellFactory.armorStorm(reference), 250, 1800);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Armor Storm", 21, objectFactory.spellFactory.armorStorm(reference), 500, 1800);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newBladsWardWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Blad's Ward", 22, objectFactory.spellFactory.bladsWard(reference), 250, 1801);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Blad's Ward", 22, objectFactory.spellFactory.bladsWard(reference), 500, 1801);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newWeaponBoltWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Weapon Bolt", 23, objectFactory.spellFactory.weaponBolt(reference), 250, 1802);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Weapon Bolt", 23, objectFactory.spellFactory.weaponBolt(reference), 500, 1802);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newInfuseUpgradeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Infuse Upgrade", 24, objectFactory.spellFactory.infuseUpgrade(reference), 250, 1803);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Infuse Upgrade", 24, objectFactory.spellFactory.infuseUpgrade(reference), 500, 1803);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
