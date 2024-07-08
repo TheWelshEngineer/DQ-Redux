@@ -99,6 +99,7 @@ public class LoseScreen implements Screen {
         	
         	return this;
         
+        case KeybindManager.navigateMenuBack:
         case KeybindManager.navigateMenuConfirm:
         	return new MainMenuScreen();
         default: return this;
