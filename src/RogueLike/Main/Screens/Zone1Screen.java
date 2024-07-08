@@ -6,14 +6,11 @@ import java.util.List;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Managers.KeybindManager;
+import RogueLike.Main.Utils.PlayerBuildDetails;
 
 public class Zone1Screen implements Screen{
 	
-	public String playerClass;
-	public String playerName;
-	public String playerAncestry;
-	public List<Integer> playerAbilities;
-	public Skill[] playerSkills;
+	public final PlayerBuildDetails playerDetails;
 	 
 	public int check = 0;
 	public void setCheck(int value) {
@@ -21,13 +18,8 @@ public class Zone1Screen implements Screen{
 	}
 	
 
-	public Zone1Screen(String playerClass, List<Integer> playerAbilities, Skill[] playerSkills, String playerName, String playerAncestry){
-		this.playerClass = playerClass;
-		this.playerName = playerName;
-		this.playerAbilities = playerAbilities;
-		this.playerSkills = playerSkills;
-		this.playerAncestry = playerAncestry;
-		
+	public Zone1Screen(PlayerBuildDetails playerDetails){
+		this.playerDetails = playerDetails;
 	}
 
 	public void displayOutput(ExtendedAsciiPanel terminal) {
@@ -48,7 +40,7 @@ public class Zone1Screen implements Screen{
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
 			case KeybindManager.navigateMenuConfirm: 
-				return new GameplayScreen(playerClass, playerAbilities, playerSkills, playerName, playerAncestry);
+				return new GameplayScreen(this.playerDetails);
 			default:
 				return this;
 		}

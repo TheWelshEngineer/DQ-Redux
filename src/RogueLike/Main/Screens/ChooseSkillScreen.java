@@ -7,6 +7,7 @@ import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Managers.SkillManager;
+import RogueLike.Main.Utils.PlayerBuildDetails;
 
 public class ChooseSkillScreen implements Screen{
 	
@@ -757,7 +758,9 @@ public class ChooseSkillScreen implements Screen{
 			
 		case KeybindManager.navigateMenuConfirm: 
 			if(skillPoints < 1) {
-				return new Zone1Screen(playerClass, playerAbilities, playerSkills, playerName, playerAncestry); 
+				return new Zone1Screen(
+					new PlayerBuildDetails(playerClass, playerAbilities, playerSkills, playerName, playerAncestry)
+				);
 			}else {
 				return this;
 			}

@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Entities.Entity;
@@ -15,6 +16,7 @@ import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Tile;
 import RogueLike.Main.Utils.NotificationHistory;
+import RogueLike.Main.Utils.PlayerBuildDetails;
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Creatures.Creature;
@@ -276,11 +278,6 @@ public class GameplayScreen implements Screen{
 	private NotificationHistory playerNotifications;
 	private FieldOfView fov;
 	public Screen subscreen;
-	public String playerClass;
-	public List<Integer> startingStats = new ArrayList<Integer>();
-	public Skill[] startingSkills;
-	public String playerName;
-	public String playerAncestry;
 	//temp
 	
 	//
@@ -294,29 +291,23 @@ public class GameplayScreen implements Screen{
 	
 	
 	// #########
-	public GameplayScreen(String playerClass, List<Integer> playerAbilities, Skill[] playerSkills, String playerName, String playerAncestry) {
-		this.playerClass = playerClass;
-		this.startingStats = playerAbilities;
-		this.startingSkills = playerSkills;
-		this.playerName = playerName;
-		this.playerAncestry = playerAncestry;
+	public GameplayScreen(PlayerBuildDetails playerDetails) {
 		screenWidth = 120; //80
 		screenHeight = 21; //21
 		// TODO: make the max notification history length configurable
 		playerNotifications = new NotificationHistory(100);
-		createWorld();
-		fov = new FieldOfView(world);
+		world = createWorld(this.playerNotifications, playerDetails);
+		player = world.player();
+		fov = ((PlayerAI) player.ai()).fov();
 		ObjectFactory factory = new ObjectFactory(world);
 		setCloneFactory(factory);
 		createCreatures(factory);
 		createItems(factory);
 		this.effects = player.effects();
-		
 	}
 
 	public void createCreatures(ObjectFactory factory) {
-		player = factory.creatureFactory.newPlayer(fov, this.playerNotifications, this.playerClass, this.startingStats, this.startingSkills, this.playerName, this.playerAncestry);
-		
+
 		factory.setUpPotionIndex();
 		factory.setUpWandIndex(player);
 		factory.setUpRingIndex(player);
@@ -400,11 +391,11 @@ public class GameplayScreen implements Screen{
 		factory.itemFactory.newVictoryItem(world.depth()-1, 1);
 	}
 	
-	private void createWorld() {
+	private World createWorld(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
 		//IMPORTANT: World Width // World Height // World Depth
-		world = new WorldBuilder(120, 60, 22)
+		return new WorldBuilder(120, 60, 22)
 				.generateWorld()
-				.build();
+				.build(playerNotifications, playerDetails);
 	}
 	
 	public int getScrollX() {

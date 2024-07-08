@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.NotificationHistory;
+import RogueLike.Main.Utils.PlayerBuildDetails;
 import RogueLike.Main.Worldgen.Blueprint;
 import RogueLike.Main.Worldgen.Blueprints.CaveFloor;
 import RogueLike.Main.Worldgen.Blueprints.MerchantFloor;
@@ -33,8 +35,9 @@ public class WorldBuilder {
 	public int depth() {return depth;}
 	public void markDepthAsSpecial(int depth) {specialDepths.add(depth);}
 
-	public World build() {
+	public World build(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
 		World world = new World(tiles, specialDepths);
+		world.addPlayer(playerNotifications, playerDetails);
 		blueprints.forEach(bp -> bp.onBuildWorld(world));
 		return world;
 	}

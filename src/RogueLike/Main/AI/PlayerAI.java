@@ -13,7 +13,7 @@ import RogueLike.Main.Items.Item;
 
 public class PlayerAI extends CreatureAI{
 	
-	private FieldOfView fov;
+	private final FieldOfView fov;
 	private final NotificationHistory notificationsHandle;
 	
 	public PlayerAI(Creature creature, NotificationHistory notificationsHandle, FieldOfView fov, ObjectFactory factory, World world) {
@@ -134,5 +134,9 @@ public class PlayerAI extends CreatureAI{
 		creature.modifySkillPoints(1);
 		creature.gainMaxHP();
 		creature.gainMaxMana();
+	}
+
+	public FieldOfView fov() {
+		return fov;
 	}
 }
