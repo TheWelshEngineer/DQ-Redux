@@ -26,7 +26,7 @@ public class SummoningTrap extends Trap {
 
 	@Override
 	public String name() {
-		return "summoning trap";
+		return "Summoning Trap";
 	}
 
 	@Override

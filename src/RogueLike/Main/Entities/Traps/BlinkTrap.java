@@ -1,6 +1,5 @@
 package RogueLike.Main.Entities.Traps;
 
-import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.ExtendedAsciiPanel;
@@ -27,7 +26,7 @@ public class BlinkTrap extends Trap {
 
 	@Override
 	public String name() {
-		return "blink trap";
+		return "Blink Trap";
 	}
 
 	@Override

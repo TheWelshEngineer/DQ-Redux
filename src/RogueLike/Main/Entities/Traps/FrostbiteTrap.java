@@ -27,7 +27,7 @@ public class FrostbiteTrap extends Trap {
 
 	@Override
 	public String name() {
-		return "frostbite trap";
+		return "Frostbite Trap";
 	}
 
 	@Override

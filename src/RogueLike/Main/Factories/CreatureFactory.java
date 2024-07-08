@@ -196,19 +196,11 @@ public ModifierFactory modifierFactory;
 		}
 
 		//Test Items
-		Item startWandTest = objectFactory.itemFactory.newPotionOfPoison(0, false);
-		player.learnNameQuiet(startWandTest);
-		player.inventory().add(startWandTest);
-		startWandTest = objectFactory.itemFactory.newPotionOfGiantStrength(0, false);
-		player.learnNameQuiet(startWandTest);
-		player.inventory().add(startWandTest);
-		startWandTest = objectFactory.itemFactory.newPotionOfInvisibility(0, false);
-		player.learnNameQuiet(startWandTest);
-		player.inventory().add(startWandTest);
-		startWandTest = objectFactory.itemFactory.newBrazierBarrierWand(0, player, false);
+		Item startWandTest = objectFactory.itemFactory.newScrollOfMagicMapping(0, player, false);
 		player.learnNameQuiet(startWandTest);
 		player.inventory().add(startWandTest);
 
+		//player.modifyGold(10000);
 		
 		
 		//

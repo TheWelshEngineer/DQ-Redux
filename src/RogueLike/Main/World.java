@@ -285,6 +285,26 @@ public class World {
 		System.out.println("Player spawned");
 	}
 	
+	private Point getMerchantSpawnPoint(int depth) {
+		for (int x=0; x<width; x++) {
+			for (int y=0; y<height; y++) {
+				if (tiles[x][y][depth] == Tile.MERCHANT_FLOOR) {
+					return new Point(x, y, depth);
+				}
+			}
+		}
+		throw new IllegalStateException("Spawn point not found.");
+	}
+	
+	public void addMerchant(Creature merchant, int depth){
+		Point spawnpoint = getMerchantSpawnPoint(depth);
+		merchant.x = spawnpoint.x;
+		merchant.y = spawnpoint.y;
+		merchant.z = spawnpoint.z;
+		creatures.add(merchant);
+		System.out.println("Merchant spawned");
+	}
+	
 	public void add(Creature pet) {
 		//temp
 		if(creature(pet.x, pet.y, pet.z) == null) {

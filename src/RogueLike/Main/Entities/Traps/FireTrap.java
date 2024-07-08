@@ -27,7 +27,7 @@ public class FireTrap extends Trap {
 
 	@Override
 	public String name() {
-		return "fire trap";
+		return "Fire Trap";
 	}
 
 	@Override

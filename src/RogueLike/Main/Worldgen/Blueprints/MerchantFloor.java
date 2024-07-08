@@ -67,9 +67,13 @@ public class MerchantFloor extends Blueprint {
 		// Create the central room
 		for(int x = lowerX; x < upperX; x++) {
 			for(int y = lowerY; y < upperY; y++) {
-				builder.setTile(x, y, depth, Tile.FLOOR);
+					builder.setTile(x, y, depth, Tile.FLOOR);
+				
 			}
 		}
+		
+		builder.setTile(this.roomCenterX, this.roomCenterY, depth, Tile.MERCHANT_FLOOR);
+		System.out.println("Merchant spawn point added");
 	}
 
 	@Override

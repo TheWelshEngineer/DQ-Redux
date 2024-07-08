@@ -323,7 +323,11 @@ public class GameplayScreen implements Screen{
 		factory.setUpScrollIndex(player);
 		for(int z = 0; z < world.depth(); z++) {
 			if (world.specialDepths().contains(z)) {
-				continue;  // no generation on special depths
+				if(z == 5 || z == 12 || z == 19) { //generate merchants on merchant floors
+					Creature merchant = factory.creatureFactory.newMerchant(z, player, false);
+					world.addMerchant(merchant, z);
+				}
+				continue;  // no further generation on special depths
 			}
 			for(int i = 0; i < 20; i++) { // 20
 				factory.creatureFactory.newMarker(z, player, true);
@@ -334,12 +338,12 @@ public class GameplayScreen implements Screen{
 			
 			for(int i = 0; i < 85; i++) {
 				//Creature creature = factory.randomLesserMonster(z, player, true);
-				Creature creature = factory.creatureFactory.newMerchant(z, player, true); //merchant test
+				//Creature creature = factory.creatureFactory.newMerchant(z, player, true); //merchant test
 				//System.out.println(creature);
 			}
 			if(z > 3) {
 				for(int i = 0; i < 50; i++) {
-					Creature creature = factory.randomMediumMonster(z, player, true);
+					//Creature creature = factory.randomMediumMonster(z, player, true);
 					//System.out.println(creature);
 				}
 			}
@@ -398,7 +402,7 @@ public class GameplayScreen implements Screen{
 	
 	private void createWorld() {
 		//IMPORTANT: World Width // World Height // World Depth
-		world = new WorldBuilder(120, 60, 15)
+		world = new WorldBuilder(120, 60, 22)
 				.generateWorld()
 				.build();
 	}

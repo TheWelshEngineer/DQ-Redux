@@ -32,6 +32,32 @@ public class MerchantScreen extends InventoryBasedScreen{
 	@Override
 	protected Screen use(Item item) {
 		// TODO add items to player inventory
+		
+		if(player.gold() < item.currentGoldValue()) {
+			player.notify("You can't afford that.");
+			return null;
+		}else {
+			if(item.stackAmount() > 1) {
+				Item toSell;
+				toSell = (Item) item.clone();
+				toSell.setStackAmount(1);
+				item.modifyStackAmount(-1);
+				player.learnNameQuiet(toSell);
+				player.notify("You buy the "+player.nameOf(toSell)+".");
+				player.inventory().add(toSell);
+				player.modifyGold(-toSell.currentGoldValue());
+			}else {
+				player.learnNameQuiet(item);
+				player.notify("You buy the "+player.nameOf(item)+".");
+				player.inventory().add(item);
+				merchant.getRidOf(item);
+				player.modifyGold(-item.currentGoldValue());
+			}
+		}
+		
+		
+		
+		
 		return null;
 	}
 	

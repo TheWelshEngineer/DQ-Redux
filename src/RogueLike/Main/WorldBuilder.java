@@ -233,7 +233,8 @@ public class WorldBuilder {
 	private WorldBuilder addAllBlueprints() {
 		for (int z=0; z<depth; z++) {
 			switch(z) {
-				case 1: addBlueprint(new MerchantFloor(this, 1)); break;
+				case 5: addBlueprint(new MerchantFloor(this, z)); break;
+				case 10: addBlueprint(new MerchantFloor(this, z)); break;
 				default: addBlueprint(new CaveFloor(this, z)); break;
 			}
 		}

@@ -4,6 +4,7 @@ import java.awt.Color;
 
 public enum Tile {
 	FLOOR((char)250, /*AsciiPanel.yellow*/ new Color(173, 146, 125), "A rocky cave floor."),
+	MERCHANT_FLOOR((char)250, /*AsciiPanel.yellow*/ new Color(173, 146, 125), "A rocky cave floor."),
 	WALL((char)177, /*AsciiPanel.yellow*/ new Color(173, 146, 125), "A rocky cave wall. Looks breakable."),
 	BOUNDS('x', ExtendedAsciiPanel.brightBlack, "Beyond the edge of the world."),
 	STAIRS_UP((char)30, ExtendedAsciiPanel.white, "A rough stone staircase that goes up."),
