@@ -956,7 +956,7 @@ public class EffectFactory {
         		
         		Damage damage = new Damage(damageAmount, false, DamageType.MAGIC, reference.ai().factory.effectFactory, true);
         		if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
-					creature.doAction("get hit with a spectral weapon!");
+					creature.doAction(String.format("get hit with a spectral %s!", reference.weapon().name()));
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
 					creature.damage(damage, String.format("Killed by %s using Weapon Bolt", reference.name()));
@@ -1844,6 +1844,24 @@ public class EffectFactory {
 			}
 		};
 		return map;
+	}
+	
+	public Effect smokeTrap() {
+		Effect pyrotechnics = new Effect(1, null, true, null, ' ', null) {
+			public void start(Creature creature){
+				for(Point p : new Square(creature.x(), creature.y(), creature.z(), 3).getPoints()) {
+					if(creature.tile(p.x, p.y, p.z).canHaveGas()) {
+                    	creature.world().changeGasTile(p.x, p.y, p.z, Tile.SMOKE);
+                    }
+				}
+				int duration_ = 10;
+
+				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 3).affectedCreatures(creature)) {
+					c.addEffect(blinded(duration_));
+				}
+            }
+		};
+		return pyrotechnics;
 	}
 	
 	//Helper Methods
