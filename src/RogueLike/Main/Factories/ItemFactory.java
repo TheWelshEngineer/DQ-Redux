@@ -117,6 +117,7 @@ public class ItemFactory {
 		item.setIsEquippable(true);
 		item.setIsStackable(true);
 		item.modifyStackAmount(ExtraMaths.d12());
+		item.setBaseGoldValue(1);
 		item.setID(300);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
@@ -132,6 +133,7 @@ public class ItemFactory {
 		item.setIsEquippable(true);
 		item.setIsStackable(true);
 		item.modifyStackAmount(ExtraMaths.d8());
+		item.setBaseGoldValue(3);
 		item.setID(301);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
@@ -147,6 +149,7 @@ public class ItemFactory {
 		item.setIsEquippable(true);
 		item.setIsStackable(true);
 		item.modifyStackAmount(ExtraMaths.d6());
+		item.setBaseGoldValue(5);
 		item.setID(302);
 		if(addToWorld > 0) {
 			objectFactory.world.addAtEmptyLocation(item, depth);

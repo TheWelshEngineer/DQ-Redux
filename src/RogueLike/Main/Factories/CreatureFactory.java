@@ -12,6 +12,7 @@ import RogueLike.Main.Creatures.Bat;
 import RogueLike.Main.Creatures.Cloaker;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Creatures.CreatureModifier;
+import RogueLike.Main.Creatures.Merchant;
 import RogueLike.Main.Creatures.Mimic;
 import RogueLike.Main.Creatures.Ogre;
 import RogueLike.Main.Creatures.Constructs.AnimatedArmor;
@@ -409,6 +410,15 @@ public ModifierFactory modifierFactory;
 			objectFactory.world.addAtEmptyLocation(mimic, depth);
 		}
 		return mimic;
+	}
+	
+	//Merchant
+	public Creature newMerchant(int depth, Creature player, boolean addToWorld) {
+		Creature merchant = new Merchant(objectFactory, player, "Merchant", (char)234, ExtendedAsciiPanel.lilac, 1100, depth);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(merchant, depth);
+		}
+		return merchant;
 	}
 	
 	//Chest

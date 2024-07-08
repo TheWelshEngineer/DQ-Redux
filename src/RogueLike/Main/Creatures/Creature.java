@@ -16,6 +16,7 @@ import RogueLike.Main.Managers.SkillManager;
 import RogueLike.Main.Screens.SpellTargetingScreen;
 import RogueLike.Main.Screens.SpellSelectScreen;
 import RogueLike.Main.Screens.GameplayScreen;
+import RogueLike.Main.Screens.MerchantScreen;
 import RogueLike.Main.Screens.Screen;
 import RogueLike.Main.Screens.ThrowAtScreen;
 
@@ -1469,11 +1470,17 @@ public class Creature implements Cloneable{
 		if(other == null) {
 			ai.onEnter(x+mx, y+my, z+mz, tile);
 		}
-		else if(other.isContainer() == true){
+		else if(other.isContainer()){ 
 			openContainer(other);
-		}else {
+		}else if(other.isMerchant && this.isPlayer()) {
+			talkToMerchant(other, this);
+		}else{
 			attack(other);
 		}		
+	}
+	
+	public void talkToMerchant(Creature merchant, Creature player) {//TODO TRIGGER MERCHANT
+		this.gameplayScreen().subscreen = new MerchantScreen(merchant, player);
 	}
 
 	public void openContainer(Creature container) {
@@ -1500,6 +1507,14 @@ public class Creature implements Cloneable{
 
 	public void wakeup() {
 		setIsAsleep(false);
+	}
+	
+	private boolean isMerchant = false;
+	public boolean isMerchant() {
+		return isMerchant;
+	}
+	public void setIsMerchant(boolean merchant) {
+		isMerchant = merchant;
 	}
 
 	public void attack(Creature other) {

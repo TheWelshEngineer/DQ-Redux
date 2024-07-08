@@ -159,7 +159,18 @@ public class Item implements Cloneable{
 	
 	private int currentGoldValue;
 	public int currentGoldValue() {
-		return currentGoldValue;
+		int returnGoldValue = baseGoldValue;
+		if(this.enchantment() != null) {
+			returnGoldValue += baseGoldValue+50;
+		}
+		if(this.upgradeLevel() > 0) {
+			returnGoldValue += ((baseGoldValue*0.25)*this.upgradeLevel())+50;
+		}
+		if(this.curse() != null) {
+			returnGoldValue *= 0.5;
+		}
+		
+		return returnGoldValue;
 	}
 	
 	public void setCurrentGoldValue(int amount) {

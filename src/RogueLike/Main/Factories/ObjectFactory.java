@@ -222,23 +222,19 @@ public class ObjectFactory {
 		if(item.enchantment() != null) {
 			item.enchantment().updateEffectDuration();
 		}
-		item.modifyCurrentGoldValue((int)Math.ceil(item.baseGoldValue()*0.5));
 		
 	}
 	
 	public void enchantItem(Item item, Enchantment enchantment) {
 		item.setEnchantment(enchantment);
-		item.modifyCurrentGoldValue(item.baseGoldValue());
 	}
 	
 	public void randomEnchantWeapon(Item item) {
 		item.setEnchantment(enchantmentFactory.randomWeaponEnchantment(item));
-		item.modifyCurrentGoldValue(item.baseGoldValue());
 	}
 	
 	public void randomEnchantArmor(Item item) {
 		item.setEnchantment(enchantmentFactory.randomArmorEnchantment(item));
-		item.modifyCurrentGoldValue(item.baseGoldValue());
 	}
 	
 	public void curseItem(Item item) {

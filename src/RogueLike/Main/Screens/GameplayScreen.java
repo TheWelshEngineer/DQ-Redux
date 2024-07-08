@@ -272,7 +272,7 @@ public class GameplayScreen implements Screen{
 	public List<Effect> effects;
 	private NotificationHistory playerNotifications;
 	private FieldOfView fov;
-	private Screen subscreen;
+	public Screen subscreen;
 	public String playerClass;
 	public List<Integer> startingStats = new ArrayList<Integer>();
 	public Skill[] startingSkills;
@@ -330,7 +330,8 @@ public class GameplayScreen implements Screen{
 			}
 			
 			for(int i = 0; i < 85; i++) {
-				Creature creature = factory.randomLesserMonster(z, player, true);
+				//Creature creature = factory.randomLesserMonster(z, player, true);
+				Creature creature = factory.creatureFactory.newMerchant(z, player, true); //merchant test
 				//System.out.println(creature);
 			}
 			if(z > 3) {

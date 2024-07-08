@@ -1,6 +1,7 @@
 package RogueLike.Main;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import RogueLike.Main.Items.Item;
 
@@ -9,6 +10,10 @@ public class Inventory {
 	private ArrayList<Item> items;
 	public ArrayList<Item> getItems() {
 		return items;
+	}
+	
+	public void shuffle() {
+		Collections.shuffle(items);
 	}
 	
 	public Item get(int i) {

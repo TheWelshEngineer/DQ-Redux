@@ -11,7 +11,7 @@ import RogueLike.Main.Items.Item;
 public abstract class InventoryBasedScreen implements Screen{
 	
 	protected Creature player;
-	private String letters;
+	public String letters;
 	
 	protected abstract String getVerb();
 	protected abstract boolean isAcceptable(Item item);
@@ -42,7 +42,7 @@ public abstract class InventoryBasedScreen implements Screen{
 		terminal.repaint();
 	}
 	
-	private ArrayList<String> getList(){
+	protected ArrayList<String> getList(){
 		ArrayList<String> lines = new ArrayList<String>();
 		ArrayList<Item> inventory = player.inventory().getItems();
 		
