@@ -276,119 +276,23 @@ public class GameplayScreen implements Screen{
 	public Creature player;
 	public List<Effect> effects;
 	private NotificationHistory playerNotifications;
-	private FieldOfView fov;
+	private final FieldOfView fov;
 	public Screen subscreen;
-	//temp
-	
-	//
-	public ObjectFactory cloneFactory;
-	public void setCloneFactory(ObjectFactory factory) {
-		cloneFactory = factory;
-	}
-	public ObjectFactory getCloneFactory() {
-		return cloneFactory;
-	}
-	
 	
 	// #########
 	public GameplayScreen(PlayerBuildDetails playerDetails) {
-		screenWidth = 120; //80
-		screenHeight = 21; //21
+		this.screenWidth = 120; //80
+		this.screenHeight = 21; //21
 		// TODO: make the max notification history length configurable
-		playerNotifications = new NotificationHistory(100);
-		world = createWorld(this.playerNotifications, playerDetails);
-		player = world.player();
-		fov = ((PlayerAI) player.ai()).fov();
-		ObjectFactory factory = new ObjectFactory(world);
-		setCloneFactory(factory);
-		createCreatures(factory);
-		createItems(factory);
-		this.effects = player.effects();
-	}
+		this.playerNotifications = new NotificationHistory(100);
+		this.world = createWorld(this.playerNotifications, playerDetails);
 
-	public void createCreatures(ObjectFactory factory) {
-
-		factory.setUpPotionIndex();
-		factory.setUpWandIndex(player);
-		factory.setUpRingIndex(player);
-		factory.setUpScrollIndex(player);
-		for(int z = 0; z < world.depth(); z++) {
-			if (world.specialDepths().contains(z)) {
-				if(z == 5 || z == 12 || z == 19) { //generate merchants on merchant floors
-					Creature merchant = factory.creatureFactory.newMerchant(z, player, false);
-					world.addMerchant(merchant, z);
-				}
-				continue;  // no further generation on special depths
-			}
-			for(int i = 0; i < 20; i++) { // 20
-				factory.creatureFactory.newMarker(z, player, true);
-			}
-			for(int i = 0; i < 18; i++) {
-				factory.randomChest(z, player, true);
-			}
-			
-			for(int i = 0; i < 85; i++) {
-				//Creature creature = factory.randomLesserMonster(z, player, true);
-				//Creature creature = factory.creatureFactory.newMerchant(z, player, true); //merchant test
-				//System.out.println(creature);
-			}
-			if(z > 3) {
-				for(int i = 0; i < 50; i++) {
-					//Creature creature = factory.randomMediumMonster(z, player, true);
-					//System.out.println(creature);
-				}
-			}
-			if(z > 5) {
-				for(int i = 0; i < 30; i++) {
-					Creature creature = factory.randomGreaterMonster(z, player, true);
-					//System.out.println(creature);
-				}
-			}
-
-
-
-		}
 		for(Creature c : world.creatures) {
 			c.setGameplayScreen(this);
 		}
-	}
-	
-	private void createItems(ObjectFactory factory) {
-		for(int z = 0; z < world.depth(); z++) {
-			if (world.specialDepths().contains(z)) {
-				continue;  // no generation on special depths
-			}
-
-			for(int i = 0; i < world.width() * world.height() / 25; i++) {
-				factory.itemFactory.newRock(z, 1);
-			}
-			for(int i = 0; i < 35; i++) {
-				Point where = world.getEmptyLocationForTrap(z);
-				factory.createRandomTrap(where);
-			}
-			for(int i = 0; i < 6; i++) {//6
-				factory.randomFood(z, 1);
-			}
-			for(int j = 0; j < 4; j++) {
-				factory.randomPotion(z, true);
-			}
-			for(int k = 0; k < 1; k++) {
-				factory.randomArmor(z, true);
-			}
-			for(int l = 0; l < 1; l++) {
-				factory.randomShield(z, true);
-			}
-			for(int m = 0; m < 2; m++) {
-				factory.randomWeapon(z, true);
-			}
-			for(int l = 0; l < 1; l++) {
-				factory.randomRing(z, true);
-			}
-			for(int l = 0; l < 1; l++) {
-				factory.randomScroll(z, player, true);
-			}
-		}
-		factory.itemFactory.newVictoryItem(world.depth()-1, 1);
+		this.player = world.player();
+		this.fov = ((PlayerAI) player.ai()).fov();
+		this.effects = player.effects();
 	}
 	
 	private World createWorld(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {

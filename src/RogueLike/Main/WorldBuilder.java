@@ -39,6 +39,9 @@ public class WorldBuilder {
 		World world = new World(tiles, specialDepths);
 		world.addPlayer(playerNotifications, playerDetails);
 		blueprints.forEach(bp -> bp.onBuildWorld(world));
+
+		// TODO: move the victory item to a VictoryFloor blueprint? or make it drop from the final boss?
+		world.factory().itemFactory.newVictoryItem(world.depth()-1, 1);
 		return world;
 	}
 
@@ -236,7 +239,7 @@ public class WorldBuilder {
 	private WorldBuilder addAllBlueprints() {
 		for (int z=0; z<depth; z++) {
 			switch(z) {
-				case 5: addBlueprint(new MerchantFloor(this, z)); break;
+				case 5:
 				case 10: addBlueprint(new MerchantFloor(this, z)); break;
 				default: addBlueprint(new CaveFloor(this, z)); break;
 			}

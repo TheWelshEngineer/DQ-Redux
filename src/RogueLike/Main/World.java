@@ -60,6 +60,7 @@ public class World {
 	public int turnNumber() {return turnNumber; }
 
 	private final ObjectFactory factory;
+	public ObjectFactory factory() {return factory;}
 	
 	public World(Tile[][][] tiles, List<Integer> specialDepths) {
 		this.tiles = tiles;
@@ -303,6 +304,13 @@ public class World {
 		player.y = spawnpoint.y;
 		player.z = spawnpoint.z;
 		creatures.add(player);
+
+		// Set up indexes - this is the earliest we can do this
+		factory.setUpPotionIndex();
+		factory.setUpWandIndex(player);
+		factory.setUpRingIndex(player);
+		factory.setUpScrollIndex(player);
+
 		System.out.println("Player spawned");
 	}
 	
