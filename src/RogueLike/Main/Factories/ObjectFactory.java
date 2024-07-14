@@ -11,6 +11,7 @@ import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Description;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
+import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.Entities.Traps.*;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
@@ -1425,14 +1426,16 @@ public class ObjectFactory {
 	}
 	
 	public void createRandomTrap(Point where) {
-		RogueLike.Main.Entities.Trap trap;
-		switch(ExtraMaths.diceRoll(1, 5)) {
+		Trap trap;
+		switch(ExtraMaths.diceRoll(1, 7)) {
 			case 1: trap = new LightningTrap(where.x, where.y, where.z, world); break;
 			case 2: trap = new FrostbiteTrap(where.x, where.y, where.z, world); break;
 			case 3: trap = new SummoningTrap(where.x, where.y, where.z, world); break;
 			case 4: trap = new BlinkTrap(where.x, where.y, where.z, world); break;
 			case 5: trap = new FireTrap(where.x, where.y, where.z, world); break;
-			default: throw new IllegalArgumentException();
+			case 6: trap = new AcidTrap(where.x, where.y, where.z, world); break;
+			case 7: trap = new SmokeTrap(where.x, where.y, where.z, world); break;
+			default: trap = new FireTrap(where.x, where.y, where.z, world); break;
 		}
 		world.add(trap);
 	}

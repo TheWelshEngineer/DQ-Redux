@@ -15,7 +15,7 @@ public class RangedWeaponTargetingScreen extends TargetBasedScreen{
 			return false;
 		}
 		for(Point p : new Line(player.x, player.y, x, y)) {
-			if(!player.realTile(p.x, p.y, player.z).isGround()) {
+			if(player.realTile(p.x, p.y, player.z).blocksRangedAttacks()) {
 				return false;
 			}
 		}

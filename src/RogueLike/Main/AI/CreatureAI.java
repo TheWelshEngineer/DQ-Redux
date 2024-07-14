@@ -91,9 +91,8 @@ public class CreatureAI {
 		this.itemNames = new HashMap<String, String>();
 		this.factory = factory;
 		this.world = world;
-		actionQueue.add(1);
 		actionQueue.add(1000);
-		
+		actionQueue.add(1000);
 	}
 	
 	public String getName(Item item) {

@@ -1688,7 +1688,7 @@ public class Creature implements Cloneable{
 		Point end = new Point(x, y, 0);
 		item.setOwner(this);
 		for(Point p : new Line(x, y, wx, wy)) {
-			if(!realTile(p.x, p.y, z).isGround()) {
+			if(realTile(p.x, p.y, z).blocksRangedAttacks()) {
 				break;
 			}
 			end = p;

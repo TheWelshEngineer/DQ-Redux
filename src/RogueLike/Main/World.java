@@ -515,12 +515,13 @@ public class World {
 	}
 	
 	public void updateOnCurrentFloor(Creature player) {
-		turnNumber ++;
-		List<Creature> toUpdate = new ArrayList<Creature>(creatures);
-		if(player.ai().actionQueue().isEmpty() == true) {
-			//player.ai().playerAIMoveIdle();
+		if(player.ai().actionQueue().isEmpty()) {
+			// the player isn't doing anything - don't update
 			return;
 		}
+		List<Creature> toUpdate = new ArrayList<Creature>(creatures);
+		turnNumber++;
+		System.out.printf(" ----- [TURN %d] ----- %n", turnNumber);
 		Collections.sort(toUpdate, Comparator.comparing(Creature::getActionSpeed));
 	    for (Creature creature : toUpdate){
 	    	if(creature.z() == player.z()) {

@@ -139,5 +139,8 @@ public enum Tile {
 		return this == STAIRS_EXIT;
 	}
 
+	public boolean blocksRangedAttacks() {
+		return this.isBars() || this.isWall();
+	}
 
 }
