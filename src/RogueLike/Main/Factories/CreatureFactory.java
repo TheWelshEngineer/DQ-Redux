@@ -37,6 +37,7 @@ import RogueLike.Main.Creatures.Slimes.ThundercloudSlimeling;
 import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Utils.NotificationHistory;
+import RogueLike.Main.Utils.PlayerBuildDetails;
 
 public class CreatureFactory {
 	
@@ -63,27 +64,27 @@ public ModifierFactory modifierFactory;
 	}
 	
 	//Player
-	public Creature newPlayer(FieldOfView fov, NotificationHistory notificationsHandle, String playerClass, List<Integer> startingStats, Skill[] startingSkills, String playerName, String playerAncestry) {
+	public Creature newPlayer(FieldOfView fov, NotificationHistory notificationsHandle, PlayerBuildDetails details) {
 		//world, name, glyph, color, maxHP 20, maxMana, base armorclass, strength, dexterity, intelligence, visionRadius, inventorySize) {
 		Creature player = new Creature(objectFactory.world, "Player", '@', ExtendedAsciiPanel.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
 		player.setID(0);
 		new PlayerAI(player, notificationsHandle, fov, objectFactory, objectFactory.world);
 		
-		player.setPlayerName(playerName);
-		player.setPlayerAncestry(playerAncestry);
-		player.creatureTypes.add(playerAncestry);
+		player.setPlayerName(details.name);
+		player.setPlayerAncestry(details.ancestry);
+		player.creatureTypes.add(details.ancestry);
 		
-		player.setStrength(startingStats.get(0));
-		player.setDexterity(startingStats.get(1));
-		player.setIntelligence(startingStats.get(2));
+		player.setStrength(details.startingStats.get(0));
+		player.setDexterity(details.startingStats.get(1));
+		player.setIntelligence(details.startingStats.get(2));
 		
-		player.setSkills(startingSkills);
+		player.setSkills(details.startingSkills);
 
 		//Max HP
 		player.setMaxHP((player.baseStrength()*2)-5);
 
 		//Max Mana
-		if(playerAncestry == "Elf") {
+		if(details.ancestry == "Elf") {
 			int amount = (int) Math.ceil((((player.baseIntelligence()*2)-5)*1.25));
 			player.setMaxMana(amount);
 		}else {
@@ -91,17 +92,17 @@ public ModifierFactory modifierFactory;
 		}
 		
 		//Ancestry Traits
-		if(playerAncestry == "Dwarf") {
+		if(details.ancestry == "Dwarf") {
 			player.modifyBaseArmorClass(1);
 			player.addResistanceTo(DamageType.POISON);
 		}
-		if(playerAncestry == "Dragonborn") {
+		if(details.ancestry == "Dragonborn") {
 			player.addResistanceTo(DamageType.FIRE);
 		}
 		
 		//Class Equipment
-		if(playerClass == "Warrior") {
-			player.setPlayerClass(playerClass);
+		player.setPlayerClass(details.playerClass);
+		if(details.playerClass == "Warrior") {
 			Item startWeaponWarrior = objectFactory.itemFactory.newShortsword(0, false);
 			player.learnNameQuiet(startWeaponWarrior);
 			player.inventory().add(startWeaponWarrior);
@@ -118,8 +119,7 @@ public ModifierFactory modifierFactory;
 			player.setHPScaleAmount(player.hpScaleHigh());
 			player.setManaScaleAmount(player.manaScaleLow());
 			
-		}else if(playerClass == "Rogue") {
-			player.setPlayerClass(playerClass);
+		}else if(details.playerClass == "Rogue") {
 			Item startWeaponRogue = objectFactory.itemFactory.newDagger(0, false);
 			player.learnNameQuiet(startWeaponRogue);
 			player.inventory().add(startWeaponRogue);
@@ -136,8 +136,7 @@ public ModifierFactory modifierFactory;
 			player.setHPScaleAmount(player.hpScaleMedium());
 			player.setManaScaleAmount(player.manaScaleMedium());
 			
-		}else if(playerClass == "Mage") {
-			player.setPlayerClass(playerClass);
+		}else if(details.playerClass == "Mage") {
 			Item startWeaponWizard = objectFactory.itemFactory.newClub(0, false);
 			player.learnNameQuiet(startWeaponWizard);
 			player.inventory().add(startWeaponWizard);
@@ -154,8 +153,7 @@ public ModifierFactory modifierFactory;
 			player.setHPScaleAmount(player.hpScaleLow());
 			player.setManaScaleAmount(player.manaScaleHigh());
 			
-		}else if(playerClass == "Ranger") {
-			player.setPlayerClass(playerClass);
+		}else if(details.playerClass == "Ranger") {
 			Item startBowRanger = objectFactory.itemFactory.newShortbow(0, false);
 			player.learnNameQuiet(startBowRanger);
 			player.inventory().add(startBowRanger);
@@ -177,18 +175,18 @@ public ModifierFactory modifierFactory;
 			player.setManaScaleAmount(player.manaScaleMedium());
 			
 		}else{
-			
+			throw new IllegalArgumentException(details.playerClass);
 		}
 	
 		//Starting Food
 		player.inventory().add(objectFactory.itemFactory.newRations(0, 0));
 		
 		//Ancestry Items
-		if(playerAncestry == "Dragonborn") {
+		if(details.ancestry == "Dragonborn") {
 			Item startWandDragonborn = objectFactory.itemFactory.newFireboltWand(0, player, false);
 			player.learnNameQuiet(startWandDragonborn);
 			player.inventory().add(startWandDragonborn);
-			if(playerClass == "Mage") {
+			if(details.playerClass == "Mage") {
 				player.equipToQuickslot(startWandDragonborn, 2);
 			}else {
 				player.equipToQuickslot(startWandDragonborn, 1);
@@ -205,7 +203,6 @@ public ModifierFactory modifierFactory;
 		
 		//
 		player.stackItems();
-		objectFactory.world.addPlayer(player);
 		return player;
 	}
 	

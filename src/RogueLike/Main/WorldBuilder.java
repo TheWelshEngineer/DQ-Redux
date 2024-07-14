@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.NotificationHistory;
+import RogueLike.Main.Utils.PlayerBuildDetails;
 import RogueLike.Main.Worldgen.Blueprint;
 import RogueLike.Main.Worldgen.Blueprints.CaveFloor;
 import RogueLike.Main.Worldgen.Blueprints.MerchantFloor;
@@ -33,9 +35,13 @@ public class WorldBuilder {
 	public int depth() {return depth;}
 	public void markDepthAsSpecial(int depth) {specialDepths.add(depth);}
 
-	public World build() {
+	public World build(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
 		World world = new World(tiles, specialDepths);
+		world.addPlayer(playerNotifications, playerDetails);
 		blueprints.forEach(bp -> bp.onBuildWorld(world));
+
+		// TODO: move the victory item to a VictoryFloor blueprint? or make it drop from the final boss?
+		world.factory().itemFactory.newVictoryItem(world.depth()-1, 1);
 		return world;
 	}
 
@@ -233,7 +239,7 @@ public class WorldBuilder {
 	private WorldBuilder addAllBlueprints() {
 		for (int z=0; z<depth; z++) {
 			switch(z) {
-				case 5: addBlueprint(new MerchantFloor(this, z)); break;
+				case 5:
 				case 10: addBlueprint(new MerchantFloor(this, z)); break;
 				default: addBlueprint(new CaveFloor(this, z)); break;
 			}

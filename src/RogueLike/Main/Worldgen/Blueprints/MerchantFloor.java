@@ -2,6 +2,7 @@ package RogueLike.Main.Worldgen.Blueprints;
 
 import RogueLike.Main.AoE.Line;
 import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Entities.Teleporter;
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
@@ -183,6 +184,10 @@ public class MerchantFloor extends Blueprint {
 				new Teleporter(world, source.x, source.y, depth, target.x, target.y)
 			);
 		});
+
+		// add the merchant!
+		Creature merchant = world.factory().creatureFactory.newMerchant(depth, world.player(), false);
+		world.addMerchant(merchant, depth);
 	}
 
 }

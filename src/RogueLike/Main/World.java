@@ -9,7 +9,10 @@ import java.util.List;
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Entities.Entity;
+import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
+import RogueLike.Main.Utils.NotificationHistory;
+import RogueLike.Main.Utils.PlayerBuildDetails;
 
 public class World {
 	private Tile[][][] tiles;
@@ -40,13 +43,24 @@ public class World {
 	}
 
 	private Creature player;
-	public Creature player() {return player;}
+	public Creature player() {
+		if (player == null) {
+			// defensive programming! we don't want things to pick up a dead reference to the player.
+			// anything that needs a reference should only need to get one after worldgen is complete
+			// and the player has been spawned.
+			throw new NullPointerException();
+		}
+		return player;
+	}
 
 	private final List<Integer> specialDepths;
 	public List<Integer> specialDepths() {return specialDepths;}
 
 	private int turnNumber;
 	public int turnNumber() {return turnNumber; }
+
+	private final ObjectFactory factory;
+	public ObjectFactory factory() {return factory;}
 	
 	public World(Tile[][][] tiles, List<Integer> specialDepths) {
 		this.tiles = tiles;
@@ -63,6 +77,8 @@ public class World {
 		//
 		this.particles = new Particle[width][height][depth];
 		this.specialDepths = specialDepths;
+
+		this.factory = new ObjectFactory(this);
 	}
 	
 	public Tile tile(int x, int y, int z) {
@@ -275,13 +291,26 @@ public class World {
 		throw new IllegalStateException("Spawn point not found.");
 	}
 
-	public void addPlayer(Creature player){
+	public void addPlayer(
+		NotificationHistory notificationHandle,
+		PlayerBuildDetails playerDetails
+	) {
+		if (player != null) {
+			throw new IllegalStateException("Player already exists!");
+		}
+		player = factory.creatureFactory.newPlayer(new FieldOfView(this), notificationHandle, playerDetails);
 		Point spawnpoint = getPlayerSpawnPoint();
 		player.x = spawnpoint.x;
 		player.y = spawnpoint.y;
 		player.z = spawnpoint.z;
 		creatures.add(player);
-		this.player = player;
+
+		// Set up indexes - this is the earliest we can do this
+		factory.setUpPotionIndex();
+		factory.setUpWandIndex(player);
+		factory.setUpRingIndex(player);
+		factory.setUpScrollIndex(player);
+
 		System.out.println("Player spawned");
 	}
 	
