@@ -1,5 +1,7 @@
 package RogueLike.Main.Screens;
 
+import RogueLike.Main.Entities.Entity;
+import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.Tile;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
@@ -22,6 +24,14 @@ public class LookScreen extends TargetBasedScreen{
 		if(item != null) {
 			caption = item.glyph() + " " + player.nameOf(item) + item.details();
 			return;
+		}
+
+		Entity entity = player.world().entity(x, y, player.z);
+		if (entity != null) {
+			if (!(entity instanceof Trap) || ((Trap) entity).isRevealed()) {
+				caption = String.format("%c %s", entity.glyph(), entity.name());
+				return;
+			}
 		}
 		
 		Tile tile = player.tile(x, y, player.z);
