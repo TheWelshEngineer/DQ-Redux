@@ -1,11 +1,11 @@
 package RogueLike.Main.Screens.CharacterSheet;
 
-import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Creatures.Player;
 
 public class LevelElement extends CharacterSheetElement {
-    private final Creature player;
+    private final Player player;
 
-    public LevelElement(Creature player) {
+    public LevelElement(Player player) {
         this.player = player;
     }
 

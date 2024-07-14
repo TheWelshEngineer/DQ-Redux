@@ -134,32 +134,7 @@ public class Creature implements Cloneable{
 	
 	public ArrayList<String> creatureTypes = new ArrayList<String>();
 
-	private String playerClass;
-	public String playerClass() {
-		return playerClass;
-	}
 
-	public void setPlayerClass(String newClass) {
-		playerClass = newClass;
-	}
-	
-	private String playerAncestry;
-	public String playerAncestry() {
-		return playerAncestry;
-	}
-
-	public void setPlayerAncestry(String ancestry) {
-		playerAncestry = ancestry;
-	}
-
-	private String playerName;
-	public String playerName() {
-		return playerName;
-	}
-
-	public void setPlayerName(String newName) {
-		playerName = newName;
-	}
 
 	public void setIsDead(boolean value) {
 		isDead = value;
@@ -849,16 +824,14 @@ public class Creature implements Cloneable{
 	}
 
 	public void gainMaxMana() {
-		int bonus = intelligenceModifier();
-		if(playerAncestry == "Elf") {
-			bonus += this.proficiencyBonus();
-		}
-		if(bonus < 0) {
-			bonus = 0;
-		}
+		int bonus = Math.max(0, manaGainedOnLevelUp());
 		maxMana += manaScaleAmount+bonus;
 		mana += manaScaleAmount+bonus;
 		//doAction("look healthier");
+	}
+
+	public int manaGainedOnLevelUp() {
+		return intelligenceModifier();
 	}
 
 	private int regenHPCooldown = 1;
@@ -1474,14 +1447,15 @@ public class Creature implements Cloneable{
 		}
 		else if(other.isContainer()){ 
 			openContainer(other);
-		}else if(other.isMerchant && this.isPlayer()) {
-			talkToMerchant(other, this);
+		}else if(other instanceof Merchant && this instanceof Player) {
+			// TODO(dd): this looks kinda hacky to me
+			talkToMerchant((Merchant) other, (Player) this);
 		}else{
 			attack(other);
 		}		
 	}
 	
-	public void talkToMerchant(Creature merchant, Creature player) {//TODO TRIGGER MERCHANT
+	public void talkToMerchant(Merchant merchant, Player player) {//TODO TRIGGER MERCHANT
 		this.gameplayScreen().subscreen = new MerchantScreen(merchant, player);
 	}
 
@@ -2730,14 +2704,15 @@ public class Creature implements Cloneable{
 		doAction("eat a "+nameOf(item));
 		consume(item);
 	}
-	
+
 	private void consume(Item item) {
 		if(item.foodValue() < 0) {
 			notify("Gross!");
 		}
 		addEffect(item.quaffEffect());
 		modifyFood(item.foodValue());
-		if(playerAncestry == "Orc") {
+		// TODO(dd): This looks like a hacky way of handling the heal-on-eat for players
+		if(this instanceof Player && ((Player)this).playerAncestry() == "Orc") {
 			heal((int) Math.ceil(item.foodValue()/100), true);
 		}
 		if(item.isCorpse()) {

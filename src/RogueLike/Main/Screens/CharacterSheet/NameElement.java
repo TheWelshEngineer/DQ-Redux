@@ -1,10 +1,10 @@
 package RogueLike.Main.Screens.CharacterSheet;
 
-import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Creatures.Player;
 
 public class NameElement extends CharacterSheetElement {
-    private final Creature player;
-    public NameElement(Creature player) {
+    private final Player player;
+    public NameElement(Player player) {
         this.player = player;
     }
 

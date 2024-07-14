@@ -5,12 +5,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 
 public class LoseScreen implements Screen {
-	public Creature player;
+	public Player player;
 	public String weaponName = "None";
 	public String armorName = "None";
 	public String shieldName = "None";
@@ -18,7 +19,7 @@ public class LoseScreen implements Screen {
 	public String ammunitionName = "None";
 	public String exportCheck = "";
 	
-	public LoseScreen(Creature player) {
+	public LoseScreen(Player player) {
 		this.player = player;
 	}
 

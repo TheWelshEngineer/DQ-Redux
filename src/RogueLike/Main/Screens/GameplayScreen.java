@@ -7,6 +7,7 @@ import java.util.List;
 
 import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.Entities.Trap;
@@ -273,7 +274,7 @@ public class GameplayScreen implements Screen{
 	private World world;
 	private int screenWidth;
 	private int screenHeight;
-	public Creature player;
+	public Player player;
 	public List<Effect> effects;
 	private NotificationHistory playerNotifications;
 	private final FieldOfView fov;

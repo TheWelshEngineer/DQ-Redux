@@ -2,6 +2,7 @@ package RogueLike.Main.AI;
 
 import java.util.*;
 
+import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Tile;
@@ -16,7 +17,7 @@ public class PlayerAI extends CreatureAI{
 	private final FieldOfView fov;
 	private final NotificationHistory notificationsHandle;
 	
-	public PlayerAI(Creature creature, NotificationHistory notificationsHandle, FieldOfView fov, ObjectFactory factory, World world) {
+	public PlayerAI(Player creature, NotificationHistory notificationsHandle, FieldOfView fov, ObjectFactory factory, World world) {
 		super(creature, factory, world);
 		actionQueue = new ArrayList<Integer>();
 		this.fov = fov;

@@ -2,19 +2,13 @@ package RogueLike.Main.Factories;
 
 import java.util.List;
 
+import RogueLike.Main.Creatures.*;
 import RogueLike.Main.Dice;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Skill;
 import RogueLike.Main.AI.ChestAI;
 import RogueLike.Main.AI.PlayerAI;
-import RogueLike.Main.Creatures.Bat;
-import RogueLike.Main.Creatures.Cloaker;
-import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Creatures.CreatureModifier;
-import RogueLike.Main.Creatures.Merchant;
-import RogueLike.Main.Creatures.Mimic;
-import RogueLike.Main.Creatures.Ogre;
 import RogueLike.Main.Creatures.Constructs.AnimatedArmor;
 import RogueLike.Main.Creatures.Constructs.AnimatedWeapon;
 import RogueLike.Main.Creatures.Containers.BasicChest;
@@ -64,9 +58,9 @@ public ModifierFactory modifierFactory;
 	}
 	
 	//Player
-	public Creature newPlayer(FieldOfView fov, NotificationHistory notificationsHandle, PlayerBuildDetails details) {
+	public Player newPlayer(FieldOfView fov, NotificationHistory notificationsHandle, PlayerBuildDetails details) {
 		//world, name, glyph, color, maxHP 20, maxMana, base armorclass, strength, dexterity, intelligence, visionRadius, inventorySize) {
-		Creature player = new Creature(objectFactory.world, "Player", '@', ExtendedAsciiPanel.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
+		Player player = new Player(objectFactory.world, "Player", '@', ExtendedAsciiPanel.brightWhite, 20, 20, 10, 10, 10, 10, 8, 20);
 		player.setID(0);
 		new PlayerAI(player, notificationsHandle, fov, objectFactory, objectFactory.world);
 		
