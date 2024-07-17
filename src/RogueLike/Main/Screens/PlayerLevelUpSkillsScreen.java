@@ -490,19 +490,19 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 			
 		case KeybindManager.navigateMenuConfirm: 
 			if(points < 1) {
-				player.levelUpSkill(0, playerSimpleWeapons);
-				player.levelUpSkill(1, playerMartialWeapons);
-				player.levelUpSkill(2, playerArmorTraining);
-				player.levelUpSkill(3, playerFortitude);
-				player.levelUpSkill(4, playerFinesseWeapons);
-				player.levelUpSkill(5, playerRangedWeapons);
-				player.levelUpSkill(6, playerStealth);
-				player.levelUpSkill(7, playerPerception);
-				player.levelUpSkill(8, playerEvocation);
-				player.levelUpSkill(9, playerPyromancy);
-				player.levelUpSkill(10, playerCryomancy);
-				player.levelUpSkill(11, playerElectromancy);
-				player.levelUpSkill(12, playerAlchemancy);
+				player.skills().simpleWeapons.setLevel(playerSimpleWeapons);
+				player.skills().martialWeapons.setLevel(playerMartialWeapons);
+				player.skills().armorTraining.setLevel(playerArmorTraining);
+				player.skills().fortitude.setLevel(playerFortitude);
+				player.skills().finesseWeapons.setLevel(playerFinesseWeapons);
+				player.skills().rangedWeapons.setLevel(playerRangedWeapons);
+				player.skills().stealth.setLevel(playerStealth);
+				player.skills().perception.setLevel(playerPerception);
+				player.skills().evocation.setLevel(playerEvocation);
+				player.skills().pyromancy.setLevel(playerPyromancy);
+				player.skills().cryomancy.setLevel(playerCryomancy);
+				player.skills().electromancy.setLevel(playerElectromancy);
+				player.skills().alchemancy.setLevel(playerAlchemancy);
 				player.setSkillPoints(0);
 				return null;
 			}else {

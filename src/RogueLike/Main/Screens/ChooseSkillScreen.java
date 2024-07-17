@@ -7,15 +7,18 @@ import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Managers.SkillManager;
+import RogueLike.Main.Skillset;
 import RogueLike.Main.Utils.PlayerBuildDetails;
 
+
+// TODO: This _really_ wants refactoring.
 public class ChooseSkillScreen implements Screen{
 	
 	public String playerClass;
 	public String playerName;
 	public String playerAncestry;
 	public List<Integer> playerAbilities;
-	public Skill[] playerSkills;// = Skill.defaultSkillArray();
+	public Skillset playerSkills = new Skillset();
 	
 	public int skillPoints = 2;
 	public void modifyPoints(int amount) {
@@ -47,37 +50,36 @@ public class ChooseSkillScreen implements Screen{
 		this.playerAbilities = playerAbilities;
 		this.playerName = playerName;
 		this.playerAncestry = playerAncestry;
-		playerSkills = SkillManager.getDefaultSkillArray();
 		if(this.playerAncestry == "Human") {
 			this.skillPoints = 3;
 		}
 		
 		if(playerClass == "Warrior") {
 			playerMartialWeapons = true;
-			playerSkills[1].modifyLevel(1, false);
+			playerSkills.martialWeapons.modifyLevel(1, false);
 			playerArmorTraining = true;
-			playerSkills[2].modifyLevel(1, false);
+			playerSkills.armorTraining.modifyLevel(1, false);
 			martialUp = ' ';
 			armorUp = ' ';
 		}else if(playerClass == "Rogue") {
 			playerFinesseWeapons = true;
-			playerSkills[4].modifyLevel(1, false);
+			playerSkills.finesseWeapons.modifyLevel(1, false);
 			playerStealth = true;
-			playerSkills[6].modifyLevel(1, false);
+			playerSkills.stealth.modifyLevel(1, false);
 			finesseUp = ' ';
 			stealthUp = ' ';
 		}else if(playerClass == "Mage") {
 			playerEvocation = true;
-			playerSkills[8].modifyLevel(1, false);
+			playerSkills.evocation.modifyLevel(1, false);
 			playerSimpleWeapons = true;
-			playerSkills[0].modifyLevel(1, false);
+			playerSkills.simpleWeapons.modifyLevel(1, false);
 			evocationUp = ' ';
 			simpleUp = ' ';
 		}else if(playerClass == "Ranger") {
 			playerRangedWeapons = true;
-			playerSkills[5].modifyLevel(1, false);
+			playerSkills.rangedWeapons.modifyLevel(1, false);
 			playerPerception = true;
-			playerSkills[7].modifyLevel(1, false);
+			playerSkills.perception.modifyLevel(1, false);
 			rangedUp = ' ';
 			perceptionUp = ' ';
 		}
@@ -580,85 +582,85 @@ public class ChooseSkillScreen implements Screen{
 		case KeybindManager.navigateMenuRight:
 			if(check == 0) {
 				if(skillPoints > 0 && playerClass != "Mage" && !playerSimpleWeapons) {
-					playerSkills[0].modifyLevel(1, false);
+					playerSkills.simpleWeapons.modifyLevel(1, false);
 					playerSimpleWeapons = true;
 					modifyPoints(-1); 
 				}
 			}else if(check == 1) {
 				if(skillPoints > 0 && playerClass != "Warrior" && !playerMartialWeapons) {
-					playerSkills[1].modifyLevel(1, false);
+					playerSkills.martialWeapons.modifyLevel(1, false);
 					playerMartialWeapons = true;
 					modifyPoints(-1); 
 				}
 			}else if(check == 2) {
 				if(skillPoints > 0 && playerClass != "Warrior" && !playerArmorTraining) {
-					playerSkills[2].modifyLevel(1, false);
+					playerSkills.armorTraining.modifyLevel(1, false);
 					playerArmorTraining = true;
 					modifyPoints(-1);
 				}
 			}else if(check == 3) {
 				if(skillPoints > 0 && !playerFortitude) {
-					playerSkills[3].modifyLevel(1, false);
+					playerSkills.fortitude.modifyLevel(1, false);
 					playerFortitude = true;
 					modifyPoints(-1);
 				}
 			}else if(check == 4) {
 				if(skillPoints > 0 && playerClass != "Rogue" && !playerFinesseWeapons) {
-					playerSkills[4].modifyLevel(1, false);
+					playerSkills.finesseWeapons.modifyLevel(1, false);
 					playerFinesseWeapons = true;
 					modifyPoints(-1);
 				}
 			}else if(check == 5) {
 				if(skillPoints > 0&& playerClass != "Ranger" && !playerRangedWeapons) {
-					playerSkills[5].modifyLevel(1, false);
+					playerSkills.rangedWeapons.modifyLevel(1, false);
 					playerRangedWeapons = true;
 					modifyPoints(-1);
 				} 
 			}else if(check == 6) {
 				if(skillPoints > 0 && playerClass != "Rogue" && !playerStealth) {
-					playerSkills[6].modifyLevel(1, false);
+					playerSkills.stealth.modifyLevel(1, false);
 					playerStealth = true;
 					modifyPoints(-1);
 				}
 			}else if(check == 7) {
 				if(skillPoints > 0 && playerClass != "Ranger" && !playerPerception) {
-					playerSkills[7].modifyLevel(1, false);
+					playerSkills.perception.modifyLevel(1, false);
 					playerPerception = true;
 					modifyPoints(-1);
 				} 
 			}else if(check == 8) {
 				if(skillPoints > 0 && playerClass != "Mage" && !playerEvocation) {
-					playerSkills[8].modifyLevel(1, false);
+					playerSkills.evocation.modifyLevel(1, false);
 					playerEvocation = true;
 					modifyPoints(-1);
 				}
 			}else if(check == 9) {
 				if(skillPoints > 0 && !playerPyromancy) {
-					playerSkills[9].modifyLevel(1, false);
+					playerSkills.pyromancy.modifyLevel(1, false);
 					playerPyromancy = true;
 					modifyPoints(-1);
 				}
 			}else if(check == 10) {
 				if(skillPoints > 0 && !playerCryomancy) {
-					playerSkills[10].modifyLevel(1, false);
+					playerSkills.cryomancy.modifyLevel(1, false);
 					playerCryomancy = true;
 					modifyPoints(-1);
 				}
 			}else if(check == 11) {
 				if(skillPoints > 0 && !playerElectromancy) {
-					playerSkills[11].modifyLevel(1, false);
+					playerSkills.electromancy.modifyLevel(1, false);
 					playerElectromancy = true;
 					modifyPoints(-1);
 				}
 			}else if(check == 12) {
 				if(skillPoints > 0 && !playerAlchemancy) {
-					playerSkills[12].modifyLevel(1, false);
+					playerSkills.alchemancy.modifyLevel(1, false);
 					playerAlchemancy = true;
 					modifyPoints(-1);
 				}
 			}else if(check == 13) {
 				if(skillPoints > 0 && !playerFerromancy) {
-					playerSkills[13].modifyLevel(1, false);
+					playerSkills.ferromancy.modifyLevel(1, false);
 					playerFerromancy = true;
 					modifyPoints(-1);
 				}
@@ -670,85 +672,85 @@ public class ChooseSkillScreen implements Screen{
 			if(check == 0) {
 				if(playerSimpleWeapons && playerClass != "Mage") {
 					playerSimpleWeapons = false;
-					playerSkills[0].modifyLevel(1, true);
+					playerSkills.simpleWeapons.modifyLevel(1, true);
 					modifyPoints(1); 
 				}
 			}else if(check == 1) {
 				if(playerMartialWeapons && playerClass != "Warrior") {
 					playerMartialWeapons = false;
-					playerSkills[1].modifyLevel(1, true);
+					playerSkills.martialWeapons.modifyLevel(1, true);
 					modifyPoints(1);
 				}
 			}else if(check == 2) {
 				if(playerArmorTraining && playerClass != "Warrior") {
 					playerArmorTraining = false;
-					playerSkills[2].modifyLevel(1, true);
+					playerSkills.armorTraining.modifyLevel(1, true);
 					modifyPoints(1);
 				}
 			}else if(check == 3) {
 				if(playerFortitude) {
 					playerFortitude = false;
-					playerSkills[3].modifyLevel(1, true);
+					playerSkills.fortitude.modifyLevel(1, true);
 					modifyPoints(1); 
 				}
 			}else if(check == 4) {
 				if(playerFinesseWeapons && playerClass != "Rogue") {
 					playerFinesseWeapons = false;
-					playerSkills[4].modifyLevel(1, true);
+					playerSkills.finesseWeapons.modifyLevel(1, true);
 					modifyPoints(1);
 				} 
 			}else if(check == 5) {
 				if(playerRangedWeapons && playerClass != "Ranger") {
 					playerRangedWeapons = false;
-					playerSkills[5].modifyLevel(1, true);
+					playerSkills.rangedWeapons.modifyLevel(1, true);
 					modifyPoints(1); 
 				} 
 			}else if(check == 6) {
 				if(playerStealth && playerClass != "Rogue") {
 					playerStealth = false;
-					playerSkills[6].modifyLevel(1, true);
+					playerSkills.stealth.modifyLevel(1, true);
 					modifyPoints(1);
 				} 
 			}else if(check == 7) {
 				if(playerPerception && playerClass != "Ranger") {
 					playerPerception = false;
-					playerSkills[7].modifyLevel(1, true);
+					playerSkills.perception.modifyLevel(1, true);
 					modifyPoints(1); 
 				}  
 			}else if(check == 8) {
 				if(playerEvocation && playerClass != "Mage") {
 					playerEvocation = false;
-					playerSkills[8].modifyLevel(1, true);
+					playerSkills.evocation.modifyLevel(1, true);
 					modifyPoints(1); 
 				}
 			}else if(check == 9) {
 				if(playerPyromancy) {
 					playerPyromancy = false;
-					playerSkills[9].modifyLevel(1, true);
+					playerSkills.pyromancy.modifyLevel(1, true);
 					modifyPoints(1); 
 				}
 			}else if(check == 10) {
 				if(playerCryomancy) {
 					playerCryomancy = false;
-					playerSkills[10].modifyLevel(1, true);
+					playerSkills.cryomancy.modifyLevel(1, true);
 					modifyPoints(1); 
 				}
 			}else if(check == 11) {
 				if(playerElectromancy) {
 					playerElectromancy = false;
-					playerSkills[11].modifyLevel(1, true);
+					playerSkills.electromancy.modifyLevel(1, true);
 					modifyPoints(1); 
 				}
 			}else if(check == 12) {
 				if(playerAlchemancy) {
 					playerAlchemancy = false;
-					playerSkills[12].modifyLevel(1, true);
+					playerSkills.alchemancy.modifyLevel(1, true);
 					modifyPoints(1); 
 				}
 			}else if(check == 13) {
 				if(playerFerromancy) {
 					playerFerromancy = false;
-					playerSkills[13].modifyLevel(1, true);
+					playerSkills.ferromancy.modifyLevel(1, true);
 					modifyPoints(1); 
 				}
 			}

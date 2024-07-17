@@ -2,6 +2,7 @@ package RogueLike.Main.Screens.CharacterSheet.Skills;
 
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Screens.CharacterSheet.SkillElement;
+import RogueLike.Main.Skill;
 
 public class StealthSkillElement extends SkillElement {
 
@@ -10,8 +11,8 @@ public class StealthSkillElement extends SkillElement {
     }
 
     @Override
-    protected int skillIndex() {
-        return 6;
+    protected Skill skill() {
+        return player.skills().stealth;
     }
 
     @Override

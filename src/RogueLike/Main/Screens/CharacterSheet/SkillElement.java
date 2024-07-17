@@ -6,19 +6,17 @@ import RogueLike.Main.Skill;
 
 public abstract class SkillElement extends CharacterSheetElement {
     protected final Creature player;
-    protected final Skill skill;
 
     protected SkillElement(Creature player) {
         this.player = player;
-        this.skill = player.skills()[skillIndex()];
     }
 
     @Override
     public String header() {
-        return String.format("%s: %s", skill.name(), ExtraMaths.toRomanNumerals(skill.level()));
+        return String.format("%s: %s", skill().name(), ExtraMaths.toRomanNumerals(skill().level()));
     }
 
-    protected abstract int skillIndex();
+    protected abstract Skill skill();
 
     protected abstract String descriptionLevel1();
 
@@ -30,9 +28,9 @@ public abstract class SkillElement extends CharacterSheetElement {
     public String details() {
         return String.join(
             "\n\n",
-            skill.level() >= 1 ? descriptionLevel1() : "",
-            skill.level() >= 2 ? descriptionLevel2() : "",
-            skill.level() >= 3 ? descriptionLevel3() : ""
+            skill().level() >= 1 ? descriptionLevel1() : "",
+            skill().level() >= 2 ? descriptionLevel2() : "",
+            skill().level() >= 3 ? descriptionLevel3() : ""
         );
     }
 }

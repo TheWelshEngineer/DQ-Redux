@@ -41,6 +41,8 @@ public class Creature implements Cloneable{
 	public CreatureAI ai() {
 		return ai;
 	}
+
+	private Skillset skills = new Skillset();
 	
 	public int getActionSpeed() {
 		int speed = ai.getActionSpeed();
@@ -557,118 +559,54 @@ public class Creature implements Cloneable{
 		return resistances.contains(damageType);
 	}
 
-	private Skill[] skills = SkillManager.getDefaultSkillArray();
-	public Skill[] skills(){
-		//Collections.sort(skills, Comparator.comparing(Skill::id));
+	public Skillset skills(){
 		return skills;
 	}
-	public void setSkills(Skill[] skills) {
+	public void setSkills(Skillset skills) {
 		this.skills = skills;
 	}
-	public void levelUpSkill(int id, int amount) {
-		boolean decrease = false;
-		if(amount < 0) {
-			decrease = true;
-		}
-		skills[id].modifyLevel(amount, decrease);
-	}
-	
-	public Skill simpleWeapons() {
-		return skills[0];
-	}
+
 	public int simpleWeaponsLevel() {
-		return skills[0].level();
-	}
-	
-	public Skill martialWeapons() {
-		return skills[1];
+		return skills.simpleWeapons.level();
 	}
 	public int martialWeaponsLevel() {
-		return skills[1].level();
-	}
-	
-	public Skill armorTraining() {
-		return skills[2];
+		return skills.martialWeapons.level();
 	}
 	public int armorTrainingLevel() {
-		return skills[2].level();
-	}
-	
-	public Skill fortitude() {
-		return skills[3];
+		return skills.armorTraining.level();
 	}
 	public int fortitudeLevel() {
-		return skills[3].level();
-	}
-
-	public Skill finesseWeapons() {
-		return skills[4];
+		return skills.fortitude.level();
 	}
 	public int finesseWeaponsLevel() {
-		return skills[4].level();
-	}
-	
-	public Skill rangedWeapons() {
-		return skills[5];
+		return skills.finesseWeapons.level();
 	}
 	public int rangedWeaponsLevel() {
-		return skills[5].level();
-	}
-	
-	public Skill stealth() {
-		return skills[6];
+		return skills.rangedWeapons.level();
 	}
 	public int stealthLevel() {
-		return skills[6].level();
-	}
-	
-	public Skill perception() {
-		return skills[7];
+		return skills.stealth.level();
 	}
 	public int perceptionLevel() {
-		return skills[7].level();
-	}
-	
-	public Skill evocation() {
-		return skills[8];
+		return skills.perception.level();
 	}
 	public int evocationLevel() {
-		return skills[8].level();
-	}
-	
-	public Skill pyromancy() {
-		return skills[9];
+		return skills.evocation.level();
 	}
 	public int pyromancyLevel() {
-		return skills[9].level();
-	}
-	
-	public Skill cryomancy() {
-		return skills[10];
+		return skills.pyromancy.level();
 	}
 	public int cryomancyLevel() {
-		return skills[10].level();
-	}
-	
-	public Skill electromancy() {
-		return skills[11];
+		return skills.cryomancy.level();
 	}
 	public int electromancyLevel() {
-		return skills[11].level();
-	}
-	
-	public Skill alchemancy() {
-		return skills[12];
+		return skills.electromancy.level();
 	}
 	public int alchemancyLevel() {
-		return skills[12].level();
-	}
-	
-	public Skill ferromancy() {
-		return skills[13];
+		return skills.alchemancy.level();
 	}
 	public int ferromancyLevel() {
-		return skills[13].level();
+		return skills.ferromancy.level();
 	}
 
 

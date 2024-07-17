@@ -1,7 +1,9 @@
 package RogueLike.Main.Screens.CharacterSheet.Skills;
 
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Screens.CharacterSheet.SkillElement;
+import RogueLike.Main.Skill;
 
 public class FortitudeSkillElement extends SkillElement {
 
@@ -10,8 +12,8 @@ public class FortitudeSkillElement extends SkillElement {
     }
 
     @Override
-    protected int skillIndex() {
-        return 3;
+    protected Skill skill() {
+        return player.skills().fortitude;
     }
 
     @Override

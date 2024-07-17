@@ -2,6 +2,7 @@ package RogueLike.Main.Screens.CharacterSheet.Skills;
 
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Screens.CharacterSheet.SkillElement;
+import RogueLike.Main.Skill;
 
 public class FerromancySkillElement extends SkillElement {
 
@@ -10,9 +11,10 @@ public class FerromancySkillElement extends SkillElement {
     }
 
     @Override
-    protected int skillIndex() {
-        return 13;
+    protected Skill skill() {
+        return player.skills().ferromancy;
     }
+
 
     @Override
     protected String descriptionLevel1() {
