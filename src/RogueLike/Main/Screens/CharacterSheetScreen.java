@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Screens.CharacterSheet.*;
@@ -16,9 +16,9 @@ import RogueLike.Main.TextUtils;
 
 public class CharacterSheetScreen implements Screen{
 
-	protected Creature player;
+	protected Player player;
 
-	public CharacterSheetScreen(Creature player) {
+	public CharacterSheetScreen(Player player) {
 		this.player = player;
 
 		elements = new ArrayList<>();

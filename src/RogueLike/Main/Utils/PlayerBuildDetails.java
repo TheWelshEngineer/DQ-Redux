@@ -1,17 +1,19 @@
 package RogueLike.Main.Utils;
 
-import RogueLike.Main.Skill;
+import RogueLike.Main.Enums.PlayerAncestry;
+import RogueLike.Main.Enums.PlayerClass;
+import RogueLike.Main.Skillset;
 
 import java.util.List;
 
 public class PlayerBuildDetails {
-	public final String playerClass;
+	public final PlayerClass playerClass;
 	public final List<Integer> startingStats;
-	public final Skill[] startingSkills;
+	public final Skillset startingSkills;
 	public final String name;
-	public final String ancestry;
+	public final PlayerAncestry ancestry;
 
-	public PlayerBuildDetails(String playerClass, List<Integer> startingStats, Skill[] startingSkills, String name, String ancestry) {
+	public PlayerBuildDetails(PlayerClass playerClass, List<Integer> startingStats, Skillset startingSkills, String name, PlayerAncestry ancestry) {
 		this.playerClass = playerClass;
 		this.startingStats = startingStats;
 		this.startingSkills = startingSkills;

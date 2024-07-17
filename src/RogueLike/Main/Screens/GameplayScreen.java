@@ -2,25 +2,22 @@ package RogueLike.Main.Screens;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.AI.PlayerAI;
-import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Factories.ItemFactory;
 import RogueLike.Main.FieldOfView;
-import RogueLike.Main.Skill;
 import RogueLike.Main.Tile;
 import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.Utils.PlayerBuildDetails;
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
 
@@ -273,7 +270,7 @@ public class GameplayScreen implements Screen{
 	private World world;
 	private int screenWidth;
 	private int screenHeight;
-	public Creature player;
+	public Player player;
 	public List<Effect> effects;
 	private NotificationHistory playerNotifications;
 	private final FieldOfView fov;

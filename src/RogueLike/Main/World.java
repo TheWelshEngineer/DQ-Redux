@@ -8,6 +8,7 @@ import java.util.List;
 
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
@@ -42,8 +43,8 @@ public class World {
 		return depth;
 	}
 
-	private Creature player;
-	public Creature player() {
+	private Player player;
+	public Player player() {
 		if (player == null) {
 			// defensive programming! we don't want things to pick up a dead reference to the player.
 			// anything that needs a reference should only need to get one after worldgen is complete

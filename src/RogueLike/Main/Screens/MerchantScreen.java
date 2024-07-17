@@ -2,16 +2,18 @@ package RogueLike.Main.Screens;
 
 import java.util.ArrayList;
 
+import RogueLike.Main.Creatures.Merchant;
+import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 
 public class MerchantScreen extends InventoryBasedScreen{
 	
-	private Creature merchant;
-	private Creature player;
+	private Merchant merchant;
+	private Player player;
 
-	public MerchantScreen(Creature merchant, Creature player) {
+	public MerchantScreen(Merchant merchant, Player player) {
 		super(merchant);
 		this.merchant = merchant;
 		this.player = player;

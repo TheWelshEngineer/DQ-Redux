@@ -2,6 +2,8 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.Enums.PlayerAncestry;
+import RogueLike.Main.Enums.PlayerClass;
 import RogueLike.Main.ExtendedAsciiPanel;
 
 public class ChooseClassScreen implements Screen{
@@ -12,15 +14,12 @@ public class ChooseClassScreen implements Screen{
 		check = value;
 	}
 	
-	public ChooseClassScreen(String playerAncestry) {
-		setAncestry(playerAncestry);
+	public ChooseClassScreen(PlayerAncestry playerAncestry) {
+		this.playerAncestry = playerAncestry;
 	}
 	
-	private String playerAncestry;
-	public void setAncestry(String ancestry) {
-		playerAncestry = ancestry;
-	}
-	
+	private final PlayerAncestry playerAncestry;
+
 	public char borderVertical = 186;
 	public char borderHorizontal = 205;
 	public char borderCorner = 206;
@@ -215,13 +214,13 @@ public class ChooseClassScreen implements Screen{
 			
 		case KeyEvent.VK_ENTER:
 			if(check == 0) {
-				return new ChooseAbilityScreen("Warrior", playerAncestry);
+				return new ChooseAbilityScreen(PlayerClass.WARRIOR, playerAncestry);
 			}else if(check == 1) {
-				return new ChooseAbilityScreen("Rogue", playerAncestry);
+				return new ChooseAbilityScreen(PlayerClass.ROGUE, playerAncestry);
 			}else if(check == 2) {
-				return new ChooseAbilityScreen("Mage", playerAncestry);
+				return new ChooseAbilityScreen(PlayerClass.MAGE, playerAncestry);
 			}else if(check == 3) {
-				return new ChooseAbilityScreen("Ranger", playerAncestry);
+				return new ChooseAbilityScreen(PlayerClass.RANGER, playerAncestry);
 			}
 		case KeyEvent.VK_ESCAPE: return new ChooseAncestryScreen();
 		}

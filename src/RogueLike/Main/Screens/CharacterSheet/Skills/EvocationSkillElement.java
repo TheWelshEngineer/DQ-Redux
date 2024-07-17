@@ -2,6 +2,7 @@ package RogueLike.Main.Screens.CharacterSheet.Skills;
 
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Screens.CharacterSheet.SkillElement;
+import RogueLike.Main.SkillInstance;
 
 public class EvocationSkillElement extends SkillElement {
 
@@ -10,8 +11,8 @@ public class EvocationSkillElement extends SkillElement {
     }
 
     @Override
-    protected int skillIndex() {
-        return 8;
+    protected SkillInstance skill() {
+        return player.skills().evocation;
     }
 
     @Override
