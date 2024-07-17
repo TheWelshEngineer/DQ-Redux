@@ -1,12 +1,9 @@
 package RogueLike.Main.Factories;
 
-import java.util.List;
-
 import RogueLike.Main.Creatures.*;
 import RogueLike.Main.Dice;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.FieldOfView;
-import RogueLike.Main.Skill;
 import RogueLike.Main.AI.ChestAI;
 import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.Creatures.Constructs.AnimatedArmor;

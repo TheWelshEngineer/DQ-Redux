@@ -4,14 +4,11 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Skill;
 import RogueLike.Main.Managers.KeybindManager;
-import RogueLike.Main.Managers.SkillManager;
 import RogueLike.Main.Skillset;
 import RogueLike.Main.Utils.PlayerBuildDetails;
 
 
-// TODO: This _really_ wants refactoring.
 public class ChooseSkillScreen implements Screen{
 	
 	public String playerClass;

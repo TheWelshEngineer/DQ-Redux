@@ -2,7 +2,7 @@ package RogueLike.Main.Screens.CharacterSheet.Skills;
 
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Screens.CharacterSheet.SkillElement;
-import RogueLike.Main.Skill;
+import RogueLike.Main.SkillInstance;
 
 public class FerromancySkillElement extends SkillElement {
 
@@ -11,7 +11,7 @@ public class FerromancySkillElement extends SkillElement {
     }
 
     @Override
-    protected Skill skill() {
+    protected SkillInstance skill() {
         return player.skills().ferromancy;
     }
 

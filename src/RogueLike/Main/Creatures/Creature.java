@@ -14,7 +14,6 @@ import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.Factories.EffectFactory;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
-import RogueLike.Main.Managers.SkillManager;
 import RogueLike.Main.Screens.SpellTargetingScreen;
 import RogueLike.Main.Screens.SpellSelectScreen;
 import RogueLike.Main.Screens.GameplayScreen;

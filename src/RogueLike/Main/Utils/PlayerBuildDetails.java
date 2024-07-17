@@ -1,6 +1,5 @@
 package RogueLike.Main.Utils;
 
-import RogueLike.Main.Skill;
 import RogueLike.Main.Skillset;
 
 import java.util.List;

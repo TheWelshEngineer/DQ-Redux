@@ -1,10 +1,8 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Skill;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Utils.PlayerBuildDetails;
 

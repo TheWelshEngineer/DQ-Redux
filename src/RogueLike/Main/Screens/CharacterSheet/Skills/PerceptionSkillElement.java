@@ -1,9 +1,8 @@
 package RogueLike.Main.Screens.CharacterSheet.Skills;
 
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Screens.CharacterSheet.SkillElement;
-import RogueLike.Main.Skill;
+import RogueLike.Main.SkillInstance;
 
 public class PerceptionSkillElement extends SkillElement {
 
@@ -12,7 +11,7 @@ public class PerceptionSkillElement extends SkillElement {
     }
 
     @Override
-    protected Skill skill() {
+    protected SkillInstance skill() {
         return player.skills().perception;
     }
 

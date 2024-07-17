@@ -2,7 +2,7 @@ package RogueLike.Main.Screens.CharacterSheet;
 
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.ExtraMaths;
-import RogueLike.Main.Skill;
+import RogueLike.Main.SkillInstance;
 
 public abstract class SkillElement extends CharacterSheetElement {
     protected final Creature player;
@@ -16,7 +16,7 @@ public abstract class SkillElement extends CharacterSheetElement {
         return String.format("%s: %s", skill().name(), ExtraMaths.toRomanNumerals(skill().level()));
     }
 
-    protected abstract Skill skill();
+    protected abstract SkillInstance skill();
 
     protected abstract String descriptionLevel1();
 
