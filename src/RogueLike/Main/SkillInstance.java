@@ -5,7 +5,7 @@ public class SkillInstance {
 	public final Skill type;
 
 	public String name() {
-		return type.name;
+		return type.toString();
 	}
 	public String toString() {
 		return String.format("%s (%d)", this.name(), this.level);

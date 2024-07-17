@@ -16,9 +16,14 @@ public enum Skill {
 	ALCHEMANCY("Alchemancy"),
 	FERROMANCY("Ferromancy"),
 	;
-	public final String name;
+	private final String name;
 
 	Skill(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 }
