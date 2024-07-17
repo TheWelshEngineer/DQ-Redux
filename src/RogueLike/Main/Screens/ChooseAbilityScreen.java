@@ -4,14 +4,16 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import RogueLike.Main.Enums.PlayerAncestry;
+import RogueLike.Main.Enums.PlayerClass;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Managers.KeybindManager;
 
 public class ChooseAbilityScreen implements Screen{
 	
-	public String playerClass;
-	public String playerAncestry;
+	public PlayerClass playerClass;
+	public PlayerAncestry playerAncestry;
 	 
 	public int check = 0;
 	public void setCheck(int value) {
@@ -205,7 +207,7 @@ public class ChooseAbilityScreen implements Screen{
 	
 
 
-	public ChooseAbilityScreen(String playerClass, String playerAncestry) {
+	public ChooseAbilityScreen(PlayerClass playerClass, PlayerAncestry playerAncestry) {
 		this.playerClass = playerClass;
 		this.playerAncestry = playerAncestry;
 		playerAbilities.add(playerStrength);

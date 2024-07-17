@@ -2,6 +2,8 @@ package RogueLike.Main.Factories;
 
 import RogueLike.Main.Creatures.*;
 import RogueLike.Main.Dice;
+import RogueLike.Main.Enums.PlayerAncestry;
+import RogueLike.Main.Enums.PlayerClass;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.AI.ChestAI;
@@ -63,7 +65,7 @@ public ModifierFactory modifierFactory;
 		
 		player.setPlayerName(details.name);
 		player.setPlayerAncestry(details.ancestry);
-		player.creatureTypes.add(details.ancestry);
+		player.creatureTypes.add(details.ancestry.toString());
 		
 		player.setStrength(details.startingStats.get(0));
 		player.setDexterity(details.startingStats.get(1));
@@ -75,7 +77,7 @@ public ModifierFactory modifierFactory;
 		player.setMaxHP((player.baseStrength()*2)-5);
 
 		//Max Mana
-		if(details.ancestry == "Elf") {
+		if(details.ancestry == PlayerAncestry.ELF) {
 			int amount = (int) Math.ceil((((player.baseIntelligence()*2)-5)*1.25));
 			player.setMaxMana(amount);
 		}else {
@@ -83,101 +85,106 @@ public ModifierFactory modifierFactory;
 		}
 		
 		//Ancestry Traits
-		if(details.ancestry == "Dwarf") {
+		if(details.ancestry == PlayerAncestry.DWARF) {
 			player.modifyBaseArmorClass(1);
 			player.addResistanceTo(DamageType.POISON);
 		}
-		if(details.ancestry == "Dragonborn") {
+		if(details.ancestry == PlayerAncestry.DRAGONBORN) {
 			player.addResistanceTo(DamageType.FIRE);
 		}
 		
 		//Class Equipment
 		player.setPlayerClass(details.playerClass);
-		if(details.playerClass == "Warrior") {
-			Item startWeaponWarrior = objectFactory.itemFactory.newShortsword(0, false);
-			player.learnNameQuiet(startWeaponWarrior);
-			player.inventory().add(startWeaponWarrior);
-			player.equip(startWeaponWarrior);
-			Item startArmorWarrior = objectFactory.itemFactory.newChainmailArmor(0, false);
-			player.learnNameQuiet(startArmorWarrior);
-			player.inventory().add(startArmorWarrior);
-			player.equip(startArmorWarrior);
-			Item startShieldWarrior = objectFactory.itemFactory.newRoundShield(0, false);
-			player.learnNameQuiet(startShieldWarrior);
-			player.inventory().add(startShieldWarrior);
-			player.equip(startShieldWarrior);
-			
-			player.setHPScaleAmount(player.hpScaleHigh());
-			player.setManaScaleAmount(player.manaScaleLow());
-			
-		}else if(details.playerClass == "Rogue") {
-			Item startWeaponRogue = objectFactory.itemFactory.newDagger(0, false);
-			player.learnNameQuiet(startWeaponRogue);
-			player.inventory().add(startWeaponRogue);
-			player.equip(startWeaponRogue);
-			player.equipToQuickslot(startWeaponRogue, 1);
-			Item startArmorRogue = objectFactory.itemFactory.newPaddedClothArmor(0, false);
-			player.learnNameQuiet(startArmorRogue);
-			player.inventory().add(startArmorRogue);
-			player.equip(startArmorRogue);
-			Item startItemRogue = objectFactory.itemFactory.newPotionOfInvisibility(0, false);
-			player.learnNameQuiet(startItemRogue);
-			player.inventory().add(startItemRogue);
-			
-			player.setHPScaleAmount(player.hpScaleMedium());
-			player.setManaScaleAmount(player.manaScaleMedium());
-			
-		}else if(details.playerClass == "Mage") {
-			Item startWeaponWizard = objectFactory.itemFactory.newClub(0, false);
-			player.learnNameQuiet(startWeaponWizard);
-			player.inventory().add(startWeaponWizard);
-			player.equip(startWeaponWizard);
-			Item startArmorWizard = objectFactory.itemFactory.newPaddedClothArmor(0, false);
-			player.learnNameQuiet(startArmorWizard);
-			player.inventory().add(startArmorWizard);
-			player.equip(startArmorWizard);
-			Item startWandMage = objectFactory.itemFactory.newMagicMissileWand(0, player, false);
-			player.learnNameQuiet(startWandMage);
-			player.inventory().add(startWandMage);
-			player.equipToQuickslot(startWandMage, 1);
+		switch (details.playerClass) {
+			case WARRIOR:
+				Item startWeaponWarrior = objectFactory.itemFactory.newShortsword(0, false);
+				player.learnNameQuiet(startWeaponWarrior);
+				player.inventory().add(startWeaponWarrior);
+				player.equip(startWeaponWarrior);
+				Item startArmorWarrior = objectFactory.itemFactory.newChainmailArmor(0, false);
+				player.learnNameQuiet(startArmorWarrior);
+				player.inventory().add(startArmorWarrior);
+				player.equip(startArmorWarrior);
+				Item startShieldWarrior = objectFactory.itemFactory.newRoundShield(0, false);
+				player.learnNameQuiet(startShieldWarrior);
+				player.inventory().add(startShieldWarrior);
+				player.equip(startShieldWarrior);
 
-			player.setHPScaleAmount(player.hpScaleLow());
-			player.setManaScaleAmount(player.manaScaleHigh());
-			
-		}else if(details.playerClass == "Ranger") {
-			Item startBowRanger = objectFactory.itemFactory.newShortbow(0, false);
-			player.learnNameQuiet(startBowRanger);
-			player.inventory().add(startBowRanger);
-			player.equip(startBowRanger);
-			Item startWeaponRanger = objectFactory.itemFactory.newClub(0, false);
-			player.learnNameQuiet(startWeaponRanger);
-			player.inventory().add(startWeaponRanger);
-			Item startArmorRanger = objectFactory.itemFactory.newPaddedClothArmor(0, false);
-			player.learnNameQuiet(startArmorRanger);
-			player.inventory().add(startArmorRanger);
-			player.equip(startArmorRanger);
-			Item startItemRanger = objectFactory.itemFactory.newArrows(0, 0);
-			startItemRanger.setStackAmount(20);
-			player.learnNameQuiet(startItemRanger);
-			player.inventory().add(startItemRanger);
-			player.equip(startItemRanger);
-			
-			player.setHPScaleAmount(player.hpScaleMedium());
-			player.setManaScaleAmount(player.manaScaleMedium());
-			
-		}else{
-			throw new IllegalArgumentException(details.playerClass);
+				player.setHPScaleAmount(player.hpScaleHigh());
+				player.setManaScaleAmount(player.manaScaleLow());
+				break;
+
+			case ROGUE:
+				Item startWeaponRogue = objectFactory.itemFactory.newDagger(0, false);
+				player.learnNameQuiet(startWeaponRogue);
+				player.inventory().add(startWeaponRogue);
+				player.equip(startWeaponRogue);
+				player.equipToQuickslot(startWeaponRogue, 1);
+				Item startArmorRogue = objectFactory.itemFactory.newPaddedClothArmor(0, false);
+				player.learnNameQuiet(startArmorRogue);
+				player.inventory().add(startArmorRogue);
+				player.equip(startArmorRogue);
+				Item startItemRogue = objectFactory.itemFactory.newPotionOfInvisibility(0, false);
+				player.learnNameQuiet(startItemRogue);
+				player.inventory().add(startItemRogue);
+
+				player.setHPScaleAmount(player.hpScaleMedium());
+				player.setManaScaleAmount(player.manaScaleMedium());
+				break;
+
+			case MAGE:
+				Item startWeaponWizard = objectFactory.itemFactory.newClub(0, false);
+				player.learnNameQuiet(startWeaponWizard);
+				player.inventory().add(startWeaponWizard);
+				player.equip(startWeaponWizard);
+				Item startArmorWizard = objectFactory.itemFactory.newPaddedClothArmor(0, false);
+				player.learnNameQuiet(startArmorWizard);
+				player.inventory().add(startArmorWizard);
+				player.equip(startArmorWizard);
+				Item startWandMage = objectFactory.itemFactory.newMagicMissileWand(0, player, false);
+				player.learnNameQuiet(startWandMage);
+				player.inventory().add(startWandMage);
+				player.equipToQuickslot(startWandMage, 1);
+
+				player.setHPScaleAmount(player.hpScaleLow());
+				player.setManaScaleAmount(player.manaScaleHigh());
+				break;
+
+			case RANGER:
+				Item startBowRanger = objectFactory.itemFactory.newShortbow(0, false);
+				player.learnNameQuiet(startBowRanger);
+				player.inventory().add(startBowRanger);
+				player.equip(startBowRanger);
+				Item startWeaponRanger = objectFactory.itemFactory.newClub(0, false);
+				player.learnNameQuiet(startWeaponRanger);
+				player.inventory().add(startWeaponRanger);
+				Item startArmorRanger = objectFactory.itemFactory.newPaddedClothArmor(0, false);
+				player.learnNameQuiet(startArmorRanger);
+				player.inventory().add(startArmorRanger);
+				player.equip(startArmorRanger);
+				Item startItemRanger = objectFactory.itemFactory.newArrows(0, 0);
+				startItemRanger.setStackAmount(20);
+				player.learnNameQuiet(startItemRanger);
+				player.inventory().add(startItemRanger);
+				player.equip(startItemRanger);
+
+				player.setHPScaleAmount(player.hpScaleMedium());
+				player.setManaScaleAmount(player.manaScaleMedium());
+				break;
+
+			default:
+				throw new IllegalArgumentException(details.playerClass.toString());
 		}
 	
 		//Starting Food
 		player.inventory().add(objectFactory.itemFactory.newRations(0, 0));
 		
 		//Ancestry Items
-		if(details.ancestry == "Dragonborn") {
+		if(details.ancestry == PlayerAncestry.DRAGONBORN) {
 			Item startWandDragonborn = objectFactory.itemFactory.newFireboltWand(0, player, false);
 			player.learnNameQuiet(startWandDragonborn);
 			player.inventory().add(startWandDragonborn);
-			if(details.playerClass == "Mage") {
+			if(details.playerClass == PlayerClass.MAGE) {
 				player.equipToQuickslot(startWandDragonborn, 2);
 			}else {
 				player.equipToQuickslot(startWandDragonborn, 1);

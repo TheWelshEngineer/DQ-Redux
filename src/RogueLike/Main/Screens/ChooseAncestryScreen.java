@@ -2,6 +2,7 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 
+import RogueLike.Main.Enums.PlayerAncestry;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 
@@ -201,15 +202,15 @@ public class ChooseAncestryScreen implements Screen{
 			
 		case KeybindManager.navigateMenuConfirm:
 			if(check == 0) {
-				return new ChooseClassScreen("Human");
+				return new ChooseClassScreen(PlayerAncestry.HUMAN);
 			}else if(check == 1) {
-				return new ChooseClassScreen("Elf");
+				return new ChooseClassScreen(PlayerAncestry.ELF);
 			}else if(check == 2) {
-				return new ChooseClassScreen("Dwarf");
+				return new ChooseClassScreen(PlayerAncestry.DWARF);
 			}else if(check == 3) {
-				return new ChooseClassScreen("Orc");
+				return new ChooseClassScreen(PlayerAncestry.ORC);
 			}else if(check == 4) {
-				return new ChooseClassScreen("Dragonborn");
+				return new ChooseClassScreen(PlayerAncestry.DRAGONBORN);
 			}
 			
 		case KeybindManager.navigateMenuBack: return new MainMenuScreen();

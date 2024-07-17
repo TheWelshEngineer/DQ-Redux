@@ -11,6 +11,7 @@ import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Damage.*;
 import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.Entities.Trap;
+import RogueLike.Main.Enums.PlayerAncestry;
 import RogueLike.Main.Factories.EffectFactory;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
@@ -2649,8 +2650,8 @@ public class Creature implements Cloneable{
 		addEffect(item.quaffEffect());
 		modifyFood(item.foodValue());
 		// TODO(dd): This looks like a hacky way of handling the heal-on-eat for players
-		if(this instanceof Player && ((Player)this).playerAncestry() == "Orc") {
-			heal((int) Math.ceil(item.foodValue()/100), true);
+		if(this instanceof Player && ((Player)this).playerAncestry() == PlayerAncestry.ORC) {
+			heal((int) Math.ceil(item.foodValue()/100.0), true);
 		}
 		if(item.isCorpse()) {
 			int effectChance = this.strengthRoll();

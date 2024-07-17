@@ -22,31 +22,33 @@ public class LevelElement extends CharacterSheetElement {
     }
 
     private String details2() {
-        if (player.playerClass().equals("Rogue")) {
-            return "As a Rogue, you regenerate health and mana at a roughly even rate.";
-        } else if (player.playerClass().equals("Ranger")) {
-            return "As a Ranger, you regenerate health and mana at a roughly even rate.";
-        } else if (player.playerClass().equals("Warrior")) {
-            return "As a Warrior, your health regenerates quickly, at the expense of your mana.";
-        } else if (player.playerClass().equals("Mage")) {
-            return "As a Mage, your mana regenerates quickly, at the expense of your health.";
-        } else {
-            throw new IllegalStateException(player.playerClass());
+        switch (player.playerClass()) {
+            case ROGUE:
+                return "As a Rogue, you regenerate health and mana at a roughly even rate.";
+            case RANGER:
+                return "As a Ranger, you regenerate health and mana at a roughly even rate.";
+            case WARRIOR:
+                return "As a Warrior, your health regenerates quickly, at the expense of your mana.";
+            case MAGE:
+                return "As a Mage, your mana regenerates quickly, at the expense of your health.";
+            default:
+                throw new IllegalStateException(player.playerClass().toString());
         }
     }
     private String details3() {
-        if (player.playerAncestry().equals("Human")) {
-            return "As a Human, you began your quest with an addtional skill point.";
-        } else if (player.playerAncestry().equals("Elf")) {
-            return "As an Elf, you gain 25% more maximum mana upon levelling up.";
-        } else if (player.playerAncestry().equals("Dwarf")) {
-            return "As a Dwarf, you are resistant to Poison damage, and your base armor class is increased by 1.";
-        } else if (player.playerAncestry().equals("Orc")) {
-            return "As an Orc, you regenerate health whenever you eat, based on the quality of the food item you ate.";
-        } else if (player.playerAncestry().equals("Dragonborn")) {
-            return "As a Dragonborn, you are resistant to Fire damage, and began your quest with a Wand of Firebolt.";
-        } else {
-            throw new IllegalStateException(player.playerAncestry());
+        switch (player.playerAncestry()) {
+            case HUMAN:
+                return "As a Human, you began your quest with an addtional skill point.";
+            case ELF:
+                return "As an Elf, you gain 25% more maximum mana upon levelling up.";
+            case DWARF:
+                return "As a Dwarf, you are resistant to Poison damage, and your base armor class is increased by 1.";
+            case ORC:
+                return "As an Orc, you regenerate health whenever you eat, based on the quality of the food item you ate.";
+            case DRAGONBORN:
+                return "As a Dragonborn, you are resistant to Fire damage, and began your quest with a Wand of Firebolt.";
+            default:
+                throw new IllegalStateException(player.playerAncestry().toString());
         }
     }
 }

@@ -4,6 +4,8 @@ import java.awt.event.KeyEvent;
 import java.util.EnumSet;
 import java.util.List;
 
+import RogueLike.Main.Enums.PlayerAncestry;
+import RogueLike.Main.Enums.PlayerClass;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Skill;
@@ -12,9 +14,9 @@ import RogueLike.Main.Utils.PlayerBuildDetails;
 
 
 public class ChooseSkillScreen implements Screen{
-	private final String playerClass;
+	private final PlayerClass playerClass;
 	private final String playerName;
-	private final String playerAncestry;
+	private final PlayerAncestry playerAncestry;
 	private final List<Integer> playerAbilities;
 
 	private int skillPoints = 2;
@@ -26,21 +28,21 @@ public class ChooseSkillScreen implements Screen{
 	/** Skills that are forced to be selected based on the class chosen. */
 	private final EnumSet<Skill> classSkills;
 	
-	public ChooseSkillScreen(String playerClass, List<Integer> playerAbilities, String playerName, String playerAncestry) {
+	public ChooseSkillScreen(PlayerClass playerClass, List<Integer> playerAbilities, String playerName, PlayerAncestry playerAncestry) {
 		this.playerClass = playerClass;
 		this.playerAbilities = playerAbilities;
 		this.playerName = playerName;
 		this.playerAncestry = playerAncestry;
-		if(this.playerAncestry == "Human") {
+		if(this.playerAncestry == PlayerAncestry.HUMAN) {
 			this.skillPoints = 3;
 		}
 
 		switch (playerClass) {
-			case "Warrior": classSkills = EnumSet.of(Skill.MARTIAL_WEAPONS, Skill.ARMOR_TRAINING); break;
-			case "Rogue": classSkills = EnumSet.of(Skill.FINESSE_WEAPONS, Skill.STEALTH); break;
-			case "Mage": classSkills = EnumSet.of(Skill.EVOCATION, Skill.SIMPLE_WEAPONS); break;
-			case "Ranger": classSkills = EnumSet.of(Skill.RANGED_WEAPONS, Skill.PERCEPTION); break;
-			default: throw new IllegalArgumentException(playerClass);
+			case WARRIOR: classSkills = EnumSet.of(Skill.MARTIAL_WEAPONS, Skill.ARMOR_TRAINING); break;
+			case ROGUE: classSkills = EnumSet.of(Skill.FINESSE_WEAPONS, Skill.STEALTH); break;
+			case MAGE: classSkills = EnumSet.of(Skill.EVOCATION, Skill.SIMPLE_WEAPONS); break;
+			case RANGER: classSkills = EnumSet.of(Skill.RANGED_WEAPONS, Skill.PERCEPTION); break;
+			default: throw new IllegalArgumentException(playerClass.toString());
 		}
 	}
 	

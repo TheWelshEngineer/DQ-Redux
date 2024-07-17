@@ -1,29 +1,31 @@
 package RogueLike.Main.Creatures;
 
+import RogueLike.Main.Enums.PlayerAncestry;
+import RogueLike.Main.Enums.PlayerClass;
 import RogueLike.Main.World;
 
 import java.awt.*;
 
 public class Player extends Creature {
-	private String playerClass;
-	private String playerAncestry;
+	private PlayerClass playerClass;
+	private PlayerAncestry playerAncestry;
 	private String playerName;
 
 	public Player(World world, String name, char glyph, Color color, int maxHP, int maxMana, int armorclass, int strength, int dexterity, int intelligence, int visionRadius, int inventorySize) {
 		super(world, name, glyph, color, maxHP, maxMana, armorclass, strength, dexterity, intelligence, visionRadius, inventorySize);
 	}
 
-	public String playerClass() {
+	public PlayerClass playerClass() {
 		return playerClass;
 	}
-	public void setPlayerClass(String newClass) {
+	public void setPlayerClass(PlayerClass newClass) {
 		playerClass = newClass;
 	}
 
-	public String playerAncestry() {
+	public PlayerAncestry playerAncestry() {
 		return playerAncestry;
 	}
-	public void setPlayerAncestry(String ancestry) {
+	public void setPlayerAncestry(PlayerAncestry ancestry) {
 		playerAncestry = ancestry;
 	}
 
@@ -37,7 +39,7 @@ public class Player extends Creature {
 	@Override
 	public int manaGainedOnLevelUp() {
 		int bonus = super.manaGainedOnLevelUp();
-		if (playerAncestry == "Elf") {
+		if (playerAncestry == PlayerAncestry.ELF) {
 			bonus += proficiencyBonus();
 		}
 		return bonus;
