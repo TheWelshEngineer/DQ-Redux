@@ -45,6 +45,6 @@ public class SmallCell extends Structure {
 
 	@Override
 	protected Stream<Point> getReservedArea() {
-		return new Rectangle(new Point(x, y, z), internalWidth + 2, internalHeight + 2).stream();
+		return new Rectangle(new Point(x, y, z), internalWidth + 4, internalHeight + 4).stream();
 	}
 }
