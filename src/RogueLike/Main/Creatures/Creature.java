@@ -5,7 +5,7 @@ import java.util.*;
 
 import RogueLike.Main.*;
 import RogueLike.Main.AI.CreatureAI;
-import RogueLike.Main.AoE.Line;
+import RogueLike.Main.Utils.PointShapes.Line;
 import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Damage.*;
 import RogueLike.Main.Entities.Entity;

@@ -338,9 +338,9 @@ public class InventoryScreen implements Screen{
 							Spell wandSpell = item.writtenSpells().get(0);
 							if(wandSpell.aoe() != null) {
 								if(wandSpell.aoe().size() > 0) {
-									range = String.format("Range: %s (%d)", wandSpell.aoe().sizeWord(), wandSpell.aoe().size());
+									range = String.format("Range: %s (%d)", wandSpell.aoe().typeName(), wandSpell.aoe().size());
 								}else {
-									range = String.format("Range: %s (Sight)", wandSpell.aoe().sizeWord());
+									range = String.format("Range: %s (Sight)", wandSpell.aoe().typeName());
 								}
 							}else if(wandSpell.isSelfCast()) {
 								range = "Range: Self";

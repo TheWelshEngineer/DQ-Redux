@@ -1,6 +1,6 @@
 package RogueLike.Main.Worldgen.Blueprints;
 
-import RogueLike.Main.AoE.Line;
+import RogueLike.Main.Utils.PointShapes.Line;
 import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Entities.Teleporter;

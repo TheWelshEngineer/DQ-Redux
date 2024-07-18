@@ -1,6 +1,6 @@
 package RogueLike.Main;
 
-import RogueLike.Main.AoE.Line;
+import RogueLike.Main.Utils.PointShapes.Line;
 import RogueLike.Main.Utils.PointShapes.Point;
 
 public class FieldOfView {

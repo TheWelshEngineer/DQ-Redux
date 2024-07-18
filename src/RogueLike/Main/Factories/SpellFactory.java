@@ -1,8 +1,8 @@
 package RogueLike.Main.Factories;
 
+import RogueLike.Main.AoE.LineAoe;
+import RogueLike.Main.AoE.SquareAoe;
 import RogueLike.Main.Spell;
-import RogueLike.Main.AoE.Line;
-import RogueLike.Main.AoE.Square;
 import RogueLike.Main.Creatures.Creature;
 
 public class SpellFactory {
@@ -29,7 +29,7 @@ public class SpellFactory {
 	}
 	
 	public Spell chainLightning(Creature caster) {
-		Spell lightning = new Spell("Chain Lightning", 3, 4, caster, effectFactory.chainLightning(caster), false, false, new Square(2));
+		Spell lightning = new Spell("Chain Lightning", 3, 4, caster, effectFactory.chainLightning(caster), false, false, new SquareAoe(2));
 		return lightning;
 	}
 	
@@ -39,7 +39,7 @@ public class SpellFactory {
 	}
 	
 	public Spell iceWall(Creature caster) {
-		Spell wall = new Spell("Ice Wall", 5, 8, caster, effectFactory.iceWall(caster), false, true, new Line(5));
+		Spell wall = new Spell("Ice Wall", 5, 8, caster, effectFactory.iceWall(caster), false, true, new LineAoe(5));
 		return wall;
 	}
 	
@@ -79,7 +79,7 @@ public class SpellFactory {
 	}
 	
 	public Spell iceKnife(Creature caster) {
-		Spell iceKnife = new Spell("Ice Knife", 19, 8, caster, effectFactory.iceKnife(caster), false, false, new Square(1));
+		Spell iceKnife = new Spell("Ice Knife", 19, 8, caster, effectFactory.iceKnife(caster), false, false, new SquareAoe(1));
 		return iceKnife;
 	}
 	
@@ -89,12 +89,12 @@ public class SpellFactory {
 	}
 	
 	public Spell brazierBarrier(Creature caster) {
-		Spell brazierBarrier = new Spell("Brazier Barrier", 21, 4, caster, effectFactory.brazierBarrier(caster), true, false, new Square(2));
+		Spell brazierBarrier = new Spell("Brazier Barrier", 21, 4, caster, effectFactory.brazierBarrier(caster), true, false, new SquareAoe(2));
 		return brazierBarrier;
 	}
 	
 	public Spell pyrotechnics(Creature caster) {
-		Spell pyrotechnics = new Spell("Pyrotechnics", 22, 4, caster, effectFactory.pyrotechnics(caster), false, false, new Square(3));
+		Spell pyrotechnics = new Spell("Pyrotechnics", 22, 4, caster, effectFactory.pyrotechnics(caster), false, false, new SquareAoe(3));
 		return pyrotechnics;
 	}
 	
@@ -104,17 +104,17 @@ public class SpellFactory {
 	}
 	
 	public Spell glaciate(Creature caster) {
-		Spell glaciate = new Spell("Glaciate", 24, 4, caster, effectFactory.glaciate(caster), true, false, new Square(2));
+		Spell glaciate = new Spell("Glaciate", 24, 4, caster, effectFactory.glaciate(caster), true, false, new SquareAoe(2));
 		return glaciate;
 	}
 	
 	public Spell lightningLance(Creature caster) {
-		Spell lightningLance = new Spell("Lightning Lance", 25, 4, caster, effectFactory.lightningLance(caster), false, false, new Line(0));
+		Spell lightningLance = new Spell("Lightning Lance", 25, 4, caster, effectFactory.lightningLance(caster), false, false, new LineAoe(0));
 		return lightningLance;
 	}
 	
 	public Spell staticSurge(Creature caster) {
-		Spell staticSurge = new Spell("Static Surge", 26, 4, caster, effectFactory.staticSurge(caster), true, false, new Square(1));
+		Spell staticSurge = new Spell("Static Surge", 26, 4, caster, effectFactory.staticSurge(caster), true, false, new SquareAoe(1));
 		return staticSurge;
 	}
 	
@@ -124,12 +124,12 @@ public class SpellFactory {
 	}
 	
 	public Spell archmagesAegis(Creature caster) {
-		Spell archmagesAegis = new Spell("Archmage's Aegis", 28, 4, caster, effectFactory.archmagesAegis(caster), true, false, new Square(2));
+		Spell archmagesAegis = new Spell("Archmage's Aegis", 28, 4, caster, effectFactory.archmagesAegis(caster), true, false, new SquareAoe(2));
 		return archmagesAegis;
 	}
 	
 	public Spell findTraps(Creature caster) {
-		Spell findTraps = new Spell("Find Traps", 29, 4, caster, effectFactory.findTraps(), true, false, new Square(0));
+		Spell findTraps = new Spell("Find Traps", 29, 4, caster, effectFactory.findTraps(), true, false, new SquareAoe(0));
 		return findTraps;
 	}
 	
@@ -139,7 +139,7 @@ public class SpellFactory {
 	}
 	
 	public Spell refluxBarrier(Creature caster) {
-		Spell refluxBarrier = new Spell("Reflux Barrier", 31, 4, caster, effectFactory.refluxBarrier(caster), true, false, new Square(1));
+		Spell refluxBarrier = new Spell("Reflux Barrier", 31, 4, caster, effectFactory.refluxBarrier(caster), true, false, new SquareAoe(1));
 		return refluxBarrier;
 	}
 	
@@ -154,7 +154,7 @@ public class SpellFactory {
 	}
 	
 	public Spell bladsWard(Creature caster) {
-		Spell bladsWard = new Spell("Blad's Ward", 34, 4, caster, effectFactory.bladsWard(caster), true, false, new Square(1));
+		Spell bladsWard = new Spell("Blad's Ward", 34, 4, caster, effectFactory.bladsWard(caster), true, false, new SquareAoe(	1));
 		return bladsWard;
 	}
 	
