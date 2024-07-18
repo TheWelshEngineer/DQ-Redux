@@ -20,6 +20,7 @@ import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
+import RogueLike.Main.Worldgen.WorldGenerationException;
 
 public class GameplayScreen implements Screen{
 	
@@ -293,10 +294,20 @@ public class GameplayScreen implements Screen{
 	}
 	
 	private World createWorld(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
-		//IMPORTANT: World Width // World Height // World Depth
-		return new WorldBuilder(120, 60, 22)
-				.generateWorld()
-				.build(playerNotifications, playerDetails);
+		// This is a bit of a hacky way of handling the "world fails to generate sometimes" issue - just keep trying
+		// until it generates successfully!
+		while (true) {
+			System.out.println("Generating world...");
+			try {
+				//IMPORTANT: World Width // World Height // World Depth
+				return new WorldBuilder(120, 60, 22)
+						.generateWorld()
+						.build(playerNotifications, playerDetails);
+			}
+			catch (WorldGenerationException e) {
+				System.out.printf("!!! Error - Aborting generation due to %s%n", e);
+			}
+		}
 	}
 	
 	public int getScrollX() {

@@ -38,7 +38,6 @@ public class CaveFloor extends Blueprint {
 		// Smoothing
 		for (int i = 0; i < numSmoothingIterations; i++) {
 			tiles = smoothTiles(tiles);
-			System.out.printf("Smoothing iteration %d done for depth %d.%n", i, depth);
 		}
 
 		// Apply the generated tiles

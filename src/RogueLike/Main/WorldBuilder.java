@@ -11,6 +11,7 @@ import RogueLike.Main.Worldgen.Blueprint;
 import RogueLike.Main.Worldgen.Blueprints.CaveFloor;
 import RogueLike.Main.Worldgen.Blueprints.MerchantFloor;
 import RogueLike.Main.Worldgen.Structure;
+import RogueLike.Main.Worldgen.WorldGenerationException;
 
 public class WorldBuilder {
 	private int width;
@@ -149,11 +150,9 @@ public class WorldBuilder {
 			.collect(Collectors.toList());
 
 		if (candidates.isEmpty()) {
-//			throw new RuntimeException(
-//				String.format("Failed to generate world - could not generate downwards stairs on depth %d", z)
-//			);
-			// TODO handle this!!
-			return;
+			throw new WorldGenerationException(
+				String.format("Failed to generate world - could not generate downwards stairs on depth %d", z)
+			);
 		}
 		
 		int stairs = 0;
