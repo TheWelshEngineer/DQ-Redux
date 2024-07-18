@@ -1,16 +1,21 @@
 package RogueLike.Main.Worldgen.Blueprints;
 
+import RogueLike.Main.*;
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
-import RogueLike.Main.Tile;
-import RogueLike.Main.World;
-import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Worldgen.Blueprint;
+import RogueLike.Main.Worldgen.Structure;
+import RogueLike.Main.Worldgen.Structures.*;
+
+import java.util.Optional;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 public class CaveFloor extends Blueprint {
 	private final int depth;
 	private final int numSmoothingIterations = 9;
+	private final int numStructuresToSpawn = 20;
 
 	public CaveFloor(WorldBuilder builder, int depth) {
 		super(builder);
@@ -41,6 +46,14 @@ public class CaveFloor extends Blueprint {
 			for(int y = 0; y < builder.height(); y++) {
 				builder.setTile(x, y, depth, tiles[x][y]);
 			}
+		}
+
+		// Add structures
+		for (int i = 0; i < numStructuresToSpawn; i++) {
+			randomStructure().ifPresentOrElse(
+				builder::addStructure,
+				() -> System.out.printf("Failed to place a structure at depth %d%n", depth)
+			);
 		}
 	}
 
@@ -84,9 +97,6 @@ public class CaveFloor extends Blueprint {
 	}
 
 	public void createCreatures(World world) {
-		for(int i = 0; i < 20; i++) { // 20
-			world.factory().creatureFactory.newMarker(depth, world.player(), true);
-		}
 		for(int i = 0; i < 18; i++) {
 			world.factory().randomChest(depth, world.player(), true);
 		}
@@ -135,6 +145,32 @@ public class CaveFloor extends Blueprint {
 		for(int l = 0; l < 1; l++) {
 			world.factory().randomScroll(depth, world.player(), true);
 		}
+	}
 
+	private Optional<Structure> randomStructureAttempt() {
+		switch (ExtraMaths.diceRoll(1, 6)) {
+			case 1: // same as case 2
+			case 2:
+				return new GrassPatch(builder, 0, 0, depth).randomisePosition();
+			case 3:
+				return new SmallCell(builder, 0, 0, depth).randomisePosition();
+			case 4:
+				return new PotionRoom(builder, 0, 0, depth).randomisePosition();
+			case 5:
+				return new Pit(builder, 0, 0, depth).randomisePosition();
+			case 6:
+				return new PitItem(builder, 0, 0, depth).randomisePosition();
+			default:
+				throw new IllegalArgumentException("Roll out of bounds");
+		}
+	}
+
+	private Optional<Structure> randomStructure() {
+		// Attempt 10 times to generate a structure. If none can be generated, return Empty.
+		// Else return the generated structure.
+		return IntStream.range(0, 10)
+			.mapToObj(i -> randomStructureAttempt())
+			.flatMap(Optional::stream) //i.e. map to a stream containing only Structures, and no Empty instances
+			.findFirst();
 	}
 }
