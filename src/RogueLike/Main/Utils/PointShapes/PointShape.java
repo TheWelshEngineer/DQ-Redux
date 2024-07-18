@@ -1,8 +1,5 @@
 package RogueLike.Main.Utils.PointShapes;
 
-import RogueLike.Main.AoE.Point;
-
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;

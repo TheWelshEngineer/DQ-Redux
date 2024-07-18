@@ -1,4 +1,4 @@
-package RogueLike.Main.AoE;
+package RogueLike.Main.Utils.PointShapes;
 
 import java.util.ArrayList;
 import java.util.Collections;

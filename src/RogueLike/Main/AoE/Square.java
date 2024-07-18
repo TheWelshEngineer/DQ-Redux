@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Utils.PointShapes.Point;
 
 // TODO: Refactor to use PointShapes.Square
 public class Square extends AoE implements Iterable<Point>{

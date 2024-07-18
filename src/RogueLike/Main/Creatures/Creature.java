@@ -5,14 +5,12 @@ import java.util.*;
 
 import RogueLike.Main.*;
 import RogueLike.Main.AI.CreatureAI;
-import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.AoE.Line;
-import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Damage.*;
 import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.Enums.PlayerAncestry;
-import RogueLike.Main.Factories.EffectFactory;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Screens.SpellTargetingScreen;

@@ -13,6 +13,7 @@ import RogueLike.Main.AoE.*;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Damage.DamageType;
+import RogueLike.Main.Utils.PointShapes.Point;
 
 public class EffectFactory {
 	

@@ -3,7 +3,7 @@ package RogueLike.Main.Screens;
 import java.awt.event.KeyEvent;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.AoE.Line;
-import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 

@@ -1,6 +1,6 @@
 package RogueLike.Main.Worldgen.Structures.StructureUtils;
 
-import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Tile;
 import RogueLike.Main.Utils.PointShapes.HollowRectangle;
 import RogueLike.Main.Utils.PointShapes.Rectangle;

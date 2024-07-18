@@ -8,7 +8,7 @@ import java.util.Map;
 import RogueLike.Main.*;
 import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.AoE.Line;
-import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;

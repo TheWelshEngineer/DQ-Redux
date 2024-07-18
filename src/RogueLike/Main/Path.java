@@ -2,7 +2,7 @@ package RogueLike.Main;
 
 import java.util.List;
 
-import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Creatures.Creature;
 
 public class Path {
