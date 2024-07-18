@@ -1,5 +1,6 @@
 package RogueLike.Main.Factories;
 
+import RogueLike.Main.AoE.ConeAoE;
 import RogueLike.Main.AoE.LineAoe;
 import RogueLike.Main.AoE.SquareAoe;
 import RogueLike.Main.Spell;
@@ -12,10 +13,14 @@ public class SpellFactory {
 	public SpellFactory(EffectFactory factory) {
 		this.effectFactory = factory;
 	}
-	
+
 	public Spell firebolt(Creature caster) {
 		Spell firebolt = new Spell("Firebolt", 0, 4, caster, effectFactory.firebolt(caster), false, false, null);
 		return firebolt;
+	}
+
+	public Spell dragonsBreath(Creature caster) {
+		return new Spell("Dragon's Breath", 100, 4, caster, effectFactory.dragonsBreath(caster), false, true, new ConeAoE(6, 45.0));
 	}
 	
 	public Spell forceBlast(Creature caster) {

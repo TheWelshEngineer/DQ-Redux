@@ -86,6 +86,10 @@ public class Creature implements Cloneable{
 	public int z() {
 		return z;
 	}
+
+	public Point location() {
+		return new Point(x, y, z);
+	}
 	
 	public void overrideZ(int amount) {
 		z = amount;

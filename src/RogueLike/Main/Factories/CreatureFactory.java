@@ -178,7 +178,8 @@ public ModifierFactory modifierFactory;
 	
 		//Starting Food
 		player.inventory().add(objectFactory.itemFactory.newRations(0, 0));
-		
+		player.inventory().add(objectFactory.itemFactory.newDragonsBreathWand(0, player, false));
+
 		//Ancestry Items
 		if(details.ancestry == PlayerAncestry.DRAGONBORN) {
 			Item startWandDragonborn = objectFactory.itemFactory.newFireboltWand(0, player, false);

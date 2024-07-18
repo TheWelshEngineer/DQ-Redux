@@ -11,6 +11,7 @@ import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Particle;
 import RogueLike.Main.Tile;
+import RogueLike.Main.Utils.PointShapes.Cone;
 import RogueLike.Main.Utils.PointShapes.Line;
 import RogueLike.Main.Utils.PointShapes.Square;
 import RogueLike.Main.Creatures.Creature;
@@ -311,7 +312,53 @@ public class EffectFactory {
 		};
 		return pyrotechnics;
 	}
-	
+
+	public Effect dragonsBreath(Creature player) {
+		return new Effect(1, null, true, player, ' ', null){
+			public void start(Creature creature) {
+				player.notify("You breath a gout of roaring flames!");
+				Point source = player.location();
+				Point target = creature.location();
+				player.world().remove(creature); // Remove the temporary marker creature
+
+				// Calculate damage
+				int damageAmount = Dice.d6x2.roll() + player.intelligenceModifier();
+				if (player.pyromancyLevel() >= 2) {
+					damageAmount += player.proficiencyBonus();
+				}
+				if (player.pyromancyLevel() >= 3) {
+					damageAmount += player.proficiencyBonus();
+				}
+				Damage damage = new Damage(damageAmount, false, DamageType.FIRE, player.world().factory().effectFactory, true);
+				Damage halfDamage = new Damage(damageAmount / 2,  false, DamageType.FIRE, player.world().factory().effectFactory, true);
+
+				// Apply damage to all creatures in the area of effect
+				InstantiatedAoE aoe = new InstantiatedAoE(new Cone(source, target, 6, 60.0), player.world());
+				aoe.affectedCreaturesExcept(player)
+					.forEach(
+						c -> {
+							if (c.dexterityRoll() >= player.intelligenceSaveDC()) {
+								c.doAction("avoid the worst of the flames!");
+								c.damage(halfDamage, String.format("Killed by %s using Dragon's Breath", player.name()));
+							} else {
+								c.doAction("get seared by the scorching flames!");
+								c.damage(damage, String.format("Killed by %s using Dragon's Breath", player.name()));
+							}
+						}
+					);
+
+				// Set fire to terrain in the area of effect
+				aoe.points.forEach(
+					p -> {
+						if (Dice.d6.roll() > 2) { // 2 in 3 chance to set tile on fire
+							player.world().changeSubTile(p.x, p.y, p.z, Tile.FIRE);
+						}
+					}
+				);
+			}
+		};
+	}
+
 	//Cryomancy Spells
 	public Effect flashFreeze(Creature reference) {
 		Effect freeze = new Effect(1, null, true, reference, ' ', null) {
