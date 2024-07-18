@@ -8,8 +8,11 @@ import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Worldgen.Structure;
 
+import java.util.stream.Stream;
+
 public class PitItem extends Structure {
 	public static final int pitRadius = 1;
+	public static final int pitDiameter = pitRadius * 2 + 1;
 
 	public PitItem(WorldBuilder builder, int x, int y, int depth) {
 		super(builder, x, y, depth);
@@ -17,7 +20,6 @@ public class PitItem extends Structure {
 
 	@Override
 	public void onBuildStructures() {
-		int pitDiameter = pitRadius * 2 + 1;
 		Rectangle pitArea = new Rectangle(new Point(x, y, z), pitDiameter, pitDiameter);
 
 		//otherwise, generate the Pit
@@ -42,8 +44,13 @@ public class PitItem extends Structure {
 	}
 
 	@Override
-	public boolean isLocationAcceptable() {
+	public boolean isCenterAcceptable() {
 		return builder.isInBoundsMargin(x, y, pitRadius + 1)
 			&& builder.getTile(x, y, z).isGround();
+	}
+
+	@Override
+	protected Stream<Point> getReservedArea() {
+		return new Rectangle(new Point(x, y, z), pitDiameter, pitDiameter).stream();
 	}
 }

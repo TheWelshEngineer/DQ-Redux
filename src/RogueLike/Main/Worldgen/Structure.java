@@ -5,7 +5,7 @@ import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
 
 import java.util.Optional;
-import java.util.Random;
+import java.util.stream.Stream;
 
 public abstract class Structure {
 	protected final WorldBuilder builder;
@@ -31,13 +31,22 @@ public abstract class Structure {
 	 * Randomise the position of this structure.
 	 * @return This if a location was found, Empty if no location was found.
 	 */
-	public Optional<Structure> randomisePosition() {
-		Optional<Point> loc = builder.pickRandomLocation(z, p -> this.setPosition(p).isLocationAcceptable());
+	public final Optional<Structure> randomisePosition() {
+		Optional<Point> loc = builder.pickRandomLocation(z, p -> this.setPosition(p).isCenterAcceptable());
 		return loc.map(this::setPosition);
 	}
 
 	public abstract void onBuildStructures();
 	public abstract void onBuildWorld(World world);
 	public abstract void onBuildWorldLate(World world);
-	public abstract boolean isLocationAcceptable();
+	protected abstract Stream<Point> getReservedArea();
+	protected abstract boolean isCenterAcceptable();
+
+	public final void reserveArea() {
+		getReservedArea().forEach(builder::reserveStructureTile);
+	}
+
+	public final boolean isLocationAcceptable() {
+		return isCenterAcceptable() && getReservedArea().noneMatch(builder::isStructureTileReserved);
+	}
 }

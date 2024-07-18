@@ -17,6 +17,8 @@ public class WorldBuilder {
 	private int depth;
 	private Tile[][][] tiles;
 	private int[][][] regions;
+	/** Tiles that have a structure placed on them. */
+	private boolean[][][] structureReservedTiles;
 	private int nextRegion;
 	private final List<Integer> specialDepths = new ArrayList<>();
 	private final List<Blueprint> blueprints = new ArrayList<>();
@@ -28,6 +30,7 @@ public class WorldBuilder {
 		this.depth = depth;
 		this.tiles = new Tile[width][height][depth];
 		this.regions = new int[width][height][depth];
+		this.structureReservedTiles = new boolean[width][height][depth]; // defaults to filled with False
 		this.nextRegion = 1;
 	}
 
@@ -57,6 +60,7 @@ public class WorldBuilder {
 
 	public void addStructure(Structure structure) {
 		structures.add(structure);
+		structure.reserveArea();
 	}
 
 	private WorldBuilder createRegions(){
@@ -322,5 +326,12 @@ public class WorldBuilder {
 	}
 	public Tile getTile(Point p) {
 		return getTile(p.x, p.y, p.z);
+	}
+
+	public void reserveStructureTile(Point p) {
+		structureReservedTiles[p.x][p.y][p.z] = true;
+	}
+	public boolean isStructureTileReserved(Point p) {
+		return structureReservedTiles[p.x][p.y][p.z];
 	}
 }

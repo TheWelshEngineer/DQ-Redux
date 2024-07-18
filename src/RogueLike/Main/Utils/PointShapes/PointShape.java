@@ -5,6 +5,7 @@ import RogueLike.Main.AoE.Point;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 public abstract class PointShape implements Iterable<Point> {
 	private List<Point> points;
@@ -22,5 +23,9 @@ public abstract class PointShape implements Iterable<Point> {
 	@Override
 	public Iterator<Point> iterator() {
 		return points().iterator();
+	}
+
+	public Stream<Point> stream() {
+		return points().stream();
 	}
 }

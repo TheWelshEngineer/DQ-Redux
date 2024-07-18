@@ -8,6 +8,7 @@ import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Worldgen.Structure;
 
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class Pit extends Structure {
 	public static final int width = 5;
@@ -40,8 +41,13 @@ public class Pit extends Structure {
 	}
 
 	@Override
-	public boolean isLocationAcceptable() {
+	public boolean isCenterAcceptable() {
 		return builder.isInBoundsMargin(x, y, width/2 + 1, height/2 + 1)
 			&& builder.getTile(x, y, z).isGround();
+	}
+
+	@Override
+	protected Stream<Point> getReservedArea() {
+		return new Rectangle(new Point(x, y, z), width, height).stream();
 	}
 }

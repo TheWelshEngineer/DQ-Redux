@@ -9,6 +9,8 @@ import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Worldgen.Structure;
 import RogueLike.Main.Worldgen.Structures.StructureUtils.LockedRoom;
 
+import java.util.stream.Stream;
+
 public class PotionRoom extends Structure {
 	public static final int internalWidth = 3;
 	public static final int internalHeight = 2;
@@ -38,8 +40,13 @@ public class PotionRoom extends Structure {
 	}
 
 	@Override
-	public boolean isLocationAcceptable() {
+	public boolean isCenterAcceptable() {
 		return builder.isInBoundsMargin(x, y, internalWidth/2 + 3, internalHeight/2 + 3)
 			&& builder.getTile(x, y, z).isGround();
+	}
+
+	@Override
+	protected Stream<Point> getReservedArea() {
+		return new Rectangle(new Point(x, y, z), internalWidth + 2, internalHeight + 2).stream();
 	}
 }
