@@ -149,9 +149,11 @@ public class WorldBuilder {
 			.collect(Collectors.toList());
 
 		if (candidates.isEmpty()) {
-			throw new RuntimeException(
-				String.format("Failed to generate world - could not generate downwards stairs on depth %d", z)
-			);
+//			throw new RuntimeException(
+//				String.format("Failed to generate world - could not generate downwards stairs on depth %d", z)
+//			);
+			// TODO handle this!!
+			return;
 		}
 		
 		int stairs = 0;
