@@ -83,7 +83,7 @@ public class HollowRectangle extends PointShape {
 		// ooo
 		for (int dy = 1; dy < width - 1; dy++) {
 			points.add(new Point(topX, topY + dy, z));
-			points.add(new Point(topX + height - 1, topY + dy, z));
+			points.add(new Point(topX + width - 1, topY + dy, z));
 		}
 		return points;
 	}
