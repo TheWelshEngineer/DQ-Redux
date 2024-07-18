@@ -2,6 +2,7 @@ package RogueLike.Main;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Utils.NotificationHistory;
@@ -143,7 +144,15 @@ public class WorldBuilder {
 	}
 	
 	private void connectRegionsDown(int z, int r1, int r2) {
-		List<Point> candidates = findRegionOverlaps(z, r1, r2);
+		List<Point> candidates = findRegionOverlaps(z, r1, r2)
+			.stream().filter(p -> !isStructureTileReserved(p)) // filter out any points that are in a reserved area
+			.collect(Collectors.toList());
+
+		if (candidates.isEmpty()) {
+			throw new RuntimeException(
+				String.format("Failed to generate world - could not generate downwards stairs on depth %d", z)
+			);
+		}
 		
 		int stairs = 0;
 		
@@ -179,7 +188,10 @@ public class WorldBuilder {
 		do {
 			x = (int)(Math.random() * width);
 			y = (int)(Math.random() * height);
-		}while(tiles[x][y][0] != Tile.FLOOR);
+		} while (
+			tiles[x][y][0] != Tile.FLOOR // exit stairs must only be placed on the floor
+			|| structureReservedTiles[x][y][0] // exit stairs must not be placed within a structure's reserved area
+		);
 													
 		tiles[x][y][0] = Tile.STAIRS_EXIT;
 		System.out.println("Exit stairs added");
