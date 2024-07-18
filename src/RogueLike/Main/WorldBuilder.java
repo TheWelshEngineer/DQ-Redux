@@ -193,7 +193,7 @@ public class WorldBuilder {
 		for (int x=0; x<width; x++) {
 			for (int y=0; y<height; y++) {
 				for (int z=0; z<depth; z++) {
-					if (tiles[x][y][z].isBars()) {
+					if (tiles[x][y][z].isBars() && !tiles[x][y][z].isBarsDoor()) {
 						boolean barsN = isInBounds(x, y+1) && tiles[x][y+1][z].isBars();
 						boolean barsS = isInBounds(x, y-1) && tiles[x][y-1][z].isBars();
 						boolean barsE = isInBounds(x-1, y) && tiles[x-1][y][z].isBars();
