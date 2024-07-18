@@ -75,6 +75,10 @@ public class Point {
 		return points;
 	}
 
+	public int squareDistanceTo(Point other) {
+		return this.x * other.x + this.y * other.y + this.z * other.z;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Point(%d, %d, %d)", x, y, z);
