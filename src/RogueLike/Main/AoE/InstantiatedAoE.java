@@ -15,7 +15,7 @@ public class InstantiatedAoE {
 	private final World world;
 
 	public InstantiatedAoE(List<Point> points, World world) {
-		this.points = points;
+		this.points = points.stream().filter(world::isInBounds).collect(Collectors.toList());
 		this.world = world;
 	}
 
@@ -31,5 +31,9 @@ public class InstantiatedAoE {
 
 	public Stream<Creature> affectedCreaturesExcept(Creature except) {
 		return affectedCreatures().filter(c -> c != except);
+	}
+
+	public List<Point> points() {
+		return points;
 	}
 }

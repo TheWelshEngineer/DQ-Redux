@@ -9,7 +9,7 @@ public class SpellTargetingScreen extends TargetBasedScreen{
 	public Item item;
 
 	public SpellTargetingScreen(Creature player, String caption, Spell spell, Item item) {
-		super(player, caption);
+		super(player, caption, spell.aoe());
 		this.spell = spell;
 		this.item = item;
 	}

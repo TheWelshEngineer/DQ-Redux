@@ -2,7 +2,11 @@ package RogueLike.Main.Screens;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Objects;
+import java.util.Set;
 
+import RogueLike.Main.AoE.AoE;
+import RogueLike.Main.AoE.LineAoe;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Utils.PointShapes.Line;
@@ -18,17 +22,27 @@ public abstract class TargetBasedScreen implements Screen{
 	protected int wx;
 	/** world-space y-coordinate of selected point */
 	protected int wy;
+
+	protected AoE highlightArea;
 	
-	public TargetBasedScreen(Creature player, String caption) {
+	public TargetBasedScreen(Creature player, String caption, AoE highlightArea) {
 		this.player = player;
 		this.caption = caption;
 		this.wx = player.x();
 		this.wy = player.y();
+		this.highlightArea = Objects.requireNonNullElseGet(highlightArea, () -> new LineAoe(1));
+	}
+
+	public TargetBasedScreen(Creature player, String caption) {
+		this(player, caption, null);
 	}
 	
 	public void displayOutput(ExtendedAsciiPanel terminal) {
-		// Draw the line
-		for (Point p: new Line(player.x(), player.y(), wx, wy)) {
+		// Draw the highlighted area
+		// First, get the set of points directly on the line between player and target
+		Set<Point> linePoints = Set.copyOf(new Line(player.x(), player.y(), wx, wy).points());
+
+		for (Point p: highlightArea.instantiate(player.location(), new Point(wx, wy, player.z()), player.world()).points()) {
 			// Select colour based on location
 			Color drawColor;
 			if (p.x == player.x && p.y == player.y) {
@@ -37,14 +51,17 @@ public abstract class TargetBasedScreen implements Screen{
 			} else if (p.x == wx && p.y == wy) {
 				// endpoint gets bright red
 				drawColor = ExtendedAsciiPanel.brightRed;
-			} else {
+			} else if (linePoints.contains(p)) {
 				// points along the line get bright cyan
 				drawColor = ExtendedAsciiPanel.brightCyan;
+			} else {
+				// points in the highlighted area but not the endpoint or along the line get a nice green
+				drawColor = ExtendedAsciiPanel.apple;
 			}
 
 			// Select glyph based on what's at the selected location
-			Creature creature = player.creature(wx, wy, player.z());
-			Item item = player.item(wx, wy, player.z());
+			Creature creature = player.creature(p.x, p.y, player.z());
+			Item item = player.item(p.x, p.y, player.z());
 			char glyph;
 			if (creature != null) {
 				glyph = creature.glyph();
