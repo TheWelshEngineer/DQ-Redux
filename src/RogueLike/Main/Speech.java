@@ -39,7 +39,7 @@ public class Speech {
 		case 17: return "ghart";
 		case 18: return "kutt";
 		case 19: return "demn";
-		case 20: return "~#£%?";
+		case 20: return "~#Â£%?";
 		}
 		return "vokk";
 	}
