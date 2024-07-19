@@ -29,8 +29,12 @@ public class LevelElement extends CharacterSheetElement {
                 return "As a Ranger, you regenerate health and mana at a roughly even rate.";
             case WARRIOR:
                 return "As a Warrior, your health regenerates quickly, at the expense of your mana.";
+            case PALADIN:
+                return "As a Paladin, your health regenerates quickly, at the expense of your mana.";
             case MAGE:
                 return "As a Mage, your mana regenerates quickly, at the expense of your health.";
+            case WITCH:
+                return "As a Witch, your mana regenerates quickly, at the expense of your health.";
             default:
                 throw new IllegalStateException(player.playerClass().toString());
         }

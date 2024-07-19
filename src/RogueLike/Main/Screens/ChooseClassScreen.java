@@ -36,6 +36,10 @@ public class ChooseClassScreen implements Screen{
 	public char mageRight = '<';
 	public char rangerLeft = '>';
 	public char rangerRight = '<';
+	public char witchLeft = '>';
+	public char witchRight = '<';
+	public char paladinLeft = '>';
+	public char paladinRight = '<';
 	
 	public void changeMarkers(int check) {
 		if(check == 0) {
@@ -47,6 +51,10 @@ public class ChooseClassScreen implements Screen{
 			mageRight = ' ';
 			rangerLeft = ' ';
 			rangerRight = ' ';
+			witchLeft = ' ';
+			witchRight = ' ';
+			paladinLeft = ' ';
+			paladinRight = ' ';
 		}else if(check == 1) {
 			warriorLeft = ' ';
 			warriorRight = ' ';
@@ -56,6 +64,10 @@ public class ChooseClassScreen implements Screen{
 			mageRight = ' ';
 			rangerLeft = ' ';
 			rangerRight = ' ';
+			witchLeft = ' ';
+			witchRight = ' ';
+			paladinLeft = ' ';
+			paladinRight = ' ';
 		}else if(check == 2) {
 			warriorLeft = ' ';
 			warriorRight = ' ';
@@ -65,6 +77,10 @@ public class ChooseClassScreen implements Screen{
 			mageRight = '<';
 			rangerLeft = ' ';
 			rangerRight = ' ';
+			witchLeft = ' ';
+			witchRight = ' ';
+			paladinLeft = ' ';
+			paladinRight = ' ';
 		}else if(check == 3) {
 			warriorLeft = ' ';
 			warriorRight = ' ';
@@ -74,6 +90,36 @@ public class ChooseClassScreen implements Screen{
 			mageRight = ' ';
 			rangerLeft = '>';
 			rangerRight = '<';
+			witchLeft = ' ';
+			witchRight = ' ';
+			paladinLeft = ' ';
+			paladinRight = ' ';
+		}else if(check == 4) {
+			warriorLeft = ' ';
+			warriorRight = ' ';
+			rogueLeft = ' ';
+			rogueRight = ' ';
+			mageLeft = ' ';
+			mageRight = ' ';
+			rangerLeft = ' ';
+			rangerRight = ' ';
+			witchLeft = '>';
+			witchRight = '<';
+			paladinLeft = ' ';
+			paladinRight = ' ';
+		}else if(check == 5) {
+			warriorLeft = ' ';
+			warriorRight = ' ';
+			rogueLeft = ' ';
+			rogueRight = ' ';
+			mageLeft = ' ';
+			mageRight = ' ';
+			rangerLeft = ' ';
+			rangerRight = ' ';
+			witchLeft = ' ';
+			witchRight = ' ';
+			paladinLeft = '>';
+			paladinRight = '<';
 		}
 	}
 
@@ -93,6 +139,10 @@ public class ChooseClassScreen implements Screen{
 		terminal.write(String.format("%c %c Mage    %c    %c", borderVertical, mageLeft, mageRight, borderVertical), 5, y++);
 		terminal.write(String.format("%c                %c", borderVertical, borderVertical), 5, y++);
 		terminal.write(String.format("%c %c Ranger  %c    %c", borderVertical, rangerLeft, rangerRight, borderVertical), 5, y++);
+		terminal.write(String.format("%c                %c", borderVertical, borderVertical), 5, y++);
+		terminal.write(String.format("%c %c Witch  %c     %c", borderVertical, witchLeft, witchRight, borderVertical), 5, y++);
+		terminal.write(String.format("%c                %c", borderVertical, borderVertical), 5, y++);
+		terminal.write(String.format("%c %c Paladin  %c   %c", borderVertical, paladinLeft, paladinRight, borderVertical), 5, y++);
 		//terminal.write(String.format("%c                %c", borderVertical, borderVertical), 5, y++);
 		terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 5, y++);
 		
@@ -114,9 +164,9 @@ public class ChooseClassScreen implements Screen{
 			y++;
 			terminal.writeCenter("+||+ Starting Equipment +||+", y+=1);
 			y++;
-			terminal.writeCenter("+ Longsword", y+=1);
+			terminal.writeCenter("+ Shortsword", y+=1);
 			terminal.writeCenter("+ Chainmail Tunic", y+=1);
-			terminal.writeCenter("+ Kite Shield", y+=1);
+			terminal.writeCenter("+ Round Shield", y+=1);
 			terminal.writeCenter("+ Ration of Food", y+=1);
 		}else if(check == 1) {
 			terminal.writeCenter("+||+ Rogue +||+", y+=4);
@@ -180,6 +230,46 @@ public class ChooseClassScreen implements Screen{
 			terminal.writeCenter("+ Shortbow", y+=1);
 			terminal.writeCenter("+ 20x Arrows", y+=1);
 			terminal.writeCenter("+ Ration of Food", y+=1);
+		}else if(check == 4) {
+			terminal.writeCenter("+||+ Witch +||+", y+=4);
+			y++;
+			terminal.writeCenter("Mysterious magic-wielders, often working in the", y+=1);
+			terminal.writeCenter("shadows, witches trade the arcane studies undertaken", y+=1);
+			terminal.writeCenter("by traditional mages for raw magical power. Still,", y+=1);
+			terminal.writeCenter("power must always come at a price..", y+=1);
+			y++;
+			terminal.writeCenter("+||+ Starting Skills +||+", y+=1);
+			y++;
+			terminal.writeCenter("+ Electromancy (I)", y+=1);
+			terminal.writeCenter("+ Alchemancy (I)", y+=1);
+			terminal.writeCenter("+ 2x Level I skills of your choice", y+=1);
+			y++;
+			terminal.writeCenter("+||+ Starting Equipment +||+", y+=1);
+			y++;
+			terminal.writeCenter("+ Padded Armor", y+=1);
+			terminal.writeCenter("+ Wand of Chain Lightning", y+=1);
+			terminal.writeCenter("+ Wand of Acid Blast", y+=1);
+			terminal.writeCenter("+ Ration of Food", y+=1);
+		}else if(check == 5) {
+			terminal.writeCenter("+||+ Paladin +||+", y+=4);
+			y++;
+			terminal.writeCenter("Monastic warriors with deep connections to", y+=1);
+			terminal.writeCenter("their weapons, paladins swear mighty oaths", y+=1);
+			terminal.writeCenter("before each quest. Every victory deepens their", y+=1);
+			terminal.writeCenter("bond, their conviction, and their bravery.", y+=1);
+			y++;
+			terminal.writeCenter("+||+ Starting Skills +||+", y+=1);
+			y++;
+			terminal.writeCenter("+ Armor Training (I)", y+=1);
+			terminal.writeCenter("+ Ferromancy (I)", y+=1);
+			terminal.writeCenter("+ 2x Level I skills of your choice", y+=1);
+			y++;
+			terminal.writeCenter("+||+ Starting Equipment +||+", y+=1);
+			y++;
+			terminal.writeCenter("+ Shortsword", y+=1);
+			terminal.writeCenter("+ Chainmail Tunic", y+=1);
+			terminal.writeCenter("+ Wand of Weapon Bolt", y+=1);
+			terminal.writeCenter("+ Ration of Food", y+=1);
 		}
 
 		terminal.writeCenter("-- [UP / DOWN]: Move Selection | [ENTER]: Confirm and Continue --", 36);
@@ -190,25 +280,17 @@ public class ChooseClassScreen implements Screen{
 		switch(key.getKeyCode()) {
 		case KeyEvent.VK_UP:
 			if(check == 0) {
-				check = 3;
-			}else if(check == 1) {
-				check = 0;
-			}else if(check == 2) {
-				check = 1;
-			}else if(check == 3) {
-				check = 2;
+				check = 5;
+			}else {
+				check--;
 			}
 			return this;
 			
 		case KeyEvent.VK_DOWN:
-			if(check == 0) {
-				check = 1;
-			}else if(check == 1) {
-				check = 2;
-			}else if(check == 2) {
-				check = 3;
-			}else if(check == 3) {
+			if(check == 5) {
 				check = 0;
+			}else {
+				check++;
 			}
 			return this;
 			
@@ -221,6 +303,10 @@ public class ChooseClassScreen implements Screen{
 				return new ChooseAbilityScreen(PlayerClass.MAGE, playerAncestry);
 			}else if(check == 3) {
 				return new ChooseAbilityScreen(PlayerClass.RANGER, playerAncestry);
+			}else if(check == 4) {
+				return new ChooseAbilityScreen(PlayerClass.WITCH, playerAncestry);
+			}else if(check == 5) {
+				return new ChooseAbilityScreen(PlayerClass.PALADIN, playerAncestry);
 			}
 		case KeyEvent.VK_ESCAPE: return new ChooseAncestryScreen();
 		}

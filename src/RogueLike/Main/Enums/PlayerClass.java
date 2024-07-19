@@ -5,6 +5,8 @@ public enum PlayerClass {
 	ROGUE("Rogue"),
 	MAGE("Mage"),
 	RANGER("Ranger"),
+	WITCH("Witch"),
+	PALADIN("Paladin"),
 	;
 
 	private final String name;

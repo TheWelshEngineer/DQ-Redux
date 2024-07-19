@@ -171,6 +171,42 @@ public ModifierFactory modifierFactory;
 				player.setHPScaleAmount(player.hpScaleMedium());
 				player.setManaScaleAmount(player.manaScaleMedium());
 				break;
+				
+			case WITCH:
+				Item startArmorWitch = objectFactory.itemFactory.newPaddedClothArmor(0, false);
+				player.learnNameQuiet(startArmorWitch);
+				player.inventory().add(startArmorWitch);
+				player.equip(startArmorWitch);
+				Item startWandWitch_1 = objectFactory.itemFactory.newChainLightningWand(0, player, false);
+				player.learnNameQuiet(startWandWitch_1);
+				player.inventory().add(startWandWitch_1);
+				player.equipToQuickslot(startWandWitch_1, 1);
+				Item startWandWitch_2 = objectFactory.itemFactory.newAcidBlastWand(0, player, false);
+				player.learnNameQuiet(startWandWitch_2);
+				player.inventory().add(startWandWitch_2);
+				player.equipToQuickslot(startWandWitch_2, 2);
+
+				player.setHPScaleAmount(player.hpScaleLow());
+				player.setManaScaleAmount(player.manaScaleHigh());
+				break;
+				
+			case PALADIN:
+				Item startWeaponPaladin = objectFactory.itemFactory.newShortsword(0, false);
+				player.learnNameQuiet(startWeaponPaladin);
+				player.inventory().add(startWeaponPaladin);
+				player.equip(startWeaponPaladin);
+				Item startArmorPaladin = objectFactory.itemFactory.newChainmailArmor(0, false);
+				player.learnNameQuiet(startArmorPaladin);
+				player.inventory().add(startArmorPaladin);
+				player.equip(startArmorPaladin);
+				Item startWandPaladin = objectFactory.itemFactory.newBladsWardWand(0, player, false);
+				player.learnNameQuiet(startWandPaladin);
+				player.inventory().add(startWandPaladin);
+				player.equipToQuickslot(startWandPaladin, 1);
+
+				player.setHPScaleAmount(player.hpScaleHigh());
+				player.setManaScaleAmount(player.manaScaleLow());
+				break;
 
 			default:
 				throw new IllegalArgumentException(details.playerClass.toString());
@@ -184,9 +220,11 @@ public ModifierFactory modifierFactory;
 			Item startWandDragonborn = objectFactory.itemFactory.newFireboltWand(0, player, false);
 			player.learnNameQuiet(startWandDragonborn);
 			player.inventory().add(startWandDragonborn);
-			if(details.playerClass == PlayerClass.MAGE) {
+			if(details.playerClass == PlayerClass.MAGE || details.playerClass == PlayerClass.PALADIN) {
 				player.equipToQuickslot(startWandDragonborn, 2);
-			}else {
+			}else if(details.playerClass == PlayerClass.WITCH) {
+				player.equipToQuickslot(startWandDragonborn, 3);
+			}else{
 				player.equipToQuickslot(startWandDragonborn, 1);
 			}
 		}
