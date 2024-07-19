@@ -2,11 +2,13 @@ package RogueLike.Main.Screens;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import RogueLike.Main.AoE.AoE;
 import RogueLike.Main.AoE.LineAoe;
+import RogueLike.Main.AoE.SinglePointAoE;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Utils.PointShapes.Line;
@@ -30,7 +32,7 @@ public abstract class TargetBasedScreen implements Screen{
 		this.caption = caption;
 		this.wx = player.x();
 		this.wy = player.y();
-		this.highlightArea = Objects.requireNonNullElseGet(highlightArea, () -> new LineAoe(1));
+		this.highlightArea = Objects.requireNonNullElseGet(highlightArea, SinglePointAoE::new);
 	}
 
 	public TargetBasedScreen(Creature player, String caption) {
@@ -39,10 +41,14 @@ public abstract class TargetBasedScreen implements Screen{
 	
 	public void displayOutput(ExtendedAsciiPanel terminal) {
 		// Draw the highlighted area
-		// First, get the set of points directly on the line between player and target
 		Set<Point> linePoints = Set.copyOf(new Line(player.x(), player.y(), wx, wy).points());
+		Set<Point> aoePoints = Set.copyOf(highlightArea.instantiate(player.location(), new Point(wx, wy, player.z()), player.world()).points());
 
-		for (Point p: highlightArea.instantiate(player.location(), new Point(wx, wy, player.z()), player.world()).points()) {
+		Set<Point> highlightedPoints = new HashSet<>();
+		highlightedPoints.addAll(linePoints);
+		highlightedPoints.addAll(aoePoints);
+
+		for (Point p: highlightedPoints) {
 			// Select colour based on location
 			Color drawColor;
 			if (p.x == player.x && p.y == player.y) {
@@ -51,11 +57,14 @@ public abstract class TargetBasedScreen implements Screen{
 			} else if (p.x == wx && p.y == wy) {
 				// endpoint gets bright red
 				drawColor = ExtendedAsciiPanel.brightRed;
+			} else if (linePoints.contains(p) && aoePoints.contains(p)) {
+				// points in the AOE _and_ on the line get bright cyan
+				drawColor = ExtendedAsciiPanel.brightGreen;
 			} else if (linePoints.contains(p)) {
-				// points along the line get bright cyan
-				drawColor = ExtendedAsciiPanel.brightCyan;
+				// points along the line but not in the AoE get a less bright blue
+				drawColor = ExtendedAsciiPanel.cyan;
 			} else {
-				// points in the highlighted area but not the endpoint or along the line get a nice green
+				// points in the highlighted area but not the endpoint or along the line get bright green
 				drawColor = ExtendedAsciiPanel.apple;
 			}
 
