@@ -31,7 +31,7 @@ public class applicationMain extends JFrame implements KeyListener{
         //System.setProperty("sun.java2d.uiScale.enabled", "false");
         //
         try {
-			setIconImage(ImageIO.read(applicationMain.class.getResource("dwarfquesticon_temp.png")));
+			setIconImage(ImageIO.read(applicationMain.class.getResource("/dwarfquesticon_temp.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -49,7 +49,7 @@ public class applicationMain extends JFrame implements KeyListener{
         //Dsun.java2d.uiScale.enabled=false
         //-Dsun.java2d.dpiaware=true
         //120, 48
-        terminal = new ExtendedAsciiPanel(120, 48, new String[] {"cp437.png","codePage_437_K.png"});
+        terminal = new ExtendedAsciiPanel(120, 48, new String[] {"/cp437.png","/codePage_437_K.png"});
         //
         //System.out.println("Width");
         //System.out.println(terminal.getCharWidth());
