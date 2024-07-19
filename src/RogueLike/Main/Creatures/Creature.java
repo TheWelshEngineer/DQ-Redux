@@ -2406,10 +2406,10 @@ public class Creature implements Cloneable{
 				return null;
 			}
 			if(quickslot_1().isThrownWeapon()) {
-				return new ThrowAtScreen(this, sx, sy, quickslot_1());
+				return new ThrowAtScreen(this, quickslot_1());
 			}else if(quickslot_1().isPotion()) {
 				if(quickslot_1().isNegativePotion() && quickslot_1().isIdentified()) {
-					return new ThrowAtScreen(this, sx, sy, quickslot_1());
+					return new ThrowAtScreen(this, quickslot_1());
 				}else {
 					//this.quaff(quickslot_1());
 					this.ai().playerAIQuaffItem(quickslot_1());
@@ -2417,7 +2417,7 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_1().isWand() || quickslot_1().isScroll()) {
 				if(quickslot_1().writtenSpells().size() == 1 && !quickslot_1().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_1().writtenSpells().get(0).name()), sx, sy, quickslot_1().writtenSpells().get(0), quickslot_1());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_1().writtenSpells().get(0).name()), quickslot_1().writtenSpells().get(0), quickslot_1());
 				}else if(quickslot_1().writtenSpells().size() == 1 && quickslot_1().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_1(), quickslot_1().writtenSpells().get(0), this.x(), this.y());
@@ -2433,10 +2433,10 @@ public class Creature implements Cloneable{
 				return null;
 			}
 			if(quickslot_2().isThrownWeapon()) {
-				return new ThrowAtScreen(this, sx, sy, quickslot_2());
+				return new ThrowAtScreen(this, quickslot_2());
 			}else if(quickslot_2().isPotion()) {
 				if(quickslot_2().isNegativePotion() && quickslot_2().isIdentified()) {
-					return new ThrowAtScreen(this, sx, sy, quickslot_2());
+					return new ThrowAtScreen(this, quickslot_2());
 				}else {
 					//this.quaff(quickslot_1());
 					this.ai().playerAIQuaffItem(quickslot_2());
@@ -2444,7 +2444,7 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_2().isWand() || quickslot_2().isScroll()) {
 				if(quickslot_2().writtenSpells().size() == 1 && !quickslot_2().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_2().writtenSpells().get(0).name()), sx, sy, quickslot_2().writtenSpells().get(0), quickslot_2());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_2().writtenSpells().get(0).name()), quickslot_2().writtenSpells().get(0), quickslot_2());
 				}else if(quickslot_2().writtenSpells().size() == 1 && quickslot_2().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_2(), quickslot_2().writtenSpells().get(0), this.x(), this.y());
@@ -2460,10 +2460,10 @@ public class Creature implements Cloneable{
 				return null;
 			}
 			if(quickslot_3().isThrownWeapon()) {
-				return new ThrowAtScreen(this, sx, sy, quickslot_3());
+				return new ThrowAtScreen(this, quickslot_3());
 			}else if(quickslot_3().isPotion()) {
 				if(quickslot_3().isNegativePotion() && quickslot_3().isIdentified()) {
-					return new ThrowAtScreen(this, sx, sy, quickslot_3());
+					return new ThrowAtScreen(this, quickslot_3());
 				}else {
 					//this.quaff(quickslot_1());
 					this.ai().playerAIQuaffItem(quickslot_3());
@@ -2471,7 +2471,7 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_3().isWand() || quickslot_3().isScroll()) {
 				if(quickslot_3().writtenSpells().size() == 1 && !quickslot_3().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_3().writtenSpells().get(0).name()), sx, sy, quickslot_3().writtenSpells().get(0), quickslot_3());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_3().writtenSpells().get(0).name()), quickslot_3().writtenSpells().get(0), quickslot_3());
 				}else if(quickslot_3().writtenSpells().size() == 1 && quickslot_3().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_3(), quickslot_3().writtenSpells().get(0), this.x(), this.y());
@@ -2487,10 +2487,10 @@ public class Creature implements Cloneable{
 				return null;
 			}
 			if(quickslot_4().isThrownWeapon()) {
-				return new ThrowAtScreen(this, sx, sy, quickslot_4());
+				return new ThrowAtScreen(this, quickslot_4());
 			}else if(quickslot_4().isPotion()) {
 				if(quickslot_4().isNegativePotion() && quickslot_4().isIdentified()) {
-					return new ThrowAtScreen(this, sx, sy, quickslot_4());
+					return new ThrowAtScreen(this, quickslot_4());
 				}else {
 					//this.quaff(quickslot_1());
 					this.ai().playerAIQuaffItem(quickslot_4());
@@ -2498,7 +2498,7 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_4().isWand() || quickslot_4().isScroll()) {
 				if(quickslot_4().writtenSpells().size() == 1 && !quickslot_4().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_4().writtenSpells().get(0).name()), sx, sy, quickslot_4().writtenSpells().get(0), quickslot_4());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_4().writtenSpells().get(0).name()), quickslot_4().writtenSpells().get(0), quickslot_4());
 				}else if(quickslot_4().writtenSpells().size() == 1 && quickslot_4().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_4(), quickslot_4().writtenSpells().get(0), this.x(), this.y());
@@ -2514,10 +2514,10 @@ public class Creature implements Cloneable{
 				return null;
 			}
 			if(quickslot_5().isThrownWeapon()) {
-				return new ThrowAtScreen(this, sx, sy, quickslot_5());
+				return new ThrowAtScreen(this, quickslot_5());
 			}else if(quickslot_5().isPotion()) {
 				if(quickslot_5().isNegativePotion() && quickslot_5().isIdentified()) {
-					return new ThrowAtScreen(this, sx, sy, quickslot_5());
+					return new ThrowAtScreen(this, quickslot_5());
 				}else {
 					//this.quaff(quickslot_1());
 					this.ai().playerAIQuaffItem(quickslot_5());
@@ -2525,7 +2525,7 @@ public class Creature implements Cloneable{
 				}
 			}else if(quickslot_5().isWand() || quickslot_5().isScroll()) {
 				if(quickslot_5().writtenSpells().size() == 1 && !quickslot_5().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_5().writtenSpells().get(0).name()), sx, sy, quickslot_5().writtenSpells().get(0), quickslot_5());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_5().writtenSpells().get(0).name()), quickslot_5().writtenSpells().get(0), quickslot_5());
 				}else if(quickslot_5().writtenSpells().size() == 1 && quickslot_5().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_5(), quickslot_5().writtenSpells().get(0), this.x(), this.y());
@@ -2541,17 +2541,17 @@ public class Creature implements Cloneable{
 				return null;
 			}
 			if(quickslot_6().isThrownWeapon()) {
-				return new ThrowAtScreen(this, sx, sy, quickslot_6());
+				return new ThrowAtScreen(this, quickslot_6());
 			}else if(quickslot_6().isPotion()) {
 				if(quickslot_6().isNegativePotion() && quickslot_6().isIdentified()) {
-					return new ThrowAtScreen(this, sx, sy, quickslot_6());
+					return new ThrowAtScreen(this, quickslot_6());
 				}else {
 					//this.quaff(quickslot_1());
 					this.ai().playerAIQuaffItem(quickslot_6());
 				}
 			}else if(quickslot_6().isWand() || quickslot_6().isScroll()) {
 				if(quickslot_6().writtenSpells().size() == 1 && !quickslot_6().writtenSpells().get(0).isSelfCast()) {
-					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_6().writtenSpells().get(0).name()), sx, sy, quickslot_6().writtenSpells().get(0), quickslot_6());
+					return new SpellTargetingScreen(this, String.format("Cast %s at?", quickslot_6().writtenSpells().get(0).name()), quickslot_6().writtenSpells().get(0), quickslot_6());
 				}else if(quickslot_6().writtenSpells().size() == 1 && quickslot_6().writtenSpells().get(0).isSelfCast()){
 					//this.castSpell(quickslot_1().writtenSpells().get(0), this.x(), this.y(), quickslot_1());
 					this.ai().playerAICastSpell(quickslot_6(), quickslot_6().writtenSpells().get(0), this.x(), this.y());

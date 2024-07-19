@@ -1,14 +1,11 @@
 package RogueLike.Main.Screens;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.*;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Damage.Damage;
-import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
 
@@ -730,7 +727,7 @@ public class InventoryScreen implements Screen{
 			}
 			
 		case KeybindManager.interactionThrowItem:
-			return new ThrowAtScreen(player, sx, sy, inventory.get(check));
+			return new ThrowAtScreen(player, inventory.get(check));
 			
 		case KeybindManager.interactionReadSpell:
 			if(inventory.get(check).writtenSpells().size() > 0) {
@@ -740,7 +737,7 @@ public class InventoryScreen implements Screen{
 					return null;
 				}else {
 					if(inventory.get(check).writtenSpells().size() == 1 && !inventory.get(check).writtenSpells().get(0).isSelfCast()) {
-						return new SpellTargetingScreen(player, String.format("Cast %s at?", inventory.get(check).writtenSpells().get(0).name()), sx, sy, inventory.get(check).writtenSpells().get(0), inventory.get(check));
+						return new SpellTargetingScreen(player, String.format("Cast %s at?", inventory.get(check).writtenSpells().get(0).name()), inventory.get(check).writtenSpells().get(0), inventory.get(check));
 					}else if(inventory.get(check).writtenSpells().size() == 1 && inventory.get(check).writtenSpells().get(0).isSelfCast()){
 						//player.castSpell(inventory.get(check).writtenSpells().get(0), player.x(), player.y(), inventory.get(check));
 						//playScreen.setInputAccepted(true);

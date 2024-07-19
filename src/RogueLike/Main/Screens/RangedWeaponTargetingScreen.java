@@ -6,8 +6,8 @@ import RogueLike.Main.Creatures.Creature;
 
 public class RangedWeaponTargetingScreen extends TargetBasedScreen{
 
-	public RangedWeaponTargetingScreen(Creature player, int sx, int sy) {
-		super(player, "Fire "+player.nameOf(player.weapon())+" at?", sx, sy);
+	public RangedWeaponTargetingScreen(Creature player) {
+		super(player, "Fire "+player.nameOf(player.weapon())+" at?");
 	}
 	
 	public boolean isAcceptable(int x, int y) {

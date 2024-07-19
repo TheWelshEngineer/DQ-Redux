@@ -8,8 +8,8 @@ public class SpellTargetingScreen extends TargetBasedScreen{
 	private Spell spell;
 	public Item item;
 
-	public SpellTargetingScreen(Creature player, String caption, int sx, int sy, Spell spell, Item item) {
-		super(player, caption, sx, sy);
+	public SpellTargetingScreen(Creature player, String caption, Spell spell, Item item) {
+		super(player, caption);
 		this.spell = spell;
 		this.item = item;
 	}

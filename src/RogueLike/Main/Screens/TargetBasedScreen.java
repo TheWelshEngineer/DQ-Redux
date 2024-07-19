@@ -1,7 +1,10 @@
 package RogueLike.Main.Screens;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
+
 import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.Items.Item;
 import RogueLike.Main.Utils.PointShapes.Line;
 import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Creatures.Creature;
@@ -11,120 +14,87 @@ public abstract class TargetBasedScreen implements Screen{
 	
 	protected Creature player;
 	protected String caption;
-	private int sx;
-	private int sy;
-	private int x;
-	private int y;
-	private int dx;
-	private int dy;
-	private int fx;
-	private int fy;
+	/** world-space x-coordinate of selected point */
+	protected int wx;
+	/** world-space y-coordinate of selected point */
+	protected int wy;
 	
-	public TargetBasedScreen(Creature player, String caption, int sx, int sy) {
+	public TargetBasedScreen(Creature player, String caption) {
 		this.player = player;
 		this.caption = caption;
-		this.sx = sx;
-		this.sy = sy;
+		this.wx = player.x();
+		this.wy = player.y();
 	}
 	
 	public void displayOutput(ExtendedAsciiPanel terminal) {
-		for(Point p : new Line(sx, sy, sx+x, sy+y)) {
-			//if(p.x < 0 || p.x >= 80 || p.y < 0 || p.y >= 24) {
-				//continue;
-			//}
-			dx = p.x;
-			dy = p.y;
-			fx = player.gameplayScreen().getScrollX();
-			fy = player.gameplayScreen().getScrollY();
-			
-			if(p.x < 0) {
-				p.x = 0;
-				x++;
+		// Draw the line
+		for (Point p: new Line(player.x(), player.y(), wx, wy)) {
+			// Select colour based on location
+			Color drawColor;
+			if (p.x == player.x && p.y == player.y) {
+				// don't draw over the player
+				continue;
+			} else if (p.x == wx && p.y == wy) {
+				// endpoint gets bright red
+				drawColor = ExtendedAsciiPanel.brightRed;
+			} else {
+				// points along the line get bright cyan
+				drawColor = ExtendedAsciiPanel.brightCyan;
 			}
-			if(p.y < 0) {
-				p.y = 0;
-				y++;
+
+			// Select glyph based on what's at the selected location
+			Creature creature = player.creature(wx, wy, player.z());
+			Item item = player.item(wx, wy, player.z());
+			char glyph;
+			if (creature != null) {
+				glyph = creature.glyph();
 			}
-			
-			if(p.x >= 120) {
-				p.x = 120;
-				x--;
+			else if (item != null) {
+				glyph = item.glyph();
 			}
-			if(p.y > 20) {
-				p.y = 20; //48
-				y--;
+			else {
+				glyph = (char)15; //6-point burst icon
 			}
-			if(dx < 0) {
-				dx = 0;
-			}
-			if(dx >= player.world().width()) {
-				dx = player.world().width();
-			}
-			if(dy < 0) {
-				dy = 0;
-			}
-			if(dy >= player.world().height()) {
-				dy = player.world().height();
-			}
-			//terminal.write((char)177, p.x, p.y, AsciiPanel.brightCyan);
-			//temp
-			//
-			if(p.x == sx+x && p.y == sy+y) {
-				if(player.creature(player.x()+x, player.y()+y, player.z) != null) {
-					char c = player.creature(player.x()+x, player.y()+y, player.z).glyph();
-					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightRed);
-				}else if(player.item(player.x()+x, player.y()+y, player.z) != null) {
-					char c = player.item(player.x()+x, player.y()+y, player.z).glyph();
-					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightRed);
-				}else{
-					char c = (char)15;
-					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightRed);
-				}
-			}else if(p.x == sx && p.y == sy){
-				terminal.write(player.glyph(), p.x, p.y, ExtendedAsciiPanel.brightWhite);
-			}else {
-				//System.out.println(dx + " " + (dy));
-				if(player.creature(dx+fx, dy+fy, player.z) != null) {
-					char c = player.creature(dx+fx, dy+fy, player.z).glyph();
-					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightCyan);
-				}else if(player.item(dx+fx, dy+fy, player.z) != null) {
-					char c = player.item(dx+fx, dy+fy, player.z).glyph();
-					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightCyan);
-				}else{
-					char c = (char)15;
-					terminal.write(c, p.x, p.y, ExtendedAsciiPanel.brightCyan);
-				}
-				
-			}
-			
+
+			// World-space to screen-space corrections
+			int dx = player.gameplayScreen().getScrollX();
+			int dy = player.gameplayScreen().getScrollY();
+
+			// Actually draw!
+			terminal.write(glyph, p.x - dx, p.y - dy, drawColor);
 		}
+
 		terminal.clear(' ', 0, 24, 80, 1);
 		terminal.write(caption, 2, 24);
 	}
 	
 	public Screen respondToUserInput(KeyEvent key) {
-		int px = x;
-		int py = y;
-		
+		// Save previous position in case we can't move to the new tile
+		int prevX = wx;
+		int prevY = wy;
+		// World-space to screen-space corrections
+		int dx = player.gameplayScreen().getScrollX();
+		int dy = player.gameplayScreen().getScrollY();
+
 		switch (key.getKeyCode()){
-        case KeybindManager.movementWest: x--; dx--; break;
-        case KeybindManager.movementEast: x++; dx++; break;
-        case KeybindManager.movementNorth: y--; dy--; break;
-        case KeybindManager.movementSouth: y++; dy++; break;
-        case KeybindManager.movementNorthWest: x--; y--; dx--; dy--; break;
-        case KeybindManager.movementNorthEast: x++; y--; dx++; dy--; break;
-        case KeybindManager.movementSouthWest: x--; y++; dx--; dy++; break;
-        case KeybindManager.movementSouthEast: x++; y++; dx++; dy++; break;
-        case KeybindManager.navigateMenuConfirm: selectWorldCoordinate(player.x + x, player.y + y, sx + x, sy + y); return null;
-        case KeybindManager.navigateMenuBack: return null;
+			case KeybindManager.movementWest: wx--; break;
+			case KeybindManager.movementEast: wx++; break;
+			case KeybindManager.movementNorth: wy--; break;
+			case KeybindManager.movementSouth: wy++; break;
+			case KeybindManager.movementNorthWest: wx--; wy--; break;
+			case KeybindManager.movementNorthEast: wx++; wy--; break;
+			case KeybindManager.movementSouthWest: wx--; wy++; break;
+			case KeybindManager.movementSouthEast: wx++; wy++; break;
+			case KeybindManager.navigateMenuConfirm: selectWorldCoordinate(wx, wy, wx-dx, wy-dy); return null;
+			case KeybindManager.navigateMenuBack: return null;
         }
 		
-		if(!isAcceptable(player.x+x, player.y+y)) {
-			x = px;
-			y = py;
+		if(!isAcceptable(wx, wy) || !player.world().isInBounds(wx, wy)) {
+			wx = prevX;
+			wy = prevY;
 		}
 		
-		enterWorldCoordinate(player.x+x, player.y+y, sx+x, sy+y);
+		enterWorldCoordinate(wx, wy, wx-dx, wy-dy);
 		return this;
 		
 	}
