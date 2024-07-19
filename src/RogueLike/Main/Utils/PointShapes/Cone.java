@@ -29,7 +29,7 @@ public class Cone extends PointShape {
 		Vec3 targetDisplacement = new Vec3(target).difference(src);
 		double cosine = Math.cos(Math.toRadians(angle/2));
 
-		return new Square(source.x, source.y, source.z, length).stream()
+		return new Circle(source, length).stream()
 			.filter(
 				p -> {
 					Vec3 displacement = new Vec3(p).difference(src);

@@ -18,6 +18,10 @@ public class Square extends PointShape {
 		this.rect = new Rectangle(new Point(x, y, z), radius*2+1, radius*2+1);
 	}
 
+	public Square(Point p, int radius) {
+		this(p.x, p.y, p.z, radius);
+	}
+
 	@Override
 	protected List<Point> generatePoints() {
 		return rect.generatePoints();

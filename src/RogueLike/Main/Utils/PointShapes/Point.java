@@ -76,7 +76,9 @@ public class Point {
 	}
 
 	public int squareDistanceTo(Point other) {
-		return this.x * other.x + this.y * other.y + this.z * other.z;
+		return (this.x - other.x) * (this.x - other.x)
+			+ (this.y - other.y) * (this.y - other.y)
+			+ (this.z - other.z) * (this.z - other.z);
 	}
 
 	@Override
