@@ -350,7 +350,7 @@ public class EffectFactory {
 				// Set fire to terrain in the area of effect
 				aoe.points.forEach(
 					p -> {
-						if (Dice.d6.roll() > 2) { // 2 in 3 chance to set tile on fire
+						if (player.world().tile(p.x, p.y, p.z).canHaveSubtiles() && Dice.d6.roll() > 2) { // 2 in 3 chance to set tile on fire
 							player.world().changeSubTile(p.x, p.y, p.z, Tile.FIRE);
 						}
 					}
