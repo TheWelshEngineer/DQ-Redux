@@ -20,7 +20,7 @@ public class SpellFactory {
 	}
 
 	public Spell dragonsBreath(Creature caster) {
-		return new Spell("Dragon's Breath", 100, 4, caster, effectFactory.dragonsBreath(caster), false, true, new ConeAoE(6, 60.0));
+		return new Spell("Dragon's Breath", 100, 4, caster, effectFactory.dragonsBreath(caster), false, true, new ConeAoE(5, 60.0));
 	}
 	
 	public Spell forceBlast(Creature caster) {

@@ -333,7 +333,7 @@ public class EffectFactory {
 				Damage halfDamage = new Damage(damageAmount / 2,  false, DamageType.FIRE, player.world().factory().effectFactory, true);
 
 				// Apply damage to all creatures in the area of effect
-				InstantiatedAoE aoe = new InstantiatedAoE(new Cone(source, target, 6, 60.0), player.world());
+				InstantiatedAoE aoe = new InstantiatedAoE(new Cone(source, target, 5, 60.0), player.world());
 				aoe.affectedCreaturesExcept(player)
 					.forEach(
 						c -> {
