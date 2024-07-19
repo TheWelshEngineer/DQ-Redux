@@ -14,7 +14,8 @@ public class Circle extends PointShape {
 
 	@Override
 	protected List<Point> generatePoints() {
-		int squareRadius = radius * radius;
+		double delta = 0.5; // increase the radius a smidgeon to make the generated circle look nicer
+		double squareRadius = (radius + delta) * (radius + delta);
 		return new Square(center, radius).stream()
 			.filter(p -> (p.squareDistanceTo(center) <= squareRadius))
 			.collect(Collectors.toList());
