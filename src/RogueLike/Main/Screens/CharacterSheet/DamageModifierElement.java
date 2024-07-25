@@ -20,15 +20,16 @@ public class DamageModifierElement extends CharacterSheetElement {
     @Override
     public String details() {
         if (player.isImmuneTo(damageType)) {
-            return String.format("You are immune to %s damage, taking no damage of this type.", damageType);
-        }
-        else if (player.isResistantTo(damageType)) {
-            return String.format("You are resistant to %s damage, taking half damage of this type.", damageType);
-        }
-        else if (player.isWeakTo(damageType)) {
-            return String.format("You are vulnerable to %s damage, taking double damage of this type.", damageType);
-        }
-        else return String.format("You are damaged normally by %s damage.", damageType);
+            return String.format(
+                    "You are immune to %s damage, taking no damage of this type.", damageType);
+        } else if (player.isResistantTo(damageType)) {
+            return String.format(
+                    "You are resistant to %s damage, taking half damage of this type.", damageType);
+        } else if (player.isWeakTo(damageType)) {
+            return String.format(
+                    "You are vulnerable to %s damage, taking double damage of this type.",
+                    damageType);
+        } else return String.format("You are damaged normally by %s damage.", damageType);
     }
 
     private String damageTypeStatus() {

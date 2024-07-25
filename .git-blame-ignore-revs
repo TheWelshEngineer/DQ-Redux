@@ -1,0 +1,5 @@
+# Run this command to always ignore the listed formatting commits in `git blame`
+# git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# Formatting entire codebase with google-java-format
+5cfd7d16c9a37a4005a6a76b5604668e6f4a9c86

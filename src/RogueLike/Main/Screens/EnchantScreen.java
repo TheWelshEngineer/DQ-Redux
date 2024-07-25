@@ -4,36 +4,34 @@ import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 
-public class EnchantScreen extends InventoryBasedScreen{
-	
-	public ObjectFactory factory;
+public class EnchantScreen extends InventoryBasedScreen {
 
-	public EnchantScreen(Creature player, ObjectFactory factory) {
-		super(player);
-		this.factory = factory;
-	}
+    public ObjectFactory factory;
 
-	@Override
-	protected String getVerb() {
-		return "enchant";
-	}
+    public EnchantScreen(Creature player, ObjectFactory factory) {
+        super(player);
+        this.factory = factory;
+    }
 
-	@Override
-	protected boolean isAcceptable(Item item) {
-		return (item.isWeapon() || item.isArmor() || item.isShield()) && item.enchantment() == null;
-	}
+    @Override
+    protected String getVerb() {
+        return "enchant";
+    }
 
-	@Override
-	protected Screen use(Item item) {
-		if(item.isWeapon()) {
-			factory.randomEnchantWeapon(item);
-		}else {
-			factory.randomEnchantArmor(item);
-		}
+    @Override
+    protected boolean isAcceptable(Item item) {
+        return (item.isWeapon() || item.isArmor() || item.isShield()) && item.enchantment() == null;
+    }
 
-		
-		player.notify("The "+player.nameOf(item)+" shines with fresh magic!");
-		return null;
-	}
+    @Override
+    protected Screen use(Item item) {
+        if (item.isWeapon()) {
+            factory.randomEnchantWeapon(item);
+        } else {
+            factory.randomEnchantArmor(item);
+        }
 
+        player.notify("The " + player.nameOf(item) + " shines with fresh magic!");
+        return null;
+    }
 }

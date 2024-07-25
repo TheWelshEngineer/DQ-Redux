@@ -17,6 +17,8 @@ public class GoldElement extends CharacterSheetElement {
     @Override
     public String details() {
         return String.format("You are carrying %d gold pieces in your purse.\n", player.gold())
-            + String.format("You are wielding equipment worth %d gold pieces.", player.equipmentValue());
+                + String.format(
+                        "You are wielding equipment worth %d gold pieces.",
+                        player.equipmentValue());
     }
 }

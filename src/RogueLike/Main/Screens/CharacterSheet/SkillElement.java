@@ -27,10 +27,9 @@ public abstract class SkillElement extends CharacterSheetElement {
     @Override
     public String details() {
         return String.join(
-            "\n\n",
-            skill().level() >= 1 ? descriptionLevel1() : "",
-            skill().level() >= 2 ? descriptionLevel2() : "",
-            skill().level() >= 3 ? descriptionLevel3() : ""
-        );
+                "\n\n",
+                skill().level() >= 1 ? descriptionLevel1() : "",
+                skill().level() >= 2 ? descriptionLevel2() : "",
+                skill().level() >= 3 ? descriptionLevel3() : "");
     }
 }

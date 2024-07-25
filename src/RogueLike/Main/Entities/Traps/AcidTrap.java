@@ -11,27 +11,27 @@ import java.awt.*;
 
 public class AcidTrap extends Trap {
 
-	public AcidTrap(int x, int y, int z, World world) {
-		super(x, y, z, world);
-	}
+    public AcidTrap(int x, int y, int z, World world) {
+        super(x, y, z, world);
+    }
 
-	@Override
-	public Effect effect(EffectFactory factory) {
-		return factory.causticVapor(3+z+ Dice.d6.roll());
-	}
+    @Override
+    public Effect effect(EffectFactory factory) {
+        return factory.causticVapor(3 + z + Dice.d6.roll());
+    }
 
-	@Override
-	public Effect exploitEffect(EffectFactory factory) {
-		return factory.causticWard(10);
-	}
+    @Override
+    public Effect exploitEffect(EffectFactory factory) {
+        return factory.causticWard(10);
+    }
 
-	@Override
-	public String name() {
-		return "Acid Trap";
-	}
+    @Override
+    public String name() {
+        return "Acid Trap";
+    }
 
-	@Override
-	protected Color trueColor() {
-		return ExtendedAsciiPanel.lime;
-	}
+    @Override
+    protected Color trueColor() {
+        return ExtendedAsciiPanel.lime;
+    }
 }

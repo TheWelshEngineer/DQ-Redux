@@ -16,8 +16,12 @@ public class DexterityElement extends CharacterSheetElement {
 
     @Override
     public String details() {
-        return String.format("You have %d total points of Dexterity, granting a %+d modifier to Dexterity rolls.\n", player.dexterity(), player.dexterityModifier())
-            + String.format("You have %d natural points of Dexterity, out of a maximum of 30.", player.baseDexterity());
+        return String.format(
+                        "You have %d total points of Dexterity, granting a %+d modifier to"
+                                + " Dexterity rolls.\n",
+                        player.dexterity(), player.dexterityModifier())
+                + String.format(
+                        "You have %d natural points of Dexterity, out of a maximum of 30.",
+                        player.baseDexterity());
     }
-
 }

@@ -17,12 +17,17 @@ public class FortitudeSkillElement extends SkillElement {
 
     @Override
     protected String descriptionLevel1() {
-        return String.format("Fortitude I: When starving, you take damage every %s turns instead of every turn.", player.proficiencyBonus());
+        return String.format(
+                "Fortitude I: When starving, you take damage every %s turns instead of every turn.",
+                player.proficiencyBonus());
     }
 
     @Override
     protected String descriptionLevel2() {
-        return String.format("Fortitude II: You add your proficiency bonus (+%s) to checks made to avoid negative effects from eating corpses.", player.proficiencyBonus());
+        return String.format(
+                "Fortitude II: You add your proficiency bonus (+%s) to checks made to avoid"
+                        + " negative effects from eating corpses.",
+                player.proficiencyBonus());
     }
 
     @Override
