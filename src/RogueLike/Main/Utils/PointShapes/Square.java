@@ -1,11 +1,5 @@
 package RogueLike.Main.Utils.PointShapes;
 
-import RogueLike.Main.AoE.AoE;
-import RogueLike.Main.AoE.Point;
-import RogueLike.Main.Creatures.Creature;
-
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Square extends PointShape {
@@ -22,6 +16,10 @@ public class Square extends PointShape {
 		this.radius = radius;
 
 		this.rect = new Rectangle(new Point(x, y, z), radius*2+1, radius*2+1);
+	}
+
+	public Square(Point p, int radius) {
+		this(p.x, p.y, p.z, radius);
 	}
 
 	@Override

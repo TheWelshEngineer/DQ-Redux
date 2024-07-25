@@ -1,6 +1,6 @@
 package RogueLike.Main.Worldgen;
 
-import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
 

@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.Utils.PlayerBuildDetails;
 import RogueLike.Main.Worldgen.Blueprint;

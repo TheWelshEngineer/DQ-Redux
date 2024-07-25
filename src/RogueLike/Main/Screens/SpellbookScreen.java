@@ -79,7 +79,7 @@ public class SpellbookScreen implements Screen{
     		return null;
     	}else {
     		//return null;
-    		return new SpellTargetingScreen(player, String.format("Cast %s at?", spell.name()), sx, sy, spell, null);
+    		return new SpellTargetingScreen(player, String.format("Cast %s at?", spell.name()), spell, null);
     	}
         //return new CastSpellScreen(player, "Cast spell at?", sx, sy, spell, item);
     }

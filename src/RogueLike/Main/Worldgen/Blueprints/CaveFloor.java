@@ -1,15 +1,12 @@
 package RogueLike.Main.Worldgen.Blueprints;
 
 import RogueLike.Main.*;
-import RogueLike.Main.AoE.Point;
-import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Worldgen.Blueprint;
 import RogueLike.Main.Worldgen.Structure;
 import RogueLike.Main.Worldgen.Structures.*;
 
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.IntStream;
 
 public class CaveFloor extends Blueprint {
