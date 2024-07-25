@@ -16,8 +16,11 @@ public class XPElement extends CharacterSheetElement {
 
     @Override
     public String details() {
-        return String.format("You require %d more experience points to level up.\n", player.xpToNextLevel())
-            + String.format("You have %d available attribute points.\n", player.attributePoints())
-            + String.format("You have %d available skill points.", player.skillPoints());
+        return String.format(
+                        "You require %d more experience points to level up.\n",
+                        player.xpToNextLevel())
+                + String.format(
+                        "You have %d available attribute points.\n", player.attributePoints())
+                + String.format("You have %d available skill points.", player.skillPoints());
     }
 }

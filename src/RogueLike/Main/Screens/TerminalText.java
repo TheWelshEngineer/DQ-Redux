@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class TerminalText implements Iterable<TerminalChar>{
+public class TerminalText implements Iterable<TerminalChar> {
     private final List<TerminalChar> terminalChars = new ArrayList<>();
 
     public List<TerminalChar> terminalChars() {
@@ -19,7 +19,9 @@ public class TerminalText implements Iterable<TerminalChar>{
     }
 
     public TerminalText append(String text, Color foreground, Color background) {
-        text.chars().forEach(c -> terminalChars.add(new TerminalChar((char)c, foreground, background)));
+        text.chars()
+                .forEach(
+                        c -> terminalChars.add(new TerminalChar((char) c, foreground, background)));
         return this; // for method chaining
     }
 

@@ -10,27 +10,27 @@ import java.awt.*;
 
 public class SummoningTrap extends Trap {
 
-	public SummoningTrap(int x, int y, int z, World world) {
-		super(x, y, z, world);
-	}
+    public SummoningTrap(int x, int y, int z, World world) {
+        super(x, y, z, world);
+    }
 
-	@Override
-	public Effect effect(EffectFactory factory) {
-		return factory.summonMonstersScroll(world.player());
-	}
+    @Override
+    public Effect effect(EffectFactory factory) {
+        return factory.summonMonstersScroll(world.player());
+    }
 
-	@Override
-	public Effect exploitEffect(EffectFactory factory) {
-		return factory.invisible(10);
-	}
+    @Override
+    public Effect exploitEffect(EffectFactory factory) {
+        return factory.invisible(10);
+    }
 
-	@Override
-	public String name() {
-		return "Summoning Trap";
-	}
+    @Override
+    public String name() {
+        return "Summoning Trap";
+    }
 
-	@Override
-	protected Color trueColor() {
-		return ExtendedAsciiPanel.brightWhite;
-	}
+    @Override
+    protected Color trueColor() {
+        return ExtendedAsciiPanel.brightWhite;
+    }
 }

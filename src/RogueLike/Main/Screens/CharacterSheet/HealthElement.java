@@ -16,6 +16,8 @@ public class HealthElement extends CharacterSheetElement {
 
     @Override
     public String details() {
-        return String.format("You have %d health points remaining, out of a maximum of %d.", player.hp(), player.maxHP());
+        return String.format(
+                "You have %d health points remaining, out of a maximum of %d.",
+                player.hp(), player.maxHP());
     }
 }

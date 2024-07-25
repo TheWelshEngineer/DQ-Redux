@@ -11,27 +11,27 @@ import java.awt.*;
 
 public class FireTrap extends Trap {
 
-	public FireTrap(int x, int y, int z, World world) {
-		super(x, y, z, world);
-	}
+    public FireTrap(int x, int y, int z, World world) {
+        super(x, y, z, world);
+    }
 
-	@Override
-	public Effect effect(EffectFactory factory) {
-		return factory.fireball(3+z+ Dice.d6.roll());
-	}
+    @Override
+    public Effect effect(EffectFactory factory) {
+        return factory.fireball(3 + z + Dice.d6.roll());
+    }
 
-	@Override
-	public Effect exploitEffect(EffectFactory factory) {
-		return factory.magmaWard(10);
-	}
+    @Override
+    public Effect exploitEffect(EffectFactory factory) {
+        return factory.magmaWard(10);
+    }
 
-	@Override
-	public String name() {
-		return "Fire Trap";
-	}
+    @Override
+    public String name() {
+        return "Fire Trap";
+    }
 
-	@Override
-	protected Color trueColor() {
-		return ExtendedAsciiPanel.orange;
-	}
+    @Override
+    protected Color trueColor() {
+        return ExtendedAsciiPanel.orange;
+    }
 }

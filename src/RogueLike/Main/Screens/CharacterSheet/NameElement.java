@@ -4,6 +4,7 @@ import RogueLike.Main.Creatures.Player;
 
 public class NameElement extends CharacterSheetElement {
     private final Player player;
+
     public NameElement(Player player) {
         this.player = player;
     }

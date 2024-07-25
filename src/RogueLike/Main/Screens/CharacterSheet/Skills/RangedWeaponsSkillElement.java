@@ -17,16 +17,23 @@ public class RangedWeaponsSkillElement extends SkillElement {
 
     @Override
     protected String descriptionLevel1() {
-        return String.format("Ranged Weapons I: You add your proficiency bonus (+%s) to attack rolls made with Ranged Weapons.", player.proficiencyBonus());
+        return String.format(
+                "Ranged Weapons I: You add your proficiency bonus (+%s) to attack rolls made with"
+                        + " Ranged Weapons.",
+                player.proficiencyBonus());
     }
 
     @Override
     protected String descriptionLevel2() {
-        return String.format("Ranged Weapons II: You add your proficiency bonus (+%s) to damage rolls made with Ranged Weapons.", player.proficiencyBonus());
+        return String.format(
+                "Ranged Weapons II: You add your proficiency bonus (+%s) to damage rolls made with"
+                        + " Ranged Weapons.",
+                player.proficiencyBonus());
     }
 
     @Override
     protected String descriptionLevel3() {
-        return "Ranged Weapons III: Attacks with Ranged Weapons refund the spent ammunition upon the target's death.";
+        return "Ranged Weapons III: Attacks with Ranged Weapons refund the spent ammunition upon"
+                + " the target's death.";
     }
 }

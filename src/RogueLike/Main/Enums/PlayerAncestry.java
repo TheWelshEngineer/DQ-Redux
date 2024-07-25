@@ -1,21 +1,21 @@
 package RogueLike.Main.Enums;
 
 public enum PlayerAncestry {
-	HUMAN("Human"),
-	ELF("Elf"),
-	DWARF("Dwarf"),
-	ORC("Orc"),
-	DRAGONBORN("Dragonborn"),
-	;
+    HUMAN("Human"),
+    ELF("Elf"),
+    DWARF("Dwarf"),
+    ORC("Orc"),
+    DRAGONBORN("Dragonborn"),
+    ;
 
-	private final String name;
+    private final String name;
 
-	PlayerAncestry(String name) {
-		this.name = name;
-	}
+    PlayerAncestry(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public String toString() {
-		return name;
-	}
+    @Override
+    public String toString() {
+        return name;
+    }
 }

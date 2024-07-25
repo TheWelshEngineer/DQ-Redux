@@ -11,29 +11,27 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class InstantiatedAoE {
-	public final List<Point> points;
-	private final World world;
+    public final List<Point> points;
+    private final World world;
 
-	public InstantiatedAoE(List<Point> points, World world) {
-		this.points = points.stream().filter(world::isInBounds).collect(Collectors.toList());
-		this.world = world;
-	}
+    public InstantiatedAoE(List<Point> points, World world) {
+        this.points = points.stream().filter(world::isInBounds).collect(Collectors.toList());
+        this.world = world;
+    }
 
-	public InstantiatedAoE(PointShape shape, World world) {
-		this(shape.points(), world);
-	}
+    public InstantiatedAoE(PointShape shape, World world) {
+        this(shape.points(), world);
+    }
 
-	public Stream<Creature> affectedCreatures() {
-		return points.stream()
-			.map(p -> world.creature(p.x, p.y, p.z))
-			.filter(Objects::nonNull);
-	}
+    public Stream<Creature> affectedCreatures() {
+        return points.stream().map(p -> world.creature(p.x, p.y, p.z)).filter(Objects::nonNull);
+    }
 
-	public Stream<Creature> affectedCreaturesExcept(Creature except) {
-		return affectedCreatures().filter(c -> c != except);
-	}
+    public Stream<Creature> affectedCreaturesExcept(Creature except) {
+        return affectedCreatures().filter(c -> c != except);
+    }
 
-	public List<Point> points() {
-		return points;
-	}
+    public List<Point> points() {
+        return points;
+    }
 }

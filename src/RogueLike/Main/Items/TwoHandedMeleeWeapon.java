@@ -1,14 +1,20 @@
 package RogueLike.Main.Items;
 
-import java.awt.Color;
-
 import RogueLike.Main.Dice;
 
-public class TwoHandedMeleeWeapon extends BasicMeleeWeapon{
+import java.awt.Color;
 
-	public TwoHandedMeleeWeapon(char glyph, Color color, String name, String appearance, Dice damageDice, int goldValue, int id) {
-		super(glyph, color, name, appearance, damageDice, goldValue, id);
-		this.setIsTwoHanded(true);
-	}
+public class TwoHandedMeleeWeapon extends BasicMeleeWeapon {
 
+    public TwoHandedMeleeWeapon(
+            char glyph,
+            Color color,
+            String name,
+            String appearance,
+            Dice damageDice,
+            int goldValue,
+            int id) {
+        super(glyph, color, name, appearance, damageDice, goldValue, id);
+        this.setIsTwoHanded(true);
+    }
 }

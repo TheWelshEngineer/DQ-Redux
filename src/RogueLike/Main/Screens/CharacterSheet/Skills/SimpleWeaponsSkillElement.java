@@ -17,16 +17,25 @@ public class SimpleWeaponsSkillElement extends SkillElement {
 
     @Override
     protected String descriptionLevel1() {
-        return String.format("Simple Weapons I: You add your proficiency bonus (+%s) to attack rolls made with Simple Weapons.", player.proficiencyBonus());
+        return String.format(
+                "Simple Weapons I: You add your proficiency bonus (+%s) to attack rolls made with"
+                        + " Simple Weapons.",
+                player.proficiencyBonus());
     }
 
     @Override
     protected String descriptionLevel2() {
-        return String.format("Simple Weapons II: You add your proficiency bonus (+%s) to damage rolls made with Simple Weapons.", player.proficiencyBonus());
+        return String.format(
+                "Simple Weapons II: You add your proficiency bonus (+%s) to damage rolls made with"
+                        + " Simple Weapons.",
+                player.proficiencyBonus());
     }
 
     @Override
     protected String descriptionLevel3() {
-        return String.format("Simple Weapons III: Critical hits with Simple Weapons Paralyse the target for %s turns.", player.proficiencyBonus());
+        return String.format(
+                "Simple Weapons III: Critical hits with Simple Weapons Paralyse the target for %s"
+                        + " turns.",
+                player.proficiencyBonus());
     }
 }
