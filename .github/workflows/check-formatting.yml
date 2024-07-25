@@ -26,7 +26,9 @@ jobs:
           wget $URL -O $RUNNER_TEMP/formatter.jar --no-verbose
       - name: Check formatting
         run: |
+          # Format checking script:
           # Enable globstar to allow recursive searching
           shopt -s globstar
-          # Run the formatter
-          java -jar $RUNNER_TEMP/formatter.jar --dry-run --set-exit-if-changed --aosp ./**/*.java
+          # Run the formatter (and print an error message on failure)
+          java -jar $RUNNER_TEMP/formatter.jar --dry-run --set-exit-if-changed --aosp ./**/*.java \
+            || { echo "The above file(s) failed the formatting check!"; exit 1; }
