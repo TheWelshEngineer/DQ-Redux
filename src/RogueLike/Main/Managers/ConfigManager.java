@@ -5,13 +5,11 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 public class ConfigManager {
 
     public static Config config;
     private static final String CONFIG_PATH = "src/RogueLike/Main/Managers/config.ini";
-
 
     public static void init() {
         try {
@@ -64,7 +62,7 @@ public class ConfigManager {
                     // Start a new section with the appropriate title
                     result.sections.put(currentSectionTitle, currentSection);
                     currentSection = new ConfigSection();
-                    currentSectionTitle = line.substring(1, line.length()-1);
+                    currentSectionTitle = line.substring(1, line.length() - 1);
                 } else if (line.contains("=")) {
                     String[] split = line.split("=");
                     currentSection.values.put(split[0].strip(), split[1].strip());
@@ -76,39 +74,39 @@ public class ConfigManager {
         result.sections.put(currentSectionTitle, currentSection);
 
         return result;
-    };
+    }
+    ;
 
     public static void applyConfig(Config config) {
         // Apply the keybinds section
         if (config.sections.containsKey("keybinds")) {
             ConfigSection keybindSection = config.sections.get("keybinds");
-            keybindSection.values.forEach((k, v) -> {
-                try {
-                    Class<?> c = KeybindManager.class;
-                    Field f = c.getDeclaredField(k);
-                    int destVal = f.getInt(null);
-                    int sourceVal = -1;
-                    // If we can parse the input as an int, do it and be done with this
-                    if (v.matches("\\d+")) {
-                        sourceVal = Integer.parseInt(v);
-                    } else {
+            keybindSection.values.forEach(
+                    (k, v) -> {
+                        try {
+                            Class<?> c = KeybindManager.class;
+                            Field f = c.getDeclaredField(k);
+                            int destVal = f.getInt(null);
+                            int sourceVal = -1;
+                            // If we can parse the input as an int, do it and be done with this
+                            if (v.matches("\\d+")) {
+                                sourceVal = Integer.parseInt(v);
+                            } else {
 
-                        Class<?> c_k = KeyEvent.class;
-                        //TODO add VK_ prefixing
-                        Field f_k = c_k.getDeclaredField(v.toUpperCase());
-                        sourceVal = f_k.getInt(null);
-                    }
+                                Class<?> c_k = KeyEvent.class;
+                                // TODO add VK_ prefixing
+                                Field f_k = c_k.getDeclaredField(v.toUpperCase());
+                                sourceVal = f_k.getInt(null);
+                            }
 
-                    KeybindManager.addKeybind(sourceVal, destVal);
+                            KeybindManager.addKeybind(sourceVal, destVal);
 
-                } catch (NoSuchFieldException e) {
-                    System.out.println("Unknown keybind " + k);
-                } catch (IllegalAccessException e) {
-                    System.out.println(e);
-                }
-            });
+                        } catch (NoSuchFieldException e) {
+                            System.out.println("Unknown keybind " + k);
+                        } catch (IllegalAccessException e) {
+                            System.out.println(e);
+                        }
+                    });
         }
     }
-
-
 }

@@ -11,27 +11,27 @@ import java.awt.*;
 
 public class LightningTrap extends Trap {
 
-	public LightningTrap(int x, int y, int z, World world) {
-		super(x, y, z, world);
-	}
+    public LightningTrap(int x, int y, int z, World world) {
+        super(x, y, z, world);
+    }
 
-	@Override
-	public Effect effect(EffectFactory factory) {
-		return factory.electrified(3+z+ Dice.d6.roll());
-	}
+    @Override
+    public Effect effect(EffectFactory factory) {
+        return factory.electrified(3 + z + Dice.d6.roll());
+    }
 
-	@Override
-	public Effect exploitEffect(EffectFactory factory) {
-		return factory.arcWard(10);
-	}
+    @Override
+    public Effect exploitEffect(EffectFactory factory) {
+        return factory.arcWard(10);
+    }
 
-	@Override
-	public String name() {
-		return "Lightning Trap";
-	}
+    @Override
+    public String name() {
+        return "Lightning Trap";
+    }
 
-	@Override
-	protected Color trueColor() {
-		return ExtendedAsciiPanel.brightCyan;
-	}
+    @Override
+    protected Color trueColor() {
+        return ExtendedAsciiPanel.brightCyan;
+    }
 }

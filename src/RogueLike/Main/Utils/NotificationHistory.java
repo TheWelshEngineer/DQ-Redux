@@ -18,8 +18,7 @@ public class NotificationHistory {
     public void addNotification(String message, Integer turn) {
         if (messagesByTurn.containsKey(turn)) {
             messagesByTurn.get(turn).add(message);
-        }
-        else {
+        } else {
             ArrayList<String> messages = new ArrayList<>();
             messages.add(message);
             messagesByTurn.put(turn, messages);
@@ -35,18 +34,20 @@ public class NotificationHistory {
         int minimumTurn = currentTurn - maxLength;
         ArrayList<Integer> turnsToRemove = new ArrayList<>();
 
-        for (Integer turnNumber: messagesByTurn.keySet()) {
+        for (Integer turnNumber : messagesByTurn.keySet()) {
             if (turnNumber < minimumTurn) {
                 turnsToRemove.add(turnNumber);
             }
         }
-        for (Integer turnToRemove: turnsToRemove) {
+        for (Integer turnToRemove : turnsToRemove) {
             messagesByTurn.remove(turnToRemove);
         }
     }
 
     public List<Integer> storedTurns() {
-        return (messagesByTurn.keySet().stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
+        return (messagesByTurn.keySet().stream()
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList()));
     }
 
     public int getTurnLimit() {

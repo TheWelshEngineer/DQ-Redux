@@ -10,27 +10,27 @@ import java.awt.*;
 
 public class BlinkTrap extends Trap {
 
-	public BlinkTrap(int x, int y, int z, World world) {
-		super(x, y, z, world);
-	}
+    public BlinkTrap(int x, int y, int z, World world) {
+        super(x, y, z, world);
+    }
 
-	@Override
-	public Effect effect(EffectFactory factory) {
-		return factory.blink();
-	}
+    @Override
+    public Effect effect(EffectFactory factory) {
+        return factory.blink();
+    }
 
-	@Override
-	public Effect exploitEffect(EffectFactory factory) {
-		return factory.bounce();
-	}
+    @Override
+    public Effect exploitEffect(EffectFactory factory) {
+        return factory.bounce();
+    }
 
-	@Override
-	public String name() {
-		return "Blink Trap";
-	}
+    @Override
+    public String name() {
+        return "Blink Trap";
+    }
 
-	@Override
-	protected Color trueColor() {
-		return ExtendedAsciiPanel.pink;
-	}
+    @Override
+    protected Color trueColor() {
+        return ExtendedAsciiPanel.pink;
+    }
 }

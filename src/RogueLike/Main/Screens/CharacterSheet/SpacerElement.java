@@ -7,7 +7,9 @@ public class SpacerElement extends CharacterSheetElement {
     }
 
     @Override
-    public String details() { return ""; }
+    public String details() {
+        return "";
+    }
 
     @Override
     public boolean isSelectable() {

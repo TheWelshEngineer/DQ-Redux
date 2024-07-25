@@ -16,6 +16,8 @@ public class ProficiencyBonusElement extends CharacterSheetElement {
 
     @Override
     public String details() {
-        return String.format("As a level %d adventurer, you have a +%d proficiency bonus.", player.level(), player.proficiencyBonus());
+        return String.format(
+                "As a level %d adventurer, you have a +%d proficiency bonus.",
+                player.level(), player.proficiencyBonus());
     }
 }

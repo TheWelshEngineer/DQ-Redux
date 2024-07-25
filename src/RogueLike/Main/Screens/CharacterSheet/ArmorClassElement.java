@@ -16,6 +16,6 @@ public class ArmorClassElement extends CharacterSheetElement {
 
     public String details() {
         return String.format("You have a total Armor Class of %d.\n", player.armorClass())
-            + String.format("You have a natural Armor Class of %d.", player.baseArmorClass());
+                + String.format("You have a natural Armor Class of %d.", player.baseArmorClass());
     }
 }
