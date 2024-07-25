@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// TODO: Move to somewhere more general (probably PointShapes)
 public class Point {
 	
 	public int x;
