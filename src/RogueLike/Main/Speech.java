@@ -69,7 +69,7 @@ public class Speech {
             case 19:
                 return "demn";
             case 20:
-                return "~#�%?";
+                return "~#£%?";
         }
         return "vokk";
     }

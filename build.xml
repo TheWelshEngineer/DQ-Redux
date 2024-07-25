@@ -1,0 +1,26 @@
+<project>
+    <target name="clean">
+        <delete dir="compiled" />
+    </target>
+
+    <target name="compile" depends="clean">
+        <mkdir dir="compiled" />
+        <javac srcdir="src" destdir="compiled" includeantruntime="false"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="jar" />
+        <jar destfile="jar/DwarfQuestRedux.jar">
+            <manifest>
+                <attribute name="Main-Class"
+                           value="RogueLike.Main.applicationMain" />
+            </manifest>
+            <fileset dir="compiled"/>
+            <fileset dir="res"/>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="jar/DwarfQuestRedux.jar" fork="true" />
+    </target>
+</project>
