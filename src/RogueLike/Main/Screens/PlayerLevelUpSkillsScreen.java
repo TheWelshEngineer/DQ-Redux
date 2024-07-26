@@ -488,31 +488,30 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 			return this;
 		
 			
-		case KeybindManager.navigateMenuConfirm: 
-			if(points < 1) {
-				player.skills().simpleWeapons.setLevel(playerSimpleWeapons);
-				player.skills().martialWeapons.setLevel(playerMartialWeapons);
-				player.skills().armorTraining.setLevel(playerArmorTraining);
-				player.skills().fortitude.setLevel(playerFortitude);
-				player.skills().finesseWeapons.setLevel(playerFinesseWeapons);
-				player.skills().rangedWeapons.setLevel(playerRangedWeapons);
-				player.skills().stealth.setLevel(playerStealth);
-				player.skills().perception.setLevel(playerPerception);
-				player.skills().evocation.setLevel(playerEvocation);
-				player.skills().pyromancy.setLevel(playerPyromancy);
-				player.skills().cryomancy.setLevel(playerCryomancy);
-				player.skills().electromancy.setLevel(playerElectromancy);
-				player.skills().alchemancy.setLevel(playerAlchemancy);
-				player.setSkillPoints(0);
-				return null;
-			}else {
-				return this;
-			}
+		case KeybindManager.navigateMenuConfirm:
+            if (points < 1) {
+                player.skills().simpleWeapons.modifyLevel(playerSimpleWeapons, false);
+                player.skills().martialWeapons.modifyLevel(playerMartialWeapons, false);
+                player.skills().armorTraining.modifyLevel(playerArmorTraining, false);
+                player.skills().fortitude.modifyLevel(playerFortitude, false);
+                player.skills().finesseWeapons.modifyLevel(playerFinesseWeapons, false);
+                player.skills().rangedWeapons.modifyLevel(playerRangedWeapons, false);
+                player.skills().stealth.modifyLevel(playerStealth, false);
+                player.skills().perception.modifyLevel(playerPerception, false);
+                player.skills().evocation.modifyLevel(playerEvocation, false);
+                player.skills().pyromancy.modifyLevel(playerPyromancy, false);
+                player.skills().cryomancy.modifyLevel(playerCryomancy, false);
+                player.skills().electromancy.modifyLevel(playerElectromancy, false);
+                player.skills().alchemancy.modifyLevel(playerAlchemancy, false);
+                player.setSkillPoints(0);
+                return null;
+            } else {
+                return this;
+            }
 		
 		}
 		
 		return this;
 	}
-
 }
 
