@@ -1,20 +1,20 @@
 package RogueLike.Main;
 
 public class Skillset {
-    public final SkillInstance simpleWeapons = new SkillInstance(Skill.SIMPLE_WEAPONS, 0);
-    public final SkillInstance martialWeapons = new SkillInstance(Skill.MARTIAL_WEAPONS, 0);
-    public final SkillInstance armorTraining = new SkillInstance(Skill.ARMOR_TRAINING, 0);
-    public final SkillInstance fortitude = new SkillInstance(Skill.FORTITUDE, 0);
-    public final SkillInstance finesseWeapons = new SkillInstance(Skill.FINESSE_WEAPONS, 0);
-    public final SkillInstance rangedWeapons = new SkillInstance(Skill.RANGED_WEAPONS, 0);
-    public final SkillInstance stealth = new SkillInstance(Skill.STEALTH, 0);
-    public final SkillInstance perception = new SkillInstance(Skill.PERCEPTION, 0);
-    public final SkillInstance evocation = new SkillInstance(Skill.EVOCATION, 0);
-    public final SkillInstance pyromancy = new SkillInstance(Skill.PYROMANCY, 0);
-    public final SkillInstance cryomancy = new SkillInstance(Skill.CRYOMANCY, 0);
-    public final SkillInstance electromancy = new SkillInstance(Skill.ELECTROMANCY, 0);
-    public final SkillInstance alchemancy = new SkillInstance(Skill.ALCHEMANCY, 0);
-    public final SkillInstance ferromancy = new SkillInstance(Skill.FERROMANCY, 0);
+    public final SkillInstance simpleWeapons;
+    public final SkillInstance martialWeapons;
+    public final SkillInstance armorTraining;
+    public final SkillInstance fortitude;
+    public final SkillInstance finesseWeapons;
+    public final SkillInstance rangedWeapons;
+    public final SkillInstance stealth;
+    public final SkillInstance perception;
+    public final SkillInstance evocation;
+    public final SkillInstance pyromancy;
+    public final SkillInstance cryomancy;
+    public final SkillInstance electromancy;
+    public final SkillInstance alchemancy;
+    public final SkillInstance ferromancy;
 
     public SkillInstance get(Skill type) {
         switch (type) {
@@ -49,5 +49,39 @@ public class Skillset {
             default:
                 throw new IllegalArgumentException(type.toString());
         }
+    }
+
+    public Skillset() {
+        simpleWeapons = new SkillInstance(Skill.SIMPLE_WEAPONS, 0);
+        martialWeapons = new SkillInstance(Skill.MARTIAL_WEAPONS, 0);
+        armorTraining = new SkillInstance(Skill.ARMOR_TRAINING, 0);
+        fortitude = new SkillInstance(Skill.FORTITUDE, 0);
+        finesseWeapons = new SkillInstance(Skill.FINESSE_WEAPONS, 0);
+        rangedWeapons = new SkillInstance(Skill.RANGED_WEAPONS, 0);
+        stealth = new SkillInstance(Skill.STEALTH, 0);
+        perception = new SkillInstance(Skill.PERCEPTION, 0);
+        evocation = new SkillInstance(Skill.EVOCATION, 0);
+        pyromancy = new SkillInstance(Skill.PYROMANCY, 0);
+        cryomancy = new SkillInstance(Skill.CRYOMANCY, 0);
+        electromancy = new SkillInstance(Skill.ELECTROMANCY, 0);
+        alchemancy = new SkillInstance(Skill.ALCHEMANCY, 0);
+        ferromancy = new SkillInstance(Skill.FERROMANCY, 0);
+    }
+
+    public Skillset(Skillset other) {
+        simpleWeapons = new SkillInstance(Skill.SIMPLE_WEAPONS, other.simpleWeapons.level());
+        martialWeapons = new SkillInstance(Skill.MARTIAL_WEAPONS, other.martialWeapons.level());
+        armorTraining = new SkillInstance(Skill.ARMOR_TRAINING, other.armorTraining.level());
+        fortitude = new SkillInstance(Skill.FORTITUDE, other.fortitude.level());
+        finesseWeapons = new SkillInstance(Skill.FINESSE_WEAPONS, other.finesseWeapons.level());
+        rangedWeapons = new SkillInstance(Skill.RANGED_WEAPONS, other.rangedWeapons.level());
+        stealth = new SkillInstance(Skill.STEALTH, other.stealth.level());
+        perception = new SkillInstance(Skill.PERCEPTION, other.perception.level());
+        evocation = new SkillInstance(Skill.EVOCATION, other.evocation.level());
+        pyromancy = new SkillInstance(Skill.PYROMANCY, other.pyromancy.level());
+        cryomancy = new SkillInstance(Skill.CRYOMANCY, other.cryomancy.level());
+        electromancy = new SkillInstance(Skill.ELECTROMANCY, other.electromancy.level());
+        alchemancy = new SkillInstance(Skill.ALCHEMANCY, other.alchemancy.level());
+        ferromancy = new SkillInstance(Skill.FERROMANCY, other.ferromancy.level());
     }
 }

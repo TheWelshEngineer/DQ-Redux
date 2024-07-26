@@ -22,15 +22,8 @@ public class SkillInstance {
         this.level = level;
     }
 
-    public void modifyLevel(int amount, boolean decrease) {
-        if (decrease) {
-            level -= amount;
-            if (level < 1) {
-                level = 1;
-            }
-        } else {
-            level += amount;
-        }
+    public void modifyLevel(int amount) {
+        level += amount;
     }
 
     public SkillInstance(Skill type, int level) {
