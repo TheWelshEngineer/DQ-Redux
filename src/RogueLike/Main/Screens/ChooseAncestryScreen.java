@@ -101,24 +101,9 @@ public class ChooseAncestryScreen implements Screen {
 
         terminal.write(
                 String.format(
-                        "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",
+                        "%c%s%c",
                         borderCornerNW,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
+                        String.valueOf(borderHorizontal).repeat(16),
                         borderCornerNE),
                 5,
                 y++);
@@ -162,24 +147,9 @@ public class ChooseAncestryScreen implements Screen {
                 y++);
         terminal.write(
                 String.format(
-                        "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",
+                        "%c%s%c",
                         borderCornerSW,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
-                        borderHorizontal,
+                        String.valueOf(borderHorizontal).repeat(16),
                         borderCornerSE),
                 5,
                 y++);
