@@ -315,6 +315,4 @@ public class ChooseClassScreen implements Screen{
 		
 		
 	}
-	
-
 }

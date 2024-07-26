@@ -220,8 +220,6 @@ public class ChooseAncestryScreen implements Screen{
 		
 		
 	}
-	
-
 }
 
 
