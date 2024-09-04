@@ -605,7 +605,7 @@ public class InventoryScreen implements Screen{
 		//
 		
 		
-        terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Cancel --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 40);
+        terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Sort Inventory | [%s]: Cancel --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuSort), KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 40);
 		
 	}
 	
@@ -640,11 +640,9 @@ public class InventoryScreen implements Screen{
 			return this;
 		case KeybindManager.navigateMenuBack:
 			return null;
-		/*case KeyEvent.VK_ENTER:
-			if(spellbook.getSpells().size() > 0) {
-				return use(spellbook.get(check));
-			}
-			return null;*/
+		case KeybindManager.navigateMenuSort:
+			inventory.sort();
+			return this;
 		case KeybindManager.interactionEquipItem:
 			if(inventory.get(check).isEquippable()) {
 				//player.equip(inventory.get(check));

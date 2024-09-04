@@ -230,12 +230,11 @@ public ModifierFactory modifierFactory;
 		}
 
 		//Test Items
-		Item startWandTest = objectFactory.itemFactory.newScrollOfMagicMapping(0, player, false);
-		player.learnNameQuiet(startWandTest);
-		player.inventory().add(startWandTest);
+		//Item startWandTest = objectFactory.itemFactory.newScrollOfMagicMapping(0, player, false);
+		//player.learnNameQuiet(startWandTest);
+		//player.inventory().add(startWandTest);
 
 		//player.modifyGold(10000);
-		
 		
 		//
 		player.stackItems();

@@ -49,8 +49,8 @@ public class KeybindManager {
 	public static final int menuInventory = KeyEvent.VK_B;
 	public static final int menuIndex = KeyEvent.VK_I;
 	public static final int menuCharacterSheet = KeyEvent.VK_C;
-
 	public static final int menuActionLog = KeyEvent.VK_A;
+	
 	public static final int navigateMenuConfirm = KeyEvent.VK_ENTER;
 	public static final int navigateMenuBack = KeyEvent.VK_ESCAPE;
 	public static final int navigateMenuUp = KeyEvent.VK_UP;
@@ -67,6 +67,7 @@ public class KeybindManager {
 	public static final int navigateMenuOption_8 = KeyEvent.VK_8;
 	public static final int navigateMenuOption_9 = KeyEvent.VK_9;
 	public static final int navigateMenuFunction_1 = KeyEvent.VK_F1;
+	public static final int navigateMenuSort = KeyEvent.VK_S;
 
 	public static String keybindText(int keyCode) {
 		String representation = KeyEvent.getKeyText(keyCode);
