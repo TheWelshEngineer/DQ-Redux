@@ -1,8 +1,8 @@
 package RogueLike.Main;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import RogueLike.Main.AoE.Point;
 import RogueLike.Main.Utils.NotificationHistory;
@@ -10,6 +10,8 @@ import RogueLike.Main.Utils.PlayerBuildDetails;
 import RogueLike.Main.Worldgen.Blueprint;
 import RogueLike.Main.Worldgen.Blueprints.CaveFloor;
 import RogueLike.Main.Worldgen.Blueprints.MerchantFloor;
+import RogueLike.Main.Worldgen.Structure;
+import RogueLike.Main.Worldgen.WorldGenerationException;
 
 public class WorldBuilder {
 	private int width;
@@ -17,16 +19,20 @@ public class WorldBuilder {
 	private int depth;
 	private Tile[][][] tiles;
 	private int[][][] regions;
+	/** Tiles that have a structure placed on them. */
+	private boolean[][][] structureReservedTiles;
 	private int nextRegion;
 	private final List<Integer> specialDepths = new ArrayList<>();
 	private final List<Blueprint> blueprints = new ArrayList<>();
-	
+	private final List<Structure> structures = new ArrayList<>();
+
 	public WorldBuilder(int width, int height, int depth) {
 		this.width = width;
 		this.height = height;
 		this.depth = depth;
 		this.tiles = new Tile[width][height][depth];
 		this.regions = new int[width][height][depth];
+		this.structureReservedTiles = new boolean[width][height][depth]; // defaults to filled with False
 		this.nextRegion = 1;
 	}
 
@@ -38,6 +44,10 @@ public class WorldBuilder {
 	public World build(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
 		World world = new World(tiles, specialDepths);
 		world.addPlayer(playerNotifications, playerDetails);
+		// Structures do their generation before blueprints, as structures are intended to have more specific
+		// generation, and we don't want that to be stepped on by the more generic generation from blueprints
+		structures.forEach(s -> s.onBuildWorld(world));
+		structures.forEach(s -> s.onBuildWorldLate(world));
 		blueprints.forEach(bp -> bp.onBuildWorld(world));
 
 		// TODO: move the victory item to a VictoryFloor blueprint? or make it drop from the final boss?
@@ -48,6 +58,11 @@ public class WorldBuilder {
 	private void addBlueprint(Blueprint blueprint) {
 		blueprints.add(blueprint);
 		blueprint.onAdd();
+	}
+
+	public void addStructure(Structure structure) {
+		structures.add(structure);
+		structure.reserveArea();
 	}
 
 	private WorldBuilder createRegions(){
@@ -130,7 +145,15 @@ public class WorldBuilder {
 	}
 	
 	private void connectRegionsDown(int z, int r1, int r2) {
-		List<Point> candidates = findRegionOverlaps(z, r1, r2);
+		List<Point> candidates = findRegionOverlaps(z, r1, r2)
+			.stream().filter(p -> !isStructureTileReserved(p)) // filter out any points that are in a reserved area
+			.collect(Collectors.toList());
+
+		if (candidates.isEmpty()) {
+			throw new WorldGenerationException(
+				String.format("Failed to generate world - could not generate downwards stairs on depth %d", z)
+			);
+		}
 		
 		int stairs = 0;
 		
@@ -166,7 +189,10 @@ public class WorldBuilder {
 		do {
 			x = (int)(Math.random() * width);
 			y = (int)(Math.random() * height);
-		}while(tiles[x][y][0] != Tile.FLOOR);
+		} while (
+			tiles[x][y][0] != Tile.FLOOR // exit stairs must only be placed on the floor
+			|| structureReservedTiles[x][y][0] // exit stairs must not be placed within a structure's reserved area
+		);
 													
 		tiles[x][y][0] = Tile.STAIRS_EXIT;
 		System.out.println("Exit stairs added");
@@ -180,7 +206,7 @@ public class WorldBuilder {
 		for (int x=0; x<width; x++) {
 			for (int y=0; y<height; y++) {
 				for (int z=0; z<depth; z++) {
-					if (tiles[x][y][z].isBars()) {
+					if (tiles[x][y][z].isBars() && !tiles[x][y][z].isBarsDoor()) {
 						boolean barsN = isInBounds(x, y+1) && tiles[x][y+1][z].isBars();
 						boolean barsS = isInBounds(x, y-1) && tiles[x][y-1][z].isBars();
 						boolean barsE = isInBounds(x-1, y) && tiles[x-1][y][z].isBars();
@@ -236,6 +262,26 @@ public class WorldBuilder {
 		return x >= 0 && x < width && y >= 0 && y < height;
 	}
 
+	public boolean isInBoundsMargin(int x, int y, int margin) {
+		return isInBoundsMargin(x, y, margin, margin);
+	}
+
+	public boolean isInBoundsMargin(int x, int y, int marginX, int marginY) {
+		return x >= marginX && x < width - marginX && y >= marginY && y < height - marginY;
+	}
+
+	public Optional<Point> pickRandomLocation(int depth, Function<Point, Boolean> isAcceptable) {
+		int MAX_ATTEMPTS = 100;
+		Random rng = new Random();
+		for (int i = 0; i < MAX_ATTEMPTS; i++) {
+			Point point = new Point(rng.nextInt(width), rng.nextInt(height), depth);
+			if (isAcceptable.apply(point)) {
+				return Optional.of(point);
+			}
+		}
+		return Optional.empty();
+	}
+
 	private WorldBuilder addAllBlueprints() {
 		for (int z=0; z<depth; z++) {
 			switch(z) {
@@ -261,12 +307,18 @@ public class WorldBuilder {
 		blueprints.forEach(Blueprint::onPostRegionConnection);
 		return this;
 	}
+
+	private WorldBuilder buildStructures() {
+		structures.forEach(Structure::onBuildStructures);
+		return this;
+	}
 	
 	public WorldBuilder generateWorld() {
 		System.out.println("Generating world");
 		return addAllBlueprints()
 				.blueprintsGenerateTiles()
 				.blueprintsPostGenerateTiles()
+				.buildStructures()
 				.createRegions()
 				.connectRegions()
 				.blueprintsPostRegionConnection()
@@ -278,7 +330,21 @@ public class WorldBuilder {
 	public void setTile(int x, int y, int z, Tile tile) {
 		tiles[x][y][z] = tile;
 	}
+	public void setTile(Point p, Tile tile) {
+		setTile(p.x, p.y, p.z, tile);
+	}
+
 	public Tile getTile(int x, int y, int z) {
 		return tiles[x][y][z];
+	}
+	public Tile getTile(Point p) {
+		return getTile(p.x, p.y, p.z);
+	}
+
+	public void reserveStructureTile(Point p) {
+		structureReservedTiles[p.x][p.y][p.z] = true;
+	}
+	public boolean isStructureTileReserved(Point p) {
+		return structureReservedTiles[p.x][p.y][p.z];
 	}
 }
