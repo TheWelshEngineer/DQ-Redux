@@ -214,7 +214,9 @@ public ModifierFactory modifierFactory;
 	
 		//Starting Food
 		player.inventory().add(objectFactory.itemFactory.newRations(0, 0));
-		
+		player.inventory().add(objectFactory.itemFactory.newDragonsBreathWand(0, player, false));
+		player.inventory().add(objectFactory.itemFactory.newIceKnifeWand(0, player, false));
+
 		//Ancestry Items
 		if(details.ancestry == PlayerAncestry.DRAGONBORN) {
 			Item startWandDragonborn = objectFactory.itemFactory.newFireboltWand(0, player, false);
@@ -469,16 +471,6 @@ public ModifierFactory modifierFactory;
 	}
 	
 	//Technical Creatures
-	public Creature newMarker(int depth, Creature player, boolean addToWorld) {
-		Creature marker = new Creature(objectFactory.world, " ", 'M', ExtendedAsciiPanel.brown, 1, 1, 10, 1, 1, 1, 1, 1);
-		new ChestAI(marker, objectFactory, objectFactory.world);
-		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(marker, depth);
-			marker.addEffect(objectFactory.randomStructure(player));
-		}
-		return marker;
-	}
-	
 	public Creature newTileSpell(int depth, Creature player, boolean addToWorld) {
 		Creature tileSpell = new Creature(objectFactory.world, " ", 'T', ExtendedAsciiPanel.brown, 1, 1, 10, 1, 1, 1, 1, 1);
 		new ChestAI(tileSpell, objectFactory, objectFactory.world);

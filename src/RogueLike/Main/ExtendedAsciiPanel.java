@@ -877,4 +877,19 @@ public class ExtendedAsciiPanel extends JPanel {
 
         return this;
     }
+
+    /**
+     * Write a multiline string to the terminal at the specified position, centered horizontally.
+     *
+     * @param string The multiline string to write, with `\n` denoting newlines.
+     * @param y the distance from the top to begin writing from.
+     * @return this, for convenient chaining of method calls.
+     */
+    public ExtendedAsciiPanel writeCenterMultiline(String string, int y) {
+        for (String line : string.split("\n")) {
+            writeCenter(line, y++);
+        }
+
+        return this;
+    }
 }

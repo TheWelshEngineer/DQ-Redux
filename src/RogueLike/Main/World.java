@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Entities.Entity;
@@ -551,19 +551,13 @@ public class World {
             }
         }
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+	public boolean isInBounds(int x, int y) {
+		return x >= 0 && x < width && y >= 0 && y < height;
+	}
+
+	public boolean isInBounds(Point p) {
+		return p.x >= 0 && p.x < width && p.y >= 0 && p.y < height && p.z >= 0 && p.z < depth;
+	}
 }
