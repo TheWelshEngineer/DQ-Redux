@@ -4,6 +4,9 @@ import java.awt.event.KeyEvent;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.Skill;
+import RogueLike.Main.Skillset;
+import RogueLike.Main.TextUtils;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 
@@ -11,10 +14,9 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 
 	protected Creature player;
 
-	private int
-		points ;private final Skillset newSkills;
-	private int
-		check =  0;
+	private int points ;
+	private final Skillset newSkills;
+	private int check =  0;
 	private Skill selectedSkill() {
 		return Skill.values()[check];
 	}
@@ -22,7 +24,7 @@ public class PlayerLevelUpSkillsScreen implements Screen{
 	public PlayerLevelUpSkillsScreen(Creature player) {
 		this.player = player;
 		this.points = player.skillPoints();
-	this.newSkills = new Skillset(player.skills());
+		this.newSkills = new Skillset(player.skills());
     }
 
 	@Override
