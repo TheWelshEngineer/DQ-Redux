@@ -743,7 +743,7 @@ public class ExtendedAsciiPanel extends JPanel {
      * @return this for convenient chaining of method calls
      */
     public ExtendedAsciiPanel write(TerminalText text, int x, int y) {
-        for (TerminalChar c: text) {
+        for (TerminalChar c : text) {
             write(c.glyph, x++, y, c.foreground, c.background);
         }
         return this;

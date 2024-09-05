@@ -44,6 +44,7 @@ public class KeybindManager {
 	public static final int interactionQuickslot_6 = KeyEvent.VK_6;
 	public static final int interactionFireRangedWeapon = KeyEvent.VK_F;
 	public static final int interactionLook = KeyEvent.VK_L;
+	public static final int interactionToggleStatusToQuickslots = KeyEvent.VK_EQUALS;
 
 	public static final int menuHelp = KeyEvent.VK_H;
 	public static final int menuInventory = KeyEvent.VK_B;

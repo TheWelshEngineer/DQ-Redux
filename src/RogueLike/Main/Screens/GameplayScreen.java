@@ -28,6 +28,11 @@ public class GameplayScreen implements Screen{
 	public void setInputAccepted(boolean value) {
 		inputAccepted = value;
 	}
+	
+	private boolean toggleStatusToQuickslots = false;
+	public void toggleStatusToQuickslots() {
+		toggleStatusToQuickslots = !toggleStatusToQuickslots;
+	}
 
 	public void displayOutput(ExtendedAsciiPanel terminal) {
 		
@@ -75,28 +80,40 @@ public class GameplayScreen implements Screen{
 		}
 		//
 		int y = 24;
-		terminal.write("== Status Effects ==", 95, y++);
-		y++;
-		for(Effect effect : effects) {
-        	if(effect.name() != null) {
-        		int y2 = y;
-        		if(y2 > 46) {
-        			y2 = 46;
-        		}
-        		char effectTypeIcon = (char)30;
-        		Color effectTypeColor = ExtendedAsciiPanel.brightGreen;
-        		if(effect.isNegative()) {
-        			effectTypeIcon = (char)31;
-        			effectTypeColor = ExtendedAsciiPanel.brightRed;
-        		}
-        		if(effect.showInMenu()) {
-        			terminal.write(String.format("    %s (%d)", effect.name(), effect.duration()), 95, y2);
-        			terminal.write(String.format("%c ", effect.glyph()), 95, y2, effect.color());
-        			terminal.write(String.format(" %c", effectTypeIcon), 96, y2, effectTypeColor);
-        		}
-        		y++;
-        	}
+		if(!toggleStatusToQuickslots) {
+			terminal.write("== Status Effects ==", 95, y++);
+			y++;
+			for(Effect effect : effects) {
+	        	if(effect.name() != null) {
+	        		int y2 = y;
+	        		if(y2 > 46) {
+	        			y2 = 46;
+	        		}
+	        		char effectTypeIcon = (char)30;
+	        		Color effectTypeColor = ExtendedAsciiPanel.brightGreen;
+	        		if(effect.isNegative()) {
+	        			effectTypeIcon = (char)31;
+	        			effectTypeColor = ExtendedAsciiPanel.brightRed;
+	        		}
+	        		if(effect.showInMenu()) {
+	        			terminal.write(String.format("    %s (%d)", effect.name(), effect.duration()), 95, y2);
+	        			terminal.write(String.format("%c ", effect.glyph()), 95, y2, effect.color());
+	        			terminal.write(String.format(" %c", effectTypeIcon), 96, y2, effectTypeColor);
+	        		}
+	        		y++;
+	        	}
+			}
+		}else {
+			terminal.write("== Quickslots ==", 95, y++);
+			y++;
+			terminal.write(String.format("QS1: %s", player.quickslot_1() == null ? "Empty" : player.nameOf(player.quickslot_1())), 88, y++);
+			terminal.write(String.format("QS2: %s", player.quickslot_2() == null ? "Empty" : player.nameOf(player.quickslot_2())), 88, y++);
+			terminal.write(String.format("QS3: %s", player.quickslot_3() == null ? "Empty" : player.nameOf(player.quickslot_3())), 88, y++);
+			terminal.write(String.format("QS4: %s", player.quickslot_4() == null ? "Empty" : player.nameOf(player.quickslot_4())), 88, y++);
+			terminal.write(String.format("QS5: %s", player.quickslot_5() == null ? "Empty" : player.nameOf(player.quickslot_5())), 88, y++);
+			terminal.write(String.format("QS6: %s", player.quickslot_6() == null ? "Empty" : player.nameOf(player.quickslot_6())), 88, y++);
 		}
+		
 		//
 		//mana here
 		
@@ -210,6 +227,7 @@ public class GameplayScreen implements Screen{
 	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); break;
 			case KeybindManager.menuActionLog: subscreen = new ActionLogScreen(playerNotifications, world.turnNumber()); break;
 			case KeybindManager.menuPause: subscreen = new PauseScreen(); break;
+			case KeybindManager.interactionToggleStatusToQuickslots: this.toggleStatusToQuickslots(); inputAccepted = true; break;
 			//
 	        //case KeyEvent.VK_A: subscreen = new SpellbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = true; break;
 	        //
