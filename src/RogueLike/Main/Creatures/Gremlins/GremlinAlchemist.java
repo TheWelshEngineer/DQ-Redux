@@ -25,8 +25,8 @@ public class GremlinAlchemist extends Creature{
 		Item startArmor = factory.itemFactory.newLeatherArmor(0, false);
 		this.inventory().add(startWeapon);
 		this.inventory().add(startArmor);
-		this.equip(startWeapon);
-		this.equip(startArmor);
+		this.equip(startWeapon, true);
+		this.equip(startArmor, true);
 		this.creatureTypes.add("Gremlin");
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	

@@ -317,7 +317,7 @@ public class CreatureAI {
 			boolean isArmor = item.isArmor();
 			
 			if(!isArmor && itemWeaponRating > currentWeaponRating || isArmor && item.armorClass() > currentArmorRating) {
-				creature.equip(item);
+				creature.equip(item, false);
 			}
 		}
 		

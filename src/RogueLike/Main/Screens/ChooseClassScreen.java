@@ -268,7 +268,7 @@ public class ChooseClassScreen implements Screen{
 			y++;
 			terminal.writeCenter("+ Shortsword", y+=1);
 			terminal.writeCenter("+ Chainmail Tunic", y+=1);
-			terminal.writeCenter("+ Wand of Weapon Bolt", y+=1);
+			terminal.writeCenter("+ Wand of Blad's Ward", y+=1);
 			terminal.writeCenter("+ Ration of Food", y+=1);
 		}
 

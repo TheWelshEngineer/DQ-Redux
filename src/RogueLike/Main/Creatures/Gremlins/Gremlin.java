@@ -24,10 +24,10 @@ public class Gremlin extends Creature{
 		this.creatureTypes.add("Gremlin");
 		Item startWeapon = factory.itemFactory.newShortbow(0, false);
 		this.inventory().add(startWeapon);
-		this.equip(startWeapon);
+		this.equip(startWeapon, true);
 		Item startAmmo = factory.itemFactory.newArrows(0, 0);
 		this.inventory().add(startAmmo);
-		this.equip(startAmmo);
+		this.equip(startAmmo, true);
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	
 		this.scaleStrengthWithDepth(depth);	

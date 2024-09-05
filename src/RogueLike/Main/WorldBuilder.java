@@ -39,6 +39,7 @@ public class WorldBuilder {
 		World world = new World(tiles, specialDepths);
 		world.addPlayer(playerNotifications, playerDetails);
 		blueprints.forEach(bp -> bp.onBuildWorld(world));
+		
 
 		// TODO: move the victory item to a VictoryFloor blueprint? or make it drop from the final boss?
 		world.factory().itemFactory.newVictoryItem(world.depth()-1, 1);

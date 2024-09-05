@@ -24,8 +24,8 @@ public class Ogre extends Creature{
 		Item startArmor = factory.itemFactory.newHideArmor(0, false);
 		this.inventory().add(startWeapon);
 		this.inventory().add(startArmor);
-		this.equip(startWeapon);
-		this.equip(startArmor);
+		this.equip(startWeapon, true);
+		this.equip(startArmor, true);
 		this.creatureTypes.add("Beast");
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	

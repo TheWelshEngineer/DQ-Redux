@@ -24,7 +24,7 @@ public class AnimatedWeapon extends Creature{
 		this.creatureTypes.add("Construct");
 		Item startWeapon = factory.randomWeapon(0, false);
 		this.inventory().add(startWeapon);
-		this.equip(startWeapon);
+		this.equip(startWeapon, true);
 		this.setHasNoCorpse(true);
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	

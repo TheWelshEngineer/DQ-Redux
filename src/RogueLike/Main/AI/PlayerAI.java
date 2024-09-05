@@ -45,9 +45,9 @@ public class PlayerAI extends CreatureAI{
 			case 8: this.creature.moveBy(1, 1, 0, false); actionQueue = new ArrayList<Integer>(); System.out.println(this.toString() + " uses [Move/Attack Southeast]"); break;
 			case 9: this.creature.idle(); System.out.println(this.toString() + " uses [Idle]"); break;
 			//
-			case 10: if(this.itemToProcess() != null){this.creature.drop(itemToProcess); System.out.println(this.toString() + " uses [Drop "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 10: if(this.itemToProcess() != null){this.creature.drop(itemToProcess, false); System.out.println(this.toString() + " uses [Drop "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
 			case 11: if(this.itemToProcess() != null){this.creature.eat(itemToProcess); System.out.println(this.toString() + " uses [Eat "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
-			case 12: if(this.itemToProcess() != null){this.creature.equip(itemToProcess); System.out.println(this.toString() + " uses [Equip "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
+			case 12: if(this.itemToProcess() != null){this.creature.equip(itemToProcess, false); System.out.println(this.toString() + " uses [Equip "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
 			case 13: this.creature.pickup(); System.out.println(this.toString() + " uses [Get Item]"); actionQueue = new ArrayList<Integer>(); break;
 			case 14: if(this.itemToProcess() != null){this.creature.throwItem(itemToProcess, processX, processY, processZ); System.out.println(this.toString() + " uses [Throw "+itemToProcess.toString()+"] at: ("+processX+","+processY+","+processZ+")"); this.setItemToProcess(null); this.setProcessX(null); this.setProcessY(null); this.setProcessZ(null);} actionQueue = new ArrayList<Integer>(); break;
 			case 15: if(this.itemToProcess() != null){this.creature.quaff(itemToProcess); System.out.println(this.toString() + " uses [Quaff "+itemToProcess.toString()+"]"); this.setItemToProcess(null);} actionQueue = new ArrayList<Integer>(); break;
@@ -88,7 +88,7 @@ public class PlayerAI extends CreatureAI{
 			if(hasCorrectKey == true) {
 				creature.world().changeTile(x, y, z, Tile.FLOOR);
 				creature.notify("The door opens!");
-				creature.getRidOf(correctKey);
+				creature.getRidOf(correctKey, false);
 				creature.notify("The key snaps off in the lock...");
 			}else if(hasCorrectKey == false){
 				creature.notify("The door is locked.");

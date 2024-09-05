@@ -24,10 +24,10 @@ public class GremlinSkirmisher extends Creature{
 		this.creatureTypes.add("Gremlin");
 		Item startWeapon = factory.itemFactory.newShortsword(0, false);
 		this.inventory().add(startWeapon);
-		this.equip(startWeapon);
+		this.equip(startWeapon, true);
 		Item startArmor = factory.itemFactory.newLeatherArmor(0, false);
 		this.inventory().add(startArmor);
-		this.equip(startArmor);
+		this.equip(startArmor, true);
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	
 		this.scaleStrengthWithDepth(depth);	

@@ -24,7 +24,7 @@ public class AnimatedArmor extends Creature{
 		this.creatureTypes.add("Construct");
 		Item startArmor = factory.randomArmor(0, false);
 		this.inventory().add(startArmor);
-		this.equip(startArmor);
+		this.equip(startArmor, true);
 		this.setHasNoCorpse(true);
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	

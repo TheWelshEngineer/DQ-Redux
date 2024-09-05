@@ -24,7 +24,7 @@ public class SkeletonElectromancer extends Creature{
 		new SkeletonElectromancerAI(this, player, factory, factory.world);
 		Item startWeapon = factory.itemFactory.newClub(0, false);
 		this.inventory().add(startWeapon);
-		this.equip(startWeapon);
+		this.equip(startWeapon, true);
 		this.creatureTypes.add("Undead");
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	

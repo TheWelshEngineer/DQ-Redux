@@ -52,7 +52,7 @@ public class MerchantScreen extends InventoryBasedScreen{
 				player.learnNameQuiet(item);
 				player.notify("You buy the "+player.nameOf(item)+".");
 				player.inventory().add(item);
-				merchant.getRidOf(item);
+				merchant.getRidOf(item, false);
 				player.modifyGold(-item.currentGoldValue());
 			}
 		}

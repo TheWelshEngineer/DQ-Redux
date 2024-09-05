@@ -1649,9 +1649,9 @@ public class Creature implements Cloneable{
 			}
 
 			if(item2.quaffEffect() != null && c != null) {
-				getRidOf(item2);
+				getRidOf(item2, true);
 			}else {
-				putAt(item2, wx, wy, wz);
+				putAt(item2, wx, wy, wz, true);
 			}
 		}
 
@@ -1960,7 +1960,7 @@ public class Creature implements Cloneable{
 			if (item.isThrownWeapon()){
 				if (item.getWasCreatureWepon() && this.weapon() == null && (item.getOwner().equals(this))) {
 					doAction("wield a "+nameOf(item));
-					this.equip(item);
+					this.equip(item, false);
 					//weapon = item;
 					//weaponName = item.name();
 				}
@@ -2010,64 +2010,76 @@ public class Creature implements Cloneable{
 		}
 	}
 
-	public void drop(Item item){
+	public void drop(Item item, boolean silent){
 		if((item == weapon || item == armor || item == shield || item == ring || item == ammunition || item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6) && item.curse() != null) {
 			notify("The "+nameOf(item)+" is cursed! You can't let go of it!");
 		}else if (world.addAtEmptySpace(item, x, y, z)){
 			if(isDead) {
 				doActionWhenDead("drop a " + nameOf(item));
 			}
-			if(item.stackAmount() > 1) {
-				doAction(String.format("drops %d %ss", item.stackAmount(), nameOf(item)));
-			}else {
-				doAction("drop a " + nameOf(item));
+			if(!silent) {
+				if(item.stackAmount() > 1) {
+					doAction(String.format("drops %d %ss", item.stackAmount(), nameOf(item)));
+				}else {
+					doAction("drop a " + nameOf(item));
+				}
 			}
-			unequip(item);
+			unequip(item, silent);
 			inventory.remove(item);
 		} else {
 			notify("There's nowhere to drop the %s.", nameOf(item));
 		}
 	}
 
-	public void getRidOf(Item item) {
-		unequip(item);
+	public void getRidOf(Item item, boolean silent) {
+		unequip(item, silent);
 		inventory.remove(item);
 	}
 
-	private void putAt(Item item, int wx, int wy, int wz) {
-		unequip(item);
+	private void putAt(Item item, int wx, int wy, int wz, boolean silent) {
+		unequip(item, silent);
 		inventory.remove(item);
 		world.addAtEmptySpace(item, wx, wy, wz);
 	}
 
-	public void unequip(Item item) {
+	public void unequip(Item item, boolean silent) {
 		if(item == null) {
 			return;
 		}//else
 		if(item == weapon) {
-			doAction("put away a "+nameOf(item));
+			if(!silent) {
+				doAction("put away a "+nameOf(item));
+			}
 			weapon = null;
 			//weaponName = "None";
 		}else if(item == armor) {
-			doAction("remove a "+nameOf(item));
+			if(!silent) {
+				doAction("remove a "+nameOf(item));
+			}
 			armor = null;
 			//armorName = "None";
 		}else if(item == shield) {
-			doAction("put away a "+nameOf(item));
+			if(!silent) {
+				doAction("put away a "+nameOf(item));
+			}
 			shield = null;
 			//shieldName = "None";
 		}else if(item == ring) {
-			doAction("remove a "+nameOf(item));
+			if(!silent) {
+				doAction("remove a "+nameOf(item));
+			}
 			ring = null;
 			//ringName = "None";
 		}else if(item == ammunition) {
-			doAction("put away a "+nameOf(item));
+			if(!silent) {
+				doAction("put away a "+nameOf(item));
+			}
 			ammunition = null;
 			//ringName = "None";
 		}
 	}
 
-	public void equip(Item item) {
+	public void equip(Item item, boolean silent) {
 		if(!item.isEquippable()) {
 			return;
 		}
@@ -2076,7 +2088,7 @@ public class Creature implements Cloneable{
 				if(weapon.curse() != null) {
 					notify("Your "+nameOf(weapon)+" is cursed! You can't let go of it!");
 				}else {
-					unequip(weapon);
+					unequip(weapon, silent);
 				}
 
 			}else {
@@ -2096,8 +2108,10 @@ public class Creature implements Cloneable{
 							notify("The "+nameOf(item)+" is cursed!");
 							item.setCurseKnown(true);
 						}else {
-							unequip(weapon);
-							doAction("wield a "+nameOf(item));
+							unequip(weapon, silent);
+							if(!silent) {
+								doAction("wield a "+nameOf(item));
+							}
 							weapon = item;
 							weaponName = item.name();
 							notify("As you wield the "+nameOf(item)+", a foul magic grips you!");
@@ -2105,8 +2119,10 @@ public class Creature implements Cloneable{
 							item.setCurseKnown(true);
 						}
 					}else {
-						unequip(weapon);
-						doAction("wield a "+nameOf(item));
+						unequip(weapon, silent);
+						if(!silent) {
+							doAction("wield a "+nameOf(item));
+						}
 						weapon = item;
 						weaponName = item.name();
 						item.setWasCreatureWepon(true);
@@ -2122,7 +2138,7 @@ public class Creature implements Cloneable{
 				if(armor.curse() != null) {
 					notify("Your "+nameOf(armor)+" is cursed! You can't take it off!");
 				}else {
-					unequip(armor);
+					unequip(armor, silent);
 				}
 
 			}else {
@@ -2140,8 +2156,10 @@ public class Creature implements Cloneable{
 							notify("The "+nameOf(item)+" is cursed!");
 							item.setCurseKnown(true);
 						}else {
-							unequip(armor);
-							doAction("put on a "+nameOf(item));
+							unequip(armor, silent);
+							if(!silent) {
+								doAction("put on a "+nameOf(item));
+							}
 							armor = item;
 							armorName = item.name();
 							notify("As you put on the "+nameOf(item)+", a foul magic grips you!");
@@ -2149,8 +2167,10 @@ public class Creature implements Cloneable{
 							item.setCurseKnown(true);
 						}
 					}else {
-						unequip(armor);
-						doAction("put on a "+nameOf(item));
+						unequip(armor, silent);
+						if(!silent) {
+							doAction("put on a "+nameOf(item));
+						}
 						armor = item;
 						armorName = item.name();
 					}
@@ -2164,7 +2184,7 @@ public class Creature implements Cloneable{
 				if(shield.curse() != null) {
 					notify("Your "+nameOf(shield)+" is cursed! You can't put it down!");
 				}else {
-					unequip(shield);
+					unequip(shield, silent);
 				}
 
 			}else {
@@ -2184,8 +2204,10 @@ public class Creature implements Cloneable{
 							notify("The "+nameOf(item)+" is cursed!");
 							item.setCurseKnown(true);
 						}else {
-							unequip(shield);
-							doAction("ready a "+nameOf(item));
+							unequip(shield, silent);
+							if(!silent) {
+								doAction("ready a "+nameOf(item));
+							}
 							shield = item;
 							shieldName = item.name();
 							notify("As you ready the "+nameOf(item)+", a foul magic grips you!");
@@ -2193,8 +2215,10 @@ public class Creature implements Cloneable{
 							item.setCurseKnown(true);
 						}
 					}else {
-						unequip(shield);
-						doAction("ready a "+nameOf(item));
+						unequip(shield, silent);
+						if(!silent) {
+							doAction("ready a "+nameOf(item));
+						}
 						shield = item;
 						shieldName = item.name();
 					}
@@ -2208,7 +2232,7 @@ public class Creature implements Cloneable{
 				if(ring.curse() != null) {
 					notify("Your "+nameOf(ring)+" is cursed! You can't take it off!");
 				}else {
-					unequip(ring);
+					unequip(ring, silent);
 				}
 
 			}else {
@@ -2224,8 +2248,10 @@ public class Creature implements Cloneable{
 							notify("The "+nameOf(item)+" is cursed!");
 							item.setCurseKnown(true);
 						}else {
-							unequip(ring);
-							doAction("put on a "+nameOf(item));
+							unequip(ring, silent);
+							if(!silent) {
+								doAction("put on a "+nameOf(item));
+							}
 							ring = item;
 							ringName = item.name();
 							notify("As you put on the "+nameOf(item)+", a foul magic grips you!");
@@ -2233,8 +2259,10 @@ public class Creature implements Cloneable{
 							item.setCurseKnown(true);
 						}
 					}else {
-						unequip(ring);
-						doAction("put on a "+nameOf(item));
+						unequip(ring, silent);
+						if(!silent) {
+							doAction("put on a "+nameOf(item));
+						}
 						ring = item;
 						ringName = item.name();
 					}
@@ -2247,7 +2275,7 @@ public class Creature implements Cloneable{
 				if(ammunition.curse() != null) {
 					notify("Your "+nameOf(ammunition)+" is cursed! You can't take it off!");
 				}else {
-					unequip(ammunition);
+					unequip(ammunition, silent);
 				}
 
 			}else {
@@ -2263,8 +2291,10 @@ public class Creature implements Cloneable{
 							notify("The "+nameOf(item)+" is cursed!");
 							item.setCurseKnown(true);
 						}else {
-							unequip(ammunition);
-							doAction("ready a "+nameOf(item));
+							unequip(ammunition, silent);
+							if(!silent) {
+								doAction("ready a "+nameOf(item));
+							}
 							ammunition = item;
 							ammunitionName = item.name();
 							notify("As you ready the "+nameOf(item)+", a foul magic grips you!");
@@ -2272,8 +2302,10 @@ public class Creature implements Cloneable{
 							item.setCurseKnown(true);
 						}
 					}else {
-						unequip(ammunition);
-						doAction("ready a "+nameOf(item));
+						unequip(ammunition, silent);
+						if(!silent) {
+							doAction("ready a "+nameOf(item));
+						}
 						ammunition = item;
 						ammunitionName = item.name();
 					}
@@ -2629,7 +2661,7 @@ public class Creature implements Cloneable{
 		}
 		for(int i = 0; i < inventory.getItems().size(); i++) {
 			if(inventory.getItems().get(i) != null) {
-				drop(inventory.getItems().get(i));
+				drop(inventory.getItems().get(i), false);
 			}
 		}
 	}
@@ -2885,7 +2917,7 @@ public class Creature implements Cloneable{
 				for(int z = 1; z < stacked.size(); z++) {
 					master.modifyStackAmount(stacked.get(z).stackAmount());
 					stackedDone.add(stacked.get(z));
-					getRidOf(stacked.get(z));
+					getRidOf(stacked.get(z), true);
 
 				}
 			}
@@ -2898,7 +2930,7 @@ public class Creature implements Cloneable{
 		for(int i = 0; i < inventory.getItems().size(); i++) {
 			try {
 				if(inventory.get(i).stackAmount() < 1) {
-					getRidOf(inventory.get(i));
+					getRidOf(inventory.get(i), true);
 				}
 			} catch (Exception e) {
 				//e.printStackTrace();
@@ -2952,7 +2984,7 @@ public class Creature implements Cloneable{
 
 		if(ammunition != null && ammunition.ammunitionAmount() < 1) {
 			notify("Your "+ammunition.name()+" is empty!");
-			getRidOf(ammunition);
+			getRidOf(ammunition, true);
 		}else {
 
 		}
@@ -3052,13 +3084,16 @@ public class Creature implements Cloneable{
 		int r = 9;
 		for (int ox = -r; ox < r+1; ox++){
 			for (int oy = -r; oy < r+1; oy++){
-				if (ox*ox + oy*oy > r*r)
+				if (ox*ox + oy*oy > r*r) {
 					continue;
-
+				}
+					
 				Creature other = world.creature(x+ox, y+oy, z);
 
-				if (other == null)
+				if (other == null) {
 					continue;
+				}
+					
 
 				others.add(other);
 			}

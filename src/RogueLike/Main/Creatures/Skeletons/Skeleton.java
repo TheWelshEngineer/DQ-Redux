@@ -23,7 +23,7 @@ public class Skeleton extends Creature{
 		new SkeletonAI(this, player, factory, factory.world);
 		Item startWeapon = factory.itemFactory.newShortsword(0, false);
 		this.inventory().add(startWeapon);
-		this.equip(startWeapon);
+		this.equip(startWeapon, true);
 		this.creatureTypes.add("Undead");
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	
