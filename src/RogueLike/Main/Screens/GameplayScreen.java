@@ -209,6 +209,7 @@ public class GameplayScreen implements Screen{
 	        case KeybindManager.menuIndex: subscreen = new IndexPotionScreen(player, player.factory()); break;
 	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); break;
 			case KeybindManager.menuActionLog: subscreen = new ActionLogScreen(playerNotifications, world.turnNumber()); break;
+			case KeybindManager.menuPause: subscreen = new PauseScreen(); break;
 			//
 	        //case KeyEvent.VK_A: subscreen = new SpellbookScreen(player, player.x - getScrollX(), player.y - getScrollY(), true); inputAccepted = true; break;
 	        //

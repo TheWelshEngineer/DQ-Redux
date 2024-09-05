@@ -1388,14 +1388,13 @@ public class Creature implements Cloneable{
 		else if(other.isContainer()){ 
 			openContainer(other);
 		}else if(other instanceof Merchant && this instanceof Player) {
-			// TODO(dd): this looks kinda hacky to me
 			talkToMerchant((Merchant) other, (Player) this);
 		}else{
 			attack(other);
 		}		
 	}
 	
-	public void talkToMerchant(Merchant merchant, Player player) {//TODO TRIGGER MERCHANT
+	public void talkToMerchant(Merchant merchant, Player player) {
 		this.gameplayScreen().subscreen = new MerchantScreen(merchant, player);
 	}
 
@@ -1454,7 +1453,20 @@ public class Creature implements Cloneable{
 				amount += (int)(weapon.damageDice().roll())+attackBonus+weapon.upgradeLevel();
 			}
 		}else {
-			amount += 1+strengthModifier();
+			if(this instanceof Player) {
+				amount += 1+strengthModifier();
+			}else {
+				if(this.strength() > this.dexterity() && this.strength() > this.intelligence()) {
+					amount += 1+strengthModifier();
+				}else if(this.dexterity() > this.strength() && this.dexterity() > this.intelligence()) {
+					amount += 1+dexterityModifier();
+				}else if(this.intelligence() > this.strength() && this.intelligence() > this.dexterity()) {
+					amount += 1+intelligenceModifier();
+				}else {
+					amount += 1+strengthModifier();
+				}
+			}
+			
 		}
 
 		if(amount < 1) {
