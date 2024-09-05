@@ -1,7 +1,9 @@
 package RogueLike.Main.Factories;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
+import RogueLike.Main.AoE.InstantiatedAoE;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Entities.Trap;
@@ -9,10 +11,13 @@ import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Particle;
 import RogueLike.Main.Tile;
-import RogueLike.Main.AoE.*;
+import RogueLike.Main.Utils.PointShapes.Cone;
+import RogueLike.Main.Utils.PointShapes.Line;
+import RogueLike.Main.Utils.PointShapes.Square;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Damage.DamageType;
+import RogueLike.Main.Utils.PointShapes.Point;
 
 public class EffectFactory {
 	
@@ -145,11 +150,13 @@ public class EffectFactory {
         		Effect arcaneWard_ = reference.ai().factory.effectFactory.arcaneWard(duration_);
         		Effect confused_ = reference.ai().factory.effectFactory.confused(duration_);
 				creature.addEffect((Effect) arcaneWard_.clone());
-				
-				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 2).affectedCreaturesExceptCenter(creature)) {
-					c.addEffect((Effect) confused_.clone());
-					c.world().setParticleAtLocation(c.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.lilac, 2), c.x(), c.y(), c.z());
-				}
+
+				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 2), creature.world())
+					.affectedCreaturesExcept(reference)
+					.forEach(c -> {
+						c.addEffect((Effect) confused_.clone());
+						c.world().setParticleAtLocation(c.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.lilac, 2), c.x(), c.y(), c.z());
+					});
 			}
         };
         archmagesAegis.setShowInMenu(false);
@@ -160,7 +167,7 @@ public class EffectFactory {
 		Effect findTraps = new Effect(0, null, false, null, ' ', null) {
 			public void start(Creature creature) {
 				int count = 0;
-				for(Point p : new Square(creature.x(), creature.y(), creature.z(), creature.visionRadius()).getPoints()) {
+				for(Point p : new Square(creature.x(), creature.y(), creature.z(), creature.visionRadius())) {
 					if(p.x < 0 || p.y < 0 || p.x > creature.world().width() || p.y > creature.world().height()) {
 						continue;
 					}
@@ -284,7 +291,7 @@ public class EffectFactory {
 	public Effect pyrotechnics(Creature reference) {
 		Effect pyrotechnics = new Effect(1, null, true, reference, ' ', null) {
 			public void start(Creature creature){
-				for(Point p : new Square(creature.x(), creature.y(), creature.z(), 3).getPoints()) {
+				for(Point p : new Square(creature.x(), creature.y(), creature.z(), 3)) {
 					if(creature.tile(p.x, p.y, p.z).canHaveGas()) {
                     	creature.world().changeGasTile(p.x, p.y, p.z, Tile.SMOKE);
                     }
@@ -296,14 +303,62 @@ public class EffectFactory {
                 if(reference.pyromancyLevel() >= 2) {
                 	duration_ += reference.proficiencyBonus();
                 }
-				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 3).affectedCreaturesExceptCenter(creature)) {
-					c.addEffect(blinded(duration_));
-				}
+				// Blind all creatures within radius 3, except the caster
+				int blindedDuration = duration;
+				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 3), creature.world())
+					.affectedCreaturesExcept(reference)
+					.forEach(c -> c.addEffect(blinded(blindedDuration)));
             }
 		};
 		return pyrotechnics;
 	}
-	
+
+	public Effect dragonsBreath(Creature player) {
+		return new Effect(1, null, true, player, ' ', null){
+			public void start(Creature creature) {
+				player.notify("You breath a gout of roaring flames!");
+				Point source = player.location();
+				Point target = creature.location();
+				player.world().remove(creature); // Remove the temporary marker creature
+
+				// Calculate damage
+				int damageAmount = Dice.d6x2.roll() + player.intelligenceModifier();
+				if (player.pyromancyLevel() >= 2) {
+					damageAmount += player.proficiencyBonus();
+				}
+				if (player.pyromancyLevel() >= 3) {
+					damageAmount += player.proficiencyBonus();
+				}
+				Damage damage = new Damage(damageAmount, false, DamageType.FIRE, player.world().factory().effectFactory, true);
+				Damage halfDamage = new Damage(damageAmount / 2,  false, DamageType.FIRE, player.world().factory().effectFactory, true);
+
+				// Apply damage to all creatures in the area of effect
+				InstantiatedAoE aoe = new InstantiatedAoE(new Cone(source, target, 5, 60.0), player.world());
+				aoe.affectedCreaturesExcept(player)
+					.forEach(
+						c -> {
+							if (c.dexterityRoll() >= player.intelligenceSaveDC()) {
+								c.doAction("avoid the worst of the flames!");
+								c.damage(halfDamage, String.format("Killed by %s using Dragon's Breath", player.name()));
+							} else {
+								c.doAction("get seared by the scorching flames!");
+								c.damage(damage, String.format("Killed by %s using Dragon's Breath", player.name()));
+							}
+						}
+					);
+
+				// Set fire to terrain in the area of effect
+				aoe.points.forEach(
+					p -> {
+						if (player.world().tile(p.x, p.y, p.z).canHaveSubtiles() && Dice.d6.roll() > 2) { // 2 in 3 chance to set tile on fire
+							player.world().changeSubTile(p.x, p.y, p.z, Tile.FIRE);
+						}
+					}
+				);
+			}
+		};
+	}
+
 	//Cryomancy Spells
 	public Effect flashFreeze(Creature reference) {
 		Effect freeze = new Effect(1, null, true, reference, ' ', null) {
@@ -376,11 +431,14 @@ public class EffectFactory {
 					reference.notify(String.format("The %s is frostbitten by your spell!", creature.name()));
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
-					creature.damage(splashDamage, String.format("Killed by %s using Ice Knife", reference.name()));
-					for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 1).affectedCreaturesExceptCenter(creature)) {
-						c.damage(splashDamage, String.format("Killed by %s using Ice Knife", reference.name()));
-						c.world().setParticleAtLocation(c.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), c.x(), c.y(), c.z());
-					}
+
+					// Damage all adjacent creatures (including target) with splash damage
+					new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 3), creature.world())
+						.affectedCreatures()
+						.forEach(c -> {
+							c.damage(splashDamage, String.format("Killed by %s using Ice Knife", reference.name()));
+							c.world().setParticleAtLocation(c.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), c.x(), c.y(), c.z());
+						});
 				}else {
 					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
 					reference.notify(String.format("The %s dodges your spell.", creature.name()));
@@ -658,11 +716,13 @@ public class EffectFactory {
 				Damage damage = new Damage(damageAmount, false, DamageType.SHOCK, getThis(), true);
 				creature.damage(damage, String.format("Killed by %s using Chain Lightning", reference.name()));
 				
-				if(saved == false) {
-					for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 2).affectedCreaturesExceptCenter(creature)) {
-						c.damage(damage, String.format("Killed by %s using Chain Lightning", reference.name()));
-						c.world().setParticleAtLocation(c.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), c.x(), c.y(), c.z());
-					}
+				if(!saved) {
+					new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 2), creature.world())
+						.affectedCreaturesExcept(creature)
+						.forEach(c -> {
+							c.damage(damage, String.format("Killed by %s using Chain Lightning", reference.name()));
+							c.world().setParticleAtLocation(c.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), c.x(), c.y(), c.z());
+						});
 				}
             }
         };
@@ -1373,10 +1433,12 @@ public class EffectFactory {
 		Effect arcaneWard = new Effect(duration, "Arcane Ward", false, null, Effect.arcaneWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.lilac){
 			public void start(Creature creature){
 				creature.doAction("raise a magical shield!");
-				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 1).affectedCreaturesExceptCenter(creature)) {
-					c.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.lilac, 2), c.x(), c.y(), c.z());
-            		c.addEffect(blink());
-				}
+				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1), creature.world())
+					.affectedCreaturesExcept(creature)
+					.forEach(c -> {
+						c.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.lilac, 2), c.x(), c.y(), c.z());
+						c.addEffect(blink());
+					});
             }
 			public void end(Creature creature) {
 				creature.doAction("let the shielding magic dissipate");
@@ -1391,10 +1453,12 @@ public class EffectFactory {
 		Effect venomousWard = new Effect(duration, "Venomous Ward", false, null, Effect.venomousWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.magenta){
 			public void start(Creature creature){
 				creature.doAction("become coated in protective poison!");
-				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 1).affectedCreaturesExceptCenter(creature)) {
-					c.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.magenta, 2), c.x(), c.y(), c.z());
-            		c.addEffect(poisoned((int)duration/2));
-				}
+				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1), creature.world())
+					.affectedCreaturesExcept(creature)
+					.forEach(c -> {
+						c.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.magenta, 2), c.x(), c.y(), c.z());
+						c.addEffect(poisoned((int)duration/2));
+					});
             }
 			public void end(Creature creature) {
 				creature.doAction("feel the poisonous barrier fade");
@@ -1440,10 +1504,12 @@ public class EffectFactory {
 		Effect bladeWard = new Effect(duration, "Blade Ward", false, null, Effect.bladeWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.white){
 			public void start(Creature creature){
 				creature.doAction("become surrounded by metal shards!");
-				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 1).affectedCreaturesExceptCenter(creature)) {
-					c.world().setParticleAtLocation(c.ai().factory.particleFactory.droplet(ExtendedAsciiPanel.red, 2), c.x(), c.y(), c.z());
-            		c.addEffect(bleeding((int)duration/2));
-				}
+				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1), creature.world())
+					.affectedCreaturesExcept(creature)
+					.forEach(c -> {
+						c.world().setParticleAtLocation(c.ai().factory.particleFactory.droplet(ExtendedAsciiPanel.red, 2), c.x(), c.y(), c.z());
+						c.addEffect(bleeding((int)duration/2));
+					});
             }
 			public void end(Creature creature) {
 				creature.doAction("return the metal shards to the earth");
@@ -1458,10 +1524,12 @@ public class EffectFactory {
 		Effect causticWard = new Effect(duration, "Caustic Ward", false, null, Effect.causticWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.lime){
 			public void start(Creature creature){
 				creature.doAction("become veiled in protective acid!");
-				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 1).affectedCreaturesExceptCenter(creature)) {
-					c.world().setParticleAtLocation(c.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.lime, 2), c.x(), c.y(), c.z());
-            		c.addEffect(corroded((int)duration/2));
-				}
+				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1), creature.world())
+					.affectedCreaturesExcept(creature)
+					.forEach(c -> {
+						c.world().setParticleAtLocation(c.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.lime, 2), c.x(), c.y(), c.z());
+						c.addEffect(corroded((int)duration/2));
+					});
             }
 			public void end(Creature creature) {
 				creature.doAction("feel the acidic veil fade");
@@ -1476,10 +1544,12 @@ public class EffectFactory {
 		Effect chillWard = new Effect(duration, "Chill Ward", false, null, Effect.chillWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.water){
 			public void start(Creature creature){
 				creature.doAction("become wreathed in freezing air!");
-				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 2).affectedCreaturesExceptCenter(creature)) {
-					c.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), c.x(), c.y(), c.z());
-             		c.addEffect(frozen((int)duration/2));
-				}
+				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 2), creature.world())
+					.affectedCreaturesExcept(creature)
+					.forEach(c -> {
+						c.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), c.x(), c.y(), c.z());
+						c.addEffect(frozen((int)duration/2));
+					});
             }
 			public void end(Creature creature) {
 				creature.doAction("feel the freezing winds fade away");
@@ -1494,10 +1564,12 @@ public class EffectFactory {
 		Effect magmaWard = new Effect(duration, "Magma Ward", false, null, Effect.magmaWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.orange){
 			public void start(Creature creature){
 				creature.doAction("become shielded by flames!");
-				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 2).affectedCreaturesExceptCenter(creature)) {
-                    creature.world().setParticleAtLocation(c.ai().factory.particleFactory.fire(ExtendedAsciiPanel.orange, 2), c.x(), c.y(), c.z());
-             		c.addEffect(ignited((int)duration/2));
-				}
+				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 2), creature.world())
+					.affectedCreaturesExcept(creature)
+					.forEach(c -> {
+						creature.world().setParticleAtLocation(c.ai().factory.particleFactory.fire(ExtendedAsciiPanel.orange, 2), c.x(), c.y(), c.z());
+						c.addEffect(ignited((int)duration/2));
+					});
             }
 			public void end(Creature creature) {
 				creature.doAction("feel the flaming shield burn out");
@@ -1565,13 +1637,15 @@ public class EffectFactory {
 		Effect arcWard = new Effect(duration, "Arc Ward", false, null, Effect.arcWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.brightCyan){
 			public void start(Creature creature){
 				creature.doAction("become shrouded in lightning!");
-				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 1).affectedCreaturesExceptCenter(creature)) {
-					c.world().setParticleAtLocation(c.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), c.x(), c.y(), c.z());
-                    c.doAction("get a shock!");
-                    c.setLastHit(creature);
-    				c.damage(new Damage(Dice.d4.roll(), false, DamageType.SHOCK, getThis(), true), "Killed by lightning magic");
-    				c.loseMana(Dice.d4.roll(), false);
-				}
+				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1), creature.world())
+					.affectedCreaturesExcept(creature)
+					.forEach(c -> {
+						c.world().setParticleAtLocation(c.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), c.x(), c.y(), c.z());
+						c.doAction("get a shock!");
+						c.setLastHit(creature);
+						c.damage(new Damage(Dice.d4.roll(), false, DamageType.SHOCK, getThis(), true), "Killed by lightning magic");
+						c.loseMana(Dice.d4.roll(), false);
+					});
             }
 			public void end(Creature creature) {
 				creature.doAction("feel the lightning shroud dissipate");
@@ -1849,16 +1923,16 @@ public class EffectFactory {
 	public Effect smokeTrap() {
 		Effect pyrotechnics = new Effect(1, null, true, null, ' ', null) {
 			public void start(Creature creature){
-				for(Point p : new Square(creature.x(), creature.y(), creature.z(), 3).getPoints()) {
+				for(Point p : new Square(creature.x(), creature.y(), creature.z(), 3)) {
 					if(creature.tile(p.x, p.y, p.z).canHaveGas()) {
                     	creature.world().changeGasTile(p.x, p.y, p.z, Tile.SMOKE);
                     }
 				}
 				int duration_ = 10;
 
-				for(Creature c : new Square(creature.x(), creature.y(), creature.z(), 3).affectedCreatures(creature)) {
-					c.addEffect(blinded(duration_));
-				}
+				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 3), creature.world())
+					.affectedCreaturesExcept(creature)
+					.forEach(c -> c.addEffect(blinded(duration_)));
             }
 		};
 		return pyrotechnics;

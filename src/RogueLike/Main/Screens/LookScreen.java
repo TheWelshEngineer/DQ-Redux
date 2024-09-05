@@ -9,8 +9,8 @@ import RogueLike.Main.Items.Item;
 
 public class LookScreen extends TargetBasedScreen{
 
-	public LookScreen(Creature player, String caption, int sx, int sy) {
-		super(player, caption, sx, sy);
+	public LookScreen(Creature player, String caption) {
+		super(player, caption);
 	}
 	
 	public void enterWorldCoordinate(int x, int y, int screenX, int screenY) {

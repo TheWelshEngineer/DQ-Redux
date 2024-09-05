@@ -878,6 +878,14 @@ public class ItemFactory {
 		}
 		return item;
 	}
+
+	public Item newDragonsBreathWand(int depth, Creature reference, boolean addToWorld) {
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Dragon's Breath", 8, objectFactory.spellFactory.dragonsBreath(reference), 500, 1404);
+		if(addToWorld) {
+			objectFactory.world.addAtEmptyLocation(item, depth);
+		}
+		return item;
+	}
 	
 	//Cryomancy Wands
 	public Item newFlashFreezeWand(int depth, Creature reference, boolean addToWorld) {

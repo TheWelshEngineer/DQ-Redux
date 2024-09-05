@@ -1,15 +1,15 @@
 package RogueLike.Main.Screens;
 
-import RogueLike.Main.AoE.Line;
-import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.PointShapes.Line;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 
 public class ThrowAtScreen extends TargetBasedScreen{
 	private Item item;
 
-	public ThrowAtScreen(Creature player, int sx, int sy, Item item) {
-		super(player, "Throw "+ player.nameOf(item)+ " at?", sx, sy);
+	public ThrowAtScreen(Creature player, Item item) {
+		super(player, "Throw "+ player.nameOf(item)+ " at?");
 		this.item = item;
 	}
 	

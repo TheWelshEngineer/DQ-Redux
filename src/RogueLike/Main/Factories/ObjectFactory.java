@@ -7,15 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import RogueLike.Main.AoE.Point;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Description;
 import RogueLike.Main.Dice;
-import RogueLike.Main.Effect;
 import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.Entities.Traps.*;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
-import RogueLike.Main.Tile;
 import RogueLike.Main.World;
 import RogueLike.Main.Creatures.*;
 import RogueLike.Main.Enchantments.*;

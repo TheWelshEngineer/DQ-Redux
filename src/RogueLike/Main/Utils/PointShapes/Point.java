@@ -1,10 +1,9 @@
-package RogueLike.Main.AoE;
+package RogueLike.Main.Utils.PointShapes;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-// TODO: Move to somewhere more general (probably PointShapes)
 public class Point {
 	
 	public int x;
@@ -15,7 +14,6 @@ public class Point {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		
 	}
 	
 	@Override
@@ -75,6 +73,12 @@ public class Point {
 
 		Collections.shuffle(points);
 		return points;
+	}
+
+	public int squareDistanceTo(Point other) {
+		return (this.x - other.x) * (this.x - other.x)
+			+ (this.y - other.y) * (this.y - other.y)
+			+ (this.z - other.z) * (this.z - other.z);
 	}
 
 	@Override

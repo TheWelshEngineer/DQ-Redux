@@ -169,7 +169,7 @@ public class GameplayScreen implements Screen{
 	        case KeybindManager.interactionEquipItem: subscreen = new EquipScreen(player); break;
 	        case KeybindManager.interactionPickUpItem: player.ai().playerAIGetItem(); break;
 	        case KeybindManager.interactionExamineItem: subscreen = new ExamineScreen(player); break;
-	        case KeybindManager.interactionLook: subscreen = new LookScreen(player, String.format("Use the movement controls to look around, or press [%s] to stop looking.", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionLook: subscreen = new LookScreen(player, String.format("Use the movement controls to look around, or press [%s] to stop looking.", KeybindManager.keybindText(KeybindManager.navigateMenuBack))); break;
 	        case KeybindManager.interactionThrowItem: subscreen = new ThrowScreen(player, player.x - getScrollX(), player.y - getScrollY()); break;
 	        case KeybindManager.interactionDrinkPotion: subscreen = new QuaffScreen(player); break;
 	        case KeybindManager.interactionReadSpell: subscreen = new ReadScreen(player, player.x - getScrollX(), player.y - getScrollY()); break;
@@ -192,7 +192,7 @@ public class GameplayScreen implements Screen{
 	        	}else if(player.ammunition().isPowderAmmunition() && !player.weapon().usesPowderAmmunition()) {
 	        		player.notify("You don't have the right ammunition ready."); 
 	        	}else{
-	        		subscreen = new RangedWeaponTargetingScreen(player, player.x - getScrollX(), player.y - getScrollY()); inputAccepted = true; break;
+	        		subscreen = new RangedWeaponTargetingScreen(player); inputAccepted = true; break;
 	        	}
 	        case KeybindManager.interactionLevelUp: 
 	        	if(player.attributePoints() == 0 && player.skillPoints() == 0) {

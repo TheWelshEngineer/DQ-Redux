@@ -22,7 +22,7 @@ public class ThrowScreen extends InventoryBasedScreen{
 	}
 	
 	protected Screen use(Item item) {
-		return new ThrowAtScreen(player, sx, sy, item);
+		return new ThrowAtScreen(player, item);
 	}
 
 }

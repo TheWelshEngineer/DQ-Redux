@@ -31,7 +31,7 @@ public class ReadScreen extends InventoryBasedScreen{
 			return null;
 		}else {
 			if(item.writtenSpells().size() == 1 && !item.writtenSpells().get(0).isSelfCast()) {
-				return new SpellTargetingScreen(player, String.format("Cast %s at?", item.writtenSpells().get(0).name()), sx, sy, item.writtenSpells().get(0), item);
+				return new SpellTargetingScreen(player, String.format("Cast %s at?", item.writtenSpells().get(0).name()), item.writtenSpells().get(0), item);
 			}else if(item.writtenSpells().size() == 1 && item.writtenSpells().get(0).isSelfCast()){
 				//player.castSpell(item.writtenSpells().get(0), player.x(), player.y(), item);
 				player.ai().playerAICastSpell(item, item.writtenSpells().get(0), player.x(), player.y());
