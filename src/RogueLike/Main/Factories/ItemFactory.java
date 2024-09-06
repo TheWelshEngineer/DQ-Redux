@@ -37,18 +37,7 @@ public class ItemFactory {
 		this.objectFactory = factory;
 	}
 	
-	//Gold
-	public Item newGold(int depth, boolean addToWorld) {
-		Item item = new Item((char)155, ExtendedAsciiPanel.brightYellow, "Gold", "Gold");
-		item.setIsGold(true);
-		item.setBaseGoldValue(ExtraMaths.diceRoll(ExtraMaths.d12(), ExtraMaths.d100()+12)*(depth+1));
-		item.setCurrentGoldValue(item.baseGoldValue());
-		item.setID(88);
-		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
-		}
-		return item;
-	}
+	
 	
 	//Rock
 	public Item newRock(int depth, int addToWorld) {
@@ -83,6 +72,19 @@ public class ItemFactory {
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(2);
 		if(addToWorld > 0) {
+			objectFactory.world.addAtEmptyLocation(item, depth);
+		}
+		return item;
+	}
+	
+	//Gold
+	public Item newGold(int depth, boolean addToWorld) {
+		Item item = new Item((char)155, ExtendedAsciiPanel.brightYellow, "Gold", "Gold");
+		item.setIsGold(true);
+		item.setBaseGoldValue(ExtraMaths.diceRoll(ExtraMaths.d12(), ExtraMaths.d100()+12)*(depth+1));
+		item.setCurrentGoldValue(item.baseGoldValue());
+		item.setID(3);
+		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
@@ -880,7 +882,7 @@ public class ItemFactory {
 	}
 
 	public Item newDragonsBreathWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Dragon's Breath", 8, objectFactory.spellFactory.dragonsBreath(reference), 500, 1404);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Dragon's Breath", 9, objectFactory.spellFactory.dragonsBreath(reference), 500, 1404);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -889,28 +891,28 @@ public class ItemFactory {
 	
 	//Cryomancy Wands
 	public Item newFlashFreezeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flash Freeze", 9, objectFactory.spellFactory.flashFreeze(reference), 500, 1500);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flash Freeze", 10, objectFactory.spellFactory.flashFreeze(reference), 500, 1500);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newIceWallWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Wall", 10, objectFactory.spellFactory.iceWall(reference), 500, 1501);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Wall", 11, objectFactory.spellFactory.iceWall(reference), 500, 1501);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newIceKnifeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Knife", 11, objectFactory.spellFactory.iceKnife(reference), 500, 1502);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Knife", 12, objectFactory.spellFactory.iceKnife(reference), 500, 1502);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newGlaciateWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Glaciate", 12, objectFactory.spellFactory.glaciate(reference), 500, 1503);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Glaciate", 13, objectFactory.spellFactory.glaciate(reference), 500, 1503);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -919,28 +921,28 @@ public class ItemFactory {
 	
 	//Electromancy Wands
 	public Item newChainLightningWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Chain Lightning", 13, objectFactory.spellFactory.chainLightning(reference), 500, 1600);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Chain Lightning", 14, objectFactory.spellFactory.chainLightning(reference), 500, 1600);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLightningLanceWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lightning Lance", 14, objectFactory.spellFactory.lightningLance(reference), 500, 1601);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lightning Lance", 15, objectFactory.spellFactory.lightningLance(reference), 500, 1601);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newStaticSurgeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Static Surge", 15, objectFactory.spellFactory.staticSurge(reference), 500, 1602);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Static Surge", 16, objectFactory.spellFactory.staticSurge(reference), 500, 1602);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newHasteWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Haste", 16, objectFactory.spellFactory.haste(reference), 500, 1603);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Haste", 17, objectFactory.spellFactory.haste(reference), 500, 1603);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -949,28 +951,28 @@ public class ItemFactory {
 	
 	//Alchemancy Wands
 	public Item newAcidBlastWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Acid Blast", 17, objectFactory.spellFactory.acidBlast(reference), 500, 1700);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Acid Blast", 18, objectFactory.spellFactory.acidBlast(reference), 500, 1700);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newToxicTransfusionWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Toxic Transfusion", 18, objectFactory.spellFactory.toxicTransfusion(reference), 500, 1701);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Toxic Transfusion", 19, objectFactory.spellFactory.toxicTransfusion(reference), 500, 1701);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newRefluxBarrierWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Reflux Barrier", 19, objectFactory.spellFactory.refluxBarrier(reference), 500, 1702);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Reflux Barrier", 20, objectFactory.spellFactory.refluxBarrier(reference), 500, 1702);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLifetapWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lifetap", 20, objectFactory.spellFactory.lifetap(reference), 500, 1703);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lifetap", 21, objectFactory.spellFactory.lifetap(reference), 500, 1703);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -979,28 +981,28 @@ public class ItemFactory {
 	
 	//Ferromancy Wands
 	public Item newArmorStormWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Armor Storm", 21, objectFactory.spellFactory.armorStorm(reference), 500, 1800);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Armor Storm", 22, objectFactory.spellFactory.armorStorm(reference), 500, 1800);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newBladsWardWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Blad's Ward", 22, objectFactory.spellFactory.bladsWard(reference), 500, 1801);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Blad's Ward", 23, objectFactory.spellFactory.bladsWard(reference), 500, 1801);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newWeaponBoltWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Weapon Bolt", 23, objectFactory.spellFactory.weaponBolt(reference), 500, 1802);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Weapon Bolt", 24, objectFactory.spellFactory.weaponBolt(reference), 500, 1802);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newInfuseUpgradeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Infuse Upgrade", 24, objectFactory.spellFactory.infuseUpgrade(reference), 500, 1803);
+		Item item = new Wand(this.objectFactory, (char)33, "Wand of Infuse Upgrade", 25, objectFactory.spellFactory.infuseUpgrade(reference), 500, 1803);
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}

@@ -41,10 +41,11 @@ public class ChooseSkillScreen implements Screen{
 		switch (playerClass) {
 			case WARRIOR: classSkills = EnumSet.of(Skill.MARTIAL_WEAPONS, Skill.ARMOR_TRAINING); break;
 			case ROGUE: classSkills = EnumSet.of(Skill.FINESSE_WEAPONS, Skill.STEALTH); break;
-			case MAGE: classSkills = EnumSet.of(Skill.EVOCATION, Skill.SIMPLE_WEAPONS); break;
+			case MAGE: classSkills = EnumSet.of(Skill.EVOCATION, Skill.PYROMANCY); break;
 			case RANGER: classSkills = EnumSet.of(Skill.RANGED_WEAPONS, Skill.PERCEPTION); break;
-			case WITCH: classSkills = EnumSet.of(Skill.ELECTROMANCY, Skill.ALCHEMANCY); break;
+			case WITCH: classSkills = EnumSet.of(Skill.FINESSE_WEAPONS, Skill.ALCHEMANCY); break;
 			case PALADIN: classSkills = EnumSet.of(Skill.ARMOR_TRAINING, Skill.FERROMANCY); break;
+			case MONK: classSkills = EnumSet.of(Skill.SIMPLE_WEAPONS, Skill.FORTITUDE); break;
 			default: throw new IllegalArgumentException(playerClass.toString());
 		}
 	}

@@ -101,14 +101,14 @@ public class ObjectFactory {
 		wandColors = new HashMap<String, Description>();
 		wandColors.put("Oak Wand", new Description("oak wood", ExtendedAsciiPanel.paper)); 
 		wandColors.put("Ash Wand", new Description("ash wood", ExtendedAsciiPanel.brightGreen));
-		wandColors.put("Thorn Wand", new Description("thorn wood", ExtendedAsciiPanel.brightMagenta));
-		wandColors.put("Beech Wand", new Description("beechwood", ExtendedAsciiPanel.brown));
+		wandColors.put("Thorn Wand", new Description("thornwood", ExtendedAsciiPanel.brightMagenta));
+		wandColors.put("Beech Wand", new Description("beech wood", ExtendedAsciiPanel.brown));
 		wandColors.put("Cherry Wand", new Description("cherry wood", ExtendedAsciiPanel.pink));
 		wandColors.put("Willow Wand", new Description("willow", ExtendedAsciiPanel.paleRed));
-		wandColors.put("Maple Wand", new Description("maplewood", ExtendedAsciiPanel.orange));
-		wandColors.put("Birch Wand", new Description("birchwood", ExtendedAsciiPanel.white));
+		wandColors.put("Maple Wand", new Description("maple wood", ExtendedAsciiPanel.orange));
+		wandColors.put("Birch Wand", new Description("birch wood", ExtendedAsciiPanel.white));
 		wandColors.put("Rowan Wand", new Description("rowan", ExtendedAsciiPanel.apple));
-		wandColors.put("Cedar Wand", new Description("cedarwood", ExtendedAsciiPanel.magenta));
+		wandColors.put("Cedar Wand", new Description("cedar wood", ExtendedAsciiPanel.magenta));
 		wandColors.put("Bamboo Wand", new Description("bamboo", ExtendedAsciiPanel.green));
 		wandColors.put("Pine Wand", new Description("pinewood", ExtendedAsciiPanel.smoke));
 		wandColors.put("Stone Wand", new Description("dungeon-stone", ExtendedAsciiPanel.brightBlack));
@@ -119,12 +119,13 @@ public class ObjectFactory {
 		wandColors.put("Baobab Wand", new Description("baobab", ExtendedAsciiPanel.brightBlue));
 		wandColors.put("Redwood Wand", new Description("redwood", ExtendedAsciiPanel.brightRed));
 		wandColors.put("Sequoia Wand", new Description("sequoia", ExtendedAsciiPanel.yellow));
-		wandColors.put("Pear Wand", new Description("pear-wood", ExtendedAsciiPanel.paralyzed));
+		wandColors.put("Pear Wand", new Description("pearwood", ExtendedAsciiPanel.paralyzed));
 		wandColors.put("Lavender Wand", new Description("braided lavender", ExtendedAsciiPanel.lilac)); //21
 		wandColors.put("Heartwood Wand", new Description("heartwood", ExtendedAsciiPanel.kathryn)); //22
 		wandColors.put("Copper Wand", new Description("copper", ExtendedAsciiPanel.copper)); //23
 		wandColors.put("Driftwood Wand", new Description("driftwood", ExtendedAsciiPanel.seafoam)); //24
-		
+		wandColors.put("Driftwood Wand", new Description("driftwood", ExtendedAsciiPanel.seafoam)); //24
+		wandColors.put("Wheatgrass Wand", new Description("braided wheatgrass", ExtendedAsciiPanel.wheatgrass)); //24
 		wandAppearances = new ArrayList<String>(wandColors.keySet());
 		Collections.shuffle(wandAppearances);
 	}

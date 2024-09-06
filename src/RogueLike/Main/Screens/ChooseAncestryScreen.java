@@ -174,7 +174,7 @@ public class ChooseAncestryScreen implements Screen{
 			terminal.writeCenter("+||+ Ancestry Trait +||+", y+=1);
 			y++;
 			terminal.writeCenter("Draconic Descendant: You are resistant to Fire damage, and begin", y+=1);
-			terminal.writeCenter("your quest with a Wand of Firebolt.", y+=1);
+			terminal.writeCenter("your quest with a Wand of Dragon's Breath.", y+=1);
 			y++;
 		}
 

@@ -133,15 +133,15 @@ public ModifierFactory modifierFactory;
 				break;
 
 			case MAGE:
-				Item startWeaponWizard = objectFactory.itemFactory.newClub(0, false);
-				player.learnNameQuiet(startWeaponWizard);
-				player.inventory().add(startWeaponWizard);
-				player.equip(startWeaponWizard, true);
 				Item startArmorWizard = objectFactory.itemFactory.newPaddedClothArmor(0, false);
 				player.learnNameQuiet(startArmorWizard);
 				player.inventory().add(startArmorWizard);
 				player.equip(startArmorWizard, true);
 				Item startWandMage = objectFactory.itemFactory.newMagicMissileWand(0, player, false);
+				player.learnNameQuiet(startWandMage);
+				player.inventory().add(startWandMage);
+				player.equipToQuickslot(startWandMage, 1);
+				startWandMage = objectFactory.itemFactory.newFireboltWand(0, player, false);
 				player.learnNameQuiet(startWandMage);
 				player.inventory().add(startWandMage);
 				player.equipToQuickslot(startWandMage, 1);
@@ -173,14 +173,15 @@ public ModifierFactory modifierFactory;
 				break;
 				
 			case WITCH:
+				Item startWeaponWitch = objectFactory.itemFactory.newDagger(0, false);
+				player.learnNameQuiet(startWeaponWitch);
+				player.inventory().add(startWeaponWitch);
+				player.equip(startWeaponWitch, true);
+				player.equipToQuickslot(startWeaponWitch, 1);
 				Item startArmorWitch = objectFactory.itemFactory.newPaddedClothArmor(0, false);
 				player.learnNameQuiet(startArmorWitch);
 				player.inventory().add(startArmorWitch);
 				player.equip(startArmorWitch, true);
-				Item startWandWitch_1 = objectFactory.itemFactory.newChainLightningWand(0, player, false);
-				player.learnNameQuiet(startWandWitch_1);
-				player.inventory().add(startWandWitch_1);
-				player.equipToQuickslot(startWandWitch_1, 1);
 				Item startWandWitch_2 = objectFactory.itemFactory.newAcidBlastWand(0, player, false);
 				player.learnNameQuiet(startWandWitch_2);
 				player.inventory().add(startWandWitch_2);
@@ -207,6 +208,23 @@ public ModifierFactory modifierFactory;
 				player.setHPScaleAmount(player.hpScaleHigh());
 				player.setManaScaleAmount(player.manaScaleLow());
 				break;
+				
+			case MONK:
+				Item startWeaponMonk = objectFactory.itemFactory.newClub(0, false);
+				player.learnNameQuiet(startWeaponMonk);
+				player.inventory().add(startWeaponMonk);
+				player.equip(startWeaponMonk, true);
+				Item startArmorMonk = objectFactory.itemFactory.newPaddedClothArmor(0, false);
+				player.learnNameQuiet(startArmorMonk);
+				player.inventory().add(startArmorMonk);
+				player.equip(startArmorMonk, true);
+				Item startItemMonk = objectFactory.itemFactory.newPotionOfMindVision(0, false);
+				player.learnNameQuiet(startItemMonk);
+				player.inventory().add(startItemMonk);
+
+				player.setHPScaleAmount(player.hpScaleMedium());
+				player.setManaScaleAmount(player.manaScaleMedium());
+				break;
 
 			default:
 				throw new IllegalArgumentException(details.playerClass.toString());
@@ -214,12 +232,10 @@ public ModifierFactory modifierFactory;
 	
 		//Starting Food
 		player.inventory().add(objectFactory.itemFactory.newRations(0, 0));
-		player.inventory().add(objectFactory.itemFactory.newDragonsBreathWand(0, player, false));
-		player.inventory().add(objectFactory.itemFactory.newIceKnifeWand(0, player, false));
 
 		//Ancestry Items
 		if(details.ancestry == PlayerAncestry.DRAGONBORN) {
-			Item startWandDragonborn = objectFactory.itemFactory.newFireboltWand(0, player, false);
+			Item startWandDragonborn = objectFactory.itemFactory.newDragonsBreathWand(0, player, false);
 			player.learnNameQuiet(startWandDragonborn);
 			player.inventory().add(startWandDragonborn);
 			if(details.playerClass == PlayerClass.MAGE || details.playerClass == PlayerClass.PALADIN) {
@@ -235,7 +251,8 @@ public ModifierFactory modifierFactory;
 		//Item startWandTest = objectFactory.itemFactory.newScrollOfMagicMapping(0, player, false);
 		//player.learnNameQuiet(startWandTest);
 		//player.inventory().add(startWandTest);
-
+		player.inventory().add(objectFactory.itemFactory.newDragonsBreathWand(0, player, false));
+		player.inventory().add(objectFactory.itemFactory.newIceKnifeWand(0, player, false));
 		//player.modifyGold(10000);
 		
 		//

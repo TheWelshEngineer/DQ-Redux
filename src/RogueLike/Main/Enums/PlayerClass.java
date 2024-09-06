@@ -7,6 +7,7 @@ public enum PlayerClass {
 	RANGER("Ranger"),
 	WITCH("Witch"),
 	PALADIN("Paladin"),
+	MONK("Monk"),
 	;
 
 	private final String name;

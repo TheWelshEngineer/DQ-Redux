@@ -27,6 +27,8 @@ public class LevelElement extends CharacterSheetElement {
                 return "As a Rogue, you regenerate health and mana at a roughly even rate.";
             case RANGER:
                 return "As a Ranger, you regenerate health and mana at a roughly even rate.";
+            case MONK:
+                return "As a Monk, you regenerate health and mana at a roughly even rate.";
             case WARRIOR:
                 return "As a Warrior, your health regenerates quickly, at the expense of your mana.";
             case PALADIN:
