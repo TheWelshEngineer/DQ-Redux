@@ -21,8 +21,8 @@ public class GremlinAlchemist extends Creature{
 		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
 		new GremlinAlchemistAI(this, player, factory, factory.world);
-		Item startWeapon = factory.itemFactory.newDagger(0, false);
-		Item startArmor = factory.itemFactory.newLeatherArmor(0, false);
+		Item startWeapon = factory.itemFactory.newDagger(0, false, true, true, false);
+		Item startArmor = factory.itemFactory.newLeatherArmor(0, false, true, true, false);
 		this.inventory().add(startWeapon);
 		this.inventory().add(startArmor);
 		this.equip(startWeapon, true);

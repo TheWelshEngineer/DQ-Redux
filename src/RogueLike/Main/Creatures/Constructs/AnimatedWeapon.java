@@ -22,7 +22,7 @@ public class AnimatedWeapon extends Creature{
 		this.setID(id);
 		new SkeletonAI(this, player, factory, factory.world);
 		this.creatureTypes.add("Construct");
-		Item startWeapon = factory.randomWeapon(0, false);
+		Item startWeapon = factory.randomWeapon(0, false, true, true, true);
 		this.inventory().add(startWeapon);
 		this.equip(startWeapon, true);
 		this.setHasNoCorpse(true);

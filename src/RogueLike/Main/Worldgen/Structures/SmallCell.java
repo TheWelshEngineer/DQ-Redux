@@ -26,7 +26,7 @@ public class SmallCell extends Structure {
 	@Override
 	public void onBuildWorld(World world) {
 		// add a random magic item in the cell
-		world.addAtEmptySpace(world.factory().randomMagicItem(z, world.player(), false), x, y, z);
+		world.addAtEmptySpace(world.factory().randomMagicItem(z, world.player(), false, false), x, y, z);
 	}
 
 	@Override

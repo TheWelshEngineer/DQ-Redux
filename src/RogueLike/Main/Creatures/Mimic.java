@@ -22,13 +22,7 @@ public class Mimic extends Creature{
 		this.setID(id);
 		new MimicAI(this, player, factory, factory.world);
 		this.creatureTypes.add("Monstrosity");
-		Item startItem = factory.randomMimicDrop(0, false);
-		if(Dice.d10.roll() <= 4) {
-			factory.upgradeItem(startItem, Dice.d4.roll());
-		}
-		if(Dice.d10.roll() == 1) { // == 1
-			factory.curseItem(startItem);
-		}
+		Item startItem = factory.randomMimicDrop(0, false, true, true, true);
 		this.inventory().add(startItem);
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	

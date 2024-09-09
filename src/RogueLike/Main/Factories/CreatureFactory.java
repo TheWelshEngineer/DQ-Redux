@@ -97,15 +97,15 @@ public ModifierFactory modifierFactory;
 		player.setPlayerClass(details.playerClass);
 		switch (details.playerClass) {
 			case WARRIOR:
-				Item startWeaponWarrior = objectFactory.itemFactory.newShortsword(0, false);
+				Item startWeaponWarrior = objectFactory.itemFactory.newShortsword(0, false, false, false, false);
 				player.learnNameQuiet(startWeaponWarrior);
 				player.inventory().add(startWeaponWarrior);
 				player.equip(startWeaponWarrior, true);
-				Item startArmorWarrior = objectFactory.itemFactory.newChainmailArmor(0, false);
+				Item startArmorWarrior = objectFactory.itemFactory.newChainmailArmor(0, false, false, false, false);
 				player.learnNameQuiet(startArmorWarrior);
 				player.inventory().add(startArmorWarrior);
 				player.equip(startArmorWarrior, true);
-				Item startShieldWarrior = objectFactory.itemFactory.newRoundShield(0, false);
+				Item startShieldWarrior = objectFactory.itemFactory.newRoundShield(0, false, false, false, false);
 				player.learnNameQuiet(startShieldWarrior);
 				player.inventory().add(startShieldWarrior);
 				player.equip(startShieldWarrior, true);
@@ -115,12 +115,12 @@ public ModifierFactory modifierFactory;
 				break;
 
 			case ROGUE:
-				Item startWeaponRogue = objectFactory.itemFactory.newDagger(0, false);
+				Item startWeaponRogue = objectFactory.itemFactory.newDagger(0, false, false, false, false);
 				player.learnNameQuiet(startWeaponRogue);
 				player.inventory().add(startWeaponRogue);
 				player.equip(startWeaponRogue, true);
 				player.equipToQuickslot(startWeaponRogue, 1);
-				Item startArmorRogue = objectFactory.itemFactory.newPaddedClothArmor(0, false);
+				Item startArmorRogue = objectFactory.itemFactory.newPaddedClothArmor(0, false, false, false, false);
 				player.learnNameQuiet(startArmorRogue);
 				player.inventory().add(startArmorRogue);
 				player.equip(startArmorRogue, true);
@@ -133,7 +133,7 @@ public ModifierFactory modifierFactory;
 				break;
 
 			case MAGE:
-				Item startArmorWizard = objectFactory.itemFactory.newPaddedClothArmor(0, false);
+				Item startArmorWizard = objectFactory.itemFactory.newPaddedClothArmor(0, false, false, false, false);
 				player.learnNameQuiet(startArmorWizard);
 				player.inventory().add(startArmorWizard);
 				player.equip(startArmorWizard, true);
@@ -151,14 +151,14 @@ public ModifierFactory modifierFactory;
 				break;
 
 			case RANGER:
-				Item startBowRanger = objectFactory.itemFactory.newShortbow(0, false);
+				Item startBowRanger = objectFactory.itemFactory.newShortbow(0, false, false, false, false);
 				player.learnNameQuiet(startBowRanger);
 				player.inventory().add(startBowRanger);
 				player.equip(startBowRanger, true);
-				Item startWeaponRanger = objectFactory.itemFactory.newClub(0, false);
+				Item startWeaponRanger = objectFactory.itemFactory.newClub(0, false, false, false, false);
 				player.learnNameQuiet(startWeaponRanger);
 				player.inventory().add(startWeaponRanger);
-				Item startArmorRanger = objectFactory.itemFactory.newPaddedClothArmor(0, false);
+				Item startArmorRanger = objectFactory.itemFactory.newPaddedClothArmor(0, false, false, false, false);
 				player.learnNameQuiet(startArmorRanger);
 				player.inventory().add(startArmorRanger);
 				player.equip(startArmorRanger, true);
@@ -173,12 +173,12 @@ public ModifierFactory modifierFactory;
 				break;
 				
 			case WITCH:
-				Item startWeaponWitch = objectFactory.itemFactory.newDagger(0, false);
+				Item startWeaponWitch = objectFactory.itemFactory.newDagger(0, false, false, false, false);
 				player.learnNameQuiet(startWeaponWitch);
 				player.inventory().add(startWeaponWitch);
 				player.equip(startWeaponWitch, true);
 				player.equipToQuickslot(startWeaponWitch, 1);
-				Item startArmorWitch = objectFactory.itemFactory.newPaddedClothArmor(0, false);
+				Item startArmorWitch = objectFactory.itemFactory.newPaddedClothArmor(0, false, false, false, false);
 				player.learnNameQuiet(startArmorWitch);
 				player.inventory().add(startArmorWitch);
 				player.equip(startArmorWitch, true);
@@ -192,11 +192,11 @@ public ModifierFactory modifierFactory;
 				break;
 				
 			case PALADIN:
-				Item startWeaponPaladin = objectFactory.itemFactory.newShortsword(0, false);
+				Item startWeaponPaladin = objectFactory.itemFactory.newShortsword(0, false, false, false, false);
 				player.learnNameQuiet(startWeaponPaladin);
 				player.inventory().add(startWeaponPaladin);
 				player.equip(startWeaponPaladin, true);
-				Item startArmorPaladin = objectFactory.itemFactory.newChainmailArmor(0, false);
+				Item startArmorPaladin = objectFactory.itemFactory.newChainmailArmor(0, false, false, false, false);
 				player.learnNameQuiet(startArmorPaladin);
 				player.inventory().add(startArmorPaladin);
 				player.equip(startArmorPaladin, true);
@@ -210,11 +210,11 @@ public ModifierFactory modifierFactory;
 				break;
 				
 			case MONK:
-				Item startWeaponMonk = objectFactory.itemFactory.newClub(0, false);
+				Item startWeaponMonk = objectFactory.itemFactory.newClub(0, false, false, false, false);
 				player.learnNameQuiet(startWeaponMonk);
 				player.inventory().add(startWeaponMonk);
 				player.equip(startWeaponMonk, true);
-				Item startArmorMonk = objectFactory.itemFactory.newPaddedClothArmor(0, false);
+				Item startArmorMonk = objectFactory.itemFactory.newPaddedClothArmor(0, false, false, false, false);
 				player.learnNameQuiet(startArmorMonk);
 				player.inventory().add(startArmorMonk);
 				player.equip(startArmorMonk, true);

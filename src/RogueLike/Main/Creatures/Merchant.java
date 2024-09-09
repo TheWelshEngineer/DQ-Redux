@@ -26,53 +26,23 @@ public class Merchant extends Creature {
 		new ChestAI(this, factory, factory.world);
 		this.creatureTypes.add("Merchant");
 		
-		Item startItem = factory.randomSimpleWeapon(0, false);
-		if(Dice.d10.roll() <= 4) {
-			factory.upgradeItem(startItem, Dice.d4.roll());
-		}
-		if(Dice.d10.roll() <= 4) {
-			factory.randomEnchantWeapon(startItem);
-		}
+		Item startItem = factory.randomSimpleWeapon(0, false, true, true, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomMartialWeapon(0, false);
-		if(Dice.d10.roll() <= 4) {
-			factory.upgradeItem(startItem, Dice.d4.roll());
-		}
-		if(Dice.d10.roll() <= 4) {
-			factory.randomEnchantWeapon(startItem);
-		}
+		startItem = factory.randomMartialWeapon(0, false, true, true, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomFinesseWeapon(0, false);
-		if(Dice.d10.roll() <= 4) {
-			factory.upgradeItem(startItem, Dice.d4.roll());
-		}
-		if(Dice.d10.roll() <= 4) {
-			factory.randomEnchantWeapon(startItem);
-		}
+		startItem = factory.randomFinesseWeapon(0, false, true, true, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomRangedWeapon(0, false);
-		if(Dice.d10.roll() <= 4) {
-			factory.upgradeItem(startItem, Dice.d4.roll());
-		}
-		if(Dice.d10.roll() <= 4) {
-			factory.randomEnchantWeapon(startItem);
-		}
+		startItem = factory.randomRangedWeapon(0, false, true, true, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomArmor(0, false);
-		if(Dice.d10.roll() <= 4) {
-			factory.upgradeItem(startItem, Dice.d4.roll());
-		}
-		if(Dice.d10.roll() <= 4) {
-			factory.randomEnchantArmor(startItem);
-		}
+		startItem = factory.randomArmor(0, false, true, true, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
@@ -100,11 +70,11 @@ public class Merchant extends Creature {
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomMagicItem(0, player, false);
+		startItem = factory.randomMagicItem(0, player, false, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomMagicItem(0, player, false);
+		startItem = factory.randomMagicItem(0, player, false, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		

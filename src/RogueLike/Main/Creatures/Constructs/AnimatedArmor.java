@@ -22,7 +22,7 @@ public class AnimatedArmor extends Creature{
 		this.setID(id);
 		new SkeletonAI(this, player, factory, factory.world);
 		this.creatureTypes.add("Construct");
-		Item startArmor = factory.randomArmor(0, false);
+		Item startArmor = factory.randomArmor(0, false, true, true, true);
 		this.inventory().add(startArmor);
 		this.equip(startArmor, true);
 		this.setHasNoCorpse(true);

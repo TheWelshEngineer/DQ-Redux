@@ -22,7 +22,7 @@ public class Gremlin extends Creature{
 		this.setID(id);
 		new GremlinAI(this, player, factory, factory.world);
 		this.creatureTypes.add("Gremlin");
-		Item startWeapon = factory.itemFactory.newShortbow(0, false);
+		Item startWeapon = factory.itemFactory.newShortbow(0, false, true, true, false);
 		this.inventory().add(startWeapon);
 		this.equip(startWeapon, true);
 		Item startAmmo = factory.itemFactory.newArrows(0, 0);

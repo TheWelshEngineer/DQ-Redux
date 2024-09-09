@@ -36,19 +36,19 @@ public class BasicChest extends Creature{
 			this.inventory().add(startAmmo);
 			break;
 		case 4: 
-			Item startWeapon = factory.randomWeapon(0, false);
+			Item startWeapon = factory.randomWeapon(0, false, true, true, true);
 			this.inventory().add(startWeapon);
 			break;
 		case 5: 
-			Item startArmor = factory.randomArmor(0, false);
+			Item startArmor = factory.randomArmor(0, false, true, true, true);
 			this.inventory().add(startArmor);
 			break;
 		case 6: 
-			Item startShield = factory.randomShield(0, false);
+			Item startShield = factory.randomShield(0, false, true, true, true);
 			this.inventory().add(startShield);
 			break;
 		case 7: 
-			Item startRing = factory.randomRing(0, false);
+			Item startRing = factory.randomRing(0, false, true);
 			this.inventory().add(startRing);
 			break;
 		case 8: 

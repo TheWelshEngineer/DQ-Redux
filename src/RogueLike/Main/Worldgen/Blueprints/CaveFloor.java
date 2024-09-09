@@ -126,19 +126,19 @@ public class CaveFloor extends Blueprint {
 		for(int j = 0; j < 4; j++) {
 			world.factory().randomPotion(depth, true);
 		}
-		for(int k = 0; k < 1; k++) {
-			world.factory().randomArmor(depth, true);
+		for(int k = 0; k < 3; k++) {
+			world.factory().randomArmor(depth, true, true, true, true);
 		}
-		for(int l = 0; l < 1; l++) {
-			world.factory().randomShield(depth, true);
+		for(int l = 0; l < 2; l++) {
+			world.factory().randomShield(depth, true, true, true, true);
 		}
 		for(int m = 0; m < 2; m++) {
-			world.factory().randomWeapon(depth, true);
+			world.factory().randomWeapon(depth, true, true, true, true);
 		}
-		for(int l = 0; l < 1; l++) {
-			world.factory().randomRing(depth, true);
+		for(int l = 0; l < 2; l++) {
+			world.factory().randomRing(depth, true, true);
 		}
-		for(int l = 0; l < 1; l++) {
+		for(int l = 0; l < 2; l++) {
 			world.factory().randomScroll(depth, world.player(), true);
 		}
 	}

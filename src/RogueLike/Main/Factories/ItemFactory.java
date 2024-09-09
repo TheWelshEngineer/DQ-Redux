@@ -159,84 +159,220 @@ public class ItemFactory {
 	}
 	
 	//Simple Weapons
-	public Item newClub(int depth, boolean addToWorld) {
+	public Item newClub(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Club", null, Dice.d4, 25, 400);
 		item.setIsSimple(true);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newDart(int depth, boolean addToWorld) {
+	public Item newDart(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Dart", null, Dice.d1, Dice.d4, 25, 401);
 		item.setIsSimple(true);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newQuarterstaff(int depth, boolean addToWorld) {
+	public Item newQuarterstaff(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Quarterstaff", null, Dice.d6, Dice.d8, 75, 402);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(12);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newSpear(int depth, boolean addToWorld) {
+	public Item newSpear(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new ThrownVersatileWeapon(')', ExtendedAsciiPanel.brightWhite, "Spear", null, Dice.d4, Dice.d6, Dice.d8, 75, 403);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(12);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newGreatclub(int depth, boolean addToWorld) {
+	public Item newGreatclub(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatclub", null, Dice.d10, 125, 404);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(14);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newThrowingAxe(int depth, boolean addToWorld) {
+	public Item newThrowingAxe(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Axe", null, Dice.d6, Dice.d8, 125, 405);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(14);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newMattock(int depth, boolean addToWorld) {
+	public Item newMattock(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mattock", null, Dice.d8, Dice.d10, 250, 406);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(16);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
-	public Item newMaul(int depth, boolean addToWorld) {
+	public Item newMaul(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Maul", null, Dice.d12, 500, 407);
 		item.setIsSimple(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(18);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -244,87 +380,240 @@ public class ItemFactory {
 	}
 	
 	//Martial Weapons
-	public Item newShortsword(int depth, boolean addToWorld) {
+	public Item newShortsword(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Shortsword", null, Dice.d6, 25, 500);
 		item.setIsMartial(true);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newKnuckleduster(int depth, boolean addToWorld) {
+	public Item newKnuckleduster(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Knuckleduster", null, Dice.d4, 25, 501);
 		item.setIsMartial(true);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newMace(int depth, boolean addToWorld) {
+	public Item newMace(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Mace", null, Dice.d6, Dice.d8, 75, 502);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(12);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newThrowingHammer(int depth, boolean addToWorld) {
+	public Item newThrowingHammer(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Throwing Hammer", null, Dice.d4, Dice.d6, 75, 503);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(12);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newLongsword(int depth, boolean addToWorld) {
+	public Item newLongsword(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BasicMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Longsword", null, Dice.d8, 125, 504);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(14);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newHalberd(int depth, boolean addToWorld) {
+	public Item newHalberd(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Halberd", null, Dice.d10, 125, 505);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(14);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newWarhammer(int depth, boolean addToWorld) {
+	public Item newWarhammer(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new VersatileMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Warhammer", null, Dice.d8, Dice.d10, 125, 506);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(14);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newJavelin(int depth, boolean addToWorld) {
+	public Item newJavelin(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BasicThrownWeapon(')', ExtendedAsciiPanel.brightWhite, "Javelin", null, Dice.d6, Dice.d10, 250, 507);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(16);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newGreatsword(int depth, boolean addToWorld) {
+	public Item newGreatsword(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new TwoHandedMeleeWeapon(')', ExtendedAsciiPanel.brightWhite, "Greatsword", null, Dice.d12, 500, 508);
 		item.setIsMartial(true);
 		item.setUsesStrength(true);
 		item.setStrengthRequirement(18);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -332,60 +621,179 @@ public class ItemFactory {
 	}
 	
 	//Finesse Weapons
-	public Item newDagger(int depth, boolean addToWorld) {
+	public Item newDagger(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new ThrownFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Dagger", null, Dice.d4, Dice.d4, 25, 600);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newRapier(int depth, boolean addToWorld) {
+	public Item newRapier(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BasicFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Rapier", null, Dice.d6, 25, 601);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newFalchion(int depth, boolean addToWorld) {
+	public Item newFalchion(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new VersatileFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Falchion", null, Dice.d6, Dice.d8, 75, 602);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(12);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newBoomerang(int depth, boolean addToWorld) {
+	public Item newBoomerang(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new ThrownFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Boomerang", null, Dice.d4, Dice.d8, 125, 603);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(14);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newGlaive(int depth, boolean addToWorld) {
+	public Item newGlaive(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new TwoHandedFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Glaive", null, Dice.d10, 125, 604);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(14);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newFlamberge(int depth, boolean addToWorld) {
+	public Item newFlamberge(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new VersatileFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Flamberge", null, Dice.d8, Dice.d10, 250, 605);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(16);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newPairedBlades(int depth, boolean addToWorld) {
+	public Item newPairedBlades(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new TwoHandedFinesseWeapon(')', ExtendedAsciiPanel.brightWhite, "Paired Blades", null, Dice.d6x2, 500, 606);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(18);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -393,64 +801,183 @@ public class ItemFactory {
 	}
 	
 	//Ranged Weapons
-	public Item newShortbow(int depth, boolean addToWorld) {
+	public Item newShortbow(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new ArrowsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Shortbow", null, Dice.d6, 25, 700);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newLongbow(int depth, boolean addToWorld) {
+	public Item newLongbow(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new ArrowsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Longbow", null, Dice.d8, 75, 701);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(12);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newLightCrossbow(int depth, boolean addToWorld) {
+	public Item newLightCrossbow(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Light Crossbow", null, Dice.d8, 75, 702);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(12);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newHeavyCrossbow(int depth, boolean addToWorld) {
+	public Item newHeavyCrossbow(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Heavy Crossbow", null, Dice.d10, 125, 703);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(14);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newHandCrossbow(int depth, boolean addToWorld) {
+	public Item newHandCrossbow(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BoltsRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Hand Crossbow", null, Dice.d4x2, 250, 704);
 		item.setIsTwoHanded(false);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(16);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newPistol(int depth, boolean addToWorld) {
+	public Item newPistol(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new PowderRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Flintlock Pistol", null, Dice.d10, 250, 705);
 		item.setIsTwoHanded(false);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(16);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newCaliver(int depth, boolean addToWorld) {
+	public Item newCaliver(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new PowderRangedWeapon('}', ExtendedAsciiPanel.brightWhite, "Flintlock Caliver", null, Dice.d12, 500, 706);
 		item.setUsesDexterity(true);
 		item.setDexterityRequirement(18);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -458,85 +985,289 @@ public class ItemFactory {
 	}
 	
 	//Armor
-	public Item newPaddedClothArmor(int depth, boolean addToWorld) {
+	public Item newPaddedClothArmor(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Padded Cloth Armor", null, 11, 25, 800);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newLeatherArmor(int depth, boolean addToWorld) {
+	public Item newLeatherArmor(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Leather Armor", null, 11, 25, 801);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newStuddedLeatherArmor(int depth, boolean addToWorld) {
+	public Item newStuddedLeatherArmor(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new LightArmor((char)203, ExtendedAsciiPanel.brightWhite, "Studded Leather Armor", null, 12, 75, 802);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newHideArmor(int depth, boolean addToWorld) {
+	public Item newHideArmor(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Hide Armor", null, 12, 75, 803);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newChainmailArmor(int depth, boolean addToWorld) {
+	public Item newChainmailArmor(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Chainmail Tunic", null, 13, 125, 804);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newScaleArmor(int depth, boolean addToWorld) {
+	public Item newScaleArmor(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Scale Mail", null, 14, 125, 805);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newBreastplate(int depth, boolean addToWorld) {
+	public Item newBreastplate(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Breastplate", null, 14, 125, 806);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newHalfPlate(int depth, boolean addToWorld) {
+	public Item newHalfPlate(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new MediumArmor((char)203, ExtendedAsciiPanel.brightWhite, "Half-Plate Armor", null, 15, 250, 807);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newPlateArmor(int depth, boolean addToWorld) {
+	public Item newPlateArmor(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Plate Armor", null, 18, 750, 808);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newRingMail(int depth, boolean addToWorld) {
+	public Item newRingMail(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Ringmail Armor", null, 14, 125, 809);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newChainArmor(int depth, boolean addToWorld) {
+	public Item newChainArmor(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Chainmail Armor", null, 16, 500, 810);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newSplintArmor(int depth, boolean addToWorld) {
+	public Item newSplintArmor(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new HeavyArmor((char)203, ExtendedAsciiPanel.brightWhite, "Splint Armor", null, 17, 750, 811);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -544,22 +1275,73 @@ public class ItemFactory {
 	}
 	
 	//Shields
-	public Item newRoundShield(int depth, boolean addToWorld) {
+	public Item newRoundShield(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BasicShield((char)232, ExtendedAsciiPanel.brightWhite, "Round Shield", null, 2, 75, 900);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newKiteShield(int depth, boolean addToWorld) {
+	public Item newKiteShield(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new BasicShield((char)232, ExtendedAsciiPanel.brightWhite, "Kite Shield", null, 3, 250, 901);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newTowerShield(int depth, boolean addToWorld) {
+	public Item newTowerShield(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		Item item = new TowerShield((char)232, ExtendedAsciiPanel.brightWhite, "Tower Shield", null, 4, 500, 902);
+		//
+		if(canUpgrade) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+			}
+		}
+		if(canEnchant) {
+			if(Dice.d100.roll() >= 75) {
+				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+			}
+		}
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) {
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
@@ -567,97 +1349,181 @@ public class ItemFactory {
 	}
 	
 	//Rings
-	public Item newStrengthRing(int depth, boolean addToWorld) {
+	public Item newStrengthRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Strength", 0, 250, 1000);
 		item.modifyStrength(2);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newDexterityRing(int depth, boolean addToWorld) {
+	public Item newDexterityRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Dexterity", 1, 250, 1001);
 		item.modifyDexterity(2);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newIntelligenceRing(int depth, boolean addToWorld) {
+	public Item newIntelligenceRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Intelligence", 2, 250, 1002);
 		item.modifyIntelligence(2);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newArmorRing(int depth, boolean addToWorld) {
+	public Item newArmorRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Shielding", 3, 250, 1003);
 		item.modifyArmorClass(2);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newFireResistanceRing(int depth, boolean addToWorld) {
+	public Item newFireResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Fire Resistance", 4, 250, 1004);
 		item.addResistance(DamageType.FIRE);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newFrostResistanceRing(int depth, boolean addToWorld) {
+	public Item newFrostResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Frost Resistance", 5, 250, 1005);
 		item.addResistance(DamageType.FROST);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newShockResistanceRing(int depth, boolean addToWorld) {
+	public Item newShockResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Shock Resistance", 6, 250, 1006);
 		item.addResistance(DamageType.SHOCK);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newPoisonResistanceRing(int depth, boolean addToWorld) {
+	public Item newPoisonResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Poison Resistance", 7, 250, 1007);
 		item.addResistance(DamageType.POISON);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newAcidResistanceRing(int depth, boolean addToWorld) {
+	public Item newAcidResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Acid Resistance", 8, 250, 1008);
 		item.addResistance(DamageType.ACID);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newMagicResistanceRing(int depth, boolean addToWorld) {
+	public Item newMagicResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Magic Resistance", 9, 250, 1009);
 		item.addResistance(DamageType.MAGIC);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newChaosResistanceRing(int depth, boolean addToWorld) {
+	public Item newChaosResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Chaos Resistance", 10, 250, 1010);
 		item.addResistance(DamageType.CHAOS);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
-	public Item newVisionRing(int depth, boolean addToWorld) {
+	public Item newVisionRing(int depth, boolean addToWorld, boolean canCurse) {
 		Item item = new Ring(this.objectFactory, (char)9, "Ring of Sight", 11, 250, 1011);
 		item.modifyVisionRadius(4);
+		//
+		if(canCurse) {
+			if(Dice.d100.roll() >= 60) {
+				this.objectFactory.curseItem(item);
+			}
+		}
+		//
 		if(addToWorld) { 
 			objectFactory.world.addAtEmptyLocation(item, depth);
 		}

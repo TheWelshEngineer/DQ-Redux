@@ -22,9 +22,11 @@ public class SkeletonCryomancer extends Creature{
 		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
 		new SkeletonCryomancerAI(this, player, factory, factory.world);
-		Item startWeapon = factory.itemFactory.newClub(0, false);
+		Item startWeapon = factory.itemFactory.newClub(0, false, true, true, false);
 		this.inventory().add(startWeapon);
 		this.equip(startWeapon, true);
+		startWeapon = factory.itemFactory.newIceKnifeWand(0, player, false);
+		this.inventory().add(startWeapon);
 		this.creatureTypes.add("Undead");
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	

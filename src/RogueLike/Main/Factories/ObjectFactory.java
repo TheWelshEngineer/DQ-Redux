@@ -172,18 +172,18 @@ public class ObjectFactory {
 	
 	public void setUpRingIndex(Creature player) {
 		ringIndex = new ArrayList<Item>();
-		ringIndex.add(itemFactory.newStrengthRing(0, false));
-		ringIndex.add(itemFactory.newDexterityRing(0, false));
-		ringIndex.add(itemFactory.newIntelligenceRing(0, false));
-		ringIndex.add(itemFactory.newArmorRing(0, false));
-		ringIndex.add(itemFactory.newFireResistanceRing(0, false));
-		ringIndex.add(itemFactory.newFrostResistanceRing(0, false));
-		ringIndex.add(itemFactory.newShockResistanceRing(0, false));
-		ringIndex.add(itemFactory.newPoisonResistanceRing(0, false));
-		ringIndex.add(itemFactory.newAcidResistanceRing(0, false));
-		ringIndex.add(itemFactory.newMagicResistanceRing(0, false));
-		ringIndex.add(itemFactory.newChaosResistanceRing(0, false));
-		ringIndex.add(itemFactory.newVisionRing(0, false));
+		ringIndex.add(itemFactory.newStrengthRing(0, false, false));
+		ringIndex.add(itemFactory.newDexterityRing(0, false, false));
+		ringIndex.add(itemFactory.newIntelligenceRing(0, false, false));
+		ringIndex.add(itemFactory.newArmorRing(0, false, false));
+		ringIndex.add(itemFactory.newFireResistanceRing(0, false, false));
+		ringIndex.add(itemFactory.newFrostResistanceRing(0, false, false));
+		ringIndex.add(itemFactory.newShockResistanceRing(0, false, false));
+		ringIndex.add(itemFactory.newPoisonResistanceRing(0, false, false));
+		ringIndex.add(itemFactory.newAcidResistanceRing(0, false, false));
+		ringIndex.add(itemFactory.newMagicResistanceRing(0, false, false));
+		ringIndex.add(itemFactory.newChaosResistanceRing(0, false, false));
+		ringIndex.add(itemFactory.newVisionRing(0, false, false));
 		
 		
 		
@@ -244,104 +244,104 @@ public class ObjectFactory {
 	}
 
 	//generators
-	public Item randomWeapon(int depth, boolean addToWorld) {
+	public Item randomWeapon(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
-		case 1: return randomSimpleWeapon(depth, addToWorld);
-		case 2: return randomMartialWeapon(depth, addToWorld);
-		case 3: return randomFinesseWeapon(depth, addToWorld);
-		case 4: return randomRangedWeapon(depth, addToWorld);
-		default: return randomSimpleWeapon(depth, addToWorld);
+		case 1: return randomSimpleWeapon(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return randomMartialWeapon(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return randomFinesseWeapon(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 4: return randomRangedWeapon(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return randomSimpleWeapon(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
-	public Item randomSimpleWeapon(int depth, boolean addToWorld) {
+	public Item randomSimpleWeapon(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 8)) {
-		case 1: return itemFactory.newClub(depth, addToWorld);
-		case 2: return itemFactory.newDart(depth, addToWorld);
-		case 3: return itemFactory.newQuarterstaff(depth, addToWorld);
-		case 4: return itemFactory.newSpear(depth, addToWorld);
-		case 5: return itemFactory.newGreatclub(depth, addToWorld);
-		case 6: return itemFactory.newThrowingAxe(depth, addToWorld);
-		case 7: return itemFactory.newMattock(depth, addToWorld);
-		case 8: return itemFactory.newMaul(depth, addToWorld);
-		default: return itemFactory.newClub(depth, addToWorld);
+		case 1: return itemFactory.newClub(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return itemFactory.newDart(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return itemFactory.newQuarterstaff(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 4: return itemFactory.newSpear(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 5: return itemFactory.newGreatclub(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 6: return itemFactory.newThrowingAxe(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 7: return itemFactory.newMattock(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 8: return itemFactory.newMaul(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return itemFactory.newClub(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
-	public Item randomMartialWeapon(int depth, boolean addToWorld) {
+	public Item randomMartialWeapon(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 9)) {
-		case 1: return itemFactory.newShortsword(depth, addToWorld);
-		case 2: return itemFactory.newKnuckleduster(depth, addToWorld);
-		case 3: return itemFactory.newMace(depth, addToWorld);
-		case 4: return itemFactory.newThrowingHammer(depth, addToWorld);
-		case 5: return itemFactory.newLongsword(depth, addToWorld);
-		case 6: return itemFactory.newHalberd(depth, addToWorld);
-		case 7: return itemFactory.newWarhammer(depth, addToWorld);
-		case 8: return itemFactory.newJavelin(depth, addToWorld);
-		case 9: return itemFactory.newGreatsword(depth, addToWorld);
-		default: return itemFactory.newShortsword(depth, addToWorld);
+		case 1: return itemFactory.newShortsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return itemFactory.newKnuckleduster(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return itemFactory.newMace(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 4: return itemFactory.newThrowingHammer(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 5: return itemFactory.newLongsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 6: return itemFactory.newHalberd(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 7: return itemFactory.newWarhammer(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 8: return itemFactory.newJavelin(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 9: return itemFactory.newGreatsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return itemFactory.newShortsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
-	public Item randomFinesseWeapon(int depth, boolean addToWorld) {
+	public Item randomFinesseWeapon(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 7)) {
-		case 1: return itemFactory.newDagger(depth, addToWorld);
-		case 2: return itemFactory.newRapier(depth, addToWorld);
-		case 3: return itemFactory.newFalchion(depth, addToWorld);
-		case 4: return itemFactory.newBoomerang(depth, addToWorld);
-		case 5: return itemFactory.newGlaive(depth, addToWorld);
-		case 6: return itemFactory.newFlamberge(depth, addToWorld);
-		case 7: return itemFactory.newPairedBlades(depth, addToWorld);
-		default: return itemFactory.newDagger(depth, addToWorld);
+		case 1: return itemFactory.newDagger(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return itemFactory.newRapier(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return itemFactory.newFalchion(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 4: return itemFactory.newBoomerang(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 5: return itemFactory.newGlaive(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 6: return itemFactory.newFlamberge(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 7: return itemFactory.newPairedBlades(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return itemFactory.newDagger(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
-	public Item randomRangedWeapon(int depth, boolean addToWorld) {
+	public Item randomRangedWeapon(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 7)) {
-		case 1: return itemFactory.newShortbow(depth, addToWorld);
-		case 2: return itemFactory.newLongbow(depth, addToWorld);
-		case 3: return itemFactory.newLightCrossbow(depth, addToWorld);
-		case 4: return itemFactory.newHeavyCrossbow(depth, addToWorld);
-		case 5: return itemFactory.newHandCrossbow(depth, addToWorld);
-		case 6: return itemFactory.newPistol(depth, addToWorld);
-		case 7: return itemFactory.newCaliver(depth, addToWorld);
-		default: return itemFactory.newShortbow(depth, addToWorld);
+		case 1: return itemFactory.newShortbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return itemFactory.newLongbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return itemFactory.newLightCrossbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 4: return itemFactory.newHeavyCrossbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 5: return itemFactory.newHandCrossbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 6: return itemFactory.newPistol(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 7: return itemFactory.newCaliver(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return itemFactory.newShortbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
-	public Item randomArmor(int depth, boolean addToWorld) {
+	public Item randomArmor(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 12)) {
-		case 1: return itemFactory.newPaddedClothArmor(depth, addToWorld);
-		case 2: return itemFactory.newLeatherArmor(depth, addToWorld);
-		case 3: return itemFactory.newStuddedLeatherArmor(depth, addToWorld);
-		case 4: return itemFactory.newHideArmor(depth, addToWorld);
-		case 5: return itemFactory.newChainmailArmor(depth, addToWorld);
-		case 6: return itemFactory.newScaleArmor(depth, addToWorld);
-		case 7: return itemFactory.newBreastplate(depth, addToWorld);
-		case 8: return itemFactory.newHalfPlate(depth, addToWorld);
-		case 9: return itemFactory.newPlateArmor(depth, addToWorld);
-		case 10: return itemFactory.newRingMail(depth, addToWorld);
-		case 11: return itemFactory.newChainArmor(depth, addToWorld);
-		case 12: return itemFactory.newSplintArmor(depth, addToWorld);
-		default: return itemFactory.newPaddedClothArmor(depth, addToWorld);
+		case 1: return itemFactory.newPaddedClothArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return itemFactory.newLeatherArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return itemFactory.newStuddedLeatherArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 4: return itemFactory.newHideArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 5: return itemFactory.newChainmailArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 6: return itemFactory.newScaleArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 7: return itemFactory.newBreastplate(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 8: return itemFactory.newHalfPlate(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 9: return itemFactory.newPlateArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 10: return itemFactory.newRingMail(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 11: return itemFactory.newChainArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 12: return itemFactory.newSplintArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return itemFactory.newPaddedClothArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
-	public Item randomShield(int depth, boolean addToWorld) {
+	public Item randomShield(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 3)) {
-		case 1: return itemFactory.newRoundShield(depth, addToWorld);
-		case 2: return itemFactory.newTowerShield(depth, addToWorld);
-		case 3: return itemFactory.newKiteShield(depth, addToWorld);
-		default: return itemFactory.newRoundShield(depth, addToWorld);
+		case 1: return itemFactory.newRoundShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return itemFactory.newTowerShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return itemFactory.newKiteShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return itemFactory.newRoundShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
-	public Item randomMimicDrop(int depth, boolean addToWorld) {
+	public Item randomMimicDrop(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 3)) {
-		case 1: return randomWeapon(depth, addToWorld);
-		case 2: return randomArmor(depth, addToWorld);
-		case 3: return randomShield(depth, addToWorld);
-		default: return randomWeapon(depth, addToWorld);
+		case 1: return randomWeapon(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return randomArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return randomShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return randomWeapon(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
@@ -380,12 +380,12 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomMagicItem(int depth, Creature player, boolean addToWorld) {
+	public Item randomMagicItem(int depth, Creature player, boolean addToWorld, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
 		case 1: return randomPotion(depth, addToWorld);
 		case 2: return randomScroll(depth, player, addToWorld);
 		case 3: return randomWand(depth, player, addToWorld);
-		case 4: return randomRing(depth, addToWorld);
+		case 4: return randomRing(depth, addToWorld, canCurse);
 		default: return randomPotion(depth, addToWorld);
 		}
 	}
@@ -469,21 +469,21 @@ public class ObjectFactory {
 		}
 	}
 	
-	public Item randomRing(int depth, boolean addToWorld) {
+	public Item randomRing(int depth, boolean addToWorld, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 12)) {
-		case 1: return itemFactory.newStrengthRing(depth, addToWorld);
-		case 2: return itemFactory.newDexterityRing(depth, addToWorld);
-		case 3: return itemFactory.newIntelligenceRing(depth, addToWorld);
-		case 4: return itemFactory.newArmorRing(depth, addToWorld);
-		case 5: return itemFactory.newFireResistanceRing(depth, addToWorld);
-		case 6: return itemFactory.newFrostResistanceRing(depth, addToWorld);
-		case 7: return itemFactory.newShockResistanceRing(depth, addToWorld);
-		case 8: return itemFactory.newPoisonResistanceRing(depth, addToWorld);
-		case 9: return itemFactory.newAcidResistanceRing(depth, addToWorld);
-		case 10: return itemFactory.newMagicResistanceRing(depth, addToWorld);
-		case 11: return itemFactory.newChaosResistanceRing(depth, addToWorld);
-		case 12: return itemFactory.newVisionRing(depth, addToWorld);
-		default: return itemFactory.newStrengthRing(depth, addToWorld);
+		case 1: return itemFactory.newStrengthRing(depth, addToWorld, canCurse);
+		case 2: return itemFactory.newDexterityRing(depth, addToWorld, canCurse);
+		case 3: return itemFactory.newIntelligenceRing(depth, addToWorld, canCurse);
+		case 4: return itemFactory.newArmorRing(depth, addToWorld, canCurse);
+		case 5: return itemFactory.newFireResistanceRing(depth, addToWorld, canCurse);
+		case 6: return itemFactory.newFrostResistanceRing(depth, addToWorld, canCurse);
+		case 7: return itemFactory.newShockResistanceRing(depth, addToWorld, canCurse);
+		case 8: return itemFactory.newPoisonResistanceRing(depth, addToWorld, canCurse);
+		case 9: return itemFactory.newAcidResistanceRing(depth, addToWorld, canCurse);
+		case 10: return itemFactory.newMagicResistanceRing(depth, addToWorld, canCurse);
+		case 11: return itemFactory.newChaosResistanceRing(depth, addToWorld, canCurse);
+		case 12: return itemFactory.newVisionRing(depth, addToWorld, canCurse);
+		default: return itemFactory.newStrengthRing(depth, addToWorld, canCurse);
 		}
 	}
 	
