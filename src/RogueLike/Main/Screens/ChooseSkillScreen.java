@@ -79,65 +79,25 @@ public class ChooseSkillScreen implements Screen{
         int y = 3;
 
         terminal.writeCenter(String.format("-- Choices remaining: %d --", skillPoints), y++);
-        terminal.write(
-                String.format(
-                        "%c%s%c",
-                        borderCornerNW,
-                        String.valueOf(borderHorizontal).repeat(29),
-                        borderCornerNE),
-                4,
-                y++);
+        terminal.write(String.format("%c%s%c", borderCornerNW, String.valueOf(borderHorizontal).repeat(29), borderCornerNE), 4, y++);
 
         for (Skill skill : Skill.values()) {
             char leftMarker = (skill == selectedSkill()) ? '>' : ' ';
             char rightMarker = (skill == selectedSkill()) ? '<' : ' ';
-            terminal.write(
-                    String.format(
-                            "%c %c %-17s ( %c ) %c %c",
-                            borderVertical,
-                            leftMarker,
-                            skill,
-                            booleanToChar(
-                                    skillsChosen.contains(skill) || classSkills.contains(skill)),
-                            rightMarker,
-                            borderVertical),
-                    4,
-                    y++);
+            terminal.write(String.format( "%c %c %-17s ( %c ) %c %c", borderVertical, leftMarker, skill, booleanToChar( skillsChosen.contains(skill) || classSkills.contains(skill)), rightMarker, borderVertical), 4, y++);
         }
-        terminal.write(
-                String.format(
-                        "%c%s%c",
-                        borderCornerSW,
-                        String.valueOf(borderHorizontal).repeat(29),
-                        borderCornerSE),
-                4,
-                y++);
+        terminal.write(String.format("%c%s%c", borderCornerSW, String.valueOf(borderHorizontal).repeat(29), borderCornerSE), 4, y++);
 
         y += 5;
         terminal.writeCenterMultiline(TextUtils.wordWrap(selectedSkill().description, 66, 0), y);
 
         if (skillPoints < 1) {
-            terminal.writeCenter(
-                    String.format(
-                            "-- [%s]: Confirm and Continue --",
-                            KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)),
-                    38);
+            terminal.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 38);
         } else {
             terminal.writeCenter("-- Assign all skill points to continue --", 38);
         }
-        terminal.writeCenter(
-                String.format(
-                        "-- [%s / %s]: Move Selection | [%s / %s]: Select/Deselect Skill --",
-                        KeybindManager.keybindText(KeybindManager.navigateMenuUp),
-                        KeybindManager.keybindText(KeybindManager.navigateMenuDown),
-                        KeybindManager.keybindText(KeybindManager.navigateMenuLeft),
-                        KeybindManager.keybindText(KeybindManager.navigateMenuRight)),
-                40);
-        terminal.writeCenter(
-                String.format(
-                        "-- [%s]: Return to Ability Score selection --",
-                        KeybindManager.keybindText(KeybindManager.navigateMenuBack)),
-                42);
+        terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Select/Deselect Skill --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 40);
+        terminal.writeCenter(String.format("-- [%s]: Return to Ability Score selection --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 42);
     }
 
     public Screen respondToUserInput(KeyEvent key) {
@@ -179,13 +139,7 @@ public class ChooseSkillScreen implements Screen{
                     for (Skill skill : Skill.values()) {
                         skillset.get(skill).setLevel(isSkillSelected(skill) ? 1 : 0);
                     }
-                    return new Zone1Screen(
-                            new PlayerBuildDetails(
-                                    playerClass,
-                                    playerAbilities,
-                                    skillset,
-                                    playerName,
-                                    playerAncestry));
+                    return new Zone1Screen(new PlayerBuildDetails(playerClass, playerAbilities, skillset, playerName, playerAncestry));
                 } else {
                     return this;
                 }
