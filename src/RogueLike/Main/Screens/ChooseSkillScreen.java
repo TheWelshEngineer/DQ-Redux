@@ -69,7 +69,7 @@ public class ChooseSkillScreen implements Screen{
 		if(value) {
 			return (char)251;
 		}
-		return 'X';
+		return ' ';
 	}
 
     public void displayOutput(ExtendedAsciiPanel terminal) {

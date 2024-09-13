@@ -20,6 +20,14 @@ public class ChooseAbilityScreen implements Screen{
 		check = value;
 	}
 	
+	public char borderVertical = 186;
+	public char borderHorizontal = 205;
+	public char borderCorner = 206;
+	public char borderCornerNW = 201;
+	public char borderCornerNE = 187;
+	public char borderCornerSW = 200;
+	public char borderCornerSE = 188;
+	
 	public char strLeft = '>';
 	public char strRight = '<';
 	public char dexLeft = '>';
@@ -221,24 +229,41 @@ public class ChooseAbilityScreen implements Screen{
 		Screen.generateBorders(terminal);
 		terminal.writeCenter("== Select your starting Ability Scores ==", 1);	
 		int y = 3;
+		terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerNW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerNE), 5, y++);
+		terminal.write(String.format("%c   == Points remaining:  %2d ==   %c", borderVertical, abilityPoints, borderVertical), 5, y++);
+		terminal.write(String.format("%c                                 %c", borderVertical, borderVertical), 5, y++);
+		terminal.write(String.format("%c %c %c Strength:     %2d ( %s ) %c %c %c", borderVertical, strLeft, strDown, playerStrength, ExtraMaths.modifierToString(strengthModifier()), strUp, strRight, borderVertical), 5, y++);
+		terminal.write(String.format("%c                                 %c", borderVertical, borderVertical), 5, y++);
+		terminal.write(String.format("%c %c %c Dexterity:    %2d ( %s ) %c %c %c", borderVertical, dexLeft, dexDown, playerDexterity, ExtraMaths.modifierToString(dexterityModifier()), dexUp, dexRight, borderVertical), 5, y++);
+		terminal.write(String.format("%c                                 %c", borderVertical, borderVertical), 5, y++);
+		terminal.write(String.format("%c %c %c Intelligence: %2d ( %s ) %c %c %c", borderVertical, intLeft, intDown, playerIntelligence, ExtraMaths.modifierToString(intelligenceModifier()), intUp, intRight, borderVertical), 5, y++);
+		terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 5, y++);
 		
-		terminal.writeCenter(String.format("-- Points remaining: %d --", abilityPoints), y);
 		
-		terminal.writeCenter(String.format("%c %c Strength ( %d / %s ) %c %c", strDown, strLeft, playerStrength, ExtraMaths.modifierToString(strengthModifier()), strRight, strUp), y+=3);
-		terminal.writeCenter(String.format("%c %c Dexterity ( %d / %s ) %c %c", dexDown, dexLeft, playerDexterity, ExtraMaths.modifierToString(dexterityModifier()), dexRight, dexUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Intelligence ( %d / %s ) %c %c", intDown, intLeft, playerIntelligence, ExtraMaths.modifierToString(intelligenceModifier()), intRight, intUp), y+=2);
 		if(check == 0) {
-			terminal.writeCenter("Strength represents the physical power of your body.", y+=6);
-			terminal.writeCenter("Strength increases the damage dealt by simple and martial weapons,", y+=1);
-			terminal.writeCenter("as well as the amount of health you gain from levelling up.", y+=1);
+			terminal.write("+||+ Strength +||+", 21, y+=2);
+			y++;
+			terminal.write("Strength represents the physical power of your body.", 26, y+=1);
+			terminal.write("Strength increases the damage dealt by simple and martial weapons,", 26, y+=1);
+			terminal.write("as well as the amount of health you gain from levelling up.", 26, y+=1);
+			y++;
+			terminal.write("Strength is most important for Warriors, Monks, and Paladins.", 26, y+=1);
 		}else if(check == 1) {
-			terminal.writeCenter("Dexterity is a measure of your agility and reflexes.", y+=6);
-			terminal.writeCenter("Dexterity increases the damage dealt by ranged and finesse weapons,", y+=1);
-			terminal.writeCenter("as well as providing a bonus to light and medium armor.", y+=1);
+			terminal.write("+||+ Dexterity +||+", 21, y+=2);
+			y++;
+			terminal.write("Dexterity is a measure of your agility and reflexes.", 26, y+=1);
+			terminal.write("Dexterity increases the damage dealt by ranged and finesse weapons,", 26, y+=1);
+			terminal.write("as well as providing a bonus to light and medium armor.", 26, y+=1);
+			y++;
+			terminal.write("Dexterity is most important for Rogues, Rangers, and Witches.", 26, y+=1);
 		}else if(check == 2) {
-			terminal.writeCenter("Intelligence represents your willpower and magical talent.", y+=6);
-			terminal.writeCenter("Intelligence increases the effectiveness of wands,", y+=1);
-			terminal.writeCenter("as well as the amount of mana you gain from levelling up.", y+=1);
+			terminal.write("+||+ Intelligence +||+", 21, y+=2);
+			y++;
+			terminal.write("Intelligence represents your willpower and magical talent.", 26, y+=1);
+			terminal.write("Intelligence increases the effectiveness of wands,", 26, y+=1);
+			terminal.write("as well as the amount of mana you gain from levelling up.", 26, y+=1);
+			y++;
+			terminal.write("Intelligence is most important for Mages, Witches, and Paladins.", 26, y+=1);
 		}
 		
 		
