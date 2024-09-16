@@ -1080,6 +1080,8 @@ public class EffectFactory {
 		return infuseUpgrade;
 	}
 	
+	//General Effects
+	
 	public Effect maxHealth() {
 		Effect maxHealth = new Effect(1, null, false, null, ' ', null) {
 			public void start(Creature creature) {
@@ -1123,7 +1125,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		poisoned.setDescription("You have been poisoned, and are taking poison damage every turn!");
+		poisoned.setDescription("You have been poisoned - you take 1d4 Poison damage each turn you are affected.");
 		return poisoned;
 	}
 	
@@ -1144,7 +1146,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		bleeding.setDescription("You are bleeding, taking physical damage every turn!");
+		bleeding.setDescription("You are bleeding - you take 1d4 Physical damage each turn you are affected.");
 		return bleeding;
 	}
 	
@@ -1157,7 +1159,7 @@ public class EffectFactory {
 				creature.doAction("return to normal strength");
 			}
 		};
-		giantStrength.setDescription("The strength of giants flows through your muscles, granting you a bonus to your strength and armor class.");
+		giantStrength.setDescription("The strength of giants flows through your muscles, temporarily granting you a +4 bonus to your Strength and Armor Class.");
 		return giantStrength;
 	}
 	
@@ -1170,7 +1172,7 @@ public class EffectFactory {
 				creature.doAction("return to a normal appearance");
 			}
 		};
-		beastForm.setDescription("You've been temporarily transfigured into a bestial form, granting you a bonus to your dexterity and vision radius.");
+		beastForm.setDescription("The ferocity of beasts suffuses your body and mind, temporarily granting you a +4 bonus to your Dexterity and Vision Radius.");
 		return beastForm;
 	}
 	
@@ -1194,7 +1196,7 @@ public class EffectFactory {
 				}
 			}
         };
-		corroded.setDescription("You've been covered in burning acid, which eats away at you with acid damage every turn!");
+		corroded.setDescription("You are coated in acid - you take 1d4 Acid damage each turn you are affected and suffer a -2 penalty to your Armor Class whilst affected.");
 		return corroded;
 	}
 	
@@ -1229,7 +1231,7 @@ public class EffectFactory {
             }
             public void end(Creature creature){
             }
-        };
+        };//TODO update effects
 		mindVision.setDescription("Your senses have been expanded beyond the physical, allowing you to telepathically sense the presence of other creatures at any distance.");
         return mindVision;
 	}
