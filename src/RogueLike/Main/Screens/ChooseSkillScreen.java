@@ -78,9 +78,11 @@ public class ChooseSkillScreen implements Screen{
         terminal.writeCenter("== Select your starting Skills ==", 1);
         int y = 3;
 
-        terminal.writeCenter(String.format("-- Choices remaining: %d --", skillPoints), y++);
+        
         terminal.write(String.format("%c%s%c", borderCornerNW, String.valueOf(borderHorizontal).repeat(29), borderCornerNE), 4, y++);
-
+        terminal.write(String.format("%c -- Choices remaining: %2d -- %c", borderVertical, skillPoints, borderVertical), 4, y++);
+        terminal.write(String.format("%c                             %c", borderVertical, borderVertical), 4, y++);
+        
         for (Skill skill : Skill.values()) {
             char leftMarker = (skill == selectedSkill()) ? '>' : ' ';
             char rightMarker = (skill == selectedSkill()) ? '<' : ' ';
@@ -88,8 +90,22 @@ public class ChooseSkillScreen implements Screen{
         }
         terminal.write(String.format("%c%s%c", borderCornerSW, String.valueOf(borderHorizontal).repeat(29), borderCornerSE), 4, y++);
 
-        y += 5;
-        terminal.writeCenterMultiline(TextUtils.wordWrap(selectedSkill().description, 66, 0), y);
+        y = 4;
+        terminal.write(String.format("+||+ %s +||+", selectedSkill().toString()), 37, y++);
+        y++;
+        terminal.writeMultiline(TextUtils.wordWrap(selectedSkill().description, 66, 0), 41, y++);
+        y+=4;
+        terminal.write(String.format("+||+ %s I +||+", selectedSkill().toString()), 37, y++);
+        y++;
+        terminal.writeMultiline(TextUtils.wordWrap(selectedSkill().details_1, 66, 0), 41, y++);
+        y+=3;
+        terminal.write(String.format("+||+ %s II +||+", selectedSkill().toString()), 37, y++);
+        y++;
+        terminal.writeMultiline(TextUtils.wordWrap(selectedSkill().details_2, 66, 0), 41, y++);
+        y+=3;
+        terminal.write(String.format("+||+ %s III +||+", selectedSkill().toString()), 37, y++);
+        y++;
+        terminal.writeMultiline(TextUtils.wordWrap(selectedSkill().details_3, 66, 0), 41, y++);
 
         if (skillPoints < 1) {
             terminal.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 38);

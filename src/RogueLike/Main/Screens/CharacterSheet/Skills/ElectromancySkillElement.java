@@ -27,6 +27,6 @@ public class ElectromancySkillElement extends SkillElement {
 
     @Override
     protected String descriptionLevel3() {
-        return String.format("Electromancy III: Critical hits with Electromancy spells grant Electrocharged for a number of turns equal to your proficiency bonus (%d turns). Whilst under the effects of Electrocharged, every attack you make deals an amount of bonus damage equal to your proficiency bonus (%+d).", player.proficiencyBonus(), player.proficiencyBonus());
+        return String.format("Electromancy III: Critical hits with Electromancy spells grant Electrocharged for a number of turns equal to your proficiency bonus (%d turns).", player.proficiencyBonus(), player.proficiencyBonus());
     }
 }

@@ -177,7 +177,7 @@ public class ChooseClassScreen implements Screen{
 		//terminal.write(String.format("%c                %c", borderVertical, borderVertical), 5, y++);
 		terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 5, y++);
 		
-		y = 3;
+		y = 2;
 		
 		if(check == 0) {
 			terminal.write("+||+ Warrior +||+", 26, y+=4);
