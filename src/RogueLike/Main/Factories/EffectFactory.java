@@ -1232,7 +1232,7 @@ public class EffectFactory {
             public void end(Creature creature){
             }
         };//TODO update effects
-		mindVision.setDescription("Your senses have been expanded beyond the physical, allowing you to telepathically sense the presence of other creatures at any distance.");
+		mindVision.setDescription("You can sense the presence of minds, temporarily allowing you to see creatures at any distance regardless of intervening obstacles.");
         return mindVision;
 	}
 	
@@ -1258,7 +1258,7 @@ public class EffectFactory {
 
 			}
 		};
-		blinded.setDescription("You've been temporarily blinded, and can barely see!");
+		blinded.setDescription("You've been temporarily blinded, setting your base Vision Radius to 2.");
 		return blinded;
 	}
 	
@@ -1273,7 +1273,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		illuminated.setDescription("You are glowing with a bright light, illuminating your surroundings and letting you see farther.");
+		illuminated.setDescription("You are glowing with a bright light, illuminating your surroundings and granting a +10 bonus to your Vision Radius.");
 		return illuminated;
 	}
 	
@@ -1288,7 +1288,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		haste.setDescription("Energy flows through you, allowing you to move at superhuman speeds.");
+		haste.setDescription("Wild energy flows through you, doubling the speed at which you move, attack, and take actions.");
 		return haste;
 	}
 	
@@ -1303,7 +1303,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		electrocharged.setDescription("You are infused with electrical energy, shocking your enemies for bonus electrical damage with every attack.");
+		electrocharged.setDescription("You are infused with electrical energy, dealing additional Shock damage to your targets on successful attacks.");
 		return electrocharged;
 	}
 	
@@ -1338,7 +1338,7 @@ public class EffectFactory {
 
 			}
 		};
-		devoured.setDescription("A devouring curse is eating away at your life force, draining your health and mana every turn!");
+		devoured.setDescription("A devouring curse is eating away at your life force, draining your health and mana every turn.");
 		return devoured;
 	}
 	
@@ -1360,7 +1360,7 @@ public class EffectFactory {
 
 			}
 		};
-		confused.setDescription("You are disoriented, and can't control which direction you move!");
+		confused.setDescription("You are disoriented, and can't control the direction you move or attack in.");
 		return confused;
 	}
 	
@@ -1431,7 +1431,6 @@ public class EffectFactory {
 	}
 	
 	public Effect arcaneWard(int duration) {
-		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect arcaneWard = new Effect(duration, "Arcane Ward", false, null, Effect.arcaneWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.lilac){
 			public void start(Creature creature){
 				creature.doAction("raise a magical shield!");
@@ -1451,7 +1450,6 @@ public class EffectFactory {
 	}
 	
 	public Effect venomousWard(int duration) {
-		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect venomousWard = new Effect(duration, "Venomous Ward", false, null, Effect.venomousWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.magenta){
 			public void start(Creature creature){
 				creature.doAction("become coated in protective poison!");
@@ -1471,11 +1469,9 @@ public class EffectFactory {
 	}
 	
 	public Effect eldritchWard(int duration) {
-		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect eldritchWard = new Effect(duration, "Eldritch Ward", false, null, Effect.eldritchWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.brightMagenta){
 			public void start(Creature creature){
 				creature.doAction("become shrouded by chaotic energy!");
-
                 for (int ox = -1; ox < 2; ox++){
                     for (int oy = -1; oy < 2; oy++){
                         int nx = creature.x + ox;
@@ -1502,7 +1498,6 @@ public class EffectFactory {
 	}
 	
 	public Effect bladeWard(int duration) {
-		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect bladeWard = new Effect(duration, "Blade Ward", false, null, Effect.bladeWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.white){
 			public void start(Creature creature){
 				creature.doAction("become surrounded by metal shards!");
@@ -1517,12 +1512,11 @@ public class EffectFactory {
 				creature.doAction("return the metal shards to the earth");
 			}
         };
-		bladeWard.setDescription("A swarm of metal shards shields you.");
+		bladeWard.setDescription("A storm of metal shards shields you.");
 		return bladeWard;
 	}
 	
 	public Effect causticWard(int duration) {
-		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect causticWard = new Effect(duration, "Caustic Ward", false, null, Effect.causticWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.lime){
 			public void start(Creature creature){
 				creature.doAction("become veiled in protective acid!");
@@ -1542,7 +1536,6 @@ public class EffectFactory {
 	}
 	
 	public Effect chillWard(int duration) {
-		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect chillWard = new Effect(duration, "Chill Ward", false, null, Effect.chillWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.water){
 			public void start(Creature creature){
 				creature.doAction("become wreathed in freezing air!");
@@ -1562,7 +1555,6 @@ public class EffectFactory {
 	}
 	
 	public Effect magmaWard(int duration) {
-		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect magmaWard = new Effect(duration, "Magma Ward", false, null, Effect.magmaWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.orange){
 			public void start(Creature creature){
 				creature.doAction("become shielded by flames!");
@@ -1635,7 +1627,6 @@ public class EffectFactory {
 	}
 	
 	public Effect arcWard(int duration) {
-		// TODO the ongoing portion of this effect essentially does nothing at the moment
 		Effect arcWard = new Effect(duration, "Arc Ward", false, null, Effect.arcWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.brightCyan){
 			public void start(Creature creature){
 				creature.doAction("become shrouded in lightning!");
@@ -1653,7 +1644,7 @@ public class EffectFactory {
 				creature.doAction("feel the lightning shroud dissipate");
 			}
         };
-		arcWard.setDescription("A shield of crackling lightning protects you.");
+		arcWard.setDescription("A shroud of crackling lightning protects you.");
 		return arcWard;
 	}
 	
@@ -1674,7 +1665,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		invisible.setDescription("A complex set of arcane energies hides you from mortal sight. Attacking or casting a spell will disrupt the fragile balance of this effect, making you visible once more.");
+		invisible.setDescription("You have become transparent, making you much harder to target. Attacking or casting a spell will break this effect, however.");
 		return invisible;
 	}
 	
@@ -1689,7 +1680,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		paralyzed.setDescription("Your muscles have seized up, preventing you from moving!");
+		paralyzed.setDescription("Your muscles have seized up, preventing you from moving.");
 		return paralyzed;
 	}
 	
@@ -1765,7 +1756,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		frozen.setDescription("You are frozen solid, and are completely unable to move!");
+		frozen.setDescription("You are frozen solid, and are completely unable to move.");
 		return frozen;
 	}
 	
@@ -1781,7 +1772,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		sundered.setDescription("Your armor has been sundered, leaving you defenseless!");
+		sundered.setDescription("Your armor has been sundered, reducing your Armor Class to 10 for the duration.");
 		return sundered;
 	}
 	
@@ -1802,7 +1793,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		electrified.setDescription("An electric shock has disrupted your magical reserves, draining your mana every turn!");
+		electrified.setDescription("An electric shock has disrupted your magical reserves, draining 1d4 mana every turn for the duration.");
 		return electrified;
 	}
 	
@@ -1824,7 +1815,7 @@ public class EffectFactory {
 
 			}
 		};
-		ignited.setDescription("You have been set on fire, and you are taking fire damage every turn!");
+		ignited.setDescription("You have been set on fire, taking 1d4 Fire damage every turn for the duration.");
 		return ignited;
 		
 	}
