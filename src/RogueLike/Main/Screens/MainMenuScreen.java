@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
+import RogueLike.Main.Screens.HelpScreens.HelpScreen;
 
 public class MainMenuScreen implements Screen{
 	

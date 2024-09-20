@@ -1,10 +1,10 @@
-package RogueLike.Main.Screens;
+package RogueLike.Main.Screens.HelpScreens;
 
 import java.awt.event.KeyEvent;
 
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Enums.PlayerAncestry;
 import RogueLike.Main.Managers.KeybindManager;
+import RogueLike.Main.Screens.*;
 
 public class HelpScreen implements Screen{
 	

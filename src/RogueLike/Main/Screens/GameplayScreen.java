@@ -20,6 +20,7 @@ import RogueLike.Main.WorldBuilder;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
+import RogueLike.Main.Screens.HelpScreens.HelpScreen;
 import RogueLike.Main.Worldgen.WorldGenerationException;
 
 public class GameplayScreen implements Screen{
