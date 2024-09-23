@@ -81,13 +81,547 @@ public class HelpEffectsScreen implements Screen{
 	public char sunderedLeft = '>';
 	public char sunderedRight = '<';
 	
-	
+	public void changeMarkers(int checkX, int checkY) {
+		if(checkX == 0) {
+			if(checkY == 0) {
+				beastLeft = '>';
+				beastRight = '<';
+				electroLeft = ' ';
+				electroRight = ' ';
+				giantLeft = ' ';
+				giantRight = ' ';
+				hasteLeft = ' ';
+				hasteRight = ' ';
+				illuminatedLeft = ' ';
+				illuminatedRight = ' ';
+				invisibleLeft = ' ';
+				invisibleRight = ' ';
+				levitatingLeft = ' ';
+				levitatingRight = ' ';
+				mindLeft = ' ';
+				mindRight = ' ';
+			}else if(checkY == 1) {
+				beastLeft = ' ';
+				beastRight = ' ';
+				electroLeft = '>';
+				electroRight = '<';
+				giantLeft = ' ';
+				giantRight = ' ';
+				hasteLeft = ' ';
+				hasteRight = ' ';
+				illuminatedLeft = ' ';
+				illuminatedRight = ' ';
+				invisibleLeft = ' ';
+				invisibleRight = ' ';
+				levitatingLeft = ' ';
+				levitatingRight = ' ';
+				mindLeft = ' ';
+				mindRight = ' ';
+			}else if(checkY == 2) {
+				beastLeft = ' ';
+				beastRight = ' ';
+				electroLeft = ' ';
+				electroRight = ' ';
+				giantLeft = '>';
+				giantRight = '<';
+				hasteLeft = ' ';
+				hasteRight = ' ';
+				illuminatedLeft = ' ';
+				illuminatedRight = ' ';
+				invisibleLeft = ' ';
+				invisibleRight = ' ';
+				levitatingLeft = ' ';
+				levitatingRight = ' ';
+				mindLeft = ' ';
+				mindRight = ' ';
+			}else if(checkY == 3) {
+				beastLeft = ' ';
+				beastRight = ' ';
+				electroLeft = ' ';
+				electroRight = ' ';
+				giantLeft = ' ';
+				giantRight = ' ';
+				hasteLeft = '>';
+				hasteRight = '<';
+				illuminatedLeft = ' ';
+				illuminatedRight = ' ';
+				invisibleLeft = ' ';
+				invisibleRight = ' ';
+				levitatingLeft = ' ';
+				levitatingRight = ' ';
+				mindLeft = ' ';
+				mindRight = ' ';
+			}else if(checkY == 4) {
+				beastLeft = ' ';
+				beastRight = ' ';
+				electroLeft = ' ';
+				electroRight = ' ';
+				giantLeft = ' ';
+				giantRight = ' ';
+				hasteLeft = ' ';
+				hasteRight = ' ';
+				illuminatedLeft = '>';
+				illuminatedRight = '<';
+				invisibleLeft = ' ';
+				invisibleRight = ' ';
+				levitatingLeft = ' ';
+				levitatingRight = ' ';
+				mindLeft = ' ';
+				mindRight = ' ';
+			}else if(checkY == 5) {
+				beastLeft = ' ';
+				beastRight = ' ';
+				electroLeft = ' ';
+				electroRight = ' ';
+				giantLeft = ' ';
+				giantRight = ' ';
+				hasteLeft = ' ';
+				hasteRight = ' ';
+				illuminatedLeft = ' ';
+				illuminatedRight = ' ';
+				invisibleLeft = '>';
+				invisibleRight = '<';
+				levitatingLeft = ' ';
+				levitatingRight = ' ';
+				mindLeft = ' ';
+				mindRight = ' ';
+			}else if(checkY == 6) {
+				beastLeft = ' ';
+				beastRight = ' ';
+				electroLeft = ' ';
+				electroRight = ' ';
+				giantLeft = ' ';
+				giantRight = ' ';
+				hasteLeft = ' ';
+				hasteRight = ' ';
+				illuminatedLeft = ' ';
+				illuminatedRight = ' ';
+				invisibleLeft = ' ';
+				invisibleRight = ' ';
+				levitatingLeft = '>';
+				levitatingRight = '<';
+				mindLeft = ' ';
+				mindRight = ' ';
+			}else if(checkY == 7) {
+				beastLeft = ' ';
+				beastRight = ' ';
+				electroLeft = ' ';
+				electroRight = ' ';
+				giantLeft = ' ';
+				giantRight = ' ';
+				hasteLeft = ' ';
+				hasteRight = ' ';
+				illuminatedLeft = ' ';
+				illuminatedRight = ' ';
+				invisibleLeft = ' ';
+				invisibleRight = ' ';
+				levitatingLeft = ' ';
+				levitatingRight = ' ';
+				mindLeft = '>';
+				mindRight = '<';
+			}
+		}else if(checkX == 1) {
+			if(checkY == 0) {
+				bleedingLeft = '>';
+				bleedingRight = '<';
+				blindedLeft = ' ';
+				blindedRight = ' ';
+				confusedLeft = ' ';
+				confusedRight = ' ';
+				corrodedLeft = ' ';
+				corrodedRight = ' ';
+				devouredLeft = ' ';
+				devouredRight = ' ';
+				electrifiedLeft = ' ';
+				electrifiedRight = ' ';
+				frozenLeft = ' ';
+				frozenRight = ' ';
+				ignitedLeft = ' ';
+			    ignitedRight = ' ';
+				paralysedLeft = ' ';
+				paralysedRight = ' ';
+				poisonedLeft = ' ';
+				poisonedRight = ' ';
+				sunderedLeft = ' ';
+				sunderedRight = ' ';
+			}else if(checkY == 1) {
+				bleedingLeft = ' ';
+				bleedingRight = ' ';
+				blindedLeft = '>';
+				blindedRight = '<';
+				confusedLeft = ' ';
+				confusedRight = ' ';
+				corrodedLeft = ' ';
+				corrodedRight = ' ';
+				devouredLeft = ' ';
+				devouredRight = ' ';
+				electrifiedLeft = ' ';
+				electrifiedRight = ' ';
+				frozenLeft = ' ';
+				frozenRight = ' ';
+				ignitedLeft = ' ';
+			    ignitedRight = ' ';
+				paralysedLeft = ' ';
+				paralysedRight = ' ';
+				poisonedLeft = ' ';
+				poisonedRight = ' ';
+				sunderedLeft = ' ';
+				sunderedRight = ' ';
+			}else if(checkY == 2) {
+				bleedingLeft = ' ';
+				bleedingRight = ' ';
+				blindedLeft = ' ';
+				blindedRight = ' ';
+				confusedLeft = '>';
+				confusedRight = '<';
+				corrodedLeft = ' ';
+				corrodedRight = ' ';
+				devouredLeft = ' ';
+				devouredRight = ' ';
+				electrifiedLeft = ' ';
+				electrifiedRight = ' ';
+				frozenLeft = ' ';
+				frozenRight = ' ';
+				ignitedLeft = ' ';
+			    ignitedRight = ' ';
+				paralysedLeft = ' ';
+				paralysedRight = ' ';
+				poisonedLeft = ' ';
+				poisonedRight = ' ';
+				sunderedLeft = ' ';
+				sunderedRight = ' ';
+			}else if(checkY == 2) {
+				bleedingLeft = ' ';
+				bleedingRight = ' ';
+				blindedLeft = ' ';
+				blindedRight = ' ';
+				confusedLeft = ' ';
+				confusedRight = ' ';
+				corrodedLeft = '>';
+				corrodedRight = '<';
+				devouredLeft = ' ';
+				devouredRight = ' ';
+				electrifiedLeft = ' ';
+				electrifiedRight = ' ';
+				frozenLeft = ' ';
+				frozenRight = ' ';
+				ignitedLeft = ' ';
+			    ignitedRight = ' ';
+				paralysedLeft = ' ';
+				paralysedRight = ' ';
+				poisonedLeft = ' ';
+				poisonedRight = ' ';
+				sunderedLeft = ' ';
+				sunderedRight = ' ';
+			}else if(checkY == 3) {
+				bleedingLeft = ' ';
+				bleedingRight = ' ';
+				blindedLeft = ' ';
+				blindedRight = ' ';
+				confusedLeft = ' ';
+				confusedRight = ' ';
+				corrodedLeft = ' ';
+				corrodedRight = ' ';
+				devouredLeft = '>';
+				devouredRight = '<';
+				electrifiedLeft = ' ';
+				electrifiedRight = ' ';
+				frozenLeft = ' ';
+				frozenRight = ' ';
+				ignitedLeft = ' ';
+			    ignitedRight = ' ';
+				paralysedLeft = ' ';
+				paralysedRight = ' ';
+				poisonedLeft = ' ';
+				poisonedRight = ' ';
+				sunderedLeft = ' ';
+				sunderedRight = ' ';
+			}else if(checkY == 4) {
+				bleedingLeft = ' ';
+				bleedingRight = ' ';
+				blindedLeft = ' ';
+				blindedRight = ' ';
+				confusedLeft = ' ';
+				confusedRight = ' ';
+				corrodedLeft = ' ';
+				corrodedRight = ' ';
+				devouredLeft = ' ';
+				devouredRight = ' ';
+				electrifiedLeft = '>';
+				electrifiedRight = '<';
+				frozenLeft = ' ';
+				frozenRight = ' ';
+				ignitedLeft = ' ';
+			    ignitedRight = ' ';
+				paralysedLeft = ' ';
+				paralysedRight = ' ';
+				poisonedLeft = ' ';
+				poisonedRight = ' ';
+				sunderedLeft = ' ';
+				sunderedRight = ' ';
+			}else if(checkY == 5) {
+				bleedingLeft = ' ';
+				bleedingRight = ' ';
+				blindedLeft = ' ';
+				blindedRight = ' ';
+				confusedLeft = ' ';
+				confusedRight = ' ';
+				corrodedLeft = ' ';
+				corrodedRight = ' ';
+				devouredLeft = ' ';
+				devouredRight = ' ';
+				electrifiedLeft = ' ';
+				electrifiedRight = ' ';
+				frozenLeft = '>';
+				frozenRight = '<';
+				ignitedLeft = ' ';
+			    ignitedRight = ' ';
+				paralysedLeft = ' ';
+				paralysedRight = ' ';
+				poisonedLeft = ' ';
+				poisonedRight = ' ';
+				sunderedLeft = ' ';
+				sunderedRight = ' ';
+			}else if(checkY == 6) {
+				bleedingLeft = ' ';
+				bleedingRight = ' ';
+				blindedLeft = ' ';
+				blindedRight = ' ';
+				confusedLeft = ' ';
+				confusedRight = ' ';
+				corrodedLeft = ' ';
+				corrodedRight = ' ';
+				devouredLeft = ' ';
+				devouredRight = ' ';
+				electrifiedLeft = ' ';
+				electrifiedRight = ' ';
+				frozenLeft = ' ';
+				frozenRight = ' ';
+				ignitedLeft = '>';
+			    ignitedRight = '<';
+				paralysedLeft = ' ';
+				paralysedRight = ' ';
+				poisonedLeft = ' ';
+				poisonedRight = ' ';
+				sunderedLeft = ' ';
+				sunderedRight = ' ';
+			}else if(checkY == 7) {
+				bleedingLeft = ' ';
+				bleedingRight = ' ';
+				blindedLeft = ' ';
+				blindedRight = ' ';
+				confusedLeft = ' ';
+				confusedRight = ' ';
+				corrodedLeft = ' ';
+				corrodedRight = ' ';
+				devouredLeft = ' ';
+				devouredRight = ' ';
+				electrifiedLeft = ' ';
+				electrifiedRight = ' ';
+				frozenLeft = ' ';
+				frozenRight = ' ';
+				ignitedLeft = ' ';
+			    ignitedRight = ' ';
+				paralysedLeft = '>';
+				paralysedRight = '<';
+				poisonedLeft = ' ';
+				poisonedRight = ' ';
+				sunderedLeft = ' ';
+				sunderedRight = ' ';
+			}else if(checkY == 8) {
+				bleedingLeft = ' ';
+				bleedingRight = ' ';
+				blindedLeft = ' ';
+				blindedRight = ' ';
+				confusedLeft = ' ';
+				confusedRight = ' ';
+				corrodedLeft = ' ';
+				corrodedRight = ' ';
+				devouredLeft = ' ';
+				devouredRight = ' ';
+				electrifiedLeft = ' ';
+				electrifiedRight = ' ';
+				frozenLeft = ' ';
+				frozenRight = ' ';
+				ignitedLeft = ' ';
+			    ignitedRight = ' ';
+				paralysedLeft = ' ';
+				paralysedRight = ' ';
+				poisonedLeft = '>';
+				poisonedRight = '<';
+				sunderedLeft = ' ';
+				sunderedRight = ' ';
+			}else if(checkY == 9) {
+				bleedingLeft = ' ';
+				bleedingRight = ' ';
+				blindedLeft = ' ';
+				blindedRight = ' ';
+				confusedLeft = ' ';
+				confusedRight = ' ';
+				corrodedLeft = ' ';
+				corrodedRight = ' ';
+				devouredLeft = ' ';
+				devouredRight = ' ';
+				electrifiedLeft = ' ';
+				electrifiedRight = ' ';
+				frozenLeft = ' ';
+				frozenRight = ' ';
+				ignitedLeft = ' ';
+			    ignitedRight = ' ';
+				paralysedLeft = ' ';
+				paralysedRight = ' ';
+				poisonedLeft = ' ';
+				poisonedRight = ' ';
+				sunderedLeft = '>';
+				sunderedRight = '<';
+			}
+		}else if(checkX == 2) {
+			if(checkY == 0) {
+				bladeLeft = '>';
+				bladeRight = '<';
+				magmaLeft = ' ';
+				magmaRight = ' ';
+				chillLeft = ' ';
+				chillRight = ' ';
+				arcLeft = ' ';
+				arcRight = ' ';
+				venomLeft = ' ';
+				venomRight = ' ';
+				causticLeft = ' ';
+				causticRight = ' ';
+				arcaneLeft = ' ';
+				arcaneRight = ' ';
+				eldritchLeft = ' ';
+				eldritchRight = ' ';
+			}else if(checkY == 1) {
+				bladeLeft = ' ';
+				bladeRight = ' ';
+				magmaLeft = '>';
+				magmaRight = '<';
+				chillLeft = ' ';
+				chillRight = ' ';
+				arcLeft = ' ';
+				arcRight = ' ';
+				venomLeft = ' ';
+				venomRight = ' ';
+				causticLeft = ' ';
+				causticRight = ' ';
+				arcaneLeft = ' ';
+				arcaneRight = ' ';
+				eldritchLeft = ' ';
+				eldritchRight = ' ';
+			}else if(checkY == 2) {
+				bladeLeft = ' ';
+				bladeRight = ' ';
+				magmaLeft = ' ';
+				magmaRight = ' ';
+				chillLeft = '>';
+				chillRight = '<';
+				arcLeft = ' ';
+				arcRight = ' ';
+				venomLeft = ' ';
+				venomRight = ' ';
+				causticLeft = ' ';
+				causticRight = ' ';
+				arcaneLeft = ' ';
+				arcaneRight = ' ';
+				eldritchLeft = ' ';
+				eldritchRight = ' ';
+			}else if(checkY == 3) {
+				bladeLeft = ' ';
+				bladeRight = ' ';
+				magmaLeft = ' ';
+				magmaRight = ' ';
+				chillLeft = ' ';
+				chillRight = ' ';
+				arcLeft = '>';
+				arcRight = '<';
+				venomLeft = ' ';
+				venomRight = ' ';
+				causticLeft = ' ';
+				causticRight = ' ';
+				arcaneLeft = ' ';
+				arcaneRight = ' ';
+				eldritchLeft = ' ';
+				eldritchRight = ' ';
+			}else if(checkY == 4) {
+				bladeLeft = ' ';
+				bladeRight = ' ';
+				magmaLeft = ' ';
+				magmaRight = ' ';
+				chillLeft = ' ';
+				chillRight = ' ';
+				arcLeft = ' ';
+				arcRight = ' ';
+				venomLeft = '>';
+				venomRight = '<';
+				causticLeft = ' ';
+				causticRight = ' ';
+				arcaneLeft = ' ';
+				arcaneRight = ' ';
+				eldritchLeft = ' ';
+				eldritchRight = ' ';
+			}else if(checkY == 5) {
+				bladeLeft = ' ';
+				bladeRight = ' ';
+				magmaLeft = ' ';
+				magmaRight = ' ';
+				chillLeft = ' ';
+				chillRight = ' ';
+				arcLeft = ' ';
+				arcRight = ' ';
+				venomLeft = ' ';
+				venomRight = ' ';
+				causticLeft = '>';
+				causticRight = '<';
+				arcaneLeft = ' ';
+				arcaneRight = ' ';
+				eldritchLeft = ' ';
+				eldritchRight = ' ';
+			}else if(checkY == 6) {
+				bladeLeft = ' ';
+				bladeRight = ' ';
+				magmaLeft = ' ';
+				magmaRight = ' ';
+				chillLeft = ' ';
+				chillRight = ' ';
+				arcLeft = ' ';
+				arcRight = ' ';
+				venomLeft = ' ';
+				venomRight = ' ';
+				causticLeft = ' ';
+				causticRight = ' ';
+				arcaneLeft = '>';
+				arcaneRight = '<';
+				eldritchLeft = ' ';
+				eldritchRight = ' ';
+			}else if(checkY == 7) {
+				bladeLeft = ' ';
+				bladeRight = ' ';
+				magmaLeft = ' ';
+				magmaRight = ' ';
+				chillLeft = ' ';
+				chillRight = ' ';
+				arcLeft = ' ';
+				arcRight = ' ';
+				venomLeft = ' ';
+				venomRight = ' ';
+				causticLeft = ' ';
+				causticRight = ' ';
+				arcaneLeft = ' ';
+				arcaneRight = ' ';
+				eldritchLeft = '>';
+				eldritchRight = '<';
+			}
+		}
+	}
 	
 	public HelpEffectsScreen(boolean fromMenu) {
 		this.fromMenu = fromMenu;
 	}
 	
 	public void displayOutput(ExtendedAsciiPanel terminal) {
+		changeMarkers(checkX, checkY);
 		terminal.clear();
 		Screen.generateBorders(terminal);
 		terminal.writeCenter("== Help: Status Effects ==", 1);
@@ -113,6 +647,14 @@ public class HelpEffectsScreen implements Screen{
 			terminal.write(String.format("%c                    %c", borderVertical, borderVertical), 5, y++);
 			terminal.write(String.format("%c %c Mind Vision %c    %c", borderVertical, mindLeft, mindRight, borderVertical), 5, y++);
 			terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 5, y++);
+			
+			y = 0;
+			terminal.write("+||+ Positive Effects +||+", 29, y+=4);
+			y++;
+			y++;
+			terminal.write("Positive status effects can grant a range of benefits, making your", 34, y++);
+			terminal.write("exploration of the Caves of Chaos easier for a short time.", 34, y++);
+			
 		}else if(checkX == 1){
 			terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerNW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerNE), 5, y++);
 			terminal.write(String.format("%c %c Bleeding %c    %c", borderVertical, bleedingLeft, bleedingRight, borderVertical), 5, y++);
@@ -137,6 +679,14 @@ public class HelpEffectsScreen implements Screen{
 			terminal.write(String.format("%c                 %c", borderVertical, borderVertical), 5, y++);
 			terminal.write(String.format("%c %c Sundered %c    %c", borderVertical, sunderedLeft, sunderedRight, borderVertical), 5, y++);
 			terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 5, y++);
+			
+			y = 0;
+			terminal.write("+||+ Negative Effects +||+", 29, y+=4);
+			y++;
+			y++;
+			terminal.write("Negative status effects can hinder you in a variety of", 34, y++);
+			terminal.write("ways, adding new threats and challenges to your adventure.", 34, y++);
+			
 		}else if(checkX == 2) {
 			terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerNW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerNE), 5, y++);
 			terminal.write(String.format("%c %c Blade Ward %c    %c", borderVertical, bladeLeft, bladeRight, borderVertical), 5, y++);
@@ -155,6 +705,15 @@ public class HelpEffectsScreen implements Screen{
 			terminal.write(String.format("%c                   %c", borderVertical, borderVertical), 5, y++);
 			terminal.write(String.format("%c %c Eldritch Ward %c %c", borderVertical, eldritchLeft, eldritchRight, borderVertical), 5, y++);
 			terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 5, y++);
+			
+			y = 0;
+			terminal.write("+||+ Ward Effects +||+", 29, y+=4);
+			y++;
+			y++;
+			terminal.write("Ward status effects provide both an immediate defensive effect", 34, y++);
+			terminal.write("and an ongoing protection from a given damage type, granting", 34, y++);
+			terminal.write("you increased defenses against the perils of the Caves.", 34, y++);
+			
 		}
 
         terminal.writeCenter(String.format("-- [%s / %s]: Move Selection --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown)), 34);
@@ -172,6 +731,7 @@ public class HelpEffectsScreen implements Screen{
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
 		case KeybindManager.navigateMenuLeft:
+			checkY = 0;
 			if(checkX == 0) {
 				checkX = 2;
 			}else {
@@ -180,10 +740,55 @@ public class HelpEffectsScreen implements Screen{
 			break;
 			
 		case KeybindManager.navigateMenuRight:
+			checkY = 0;
 			if(checkX == 2) {
 				checkX = 0;
 			}else {
 				checkX++;
+			}
+			break;
+			
+		case KeybindManager.navigateMenuUp:
+			if(checkX == 0) {
+				if(checkY == 0) {
+					checkY = 7;
+				}else {
+					checkY--;
+				}
+			}else if(checkX == 1) {
+				if(checkY == 0) {
+					checkY = 9;
+				}else {
+					checkY--;
+				}
+			}else if(checkX == 2) {
+				if(checkY == 0) {
+					checkY = 7;
+				}else {
+					checkY--;
+				}
+			}
+			break;
+			
+		case KeybindManager.navigateMenuDown:
+			if(checkX == 0) {
+				if(checkY == 7) {
+					checkY = 0;
+				}else {
+					checkY++;
+				}
+			}else if(checkX == 1) {
+				if(checkY == 9) {
+					checkY = 0;
+				}else {
+					checkY++;
+				}
+			}else if(checkX == 2) {
+				if(checkY == 7) {
+					checkY = 0;
+				}else {
+					checkY++;
+				}
 			}
 			break;
 		
