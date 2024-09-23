@@ -70,6 +70,7 @@ public class KeybindManager {
 	public static final int navigateMenuOption_9 = KeyEvent.VK_9;
 	public static final int navigateMenuFunction_1 = KeyEvent.VK_F1;
 	public static final int navigateMenuSort = KeyEvent.VK_S;
+	public static final int navigateMenuToggle = KeyEvent.VK_EQUALS;
 
 	public static String keybindText(int keyCode) {
 		String representation = KeyEvent.getKeyText(keyCode);
