@@ -60,5 +60,22 @@ public abstract class Language {
 		return String.format(languageData.get(7), KeybindManager.keybindText(KeybindManager.navigateMenuBack));
 	}
 	
+	//Credits
+	public String credits_Heading() {
+		return languageData.get(8);
+	}
+	public String credits_Design() {
+		return languageData.get(9);
+	}
+	public String credits_Ascii() {
+		return languageData.get(10);
+	}
+	public String credits_Review() {
+		return languageData.get(11);
+	}
+	public String credits_Controls() {
+		return String.format(languageData.get(12), KeybindManager.keybindText(KeybindManager.navigateMenuBack));
+	}
+	
 
 }
