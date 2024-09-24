@@ -290,7 +290,7 @@ public class HelpEffectsScreen implements Screen{
 				poisonedRight = ' ';
 				sunderedLeft = ' ';
 				sunderedRight = ' ';
-			}else if(checkY == 2) {
+			}else if(checkY == 3) {
 				bleedingLeft = ' ';
 				bleedingRight = ' ';
 				blindedLeft = ' ';
@@ -313,7 +313,7 @@ public class HelpEffectsScreen implements Screen{
 				poisonedRight = ' ';
 				sunderedLeft = ' ';
 				sunderedRight = ' ';
-			}else if(checkY == 3) {
+			}else if(checkY == 4) {
 				bleedingLeft = ' ';
 				bleedingRight = ' ';
 				blindedLeft = ' ';
@@ -336,7 +336,7 @@ public class HelpEffectsScreen implements Screen{
 				poisonedRight = ' ';
 				sunderedLeft = ' ';
 				sunderedRight = ' ';
-			}else if(checkY == 4) {
+			}else if(checkY == 5) {
 				bleedingLeft = ' ';
 				bleedingRight = ' ';
 				blindedLeft = ' ';
@@ -359,7 +359,7 @@ public class HelpEffectsScreen implements Screen{
 				poisonedRight = ' ';
 				sunderedLeft = ' ';
 				sunderedRight = ' ';
-			}else if(checkY == 5) {
+			}else if(checkY == 6) {
 				bleedingLeft = ' ';
 				bleedingRight = ' ';
 				blindedLeft = ' ';
@@ -382,7 +382,7 @@ public class HelpEffectsScreen implements Screen{
 				poisonedRight = ' ';
 				sunderedLeft = ' ';
 				sunderedRight = ' ';
-			}else if(checkY == 6) {
+			}else if(checkY == 7) {
 				bleedingLeft = ' ';
 				bleedingRight = ' ';
 				blindedLeft = ' ';
@@ -405,7 +405,7 @@ public class HelpEffectsScreen implements Screen{
 				poisonedRight = ' ';
 				sunderedLeft = ' ';
 				sunderedRight = ' ';
-			}else if(checkY == 7) {
+			}else if(checkY == 8) {
 				bleedingLeft = ' ';
 				bleedingRight = ' ';
 				blindedLeft = ' ';
@@ -428,7 +428,7 @@ public class HelpEffectsScreen implements Screen{
 				poisonedRight = ' ';
 				sunderedLeft = ' ';
 				sunderedRight = ' ';
-			}else if(checkY == 8) {
+			}else if(checkY == 9) {
 				bleedingLeft = ' ';
 				bleedingRight = ' ';
 				blindedLeft = ' ';
@@ -451,7 +451,7 @@ public class HelpEffectsScreen implements Screen{
 				poisonedRight = '<';
 				sunderedLeft = ' ';
 				sunderedRight = ' ';
-			}else if(checkY == 9) {
+			}else if(checkY == 10) {
 				bleedingLeft = ' ';
 				bleedingRight = ' ';
 				blindedLeft = ' ';
@@ -627,7 +627,6 @@ public class HelpEffectsScreen implements Screen{
 		terminal.writeCenter("== Help: Status Effects ==", 1);
 		
 		int y = 3;
-		int x = 27;
 		
 		if(checkX == 0) {
 			terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerNW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerNE), 5, y++);
@@ -654,6 +653,49 @@ public class HelpEffectsScreen implements Screen{
 			y++;
 			terminal.write("Positive status effects can grant a range of benefits, making your", 34, y++);
 			terminal.write("exploration of the Caves of Chaos easier for a short time.", 34, y++);
+			y++;
+			y++;
+			if(checkY == 0) {
+				terminal.write("+||+ Beast Form +||+", 29, y++);
+				y++;
+				terminal.write("The ferocity of beasts suffuses your body and mind, temporarily", 34, y++);
+				terminal.write("granting you a +4 bonus to your Dexterity and Vision Radius.", 34, y++);
+			}else if(checkY == 1) {
+				terminal.write("+||+ Electrocharged +||+", 29, y++);
+				y++;
+				terminal.write("You are infused with electrical energy, dealing additional", 34, y++);
+				terminal.write("Shock damage to your targets on successful attacks.", 34, y++);
+			}else if(checkY == 2) {
+				terminal.write("+||+ Giant Strength +||+", 29, y++);
+				y++;
+				terminal.write("The strength of giants flows through your muscles, temporarily", 34, y++);
+				terminal.write("granting you a +4 bonus to your Strength and Armor Class.", 34, y++);
+			}else if(checkY == 3) {
+				terminal.write("+||+ Haste +||+", 29, y++);
+				y++;
+				terminal.write("Wild energy flows through you, doubling the speed at which you", 34, y++);
+				terminal.write("move, attack, and take actions.", 34, y++);
+			}else if(checkY == 4) {
+				terminal.write("+||+ Illuminated +||+", 29, y++);
+				y++;
+				terminal.write("You are glowing with a bright light, illuminating your surroundings", 34, y++);
+				terminal.write("and granting a +10 bonus to your Vision Radius.", 34, y++);
+			}else if(checkY == 5) {
+				terminal.write("+||+ Invisible +||+", 29, y++);
+				y++;
+				terminal.write("You have become transparent, making you much harder to target.", 34, y++);
+				terminal.write("Attacking or casting a spell will break this effect, however.", 34, y++);
+			}else if(checkY == 6) {
+				terminal.write("+||+ Levitating +||+", 29, y++);
+				y++;
+				terminal.write("You are floating in the air, allowing you to glide across", 34, y++);
+				terminal.write("pits and trapped floors safely.", 34, y++);
+			}else if(checkY == 7) {
+				terminal.write("+||+ Mind Vision +||+", 29, y++);
+				y++;
+				terminal.write("You can sense the presence of minds, temporarily allowing you to", 34, y++);
+				terminal.write("see creatures at any distance regardless of intervening obstacles.", 34, y++);
+			}
 			
 		}else if(checkX == 1){
 			terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerNW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerNE), 5, y++);
@@ -686,6 +728,57 @@ public class HelpEffectsScreen implements Screen{
 			y++;
 			terminal.write("Negative status effects can hinder you in a variety of", 34, y++);
 			terminal.write("ways, adding new threats and challenges to your adventure.", 34, y++);
+			y++;
+			y++;
+			if(checkY == 0) {
+				terminal.write("+||+ Bleeding +||+", 29, y++);
+				y++;
+				terminal.write("You are bleeding - you take 1d4 Physical damage each turn you are affected.", 34, y++);
+			}else if(checkY == 1) {
+				terminal.write("+||+ Blinded +||+", 29, y++);
+				y++;
+				terminal.write("You've been temporarily blinded, setting your base Vision Radius to 2.", 34, y++);
+			}else if(checkY == 2) {
+				terminal.write("+||+ Confused +||+", 29, y++);
+				y++;
+				terminal.write("You are disoriented, and can't control the direction you move or attack in.", 34, y++);
+			}else if(checkY == 3) {
+				terminal.write("+||+ Corroded +||+", 29, y++);
+				y++;
+				terminal.write("You are coated in acid - you take 1d4 Acid damage each turn you are affected", 34, y++);
+				terminal.write("and suffer a -2 penalty to your Armor Class whilst affected.", 34, y++);
+			}else if(checkY == 4) {
+				terminal.write("+||+ Devoured +||+", 29, y++);
+				y++;
+				terminal.write("A devouring curse is eating away at your life force, draining 1d4", 34, y++);
+				terminal.write("Health and Mana each turn you are affected.", 34, y++);
+			}else if(checkY == 5) {
+				terminal.write("+||+ Electrified +||+", 29, y++);
+				y++;
+				terminal.write("An electric shock has disrupted your magical reserves - you immediately", 34, y++);
+				terminal.write("take 1d6 Shock damage, then lose 1d4 Mana each turn you are affected.", 34, y++);
+			}else if(checkY == 6) {
+				terminal.write("+||+ Frozen +||+", 29, y++);
+				y++;
+				terminal.write("You are frozen solid, and are completely unable to move.", 34, y++);
+			}else if(checkY == 7) {
+				terminal.write("+||+ Ignited +||+", 29, y++);
+				y++;
+				terminal.write("You have been set on fire, taking 1d4 Fire damage each turn you are affected.", 34, y++);
+			}else if(checkY == 8) {
+				terminal.write("+||+ Paralysed +||+", 29, y++);
+				y++;
+				terminal.write("Your muscles have seized up, preventing you from moving.", 34, y++);
+			}else if(checkY == 9) {
+				terminal.write("+||+ Poisoned +||+", 29, y++);
+				y++;
+				terminal.write("You have been poisoned - you take 1d4 Poison damage each turn you are affected.", 34, y++);
+			}else if(checkY == 10) {
+				terminal.write("+||+ Sundered +||+", 29, y++);
+				y++;
+				terminal.write("Your armor has been sundered, limiting your Armor Class", 34, y++);
+				terminal.write("to a maximum of 10 for the duration.", 34, y++);
+			}
 			
 		}else if(checkX == 2) {
 			terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerNW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerNE), 5, y++);
@@ -713,6 +806,56 @@ public class HelpEffectsScreen implements Screen{
 			terminal.write("Ward status effects provide both an immediate defensive effect", 34, y++);
 			terminal.write("and an ongoing protection from a given damage type, granting", 34, y++);
 			terminal.write("you increased defenses against the perils of the Caves.", 34, y++);
+			y++;
+			if(checkY == 0) {
+				terminal.write("+||+ Blade Ward +||+", 29, y++);
+				y++;
+				terminal.write("A storm of metal shards shields you, immediately applying", 34, y++);
+				terminal.write("Bleeding to adjacent foes and granting you Resistance to", 34, y++);
+				terminal.write("Physical damage for the duration.", 34, y++);
+			}else if(checkY == 1) {
+				terminal.write("+||+ Magma Ward +||+", 29, y++);
+				y++;
+				terminal.write("A shield of flames surrounds you, immediately applying", 34, y++);
+				terminal.write("Ignited to adjacent foes and granting you Resistance to", 34, y++);
+				terminal.write("Fire damage for the duration.", 34, y++);
+			}else if(checkY == 2) {
+				terminal.write("+||+ Chill Ward +||+", 29, y++);
+				y++;
+				terminal.write("You are shielded by freezing winds, immediately applying", 34, y++);
+				terminal.write("Frozen to adjacent foes and granting you Resistance to", 34, y++);
+				terminal.write("Frost damage for the duration.", 34, y++);
+			}else if(checkY == 3) {
+				terminal.write("+||+ Arc Ward +||+", 29, y++);
+				y++;
+				terminal.write("A shroud of crackling lightning protects you, immediately dealing", 34, y++);
+				terminal.write("1d4 Shock damage and draining 1d4 Mana from adjacent foes and granting", 34, y++);
+				terminal.write("you Resistance to Shock damage for the duration.", 34, y++);
+			}else if(checkY == 4) {
+				terminal.write("+||+ Venomous Ward +||+", 29, y++);
+				y++;
+				terminal.write("A shield of protective poison surrounds you, immediately applying", 34, y++);
+				terminal.write("Poisoned to adjacent foes and granting you Resistance to", 34, y++);
+				terminal.write("Poison damage for the duration.", 34, y++);
+			}else if(checkY == 5) {
+				terminal.write("+||+ Caustic Ward +||+", 29, y++);
+				y++;
+				terminal.write("A veil of protective acid shields you, immediately applying", 34, y++);
+				terminal.write("Corroded to adjacent foes and granting you Resistance to", 34, y++);
+				terminal.write("Acid damage for the duration.", 34, y++);
+			}else if(checkY == 6) {
+				terminal.write("+||+ Arcane Ward +||+", 29, y++);
+				y++;
+				terminal.write("An arcane shield surrounds you, immediately", 34, y++);
+				terminal.write("teleporting adjacent foes away from you and granting you", 34, y++);
+				terminal.write("Resistance to Magic damage for the duration.", 34, y++);
+			}else if(checkY == 7) {
+				terminal.write("+||+ Eldritch Ward +||+", 29, y++);
+				y++;
+				terminal.write("A shroud of chaotic energy protects you, immediately applying", 34, y++);
+				terminal.write("Devoured to adjacent foes and granting you Resistance to", 34, y++);
+				terminal.write("Chaos damage for the duration.", 34, y++);
+			}
 			
 		}
 
@@ -757,7 +900,7 @@ public class HelpEffectsScreen implements Screen{
 				}
 			}else if(checkX == 1) {
 				if(checkY == 0) {
-					checkY = 9;
+					checkY = 10;
 				}else {
 					checkY--;
 				}
@@ -778,7 +921,7 @@ public class HelpEffectsScreen implements Screen{
 					checkY++;
 				}
 			}else if(checkX == 1) {
-				if(checkY == 9) {
+				if(checkY == 10) {
 					checkY = 0;
 				}else {
 					checkY++;

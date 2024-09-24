@@ -1338,7 +1338,7 @@ public class EffectFactory {
 
 			}
 		};
-		devoured.setDescription("A devouring curse is eating away at your life force, draining your health and mana every turn.");
+		devoured.setDescription("A devouring curse is eating away at your life force, draining 1d4 Health and Mana each turn you are affected.");
 		return devoured;
 	}
 	
@@ -1445,7 +1445,7 @@ public class EffectFactory {
 				creature.doAction("let the shielding magic dissipate");
 			}
         };
-		arcaneWard.setDescription("An arcane shield surrounds you.");
+		arcaneWard.setDescription("An arcane shield surrounds you, immediately teleporting adjacent foes away from you and granting you Resistance to Magic damage for the duration.");
 		return arcaneWard;
 	}
 	
@@ -1464,7 +1464,7 @@ public class EffectFactory {
 				creature.doAction("feel the poisonous barrier fade");
 			}
         };
-		venomousWard.setDescription("A shield of protective poison surrounds you.");
+		venomousWard.setDescription("A shield of protective poison surrounds you, immediately applying Poisoned to adjacent foes and granting you Resistance to Poison damage for the duration.");
 		return venomousWard;
 	}
 	
@@ -1493,7 +1493,7 @@ public class EffectFactory {
 				creature.doAction("feel the chaotic energy fade away");
 			}
         };
-		eldritchWard.setDescription("A shroud of chaotic energy protects you.");
+		eldritchWard.setDescription("A shroud of chaotic energy protects you, immediately applying Devoured to adjacent foes and granting you Resistance to Chaos damage for the duration.");
 		return eldritchWard;
 	}
 	
@@ -1512,7 +1512,7 @@ public class EffectFactory {
 				creature.doAction("return the metal shards to the earth");
 			}
         };
-		bladeWard.setDescription("A storm of metal shards shields you.");
+		bladeWard.setDescription("A storm of metal shards shields you, immediately applying Bleeding to adjacent foes and granting you Resistance to Physical damage for the duration.");
 		return bladeWard;
 	}
 	
@@ -1531,7 +1531,7 @@ public class EffectFactory {
 				creature.doAction("feel the acidic veil fade");
 			}
         };
-		causticWard.setDescription("A veil of protective acid shields you.");
+		causticWard.setDescription("A veil of protective acid shields you, immediately applying Corroded to adjacent foes and granting you Resistance to Acid damage for the duration.");
 		return causticWard;
 	}
 	
@@ -1550,7 +1550,7 @@ public class EffectFactory {
 				creature.doAction("feel the freezing winds fade away");
 			}
         };
-		chillWard.setDescription("You are shielded by freezing winds.");
+		chillWard.setDescription("You are shielded by freezing winds, immediately applying Frozen to adjacent foes and granting you Resistance to Frost damage for the duration.");
 		return chillWard;
 	}
 	
@@ -1569,7 +1569,7 @@ public class EffectFactory {
 				creature.doAction("feel the flaming shield burn out");
 			}
         };
-		magmaWard.setDescription("A shield of flames protects you.");
+		magmaWard.setDescription("A shield of flames surrounds you, immediately applying Ignited to adjacent foes and granting you Resistance to Fire damage for the durration");
 		return magmaWard;
 	}
 	
@@ -1644,7 +1644,7 @@ public class EffectFactory {
 				creature.doAction("feel the lightning shroud dissipate");
 			}
         };
-		arcWard.setDescription("A shroud of crackling lightning protects you.");
+		arcWard.setDescription("A shroud of crackling lightning protects you, immediately dealing 1d4 Shock damage and draining 1d4 Mana from adjacent foes and granting you Resistance to Shock damage for the duration.");
 		return arcWard;
 	}
 	
@@ -1772,7 +1772,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		sundered.setDescription("Your armor has been sundered, reducing your Armor Class to 10 for the duration.");
+		sundered.setDescription("Your armor has been sundered, limiting your Armor Class to a maximum of 10 for the duration.");
 		return sundered;
 	}
 	
@@ -1793,7 +1793,7 @@ public class EffectFactory {
 				}
 			}
 		};
-		electrified.setDescription("An electric shock has disrupted your magical reserves, draining 1d4 mana every turn for the duration.");
+		electrified.setDescription("An electric shock has disrupted your magical reserves - you immediately take 1d6 Shock damage, then lose 1d4 Mana each turn you are affected.");
 		return electrified;
 	}
 	
@@ -1815,7 +1815,7 @@ public class EffectFactory {
 
 			}
 		};
-		ignited.setDescription("You have been set on fire, taking 1d4 Fire damage every turn for the duration.");
+		ignited.setDescription("You have been set on fire, taking 1d4 Fire damage each turn you are affected.");
 		return ignited;
 		
 	}
