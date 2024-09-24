@@ -38,7 +38,27 @@ public abstract class Language {
 	}
 	
 	//Main Menu
-
+	public String mainMenu_Subtitle() {
+		return titleScreen_Subtitle();
+	}
+	public String mainMenu_Heading() {
+		return languageData.get(2);
+	}
+	public String mainMenu_NewGame() {
+		return languageData.get(3);
+	}
+	public String mainMenu_Help() {
+		return languageData.get(4);
+	}
+	public String mainMenu_Credits() {
+		return languageData.get(5);
+	}
+	public String mainMenu_Controls1() {
+		return String.format(languageData.get(6), KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuConfirm));
+	}
+	public String mainMenu_Controls2() {
+		return String.format(languageData.get(7), KeybindManager.keybindText(KeybindManager.navigateMenuBack));
+	}
 	
 
 }
