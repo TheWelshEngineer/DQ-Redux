@@ -52,14 +52,8 @@ public class TitleScreen implements Screen{
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
 		terminal.writeCenter("                         /////*****          /////(((((                        ", y++);
-		terminal.writeCenter(
-			String.format(
-				"-- version: rc-6 -- Press [%s] to Start -- Press [%s] to Exit --",
-				KeybindManager.keybindText(KeybindManager.navigateMenuConfirm),
-				KeybindManager.keybindText(KeybindManager.navigateMenuBack)
-			),
-			45
-		);
+		terminal.writeCenter(String.format("-- Version: rc-7-24092024 -- Press [%s] to Start -- Press [%s] to Exit --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm), KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 45);
+		
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {
