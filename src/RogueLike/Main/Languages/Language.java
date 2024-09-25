@@ -1,25 +1,32 @@
-package RogueLike.Main.Language;
+package RogueLike.Main.Languages;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import RogueLike.Main.Managers.KeybindManager;
 
-public abstract class Language {
+public class Language {
 
 	public ArrayList<String> languageData = new ArrayList<String>();
 	
 	public Language(String filepath) {
-		setUpLanguage(filepath);
+		URL url = getClass().getResource(filepath);
+		File file = new File(url.getPath());
+		setUpLanguage(file, filepath);
 	}
 	
-	public void setUpLanguage(String filepath) {
-		try(BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
+	public void setUpLanguage(File file, String filepath) {
+		System.out.println("Attempting to load: "+filepath);
+		try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
+			System.out.println("Loading: "+filepath);
 		    for(String line; (line = reader.readLine()) != null; ) {
-		        String[] split = line.split(":");
+		        System.out.println(line);
+		    	String[] split = line.split(":", 2);
 		        languageData.add(split[1]);
 		    }
 		} catch (FileNotFoundException e) {

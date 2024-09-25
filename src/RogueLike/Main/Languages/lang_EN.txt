@@ -1,0 +1,13 @@
+Title Screen Subtitle : +|=|+ Magic and Madness in the Caves of Chaos! +|=|+
+Title Screen Controls : -- Version: rc-7-24092024 -- Press [%s] to Start -- Press [%s] to Exit --
+Main Menu Heading : == Main Menu ==
+Main Menu New Game : New Game
+Main Menu Help : Help
+Main Menu Credits : Credits
+Main Menu Controls 1 : -- [%s / %s]: Move Selection | [%s]: Confirm and Continue --
+Main Menu Controls 2 : -- [%s]: Return to Title Screen --
+Credits Heading : +|=|+ Credits +|=|+
+Credits Design : Design & Development:
+Credits Ascii : AsciiPanel Framework & Initial Inspiration:
+Credits Review : Code Review and GitHub Documentation:
+Credits Controls : -- [%s]: Back --

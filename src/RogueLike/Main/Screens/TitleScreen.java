@@ -2,9 +2,12 @@ package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
 import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.Languages.Language;
 import RogueLike.Main.Managers.KeybindManager;
 
 public class TitleScreen implements Screen{
+	
+	private Language language = new Language("lang_EN.txt");
 
 	public void displayOutput(ExtendedAsciiPanel terminal) {
 		Screen.generateBorders(terminal);
@@ -16,7 +19,8 @@ public class TitleScreen implements Screen{
 		terminal.writeCenter("| |__| |\\ V  V / (_| | |  | | | |__| | |_| |  __/\\__ \\ |_ ", y++);
 		terminal.writeCenter("|_____/  \\_/\\_/ \\__,_|_|  |_|  \\___\\_\\\\__,_|\\___||___/\\__|", y++);
 		terminal.writeCenter("", y++);
-		terminal.writeCenter("+|=|+ Magic and Madness in the Caves of Chaos! +|=|+", y++);
+		//terminal.writeCenter("+|=|+ Magic and Madness in the Caves of Chaos! +|=|+", y++);
+		terminal.writeCenter(language.titleScreen_Subtitle(), y++);
 		terminal.writeCenter("", y++);
 		terminal.writeCenter("                                   /////                                       ", y++);
 		terminal.writeCenter("                                   /////                                       ", y++);
