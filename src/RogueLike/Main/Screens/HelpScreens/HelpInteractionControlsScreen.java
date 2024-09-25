@@ -68,7 +68,7 @@ public class HelpInteractionControlsScreen implements Screen{
         
 
     
-        terminal.writeCenter("-- [ESCAPE]: Back --", 38);
+        terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
 	}
 	
 	public Screen respondToUserInput(KeyEvent key) {

@@ -238,7 +238,7 @@ public class HelpScreen implements Screen{
 			}else if(check == 1) {
 				return new HelpInteractionControlsScreen(fromMenu);
 			}else if(check == 2) {
-				return this; //TODO Help: Menu Controls
+				return new HelpMenuControlsScreen(fromMenu);
 			}else if(check == 3) {
 				return this; //TODO Help: Items
 			}else if(check == 4) {
