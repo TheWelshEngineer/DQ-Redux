@@ -6,6 +6,7 @@ public enum PlayerAncestry {
 	DWARF("Dwarf"),
 	ORC("Orc"),
 	DRAGONBORN("Dragonborn"),
+	LYCAN("Lycan"),
 	;
 
 	private final String name;

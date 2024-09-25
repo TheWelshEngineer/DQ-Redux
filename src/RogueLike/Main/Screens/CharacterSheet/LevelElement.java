@@ -46,13 +46,15 @@ public class LevelElement extends CharacterSheetElement {
             case HUMAN:
                 return "As a Human, you began your quest with an addtional skill point.";
             case ELF:
-                return "As an Elf, you gain 25% more maximum mana upon levelling up.";
+                return "As an Elf, you gain 25% more maximum Mana upon levelling up.";
             case DWARF:
-                return "As a Dwarf, you are resistant to Poison damage, and your base armor class is increased by 1.";
+                return "As a Dwarf, you are Resistant to Poison damage, and your base Armor Class is increased by 1.";
             case ORC:
                 return "As an Orc, you regenerate health whenever you eat, based on the quality of the food item you ate.";
             case DRAGONBORN:
-                return "As a Dragonborn, you are resistant to Fire damage, and began your quest with a Wand of Firebolt.";
+                return "As a Dragonborn, you are Resistant to Fire damage, and began your quest with a Wand of Dragon's Breath.";
+            case LYCAN:
+                return String.format("As a Lycan, whenever your HP drops below 50%%, you gain Beast Form for %d turns.", player.proficiencyBonus()*2);
             default:
                 throw new IllegalStateException(player.playerAncestry().toString());
         }

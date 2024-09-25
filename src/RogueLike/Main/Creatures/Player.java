@@ -3,6 +3,7 @@ package RogueLike.Main.Creatures;
 import RogueLike.Main.Enums.PlayerAncestry;
 import RogueLike.Main.Enums.PlayerClass;
 import RogueLike.Main.World;
+import RogueLike.Main.Damage.Damage;
 
 import java.awt.*;
 
@@ -43,5 +44,13 @@ public class Player extends Creature {
 			bonus += proficiencyBonus();
 		}
 		return bonus;
+	}
+	
+	@Override
+	public void damage(Damage damage, String causeOfDeath) {
+		super.damage(damage, causeOfDeath);
+		if(playerAncestry == PlayerAncestry.LYCAN && this.hp() <= (this.maxHP()/2)) {
+			this.addEffect(this.factory().effectFactory.beastForm(2*this.proficiencyBonus()));
+		}
 	}
 }

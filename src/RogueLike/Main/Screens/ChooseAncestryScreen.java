@@ -23,6 +23,8 @@ public class ChooseAncestryScreen implements Screen{
 	public char orcRight = '<';
 	public char dragonbornLeft = '>';
 	public char dragonbornRight = '<';
+	public char lycanLeft = '>';
+	public char lycanRight = '<';
 	
 	public char borderVertical = 186;
 	public char borderHorizontal = 205;
@@ -44,6 +46,8 @@ public class ChooseAncestryScreen implements Screen{
 			orcRight = ' ';
 			dragonbornLeft = ' ';
 			dragonbornRight = ' ';
+			lycanLeft = ' ';
+			lycanRight = ' ';
 		}else if(check == 1) {
 			humanLeft = ' ';
 			humanRight = ' ';
@@ -55,6 +59,8 @@ public class ChooseAncestryScreen implements Screen{
 			orcRight = ' ';
 			dragonbornLeft = ' ';
 			dragonbornRight = ' ';
+			lycanLeft = ' ';
+			lycanRight = ' ';
 		}else if(check == 2) {
 			humanLeft = ' ';
 			humanRight = ' ';
@@ -66,6 +72,8 @@ public class ChooseAncestryScreen implements Screen{
 			orcRight = ' ';
 			dragonbornLeft = ' ';
 			dragonbornRight = ' ';
+			lycanLeft = ' ';
+			lycanRight = ' ';
 		}else if(check == 3) {
 			humanLeft = ' ';
 			humanRight = ' ';
@@ -77,6 +85,8 @@ public class ChooseAncestryScreen implements Screen{
 			orcRight = '<';
 			dragonbornLeft = ' ';
 			dragonbornRight = ' ';
+			lycanLeft = ' ';
+			lycanRight = ' ';
 		}else if(check == 4) {
 			humanLeft = ' ';
 			humanRight = ' ';
@@ -88,6 +98,21 @@ public class ChooseAncestryScreen implements Screen{
 			orcRight = ' ';
 			dragonbornLeft = '>';
 			dragonbornRight = '<';
+			lycanLeft = ' ';
+			lycanRight = ' ';
+		}else if(check == 5) {
+			humanLeft = ' ';
+			humanRight = ' ';
+			elfLeft = ' ';
+			elfRight = ' ';
+			dwarfLeft = ' ';
+			dwarfRight = ' ';
+			orcLeft = ' ';
+			orcRight = ' ';
+			dragonbornLeft = ' ';
+			dragonbornRight = ' ';
+			lycanLeft = '>';
+			lycanRight = '<';
 		}
 	}
 
@@ -108,6 +133,8 @@ public class ChooseAncestryScreen implements Screen{
 		terminal.write(String.format("%c %c Orc %c        %c", borderVertical, orcLeft, orcRight, borderVertical), 5, y++);
 		terminal.write(String.format("%c                %c", borderVertical, borderVertical), 5, y++);
 		terminal.write(String.format("%c %c Dragonborn %c %c", borderVertical, dragonbornLeft, dragonbornRight, borderVertical), 5, y++);
+		terminal.write(String.format("%c                %c", borderVertical, borderVertical), 5, y++);
+		terminal.write(String.format("%c %c Lycan %c      %c", borderVertical, lycanLeft, lycanRight, borderVertical), 5, y++);
 		terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 5, y++);
 		
 		y = 2;
@@ -163,7 +190,7 @@ public class ChooseAncestryScreen implements Screen{
 			terminal.write("you eat food. The recovered HP increases based on", 31, y+=1);
 			terminal.write("the quality of the consumed food item.", 31, y+=1);
 			y++;
-		}else  if(check == 4) {
+		}else if(check == 4) {
 			terminal.write("+||+ Dragonborn +||+", 26, y+=4);
 			y++;
 			terminal.write("One or more of your parents was a dragonborn, or was", 31, y+=1);
@@ -176,6 +203,19 @@ public class ChooseAncestryScreen implements Screen{
 			terminal.write("You are resistant to Fire damage, and begin", 31, y+=1);
 			terminal.write("your adventure with a Wand of Dragon's Breath.", 31, y+=1);
 			y++;
+		}else if(check == 5) {
+			terminal.write("+||+ Lycan +||+", 26, y+=4);
+			y++;
+			terminal.write("One or more of your parents was a lycan, or you were", 31, y+=1);
+			terminal.write("born on the night of the harvest moon. You are able to", 31, y+=1);
+			terminal.write("shift between your lycan and werewolf forms at will.", 31, y+=1);
+			y++;
+			y++;
+			terminal.write("+||+ Ancestry Trait: Wild Fury +||+", 26, y+=1);
+			y++;
+			terminal.write("Whenever you drop below 50% of your maximum HP,", 31, y+=1);
+			terminal.write("you gain the Beast Form effect for a short duration.", 31, y+=1);
+			y++;
 		}
 
 		terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 40);
@@ -186,14 +226,14 @@ public class ChooseAncestryScreen implements Screen{
 		switch(key.getKeyCode()) {
 		case KeybindManager.navigateMenuUp:
 			if(check == 0) {
-				check = 4;
+				check = 5;
 			}else{
 				check--;
 			}
 			return this;
 			
 		case KeybindManager.navigateMenuDown:
-			if(check == 4) {
+			if(check == 5) {
 				check = 0;
 			}else{
 				check++;
@@ -211,6 +251,8 @@ public class ChooseAncestryScreen implements Screen{
 				return new ChooseClassScreen(PlayerAncestry.ORC);
 			}else if(check == 4) {
 				return new ChooseClassScreen(PlayerAncestry.DRAGONBORN);
+			}else if(check == 5) {
+				return new ChooseClassScreen(PlayerAncestry.LYCAN);
 			}
 			
 		case KeybindManager.navigateMenuBack: return new MainMenuScreen();
