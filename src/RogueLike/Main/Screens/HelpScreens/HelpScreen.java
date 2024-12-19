@@ -240,7 +240,7 @@ public class HelpScreen implements Screen{
 			}else if(check == 2) {
 				return new HelpMenuControlsScreen(fromMenu);
 			}else if(check == 3) {
-				return this; //TODO Help: Items
+				return new HelpItemsScreen(fromMenu);
 			}else if(check == 4) {
 				return this; //TODO Help: Inventory & Equipment
 			}else if(check == 5) {
