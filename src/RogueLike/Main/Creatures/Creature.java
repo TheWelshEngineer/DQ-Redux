@@ -14,6 +14,8 @@ import RogueLike.Main.Enums.PlayerAncestry;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Screens.SpellTargetingScreen;
+import RogueLike.Main.Screens.TerminalChar;
+import RogueLike.Main.Screens.TerminalText;
 import RogueLike.Main.Screens.SpellSelectScreen;
 import RogueLike.Main.Screens.GameplayScreen;
 import RogueLike.Main.Screens.MerchantScreen;
@@ -172,6 +174,7 @@ public class Creature implements Cloneable{
 	public void damage(Damage damage, String causeOfDeath) {
 		int amount = damage.amount();
 		int amountTemp = damage.amount();
+		TerminalText newNotificaion = new TerminalText();
 		boolean applyStatus = true;
 
 		if (amount < 0) amount = 0;
@@ -193,17 +196,29 @@ public class Creature implements Cloneable{
 		if(amount > 0) {
 			setHPCooldown(5);
 		}
-		if(!damage.isSilent && amount > 0) {
-			if(this.isPlayer()) {
-				this.notify("You take %d %s damage.", amount, damage.type.toString().toLowerCase());
-			}else {
-				this.doAction("take %d %s damage", amount, damage.type.toString().toLowerCase());
+		
+		if(!damage.isSilent) {
+			if(amount > 0) {
+				if(this.isPlayer()) {
+					newNotificaion.append("You take ");
+				} else {
+					newNotificaion.append("take ");
+				}
+				newNotificaion.append(Integer.toString(amount), damage.type.getColor());
+				newNotificaion.append(" ");
+			}else if (amount == 0) {
+				if(this.isPlayer()) {
+					newNotificaion.append("You ignore the ");
+				} else {
+					newNotificaion.append("seem to ignore the ");
+				}
 			}
-		}else if (!damage.isSilent && amount == 0) {
+			newNotificaion.append(damage.type.toString(), damage.type.getColor());
+			newNotificaion.append(" damage", damage.type.getColor());
 			if(this.isPlayer()) {
-				this.notify("You ignore the %s damage.", damage.type.toString().toLowerCase());
-			}else {
-				this.doAction("seem to ignore the %s damage", damage.type.toString().toLowerCase());
+				this.notify(newNotificaion);
+			} else {
+				this.doAction(newNotificaion);
 			}
 		}
 
@@ -216,7 +231,7 @@ public class Creature implements Cloneable{
 
 		if(hp <= 0 && !isDead) {
 			setIsDead(true);
-			doActionWhenDead("die");
+			doActionWhenDead(new TerminalText("die"));
 			if(lastHit != null) {
 				lastHit.gainXP(this);
 			}
@@ -233,10 +248,17 @@ public class Creature implements Cloneable{
 
 		hp += amount;
 		if(!isSilent) {
+			TerminalText newNotificaion = new TerminalText();
 			if(this.isPlayer()) {
-				this.notify("You recover %d health.", amount);
+				newNotificaion.append("You recover ");
+				newNotificaion.append(Integer.toString(amount), ExtendedAsciiPanel.green);
+				newNotificaion.append(" health");
+				this.notify(newNotificaion);
 			}else {
-				this.doAction("recover %d health", amount);
+				newNotificaion.append("recover ");
+				newNotificaion.append(Integer.toString(amount), ExtendedAsciiPanel.green);
+				newNotificaion.append(" health");
+				this.doAction(newNotificaion);
 			}
 		}
 
@@ -274,7 +296,7 @@ public class Creature implements Cloneable{
 		}
 
 		if (this.isPlayer() && !isSilent) {
-			this.notify("You recover %d mana.", amount);
+			this.notify("You recover %d mana", amount);
 		}
 	}
 
@@ -287,7 +309,7 @@ public class Creature implements Cloneable{
 		}
 
 		if (this.isPlayer() && !isSilent) {
-			this.notify("You lose %d mana.", amount);
+			this.notify("You lose %d mana", amount);
 		}
 	}
 
@@ -683,12 +705,11 @@ public class Creature implements Cloneable{
 
 	public void modifyXP(int amount) {
 		xp += amount;
-		notify("You %s %d XP.", amount < 0 ? "lose" : "gain", amount);
-
+		notify("You %s %d XP", amount < 0 ? "lose" : "gain", amount);
 		while(xp >= xpToNextLevel()) {
 			level++;
 			xp = 0;
-			doAction("advance to level %d", level);
+			doAction(new TerminalText(String.format("advance to level %d", level)));
 			ai.onGainLevel();
 			heal(level * 2);
 		}
@@ -696,17 +717,17 @@ public class Creature implements Cloneable{
 
 	public void gainStrength() {
 		strength += 1;
-		doAction("become stronger");
+		doAction(new TerminalText("become stronger"));
 	}
 
 	public void gainDexterity() {
 		dexterity += 1;
-		doAction("become more agile");
+		doAction(new TerminalText("become more agile"));
 	}
 
 	public void gainIntelligence() {
 		intelligence += 1;
-		doAction("become more aware");
+		doAction(new TerminalText("become more aware"));
 	}
 
 	private int hpScaleAmount;
@@ -760,14 +781,14 @@ public class Creature implements Cloneable{
 		}
 		maxHP += hpScaleAmount+bonus;
 		hp += hpScaleAmount+bonus;
-		//doAction("look healthier");
+		//doAction(new TerminalText("look healthier"));
 	}
 
 	public void gainMaxMana() {
 		int bonus = Math.max(0, manaGainedOnLevelUp());
 		maxMana += manaScaleAmount+bonus;
 		mana += manaScaleAmount+bonus;
-		//doAction("look healthier");
+		//doAction(new TerminalText("look healthier"));
 	}
 
 	public int manaGainedOnLevelUp() {
@@ -810,7 +831,7 @@ public class Creature implements Cloneable{
 
 	/*public void gainAttackValue() {
 		attackValue += 1;
-		doAction("look stronger");
+		doAction(new TerminalText("look stronger"));
 	}
 
 	public void gainAttackValueOrc() {
@@ -827,12 +848,12 @@ public class Creature implements Cloneable{
 
 	public void gainDefenseValue() {
 		defenseValue += 1;
-		doAction("look tougher");
+		doAction(new TerminalText("look tougher"));
 	}*/
 
 	public void gainVision() {
 		visionRadius += 1;
-		doAction("look more alert");
+		doAction(new TerminalText("look more alert"));
 	}
 
 	private int level;
@@ -1311,19 +1332,19 @@ public class Creature implements Cloneable{
 	}
 
 	public void learnName(Item item) {
-		notify("The "+item.getAppearance()+" is a "+item.name()+"!");
+		notify(new TerminalText("The "+item.getAppearance()+" is a "+nameOf(item)+"!"));
 		item.setIsIdentified(true);
-		ai.setName(item, item.name());
+		ai.setName(item, nameOf(item));
 	}
 
 	public void learnNameQuiet(Item item) {
 		item.setIsIdentified(true);
-		ai.setName(item, item.name());
+		ai.setName(item, nameOf(item));
 	}
 
 	public void dig(int wx, int wy, int wz) {
 		modifyFood(-10);
-		doAction("dig through the wall");
+		doAction(new TerminalText("dig through the wall"));
 		world.dig(wx, wy, wz);
 
 	}
@@ -1338,15 +1359,15 @@ public class Creature implements Cloneable{
 		//}
 		if((affectedBy(Effect.paralysed)) && isPlayer()) {
 			if((int)(Math.random()*10) < 8) {
-				doAction("struggle to overcome paralysis!");
+				doAction(new TerminalText("struggle to overcome paralysis!"));
 				return;
 			}else {
-				doAction("move with difficulty");
+				doAction(new TerminalText("move with difficulty"));
 			}
 		}
 
 		if((affectedBy(Effect.frozen)) && isPlayer()) {
-			doAction("struggle to break the frost!");
+			doAction(new TerminalText("struggle to break the frost!"));
 			return;
 
 		}
@@ -1360,20 +1381,26 @@ public class Creature implements Cloneable{
 
 		if(mz == -1) {
 			if(tile == Tile.STAIRS_DOWN) {
-				doAction("walk up the stairs to depth %d", z+mz+1);
+				TerminalText newNotification = new TerminalText();
+				newNotification.append("walk up the stairs to depth ");
+				newNotification.append(Integer.toString(z+mz+1));
+				doAction(newNotification);
 			}
 			else {
-				doAction("can't find a way up here");
+				doAction(new TerminalText("can't find a way up here"));
 				return;
 			}
 		}
 		else if(mz == 1) {
 			if(tile == Tile.STAIRS_UP) {
-				doAction("walk down the stairs to depth %d", z+mz+1);
+				TerminalText newNotification = new TerminalText();
+				newNotification.append("walk up the stairs to depth ");
+				newNotification.append(Integer.toString(z+mz+1));
+				doAction(newNotification);
 			}else if(falling == true) {
 				
 			}else {
-				doAction("can't find a way down here");
+				doAction(new TerminalText("can't find a way down here"));
 				return;
 			}
 
@@ -1407,7 +1434,7 @@ public class Creature implements Cloneable{
 		setIsDisguised(false);
 		setName(defaultName());
 		changeColor(defaultColor());
-		doAction("reveal itself!");
+		doAction(new TerminalText("reveal itself!"));
 	}
 
 	public void hide() {
@@ -1539,9 +1566,13 @@ public class Creature implements Cloneable{
 
 		if(attackRoll >= other.armorClass() || attackRoll >= 20) {
 			//doAction("attack the %s for %d damage", other.name, damage.amount());
-			doAction("attack the %s", other.name);
+
+			TerminalText newNotification = new TerminalText();
+			newNotification.append("attack the ");
+			newNotification.append(other.name() + "(" + other.glyph() + ")", other.color());
+			doAction(newNotification);
 			if(attackRoll >= 20) {
-				notify("It's a critical hit!");
+				notify(new TerminalText("It's a critical hit!"));
 			}
 			//
 			
@@ -1589,13 +1620,17 @@ public class Creature implements Cloneable{
 
 			if(other.isAsleep() == true) {
 				other.setIsAsleep(false);
-				other.doAction("wake up");
+				other.doAction(new TerminalText("wake up"));
 			}
 			if(other.isDisguised() == true) {
 				other.reveal();
 			}
 		}else {
-			doAction("fail to hit the %s", other.name);
+
+			TerminalText newNotification = new TerminalText();
+			newNotification.append("fail to hit the ");
+			newNotification.append(other.name() + "(" + other.glyph() + ")", other.color());
+			doAction(newNotification);
 		}
 
 
@@ -1624,7 +1659,7 @@ public class Creature implements Cloneable{
 		wy = end.y;
 		Creature c = creature(wx, wy, wz);
 		if(item.curse() != null && (item == weapon || item == armor || item == shield || item == ring || item == ammunition || item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
-			notify("Your "+nameOf(item)+" is cursed! You can't let go of it!");
+			notify(new TerminalText("Your "+nameOf(item)+" is cursed! You can't let go of it!"));
 		}else {
 			Item item2 = (Item) item.clone();
 			item.modifyStackAmount(-1);
@@ -1647,7 +1682,7 @@ public class Creature implements Cloneable{
 			if(c != null && c.isContainer() == false && c.isDisguised() == false) {
 				throwAttack(item2, c);
 			}else {
-				doAction("throw a %s", nameOf(item2));
+				createItemNotification("throw a ", item2, true);
 			}
 
 			if(item2.quaffEffect() != null && c != null) {
@@ -1733,21 +1768,26 @@ public class Creature implements Cloneable{
 
 		if(attackRoll >= other.armorClass() || attackRoll >= 20) {
 			//doAction("throw a %s at the %s for %d damage", nameOf(item), other.name, damage.amount());
-			doAction("throw a %s at the %s", nameOf(item), other.name);
+			TerminalText newNotification = new TerminalText();
+			newNotification.append("throw a ");
+			newNotification.append(nameOf(item), item.color());
+			newNotification.append(" at the ");
+			newNotification.append(other.name + "(" + other.glyph() + ")", other.color());
+			doAction(newNotification);
 			if(attackRoll >= 20) {
-				notify("It's a critical hit!");
+				notify(new TerminalText("It's a critical hit!"));
 			}
 
 			other.setLastHit(this);
 			other.addEffect(item.quaffEffect());
-			other.damage(damage, String.format("Killed by a %s using a %s", this.name, item.name()));
+			other.damage(damage, String.format("Killed by a %s using a %s", this.name, nameOf(item)));
 			if(item.isSimple() && this.simpleWeaponsLevel() >= 3 && attackRoll >= 20) {
 				other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
 			}else if(item.isFinesse() && this.finesseWeaponsLevel() >= 3 && attackRoll >= 20) {
 				other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
 			}
 			if(this.affectedBy(Effect.electrocharged)) {
-				other.damage(electroDamage, String.format("Killed by a %s using a %s", this.name, item.name()));
+				other.damage(electroDamage, String.format("Killed by a %s using a %s", this.name, nameOf(item)));
 			}
 			if(other.hp > 0){
 				this.setLastTarget(other);
@@ -1770,13 +1810,16 @@ public class Creature implements Cloneable{
 			}
 			if(other.isAsleep() == true) {
 				other.setIsAsleep(false);
-				other.doAction("wake up");
+				other.doAction(new TerminalText("wake up"));
 			}
 			if(other.isDisguised() == true) {
 				other.reveal();
 			}
 		}else {
-			doAction("fail to hit the %s", other.name);
+			TerminalText newNotification = new TerminalText();
+			newNotification.append("fail to hit the ");
+			newNotification.append(other.name + "(" + other.glyph() + ")", other.color());
+			doAction(newNotification);
 		}
 
 		if(affectedBy(Effect.invisible) == true) {
@@ -1863,10 +1906,15 @@ public class Creature implements Cloneable{
 		Damage electroDamage = new Damage(electroAmount, false, DamageType.SHOCK, this.ai.factory.effectFactory, true);
 		
 		if(attackRoll >= other.armorClass() || attackRoll >= 20) {
-			//doAction("fire the %s at the %s for %d damage", nameOf(weapon), other.name, damage.amount());
-			doAction("fire the %s at the %s", nameOf(weapon), other.name);
+			//doAction("fire the %s at the %s for %d damage", weapon.name(), other.name, damage.amount());
+			TerminalText newNotification = new TerminalText();
+			newNotification.append("fire the ");
+			newNotification.append(weapon.name(), weapon.color());
+			newNotification.append(" at the ");
+			newNotification.append(other.name + "(" + other.glyph() + ")", other.color());
+			doAction(newNotification);
 			if(attackRoll >= 20) {
-				notify("It's a critical hit!");
+				notify(new TerminalText("It's a critical hit!"));
 			}
 
 			other.setLastHit(this);
@@ -1919,13 +1967,16 @@ public class Creature implements Cloneable{
 			}
 			if(other.isAsleep() == true) {
 				other.setIsAsleep(false);
-				other.doAction("wake up");
+				other.doAction(new TerminalText("wake up"));
 			}
 			if(other.isDisguised() == true) {
 				other.reveal();
 			}
 		}else {
-			doAction("fail to hit the %s", other.name);
+			TerminalText newNotification = new TerminalText();
+			newNotification.append("fail to hit the ");
+			newNotification.append(other.name + "(" + other.glyph() + ")", other.color());
+			doAction(newNotification);
 		}
 
 
@@ -1941,30 +1992,42 @@ public class Creature implements Cloneable{
 	public void pickup() {
 		Item item = world.item(x, y, z);	
 		if((inventory.isFull() && !item.isGold()) || item == null) {
-			doAction("grab fruitlessly at the ground");
+			doAction(new TerminalText("grab fruitlessly at the ground"));
 		}else if(item.isGold()){
 			this.modifyGold(item.currentGoldValue());
-			doAction(String.format("pick up %d gold", item.currentGoldValue()));
+			TerminalText newNotification = new TerminalText();
+			newNotification.append("pick up ");
+			newNotification.append(item.currentGoldValue() + " gold", ExtendedAsciiPanel.gold);
+			doAction(newNotification);
 			world.remove(item);
 		}else {
 			item.setOwner(this);
+			TerminalText newNotification = new TerminalText();
 			if(item.stackAmount() > 1) {
-				doAction(String.format("pick up %d %ss", item.stackAmount(), nameOf(item)));
+				newNotification.append("pick up ");
+				newNotification.append(Integer.toString(item.stackAmount()));
+				newNotification.append(" ");
+				newNotification.append(nameOf(item) + "s", item.color());
+				doAction(newNotification);
 			}else {
-				doAction("pick up a %s", nameOf(item));
+				createItemNotification("pick up a ", item, true);
 			}
 			world.remove(x, y, z);
-			if(nameOf(item) == item.name()) {
+			if(nameOf(item) == nameOf(item)) {
 				item.setIsIdentified(true);
 			}
 			inventory.add(item);
 			stackItems();
 			if (item.isThrownWeapon()){
 				if (item.getWasCreatureWepon() && this.weapon() == null && (item.getOwner().equals(this))) {
-					doAction("wield a "+nameOf(item));
+
+					newNotification = new TerminalText();
+					newNotification.append("wield a ");
+					newNotification.append(nameOf(item), item.color());
+					doAction(newNotification);
 					this.equip(item, false);
 					//weapon = item;
-					//weaponName = item.name();
+					//weaponName = nameOf(item);
 				}
 				else {
 					item.setWasCreatureWepon(false);
@@ -2014,22 +2077,26 @@ public class Creature implements Cloneable{
 
 	public void drop(Item item, boolean silent){
 		if((item == weapon || item == armor || item == shield || item == ring || item == ammunition || item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6) && item.curse() != null) {
-			notify("The "+nameOf(item)+" is cursed! You can't let go of it!");
+			notify(new TerminalText("The "+nameOf(item)+" is cursed! You can't let go of it!"));
 		}else if (world.addAtEmptySpace(item, x, y, z)){
 			if(isDead) {
-				doActionWhenDead("drop a " + nameOf(item));
+				TerminalText newNotification = new TerminalText();
+				newNotification.append("drop a ");
+				newNotification.append(nameOf(item), item.color());
+				doActionWhenDead(newNotification);
 			}
-			if(!silent) {
-				if(item.stackAmount() > 1) {
-					doAction(String.format("drops %d %ss", item.stackAmount(), nameOf(item)));
-				}else {
-					doAction("drop a " + nameOf(item));
-				}
+			else if(!silent) {
+				TerminalText newNotification = new TerminalText();
+				newNotification.append(item.stackAmount() > 1 ? "drops " : "drop ");
+				newNotification.append(Integer.toString(item.stackAmount()));
+				newNotification.append(" " + nameOf(item), item.color());
+				newNotification.append(item.stackAmount() > 1 ? "s" : "", item.color());
+				doAction(newNotification);
 			}
 			unequip(item, silent);
 			inventory.remove(item);
 		} else {
-			notify("There's nowhere to drop the %s.", nameOf(item));
+			createItemNotification("There's nowhere to drop the ", item, true);
 		}
 	}
 
@@ -2044,40 +2111,38 @@ public class Creature implements Cloneable{
 		world.addAtEmptySpace(item, wx, wy, wz);
 	}
 
+	//TODO: Look into making items able to remove themselves as this would help with readability 
+	// ine idea is to have the type be a object that can be looked for (like an enum)
 	public void unequip(Item item, boolean silent) {
 		if(item == null) {
 			return;
 		}//else
-		if(item == weapon) {
-			if(!silent) {
-				doAction("put away a "+nameOf(item));
+		if(!silent) {
+			TerminalText newNotification = new TerminalText();
+			if(item == weapon) {
+				newNotification.append("put away a ");
+				weapon = null;
+				//weaponName = "None";
+			}else if(item == shield) {
+				newNotification.append("put away a ");
+				shield = null;
+				//shieldName = "None";
+			}else if(item == ammunition) {
+				newNotification.append("put away a ");
+				ammunition = null;
+				//ringName = "None";
+			}else if(item == armor) {
+				newNotification.append("remove a ");
+				armor = null;
+				//armorName = "None";
+			}else if(item == ring) {
+				newNotification.append("remove a ");
+				ring = null;
+				//ringName = "None";
 			}
-			weapon = null;
-			//weaponName = "None";
-		}else if(item == armor) {
-			if(!silent) {
-				doAction("remove a "+nameOf(item));
-			}
-			armor = null;
-			//armorName = "None";
-		}else if(item == shield) {
-			if(!silent) {
-				doAction("put away a "+nameOf(item));
-			}
-			shield = null;
-			//shieldName = "None";
-		}else if(item == ring) {
-			if(!silent) {
-				doAction("remove a "+nameOf(item));
-			}
-			ring = null;
-			//ringName = "None";
-		}else if(item == ammunition) {
-			if(!silent) {
-				doAction("put away a "+nameOf(item));
-			}
-			ammunition = null;
-			//ringName = "None";
+			newNotification.append(nameOf(item), item.color());
+			doAction(newNotification);
+			
 		}
 	}
 
@@ -2088,45 +2153,45 @@ public class Creature implements Cloneable{
 		if(item.isWeapon()) {
 			if(item == weapon) {
 				if(weapon.curse() != null) {
-					notify("Your "+nameOf(weapon)+" is cursed! You can't let go of it!");
+					notify(new TerminalText("Your "+nameOf(weapon)+" is cursed! You can't let go of it!"));
 				}else {
 					unequip(weapon, silent);
 				}
 
 			}else {
 				if(weapon != null && weapon.curse() != null) {
-					notify("Your "+nameOf(weapon)+" is cursed! You can't let go of it!");
+					notify(new TerminalText("Your "+nameOf(weapon)+" is cursed! You can't let go of it!"));
 				}else if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
-					notify("You aren't skilled enough to use the "+nameOf(item)+".");
+					notify(new TerminalText("You aren't skilled enough to use the "+nameOf(item)));
 				}else if(item.isTwoHanded() && shield != null){
-					notify("The "+nameOf(item)+" is too unwieldy to use alongside your "+nameOf(shield)+"!");
+					notify(new TerminalText("The "+nameOf(item)+" is too unwieldy to use alongside your "+nameOf(shield)+"!"));
 				}else {
 					if(item.curse() != null) {
 						if(item.isCurseKnown()) {
-							notify("The "+nameOf(item)+" is cursed!");
-							notify("It's probably best not to equip it.");
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
+							notify(new TerminalText("It's probably best not to equip it"));
 						}else if(this.intelligenceRoll() > 15) {
-							notify("Your senses warn you of a foul magic lurking within the "+nameOf(item)+".");
-							notify("The "+nameOf(item)+" is cursed!");
+							notify(new TerminalText("Your senses warn you of a foul magic lurking within the "+nameOf(item)));
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
 							item.setCurseKnown(true);
 						}else {
 							unequip(weapon, silent);
 							if(!silent) {
-								doAction("wield a "+nameOf(item));
+								createItemNotification("wield a ", item, true);
 							}
 							weapon = item;
-							weaponName = item.name();
-							notify("As you wield the "+nameOf(item)+", a foul magic grips you!");
-							notify("The "+nameOf(item)+" is cursed!");
+							weaponName = nameOf(item);
+							notify(new TerminalText("As you wield the "+nameOf(item)+", a foul magic grips you!"));
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
 							item.setCurseKnown(true);
 						}
 					}else {
 						unequip(weapon, silent);
 						if(!silent) {
-							doAction("wield a "+nameOf(item));
+							createItemNotification("wield a ", item, true);
 						}
 						weapon = item;
-						weaponName = item.name();
+						weaponName = nameOf(item);
 						item.setWasCreatureWepon(true);
 					}
 
@@ -2138,43 +2203,43 @@ public class Creature implements Cloneable{
 		else if(item.isArmor()) {
 			if(item == armor) {
 				if(armor.curse() != null) {
-					notify("Your "+nameOf(armor)+" is cursed! You can't take it off!");
+					notify(new TerminalText("Your "+nameOf(armor)+" is cursed! You can't take it off!"));
 				}else {
 					unequip(armor, silent);
 				}
 
 			}else {
 				if(armor != null && armor.curse() != null) {
-					notify("Your "+nameOf(armor)+" is cursed! You can't take it off!");
+					notify(new TerminalText("Your "+nameOf(armor)+" is cursed! You can't take it off!"));
 				}else if((item.isMediumArmor() && this.armorTrainingLevel() < 1) || (item.isHeavyArmor() && this.armorTrainingLevel() < 2)) {
-					notify("You aren't skilled enough to use the "+nameOf(item)+".");
+					notify(new TerminalText("You aren't skilled enough to use the "+nameOf(item)));
 				}else {
 					if(item.curse() != null) {
 						if(item.isCurseKnown()) {
-							notify("The "+nameOf(item)+" is cursed!");
-							notify("It's probably best not to equip it.");
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
+							notify(new TerminalText("It's probably best not to equip it"));
 						}else if(this.intelligenceRoll() > 15) {
-							notify("Your senses warn you of a foul magic lurking within the "+nameOf(item)+".");
-							notify("The "+nameOf(item)+" is cursed!");
+							notify(new TerminalText("Your senses warn you of a foul magic lurking within the "+nameOf(item)));
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
 							item.setCurseKnown(true);
 						}else {
 							unequip(armor, silent);
 							if(!silent) {
-								doAction("put on a "+nameOf(item));
+								createItemNotification("put on a ", item, true);
 							}
 							armor = item;
-							armorName = item.name();
-							notify("As you put on the "+nameOf(item)+", a foul magic grips you!");
-							notify("The "+nameOf(item)+" is cursed!");
+							armorName = nameOf(item);
+							notify(new TerminalText("As you put on the "+nameOf(item)+", a foul magic grips you!"));
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
 							item.setCurseKnown(true);
 						}
 					}else {
 						unequip(armor, silent);
 						if(!silent) {
-							doAction("put on a "+nameOf(item));
+							createItemNotification("put on a ", item, true);
 						}
 						armor = item;
-						armorName = item.name();
+						armorName = nameOf(item);
 					}
 
 				}
@@ -2184,45 +2249,45 @@ public class Creature implements Cloneable{
 		}else if(item.isShield()) {
 			if(item == shield) {
 				if(shield.curse() != null) {
-					notify("Your "+nameOf(shield)+" is cursed! You can't put it down!");
+					notify(new TerminalText("Your "+nameOf(shield)+" is cursed! You can't put it down!"));
 				}else {
 					unequip(shield, silent);
 				}
 
 			}else {
 				if(shield != null && shield.curse() != null) {
-					notify("Your "+nameOf(shield)+" is cursed! You can't put it down!");
+					notify(new TerminalText("Your "+nameOf(shield)+" is cursed! You can't put it down!"));
 				}else if(((this.armorTrainingLevel() < 1) || (item.isTowerShield() && this.armorTrainingLevel() < 2))) {
-					notify("You aren't skilled enough to use the "+nameOf(item)+".");
+					notify(new TerminalText("You aren't skilled enough to use the "+nameOf(item)));
 				}else if(weapon != null && weapon.isTwoHanded()){
-					notify("The "+nameOf(item)+" is too unwieldy to use alongside your "+nameOf(weapon)+"!");
+					notify(new TerminalText("The "+nameOf(item)+" is too unwieldy to use alongside your "+nameOf(weapon)+"!"));
 				}else {
 					if(item.curse() != null) {
 						if(item.isCurseKnown()) {
-							notify("The "+nameOf(item)+" is cursed!");
-							notify("It's probably best not to equip it.");
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
+							notify(new TerminalText("It's probably best not to equip it"));
 						}else if(this.intelligenceRoll() > 15) {
-							notify("Your senses warn you of a foul magic lurking within the "+nameOf(item)+".");
-							notify("The "+nameOf(item)+" is cursed!");
+							notify(new TerminalText("Your senses warn you of a foul magic lurking within the "+nameOf(item)));
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
 							item.setCurseKnown(true);
 						}else {
 							unequip(shield, silent);
 							if(!silent) {
-								doAction("ready a "+nameOf(item));
+								createItemNotification("ready a ", item, true);
 							}
 							shield = item;
-							shieldName = item.name();
-							notify("As you ready the "+nameOf(item)+", a foul magic grips you!");
-							notify("The "+nameOf(item)+" is cursed!");
+							shieldName = nameOf(item);
+							notify(new TerminalText("As you ready the "+nameOf(item)+", a foul magic grips you!"));
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
 							item.setCurseKnown(true);
 						}
 					}else {
 						unequip(shield, silent);
 						if(!silent) {
-							doAction("ready a "+nameOf(item));
+							createItemNotification("ready a ", item, true);
 						}
 						shield = item;
-						shieldName = item.name();
+						shieldName = nameOf(item);
 					}
 
 				}
@@ -2232,41 +2297,41 @@ public class Creature implements Cloneable{
 		}else if(item.isRing()) {
 			if(item == ring) {
 				if(ring.curse() != null) {
-					notify("Your "+nameOf(ring)+" is cursed! You can't take it off!");
+					notify(new TerminalText("Your "+nameOf(ring)+" is cursed! You can't take it off!"));
 				}else {
 					unequip(ring, silent);
 				}
 
 			}else {
 				if(ring != null && ring.curse() != null) {
-					notify("Your "+nameOf(ring)+" is cursed! You can't take it off!");
+					notify(new TerminalText("Your "+nameOf(ring)+" is cursed! You can't take it off!"));
 				}else {
 					if(item.curse() != null) {
 						if(item.isCurseKnown()) {
-							notify("The "+nameOf(item)+" is cursed!");
-							notify("It's probably best not to equip it.");
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
+							notify(new TerminalText("It's probably best not to equip it"));
 						}else if(this.intelligenceRoll() > 15) {
-							notify("Your senses warn you of a foul magic lurking within the "+nameOf(item)+".");
-							notify("The "+nameOf(item)+" is cursed!");
+							notify(new TerminalText("Your senses warn you of a foul magic lurking within the "+nameOf(item)+""));
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
 							item.setCurseKnown(true);
 						}else {
 							unequip(ring, silent);
 							if(!silent) {
-								doAction("put on a "+nameOf(item));
+								createItemNotification("put on a ", item, true);
 							}
 							ring = item;
-							ringName = item.name();
-							notify("As you put on the "+nameOf(item)+", a foul magic grips you!");
-							notify("The "+nameOf(item)+" is cursed!");
+							ringName = nameOf(item);
+							notify(new TerminalText("As you put on the "+nameOf(item)+", a foul magic grips you!"));
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
 							item.setCurseKnown(true);
 						}
 					}else {
 						unequip(ring, silent);
 						if(!silent) {
-							doAction("put on a "+nameOf(item));
+							createItemNotification("put on a ", item, true);
 						}
 						ring = item;
-						ringName = item.name();
+						ringName = nameOf(item);
 					}
 
 				}
@@ -2275,41 +2340,41 @@ public class Creature implements Cloneable{
 		}else if(item.isAmmunition()) {
 			if(item == ammunition) {
 				if(ammunition.curse() != null) {
-					notify("Your "+nameOf(ammunition)+" is cursed! You can't take it off!");
+					notify(new TerminalText("Your "+nameOf(ammunition)+" is cursed! You can't take it off!"));
 				}else {
 					unequip(ammunition, silent);
 				}
 
 			}else {
 				if(ammunition != null && ammunition.curse() != null) {
-					notify("Your "+nameOf(ammunition)+" is cursed! You can't put it down!");
+					notify(new TerminalText("Your "+nameOf(ammunition)+" is cursed! You can't put it down!"));
 				}else {
 					if(item.curse() != null) {
 						if(item.isCurseKnown()) {
-							notify("The "+nameOf(item)+" is cursed!");
-							notify("It's probably best not to equip it.");
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
+							notify(new TerminalText("It's probably best not to equip it"));
 						}else if(this.intelligenceRoll() > 15) {
-							notify("Your senses warn you of a foul magic lurking within the "+nameOf(item)+".");
-							notify("The "+nameOf(item)+" is cursed!");
+							notify(new TerminalText("Your senses warn you of a foul magic lurking within the "+nameOf(item)));
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
 							item.setCurseKnown(true);
 						}else {
 							unequip(ammunition, silent);
 							if(!silent) {
-								doAction("ready a "+nameOf(item));
+								createItemNotification("ready a", item, true);
 							}
 							ammunition = item;
-							ammunitionName = item.name();
-							notify("As you ready the "+nameOf(item)+", a foul magic grips you!");
-							notify("The "+nameOf(item)+" is cursed!");
+							ammunitionName = nameOf(item);
+							notify(new TerminalText("As you ready the "+nameOf(item)+", a foul magic grips you!"));
+							notify(new TerminalText("The "+nameOf(item)+" is cursed!"));
 							item.setCurseKnown(true);
 						}
 					}else {
 						unequip(ammunition, silent);
 						if(!silent) {
-							doAction("ready a "+nameOf(item));
+							createItemNotification("ready a", item, true);
 						}
 						ammunition = item;
-						ammunitionName = item.name();
+						ammunitionName = nameOf(item);
 					}
 
 				}
@@ -2669,29 +2734,28 @@ public class Creature implements Cloneable{
 	}
 
 	public void triggerTrap(Item item) {
-		doAction("trigger a trap!");
+		doAction(new TerminalText("trigger a trap!"));
 		addEffect(item.quaffEffect());
 		world.remove(item);
 	}
 
 	public void quaff(Item item) {
-		doAction("quaff a "+nameOf(item));
-		//
-		if(nameOf(item) != item.name()) {
+
+		createItemNotification("quaff a ", item, true);
+		if(nameOf(item) != nameOf(item)) {
 			learnName(item);
 		}
-		//
 		consume(item);
 	}
 
 	public void eat(Item item) {
-		doAction("eat a "+nameOf(item));
+		createItemNotification("eat a ", item, true);
 		consume(item);
 	}
 
 	private void consume(Item item) {
 		if(item.foodValue() < 0) {
-			notify("Gross!");
+			notify(new TerminalText("Gross!"));
 		}
 		addEffect(item.quaffEffect());
 		modifyFood(item.foodValue());
@@ -2705,7 +2769,7 @@ public class Creature implements Cloneable{
 				effectChance += this.proficiencyBonus();
 			}
 			if(effectChance < 16) {
-				notify("That food tasted.. strange.");
+				notify(new TerminalText("That food tasted.. strange"));
 				this.addEffect((Effect)this.ai().factory.effectFactory.corpseEffect().clone());
 			}
 		}
@@ -2805,7 +2869,7 @@ public class Creature implements Cloneable{
 		if(food > maxFood) {
 			//maxFood = maxFood + food / 2;
 			food = maxFood;
-			notify("You can't believe you can eat that much!");
+			notify(new TerminalText("You can't believe you can eat that much!"));
 			Damage overeatDamage = new Damage(2, false, DamageType.TRUE, factory().effectFactory, false);
 			damage(overeatDamage, "Killed by overeating");
 
@@ -2815,7 +2879,7 @@ public class Creature implements Cloneable{
 			}
 			if((this.fortitudeLevel() >= 1 && foodTimer <= 0) || (this.fortitudeLevel() < 1)) {
 				foodTimer = this.proficiencyBonus();
-				notify("You are starving!");
+				notify(new TerminalText("You are starving!"));
 				food = 0;
 				Damage starveDamage = new Damage((int)(maxHP / 10), false, DamageType.TRUE, factory().effectFactory, false);
 				damage(starveDamage, "Starved to death");
@@ -2875,25 +2939,25 @@ public class Creature implements Cloneable{
 	public void applyCurses() {
 		if(weapon != null && weapon.curse() != null) {
 			if(weapon.curse().checkActivation(-(weapon.upgradeLevel()*this.intelligenceModifier()))) {
-				this.notify("The curse within your weapon takes hold!");
+				this.notify(new TerminalText("The curse within your weapon takes hold!"));
 				weapon.curse().applyToCreature(this);
 			}
 		}
 		if(armor != null && armor.curse() != null) {
 			if(armor.curse().checkActivation(-(armor.upgradeLevel()*this.intelligenceModifier()))) {
-				this.notify("The curse within your armor takes hold!");
+				this.notify(new TerminalText("The curse within your armor takes hold!"));
 				armor.curse().applyToCreature(this);
 			}
 		}
 		if(shield != null && shield.curse() != null) {
 			if(shield.curse().checkActivation(-(shield.upgradeLevel()*this.intelligenceModifier()))) {
-				this.notify("The curse within your shield takes hold!");
+				this.notify(new TerminalText("The curse within your shield takes hold!"));
 				shield.curse().applyToCreature(this);
 			}
 		}
 		if(ring != null && ring.curse() != null) {
 			if(ring.curse().checkActivation(-(ring.upgradeLevel()*this.intelligenceModifier()))) {
-				this.notify("The curse within your ring takes hold!");
+				this.notify(new TerminalText("The curse within your ring takes hold!"));
 				ring.curse().applyToCreature(this);
 			}
 		}
@@ -2958,7 +3022,7 @@ public class Creature implements Cloneable{
 		//modifyFood(-1);
 		//temp
 		//if(hp <= 0) {
-		//doAction("die");
+		//doAction(new TerminalText("die"));
 		//if(lastHit != null) {
 		//lastHit.gainXP(this);
 		//}
@@ -2985,7 +3049,7 @@ public class Creature implements Cloneable{
 
 
 		if(ammunition != null && ammunition.ammunitionAmount() < 1) {
-			notify("Your "+ammunition.name()+" is empty!");
+			notify(new TerminalText("Your "+ammunition.name()+" is empty!"));
 			getRidOf(ammunition, true);
 		}else {
 
@@ -3037,50 +3101,71 @@ public class Creature implements Cloneable{
 		return world.tile(wx, wy, wz).isGround() && !world.tile(wx, wy, wz).isBars() && world.creature(wx, wy, wz) == null;
 	}
 
+	public void notify(TerminalText message, Object ... params) {
+		ai.onNotify(message);
+	}
+	
+	//TODO: Remove safely in favour of TerminalText
 	public void notify(String message, Object ... params) {
-		ai.onNotify(String.format(message, params));
+		ai.onNotify(new TerminalText(String.format(message, params)));
 	}
 
-	public void doAction(String message, Object ... params) {
+	public void doAction(TerminalText message) {
 		if(!isDead) {
+			TerminalText notification = new TerminalText();
 			for(Creature other : getCreaturesWhoSeeMe()) {
 				if(other == this) {
-					other.notify("You " + message + ".", params);
+					notification = new TerminalText();
+					notification.append("You ", this.defaultColor());
+					notification.append(message);
+					notification.append(".");
+					other.notify(notification);//"You " + message + ".", params);
 				}else {
-					other.notify(String.format("The %s %s.", name, makeThirdPerson(message)), params);
+					notification = new TerminalText();
+					notification.append("The ");
+					notification.append(name + "(" + glyph() + ")" + " ", this.color());
+					TerminalText thirdperson = makeThirdPerson(message);
+					notification.append(thirdperson);
+					notification.append(".");
+					other.notify(notification); //String.format("The %s %s.", name, makeThirdPerson(message)), params);
 				}
 			}
 		}
 	}
-
-	public void doActionWhenDead(String message, Object ... params) {
-		for(Creature other : getCreaturesWhoSeeMe()) {
-			if(other == this) {
-				other.notify("You " + message + ".", params);
-			}else {
-				other.notify(String.format("The %s %s.", name, makeThirdPerson(message)), params);
-			}
+	
+	// Create a default notification for interacting with an item
+	// @param text is the initial text. Ex: "pick up a " 
+	// @param item is the item being interacted with. Ex: "pick up a " 
+	private void createItemNotification(String text, Item item, Boolean isAction) {
+		TerminalText newNotification = new TerminalText();
+		newNotification.append(text);
+		newNotification.append(nameOf(item), item.color());
+		if(isAction) {
+			doAction(newNotification); 
+		}
+		else { 
+			notify(newNotification);
 		}
 	}
 
-	public void doAction(Item item, String message, Object ... params) {
-		if(hp<1) {
-			return;
-		}
-
+	public void doActionWhenDead(TerminalText message) {
 		for(Creature other : getCreaturesWhoSeeMe()) {
+			TerminalText newNotificaion = new TerminalText();
 			if(other == this) {
-				other.notify("You " + message + ".", params);
+				newNotificaion.append("You ");
+				newNotificaion.append(message);
+				newNotificaion.append(".");
+				other.notify(newNotificaion);
 			}else {
-				other.notify(String.format("The %s %s.", name, makeThirdPerson(message)), params);
-			}
-			//other.learnName(item);
-			if(other.nameOf(item) != item.name()) {
-				other.learnName(item);
+				newNotificaion.append("The ");
+				newNotificaion.append(name + " ", color());
+				newNotificaion.append(makeThirdPerson(message));
+				newNotificaion.append(".");
+				other.notify(newNotificaion);
 			}
 		}
 	}
-
+	
 	private List<Creature> getCreaturesWhoSeeMe(){
 		List<Creature> others = new ArrayList<Creature>();
 		int r = 9;
@@ -3107,14 +3192,14 @@ public class Creature implements Cloneable{
 		Creature other = creature(x2, y2, z);
 
 		if(spell.manaCost() > mana) {
-			doAction("point and mutter to no avail...");
+			doAction(new TerminalText("point and mutter to no avail..."));
 			return;
 		}
 		//cast on creature
 		if(spell.castOnTile()) {
 			//Creature tileSpell = ai().factory.newTileSpell(this.z(), this, 0);
 			if(other != null) {
-				doAction("point and mutter at nothing in particular...");
+				doAction(new TerminalText("point and mutter at nothing in particular..."));
 				if(spell.manaCost() > 0) {
 					loseMana(spell.manaCost(), false);
 				}
@@ -3122,7 +3207,7 @@ public class Creature implements Cloneable{
 			}
 			if(item != null) {
 				if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
-					notify("The spell housed within the "+nameOf(item)+" is too complex to understand...");
+					notify(new TerminalText("The spell housed within the "+ nameOf(item) +" is too complex to understand..."));
 					return;
 				}
 			}
@@ -3138,14 +3223,14 @@ public class Creature implements Cloneable{
 				loseMana(spell.manaCost(), false);
 			}
 			if(item != null) {
-				if(item.isWand() && (this.nameOf(item) != item.name())) {
+				if(item.isWand() && (this.nameOf(item) != nameOf(item))) {
 					this.learnName(item);
 				}
 				if(item.isScroll()) {
-					if(this.nameOf(item) != item.name()) {
+					if(this.nameOf(item) != nameOf(item)) {
 						this.learnName(item);
 					}
-					notify("The magic of the "+nameOf(item)+" fades away!");
+					notify(new TerminalText("The magic of the "+ nameOf(item) +" fades away!"));
 					item.modifyStackAmount(-1);
 					if(item.stackAmount() <= 0 && (item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
 						if(item == quickslot_1) {
@@ -3170,7 +3255,7 @@ public class Creature implements Cloneable{
 
 		}else {
 			if(other == null || other.isContainer() == true || other.isDisguised() == true) {
-				doAction("point and mutter at nothing in particular...");
+				doAction(new TerminalText("point and mutter at nothing in particular..."));
 				if(spell.manaCost() > 0) {
 					loseMana(spell.manaCost(), false);
 				}
@@ -3178,7 +3263,7 @@ public class Creature implements Cloneable{
 			}
 			if(item != null) {
 				if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
-					notify("The spell housed within the "+nameOf(item)+" is too complex to understand...");
+					notify(new TerminalText("The spell housed within the "+nameOf(item)+" is too complex to understand..."));
 					return;
 				}
 			}
@@ -3189,14 +3274,14 @@ public class Creature implements Cloneable{
 				loseMana(spell.manaCost(), false);
 			}
 			if(item != null) {
-				if(item.isWand() && (this.nameOf(item) != item.name())) {
+				if(item.isWand() && (this.nameOf(item) != nameOf(item))) {
 					this.learnName(item);
 				}
 				if(item.isScroll()) {
-					if(this.nameOf(item) != item.name()) {
+					if(this.nameOf(item) != nameOf(item)) {
 						this.learnName(item);
 					}
-					notify("The magic of the "+nameOf(item)+" fades away!");
+					notify(new TerminalText("The magic of the "+ nameOf(item) + " fades away!"));
 					item.modifyStackAmount(-1);
 					if(item.stackAmount() <= 0 && (item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
 						if(item == quickslot_1) {
@@ -3225,17 +3310,17 @@ public class Creature implements Cloneable{
 	
 	public void learnSpell(Spell spell, Item item) {
 		if(this.spellbook().isSpellKnown(spell)) {
-			notify("You have already committed that spell to memory!");
+			notify(new TerminalText("You have already committed that spell to memory!"));
 		}else {
 			if((item.usesStrength() && this.strength() < item.strengthRequirement()) || (item.usesDexterity() && this.dexterity() < item.dexterityRequirement()) || (item.usesIntelligence() && this.intelligence() < item.intelligenceRequirement())) {
-				notify("The spellbook is too complex to understand...");
+				notify(new TerminalText("The spellbook is too complex to understand..."));
 			}else {
-				notify("You learn how to cast "+spell.name()+"!");
+				notify(new TerminalText("You learn how to cast "+spell.name()+"!"));
 				this.spellbook().add(spell);
-				if(this.nameOf(item) != item.name()) {
+				if(this.nameOf(item) != nameOf(item)) {
 					this.learnName(item);
 				}
-				this.notify("The magic of the "+this.nameOf(item)+" fades away!");
+				this.notify(new TerminalText("The magic of the "+ nameOf(item) +" fades away!"));
 				item.modifyStackAmount(-1);
 				if(item.stackAmount() <= 0 && (item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6)) {
 					if(item == quickslot_1) {
@@ -3257,18 +3342,24 @@ public class Creature implements Cloneable{
 		}
 	}
 
-	private String makeThirdPerson(String text) {
-		String[] words = text.split(" ");
-		words[0] = words[0] + "s";
-
-		StringBuilder builder = new StringBuilder();
-		for(String word : words) {
-			builder.append(" ");
-			builder.append(word);
-
+	private TerminalText makeThirdPerson(TerminalText text) {
+		TerminalText modifiedText = text;
+		List<TerminalChar> charas = modifiedText.terminalChars();
+		Boolean notFound = true;
+		int endOfWord = 0;
+		while(notFound && endOfWord <= charas.size()-1) {
+			if (charas.get(endOfWord).glyph == ' ') {
+				notFound = false;
+			} else {
+				endOfWord++;
+			}
 		}
-		return builder.toString().trim();
-
+		if(charas.get(endOfWord - 1).glyph != 's') {
+			Color fgColor = charas.get(endOfWord - 1).foreground;
+			Color bgColor = charas.get(endOfWord - 1).background;
+			charas.add(endOfWord, new TerminalChar('s', fgColor, bgColor));
+		}
+		return modifiedText;
 	}
 
 	public void search(int successChance, boolean passive) {
@@ -3283,9 +3374,9 @@ public class Creature implements Cloneable{
 				Effect sneak = (Effect)this.ai().factory.effectFactory.invisible(this.proficiencyBonus()).clone();
 				this.loseMana(this.proficiencyBonus()*2, false);
 				this.addEffect(sneak);
-				notify("You blend into the shadows.");
+				notify(new TerminalText("You blend into the shadows"));
 			}else {
-				notify("You don't have the energy to sneak..");
+				notify(new TerminalText("You don't have the energy to sneak"));
 			}
 		}
 		for (int ox = -searchRadius; ox < searchRadius+1; ox++){
@@ -3298,7 +3389,7 @@ public class Creature implements Cloneable{
 					Trap trap = (Trap) entity;
 					if(this.dexterityRoll()+bonus >= successChance) {
 						trap.reveal();
-						notify("You spotted a "+trap.name()+"!");
+						notify(new TerminalText("You spotted a "+trap.name()+"!"));
 						success++;
 					}
 				}
@@ -3308,7 +3399,7 @@ public class Creature implements Cloneable{
 			modifyFood(-10);
 		}
 		if(success == 0 && !passive) {
-			notify("You didn't spot anything.");
+			notify(new TerminalText("You didn't spot anything"));
 		}
 	}
 

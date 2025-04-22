@@ -10,6 +10,7 @@ import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Screens.TerminalText;
 
 public class MetalSlimeAI extends CreatureAI{
 	private Creature player;
@@ -88,7 +89,7 @@ public class MetalSlimeAI extends CreatureAI{
                     
                 }
             }
-            creature.doAction("split into slimelings!");
+            creature.doAction(new TerminalText("split into slimelings!"));
             Damage damage = new Damage(creature.hp(), true, DamageType.TRUE, factory.effectFactory, false);
             creature.damage(damage, "");
 		}
@@ -104,22 +105,22 @@ public class MetalSlimeAI extends CreatureAI{
 				}
 				if(playerStealthRoll+bonus < this.creature.dexterityRoll()) {
 					this.creature.wakeup();
-					creature.doAction("wake up!");
+					creature.doAction(new TerminalText("wake up!"));
 					
 				}
 			}else {
-				creature.doAction("snore gently");
+				creature.doAction(new TerminalText("snore gently"));
 				return;
 			}
 		}
 		if((creature.affectedBy(Effect.frozen))) {
-			creature.doAction("struggle to move!");
+			creature.doAction(new TerminalText("struggle to move!"));
 			return;
 
 		}else {
 			if((creature.affectedBy(Effect.paralysed))) {
 				creature.cureEffectOfType(Effect.paralysed);
-				creature.doAction("break free of paralysis!");
+				creature.doAction(new TerminalText("break free of paralysis!"));
 			}
 			if(!creature.canSee(player.x, player.y, player.z) || player.affectedBy(Effect.invisible)) {
 				turnsWithoutPlayer++;

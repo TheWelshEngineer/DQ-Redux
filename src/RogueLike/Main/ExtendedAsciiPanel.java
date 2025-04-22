@@ -135,8 +135,8 @@ public class ExtendedAsciiPanel extends JPanel {
     private int heightInCharacters;
     private int charWidth = 9;
     private int charHeight = 16;
-    private Color defaultBackgroundColor;
-    private Color defaultForegroundColor;
+    private static Color defaultBackgroundColor;
+    private static Color defaultForegroundColor;
     private int cursorX;
     private int cursorY;
     private BufferedImage glyphSprite;
@@ -238,7 +238,7 @@ public class ExtendedAsciiPanel extends JPanel {
      * Gets the default background color that is used when writing new text.
      * @return
      */
-    public Color getDefaultBackgroundColor() {
+    public static Color getDefaultBackgroundColor() {
         return defaultBackgroundColor;
     }
 
@@ -250,14 +250,14 @@ public class ExtendedAsciiPanel extends JPanel {
         if (defaultBackgroundColor == null)
             throw new NullPointerException("defaultBackgroundColor must not be null.");
 
-        this.defaultBackgroundColor = defaultBackgroundColor;
+        ExtendedAsciiPanel.defaultBackgroundColor = defaultBackgroundColor;
     }
 
     /**
      * Gets the default foreground color that is used when writing new text.
      * @return
      */
-    public Color getDefaultForegroundColor() {
+    public static Color getDefaultForegroundColor() {
         return defaultForegroundColor;
     }
 
@@ -269,7 +269,7 @@ public class ExtendedAsciiPanel extends JPanel {
         if (defaultForegroundColor == null)
             throw new NullPointerException("defaultForegroundColor must not be null.");
 
-        this.defaultForegroundColor = defaultForegroundColor;
+        ExtendedAsciiPanel.defaultForegroundColor = defaultForegroundColor;
     }
 
     /**
@@ -741,13 +741,17 @@ public class ExtendedAsciiPanel extends JPanel {
      * @param text       the TerminalText to write
      * @param x          the distance from the left to begin writing from
      * @param y          the distance from the top to begin writing from
-     * @return this for convenient chaining of method calls
+     * @return new Y offset if needed.
      */
-    public ExtendedAsciiPanel write(TerminalText text, int x, int y) {
+    public Integer write(TerminalText text, int x, int y) {
         for (TerminalChar c : text) {
+        	if (x >= widthInCharacters) {
+        		x = 5;
+        		y++;
+        	}
             write(c.glyph, x++, y, c.foreground, c.background);
         }
-        return this;
+        return y;
     }
 
     /**

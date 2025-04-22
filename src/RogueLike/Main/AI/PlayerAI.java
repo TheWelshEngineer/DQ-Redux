@@ -8,9 +8,9 @@ import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Tile;
 import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.World;
-import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
+import RogueLike.Main.Screens.TerminalText;
 
 public class PlayerAI extends CreatureAI{
 	
@@ -111,7 +111,7 @@ public class PlayerAI extends CreatureAI{
 		
 	}
 	
-	public void onNotify(String message) {
+	public void onNotify(TerminalText message) {
 		notificationsHandle.addNotification(message, world.turnNumber());
 	}
 	

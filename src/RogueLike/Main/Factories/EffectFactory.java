@@ -7,6 +7,7 @@ import RogueLike.Main.AoE.InstantiatedAoE;
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Entities.Trap;
+import RogueLike.Main.Screens.TerminalText;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Particle;
@@ -37,7 +38,7 @@ public class EffectFactory {
 	public Effect magicMissile(Creature reference) {
 		Effect missile = new Effect(1, null, true, reference, ' ', null){
 			public void start(Creature creature) {
-				creature.doAction("get hit with a magic missile!");
+				creature.doAction(new TerminalText("get hit with a magic missile!"));
 				creature.setLastHit(reference);
 				int critCheck = Dice.d20.roll()+reference.intelligenceModifier();
 				int damageAmount = Dice.d6.roll()+reference.intelligenceModifier();
@@ -71,7 +72,7 @@ public class EffectFactory {
 					double tempAmount = (ExtraMaths.diceRoll(1, 12));
 					int amount = (int) Math.round(tempAmount);
 					Damage damage = new Damage(amount, false, DamageType.PHYSICAL, getThis(), true);
-					creature.doAction("get crushed!");
+					creature.doAction(new TerminalText("get crushed!"));
 					creature.damage(damage, "Killed by kinetic energy");
 				}else {
 					int push = 0;
@@ -108,7 +109,7 @@ public class EffectFactory {
 							creature.moveBy(0, -1, 0, false);
 							push++;
 						}
-						creature.doAction("get thrown back!");
+						creature.doAction(new TerminalText("get thrown back!"));
 						int amount = 0;
 						for(int j = 0; j < push+1; j++) {
 							amount += Dice.d4.roll();
@@ -206,7 +207,7 @@ public class EffectFactory {
         		}
 				Damage damage = new Damage(damageAmount, false, DamageType.FIRE, getThis(), true);
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
-					creature.doAction("get hit with a bolt of fire!");
+					creature.doAction(new TerminalText("get hit with a bolt of fire!"));
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.fire(ExtendedAsciiPanel.orange, 2), creature.x(), creature.y(), creature.z());
 					creature.damage(damage, String.format("Killed by %s using Firebolt", reference.name()));
@@ -251,7 +252,7 @@ public class EffectFactory {
 
 				int saveDC = reference.intelligenceSaveDC();
 				if(creature.dexterityRoll() < saveDC) {
-					creature.doAction("get consumed by searing flames!");
+					creature.doAction(new TerminalText("get consumed by searing flames!"));
 					creature.setLastHit(reference);
 					if(creature.affectedBy(Effect.ignited)) {
 						creature.cureEffectOfType(Effect.ignited);
@@ -338,10 +339,10 @@ public class EffectFactory {
 					.forEach(
 						c -> {
 							if (c.dexterityRoll() >= player.intelligenceSaveDC()) {
-								c.doAction("avoid the worst of the flames!");
+								c.doAction(new TerminalText("avoid the worst of the flames!"));
 								c.damage(halfDamage, String.format("Killed by %s using Dragon's Breath", player.name()));
 							} else {
-								c.doAction("get seared by the scorching flames!");
+								c.doAction(new TerminalText("get seared by the scorching flames!"));
 								c.damage(damage, String.format("Killed by %s using Dragon's Breath", player.name()));
 							}
 						}
@@ -378,7 +379,7 @@ public class EffectFactory {
 					duration += reference.proficiencyBonus();
 				}
 				if(savingThrow < saveTarget) {
-					creature.doAction("get blasted by freezing air!");
+					creature.doAction(new TerminalText("get blasted by freezing air!"));
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
 					Damage damage = new Damage(damageAmount, false, DamageType.FROST, getThis(), false);
 					creature.damage(damage, "Killed by icy magic");
@@ -413,7 +414,7 @@ public class EffectFactory {
 				}
 				
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
-					creature.doAction("get hit with a blade of ice!");
+					creature.doAction(new TerminalText("get hit with a blade of ice!"));
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
 					creature.damage(hitDamage, String.format("Killed by %s using Ice Knife", reference.name()));
@@ -710,7 +711,7 @@ public class EffectFactory {
 				if(damageAmount < 1) {
 					damageAmount = 1;
 				}
-				creature.doAction("get a shock!");
+				creature.doAction(new TerminalText("get a shock!"));
 				creature.setLastHit(reference);
 				creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), creature.x(), creature.y(), creature.z());
 				Damage damage = new Damage(damageAmount, false, DamageType.SHOCK, getThis(), true);
@@ -752,7 +753,7 @@ public class EffectFactory {
         			}
     				Damage damage = new Damage(amount, false, DamageType.SHOCK, creature.ai().factory.effectFactory, true);
     				if(c.dexterityRoll() < reference.intelligenceSaveDC()) {
-    					c.doAction("get hit with a lance of electricity!");
+    					c.doAction(new TerminalText("get hit with a lance of electricity!"));
     					c.damage(damage, String.format("Killed by %s using Lightning Lance", reference.name()));
     				}
     				
@@ -826,7 +827,7 @@ public class EffectFactory {
 				
 				Damage damage = new Damage(damageAmount, false, DamageType.ACID, getThis(), true);
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
-					creature.doAction("get hit with a blast of acid!");
+					creature.doAction(new TerminalText("get hit with a blast of acid!"));
 					creature.setLastHit(reference);
 					if(creature.affectedBy(Effect.corroded)) {
 						creature.cureEffectOfType(Effect.corroded);
@@ -873,7 +874,7 @@ public class EffectFactory {
 				Damage damage = new Damage(damageAmount, false, DamageType.POISON, getThis(), false);
 
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
-					creature.doAction("get hit with a splash of poison!");
+					creature.doAction(new TerminalText("get hit with a splash of poison!"));
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.crossbones(ExtendedAsciiPanel.magenta, 2), creature.x(), creature.y(), creature.z());
 					creature.damage(damage, String.format("Killed by %s using Toxic Transfusion", reference.name()));
@@ -967,7 +968,7 @@ public class EffectFactory {
         		if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
         			Damage damage = new Damage(damageAmount, false, DamageType.PHYSICAL, reference.ai().factory.effectFactory, true);
             		creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
-            		creature.doAction("get torn apart by metal shards!");
+            		creature.doAction(new TerminalText("get torn apart by metal shards!"));
             		creature.damage(damage, String.format("Killed by %s using Armor Storm", reference.name()));
             		creature.setLastHit(reference);
             		Effect sundered_ = reference.ai().factory.effectFactory.sundered(stacks_);
@@ -1016,7 +1017,11 @@ public class EffectFactory {
         		
         		Damage damage = new Damage(damageAmount, false, DamageType.MAGIC, reference.ai().factory.effectFactory, true);
         		if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
-					creature.doAction(String.format("get hit with a spectral %s!", reference.weapon().name()));
+    				TerminalText newNotification = new TerminalText();
+    				newNotification.append("get hit with a spectral ");
+    				newNotification.append(reference.weapon().name(), reference.weapon().color());
+    				newNotification.append("!");
+    				creature.doAction(newNotification);
 					creature.setLastHit(reference);
 					creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
 					creature.damage(damage, String.format("Killed by %s using Weapon Bolt", reference.name()));
@@ -1089,7 +1094,7 @@ public class EffectFactory {
 					return;
 				}
 				creature.heal(creature.maxHP() - creature.hp());
-				//creature.doAction("look healthier");
+				//creature.doAction(new TerminalText("look healthier"));
 			}
 		};
 		return maxHealth;
@@ -1102,7 +1107,7 @@ public class EffectFactory {
 					return;
 				}
 				creature.gainMana(creature.maxMana() - creature.mana(), false);
-				creature.doAction("look energised");
+				creature.doAction(new TerminalText("look energised"));
 			}
 		};
 		return maxMana;
@@ -1111,7 +1116,7 @@ public class EffectFactory {
 	public Effect poisoned(int duration) {
 		Effect poisoned = new Effect(duration, "Poisoned", true, null, Effect.poisoned, ExtendedAsciiPanel.getGlyphFromPage(165, 2), ExtendedAsciiPanel.magenta) { //10
 			public void start(Creature creature) {
-				creature.doAction("look unwell");
+				creature.doAction(new TerminalText("look unwell"));
 				//creature.learnName(item);
 			}
 			public void update(Creature creature) {
@@ -1121,7 +1126,7 @@ public class EffectFactory {
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.poisoned)) {
-					creature.doAction("recover from poison");
+					creature.doAction(new TerminalText("recover from poison"));
 				}
 			}
 		};
@@ -1132,7 +1137,7 @@ public class EffectFactory {
 	public Effect bleeding(int duration) {
 		Effect bleeding = new Effect(duration, "Bleeding", true, null, Effect.bleeding, ExtendedAsciiPanel.getGlyphFromPage(161, 2), ExtendedAsciiPanel.red) { //10
 			public void start(Creature creature) {
-				creature.doAction("begin to bleed");
+				creature.doAction(new TerminalText("begin to bleed"));
 				//creature.learnName(item);
 			}
 			public void update(Creature creature) {
@@ -1142,7 +1147,7 @@ public class EffectFactory {
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.bleeding)) {
-					creature.doAction("stem the bleeding");
+					creature.doAction(new TerminalText("stem the bleeding"));
 				}
 			}
 		};
@@ -1153,10 +1158,10 @@ public class EffectFactory {
 	public Effect giantStrength(int duration) {
 		Effect giantStrength = new Effect(duration, "Giant Strength", false, null, Effect.giantStrength, ExtendedAsciiPanel.getGlyphFromPage(3, 1), ExtendedAsciiPanel.orange) {
 			public void start(Creature creature) {
-				creature.doAction("swell with power");
+				creature.doAction(new TerminalText("swell with power"));
 			}
 			public void end(Creature creature) {
-				creature.doAction("return to normal strength");
+				creature.doAction(new TerminalText("return to normal strength"));
 			}
 		};
 		giantStrength.setDescription("The strength of giants flows through your muscles, temporarily granting you a +4 bonus to your Strength and Armor Class.");
@@ -1166,10 +1171,10 @@ public class EffectFactory {
 	public Effect beastForm(int duration) {
 		Effect beastForm = new Effect(duration, "Beast Form", false, null, Effect.beastForm, ExtendedAsciiPanel.getGlyphFromPage(3, 1), ExtendedAsciiPanel.green) {
 			public void start(Creature creature) {
-				creature.doAction("appear more bestial");
+				creature.doAction(new TerminalText("appear more bestial"));
 			}
 			public void end(Creature creature) {
-				creature.doAction("return to a normal appearance");
+				creature.doAction(new TerminalText("return to a normal appearance"));
 			}
 		};
 		beastForm.setDescription("The ferocity of beasts suffuses your body and mind, temporarily granting you a +4 bonus to your Dexterity and Vision Radius.");
@@ -1180,7 +1185,7 @@ public class EffectFactory {
 		Effect corroded = new Effect(duration, "Corroded", true, null, Effect.corroded, ExtendedAsciiPanel.getGlyphFromPage(161, 2), ExtendedAsciiPanel.lime) {
         	public void start(Creature creature) {
         		//creature.modifyDefenseValue(-6);
-				creature.doAction("get coated in biting acid");
+				creature.doAction(new TerminalText("get coated in biting acid"));
 				//creature.learnName(item);
 			}
 			public void update(Creature creature) {
@@ -1192,7 +1197,7 @@ public class EffectFactory {
 			public void end(Creature creature) {
 				//creature.modifyDefenseValue(6);
 				if(!creature.affectedBy(Effect.corroded) == false) {
-    				creature.doAction("recover from the acid burns");
+    				creature.doAction(new TerminalText("recover from the acid burns"));
 				}
 			}
         };
@@ -1227,7 +1232,7 @@ public class EffectFactory {
 	public Effect mindVision(int duration) {
 		Effect mindVision = new Effect(duration, "Mind Vision", false, null, Effect.mindVision, ExtendedAsciiPanel.getGlyphFromPage(163, 2), ExtendedAsciiPanel.pink){
             public void start(Creature creature){
-                creature.doAction("look far off into the distance");
+                creature.doAction(new TerminalText("look far off into the distance"));
             }
             public void end(Creature creature){
             }
@@ -1239,7 +1244,7 @@ public class EffectFactory {
 	public Effect restoration() {
 		Effect restoration = new Effect(1, null, false, null, ' ', null) {
 			public void start(Creature creature) {
-				creature.doAction("look refreshed");
+				creature.doAction(new TerminalText("look refreshed"));
 				creature.cureNegativeEffects();
 			}
 		};
@@ -1249,11 +1254,11 @@ public class EffectFactory {
 	public Effect blinded(int duration) {
 		Effect blinded = new Effect(duration, "Blinded", true, null, Effect.blinded, ExtendedAsciiPanel.getGlyphFromPage(15, 1), ExtendedAsciiPanel.invisible) {
 			public void start(Creature creature) {
-				creature.doAction("become blinded!");
+				creature.doAction(new TerminalText("become blinded!"));
 			}
 			public void end(Creature creature) {
 				if(creature.affectedBy(Effect.blinded)) {
-					creature.doAction("return to seeing normally");
+					creature.doAction(new TerminalText("return to seeing normally"));
 				}
 
 			}
@@ -1265,11 +1270,11 @@ public class EffectFactory {
 	public Effect illuminated(int duration) {
 		Effect illuminated = new Effect(duration, "Illuminated", false, null, Effect.illuminated, ExtendedAsciiPanel.getGlyphFromPage(15, 1), ExtendedAsciiPanel.brightYellow) {
 			public void start(Creature creature) {
-				creature.doAction("glow with a bright light!");
+				creature.doAction(new TerminalText("glow with a bright light!"));
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.illuminated) == false) {
-					creature.doAction("stop glowing");
+					creature.doAction(new TerminalText("stop glowing"));
 				}
 			}
 		};
@@ -1280,11 +1285,11 @@ public class EffectFactory {
 	public Effect haste(int duration) {
 		Effect haste = new Effect(duration, "Haste", false, null, Effect.haste, ExtendedAsciiPanel.getGlyphFromPage(164, 2), ExtendedAsciiPanel.brightGreen) {
 			public void start(Creature creature) {
-				creature.doAction("begin to vibrate with energy!");
+				creature.doAction(new TerminalText("begin to vibrate with energy!"));
 			}
 			public void end(Creature creature) {
 				if(creature.affectedBy(Effect.haste)) {
-					creature.doAction("slow down to normal speed");
+					creature.doAction(new TerminalText("slow down to normal speed"));
 				}
 			}
 		};
@@ -1295,11 +1300,11 @@ public class EffectFactory {
 	public Effect electrocharged(int duration) {
 		Effect electrocharged = new Effect(duration, "Electrocharged", false, null, Effect.electrocharged, ExtendedAsciiPanel.getGlyphFromPage(164, 2), ExtendedAsciiPanel.brightCyan) {
 			public void start(Creature creature) {
-				creature.doAction("become infused with electricity!");
+				creature.doAction(new TerminalText("become infused with electricity!"));
 			}
 			public void end(Creature creature) {
 				if(creature.affectedBy(Effect.electrocharged)) {
-					creature.doAction("feel the electrical infusion fade away");
+					creature.doAction(new TerminalText("feel the electrical infusion fade away"));
 				}
 			}
 		};
@@ -1310,10 +1315,10 @@ public class EffectFactory {
 	public Effect levitating(int duration) {
 		Effect levitating = new Effect(duration, "Levitating", false, null, Effect.levitating, ExtendedAsciiPanel.getGlyphFromPage(162, 2), ExtendedAsciiPanel.brightWhite){
             public void start(Creature creature){
-                creature.doAction("float into the air!");
+                creature.doAction(new TerminalText("float into the air!"));
             }
             public void end(Creature creature){
-            	creature.doAction("float back down to the floor");
+            	creature.doAction(new TerminalText("float back down to the floor"));
             }
         };
 		levitating.setDescription("You are floating in the air, allowing you to glide across pits and trapped floors safely.");
@@ -1323,7 +1328,7 @@ public class EffectFactory {
 	public Effect devoured(int duration) {
 		Effect devoured = new Effect(duration, "Devoured", true, null, Effect.devoured, ExtendedAsciiPanel.getGlyphFromPage(162, 2), ExtendedAsciiPanel.brightMagenta) {
 			public void start(Creature creature) {
-				creature.doAction("writhe in agony");
+				creature.doAction(new TerminalText("writhe in agony"));
 			}
 			public void update(Creature creature) {
 				super.update(creature);
@@ -1333,7 +1338,7 @@ public class EffectFactory {
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.devoured)) {
-					creature.doAction("escape a devouring curse");
+					creature.doAction(new TerminalText("escape a devouring curse"));
 				}
 
 			}
@@ -1345,17 +1350,17 @@ public class EffectFactory {
 	public Effect confused(int duration) {
 		Effect confused = new Effect(duration, "Confused", true, null, Effect.confused, ExtendedAsciiPanel.getGlyphFromPage(162, 2), ExtendedAsciiPanel.lilac) {
 			public void start(Creature creature) {
-				creature.doAction("become confused!");
+				creature.doAction(new TerminalText("become confused!"));
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				creature.doAction("wander around in confusion!");
+				creature.doAction(new TerminalText("wander around in confusion!"));
 				//creature.ai().wander();
 				
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.confused)) {
-					creature.doAction("stop being confused");
+					creature.doAction(new TerminalText("stop being confused"));
 				}
 
 			}
@@ -1367,7 +1372,7 @@ public class EffectFactory {
 	public Effect bounce() {
 		Effect bounce = new Effect(7, null, false, null, ' ', null){
 			public void start(Creature creature){
-				creature.doAction("let out a wave of force!");
+				creature.doAction(new TerminalText("let out a wave of force!"));
 
                 for (int ox = -1; ox < 2; ox++){
                     for (int oy = -1; oy < 2; oy++){
@@ -1420,7 +1425,7 @@ public class EffectFactory {
                 				push++;
                 			}
                 			if(push > 2) {
-                				target.doAction("get thrown back!");
+                				target.doAction(new TerminalText("get thrown back!"));
                 			}
                 		}
                 	}
@@ -1433,7 +1438,7 @@ public class EffectFactory {
 	public Effect arcaneWard(int duration) {
 		Effect arcaneWard = new Effect(duration, "Arcane Ward", false, null, Effect.arcaneWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.lilac){
 			public void start(Creature creature){
-				creature.doAction("raise a magical shield!");
+				creature.doAction(new TerminalText("raise a magical shield!"));
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1), creature.world())
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
@@ -1442,7 +1447,7 @@ public class EffectFactory {
 					});
             }
 			public void end(Creature creature) {
-				creature.doAction("let the shielding magic dissipate");
+				creature.doAction(new TerminalText("let the shielding magic dissipate"));
 			}
         };
 		arcaneWard.setDescription("An arcane shield surrounds you, immediately teleporting adjacent foes away from you and granting you Resistance to Magic damage for the duration.");
@@ -1452,7 +1457,7 @@ public class EffectFactory {
 	public Effect venomousWard(int duration) {
 		Effect venomousWard = new Effect(duration, "Venomous Ward", false, null, Effect.venomousWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.magenta){
 			public void start(Creature creature){
-				creature.doAction("become coated in protective poison!");
+				creature.doAction(new TerminalText("become coated in protective poison!"));
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1), creature.world())
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
@@ -1461,7 +1466,7 @@ public class EffectFactory {
 					});
             }
 			public void end(Creature creature) {
-				creature.doAction("feel the poisonous barrier fade");
+				creature.doAction(new TerminalText("feel the poisonous barrier fade"));
 			}
         };
 		venomousWard.setDescription("A shield of protective poison surrounds you, immediately applying Poisoned to adjacent foes and granting you Resistance to Poison damage for the duration.");
@@ -1471,7 +1476,7 @@ public class EffectFactory {
 	public Effect eldritchWard(int duration) {
 		Effect eldritchWard = new Effect(duration, "Eldritch Ward", false, null, Effect.eldritchWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.brightMagenta){
 			public void start(Creature creature){
-				creature.doAction("become shrouded by chaotic energy!");
+				creature.doAction(new TerminalText("become shrouded by chaotic energy!"));
                 for (int ox = -1; ox < 2; ox++){
                     for (int oy = -1; oy < 2; oy++){
                         int nx = creature.x + ox;
@@ -1490,7 +1495,7 @@ public class EffectFactory {
                 }
             }
 			public void end(Creature creature) {
-				creature.doAction("feel the chaotic energy fade away");
+				creature.doAction(new TerminalText("feel the chaotic energy fade away"));
 			}
         };
 		eldritchWard.setDescription("A shroud of chaotic energy protects you, immediately applying Devoured to adjacent foes and granting you Resistance to Chaos damage for the duration.");
@@ -1500,7 +1505,7 @@ public class EffectFactory {
 	public Effect bladeWard(int duration) {
 		Effect bladeWard = new Effect(duration, "Blade Ward", false, null, Effect.bladeWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.white){
 			public void start(Creature creature){
-				creature.doAction("become surrounded by metal shards!");
+				creature.doAction(new TerminalText("become surrounded by metal shards!"));
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1), creature.world())
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
@@ -1509,7 +1514,7 @@ public class EffectFactory {
 					});
             }
 			public void end(Creature creature) {
-				creature.doAction("return the metal shards to the earth");
+				creature.doAction(new TerminalText("return the metal shards to the earth"));
 			}
         };
 		bladeWard.setDescription("A storm of metal shards shields you, immediately applying Bleeding to adjacent foes and granting you Resistance to Physical damage for the duration.");
@@ -1519,7 +1524,7 @@ public class EffectFactory {
 	public Effect causticWard(int duration) {
 		Effect causticWard = new Effect(duration, "Caustic Ward", false, null, Effect.causticWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.lime){
 			public void start(Creature creature){
-				creature.doAction("become veiled in protective acid!");
+				creature.doAction(new TerminalText("become veiled in protective acid!"));
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1), creature.world())
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
@@ -1528,7 +1533,7 @@ public class EffectFactory {
 					});
             }
 			public void end(Creature creature) {
-				creature.doAction("feel the acidic veil fade");
+				creature.doAction(new TerminalText("feel the acidic veil fade"));
 			}
         };
 		causticWard.setDescription("A veil of protective acid shields you, immediately applying Corroded to adjacent foes and granting you Resistance to Acid damage for the duration.");
@@ -1538,7 +1543,7 @@ public class EffectFactory {
 	public Effect chillWard(int duration) {
 		Effect chillWard = new Effect(duration, "Chill Ward", false, null, Effect.chillWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.water){
 			public void start(Creature creature){
-				creature.doAction("become wreathed in freezing air!");
+				creature.doAction(new TerminalText("become wreathed in freezing air!"));
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 2), creature.world())
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
@@ -1547,7 +1552,7 @@ public class EffectFactory {
 					});
             }
 			public void end(Creature creature) {
-				creature.doAction("feel the freezing winds fade away");
+				creature.doAction(new TerminalText("feel the freezing winds fade away"));
 			}
         };
 		chillWard.setDescription("You are shielded by freezing winds, immediately applying Frozen to adjacent foes and granting you Resistance to Frost damage for the duration.");
@@ -1557,7 +1562,7 @@ public class EffectFactory {
 	public Effect magmaWard(int duration) {
 		Effect magmaWard = new Effect(duration, "Magma Ward", false, null, Effect.magmaWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.orange){
 			public void start(Creature creature){
-				creature.doAction("become shielded by flames!");
+				creature.doAction(new TerminalText("become shielded by flames!"));
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 2), creature.world())
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
@@ -1566,7 +1571,7 @@ public class EffectFactory {
 					});
             }
 			public void end(Creature creature) {
-				creature.doAction("feel the flaming shield burn out");
+				creature.doAction(new TerminalText("feel the flaming shield burn out"));
 			}
         };
 		magmaWard.setDescription("A shield of flames surrounds you, immediately applying Ignited to adjacent foes and granting you Resistance to Fire damage for the durration");
@@ -1629,19 +1634,19 @@ public class EffectFactory {
 	public Effect arcWard(int duration) {
 		Effect arcWard = new Effect(duration, "Arc Ward", false, null, Effect.arcWard, ExtendedAsciiPanel.getGlyphFromPage(4, 1), ExtendedAsciiPanel.brightCyan){
 			public void start(Creature creature){
-				creature.doAction("become shrouded in lightning!");
+				creature.doAction(new TerminalText("become shrouded in lightning!"));
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1), creature.world())
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
 						c.world().setParticleAtLocation(c.ai().factory.particleFactory.shock(ExtendedAsciiPanel.paralyzed, 2), c.x(), c.y(), c.z());
-						c.doAction("get a shock!");
+						c.doAction(new TerminalText("get a shock!"));
 						c.setLastHit(creature);
 						c.damage(new Damage(Dice.d4.roll(), false, DamageType.SHOCK, getThis(), true), "Killed by lightning magic");
 						c.loseMana(Dice.d4.roll(), false);
 					});
             }
 			public void end(Creature creature) {
-				creature.doAction("feel the lightning shroud dissipate");
+				creature.doAction(new TerminalText("feel the lightning shroud dissipate"));
 			}
         };
 		arcWard.setDescription("A shroud of crackling lightning protects you, immediately dealing 1d4 Shock damage and draining 1d4 Mana from adjacent foes and granting you Resistance to Shock damage for the duration.");
@@ -1652,7 +1657,7 @@ public class EffectFactory {
 		Effect invisible = new Effect(duration, "Invisible", false, null, Effect.invisible, ExtendedAsciiPanel.getGlyphFromPage(163, 2), ExtendedAsciiPanel.invisible) {
 			public void start(Creature creature) {
 				creature.changeColor(ExtendedAsciiPanel.invisible);
-				creature.doAction("become transparent");
+				creature.doAction(new TerminalText("become transparent"));
 			}
 			public void update(Creature creature) {
 				super.update(creature);
@@ -1661,7 +1666,7 @@ public class EffectFactory {
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.invisible)) {
 					creature.changeColor(creature.defaultColor());
-					creature.doAction("become visible");
+					creature.doAction(new TerminalText("become visible"));
 				}
 			}
 		};
@@ -1672,11 +1677,11 @@ public class EffectFactory {
 	public Effect paralysed(int duration) {
 		Effect paralyzed = new Effect(duration, "Paralysed", true, null, Effect.paralysed, ExtendedAsciiPanel.getGlyphFromPage(165, 2), ExtendedAsciiPanel.paralyzed) {
 			public void start(Creature creature) {
-				creature.doAction("seize up!");
+				creature.doAction(new TerminalText("seize up!"));
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.paralysed)) {
-					creature.doAction("become mobile again");
+					creature.doAction(new TerminalText("become mobile again"));
 				}
 			}
 		};
@@ -1687,7 +1692,7 @@ public class EffectFactory {
 	public Effect blink() {
 		Effect blink = new Effect(8, null, false, null, ' ', null) {
 			public void start(Creature creature){
-	            creature.doAction("fade out");
+	            creature.doAction(new TerminalText("fade out"));
 	            creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.pink, 2), creature.x(), creature.y(), creature.z());
 	            int mx = 0;
 	            int my = 0;
@@ -1702,7 +1707,7 @@ public class EffectFactory {
 	            
 	            creature.moveBy(mx, my, 0, false);
 	            
-	            creature.doAction("fade in");
+	            creature.doAction(new TerminalText("fade in"));
 	            creature.world().setParticleAtLocation(creature.ai().factory.particleFactory.vortex(ExtendedAsciiPanel.pink, 2), creature.x(), creature.y(), creature.z());
 	        }
 		};
@@ -1712,7 +1717,7 @@ public class EffectFactory {
 	public Effect pitFall() {
 		Effect pit = new Effect(8, null, true, null, ' ', null) {
 			public void start(Creature creature){
-	            creature.doAction("fall into a pit!");
+	            creature.doAction(new TerminalText("fall into a pit!"));
 	            
 	            int mx = 0;
 	            int my = 0;
@@ -1738,7 +1743,7 @@ public class EffectFactory {
 	            creature.overrideZ(creature.z+1);
 	            
 	            
-	            creature.doAction("hit the ground");
+	            creature.doAction(new TerminalText("hit the ground"));
 	        }
 		};
 		return pit;
@@ -1747,12 +1752,12 @@ public class EffectFactory {
 	public Effect frozen(int duration) {
 		Effect frozen = new Effect(duration, "Frozen", true, null, Effect.frozen, ExtendedAsciiPanel.getGlyphFromPage(166, 2), ExtendedAsciiPanel.water){
 			public void start(Creature creature) {
-				creature.doAction("freeze solid!");
+				creature.doAction(new TerminalText("freeze solid!"));
 			}
 			
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.frozen)) {
-					creature.doAction("defrost");
+					creature.doAction(new TerminalText("defrost"));
 				}
 			}
 		};
@@ -1763,12 +1768,12 @@ public class EffectFactory {
 	public Effect sundered(int duration) {
 		Effect sundered = new Effect(duration, "Sundered", true, null, Effect.sundered, ExtendedAsciiPanel.getGlyphFromPage(160, 2), ExtendedAsciiPanel.white){
 			public void start(Creature creature) {
-				creature.doAction("become defenseless!");
+				creature.doAction(new TerminalText("become defenseless!"));
 			}
 			
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.sundered)) {
-					creature.doAction("recover defenses");
+					creature.doAction(new TerminalText("recover defenses"));
 				}
 			}
 		};
@@ -1779,7 +1784,7 @@ public class EffectFactory {
 	public Effect electrified(int duration) {
 		Effect electrified = new Effect(duration, "Electrified", true, null, Effect.electrified, ExtendedAsciiPanel.getGlyphFromPage(164, 2), ExtendedAsciiPanel.paralyzed) {
 			public void start(Creature creature) {
-				creature.doAction("get a shock!");
+				creature.doAction(new TerminalText("get a shock!"));
 				Damage damage = new Damage(Dice.d6.roll(), false, DamageType.SHOCK, getThis(), false);
 				creature.damage(damage, "Killed by electrocution");
 			}
@@ -1789,7 +1794,7 @@ public class EffectFactory {
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.electrified)) {
-					creature.doAction("recover from a shock");
+					creature.doAction(new TerminalText("recover from a shock"));
 				}
 			}
 		};
@@ -1800,17 +1805,17 @@ public class EffectFactory {
 	public Effect ignited(int duration) {
 		Effect ignited = new Effect(duration, "Ignited", true, null, Effect.ignited, ExtendedAsciiPanel.getGlyphFromPage(167, 2), ExtendedAsciiPanel.orange) {
 			public void start(Creature creature) {
-				creature.doAction("burst into flames!");
+				creature.doAction(new TerminalText("burst into flames!"));
 			}
 			public void update(Creature creature) {
 				super.update(creature);
-				creature.doAction("burn up!");
+				creature.doAction(new TerminalText("burn up!"));
 				Damage damage = new Damage(Dice.d4.roll(), false, DamageType.FIRE, getThis(), false);
 				creature.damage(damage, "Burned to death");
 			}
 			public void end(Creature creature) {
 				if(!creature.affectedBy(Effect.ignited)) {
-					creature.doAction("put the flames out");
+					creature.doAction(new TerminalText("put the flames out"));
 				}
 
 			}

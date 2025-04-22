@@ -60,8 +60,8 @@ public class ActionLogScreen implements Screen {
         ArrayList<TerminalText> lines = new ArrayList<>();
         for (int turn: notificationHistory.storedTurns()) {
             lines.add(new TerminalText(formatTurn(turn), ExtendedAsciiPanel.brightWhite, null));
-            for (String message: notificationHistory.getNotificationsOnTurn(turn)) {
-                lines.add(new TerminalText(String.format("  %s", message), null, null));
+            for (TerminalText message: notificationHistory.getNotificationsOnTurn(turn)) {
+                lines.add(message);
             }
         }
         return lines;

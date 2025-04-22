@@ -12,6 +12,7 @@ import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Items.Item;
+import RogueLike.Main.Screens.TerminalText;
 
 public class CreatureAI {
 	
@@ -122,7 +123,7 @@ public class CreatureAI {
 			
 		}
 		else {
-			creature.doAction("bump into a wall");
+			creature.doAction(new TerminalText("bump into a wall"));
 		}
 	}
 	
@@ -134,7 +135,13 @@ public class CreatureAI {
 		
 		if((other != null && other.glyph() == creature.glyph()) || (other != null && other.isContainer() == true)) {
 			if(other != null && other.glyph() == creature.glyph() && creature.social()) {
-				creature.doAction("say '%s' to the %s", creature.talkToOther(), other.name());
+
+				TerminalText newNotification = new TerminalText();
+				newNotification.append("say '");
+				newNotification.append(creature.talkToOther());
+				newNotification.append("' to the ");
+				newNotification.append(other.name());
+				creature.doAction(newNotification);
 			}else {
 				return;
 			}
@@ -144,7 +151,12 @@ public class CreatureAI {
 			switch(ExtraMaths.diceRoll(1, 10)) {
 				case 1: 
 					if(creature.social()) {
-						creature.doAction("say '%s' out loud", creature.talkToSelf());
+
+						TerminalText newNotification = new TerminalText();
+						newNotification.append("say '");
+						newNotification.append(creature.talkToSelf());
+						newNotification.append("' out loud");
+						creature.doAction(newNotification);
 					}else {
 						creature.moveBy(mx, my, 0, false);
 					}
@@ -160,7 +172,12 @@ public class CreatureAI {
 		decodeAction(actionQueue.get(0));
 	}
 	
+	//TODO: Safely remove and move to TerminalText
 	public void onNotify(String message) {
+		
+	}
+	
+	public void onNotify(TerminalText message) {
 		
 	}
 	

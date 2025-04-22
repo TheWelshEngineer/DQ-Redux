@@ -78,7 +78,7 @@ public class SpellSelectScreen implements Screen{
 
     protected Screen use(Spell spell, Item item){
     	if(spell.isSelfCast()) {
-    		//player.doAction("check");
+    		//player.doAction(new TerminalText("check"));
     		//player.castSpell(spell, player.x(), player.y(), item);
     		player.ai().playerAICastSpell(item, item.writtenSpells().get(0), player.x(), player.y());
     		return null;

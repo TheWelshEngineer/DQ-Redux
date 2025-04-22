@@ -9,6 +9,7 @@ import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Screens.TerminalText;
 
 public class BloodFungusAI extends CreatureAI{
 	private int spreadcount;
@@ -64,7 +65,7 @@ public class BloodFungusAI extends CreatureAI{
 		if (world.entity(x, y, creature.z) instanceof Trap) {
 			return;
 		}
-		creature.doAction("spawn a child");		
+		creature.doAction(new TerminalText("spawn a child"));		
 		Creature child = factory.creatureFactory.newBloodFungus(creature.z, player, true);
 		child.x = x;
 		child.y = y;

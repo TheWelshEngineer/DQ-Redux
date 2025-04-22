@@ -7,6 +7,7 @@ import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Screens.TerminalText;
 
 public class GremlinSkirmisherAI extends CreatureAI{
 	private Creature player;
@@ -64,25 +65,25 @@ public class GremlinSkirmisherAI extends CreatureAI{
 				}
 				if(playerStealthRoll+bonus < this.creature.dexterityRoll()) {
 					this.creature.wakeup();
-					creature.doAction("wake up!");
+					creature.doAction(new TerminalText("wake up!"));
 					
 				}
 			}else {
-				creature.doAction("snore gently");
+				creature.doAction(new TerminalText("snore gently"));
 				return;
 			}
 		}
 		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
-				creature.doAction("struggle to move!");
+				creature.doAction(new TerminalText("struggle to move!"));
 				return;
 			}else {
-				creature.doAction("move with difficulty");
+				creature.doAction(new TerminalText("move with difficulty"));
 			}
 		}
 		
 		if((creature.affectedBy(Effect.frozen))) {
-			creature.doAction("struggle to move!");
+			creature.doAction(new TerminalText("struggle to move!"));
 			return;
 
 		}else {
