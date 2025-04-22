@@ -6,6 +6,7 @@ import RogueLike.Main.Effect;
 import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Screens.TerminalText;
 
 public class MimicAI extends CreatureAI{
 	private Creature player;
@@ -48,15 +49,15 @@ public class MimicAI extends CreatureAI{
 		
 		if((creature.affectedBy(Effect.paralysed))) {
 			if((int)(Math.random()*10) < 8) {
-				creature.doAction("struggle to move!");
+				creature.doAction(new TerminalText("struggle to move!"));
 				return;
 			}else {
-				creature.doAction("move with difficulty");
+				creature.doAction(new TerminalText("move with difficulty"));
 			}
 		}
 		
 		if((creature.affectedBy(Effect.frozen))) {
-			creature.doAction("struggle to move!");
+			creature.doAction(new TerminalText("struggle to move!"));
 			return;
 
 		}else{

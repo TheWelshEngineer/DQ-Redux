@@ -7,6 +7,7 @@ import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Screens.TerminalText;
 
 public class SlimelingAI extends CreatureAI{
 	private Creature player;
@@ -53,22 +54,22 @@ public class SlimelingAI extends CreatureAI{
 				}
 				if(playerStealthRoll+bonus < this.creature.dexterityRoll()) {
 					this.creature.wakeup();
-					creature.doAction("wake up!");
+					creature.doAction(new TerminalText("wake up!"));
 					
 				}
 			}else {
-				creature.doAction("snore gently");
+				creature.doAction(new TerminalText("snore gently"));
 				return;
 			}
 		}
 		if((creature.affectedBy(Effect.frozen))) {
-			creature.doAction("struggle to move!");
+			creature.doAction(new TerminalText("struggle to move!"));
 			return;
 
 		}else {
 			if((creature.affectedBy(Effect.paralysed))) {
 				creature.cureEffectOfType(Effect.paralysed);
-				creature.doAction("break free of paralysis!");
+				creature.doAction(new TerminalText("break free of paralysis!"));
 			}
 			if(!creature.canSee(player.x, player.y, player.z) || player.affectedBy(Effect.invisible)) {
 				turnsWithoutPlayer++;

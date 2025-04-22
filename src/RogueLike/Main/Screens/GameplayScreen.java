@@ -2,6 +2,7 @@ package RogueLike.Main.Screens;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import RogueLike.Main.AI.PlayerAI;
@@ -352,8 +353,7 @@ public class GameplayScreen implements Screen{
 		return this;
 	}
 	
-	//
-	private void displayMessages(ExtendedAsciiPanel terminal, List<String> messages) {
+	private void displayMessages(ExtendedAsciiPanel terminal, List<TerminalText> messages) {
 		//screenHeight - messages.size();
 		int top = 24;
 		int messagesSize = messages.size();
@@ -365,10 +365,11 @@ public class GameplayScreen implements Screen{
 			if(y > 47) {
 				y = 47;
 			}
-			terminal.write(messages.get(i), 3, y);
-			
+			y = terminal.write(messages.get(i), 3, y);
+
 		}
 	}
+	
 	//player.x
 	private void displayTiles(ExtendedAsciiPanel terminal, int left, int top) {
 		if(player.isReadingMagicMapping()) {

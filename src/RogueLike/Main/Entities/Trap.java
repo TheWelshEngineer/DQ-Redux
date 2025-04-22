@@ -3,6 +3,7 @@ package RogueLike.Main.Entities;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Factories.EffectFactory;
+import RogueLike.Main.Screens.TerminalText;
 import RogueLike.Main.World;
 
 import java.awt.*;
@@ -48,7 +49,7 @@ public abstract class Trap extends Entity {
 			other.addEffect(exploitEffect(other.factory().effectFactory));
 			other.notify("You exploit the trap's mechanism to your benefit!");
 		}else {
-			other.doAction("trigger a trap!");
+			other.doAction(new TerminalText("trigger a trap!"));
 			other.addEffect(effect(other.factory().effectFactory));
 		}
 		world.remove(this);

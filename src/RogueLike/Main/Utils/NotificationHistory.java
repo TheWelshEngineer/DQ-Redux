@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import RogueLike.Main.Screens.TerminalText;
+
 public class NotificationHistory {
-    private final HashMap<Integer, ArrayList<String>> messagesByTurn;
+    private final HashMap<Integer, List<TerminalText>> messagesByTurn;
     private int maxLength;
 
     public NotificationHistory(int maxLength) {
@@ -15,18 +17,32 @@ public class NotificationHistory {
         messagesByTurn = new HashMap<>();
     }
 
+
+	//TODO: Safely remove and move to TerminalText
     public void addNotification(String message, Integer turn) {
+    	TerminalText messageTerminal = new TerminalText(message, null, null);
+        if (messagesByTurn.containsKey(turn)) {
+            messagesByTurn.get(turn).add(messageTerminal);
+        }
+        else {
+        	List<TerminalText> messages = new ArrayList<>();
+            messages.add(messageTerminal);
+            messagesByTurn.put(turn, messages);
+        }
+    }
+    
+    public void addNotification(TerminalText message, Integer turn) {
         if (messagesByTurn.containsKey(turn)) {
             messagesByTurn.get(turn).add(message);
         }
         else {
-            ArrayList<String> messages = new ArrayList<>();
+        	List<TerminalText> messages = new ArrayList<>();
             messages.add(message);
             messagesByTurn.put(turn, messages);
         }
     }
 
-    public ArrayList<String> getNotificationsOnTurn(Integer turn) {
+    public List<TerminalText> getNotificationsOnTurn(Integer turn) {
         return messagesByTurn.getOrDefault(turn, new ArrayList<>());
     }
 

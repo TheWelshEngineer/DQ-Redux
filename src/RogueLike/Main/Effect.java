@@ -3,6 +3,7 @@ package RogueLike.Main;
 import java.awt.Color;
 
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Screens.TerminalText;
 
 public class Effect implements Cloneable{
 	
@@ -182,7 +183,7 @@ public class Effect implements Cloneable{
 	
 	public void start(Creature creature) {
 		//temp
-		creature.doAction("not effective");
+		creature.doAction(new TerminalText("not effective"));
 	}
 	
 	public void end(Creature creature) {

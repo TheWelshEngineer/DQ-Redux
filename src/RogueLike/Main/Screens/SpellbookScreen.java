@@ -74,7 +74,7 @@ public class SpellbookScreen implements Screen{
 	
     protected Screen use(Spell spell){
     	if(spell.isSelfCast()) {
-    		//player.doAction("check");
+    		//player.doAction(new TerminalText("check"));
     		player.castSpell(spell, player.x(), player.y(), null);
     		return null;
     	}else {
