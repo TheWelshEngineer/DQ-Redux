@@ -4,17 +4,16 @@ import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
-import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Screens.TerminalText;
 
 public class SkeletonAI extends CreatureAI{
+	private static final long serialVersionUID = 2174089727406054770L;
 	private Creature player;
 	
-	public SkeletonAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public SkeletonAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
 	}
 	

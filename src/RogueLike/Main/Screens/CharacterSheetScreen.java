@@ -6,13 +6,42 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.TextUtils;
+import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Managers.KeybindManager;
-import RogueLike.Main.Screens.CharacterSheet.*;
-import RogueLike.Main.Screens.CharacterSheet.Skills.*;
-import RogueLike.Main.TextUtils;
+import RogueLike.Main.Screens.CharacterSheet.ArmorClassElement;
+import RogueLike.Main.Screens.CharacterSheet.CharacterSheetElement;
+import RogueLike.Main.Screens.CharacterSheet.DamageModifierElement;
+import RogueLike.Main.Screens.CharacterSheet.DexterityElement;
+import RogueLike.Main.Screens.CharacterSheet.EffectElement;
+import RogueLike.Main.Screens.CharacterSheet.GoldElement;
+import RogueLike.Main.Screens.CharacterSheet.HealthElement;
+import RogueLike.Main.Screens.CharacterSheet.HungerElement;
+import RogueLike.Main.Screens.CharacterSheet.IntelligenceElement;
+import RogueLike.Main.Screens.CharacterSheet.LevelElement;
+import RogueLike.Main.Screens.CharacterSheet.ManaElement;
+import RogueLike.Main.Screens.CharacterSheet.NameElement;
+import RogueLike.Main.Screens.CharacterSheet.ProficiencyBonusElement;
+import RogueLike.Main.Screens.CharacterSheet.SpacerElement;
+import RogueLike.Main.Screens.CharacterSheet.StrengthElement;
+import RogueLike.Main.Screens.CharacterSheet.VisionRadiusElement;
+import RogueLike.Main.Screens.CharacterSheet.XPElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.AlchemancySkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.ArmorTrainingSkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.CryomancySkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.ElectromancySkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.EvocationSkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.FerromancySkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.FinesseWeaponsSkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.FortitudeSkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.MartialWeaponsSkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.PerceptionSkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.PyromancySkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.RangedWeaponsSkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.SimpleWeaponsSkillElement;
+import RogueLike.Main.Screens.CharacterSheet.Skills.StealthSkillElement;
 
 public class CharacterSheetScreen implements Screen{
 
@@ -95,12 +124,12 @@ public class CharacterSheetScreen implements Screen{
 	}
 
 	@Override
-	public void displayOutput(ExtendedAsciiPanel terminal) {
-		terminal.clear();
+	public void displayOutput() {
+		ExtendedAsciiPanel.clear();
 
-		Screen.generateBorders(terminal);
+		Screen.generateBorders();
 
-		terminal.writeCenter("== Character Sheet ==", 1);
+		ExtendedAsciiPanel.writeCenter("== Character Sheet ==", 1);
 		int[] column_start_y = {3, 3, 3, 3};
 		int[] column_x = {5, 32, 59, 89};
 		String[] column_headers = {"Stats", "Skills", "Status Effects", "Damage Resistances"};
@@ -110,20 +139,20 @@ public class CharacterSheetScreen implements Screen{
 		for (int column_no = 0; column_no < 4; column_no++) {
 			int x = column_x[column_no];
 			int y = column_start_y[column_no];
-			terminal.write(String.format("== %s ==", column_headers[column_no]), x, y++);
+			ExtendedAsciiPanel.write(String.format("== %s ==", column_headers[column_no]), x, y++);
 
 			for (CharacterSheetElement element: elements.get(column_no)) {
 				String selector = element == selectedElement ? ">> " : "";
-				terminal.write(selector, x, y);
-				terminal.write(element.formattedHeader(terminal),x + selector.length(), y++);
+				ExtendedAsciiPanel.write(selector, x, y);
+				ExtendedAsciiPanel.write(element.formattedHeader(),x + selector.length(), y++);
 			}
 		}
 
 		int rightPadding = 4;
-		int maxWidth = terminal.getWidthInCharacters() - (column_x[0] + rightPadding);
-		terminal.writeMultiline(TextUtils.wordWrap(selectedElement.details(), maxWidth, 4), column_x[0], 31);
+		int maxWidth = ExtendedAsciiPanel.getWidthInCharacters() - (column_x[0] + rightPadding);
+		ExtendedAsciiPanel.writeMultiline(TextUtils.wordWrap(selectedElement.details(), maxWidth, 4), column_x[0], 31);
 
-        terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 42);
+        ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 42);
 	}
 
 	private void moveSelectionVertical(int direction) {

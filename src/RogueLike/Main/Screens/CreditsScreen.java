@@ -7,36 +7,36 @@ import RogueLike.Main.Managers.KeybindManager;
 
 public class CreditsScreen implements Screen{
 
-	public void displayOutput(ExtendedAsciiPanel terminal) {
-		Screen.generateBorders(terminal);
+	public void displayOutput() {
+		Screen.generateBorders();;
 		int y = 1;
-		terminal.writeCenter("+|=|+ Credits +|=|+", y++);
+		ExtendedAsciiPanel.writeCenter("+|=|+ Credits +|=|+", y++);
 		y+=2;
-		terminal.writeCenter("Design & Development:", y++);
-		terminal.writeCenter("----------------", y++);
-		terminal.writeCenter("Kathryn U.", y++);
-		terminal.writeCenter("H. Roland R.", y++);
-		terminal.writeCenter("Julia I.", y++);
-		terminal.writeCenter("Diamond H.", y++);
+		ExtendedAsciiPanel.writeCenter("Design & Development:", y++);
+		ExtendedAsciiPanel.writeCenter("----------------", y++);
+		ExtendedAsciiPanel.writeCenter("Kathryn U.", y++);
+		ExtendedAsciiPanel.writeCenter("H. Roland R.", y++);
+		ExtendedAsciiPanel.writeCenter("Julia I.", y++);
+		ExtendedAsciiPanel.writeCenter("Diamond H.", y++);
 		y++;
-		terminal.writeCenter("GitHub: TheWelshEngineer", y++);
-		terminal.writeCenter("GitHub: RolandReff", y++);
-		terminal.writeCenter("GitHub: JuliaScythe", y++);
-		terminal.writeCenter("GitHub: diamond-deluxe", y++);
+		ExtendedAsciiPanel.writeCenter("GitHub: TheWelshEngineer", y++);
+		ExtendedAsciiPanel.writeCenter("GitHub: RolandReff", y++);
+		ExtendedAsciiPanel.writeCenter("GitHub: JuliaScythe", y++);
+		ExtendedAsciiPanel.writeCenter("GitHub: diamond-deluxe", y++);
 		y+=3;
-		terminal.writeCenter("AsciiPanel Framework & Initial Inspiration:", y++);
-		terminal.writeCenter("----------------", y++);
-		terminal.writeCenter("Trystan S.", y++);
+		ExtendedAsciiPanel.writeCenter("AsciiPanel Framework & Initial Inspiration:", y++);
+		ExtendedAsciiPanel.writeCenter("----------------", y++);
+		ExtendedAsciiPanel.writeCenter("Trystan S.", y++);
 		y++;
-		terminal.writeCenter("GitHub: trystan", y++);
+		ExtendedAsciiPanel.writeCenter("GitHub: trystan", y++);
 		y+=3;
-		terminal.writeCenter("Code Review and GitHub Documentation:", y++);
-		terminal.writeCenter("----------------", y++);
-		terminal.writeCenter("H. Roland R.", y++);
+		ExtendedAsciiPanel.writeCenter("Code Review and GitHub Documentation:", y++);
+		ExtendedAsciiPanel.writeCenter("----------------", y++);
+		ExtendedAsciiPanel.writeCenter("H. Roland R.", y++);
 		y++;
-		terminal.writeCenter("GitHub: RolandReff", y++);
+		ExtendedAsciiPanel.writeCenter("GitHub: RolandReff", y++);
 		y++;
-		terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
 
 	}
 

@@ -1,17 +1,22 @@
 package RogueLike.Main;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import RogueLike.Main.Utils.PointShapes.Point;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.Utils.PlayerBuildDetails;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Worldgen.Blueprint;
-import RogueLike.Main.Worldgen.Blueprints.CaveFloor;
-import RogueLike.Main.Worldgen.Blueprints.MerchantFloor;
 import RogueLike.Main.Worldgen.Structure;
 import RogueLike.Main.Worldgen.WorldGenerationException;
+import RogueLike.Main.Worldgen.Blueprints.CaveFloor;
+import RogueLike.Main.Worldgen.Blueprints.MerchantFloor;
 
 public class WorldBuilder {
 	private int width;
@@ -41,19 +46,18 @@ public class WorldBuilder {
 	public int depth() {return depth;}
 	public void markDepthAsSpecial(int depth) {specialDepths.add(depth);}
 
-	public World build(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
-		World world = new World(tiles, specialDepths);
-		world.addPlayer(playerNotifications, playerDetails);
+	public void build(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
+		World.setWorld(tiles, specialDepths);
+		World.addPlayer(playerNotifications, playerDetails);
 		// Structures do their generation before blueprints, as structures are intended to have more specific
 		// generation, and we don't want that to be stepped on by the more generic generation from blueprints
-		structures.forEach(s -> s.onBuildWorld(world));
-		structures.forEach(s -> s.onBuildWorldLate(world));
-		blueprints.forEach(bp -> bp.onBuildWorld(world));
+		structures.forEach(s -> s.onBuildWorld());
+		structures.forEach(s -> s.onBuildWorldLate());
+		blueprints.forEach(bp -> bp.onBuildWorld());
 		
 
 		// TODO: move the victory item to a VictoryFloor blueprint? or make it drop from the final boss?
-		world.factory().itemFactory.newVictoryItem(world.depth()-1, 1);
-		return world;
+		FactoryManager.getItemFactory().newVictoryItem(World.depth()-1, 1);
 	}
 
 	private void addBlueprint(Blueprint blueprint) {
@@ -152,7 +156,7 @@ public class WorldBuilder {
 
 		if (candidates.isEmpty()) {
 			throw new WorldGenerationException(
-				String.format("Failed to generate world - could not generate downwards stairs on depth %d", z)
+				String.format("Failed to generate World - could not generate downwards stairs on depth %d", z)
 			);
 		}
 		
@@ -315,7 +319,7 @@ public class WorldBuilder {
 	}
 	
 	public WorldBuilder generateWorld() {
-		System.out.println("Generating world");
+		System.out.println("Generating World");
 		return addAllBlueprints()
 				.blueprintsGenerateTiles()
 				.blueprintsPostGenerateTiles()

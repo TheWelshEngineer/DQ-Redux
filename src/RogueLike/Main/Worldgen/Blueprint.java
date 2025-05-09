@@ -1,6 +1,5 @@
 package RogueLike.Main.Worldgen;
 
-import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
 
 public abstract class Blueprint {
@@ -14,5 +13,5 @@ public abstract class Blueprint {
 	public abstract void onTileGeneration();
 	public abstract void onPostTileGeneration();
 	public abstract void onPostRegionConnection();
-	public abstract void onBuildWorld(World world);
+	public abstract void onBuildWorld();
 }

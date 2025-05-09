@@ -1,9 +1,15 @@
 package RogueLike.Main.Factories;
 
+import java.io.Serializable;
+
 import RogueLike.Main.Feat;
 
-public class FeatFactory {
-		
+public class FeatFactory implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	public FeatFactory(){}
+
 	public Feat fireResistance() {
 		Feat feat = new Feat("Fire Resistance", 0, false, 0);
 		return feat;

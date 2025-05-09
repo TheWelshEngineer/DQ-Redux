@@ -1,8 +1,8 @@
 package RogueLike.Main.Screens;
 
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Utils.PointShapes.Line;
 import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.Creatures.Creature;
 
 public class RangedWeaponTargetingScreen extends TargetBasedScreen{
 

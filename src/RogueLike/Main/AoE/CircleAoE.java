@@ -2,8 +2,6 @@ package RogueLike.Main.AoE;
 
 import RogueLike.Main.Utils.PointShapes.Circle;
 import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.Utils.PointShapes.Square;
-import RogueLike.Main.World;
 
 public class CircleAoE extends AoE {
 
@@ -17,7 +15,7 @@ public class CircleAoE extends AoE {
 	}
 
 	@Override
-	public InstantiatedAoE instantiate(Point source, Point target, World world) {
-		return new InstantiatedAoE(new Circle(target, size), world);
+	public InstantiatedAoE instantiate(Point source, Point target ) {
+		return new InstantiatedAoE(new Circle(target, size));
 	}
 }

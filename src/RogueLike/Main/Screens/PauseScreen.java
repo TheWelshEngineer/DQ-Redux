@@ -45,26 +45,26 @@ public class PauseScreen implements Screen{
 		}
 	}
 
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		changeMarkers(check);
-		terminal.clear();
-		Screen.generateBorders(terminal);
+		ExtendedAsciiPanel.clear();
+		Screen.generateBorders();;
 		int y = 1;
-		terminal.writeCenter(" _____                      __  ____                  _   ", y++);
-		terminal.writeCenter("|  __ \\                    / _|/ __ \\                | |  ", y++);
-		terminal.writeCenter("| |  | |_      ____ _ _ __| |_| |  | |_   _  ___  ___| |_ ", y++);
-		terminal.writeCenter("| |  | \\ \\ /\\ / / _` | '__|  _| |  | | | | |/ _ \\/ __| __|", y++);
-		terminal.writeCenter("| |__| |\\ V  V / (_| | |  | | | |__| | |_| |  __/\\__ \\ |_ ", y++);
-		terminal.writeCenter("|_____/  \\_/\\_/ \\__,_|_|  |_|  \\___\\_\\\\__,_|\\___||___/\\__|", y++);
+		ExtendedAsciiPanel.writeCenter(" _____                      __  ____                  _   ", y++);
+		ExtendedAsciiPanel.writeCenter("|  __ \\                    / _|/ __ \\                | |  ", y++);
+		ExtendedAsciiPanel.writeCenter("| |  | |_      ____ _ _ __| |_| |  | |_   _  ___  ___| |_ ", y++);
+		ExtendedAsciiPanel.writeCenter("| |  | \\ \\ /\\ / / _` | '__|  _| |  | | | | |/ _ \\/ __| __|", y++);
+		ExtendedAsciiPanel.writeCenter("| |__| |\\ V  V / (_| | |  | | | |__| | |_| |  __/\\__ \\ |_ ", y++);
+		ExtendedAsciiPanel.writeCenter("|_____/  \\_/\\_/ \\__,_|_|  |_|  \\___\\_\\\\__,_|\\___||___/\\__|", y++);
 		y++;
-		terminal.writeCenter("+|=|+ Magic and Madness in the Caves of Chaos! +|=|+", y++);
-		terminal.writeCenter("== Pause Menu ==", y+=2);
-		terminal.write(String.format("%c  Save Game         %c", saveLeft, saveRight), 52, y+=2);
-		terminal.write(String.format("%c  Help              %c", helpLeft, helpRight), 52, y+=2);
-		terminal.write(String.format("%c  Quit to Desktop   %c", closeLeft, closeRight), 52, y+=2);
+		ExtendedAsciiPanel.writeCenter("+|=|+ Magic and Madness in the Caves of Chaos! +|=|+", y++);
+		ExtendedAsciiPanel.writeCenter("== Pause Menu ==", y+=2);
+		ExtendedAsciiPanel.write(String.format("%c  Save Game         %c", saveLeft, saveRight), 52, y+=2);
+		ExtendedAsciiPanel.write(String.format("%c  Help              %c", helpLeft, helpRight), 52, y+=2);
+		ExtendedAsciiPanel.write(String.format("%c  Quit to Desktop   %c", closeLeft, closeRight), 52, y+=2);
 
-		terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 36);
-		terminal.writeCenter(String.format("-- [%s]: Return to Game --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 36);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Return to Game --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {

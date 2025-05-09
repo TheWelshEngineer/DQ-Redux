@@ -1,16 +1,13 @@
 package RogueLike.Main.Screens;
 
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Items.Item;
 
 public class EnchantScreen extends InventoryBasedScreen{
-	
-	public ObjectFactory factory;
 
-	public EnchantScreen(Creature player, ObjectFactory factory) {
+	public EnchantScreen(Creature player) {
 		super(player);
-		this.factory = factory;
 	}
 
 	@Override
@@ -26,9 +23,9 @@ public class EnchantScreen extends InventoryBasedScreen{
 	@Override
 	protected Screen use(Item item) {
 		if(item.isWeapon()) {
-			factory.randomEnchantWeapon(item);
+			FactoryManager.getObjectFactory().randomEnchantWeapon(item);
 		}else {
-			factory.randomEnchantArmor(item);
+			FactoryManager.getObjectFactory().randomEnchantArmor(item);
 		}
 
 		

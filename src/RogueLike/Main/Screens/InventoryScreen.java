@@ -4,7 +4,13 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import RogueLike.Main.*;
+import RogueLike.Main.Dice;
+import RogueLike.Main.Effect;
+import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.Inventory;
+import RogueLike.Main.Spell;
+import RogueLike.Main.TextUtils;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
@@ -15,8 +21,6 @@ public class InventoryScreen implements Screen{
 	protected Creature player;
 	protected List<Effect> effects;
 	protected Inventory inventory;
-	private int sx;
-	private int sy;
 	
 	public int check = 0;
 	public void setCheck(int value) {
@@ -26,13 +30,11 @@ public class InventoryScreen implements Screen{
 	public int itemsPerPage = 30;
 	public int pageNumber = 1;
 	
-	public InventoryScreen(GameplayScreen playScreen, Creature player, int sx, int sy) {
+	public InventoryScreen(GameplayScreen playScreen, Creature player) {
 		this.playScreen = playScreen;
 		this.player = player;
 		this.effects = player.effects();
 		this.inventory= player.inventory();
-		this.sx = sx;
-		this.sy = sy;
 	}
 	
 	public boolean checkIfSelected(int index, int check) {
@@ -44,12 +46,12 @@ public class InventoryScreen implements Screen{
 	}
 	
 	@Override
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		//
 		//
-		terminal.clear();
-		Screen.generateBorders(terminal);
-		terminal.writeCenter("== Inventory ==", 1);	
+		ExtendedAsciiPanel.clear();
+		Screen.generateBorders();
+		ExtendedAsciiPanel.writeCenter("== Inventory ==", 1);	
 		int y = 3;
 		//
 		pageNumber = ExtraMaths.scrollingScreenPageNumber(check);
@@ -112,21 +114,21 @@ public class InventoryScreen implements Screen{
 					CharSequence nonBreakingSpace = (CharSequence)(String.format("%c", (char)255));
 					if(itemDetails.contains(nonBreakingSpace)) {
 						String[] detailsList = itemDetails.split(String.format("%c", (char)255));
-						terminal.write(detailsList[0], 5, y);
-						terminal.write(String.format("%c", item.glyph()), 8, y++, item.color());
-						terminal.write(String.format("     %s", detailsList[1]), 5, y);
+						ExtendedAsciiPanel.write(detailsList[0], 5, y);
+						ExtendedAsciiPanel.write(String.format("%c", item.glyph()), 8, y++, item.color());
+						ExtendedAsciiPanel.write(String.format("     %s", detailsList[1]), 5, y);
 						y++;
 					}else {
-						terminal.write(itemDetails, 5, y);
-						terminal.write(String.format("%c", item.glyph()), 8, y++, item.color());
+						ExtendedAsciiPanel.write(itemDetails, 5, y);
+						ExtendedAsciiPanel.write(String.format("%c", item.glyph()), 8, y++, item.color());
 					}
 					
-					//terminal.write(itemDetails, 5, y);
-					//terminal.write(String.format("%c", item.glyph()), 8, y++, item.color());
+					//ExtendedAsciiPanel.write(itemDetails, 5, y);
+					//ExtendedAsciiPanel.write(String.format("%c", item.glyph()), 8, y++, item.color());
 					int z = 3;
 					int x = 42;
-					terminal.write(String.format(">> %c %s", item.glyph(), player.nameOf(item)), x, z);
-					terminal.write(String.format("%c", item.glyph()), x+3, z++, item.color());
+					ExtendedAsciiPanel.write(String.format(">> %c %s", item.glyph(), player.nameOf(item)), x, z);
+					ExtendedAsciiPanel.write(String.format("%c", item.glyph()), x+3, z++, item.color());
 					z++;
 					if(item.isWeapon()) {
 						if(item.isIdentified()) {
@@ -153,10 +155,10 @@ public class InventoryScreen implements Screen{
 								}
 								damage = String.format("%d", amount);
 							}
-							terminal.write(String.format("Damage: %s", damage), x, z++);
+							ExtendedAsciiPanel.write(String.format("Damage: %s", damage), x, z++);
 							if(item.thrownDamageDice() != null && item.thrownDamageDice() != Dice.d1) {
 								damage = String.format("%s%s%d", item.thrownDamageDice().toString(), symbol, bonus);
-								terminal.write(String.format("Thrown Damage: %s", damage), x, z++);
+								ExtendedAsciiPanel.write(String.format("Thrown Damage: %s", damage), x, z++);
 							}
 							if(item.rangedDamageDice() != null) {
 								bonus = item.upgradeLevel() + player.dexterityModifier();
@@ -164,7 +166,7 @@ public class InventoryScreen implements Screen{
 									symbol = "+";
 								}
 								damage = String.format("%s%s%d", item.rangedDamageDice().toString(), symbol, bonus);
-								terminal.write(String.format("Ranged Damage: %s", damage), x, z++);
+								ExtendedAsciiPanel.write(String.format("Ranged Damage: %s", damage), x, z++);
 							}
 							Integer attackbonus = 0;
 							if(item.usesStrength()) {
@@ -183,8 +185,8 @@ public class InventoryScreen implements Screen{
 							if(attackbonus >= 0) {
 								symbol = "+";
 							}
-							terminal.write(String.format("Accuracy Bonus: %s%d", symbol, attackbonus), x, z++);
-							terminal.write(String.format("Damage Type: %s", item.effectiveDamageType()), x, z++);
+							ExtendedAsciiPanel.write(String.format("Accuracy Bonus: %s%d", symbol, attackbonus), x, z++);
+							ExtendedAsciiPanel.write(String.format("Damage Type: %s", item.effectiveDamageType()), x, z++);
 
 						}else {
 							String damage = "";
@@ -214,10 +216,10 @@ public class InventoryScreen implements Screen{
 								}
 								damage = String.format("%d (?)", amount);
 							}
-							terminal.write(String.format("Damage: %s", damage), x, z++);
+							ExtendedAsciiPanel.write(String.format("Damage: %s", damage), x, z++);
 							if(item.thrownDamageDice() != null && item.thrownDamageDice() != Dice.d1) {
 								damage = String.format("%s%s%d (?)", item.thrownDamageDice().toString(), symbol, bonus);
-								terminal.write(String.format("Thrown Damage: %s", damage), x, z++);
+								ExtendedAsciiPanel.write(String.format("Thrown Damage: %s", damage), x, z++);
 							}
 							if(item.rangedDamageDice() != null) {
 								bonus = player.dexterityModifier();
@@ -225,7 +227,7 @@ public class InventoryScreen implements Screen{
 									symbol = "+";
 								}
 								damage = String.format("%s%s%d (?)", item.rangedDamageDice().toString(), symbol, bonus);
-								terminal.write(String.format("Ranged Damage: %s", damage), x, z++);
+								ExtendedAsciiPanel.write(String.format("Ranged Damage: %s", damage), x, z++);
 							}
 							Integer attackbonus = 0;
 							if(item.usesStrength()) {
@@ -241,9 +243,9 @@ public class InventoryScreen implements Screen{
 							if(attackbonus >= 0) {
 								symbol = "+";
 							}
-							terminal.write(String.format("Accuracy Bonus: %s%d (?)", symbol, attackbonus), x, z++);
+							ExtendedAsciiPanel.write(String.format("Accuracy Bonus: %s%d (?)", symbol, attackbonus), x, z++);
 							
-							terminal.write("Damage Type: Physical (?)", x, z++);
+							ExtendedAsciiPanel.write("Damage Type: Physical (?)", x, z++);
 							
 						}
 						z++;
@@ -310,11 +312,11 @@ public class InventoryScreen implements Screen{
 
 							for (int j=0; j<traits_lines.size(); j++) {
 								if (j == 0) {
-									terminal.write("Traits: " + traits_lines.get(j), x, z++);
+									ExtendedAsciiPanel.write("Traits: " + traits_lines.get(j), x, z++);
 								}
 								else {
 									// write the line indented
-									terminal.write(traits_lines.get(j), x+traits_indent, z++);
+									ExtendedAsciiPanel.write(traits_lines.get(j), x+traits_indent, z++);
 								}
 							}
 							z++;
@@ -328,7 +330,7 @@ public class InventoryScreen implements Screen{
 						}else {
 							spell = "Spell: Unknown";
 						}
-						terminal.write(spell, x, z++);
+						ExtendedAsciiPanel.write(spell, x, z++);
 						
 						String range;
 						if(item.isIdentified()) {
@@ -347,7 +349,7 @@ public class InventoryScreen implements Screen{
 						}else {
 							range = "Range: Unknown";
 						}
-						terminal.write(range, x, z++);
+						ExtendedAsciiPanel.write(range, x, z++);
 						
 						String targets;
 						if(item.isIdentified()) {
@@ -362,7 +364,7 @@ public class InventoryScreen implements Screen{
 						}else {
 							targets = "Targets: Unknown";
 						}
-						terminal.write(targets, x, z++);
+						ExtendedAsciiPanel.write(targets, x, z++);
 						
 					}
 					
@@ -373,7 +375,7 @@ public class InventoryScreen implements Screen{
 						}else {
 							armor = String.format("Armor Class: %d (?)", item.armorClass());
 						}
-						terminal.write(armor, x, z++);
+						ExtendedAsciiPanel.write(armor, x, z++);
 						
 						ArrayList<String> traits = new ArrayList<>();
 						if(item.enchantment() != null && item.isIdentified()) {
@@ -409,11 +411,11 @@ public class InventoryScreen implements Screen{
 
 							for (int j=0; j<traits_lines.size(); j++) {
 								if (j == 0) {
-									terminal.write("Traits: " + traits_lines.get(j), x, z++);
+									ExtendedAsciiPanel.write("Traits: " + traits_lines.get(j), x, z++);
 								}
 								else {
 									// write the line indented
-									terminal.write(traits_lines.get(j), x+traits_indent, z++);
+									ExtendedAsciiPanel.write(traits_lines.get(j), x+traits_indent, z++);
 								}
 							}
 						}
@@ -437,9 +439,9 @@ public class InventoryScreen implements Screen{
 						String skillprint = String.format("Prerequisites: %s", skill);
 						if(skillprint.length()+x > 120){
 							skillprint = String.format("Prerequisites: %s", skill);
-							terminal.write(skillprint, x, z++);
+							ExtendedAsciiPanel.write(skillprint, x, z++);
 						}else {
-							terminal.write(skillprint, x, z++);
+							ExtendedAsciiPanel.write(skillprint, x, z++);
 						}
 						z++;
 
@@ -463,7 +465,7 @@ public class InventoryScreen implements Screen{
 							food = "Incredible!";
 						}
 						
-						terminal.write(String.format("Food Value: %s", food), x, z++);
+						ExtendedAsciiPanel.write(String.format("Food Value: %s", food), x, z++);
 					}
 					
 					if(item.quaffEffect() != null) {
@@ -471,7 +473,7 @@ public class InventoryScreen implements Screen{
 						if(item.isIdentified()) {
 							effect = item.potionName();
 						}
-						terminal.write(String.format("Potion Effect: %s", effect), x, z++);
+						ExtendedAsciiPanel.write(String.format("Potion Effect: %s", effect), x, z++);
 					}
 					
 					
@@ -480,27 +482,27 @@ public class InventoryScreen implements Screen{
 					
 					
 					if(item.isIdentified() || (item.foodValue() > 0 || item.isIronKey())) {
-						terminal.write(String.format("Value: %s gold", item.currentGoldValue()), x, z++);
+						ExtendedAsciiPanel.write(String.format("Value: %s gold", item.currentGoldValue()), x, z++);
 					}else {
-						terminal.write(String.format("Value: %s gold (?)", item.baseGoldValue()), x, z++);
+						ExtendedAsciiPanel.write(String.format("Value: %s gold (?)", item.baseGoldValue()), x, z++);
 					}
 					z++;
 					if(item.quaffEffect() != null) {
 						if(item.isIdentified()) {
-							terminal.write(item.getDescription().getPotionDescriptionBase(), x, z++);
-							terminal.write(item.getDescription().getPotionDescriptionKnown(), x, z++);
+							ExtendedAsciiPanel.write(item.getDescription().getPotionDescriptionBase(), x, z++);
+							ExtendedAsciiPanel.write(item.getDescription().getPotionDescriptionKnown(), x, z++);
 						}else {
-							terminal.write(item.getDescription().getPotionDescriptionBase(), x, z++);
-							terminal.write(item.getDescription().getPotionDescriptionUnknown(), x, z++);
+							ExtendedAsciiPanel.write(item.getDescription().getPotionDescriptionBase(), x, z++);
+							ExtendedAsciiPanel.write(item.getDescription().getPotionDescriptionUnknown(), x, z++);
 						}
 					}
 					if(item.isWand()) {
 						if(item.isIdentified()) {
-							terminal.write(item.getDescription().getWandDescriptionBase(), x, z++);
-							terminal.write(item.getDescription().getWandDescriptionKnown(), x, z++);
+							ExtendedAsciiPanel.write(item.getDescription().getWandDescriptionBase(), x, z++);
+							ExtendedAsciiPanel.write(item.getDescription().getWandDescriptionKnown(), x, z++);
 						}else {
-							terminal.write(item.getDescription().getWandDescriptionBase(), x, z++);
-							terminal.write(item.getDescription().getWandDescriptionUnknown(), x, z++);
+							ExtendedAsciiPanel.write(item.getDescription().getWandDescriptionBase(), x, z++);
+							ExtendedAsciiPanel.write(item.getDescription().getWandDescriptionUnknown(), x, z++);
 						}
 					}
 					
@@ -568,32 +570,32 @@ public class InventoryScreen implements Screen{
 					CharSequence nonBreakingSpace = (CharSequence)(String.format("%c", (char)255));
 					if(itemDetails.contains(nonBreakingSpace)) {
 						String[] detailsList = itemDetails.split(String.format("%c", (char)255));
-						terminal.write(detailsList[0], 5, y);
-						terminal.write(String.format("%c", inventory.get(i).glyph()), 5, y++, inventory.get(i).color());
-						terminal.write(String.format("  %s", detailsList[1]), 5, y);
+						ExtendedAsciiPanel.write(detailsList[0], 5, y);
+						ExtendedAsciiPanel.write(String.format("%c", inventory.get(i).glyph()), 5, y++, inventory.get(i).color());
+						ExtendedAsciiPanel.write(String.format("  %s", detailsList[1]), 5, y);
 						y++;
 					}else {
-						terminal.write(itemDetails, 5, y);
-						terminal.write(String.format("%c", inventory.get(i).glyph()), 5, y++, inventory.get(i).color());
+						ExtendedAsciiPanel.write(itemDetails, 5, y);
+						ExtendedAsciiPanel.write(String.format("%c", inventory.get(i).glyph()), 5, y++, inventory.get(i).color());
 					}
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).isEquippable()) {
-					terminal.writeCenter(String.format("-- [%s]: Equip --", KeybindManager.keybindText(KeybindManager.interactionEquipItem)), 36);
+					ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Equip --", KeybindManager.keybindText(KeybindManager.interactionEquipItem)), 36);
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).foodValue() > 0) {
-					terminal.writeCenter(String.format("-- [%s]: Eat --", KeybindManager.keybindText(KeybindManager.interactionEatFood)), 36);
+					ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Eat --", KeybindManager.keybindText(KeybindManager.interactionEatFood)), 36);
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).quaffEffect() != null) {
-					terminal.writeCenter(String.format("-- [%s]: Quaff --", KeybindManager.keybindText(KeybindManager.interactionDrinkPotion)), 36);
+					ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Quaff --", KeybindManager.keybindText(KeybindManager.interactionDrinkPotion)), 36);
 				}
 				if(checkIfSelected(i, check) && inventory.get(i).writtenSpells().size() > 0) {
-					terminal.writeCenter(String.format("-- [%s]: Read --", KeybindManager.keybindText(KeybindManager.interactionReadSpell)), 36);
+					ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Read --", KeybindManager.keybindText(KeybindManager.interactionReadSpell)), 36);
 				}
 				
 				if(checkIfSelected(i, check) && inventory.get(i).isQuickslottable()) {
-					terminal.writeCenter(String.format("-- [%s-%s]: Equip to quickslot 1-6 | [%s]: Drop | [%s]: Throw --", KeybindManager.keybindText(KeybindManager.interactionQuickslot_1), KeybindManager.keybindText(KeybindManager.interactionQuickslot_6), KeybindManager.keybindText(KeybindManager.interactionDropItem), KeybindManager.keybindText(KeybindManager.interactionThrowItem)), 38);
+					ExtendedAsciiPanel.writeCenter(String.format("-- [%s-%s]: Equip to quickslot 1-6 | [%s]: Drop | [%s]: Throw --", KeybindManager.keybindText(KeybindManager.interactionQuickslot_1), KeybindManager.keybindText(KeybindManager.interactionQuickslot_6), KeybindManager.keybindText(KeybindManager.interactionDropItem), KeybindManager.keybindText(KeybindManager.interactionThrowItem)), 38);
 				}else if(checkIfSelected(i, check)){
-					terminal.writeCenter(String.format("-- [%s]: Drop | [%s]: Throw --", KeybindManager.keybindText(KeybindManager.interactionDropItem), KeybindManager.keybindText(KeybindManager.interactionThrowItem)), 38);
+					ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Drop | [%s]: Throw --", KeybindManager.keybindText(KeybindManager.interactionDropItem), KeybindManager.keybindText(KeybindManager.interactionThrowItem)), 38);
 				}
 				
 				
@@ -602,13 +604,13 @@ public class InventoryScreen implements Screen{
 		//
 		
 		
-        terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Sort Inventory | [%s]: Cancel --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuSort), KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 40);
+        ExtendedAsciiPanel.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Sort Inventory | [%s]: Cancel --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuSort), KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 40);
 		
 	}
 	
     /*protected Screen use(Spell spell){
     	if(spell.isSelfCast()) {
-    		//player.doAction(new TerminalText("check"));
+    		//player.doAction(new ExtendedAsciiPanelText("check"));
     		player.castSpell(spell, player.x(), player.y(), null);
     		return null;
     	}else {
@@ -742,7 +744,7 @@ public class InventoryScreen implements Screen{
 						player.ai().playerAICastSpell(inventory.get(check), inventory.get(check).writtenSpells().get(0), player.x(), player.y());
 						return null;
 					}else {
-						return new SpellSelectScreen(player, sx, sy, inventory.get(check));
+						return new SpellSelectScreen(player, inventory.get(check));
 					}
 				}
 			}else {

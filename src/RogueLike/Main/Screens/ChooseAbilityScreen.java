@@ -4,10 +4,10 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import RogueLike.Main.Enums.PlayerAncestry;
-import RogueLike.Main.Enums.PlayerClass;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.Enums.PlayerAncestry;
+import RogueLike.Main.Enums.PlayerClass;
 import RogueLike.Main.Managers.KeybindManager;
 
 public class ChooseAbilityScreen implements Screen{
@@ -223,55 +223,55 @@ public class ChooseAbilityScreen implements Screen{
 		playerAbilities.add(playerIntelligence);
 	}
 
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		changeMarkers(check);
-		terminal.clear();
-		Screen.generateBorders(terminal);
-		terminal.writeCenter("== Select your starting Ability Scores ==", 1);	
+		ExtendedAsciiPanel.clear();
+		Screen.generateBorders();;
+		ExtendedAsciiPanel.writeCenter("== Select your starting Ability Scores ==", 1);	
 		int y = 3;
-		terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerNW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerNE), 5, y++);
-		terminal.write(String.format("%c   == Points remaining:  %2d ==   %c", borderVertical, abilityPoints, borderVertical), 5, y++);
-		terminal.write(String.format("%c                                 %c", borderVertical, borderVertical), 5, y++);
-		terminal.write(String.format("%c %c %c Strength:     %2d ( %s ) %c %c %c", borderVertical, strLeft, strDown, playerStrength, ExtraMaths.modifierToString(strengthModifier()), strUp, strRight, borderVertical), 5, y++);
-		terminal.write(String.format("%c                                 %c", borderVertical, borderVertical), 5, y++);
-		terminal.write(String.format("%c %c %c Dexterity:    %2d ( %s ) %c %c %c", borderVertical, dexLeft, dexDown, playerDexterity, ExtraMaths.modifierToString(dexterityModifier()), dexUp, dexRight, borderVertical), 5, y++);
-		terminal.write(String.format("%c                                 %c", borderVertical, borderVertical), 5, y++);
-		terminal.write(String.format("%c %c %c Intelligence: %2d ( %s ) %c %c %c", borderVertical, intLeft, intDown, playerIntelligence, ExtraMaths.modifierToString(intelligenceModifier()), intUp, intRight, borderVertical), 5, y++);
-		terminal.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 5, y++);
+		ExtendedAsciiPanel.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerNW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerNE), 5, y++);
+		ExtendedAsciiPanel.write(String.format("%c   == Points remaining:  %2d ==   %c", borderVertical, abilityPoints, borderVertical), 5, y++);
+		ExtendedAsciiPanel.write(String.format("%c                                 %c", borderVertical, borderVertical), 5, y++);
+		ExtendedAsciiPanel.write(String.format("%c %c %c Strength:     %2d ( %s ) %c %c %c", borderVertical, strLeft, strDown, playerStrength, ExtraMaths.modifierToString(strengthModifier()), strUp, strRight, borderVertical), 5, y++);
+		ExtendedAsciiPanel.write(String.format("%c                                 %c", borderVertical, borderVertical), 5, y++);
+		ExtendedAsciiPanel.write(String.format("%c %c %c Dexterity:    %2d ( %s ) %c %c %c", borderVertical, dexLeft, dexDown, playerDexterity, ExtraMaths.modifierToString(dexterityModifier()), dexUp, dexRight, borderVertical), 5, y++);
+		ExtendedAsciiPanel.write(String.format("%c                                 %c", borderVertical, borderVertical), 5, y++);
+		ExtendedAsciiPanel.write(String.format("%c %c %c Intelligence: %2d ( %s ) %c %c %c", borderVertical, intLeft, intDown, playerIntelligence, ExtraMaths.modifierToString(intelligenceModifier()), intUp, intRight, borderVertical), 5, y++);
+		ExtendedAsciiPanel.write(String.format("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", borderCornerSW, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderHorizontal, borderCornerSE), 5, y++);
 		
 		
 		if(check == 0) {
-			terminal.write("+||+ Strength +||+", 21, y+=2);
+			ExtendedAsciiPanel.write("+||+ Strength +||+", 21, y+=2);
 			y++;
-			terminal.write("Strength represents the physical power of your body.", 26, y+=1);
-			terminal.write("Strength increases the damage dealt by simple and martial weapons,", 26, y+=1);
-			terminal.write("as well as the amount of health you gain from levelling up.", 26, y+=1);
+			ExtendedAsciiPanel.write("Strength represents the physical power of your body.", 26, y+=1);
+			ExtendedAsciiPanel.write("Strength increases the damage dealt by simple and martial weapons,", 26, y+=1);
+			ExtendedAsciiPanel.write("as well as the amount of health you gain from levelling up.", 26, y+=1);
 			y++;
-			terminal.write("Strength is most important for Warriors, Monks, and Paladins.", 26, y+=1);
+			ExtendedAsciiPanel.write("Strength is most important for Warriors, Monks, and Paladins.", 26, y+=1);
 		}else if(check == 1) {
-			terminal.write("+||+ Dexterity +||+", 21, y+=2);
+			ExtendedAsciiPanel.write("+||+ Dexterity +||+", 21, y+=2);
 			y++;
-			terminal.write("Dexterity is a measure of your agility and reflexes.", 26, y+=1);
-			terminal.write("Dexterity increases the damage dealt by ranged and finesse weapons,", 26, y+=1);
-			terminal.write("as well as providing a bonus to light and medium armor.", 26, y+=1);
+			ExtendedAsciiPanel.write("Dexterity is a measure of your agility and reflexes.", 26, y+=1);
+			ExtendedAsciiPanel.write("Dexterity increases the damage dealt by ranged and finesse weapons,", 26, y+=1);
+			ExtendedAsciiPanel.write("as well as providing a bonus to light and medium armor.", 26, y+=1);
 			y++;
-			terminal.write("Dexterity is most important for Rogues, Rangers, and Witches.", 26, y+=1);
+			ExtendedAsciiPanel.write("Dexterity is most important for Rogues, Rangers, and Witches.", 26, y+=1);
 		}else if(check == 2) {
-			terminal.write("+||+ Intelligence +||+", 21, y+=2);
+			ExtendedAsciiPanel.write("+||+ Intelligence +||+", 21, y+=2);
 			y++;
-			terminal.write("Intelligence represents your willpower and magical talent.", 26, y+=1);
-			terminal.write("Intelligence increases the effectiveness of wands,", 26, y+=1);
-			terminal.write("as well as the amount of mana you gain from levelling up.", 26, y+=1);
+			ExtendedAsciiPanel.write("Intelligence represents your willpower and magical talent.", 26, y+=1);
+			ExtendedAsciiPanel.write("Intelligence increases the effectiveness of wands,", 26, y+=1);
+			ExtendedAsciiPanel.write("as well as the amount of mana you gain from levelling up.", 26, y+=1);
 			y++;
-			terminal.write("Intelligence is most important for Mages, Witches, and Paladins.", 26, y+=1);
+			ExtendedAsciiPanel.write("Intelligence is most important for Mages, Witches, and Paladins.", 26, y+=1);
 		}
 		
 		
 		if(abilityPoints < 1) {
-			terminal.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 36);
+			ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 36);
 		}
-		terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Increase/Decrease Attribute --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 38);
-		terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 40);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Increase/Decrease Attribute --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 38);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 40);
 	}
 	
 	public Screen respondToUserInput(KeyEvent key) {

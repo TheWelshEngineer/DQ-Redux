@@ -1,12 +1,16 @@
 package RogueLike.Main.Factories;
 
+import java.io.Serializable;
+
 import RogueLike.Main.Dice;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.CreatureModifier;
 import RogueLike.Main.Damage.DamageType;
 
-public class ModifierFactory {
+public class ModifierFactory implements Serializable {
 	
+	private static final long serialVersionUID = -5464036551832135460L;
+
 	public CreatureModifier randomCreatureModifier() {
 		switch(ExtraMaths.diceRoll(1, 7)) {
 		case 1: return fireModifier();

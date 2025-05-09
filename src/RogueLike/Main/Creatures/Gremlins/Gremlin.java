@@ -4,11 +4,12 @@ import java.awt.Color;
 
 import RogueLike.Main.AI.GremlinAI.GremlinAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Items.Item;
 
 public class Gremlin extends Creature{
 	
+	private static final long serialVersionUID = -8112396686033177716L;
 	private static int defaultMaxHP = 17;
 	private static int defaultMaxMana = 10;
 	private static int defaultAC = 12;
@@ -17,15 +18,15 @@ public class Gremlin extends Creature{
 	private static int defaultIntelligence = 10;
 	private static int defaultVisionRadius = 8;
 
-	public Gremlin(ObjectFactory factory, Creature player, String name, char glyph, Color color, int id, int depth) {
-		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
+	public Gremlin( Creature player, String name, char glyph, Color color, int id, int depth) {
+		super(name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
-		new GremlinAI(this, player, factory, factory.world);
+		new GremlinAI(this, player);
 		this.creatureTypes.add("Gremlin");
-		Item startWeapon = factory.itemFactory.newShortbow(0, false, true, true, false);
+		Item startWeapon = FactoryManager.getItemFactory().newShortbow(0, false, true, true, false);
 		this.inventory().add(startWeapon);
 		this.equip(startWeapon, true);
-		Item startAmmo = factory.itemFactory.newArrows(0, 0);
+		Item startAmmo = FactoryManager.getItemFactory().newArrows(0, 0);
 		this.inventory().add(startAmmo);
 		this.equip(startAmmo, true);
 		this.scaleHPWithDepth(depth);

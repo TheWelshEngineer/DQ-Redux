@@ -1,8 +1,11 @@
 package RogueLike.Main.Factories;
 
+import java.io.Serializable;
+
 import RogueLike.Main.Dice;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Items.ArrowsRangedWeapon;
@@ -28,24 +31,23 @@ import RogueLike.Main.Items.TwoHandedMeleeWeapon;
 import RogueLike.Main.Items.VersatileFinesseWeapon;
 import RogueLike.Main.Items.VersatileMeleeWeapon;
 import RogueLike.Main.Items.Wand;
-public class ItemFactory {
+public class ItemFactory implements Serializable {
+	
+	private static final long serialVersionUID = 8562110641811695913L;
+
 	public static final int VICTORY_ITEM_ID = 200;
 	
-	public ObjectFactory objectFactory;
-	
-	public ItemFactory(ObjectFactory factory) {
-		this.objectFactory = factory;
+	public ItemFactory() {
 	}
-	
-	
-	
+
+
 	//Rock
 	public Item newRock(int depth, int addToWorld) {
 		Item rock = new Item(',', ExtendedAsciiPanel.yellow, "Rock", "Rock");
 		rock.setIsStackable(true);
 		rock.setID(0);
 		if(addToWorld > 0) {
-			objectFactory.world.addAtEmptyLocation(rock, depth);
+			World.addAtEmptyLocation(rock, depth);
 		}
 		return rock;
 	}
@@ -59,7 +61,7 @@ public class ItemFactory {
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(1);
 		if(addToWorld > 0) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -72,7 +74,7 @@ public class ItemFactory {
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(2);
 		if(addToWorld > 0) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -85,7 +87,7 @@ public class ItemFactory {
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(3);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -94,7 +96,7 @@ public class ItemFactory {
 	public Item newIronKey(int depth, boolean addToWorld) {
 		Item key = new IronKey((char)157, ExtendedAsciiPanel.white, "Iron Key", null, depth, 100);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(key, depth);
+			World.addAtEmptyLocation(key, depth);
 		}
 		return key;
 	}
@@ -104,7 +106,7 @@ public class ItemFactory {
 		Item item = new Item('*', ExtendedAsciiPanel.brightWhite, "Eitak's Ancient Axe", "Eitak's Ancient Axe");
 		item.setID(VICTORY_ITEM_ID);
 		if(addToWorld > 0) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -121,7 +123,7 @@ public class ItemFactory {
 		item.setBaseGoldValue(1);
 		item.setID(300);
 		if(addToWorld > 0) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -137,7 +139,7 @@ public class ItemFactory {
 		item.setBaseGoldValue(3);
 		item.setID(301);
 		if(addToWorld > 0) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -153,7 +155,7 @@ public class ItemFactory {
 		item.setBaseGoldValue(5);
 		item.setID(302);
 		if(addToWorld > 0) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -165,22 +167,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -191,22 +193,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -219,22 +221,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -247,22 +249,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -275,22 +277,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -303,22 +305,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -331,22 +333,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -359,22 +361,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -386,22 +388,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -411,22 +413,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -438,22 +440,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -465,22 +467,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -492,22 +494,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -519,22 +521,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -546,22 +548,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -573,22 +575,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -600,22 +602,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -626,22 +628,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -650,22 +652,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -676,22 +678,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -702,22 +704,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -728,22 +730,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -754,22 +756,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -780,22 +782,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -806,22 +808,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -832,22 +834,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -858,22 +860,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -884,22 +886,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -911,22 +913,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -938,22 +940,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -964,22 +966,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomWeaponEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -990,22 +992,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1014,22 +1016,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1038,22 +1040,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1062,22 +1064,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1086,22 +1088,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1110,22 +1112,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1134,22 +1136,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1158,22 +1160,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1182,22 +1184,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1206,22 +1208,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1230,22 +1232,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1254,22 +1256,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1280,22 +1282,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1304,22 +1306,22 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1328,358 +1330,358 @@ public class ItemFactory {
 		//
 		if(canUpgrade) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.upgradeItem(item, Dice.d4.roll());
+				FactoryManager.getObjectFactory().upgradeItem(item, Dice.d4.roll());
 			}
 		}
 		if(canEnchant) {
 			if(Dice.d100.roll() >= 75) {
-				this.objectFactory.enchantItem(item, this.objectFactory.enchantmentFactory.randomArmorEnchantment(item));
+				FactoryManager.getObjectFactory().enchantItem(item, FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 			}
 		}
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	//Rings
 	public Item newStrengthRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Strength", 0, 250, 1000);
+		Item item = new Ring( (char)9, "Ring of Strength", 0, 250, 1000);
 		item.modifyStrength(2);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newDexterityRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Dexterity", 1, 250, 1001);
+		Item item = new Ring( (char)9, "Ring of Dexterity", 1, 250, 1001);
 		item.modifyDexterity(2);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newIntelligenceRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Intelligence", 2, 250, 1002);
+		Item item = new Ring( (char)9, "Ring of Intelligence", 2, 250, 1002);
 		item.modifyIntelligence(2);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newArmorRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Shielding", 3, 250, 1003);
+		Item item = new Ring( (char)9, "Ring of Shielding", 3, 250, 1003);
 		item.modifyArmorClass(2);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newFireResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Fire Resistance", 4, 250, 1004);
+		Item item = new Ring( (char)9, "Ring of Fire Resistance", 4, 250, 1004);
 		item.addResistance(DamageType.FIRE);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newFrostResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Frost Resistance", 5, 250, 1005);
+		Item item = new Ring( (char)9, "Ring of Frost Resistance", 5, 250, 1005);
 		item.addResistance(DamageType.FROST);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newShockResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Shock Resistance", 6, 250, 1006);
+		Item item = new Ring( (char)9, "Ring of Shock Resistance", 6, 250, 1006);
 		item.addResistance(DamageType.SHOCK);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newPoisonResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Poison Resistance", 7, 250, 1007);
+		Item item = new Ring( (char)9, "Ring of Poison Resistance", 7, 250, 1007);
 		item.addResistance(DamageType.POISON);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newAcidResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Acid Resistance", 8, 250, 1008);
+		Item item = new Ring( (char)9, "Ring of Acid Resistance", 8, 250, 1008);
 		item.addResistance(DamageType.ACID);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newMagicResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Magic Resistance", 9, 250, 1009);
+		Item item = new Ring( (char)9, "Ring of Magic Resistance", 9, 250, 1009);
 		item.addResistance(DamageType.MAGIC);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newChaosResistanceRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Chaos Resistance", 10, 250, 1010);
+		Item item = new Ring( (char)9, "Ring of Chaos Resistance", 10, 250, 1010);
 		item.addResistance(DamageType.CHAOS);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newVisionRing(int depth, boolean addToWorld, boolean canCurse) {
-		Item item = new Ring(this.objectFactory, (char)9, "Ring of Sight", 11, 250, 1011);
+		Item item = new Ring( (char)9, "Ring of Sight", 11, 250, 1011);
 		item.modifyVisionRadius(4);
 		//
 		if(canCurse) {
 			if(Dice.d100.roll() >= 60) {
-				this.objectFactory.curseItem(item);
+				FactoryManager.getObjectFactory().curseItem(item);
 			}
 		}
 		//
 		if(addToWorld) { 
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	//Potions
 	public Item newPotionOfHealing(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Healing", 0, "Healing", objectFactory.effectFactory.maxHealth(), false, 100, 1100);
+		Item item = new Potion( (char)13, "Potion of Healing", 0, "Healing", FactoryManager.getEffectFactory().maxHealth(), false, 100, 1100);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPotionOfMana(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Mana", 1, "Mana Restoration", objectFactory.effectFactory.maxMana(), false, 100, 1102);
+		Item item = new Potion( (char)13, "Potion of Mana", 1, "Mana Restoration", FactoryManager.getEffectFactory().maxMana(), false, 100, 1102);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPotionOfPoison(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Poison", 2, "Poison", objectFactory.effectFactory.poisoned(3+depth+Dice.d6.roll()), true, 100, 1103);
+		Item item = new Potion( (char)13, "Potion of Poison", 2, "Poison", FactoryManager.getEffectFactory().poisoned(3+depth+Dice.d6.roll()), true, 100, 1103);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPotionOfGiantStrength(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Giant Strength", 3, "Giant Strength", objectFactory.effectFactory.giantStrength(10+depth+Dice.d4.roll()), false, 100, 1104);
+		Item item = new Potion( (char)13, "Potion of Giant Strength", 3, "Giant Strength", FactoryManager.getEffectFactory().giantStrength(10+depth+Dice.d4.roll()), false, 100, 1104);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPotionOfInvisibility(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Invisibility", 4, "Invisibility", objectFactory.effectFactory.invisible(10+depth+Dice.d4.roll()), false, 100, 1105);
+		Item item = new Potion( (char)13, "Potion of Invisibility", 4, "Invisibility", FactoryManager.getEffectFactory().invisible(10+depth+Dice.d4.roll()), false, 100, 1105);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPotionOfParalysis(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Paralysis", 5, "Paralysis", objectFactory.effectFactory.paralysed(3+depth+Dice.d6.roll()), true, 100, 1106);
+		Item item = new Potion( (char)13, "Potion of Paralysis", 5, "Paralysis", FactoryManager.getEffectFactory().paralysed(3+depth+Dice.d6.roll()), true, 100, 1106);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPotionOfCausticGas(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Caustic Gas", 6, "Caustic Cloud", objectFactory.effectFactory.causticVapor(3+depth+Dice.d6.roll()), true, 100, 1107);
+		Item item = new Potion( (char)13, "Potion of Caustic Gas", 6, "Caustic Cloud", FactoryManager.getEffectFactory().causticVapor(3+depth+Dice.d6.roll()), true, 100, 1107);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPotionOfRestoration(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Restoration", 7, "Restoration", objectFactory.effectFactory.restoration(), false, 100, 1108);
+		Item item = new Potion( (char)13, "Potion of Restoration", 7, "Restoration", FactoryManager.getEffectFactory().restoration(), false, 100, 1108);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPotionOfMindVision(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Mind Vision", 8, "Mind Vision", objectFactory.effectFactory.mindVision(10+depth+Dice.d4.roll()), false, 100, 1109);
+		Item item = new Potion( (char)13, "Potion of Mind Vision", 8, "Mind Vision", FactoryManager.getEffectFactory().mindVision(10+depth+Dice.d4.roll()), false, 100, 1109);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPotionOfOvergrowth(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Overgrowth", 9, "Overgrowth", objectFactory.effectFactory.overgrow(3+depth+Dice.d6.roll()), true, 100, 1110);
+		Item item = new Potion( (char)13, "Potion of Overgrowth", 9, "Overgrowth", FactoryManager.getEffectFactory().overgrow(3+depth+Dice.d6.roll()), true, 100, 1110);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPotionOfCombustion(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Combustion", 10, "Combustion Cloud", objectFactory.effectFactory.fireball(3+depth+Dice.d6.roll()), true, 100, 1111);
+		Item item = new Potion( (char)13, "Potion of Combustion", 10, "Combustion Cloud", FactoryManager.getEffectFactory().fireball(3+depth+Dice.d6.roll()), true, 100, 1111);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPotionOfLevitation(int depth, boolean addToWorld) {
-		Item item = new Potion(this.objectFactory, (char)13, "Potion of Levitation", 11, "Levitation", objectFactory.effectFactory.levitating(10+depth+Dice.d4.roll()), false, 100, 1112);
+		Item item = new Potion( (char)13, "Potion of Levitation", 11, "Levitation", FactoryManager.getEffectFactory().levitating(10+depth+Dice.d4.roll()), false, 100, 1112);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	//Scrolls
 	public Item newScrollOfMagicMapping(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Magic Mapping", 0, objectFactory.spellFactory.magicMappingScroll(reference), 150, 1200);
+		Item item = new Scroll( (char)247, "Scroll of Magic Mapping", 0, FactoryManager.getSpellFactory().magicMappingScroll(reference), 150, 1200);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newScrollOfIdentify(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Identify", 1, objectFactory.spellFactory.identifyScroll(reference), 150, 1201);
+		Item item = new Scroll( (char)247, "Scroll of Identify", 1, FactoryManager.getSpellFactory().identifyScroll(reference), 150, 1201);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newScrollOfSummonMonsters(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Summon Monsters", 2, objectFactory.spellFactory.summonMonstersScroll(reference), 150, 1202);
+		Item item = new Scroll( (char)247, "Scroll of Summon Monsters", 2, FactoryManager.getSpellFactory().summonMonstersScroll(reference), 150, 1202);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newScrollOfUpgrade(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Upgrade", 3, objectFactory.spellFactory.upgradeScroll(reference), 150, 1203);
+		Item item = new Scroll( (char)247, "Scroll of Upgrade", 3, FactoryManager.getSpellFactory().upgradeScroll(reference), 150, 1203);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newScrollOfRemoveCurse(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Remove Curse", 4, objectFactory.spellFactory.removeCurseScroll(reference), 150, 1204);
+		Item item = new Scroll( (char)247, "Scroll of Remove Curse", 4, FactoryManager.getSpellFactory().removeCurseScroll(reference), 150, 1204);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newScrollOfEnchantment(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Enchantment", 5, objectFactory.spellFactory.magicMappingScroll(reference), 150, 1205);
+		Item item = new Scroll( (char)247, "Scroll of Enchantment", 5, FactoryManager.getSpellFactory().magicMappingScroll(reference), 150, 1205);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newScrollOfConfusion(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Scroll(this.objectFactory, (char)247, "Scroll of Confusion", 6, objectFactory.spellFactory.confuseScroll(reference), 150, 1206);
+		Item item = new Scroll( (char)247, "Scroll of Confusion", 6, FactoryManager.getSpellFactory().confuseScroll(reference), 150, 1206);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1687,190 +1689,190 @@ public class ItemFactory {
 	//Wands
 	//Evocation Wands
 	public Item newMagicMissileWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Magic Missile", 1, objectFactory.spellFactory.magicMissile(reference), 500, 1300);
+		Item item = new Wand( (char)33, "Wand of Magic Missile", 1, FactoryManager.getSpellFactory().magicMissile(reference), 500, 1300);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newForceBlastWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Force Blast", 2, objectFactory.spellFactory.forceBlast(reference), 500, 1301);
+		Item item = new Wand( (char)33, "Wand of Force Blast", 2, FactoryManager.getSpellFactory().forceBlast(reference), 500, 1301);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newArchmagesAegisWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Archmage's Aegis", 3, objectFactory.spellFactory.archmagesAegis(reference), 500, 1302);
+		Item item = new Wand( (char)33, "Wand of Archmage's Aegis", 3, FactoryManager.getSpellFactory().archmagesAegis(reference), 500, 1302);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newFindTrapsWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Find Traps", 4, objectFactory.spellFactory.findTraps(reference), 500, 1303);
+		Item item = new Wand( (char)33, "Wand of Find Traps", 4, FactoryManager.getSpellFactory().findTraps(reference), 500, 1303);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	//Pyromancy Wands
 	public Item newFireboltWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Firebolt", 5, objectFactory.spellFactory.firebolt(reference), 500, 1400);
+		Item item = new Wand( (char)33, "Wand of Firebolt", 5, FactoryManager.getSpellFactory().firebolt(reference), 500, 1400);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newBrazierBarrierWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Brazier Barrier", 6, objectFactory.spellFactory.brazierBarrier(reference), 500, 1401);
+		Item item = new Wand( (char)33, "Wand of Brazier Barrier", 6, FactoryManager.getSpellFactory().brazierBarrier(reference), 500, 1401);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newPyrotechnicsWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Pyrotechnics", 7, objectFactory.spellFactory.pyrotechnics(reference), 500, 1402);
+		Item item = new Wand( (char)33, "Wand of Pyrotechnics", 7, FactoryManager.getSpellFactory().pyrotechnics(reference), 500, 1402);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	public Item newFlashfireWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flashfire", 8, objectFactory.spellFactory.flashfire(reference), 500, 1403);
+		Item item = new Wand( (char)33, "Wand of Flashfire", 8, FactoryManager.getSpellFactory().flashfire(reference), 500, 1403);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 
 	public Item newDragonsBreathWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Dragon's Breath", 9, objectFactory.spellFactory.dragonsBreath(reference), 500, 1404);
+		Item item = new Wand( (char)33, "Wand of Dragon's Breath", 9, FactoryManager.getSpellFactory().dragonsBreath(reference), 500, 1404);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	//Cryomancy Wands
 	public Item newFlashFreezeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Flash Freeze", 10, objectFactory.spellFactory.flashFreeze(reference), 500, 1500);
+		Item item = new Wand( (char)33, "Wand of Flash Freeze", 10, FactoryManager.getSpellFactory().flashFreeze(reference), 500, 1500);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newIceWallWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Wall", 11, objectFactory.spellFactory.iceWall(reference), 500, 1501);
+		Item item = new Wand( (char)33, "Wand of Ice Wall", 11, FactoryManager.getSpellFactory().iceWall(reference), 500, 1501);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newIceKnifeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Ice Knife", 12, objectFactory.spellFactory.iceKnife(reference), 500, 1502);
+		Item item = new Wand( (char)33, "Wand of Ice Knife", 12, FactoryManager.getSpellFactory().iceKnife(reference), 500, 1502);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newGlaciateWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Glaciate", 13, objectFactory.spellFactory.glaciate(reference), 500, 1503);
+		Item item = new Wand( (char)33, "Wand of Glaciate", 13, FactoryManager.getSpellFactory().glaciate(reference), 500, 1503);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	//Electromancy Wands
 	public Item newChainLightningWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Chain Lightning", 14, objectFactory.spellFactory.chainLightning(reference), 500, 1600);
+		Item item = new Wand( (char)33, "Wand of Chain Lightning", 14, FactoryManager.getSpellFactory().chainLightning(reference), 500, 1600);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLightningLanceWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lightning Lance", 15, objectFactory.spellFactory.lightningLance(reference), 500, 1601);
+		Item item = new Wand( (char)33, "Wand of Lightning Lance", 15, FactoryManager.getSpellFactory().lightningLance(reference), 500, 1601);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newStaticSurgeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Static Surge", 16, objectFactory.spellFactory.staticSurge(reference), 500, 1602);
+		Item item = new Wand( (char)33, "Wand of Static Surge", 16, FactoryManager.getSpellFactory().staticSurge(reference), 500, 1602);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newHasteWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Haste", 17, objectFactory.spellFactory.haste(reference), 500, 1603);
+		Item item = new Wand( (char)33, "Wand of Haste", 17, FactoryManager.getSpellFactory().haste(reference), 500, 1603);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	//Alchemancy Wands
 	public Item newAcidBlastWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Acid Blast", 18, objectFactory.spellFactory.acidBlast(reference), 500, 1700);
+		Item item = new Wand( (char)33, "Wand of Acid Blast", 18, FactoryManager.getSpellFactory().acidBlast(reference), 500, 1700);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newToxicTransfusionWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Toxic Transfusion", 19, objectFactory.spellFactory.toxicTransfusion(reference), 500, 1701);
+		Item item = new Wand( (char)33, "Wand of Toxic Transfusion", 19, FactoryManager.getSpellFactory().toxicTransfusion(reference), 500, 1701);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newRefluxBarrierWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Reflux Barrier", 20, objectFactory.spellFactory.refluxBarrier(reference), 500, 1702);
+		Item item = new Wand( (char)33, "Wand of Reflux Barrier", 20, FactoryManager.getSpellFactory().refluxBarrier(reference), 500, 1702);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLifetapWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Lifetap", 21, objectFactory.spellFactory.lifetap(reference), 500, 1703);
+		Item item = new Wand( (char)33, "Wand of Lifetap", 21, FactoryManager.getSpellFactory().lifetap(reference), 500, 1703);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	
 	//Ferromancy Wands
 	public Item newArmorStormWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Armor Storm", 22, objectFactory.spellFactory.armorStorm(reference), 500, 1800);
+		Item item = new Wand( (char)33, "Wand of Armor Storm", 22, FactoryManager.getSpellFactory().armorStorm(reference), 500, 1800);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newBladsWardWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Blad's Ward", 23, objectFactory.spellFactory.bladsWard(reference), 500, 1801);
+		Item item = new Wand( (char)33, "Wand of Blad's Ward", 23, FactoryManager.getSpellFactory().bladsWard(reference), 500, 1801);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newWeaponBoltWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Weapon Bolt", 24, objectFactory.spellFactory.weaponBolt(reference), 500, 1802);
+		Item item = new Wand( (char)33, "Wand of Weapon Bolt", 24, FactoryManager.getSpellFactory().weaponBolt(reference), 500, 1802);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newInfuseUpgradeWand(int depth, Creature reference, boolean addToWorld) {
-		Item item = new Wand(this.objectFactory, (char)33, "Wand of Infuse Upgrade", 25, objectFactory.spellFactory.infuseUpgrade(reference), 500, 1803);
+		Item item = new Wand( (char)33, "Wand of Infuse Upgrade", 25, FactoryManager.getSpellFactory().infuseUpgrade(reference), 500, 1803);
 		if(addToWorld) {
-			objectFactory.world.addAtEmptyLocation(item, depth);
+			World.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}

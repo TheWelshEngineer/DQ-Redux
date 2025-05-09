@@ -1,27 +1,27 @@
 package RogueLike.Main.Entities.Traps;
 
-import RogueLike.Main.Effect;
-import RogueLike.Main.Entities.Trap;
-import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Factories.EffectFactory;
-import RogueLike.Main.World;
+import java.awt.Color;
 
-import java.awt.*;
+import RogueLike.Main.Effect;
+import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.World;
+import RogueLike.Main.Entities.Trap;
+import RogueLike.Main.Factories.FactoryManager;
 
 public class SummoningTrap extends Trap {
 
-	public SummoningTrap(int x, int y, int z, World world) {
-		super(x, y, z, world);
+	public SummoningTrap(int x, int y, int z) {
+		super(x, y, z);
 	}
 
 	@Override
-	public Effect effect(EffectFactory factory) {
-		return factory.summonMonstersScroll(world.player());
+	public Effect effect() {
+		return FactoryManager.getEffectFactory().summonMonstersScroll(World.player());
 	}
 
 	@Override
-	public Effect exploitEffect(EffectFactory factory) {
-		return factory.invisible(10);
+	public Effect exploitEffect() {
+		return FactoryManager.getEffectFactory().invisible(10);
 	}
 
 	@Override

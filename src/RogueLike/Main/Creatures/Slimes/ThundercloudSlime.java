@@ -5,10 +5,10 @@ import java.awt.Color;
 import RogueLike.Main.AI.SlimeAI.ThundercloudSlimeAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.DamageType;
-import RogueLike.Main.Factories.ObjectFactory;
 
 public class ThundercloudSlime extends Creature{
 	
+	private static final long serialVersionUID = -7242461053891775033L;
 	private static int defaultMaxHP = 15;
 	private static int defaultMaxMana = 20;
 	private static int defaultAC = 12;
@@ -17,10 +17,10 @@ public class ThundercloudSlime extends Creature{
 	private static int defaultIntelligence = 14;
 	private static int defaultVisionRadius = 10;
 
-	public ThundercloudSlime(ObjectFactory factory, Creature player, String name, char glyph, Color color, int id, int depth) {
-		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
+	public ThundercloudSlime( Creature player, String name, char glyph, Color color, int id, int depth) {
+		super( name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
-		new ThundercloudSlimeAI(this, player, factory, factory.world);
+		new ThundercloudSlimeAI(this, player);
 		this.creatureTypes.add("Ooze");
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	

@@ -45,48 +45,40 @@ public class MainMenuScreen implements Screen{
 		}
 	}
 
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		changeMarkers(check);
-		terminal.clear();
-		Screen.generateBorders(terminal);
+		ExtendedAsciiPanel.clear();
+		Screen.generateBorders();;
 		int y = 1;
-		terminal.writeCenter(" _____                      __  ____                  _   ", y++);
-		terminal.writeCenter("|  __ \\                    / _|/ __ \\                | |  ", y++);
-		terminal.writeCenter("| |  | |_      ____ _ _ __| |_| |  | |_   _  ___  ___| |_ ", y++);
-		terminal.writeCenter("| |  | \\ \\ /\\ / / _` | '__|  _| |  | | | | |/ _ \\/ __| __|", y++);
-		terminal.writeCenter("| |__| |\\ V  V / (_| | |  | | | |__| | |_| |  __/\\__ \\ |_ ", y++);
-		terminal.writeCenter("|_____/  \\_/\\_/ \\__,_|_|  |_|  \\___\\_\\\\__,_|\\___||___/\\__|", y++);
+		ExtendedAsciiPanel.writeCenter(" _____                      __  ____                  _   ", y++);
+		ExtendedAsciiPanel.writeCenter("|  __ \\                    / _|/ __ \\                | |  ", y++);
+		ExtendedAsciiPanel.writeCenter("| |  | |_      ____ _ _ __| |_| |  | |_   _  ___  ___| |_ ", y++);
+		ExtendedAsciiPanel.writeCenter("| |  | \\ \\ /\\ / / _` | '__|  _| |  | | | | |/ _ \\/ __| __|", y++);
+		ExtendedAsciiPanel.writeCenter("| |__| |\\ V  V / (_| | |  | | | |__| | |_| |  __/\\__ \\ |_ ", y++);
+		ExtendedAsciiPanel.writeCenter("|_____/  \\_/\\_/ \\__,_|_|  |_|  \\___\\_\\\\__,_|\\___||___/\\__|", y++);
 		y++;
-		terminal.writeCenter("+|=|+ Magic and Madness in the Caves of Chaos! +|=|+", y++);
-		terminal.writeCenter("== Main Menu ==", y+=2);
-		terminal.write(String.format("%c  New Game  %c", startLeft, startRight), 52, y+=2);
-		terminal.write(String.format("%c  Help      %c", helpLeft, helpRight), 52, y+=2);
-		terminal.write(String.format("%c  Credits   %c", creditsLeft, creditsRight), 52, y+=2);
+		ExtendedAsciiPanel.writeCenter("+|=|+ Magic and Madness in the Caves of Chaos! +|=|+", y++);
+		ExtendedAsciiPanel.writeCenter("== Main Menu ==", y+=2);
+		ExtendedAsciiPanel.write(String.format("%c  New Game  %c", startLeft, startRight), 52, y+=2);
+		ExtendedAsciiPanel.write(String.format("%c  Help      %c", helpLeft, helpRight), 52, y+=2);
+		ExtendedAsciiPanel.write(String.format("%c  Credits   %c", creditsLeft, creditsRight), 52, y+=2);
 
-		terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 36);
-		terminal.writeCenter(String.format("-- [%s]: Return to Title Screen --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 36);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Return to Title Screen --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {
 		switch(key.getKeyCode()) {
 		case KeybindManager.navigateMenuUp:
-			if(check == 0) {
+			if (check == 0) {
 				check = 2;
-			}else if(check == 1) {
-				check = 0;
-			}else if(check == 2) {
-				check = 1;
+			} else {
+				check = (check - 1) % 3;
 			}
 			return this;
 			
 		case KeybindManager.navigateMenuDown:
-			if(check == 0) {
-				check = 1;
-			}else if(check == 1) {
-				check = 2;
-			}else if(check == 2) {
-				check = 0;
-			}
+			check = (check + 1) % 3;
 			return this;
 			
 		case KeybindManager.navigateMenuConfirm:

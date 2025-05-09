@@ -5,9 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Managers.KeybindManager;
 
 public class WinScreen implements Screen {
@@ -23,8 +22,8 @@ public class WinScreen implements Screen {
 		this.player = player;
 	}
 
-    public void displayOutput(ExtendedAsciiPanel terminal) {
-    	Screen.generateBorders(terminal);
+    public void displayOutput() {
+    	Screen.generateBorders();;
     	if(player.weapon() != null) {
     		weaponName = player.weapon().name();
     	}
@@ -45,17 +44,17 @@ public class WinScreen implements Screen {
     		ammunitionName = player.ammunition().name();
     	}
     	
-        terminal.writeCenter("Victory!", 3);
-        terminal.writeCenter(String.format("%s", player.playerName()), 5);
-        terminal.writeCenter(String.format("Level %d %s %s | Score: %d", player.level(), player.playerAncestry(), player.playerClass(), player.score()), 7);
-        terminal.writeCenter("-- Equipment --", 10);
-        terminal.writeCenter("Weapon: "+weaponName, 12);
-		terminal.writeCenter("Armor: "+armorName, 14);
-		terminal.writeCenter("Shield: "+shieldName, 16);
-		terminal.writeCenter("Ring: "+ringName, 18);
-		terminal.writeCenter("Ammunition: "+ammunitionName, 20);
-		terminal.writeCenter(String.format("-- [%s]: Restart your Adventure | [%s]: Export Scores to Desktop --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm), KeybindManager.keybindText(KeybindManager.navigateMenuFunction_1)), 24);
-        terminal.writeCenter(exportCheck, 26);
+        ExtendedAsciiPanel.writeCenter("Victory!", 3);
+        ExtendedAsciiPanel.writeCenter(String.format("%s", player.playerName()), 5);
+        ExtendedAsciiPanel.writeCenter(String.format("Level %d %s %s | Score: %d", player.level(), player.playerAncestry(), player.playerClass(), player.score()), 7);
+        ExtendedAsciiPanel.writeCenter("-- Equipment --", 10);
+        ExtendedAsciiPanel.writeCenter("Weapon: "+weaponName, 12);
+		ExtendedAsciiPanel.writeCenter("Armor: "+armorName, 14);
+		ExtendedAsciiPanel.writeCenter("Shield: "+shieldName, 16);
+		ExtendedAsciiPanel.writeCenter("Ring: "+ringName, 18);
+		ExtendedAsciiPanel.writeCenter("Ammunition: "+ammunitionName, 20);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Restart your Adventure | [%s]: Export Scores to Desktop --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm), KeybindManager.keybindText(KeybindManager.navigateMenuFunction_1)), 24);
+        ExtendedAsciiPanel.writeCenter(exportCheck, 26);
     }
 
     public Screen respondToUserInput(KeyEvent key) {

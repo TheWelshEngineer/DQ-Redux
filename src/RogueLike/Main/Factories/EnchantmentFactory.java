@@ -1,127 +1,120 @@
 package RogueLike.Main.Factories;
 
+import java.io.Serializable;
+
 import RogueLike.Main.Dice;
 import RogueLike.Main.ExtraMaths;
-import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Enchantments.Enchantment;
 import RogueLike.Main.Items.Item;
 
-public class EnchantmentFactory {
+public class EnchantmentFactory implements Serializable {
 	
-	private EffectFactory effectFactory;
-	public EffectFactory effectFactory() {
-		return effectFactory;
-	}
-	public void setEffectFactory(EffectFactory factory) {
-		effectFactory = factory;
-	}
+	private static final long serialVersionUID = -3659119664404692952L;
 	
-	public EnchantmentFactory(EffectFactory factory) {
-		effectFactory = factory;
-	}
+	public EnchantmentFactory() {}
 	
 	// Weapon enchantments
 	public Enchantment fireWeaponEnchantment(Item host) {
-		Enchantment enchantment = new Enchantment("Blazing", effectFactory.ignited(5 + host.upgradeLevel()), 5, host, DamageType.FIRE);
+		Enchantment enchantment = new Enchantment("Blazing", FactoryManager.getEffectFactory().ignited(5 + host.upgradeLevel()), 5, host, DamageType.FIRE);
 		return enchantment;
 	}
 	
 	public Enchantment frostWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Freezing", effectFactory.frozen(3 + host.upgradeLevel()), 3, host, DamageType.FROST);
+		Enchantment enchantment  = new Enchantment("Freezing", FactoryManager.getEffectFactory().frozen(3 + host.upgradeLevel()), 3, host, DamageType.FROST);
 		return enchantment;
 	}
 	
 	public Enchantment shockWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Shocking", effectFactory.electrified(5 + host.upgradeLevel()), 5, host, DamageType.SHOCK);
+		Enchantment enchantment  = new Enchantment("Shocking", FactoryManager.getEffectFactory().electrified(5 + host.upgradeLevel()), 5, host, DamageType.SHOCK);
 		return enchantment;
 	}
 	
 	public Enchantment stunWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Stunning", effectFactory.paralysed(3 + host.upgradeLevel()), 3, host);
+		Enchantment enchantment  = new Enchantment("Stunning", FactoryManager.getEffectFactory().paralysed(3 + host.upgradeLevel()), 3, host);
 		return enchantment;
 	}
 	
 	public Enchantment magicWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Arcane", effectFactory.blink(), 0, host);
+		Enchantment enchantment  = new Enchantment("Arcane", FactoryManager.getEffectFactory().blink(), 0, host);
 		return enchantment;
 	}
 	
 	public Enchantment poisonWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Toxic", effectFactory.poisoned(5 + host.upgradeLevel()), 5, host, DamageType.POISON);
+		Enchantment enchantment  = new Enchantment("Toxic", FactoryManager.getEffectFactory().poisoned(5 + host.upgradeLevel()), 5, host, DamageType.POISON);
 		return enchantment;
 	}
 	
 	public Enchantment acidWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Caustic", effectFactory.corroded(5 + host.upgradeLevel()), 5, host, DamageType.ACID);
+		Enchantment enchantment  = new Enchantment("Caustic", FactoryManager.getEffectFactory().corroded(5 + host.upgradeLevel()), 5, host, DamageType.ACID);
 		return enchantment;
 	}
 	
 	public Enchantment chaosWeaponEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("Corrupting", effectFactory.devoured(5 + host.upgradeLevel()), 5, host, DamageType.CHAOS);
+		Enchantment enchantment  = new Enchantment("Corrupting", FactoryManager.getEffectFactory().devoured(5 + host.upgradeLevel()), 5, host, DamageType.CHAOS);
 		return enchantment;
 	}
 	
 	//Armor enchantments
 	
 	public Enchantment fireArmorEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("of Magma Ward", effectFactory.magmaWard(10 + host.upgradeLevel()), 10, host);
+		Enchantment enchantment  = new Enchantment("of Magma Ward", FactoryManager.getEffectFactory().magmaWard(10 + host.upgradeLevel()), 10, host);
 		return enchantment;
 	}
 	
 	public Enchantment frostArmorEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("of Chill Ward", effectFactory.chillWard(10 + host.upgradeLevel()), 10, host);
+		Enchantment enchantment  = new Enchantment("of Chill Ward", FactoryManager.getEffectFactory().chillWard(10 + host.upgradeLevel()), 10, host);
 		return enchantment;
 	}
 	
 	public Enchantment shockArmorEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("of Arc Ward", effectFactory.arcWard(10 + host.upgradeLevel()), 10, host);
+		Enchantment enchantment  = new Enchantment("of Arc Ward", FactoryManager.getEffectFactory().arcWard(10 + host.upgradeLevel()), 10, host);
 		return enchantment;
 	}
 	
 	public Enchantment magicArmorEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("of Arcane Ward", effectFactory.arcaneWard(10 + host.upgradeLevel()), 10, host);
+		Enchantment enchantment  = new Enchantment("of Arcane Ward", FactoryManager.getEffectFactory().arcaneWard(10 + host.upgradeLevel()), 10, host);
 		return enchantment;
 	}
 	
 	public Enchantment poisonArmorEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("of Venomous Ward", effectFactory.venomousWard(10 + host.upgradeLevel()), 10, host);
+		Enchantment enchantment  = new Enchantment("of Venomous Ward", FactoryManager.getEffectFactory().venomousWard(10 + host.upgradeLevel()), 10, host);
 		return enchantment;
 	}
 	
 	public Enchantment acidArmorEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("of Caustic Ward", effectFactory.causticWard(10 + host.upgradeLevel()), 10, host);
+		Enchantment enchantment  = new Enchantment("of Caustic Ward", FactoryManager.getEffectFactory().causticWard(10 + host.upgradeLevel()), 10, host);
 		return enchantment;
 	}
 	
 	public Enchantment chaosArmorEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("of Eldritch Ward", effectFactory.eldritchWard(10 + host.upgradeLevel()), 10, host);
+		Enchantment enchantment  = new Enchantment("of Eldritch Ward", FactoryManager.getEffectFactory().eldritchWard(10 + host.upgradeLevel()), 10, host);
 		return enchantment;
 	}
 	
 	public Enchantment physicalArmorEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("of Blade Ward", effectFactory.bladeWard(10 + host.upgradeLevel()), 10, host);
+		Enchantment enchantment  = new Enchantment("of Blade Ward", FactoryManager.getEffectFactory().bladeWard(10 + host.upgradeLevel()), 10, host);
 		return enchantment;
 	}
 	
 	public Enchantment stealthArmorEnchantment(Item host) {
-		Enchantment enchantment  = new Enchantment("of Transparency", effectFactory.invisible(10 + host.upgradeLevel()), 10, host);
+		Enchantment enchantment  = new Enchantment("of Transparency", FactoryManager.getEffectFactory().invisible(10 + host.upgradeLevel()), 10, host);
 		return enchantment;
 	}
 	
 	//Curses
 	public Enchantment devouringCurse(Item host) {
-		Enchantment curse = new Enchantment("Insatiable", effectFactory.devoured(Math.max(1, 7-host.upgradeLevel())), Math.max(1, 7-host.upgradeLevel()), host);
+		Enchantment curse = new Enchantment("Insatiable", FactoryManager.getEffectFactory().devoured(Math.max(1, 7-host.upgradeLevel())), Math.max(1, 7-host.upgradeLevel()), host);
 		return curse;
 	}
 	
 	public Enchantment blindingCurse(Item host) {
-		Enchantment curse = new Enchantment("Shadowing", effectFactory.blinded(Math.max(1, 7-host.upgradeLevel())), Math.max(1, 7-host.upgradeLevel()), host);
+		Enchantment curse = new Enchantment("Shadowing", FactoryManager.getEffectFactory().blinded(Math.max(1, 7-host.upgradeLevel())), Math.max(1, 7-host.upgradeLevel()), host);
 		return curse;
 	}
 	
 	public Enchantment confusingCurse(Item host) {
-		Enchantment curse = new Enchantment("Bewildering", effectFactory.confused(Math.max(1, 7-host.upgradeLevel())), Math.max(1, 7-host.upgradeLevel()), host);
+		Enchantment curse = new Enchantment("Bewildering", FactoryManager.getEffectFactory().confused(Math.max(1, 7-host.upgradeLevel())), Math.max(1, 7-host.upgradeLevel()), host);
 		return curse;
 	}
 	

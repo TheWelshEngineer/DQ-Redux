@@ -9,19 +9,20 @@ import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Damage.DamageType;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Screens.TerminalText;
 
 public class MetalSlimeAI extends CreatureAI{
+	private static final long serialVersionUID = -1795823839298504692L;
 	private Creature player;
 	private int turnsWithoutPlayer = 0;
 
 	
-	public MetalSlimeAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public MetalSlimeAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
 		//this.factory = factory;
-		//this.world = world;
+		//this.World = World;
 	}
 	
 	public void selectAction() {
@@ -64,20 +65,20 @@ public class MetalSlimeAI extends CreatureAI{
                         continue;
                     }
 
-                    Creature slimeling = factory.creatureFactory.newMetalSlimeling(0, player, false);
+                    Creature slimeling = FactoryManager.getCreatureFactory().newMetalSlimeling(0, player, false);
 
                     if (!slimeling.canEnter(nx, ny, creature.z)){
-                        world.remove(slimeling);
+                        World.remove(slimeling);
                         continue;
                     }
                     
                     if (creature.creature(nx, ny, creature.z) != null){
-                        world.remove(slimeling);
+                        World.remove(slimeling);
                         continue;
                     }
                     
                     if (Dice.d10.roll() <= 4){
-                        world.remove(slimeling);
+                        World.remove(slimeling);
                         continue;
                     }
                     
@@ -90,7 +91,7 @@ public class MetalSlimeAI extends CreatureAI{
                 }
             }
             creature.doAction(new TerminalText("split into slimelings!"));
-            Damage damage = new Damage(creature.hp(), true, DamageType.TRUE, factory.effectFactory, false);
+            Damage damage = new Damage(creature.hp(), true, DamageType.TRUE, false);
             creature.damage(damage, "");
 		}
 	}

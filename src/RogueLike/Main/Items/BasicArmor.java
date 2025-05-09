@@ -4,6 +4,8 @@ import java.awt.Color;
 
 public class BasicArmor extends Item{
 
+	private static final long serialVersionUID = 6833704094719509984L;
+
 	public BasicArmor(char glyph, Color color, String name, String appearance, int armorClass, int goldValue, int id) {
 		super(glyph, color, name, appearance);
 		this.setIsArmor(true);

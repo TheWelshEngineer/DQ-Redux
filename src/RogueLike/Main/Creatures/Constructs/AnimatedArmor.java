@@ -4,11 +4,12 @@ import java.awt.Color;
 
 import RogueLike.Main.AI.SkeletonAI.SkeletonAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Items.Item;
 
 public class AnimatedArmor extends Creature{
 	
+	private static final long serialVersionUID = -4529069412246878856L;
 	private static int defaultMaxHP = 35;
 	private static int defaultMaxMana = 10;
 	private static int defaultAC = 18;
@@ -17,12 +18,12 @@ public class AnimatedArmor extends Creature{
 	private static int defaultIntelligence = 1;
 	private static int defaultVisionRadius = 8;
 
-	public AnimatedArmor(ObjectFactory factory, Creature player, String name, char glyph, Color color, int id, int depth) {
-		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
+	public AnimatedArmor( Creature player, String name, char glyph, Color color, int id, int depth) {
+		super( name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
-		new SkeletonAI(this, player, factory, factory.world);
+		new SkeletonAI(this, player);
 		this.creatureTypes.add("Construct");
-		Item startArmor = factory.randomArmor(0, false, true, true, true);
+		Item startArmor = FactoryManager.getObjectFactory().randomArmor(0, false, true, true, true);
 		this.inventory().add(startArmor);
 		this.equip(startArmor, true);
 		this.setHasNoCorpse(true);

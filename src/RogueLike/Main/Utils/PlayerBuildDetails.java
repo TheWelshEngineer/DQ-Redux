@@ -1,10 +1,10 @@
 package RogueLike.Main.Utils;
 
+import java.util.List;
+
+import RogueLike.Main.Skillset;
 import RogueLike.Main.Enums.PlayerAncestry;
 import RogueLike.Main.Enums.PlayerClass;
-import RogueLike.Main.Skillset;
-
-import java.util.List;
 
 public class PlayerBuildDetails {
 	public final PlayerClass playerClass;

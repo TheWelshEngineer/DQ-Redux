@@ -1,12 +1,17 @@
 package RogueLike.Main.Factories;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Particle;
 
-public class ParticleFactory {
+public class ParticleFactory implements Serializable {
 	
+	private static final long serialVersionUID = -7391780131382289931L;
+
+	public ParticleFactory() {}
+
 	public Particle sunburst(Color color, int duration) {
 		return new Particle().changeColor(color).changeDuration(duration).changeGlyph(ExtendedAsciiPanel.getGlyphFromPage(15, 1));
 	}

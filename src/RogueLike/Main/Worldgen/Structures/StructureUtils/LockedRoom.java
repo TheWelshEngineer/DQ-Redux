@@ -1,14 +1,14 @@
 package RogueLike.Main.Worldgen.Structures.StructureUtils;
 
-import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.Tile;
-import RogueLike.Main.Utils.PointShapes.HollowRectangle;
-import RogueLike.Main.Utils.PointShapes.Rectangle;
-import RogueLike.Main.WorldBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import RogueLike.Main.Tile;
+import RogueLike.Main.WorldBuilder;
+import RogueLike.Main.Utils.PointShapes.HollowRectangle;
+import RogueLike.Main.Utils.PointShapes.Point;
+import RogueLike.Main.Utils.PointShapes.Rectangle;
 
 public class LockedRoom {
 	private final Rectangle floorArea;

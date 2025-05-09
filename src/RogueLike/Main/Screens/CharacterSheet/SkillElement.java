@@ -1,8 +1,8 @@
 package RogueLike.Main.Screens.CharacterSheet;
 
-import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.SkillInstance;
+import RogueLike.Main.Creatures.Creature;
 
 public abstract class SkillElement extends CharacterSheetElement {
     protected final Creature player;

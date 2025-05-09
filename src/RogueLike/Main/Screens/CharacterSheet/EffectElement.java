@@ -16,14 +16,14 @@ public class EffectElement extends CharacterSheetElement {
     }
 
     @Override
-    public TerminalText formattedHeader(ExtendedAsciiPanel terminal) {
+    public TerminalText formattedHeader() {
         String turns = effect.duration() == 1 ? "turn" : "turns";
         return new TerminalText()
-            .append(effect.glyph(), effect.color(), terminal.getDefaultBackgroundColor())
+            .append(effect.glyph(), effect.color(), ExtendedAsciiPanel.getDefaultBackgroundColor())
             .append(
                 String.format(" %s: %d %s", effect.name(), effect.duration(), turns),
-                terminal.getDefaultForegroundColor(),
-                terminal.getDefaultBackgroundColor()
+                ExtendedAsciiPanel.getDefaultForegroundColor(),
+                ExtendedAsciiPanel.getDefaultBackgroundColor()
             );
     }
 

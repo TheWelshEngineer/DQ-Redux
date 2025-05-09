@@ -1,5 +1,7 @@
 package RogueLike.Main.Factories;
 
+import java.io.Serializable;
+
 import RogueLike.Main.Dice;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Items.BasicFinesseWeapon;
@@ -11,7 +13,10 @@ import RogueLike.Main.Items.ThrownVersatileWeapon;
 import RogueLike.Main.Items.TwoHandedMeleeWeapon;
 import RogueLike.Main.Items.VersatileMeleeWeapon;
 
-public class WeaponFactory {
+public class WeaponFactory implements Serializable {
+	private static final long serialVersionUID = 7517436021983904993L;
+
+	public WeaponFactory() {}
 	
 	// Simple
 	// Tier 1

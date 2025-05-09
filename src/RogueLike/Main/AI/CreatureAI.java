@@ -1,25 +1,30 @@
 package RogueLike.Main.AI;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import RogueLike.Main.*;
-import RogueLike.Main.Entities.Entity;
-import RogueLike.Main.Utils.PointShapes.Line;
-import RogueLike.Main.Utils.PointShapes.Point;
+import RogueLike.Main.Effect;
+import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.LevelUpController;
+import RogueLike.Main.Path;
+import RogueLike.Main.Spell;
+import RogueLike.Main.Tile;
+import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Screens.TerminalText;
+import RogueLike.Main.Utils.PointShapes.Line;
+import RogueLike.Main.Utils.PointShapes.Point;
 
-public class CreatureAI {
+public class CreatureAI implements Serializable {
 	
+	private static final long serialVersionUID = 8824443622130539812L;
 	protected Creature creature;
 	private Map<String, String> itemNames;
-	public ObjectFactory factory;
-	public World world;
 	
 	protected ArrayList<Integer> actionQueue = new ArrayList<Integer>();
 	public ArrayList<Integer> actionQueue(){
@@ -86,12 +91,10 @@ public class CreatureAI {
 		return actionQueue.get(1);
 	}
 	
-	public CreatureAI(Creature creature, ObjectFactory factory, World world){
+	public CreatureAI(Creature creature){
 		this.creature = creature;
 		this.creature.setCreatureAI(this);
 		this.itemNames = new HashMap<String, String>();
-		this.factory = factory;
-		this.world = world;
 		actionQueue.add(1000);
 		actionQueue.add(1000);
 	}
@@ -115,7 +118,7 @@ public class CreatureAI {
 				creature.y = y;
 				creature.z = z;
 
-				Entity entity = world.entity(x, y, z);
+				Entity entity = World.entity(x, y, z);
 				if (entity != null) {
 					entity.onSteppedOnBy(creature);
 				}

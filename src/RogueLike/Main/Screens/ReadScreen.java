@@ -5,13 +5,8 @@ import RogueLike.Main.Items.Item;
 
 public class ReadScreen extends InventoryBasedScreen{
 	
-	private int sx;
-	private int sy;
-
 	public ReadScreen(Creature player, int sx, int sy) {
 		super(player);
-		this.sx = sx;
-		this.sy = sy;
 	}
 
 	@Override
@@ -37,7 +32,7 @@ public class ReadScreen extends InventoryBasedScreen{
 				player.ai().playerAICastSpell(item, item.writtenSpells().get(0), player.x(), player.y());
 				return null;
 			}else {
-				return new SpellSelectScreen(player, sx, sy, item);
+				return new SpellSelectScreen(player, item);
 			}
 		}
 		

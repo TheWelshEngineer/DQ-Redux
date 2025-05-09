@@ -1,15 +1,19 @@
 package RogueLike.Main.Worldgen.Blueprints;
 
-import RogueLike.Main.Utils.PointShapes.Line;
-import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Entities.Teleporter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
 import RogueLike.Main.Tile;
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
+import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Entities.Teleporter;
+import RogueLike.Main.Factories.FactoryManager;
+import RogueLike.Main.Utils.PointShapes.Line;
+import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Worldgen.Blueprint;
-
-import java.util.*;
 
 public class MerchantFloor extends Blueprint {
 	private final int depth;
@@ -177,17 +181,17 @@ public class MerchantFloor extends Blueprint {
 	@Override
 	public void onPostTileGeneration() {}
 
-	public void onBuildWorld(World world) {
+	public void onBuildWorld() {
 		teleporters.forEach((source, target) -> {
 			System.out.printf("Adding teleporter from %s to %s%n", source, target);
-			world.add(
-				new Teleporter(world, source.x, source.y, depth, target.x, target.y)
+			World.add(
+				new Teleporter(source.x, source.y, depth, target.x, target.y)
 			);
 		});
 
 		// add the merchant!
-		Creature merchant = world.factory().creatureFactory.newMerchant(depth, world.player(), false);
-		world.addMerchant(merchant, depth);
+		Creature merchant = FactoryManager.getCreatureFactory().newMerchant(depth, World.player(), false);
+		World.addMerchant(merchant, depth);
 	}
 
 }

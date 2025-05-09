@@ -16,8 +16,6 @@ import RogueLike.Main.Screens.TitleScreen;
 
 public class applicationMain extends JFrame implements KeyListener{
 	private static final long serialVersionUID = 1060623638149583738L;
-	
-	public static ExtendedAsciiPanel terminal;
 	private Screen screen;
 	//
 	//private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -48,14 +46,14 @@ public class applicationMain extends JFrame implements KeyListener{
         //Dsun.java2d.uiScale.enabled=false
         //-Dsun.java2d.dpiaware=true
         //120, 48
-        terminal = new ExtendedAsciiPanel(120, 48, new String[] {"cp437.png","codePage_437_K.png"});
+        ExtendedAsciiPanel.getInstance().newExtendedAsciiPanelSettings(120, 48, new String[] {"cp437.png","codePage_437_K.png"});
         //
         //System.out.println("Width");
-        //System.out.println(terminal.getCharWidth());
+        //System.out.println(ExtendedAsciiPanel.getCharWidth());
         //System.out.println("Height");
-        //System.out.println(terminal.getCharHeight());
+        //System.out.println(ExtendedAsciiPanel.getCharHeight());
         //
-        add(terminal);
+        add(ExtendedAsciiPanel.getInstance());
         pack();
         screen = new TitleScreen();
         addKeyListener(this);
@@ -63,8 +61,8 @@ public class applicationMain extends JFrame implements KeyListener{
     }
 
     public void repaint(){
-        terminal.clear();
-        screen.displayOutput(terminal);
+    	ExtendedAsciiPanel.clear();
+        screen.displayOutput();
         super.repaint();
     }
 

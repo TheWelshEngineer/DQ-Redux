@@ -1,16 +1,13 @@
 package RogueLike.Main.Screens;
 
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Items.Item;
 
 public class UpgradeScreen extends InventoryBasedScreen{
-	
-	public ObjectFactory factory;
 
-	public UpgradeScreen(Creature player, ObjectFactory factory) {
+	public UpgradeScreen(Creature player) {
 		super(player);
-		this.factory = factory;
 	}
 
 	@Override
@@ -25,7 +22,7 @@ public class UpgradeScreen extends InventoryBasedScreen{
 
 	@Override
 	protected Screen use(Item item) {
-		factory.upgradeItem(item, 1);
+		FactoryManager.getObjectFactory().upgradeItem(item, 1);
 		player.notify("Your "+player.nameOf(item)+" looks much better!");
 		if(item.enchantment() != null && item.isIdentified()) {
 			player.notify("The interaction of different types of magic");

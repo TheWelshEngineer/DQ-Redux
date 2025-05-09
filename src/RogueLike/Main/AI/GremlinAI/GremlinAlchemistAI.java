@@ -3,21 +3,20 @@ package RogueLike.Main.AI.GremlinAI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Effect;
-import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Screens.TerminalText;
 
 public class GremlinAlchemistAI extends CreatureAI{
+	private static final long serialVersionUID = -4154947665391579656L;
 	private Creature player;
 	private int brewPotionCooldown;
 	private int turnsWithoutPlayer = 0;
 	
-	public GremlinAlchemistAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public GremlinAlchemistAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
-		this.factory = factory;
 
 	}
 	
@@ -97,7 +96,7 @@ public class GremlinAlchemistAI extends CreatureAI{
 	}
 	
 	public void brewPotion() {
-		creature.inventory().add(factory.randomNegativePotion(0, false));
+		creature.inventory().add(FactoryManager.getObjectFactory().randomNegativePotion(0, false));
 		creature.doAction(new TerminalText("brew a foul potion."));
 		brewPotionCooldown = 3;
 	}

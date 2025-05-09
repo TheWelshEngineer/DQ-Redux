@@ -182,37 +182,37 @@ public class PlayerLevelUpStatsScreen implements Screen{
 	}
 
 	@Override
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		changeMarkers(check);
-		terminal.clear();
-		Screen.generateBorders(terminal);
-		terminal.writeCenter("== Increase your Ability Scores ==", 1);	
+		ExtendedAsciiPanel.clear();
+		Screen.generateBorders();;
+		ExtendedAsciiPanel.writeCenter("== Increase your Ability Scores ==", 1);	
 		int y = 3;
 		
-		terminal.writeCenter(String.format("-- Points remaining: %d --", points), y);
+		ExtendedAsciiPanel.writeCenter(String.format("-- Points remaining: %d --", points), y);
 		
-		terminal.writeCenter(String.format("%c %c Strength ( %d / +%d ) %c %c", strDown, strLeft, playerStrength, strMod(), strRight, strUp), y+=3);
-		terminal.writeCenter(String.format("%c %c Dexterity ( %d / +%d ) %c %c", dexDown, dexLeft, playerDexterity, dexMod(), dexRight, dexUp), y+=2);
-		terminal.writeCenter(String.format("%c %c Intelligence ( %d / +%d ) %c %c", intDown, intLeft, playerIntelligence, intMod(), intRight, intUp), y+=2);
+		ExtendedAsciiPanel.writeCenter(String.format("%c %c Strength ( %d / +%d ) %c %c", strDown, strLeft, playerStrength, strMod(), strRight, strUp), y+=3);
+		ExtendedAsciiPanel.writeCenter(String.format("%c %c Dexterity ( %d / +%d ) %c %c", dexDown, dexLeft, playerDexterity, dexMod(), dexRight, dexUp), y+=2);
+		ExtendedAsciiPanel.writeCenter(String.format("%c %c Intelligence ( %d / +%d ) %c %c", intDown, intLeft, playerIntelligence, intMod(), intRight, intUp), y+=2);
 		if(check == 0) {
-			terminal.writeCenter("Strength represents the physical power of your body.", y+=6);
-			terminal.writeCenter("Strength increases the damage dealt by simple and martial weapons,", y+=1);
-			terminal.writeCenter("as well as the amount of health you gain from levelling up.", y+=1);
+			ExtendedAsciiPanel.writeCenter("Strength represents the physical power of your body.", y+=6);
+			ExtendedAsciiPanel.writeCenter("Strength increases the damage dealt by simple and martial weapons,", y+=1);
+			ExtendedAsciiPanel.writeCenter("as well as the amount of health you gain from levelling up.", y+=1);
 		}else if(check == 1) {
-			terminal.writeCenter("Dexterity is a measure of your agility and reflexes.", y+=6);
-			terminal.writeCenter("Dexterity increases the damage dealt by ranged and finesse weapons,", y+=1);
-			terminal.writeCenter("as well as providing a bonus to light and medium armor.", y+=1);
+			ExtendedAsciiPanel.writeCenter("Dexterity is a measure of your agility and reflexes.", y+=6);
+			ExtendedAsciiPanel.writeCenter("Dexterity increases the damage dealt by ranged and finesse weapons,", y+=1);
+			ExtendedAsciiPanel.writeCenter("as well as providing a bonus to light and medium armor.", y+=1);
 		}else if(check == 2) {
-			terminal.writeCenter("Intelligence represents your willpower and magical talent.", y+=6);
-			terminal.writeCenter("Intelligence increases the effectiveness of wands,", y+=1);
-			terminal.writeCenter("as well as the amount of mana you gain from levelling up.", y+=1);
+			ExtendedAsciiPanel.writeCenter("Intelligence represents your willpower and magical talent.", y+=6);
+			ExtendedAsciiPanel.writeCenter("Intelligence increases the effectiveness of wands,", y+=1);
+			ExtendedAsciiPanel.writeCenter("as well as the amount of mana you gain from levelling up.", y+=1);
 		}
 		
 		
 		if(points < 1) {
-			terminal.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 38);
+			ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 38);
 		}
-		terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Increase/Decrease Attribute Point Allocation --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 36);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Increase/Decrease Attribute Point Allocation --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 36);
 	}
 
 	@Override

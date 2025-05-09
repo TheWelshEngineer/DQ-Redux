@@ -28,30 +28,30 @@ public class PlayerLevelUpSkillsScreen implements Screen{
     }
 
 	@Override
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 
-		terminal.clear();
-		Screen.generateBorders(terminal);
-		terminal.writeCenter("== Increase your Skills ==", 1);
+		ExtendedAsciiPanel.clear();
+		Screen.generateBorders();;
+		ExtendedAsciiPanel.writeCenter("== Increase your Skills ==", 1);
 		int y = 3;
 
-		terminal.writeCenter(String.format("-- Points remaining: %d --", points), y);
+		ExtendedAsciiPanel.writeCenter(String.format("-- Points remaining: %d --", points), y);
 		y+=3;
 		for (Skill skill : Skill.values()) {
             char leftMarker = (skill == selectedSkill()) ? '>' : ' ';
             char rightMarker = (skill == selectedSkill()) ? '<' : ' ';
-		terminal.writeCenter(String.format("%c %s: %s %c", leftMarker, skill, ExtraMaths.toRomanNumerals(newSkills.get(skill).level()),
+		ExtendedAsciiPanel.writeCenter(String.format("%c %s: %s %c", leftMarker, skill, ExtraMaths.toRomanNumerals(newSkills.get(skill).level()),
 			rightMarker),
 			 y++);
 		}
 			 y+=5;
-			terminal.writeCenterMultiline(TextUtils.wordWrap(selectedSkill().description, 66, 0), y);
+			ExtendedAsciiPanel.writeCenterMultiline(TextUtils.wordWrap(selectedSkill().description, 66, 0), y);
 
 
 		if(points < 1) {
-			terminal.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 40);
+			ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 40);
 		}
-		terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Increase/Decrease Skill Point Allocation --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 38);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Increase/Decrease Skill Point Allocation --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 38);
 	}
 
 	@Override

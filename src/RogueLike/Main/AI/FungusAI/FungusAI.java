@@ -3,19 +3,19 @@ package RogueLike.Main.AI.FungusAI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Effect;
-import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Entities.Trap;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Screens.TerminalText;
 
 public class FungusAI extends CreatureAI{
+	private static final long serialVersionUID = 588847432600574502L;
 	private int spreadcount;
 
-	public FungusAI(Creature creature, ObjectFactory factory, World world) {
-		super(creature, factory, world);
-		this.factory = factory;
+	public FungusAI(Creature creature) {
+		super(creature);
 		
 	}
 	
@@ -54,11 +54,11 @@ public class FungusAI extends CreatureAI{
 			
 		}
 		// Don't spread onto traps
-		if (world.entity(x, y, creature.z) instanceof Trap) {
+		if (World.entity(x, y, creature.z) instanceof Trap) {
 			return;
 		}
 		creature.doAction(new TerminalText("spawn a child"));		
-		Creature child = factory.creatureFactory.newFungus(creature.z, true);
+		Creature child = FactoryManager.getCreatureFactory().newFungus(creature.z, true);
 		child.x = x;
 		child.y = y;
 		spreadcount++;		

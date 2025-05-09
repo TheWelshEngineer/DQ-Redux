@@ -4,13 +4,9 @@ import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 
 public class ThrowScreen extends InventoryBasedScreen{
-	private int sx;
-	private int sy;
 	
-	public ThrowScreen(Creature player, int sx, int sy) {
+	public ThrowScreen(Creature player) {
 		super(player);
-		this.sx = sx;
-		this.sy = sy;
 	}
 	
 	protected String getVerb() {

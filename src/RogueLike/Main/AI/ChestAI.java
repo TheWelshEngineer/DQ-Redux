@@ -1,13 +1,13 @@
 package RogueLike.Main.AI;
 
-import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
 
 public class ChestAI extends CreatureAI{
 
-	public ChestAI(Creature creature, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	private static final long serialVersionUID = -280811084042432769L;
+
+	public ChestAI(Creature creature) {
+		super(creature);
 		
 	}
 	

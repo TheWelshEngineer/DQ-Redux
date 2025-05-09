@@ -4,10 +4,10 @@ import java.awt.Color;
 
 import RogueLike.Main.AI.SlimeAI.PinkSlimeAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
 
 public class PinkSlime extends Creature{
 	
+	private static final long serialVersionUID = -6794286718453652579L;
 	private static int defaultMaxHP = 22;
 	private static int defaultMaxMana = 10;
 	private static int defaultAC = 8;
@@ -16,10 +16,10 @@ public class PinkSlime extends Creature{
 	private static int defaultIntelligence = 1;
 	private static int defaultVisionRadius = 6;
 
-	public PinkSlime(ObjectFactory factory, Creature player, String name, char glyph, Color color, int id, int depth) {
-		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
+	public PinkSlime( Creature player, String name, char glyph, Color color, int id, int depth) {
+		super( name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
-		new PinkSlimeAI(this, player, factory, factory.world);
+		new PinkSlimeAI(this, player);
 		this.creatureTypes.add("Ooze");
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	

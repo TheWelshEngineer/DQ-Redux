@@ -1,13 +1,21 @@
 package RogueLike.Main.Worldgen.Blueprints;
 
-import RogueLike.Main.*;
+import java.util.Optional;
+import java.util.stream.IntStream;
+
+import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.Tile;
+import RogueLike.Main.World;
+import RogueLike.Main.WorldBuilder;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Worldgen.Blueprint;
 import RogueLike.Main.Worldgen.Structure;
-import RogueLike.Main.Worldgen.Structures.*;
-
-import java.util.Optional;
-import java.util.stream.IntStream;
+import RogueLike.Main.Worldgen.Structures.GrassPatch;
+import RogueLike.Main.Worldgen.Structures.Pit;
+import RogueLike.Main.Worldgen.Structures.PitItem;
+import RogueLike.Main.Worldgen.Structures.PotionRoom;
+import RogueLike.Main.Worldgen.Structures.SmallCell;
 
 public class CaveFloor extends Blueprint {
 	private final int depth;
@@ -87,59 +95,59 @@ public class CaveFloor extends Blueprint {
 	}
 
 	@Override
-	public void onBuildWorld(World world) {
-		createCreatures(world);
-		createItems(world);
+	public void onBuildWorld() {
+		createCreatures();
+		createItems();
 	}
 
-	public void createCreatures(World world) {
+	public void createCreatures() {
 		for(int i = 0; i < 18; i++) {
-			world.factory().randomChest(depth, world.player(), true);
+			FactoryManager.getObjectFactory().randomChest(depth, World.player(), true);
 		}
 
 		for(int i = 0; i < 85; i++) {
-			world.factory().randomLesserMonster(depth, world.player(), true);
+			FactoryManager.getObjectFactory().randomLesserMonster(depth, World.player(), true);
 		}
 		if(depth > 5) {
 			for(int i = 0; i < 50; i++) {
-				world.factory().randomMediumMonster(depth, world.player(), true);
+				FactoryManager.getObjectFactory().randomMediumMonster(depth, World.player(), true);
 			}
 		}
 		if(depth > 10) {
 			for(int i = 0; i < 30; i++) {
-				world.factory().randomGreaterMonster(depth, world.player(), true);
+				FactoryManager.getObjectFactory().randomGreaterMonster(depth, World.player(), true);
 			}
 		}
 	}
 
-	private void createItems(World world) {
-		for(int i = 0; i < world.width() * world.height() / 25; i++) {
-			world.factory().itemFactory.newRock(depth, 1);
+	private void createItems() {
+		for(int i = 0; i < World.width() * World.height() / 25; i++) {
+			FactoryManager.getItemFactory().newRock(depth, 1);
 		}
 		for(int i = 0; i < 35; i++) {
-			Point where = world.getEmptyLocationForTrap(depth);
-			world.factory().createRandomTrap(where);
+			Point where = World.getEmptyLocationForTrap(depth);
+			FactoryManager.getObjectFactory().createRandomTrap(where);
 		}
 		for(int i = 0; i < 6; i++) {//6
-			world.factory().randomFood(depth, 1);
+			FactoryManager.getObjectFactory().randomFood(depth, 1);
 		}
 		for(int j = 0; j < 4; j++) {
-			world.factory().randomPotion(depth, true);
+			FactoryManager.getObjectFactory().randomPotion(depth, true);
 		}
 		for(int k = 0; k < 3; k++) {
-			world.factory().randomArmor(depth, true, true, true, true);
+			FactoryManager.getObjectFactory().randomArmor(depth, true, true, true, true);
 		}
 		for(int l = 0; l < 2; l++) {
-			world.factory().randomShield(depth, true, true, true, true);
+			FactoryManager.getObjectFactory().randomShield(depth, true, true, true, true);
 		}
 		for(int m = 0; m < 2; m++) {
-			world.factory().randomWeapon(depth, true, true, true, true);
+			FactoryManager.getObjectFactory().randomWeapon(depth, true, true, true, true);
 		}
 		for(int l = 0; l < 2; l++) {
-			world.factory().randomRing(depth, true, true);
+			FactoryManager.getObjectFactory().randomRing(depth, true, true);
 		}
 		for(int l = 0; l < 2; l++) {
-			world.factory().randomScroll(depth, world.player(), true);
+			FactoryManager.getObjectFactory().randomScroll(depth, World.player(), true);
 		}
 	}
 

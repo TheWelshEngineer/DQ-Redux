@@ -9,19 +9,20 @@ import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Damage.DamageType;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Screens.TerminalText;
 
 public class ThundercloudSlimeAI extends CreatureAI{
+	private static final long serialVersionUID = -4303698284155819638L;
 	private Creature player;
 	private int turnsWithoutPlayer = 0;
 	private int spellCooldown = 0;
 	
-	public ThundercloudSlimeAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public ThundercloudSlimeAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
 		//this.factory = factory;
-		//this.world = world;
+		//this.World = World;
 	}
 	
 	public void selectAction() {
@@ -60,7 +61,7 @@ public class ThundercloudSlimeAI extends CreatureAI{
 	}
 	
 	public void castSpell() {
-		player.addEffect((Effect)factory.effectFactory.chainLightning(creature).clone());
+		player.addEffect((Effect)FactoryManager.getEffectFactory().chainLightning(creature).clone());
 	}
 	
 	private void burst() {
@@ -73,20 +74,20 @@ public class ThundercloudSlimeAI extends CreatureAI{
                         continue;
                     }
 
-                    Creature slimeling = factory.creatureFactory.newThundercloudSlimeling(0, player, false);
+                    Creature slimeling = FactoryManager.getCreatureFactory().newThundercloudSlimeling(0, player, false);
 
                     if (!slimeling.canEnter(nx, ny, creature.z)){
-                        world.remove(slimeling);
+                        World.remove(slimeling);
                         continue;
                     }
                     
                     if (creature.creature(nx, ny, creature.z) != null){
-                        world.remove(slimeling);
+                        World.remove(slimeling);
                         continue;
                     }
                     
                     if (Dice.d10.roll() <= 4){
-                        world.remove(slimeling);
+                        World.remove(slimeling);
                         continue;
                     }
                     
@@ -99,7 +100,7 @@ public class ThundercloudSlimeAI extends CreatureAI{
                 }
             }
             creature.doAction(new TerminalText("split into slimelings!"));
-            Damage damage = new Damage(creature.hp(), true, DamageType.TRUE, factory.effectFactory, false);
+            Damage damage = new Damage(creature.hp(), true, DamageType.TRUE, false);
             creature.damage(damage, "");
 		}
 	}

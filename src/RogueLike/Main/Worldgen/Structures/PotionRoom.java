@@ -1,13 +1,14 @@
 package RogueLike.Main.Worldgen.Structures;
 
-import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.Utils.PointShapes.Rectangle;
+import java.util.stream.Stream;
+
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
+import RogueLike.Main.Factories.FactoryManager;
+import RogueLike.Main.Utils.PointShapes.Point;
+import RogueLike.Main.Utils.PointShapes.Rectangle;
 import RogueLike.Main.Worldgen.Structure;
 import RogueLike.Main.Worldgen.Structures.StructureUtils.LockedRoom;
-
-import java.util.stream.Stream;
 
 public class PotionRoom extends Structure {
 	public static final int internalWidth = 3;
@@ -24,17 +25,17 @@ public class PotionRoom extends Structure {
 	}
 
 	@Override
-	public void onBuildWorld(World world) {
+	public void onBuildWorld() {
 		// Add three potions into the cell, one of which is guaranteed positive
-		world.addAtEmptySpace(world.factory().randomPotion(z, false), x+1, y-1, z);
-		world.addAtEmptySpace(world.factory().randomPositivePotion(z, false), x, y-1, z);
-		world.addAtEmptySpace(world.factory().randomPotion(z, false), x-1, y-1, z);
+		World.addAtEmptySpace(FactoryManager.getObjectFactory().randomPotion(z, false), x+1, y-1, z);
+		World.addAtEmptySpace(FactoryManager.getObjectFactory().randomPositivePotion(z, false), x, y-1, z);
+		World.addAtEmptySpace(FactoryManager.getObjectFactory().randomPotion(z, false), x-1, y-1, z);
 	}
 
 	@Override
-	public void onBuildWorldLate(World world) {
+	public void onBuildWorldLate() {
 		// add an iron key to this floor so the cell can be opened
-		world.factory().itemFactory.newIronKey(z, true);
+		FactoryManager.getItemFactory().newIronKey(z, true);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package RogueLike.Main.Screens;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class TerminalChar {
 	public final char glyph;
