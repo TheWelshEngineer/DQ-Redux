@@ -127,7 +127,8 @@ public class ObjectFactory implements Serializable {
 		Collections.shuffle(wandAppearances);
 	}
 	
-	public void setUpWandIndex(Creature player) {
+	public void setUpWandIndex() {
+		Creature player = World.player();
 		wandIndex = new ArrayList<Item>();
 		wandIndex.add(FactoryManager.getItemFactory().newMagicMissileWand(0, player, false));
 		wandIndex.add(FactoryManager.getItemFactory().newForceBlastWand(0, player, false));
@@ -167,7 +168,7 @@ public class ObjectFactory implements Serializable {
 		Collections.shuffle(ringAppearances);
 	}
 	
-	public void setUpRingIndex(Creature player) {
+	public void setUpRingIndex() {
 		ringIndex = new ArrayList<Item>();
 		ringIndex.add(FactoryManager.getItemFactory().newStrengthRing(0, false, false));
 		ringIndex.add(FactoryManager.getItemFactory().newDexterityRing(0, false, false));
@@ -203,7 +204,9 @@ public class ObjectFactory implements Serializable {
 		Collections.shuffle(scrollAppearances);
 	}
 	
-	public void setUpScrollIndex(Creature player) {
+	public void setUpScrollIndex() {
+
+		Creature player = World.player();
 		scrollIndex = new ArrayList<Item>();
 		scrollIndex.add(FactoryManager.getItemFactory().newScrollOfIdentify(0, player, false));
 		scrollIndex.add(FactoryManager.getItemFactory().newScrollOfMagicMapping(0, player, false));

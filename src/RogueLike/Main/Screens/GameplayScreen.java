@@ -320,16 +320,29 @@ public class GameplayScreen implements Screen{
 		this.effects = player.effects();
 	}
 	
-	private World createWorld(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
+	private void createWorld(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
 		// This is a bit of a hacky way of handling the "World fails to generate sometimes" issue - just keep trying
 		// until it generates successfully!
-		while (true) {
+		boolean success = false;
+		while (!success) {
 			System.out.println("Generating World...");
 			try {
 				//IMPORTANT: World Width // World Height // World Depth
 				new WorldBuilder(120, 60, 22)
 					.generateWorld()
 					.build(playerNotifications, playerDetails);
+				
+				//Now we have a successful world gen, add the player and indexes. 
+				//This avoids doing it multiple times in generation
+				World.creatures.add(World.player());
+
+				// Set up indexes - this is the earliest we can do this
+				FactoryManager.getObjectFactory().setUpPotionIndex();
+				FactoryManager.getObjectFactory().setUpWandIndex();
+				FactoryManager.getObjectFactory().setUpRingIndex();
+				FactoryManager.getObjectFactory().setUpScrollIndex();
+				
+				success = true;
 			}
 			catch (WorldGenerationException e) {
 				System.out.printf("!!! Error - Aborting generation due to %s%n", e);

@@ -297,21 +297,13 @@ public enum World {
 		NotificationHistory notificationHandle,
 		PlayerBuildDetails playerDetails
 	) {
-		if (player != null) {
-			throw new IllegalStateException("Player already exists!");
-		}
-		player = FactoryManager.getCreatureFactory().newPlayer(new FieldOfView(), notificationHandle, playerDetails);
+		if (player == null) {
+			player = FactoryManager.getCreatureFactory().newPlayer(new FieldOfView(), notificationHandle, playerDetails);
+		} 
 		Point spawnpoint = getPlayerSpawnPoint();
 		player.x = spawnpoint.x;
 		player.y = spawnpoint.y;
 		player.z = spawnpoint.z;
-		creatures.add(player);
-
-		// Set up indexes - this is the earliest we can do this
-		FactoryManager.getObjectFactory().setUpPotionIndex();
-		FactoryManager.getObjectFactory().setUpWandIndex(player);
-		FactoryManager.getObjectFactory().setUpRingIndex(player);
-		FactoryManager.getObjectFactory().setUpScrollIndex(player);
 
 		System.out.println("Player spawned");
 	}

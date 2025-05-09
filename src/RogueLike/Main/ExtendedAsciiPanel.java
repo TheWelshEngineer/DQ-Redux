@@ -37,7 +37,7 @@ public class ExtendedAsciiPanel extends JPanel {
     private ExtendedAsciiPanel() {
     	super();
     	instance = this;
-    	newExtendedAsciiPanelSettings(80, 24, new String[]{"../../../res/cp437.png"});
+    	//newExtendedAsciiPanelSettings(120, 48, new String[] {"cp437.png","codePage_437_K.png"});
     }
 
     /**
