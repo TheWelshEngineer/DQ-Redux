@@ -1,12 +1,14 @@
 package RogueLike.Main;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Screens.TerminalText;
 
-public class Effect implements Cloneable{
+public class Effect implements Cloneable, Serializable{
 	
+	private static final long serialVersionUID = 5018812922175309612L;
 	public static String ignited = "Ignited";
 	public static String frozen = "Frozen";
 	public static String electrified = "Electrified";

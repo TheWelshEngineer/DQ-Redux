@@ -1,27 +1,26 @@
 package RogueLike.Main.Entities;
 
-import RogueLike.Main.Utils.PointShapes.Point;
+import java.awt.Color;
+import java.io.Serializable;
+
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.World;
+import RogueLike.Main.Utils.PointShapes.Point;
 
-import java.awt.*;
-
-public abstract class Entity {
+public abstract class Entity implements Serializable {
+	private static final long serialVersionUID = -5364806522055462437L;
 	// TODO: Should Creature extend this?
 	public int x; // TODO: make protected
 	public int y; // TODO: make protected
 	public int z; // TODO: make protected
-	public final World world;
 
 	public abstract char glyph();
 	public abstract Color color();
 	public abstract String name();
 
-	public Entity(World world, int x, int y, int z) {
+	public Entity(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.world = world;
 	}
 
 	public Point location() {return new Point(x, y, z);}

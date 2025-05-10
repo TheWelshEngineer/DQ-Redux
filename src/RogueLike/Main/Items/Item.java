@@ -1,6 +1,7 @@
 package RogueLike.Main.Items;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.EnumSet;
@@ -16,7 +17,9 @@ import RogueLike.Main.Enchantments.Enchantment;
 
 
 
-public class Item implements Cloneable{
+public class Item implements Cloneable, Serializable{
+
+	private static final long serialVersionUID = 6318041693852388693L;
 	private char glyph;
 	public char glyph() {
 		return glyph;

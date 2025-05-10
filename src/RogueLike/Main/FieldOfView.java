@@ -1,11 +1,14 @@
 package RogueLike.Main;
 
+import java.io.Serializable;
+
 import RogueLike.Main.Utils.PointShapes.Line;
 import RogueLike.Main.Utils.PointShapes.Point;
 
-public class FieldOfView {
-    private World world;
-    private int depth;
+public class FieldOfView implements Serializable {
+    private static final long serialVersionUID = 866806104250178972L;
+
+	private int depth;
 
     private boolean[][] visible;
     public boolean isVisible(int x, int y, int z){
@@ -28,9 +31,11 @@ public class FieldOfView {
     	}
         return tiles[x][y][z];
     }
+    
+    private World world;
 
-    public FieldOfView(World world){
-        this.world = world;
+    public FieldOfView(){
+    	this.world = World.getInstance();
         this.visible = new boolean[world.width()][world.height()];
         this.tiles = new Tile[world.width()][world.height()][world.depth()];
     

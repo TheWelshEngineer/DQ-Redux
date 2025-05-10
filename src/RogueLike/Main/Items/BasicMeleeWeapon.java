@@ -6,6 +6,8 @@ import RogueLike.Main.Dice;
 
 public class BasicMeleeWeapon extends Item{
 	
+	private static final long serialVersionUID = -8773674565061714021L;
+
 	/**
 	 * 
 	 * @param glyph A Code Page 437 char which visually represents the Weapon.

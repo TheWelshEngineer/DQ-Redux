@@ -1,14 +1,13 @@
 package RogueLike.Main.Worldgen.Structures;
 
-import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.Tile;
-import RogueLike.Main.Utils.PointShapes.Rectangle;
-import RogueLike.Main.World;
-import RogueLike.Main.WorldBuilder;
-import RogueLike.Main.Worldgen.Structure;
-
 import java.util.Random;
 import java.util.stream.Stream;
+
+import RogueLike.Main.Tile;
+import RogueLike.Main.WorldBuilder;
+import RogueLike.Main.Utils.PointShapes.Point;
+import RogueLike.Main.Utils.PointShapes.Rectangle;
+import RogueLike.Main.Worldgen.Structure;
 
 public class GrassPatch extends Structure {
 	public static final int width = 5;
@@ -31,12 +30,12 @@ public class GrassPatch extends Structure {
 	}
 
 	@Override
-	public void onBuildWorld(World world) {
+	public void onBuildWorld() {
 		// do nothing
 	}
 
 	@Override
-	public void onBuildWorldLate(World world) {
+	public void onBuildWorldLate() {
 		// do nothing
 	}
 

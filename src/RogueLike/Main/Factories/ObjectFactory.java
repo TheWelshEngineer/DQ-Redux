@@ -1,27 +1,34 @@
 package RogueLike.Main.Factories;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Description;
 import RogueLike.Main.Dice;
-import RogueLike.Main.Entities.Trap;
-import RogueLike.Main.Entities.Traps.*;
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.World;
-import RogueLike.Main.Creatures.*;
-import RogueLike.Main.Enchantments.*;
-import RogueLike.Main.Items.*;
+import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Enchantments.Enchantment;
+import RogueLike.Main.Entities.Trap;
+import RogueLike.Main.Entities.Traps.AcidTrap;
+import RogueLike.Main.Entities.Traps.BlinkTrap;
+import RogueLike.Main.Entities.Traps.FireTrap;
+import RogueLike.Main.Entities.Traps.FrostbiteTrap;
+import RogueLike.Main.Entities.Traps.LightningTrap;
+import RogueLike.Main.Entities.Traps.SmokeTrap;
+import RogueLike.Main.Entities.Traps.SummoningTrap;
+import RogueLike.Main.Items.Item;
+import RogueLike.Main.Utils.PointShapes.Point;
 
-public class ObjectFactory {
+public class ObjectFactory implements Serializable {
 	
-	public World world;
+	private static final long serialVersionUID = 2107505917946865299L;
 	
 	//public Map<String, Color> potionColors;
 	public Map<String, Description> potionColors;
@@ -40,16 +47,10 @@ public class ObjectFactory {
 	public List<String> scrollAppearances;
 	public List<Item> scrollIndex;
 	
-	public EffectFactory effectFactory = new EffectFactory(this);
-	public SpellFactory spellFactory = new SpellFactory(effectFactory);
-	public FeatFactory featFactory = new FeatFactory();
-	public EnchantmentFactory enchantmentFactory = new EnchantmentFactory(effectFactory);
-	public ItemFactory itemFactory = new ItemFactory(this);
-	public CreatureFactory creatureFactory = new CreatureFactory(this);
-	public ParticleFactory particleFactory = new ParticleFactory();
-	
-	public ObjectFactory(World world) {
-		this.world = world;
+	private World world;
+
+	public ObjectFactory() {
+		this.world = World.getInstance();
 		setUpPotionAppearances();
 		//setUpPotionIndex();
 		setUpWandAppearances();
@@ -57,9 +58,8 @@ public class ObjectFactory {
 		setUpRingAppearances();
 		
 		setUpScrollAppearances();
-		
 	}
-	
+
 	private void setUpPotionAppearances() {
 		potionColors = new HashMap<String, Description>();
 		potionColors.put("Crimson Potion", new Description("crimson", ExtendedAsciiPanel.brightRed));
@@ -81,18 +81,18 @@ public class ObjectFactory {
 	
 	public void setUpPotionIndex() {
 		potionIndex = new ArrayList<Item>();
-		potionIndex.add(itemFactory.newPotionOfPoison(0, false));
-		potionIndex.add(itemFactory.newPotionOfGiantStrength(0, false));
-		potionIndex.add(itemFactory.newPotionOfMana(0, false));
-		potionIndex.add(itemFactory.newPotionOfInvisibility(0, false));
-		potionIndex.add(itemFactory.newPotionOfParalysis(0, false));
-		potionIndex.add(itemFactory.newPotionOfCausticGas(0, false));
-		potionIndex.add(itemFactory.newPotionOfHealing(0, false));
-		potionIndex.add(itemFactory.newPotionOfRestoration(0, false));
-		potionIndex.add(itemFactory.newPotionOfMindVision(0, false));
-		potionIndex.add(itemFactory.newPotionOfOvergrowth(0, false));
-		potionIndex.add(itemFactory.newPotionOfCombustion(0, false));
-		potionIndex.add(itemFactory.newPotionOfLevitation(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfPoison(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfGiantStrength(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfMana(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfInvisibility(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfParalysis(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfCausticGas(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfHealing(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfRestoration(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfMindVision(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfOvergrowth(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfCombustion(0, false));
+		potionIndex.add(FactoryManager.getItemFactory().newPotionOfLevitation(0, false));
 		
 		Collections.shuffle(potionIndex);
 	}
@@ -130,20 +130,21 @@ public class ObjectFactory {
 		Collections.shuffle(wandAppearances);
 	}
 	
-	public void setUpWandIndex(Creature player) {
+	public void setUpWandIndex() {
+		Creature player = this.world.player();
 		wandIndex = new ArrayList<Item>();
-		wandIndex.add(itemFactory.newMagicMissileWand(0, player, false));
-		wandIndex.add(itemFactory.newForceBlastWand(0, player, false));
+		wandIndex.add(FactoryManager.getItemFactory().newMagicMissileWand(0, player, false));
+		wandIndex.add(FactoryManager.getItemFactory().newForceBlastWand(0, player, false));
 		
-		wandIndex.add(itemFactory.newFireboltWand(0, player, false));
+		wandIndex.add(FactoryManager.getItemFactory().newFireboltWand(0, player, false));
 		
-		wandIndex.add(itemFactory.newFlashFreezeWand(0, player, false));
-		wandIndex.add(itemFactory.newIceWallWand(0, player, false));
-		wandIndex.add(itemFactory.newIceKnifeWand(0, player, false));
+		wandIndex.add(FactoryManager.getItemFactory().newFlashFreezeWand(0, player, false));
+		wandIndex.add(FactoryManager.getItemFactory().newIceWallWand(0, player, false));
+		wandIndex.add(FactoryManager.getItemFactory().newIceKnifeWand(0, player, false));
 		
-		wandIndex.add(itemFactory.newChainLightningWand(0, player, false));
+		wandIndex.add(FactoryManager.getItemFactory().newChainLightningWand(0, player, false));
 		
-		wandIndex.add(itemFactory.newAcidBlastWand(0, player, false));
+		wandIndex.add(FactoryManager.getItemFactory().newAcidBlastWand(0, player, false));
 		
 		Collections.shuffle(wandIndex);
 	}
@@ -170,20 +171,20 @@ public class ObjectFactory {
 		Collections.shuffle(ringAppearances);
 	}
 	
-	public void setUpRingIndex(Creature player) {
+	public void setUpRingIndex() {
 		ringIndex = new ArrayList<Item>();
-		ringIndex.add(itemFactory.newStrengthRing(0, false, false));
-		ringIndex.add(itemFactory.newDexterityRing(0, false, false));
-		ringIndex.add(itemFactory.newIntelligenceRing(0, false, false));
-		ringIndex.add(itemFactory.newArmorRing(0, false, false));
-		ringIndex.add(itemFactory.newFireResistanceRing(0, false, false));
-		ringIndex.add(itemFactory.newFrostResistanceRing(0, false, false));
-		ringIndex.add(itemFactory.newShockResistanceRing(0, false, false));
-		ringIndex.add(itemFactory.newPoisonResistanceRing(0, false, false));
-		ringIndex.add(itemFactory.newAcidResistanceRing(0, false, false));
-		ringIndex.add(itemFactory.newMagicResistanceRing(0, false, false));
-		ringIndex.add(itemFactory.newChaosResistanceRing(0, false, false));
-		ringIndex.add(itemFactory.newVisionRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newStrengthRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newDexterityRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newIntelligenceRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newArmorRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newFireResistanceRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newFrostResistanceRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newShockResistanceRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newPoisonResistanceRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newAcidResistanceRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newMagicResistanceRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newChaosResistanceRing(0, false, false));
+		ringIndex.add(FactoryManager.getItemFactory().newVisionRing(0, false, false));
 		
 		
 		
@@ -206,15 +207,17 @@ public class ObjectFactory {
 		Collections.shuffle(scrollAppearances);
 	}
 	
-	public void setUpScrollIndex(Creature player) {
+	public void setUpScrollIndex() {
+
+		Creature player = this.world.player();
 		scrollIndex = new ArrayList<Item>();
-		scrollIndex.add(itemFactory.newScrollOfIdentify(0, player, false));
-		scrollIndex.add(itemFactory.newScrollOfMagicMapping(0, player, false));
-		scrollIndex.add(itemFactory.newScrollOfSummonMonsters(0, player, false));
-		scrollIndex.add(itemFactory.newScrollOfUpgrade(0, player, false));
-		scrollIndex.add(itemFactory.newScrollOfRemoveCurse(0, player, false));
-		scrollIndex.add(itemFactory.newScrollOfEnchantment(0, player, false));
-		scrollIndex.add(itemFactory.newScrollOfConfusion(0, player, false));
+		scrollIndex.add(FactoryManager.getItemFactory().newScrollOfIdentify(0, player, false));
+		scrollIndex.add(FactoryManager.getItemFactory().newScrollOfMagicMapping(0, player, false));
+		scrollIndex.add(FactoryManager.getItemFactory().newScrollOfSummonMonsters(0, player, false));
+		scrollIndex.add(FactoryManager.getItemFactory().newScrollOfUpgrade(0, player, false));
+		scrollIndex.add(FactoryManager.getItemFactory().newScrollOfRemoveCurse(0, player, false));
+		scrollIndex.add(FactoryManager.getItemFactory().newScrollOfEnchantment(0, player, false));
+		scrollIndex.add(FactoryManager.getItemFactory().newScrollOfConfusion(0, player, false));
 		
 		Collections.shuffle(scrollIndex);
 	}
@@ -232,15 +235,15 @@ public class ObjectFactory {
 	}
 	
 	public void randomEnchantWeapon(Item item) {
-		item.setEnchantment(enchantmentFactory.randomWeaponEnchantment(item));
+		item.setEnchantment(FactoryManager.getEnchantmentFactory().randomWeaponEnchantment(item));
 	}
 	
 	public void randomEnchantArmor(Item item) {
-		item.setEnchantment(enchantmentFactory.randomArmorEnchantment(item));
+		item.setEnchantment(FactoryManager.getEnchantmentFactory().randomArmorEnchantment(item));
 	}
 	
 	public void curseItem(Item item) {
-		item.setCurse(enchantmentFactory.randomCurse(item));
+		item.setCurse(FactoryManager.getEnchantmentFactory().randomCurse(item));
 	}
 
 	//generators
@@ -256,83 +259,83 @@ public class ObjectFactory {
 	
 	public Item randomSimpleWeapon(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 8)) {
-		case 1: return itemFactory.newClub(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 2: return itemFactory.newDart(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 3: return itemFactory.newQuarterstaff(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 4: return itemFactory.newSpear(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 5: return itemFactory.newGreatclub(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 6: return itemFactory.newThrowingAxe(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 7: return itemFactory.newMattock(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 8: return itemFactory.newMaul(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		default: return itemFactory.newClub(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 1: return FactoryManager.getItemFactory().newClub(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return FactoryManager.getItemFactory().newDart(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return FactoryManager.getItemFactory().newQuarterstaff(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 4: return FactoryManager.getItemFactory().newSpear(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 5: return FactoryManager.getItemFactory().newGreatclub(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 6: return FactoryManager.getItemFactory().newThrowingAxe(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 7: return FactoryManager.getItemFactory().newMattock(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 8: return FactoryManager.getItemFactory().newMaul(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return FactoryManager.getItemFactory().newClub(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
 	public Item randomMartialWeapon(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 9)) {
-		case 1: return itemFactory.newShortsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 2: return itemFactory.newKnuckleduster(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 3: return itemFactory.newMace(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 4: return itemFactory.newThrowingHammer(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 5: return itemFactory.newLongsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 6: return itemFactory.newHalberd(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 7: return itemFactory.newWarhammer(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 8: return itemFactory.newJavelin(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 9: return itemFactory.newGreatsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		default: return itemFactory.newShortsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 1: return FactoryManager.getItemFactory().newShortsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return FactoryManager.getItemFactory().newKnuckleduster(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return FactoryManager.getItemFactory().newMace(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 4: return FactoryManager.getItemFactory().newThrowingHammer(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 5: return FactoryManager.getItemFactory().newLongsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 6: return FactoryManager.getItemFactory().newHalberd(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 7: return FactoryManager.getItemFactory().newWarhammer(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 8: return FactoryManager.getItemFactory().newJavelin(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 9: return FactoryManager.getItemFactory().newGreatsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return FactoryManager.getItemFactory().newShortsword(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
 	public Item randomFinesseWeapon(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 7)) {
-		case 1: return itemFactory.newDagger(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 2: return itemFactory.newRapier(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 3: return itemFactory.newFalchion(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 4: return itemFactory.newBoomerang(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 5: return itemFactory.newGlaive(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 6: return itemFactory.newFlamberge(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 7: return itemFactory.newPairedBlades(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		default: return itemFactory.newDagger(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 1: return FactoryManager.getItemFactory().newDagger(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return FactoryManager.getItemFactory().newRapier(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return FactoryManager.getItemFactory().newFalchion(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 4: return FactoryManager.getItemFactory().newBoomerang(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 5: return FactoryManager.getItemFactory().newGlaive(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 6: return FactoryManager.getItemFactory().newFlamberge(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 7: return FactoryManager.getItemFactory().newPairedBlades(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return FactoryManager.getItemFactory().newDagger(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
 	public Item randomRangedWeapon(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 7)) {
-		case 1: return itemFactory.newShortbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 2: return itemFactory.newLongbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 3: return itemFactory.newLightCrossbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 4: return itemFactory.newHeavyCrossbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 5: return itemFactory.newHandCrossbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 6: return itemFactory.newPistol(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 7: return itemFactory.newCaliver(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		default: return itemFactory.newShortbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 1: return FactoryManager.getItemFactory().newShortbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return FactoryManager.getItemFactory().newLongbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return FactoryManager.getItemFactory().newLightCrossbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 4: return FactoryManager.getItemFactory().newHeavyCrossbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 5: return FactoryManager.getItemFactory().newHandCrossbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 6: return FactoryManager.getItemFactory().newPistol(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 7: return FactoryManager.getItemFactory().newCaliver(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return FactoryManager.getItemFactory().newShortbow(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
 	public Item randomArmor(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 12)) {
-		case 1: return itemFactory.newPaddedClothArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 2: return itemFactory.newLeatherArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 3: return itemFactory.newStuddedLeatherArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 4: return itemFactory.newHideArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 5: return itemFactory.newChainmailArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 6: return itemFactory.newScaleArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 7: return itemFactory.newBreastplate(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 8: return itemFactory.newHalfPlate(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 9: return itemFactory.newPlateArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 10: return itemFactory.newRingMail(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 11: return itemFactory.newChainArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 12: return itemFactory.newSplintArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		default: return itemFactory.newPaddedClothArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 1: return FactoryManager.getItemFactory().newPaddedClothArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return FactoryManager.getItemFactory().newLeatherArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return FactoryManager.getItemFactory().newStuddedLeatherArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 4: return FactoryManager.getItemFactory().newHideArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 5: return FactoryManager.getItemFactory().newChainmailArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 6: return FactoryManager.getItemFactory().newScaleArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 7: return FactoryManager.getItemFactory().newBreastplate(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 8: return FactoryManager.getItemFactory().newHalfPlate(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 9: return FactoryManager.getItemFactory().newPlateArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 10: return FactoryManager.getItemFactory().newRingMail(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 11: return FactoryManager.getItemFactory().newChainArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 12: return FactoryManager.getItemFactory().newSplintArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return FactoryManager.getItemFactory().newPaddedClothArmor(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
 	public Item randomShield(int depth, boolean addToWorld, boolean canUpgrade, boolean canEnchant, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 3)) {
-		case 1: return itemFactory.newRoundShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 2: return itemFactory.newTowerShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		case 3: return itemFactory.newKiteShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
-		default: return itemFactory.newRoundShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 1: return FactoryManager.getItemFactory().newRoundShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 2: return FactoryManager.getItemFactory().newTowerShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		case 3: return FactoryManager.getItemFactory().newKiteShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
+		default: return FactoryManager.getItemFactory().newRoundShield(depth, addToWorld, canUpgrade, canEnchant, canCurse);
 		}
 	}
 	
@@ -348,35 +351,35 @@ public class ObjectFactory {
 	public void createRandomTrap(Point where) {
 		Trap trap;
 		switch(ExtraMaths.diceRoll(1, 7)) {
-			case 1: trap = new LightningTrap(where.x, where.y, where.z, world); break;
-			case 2: trap = new FrostbiteTrap(where.x, where.y, where.z, world); break;
-			case 3: trap = new SummoningTrap(where.x, where.y, where.z, world); break;
-			case 4: trap = new BlinkTrap(where.x, where.y, where.z, world); break;
-			case 5: trap = new FireTrap(where.x, where.y, where.z, world); break;
-			case 6: trap = new AcidTrap(where.x, where.y, where.z, world); break;
-			case 7: trap = new SmokeTrap(where.x, where.y, where.z, world); break;
-			default: trap = new FireTrap(where.x, where.y, where.z, world); break;
+			case 1: trap = new LightningTrap(where.x, where.y, where.z); break;
+			case 2: trap = new FrostbiteTrap(where.x, where.y, where.z); break;
+			case 3: trap = new SummoningTrap(where.x, where.y, where.z); break;
+			case 4: trap = new BlinkTrap(where.x, where.y, where.z); break;
+			case 5: trap = new FireTrap(where.x, where.y, where.z); break;
+			case 6: trap = new AcidTrap(where.x, where.y, where.z); break;
+			case 7: trap = new SmokeTrap(where.x, where.y, where.z); break;
+			default: trap = new FireTrap(where.x, where.y, where.z); break;
 		}
-		world.add(trap);
+		World.getInstance().add(trap);
 	}
 	
 	public Item randomAmmunition(int depth, int addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 3)) {
-		case 1: return itemFactory.newArrows(depth, addToWorld);
-		case 2: return itemFactory.newBolts(depth, addToWorld);
-		case 3: return itemFactory.newPowder(depth, addToWorld);
-		default: return itemFactory.newArrows(depth, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newArrows(depth, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newBolts(depth, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newPowder(depth, addToWorld);
+		default: return FactoryManager.getItemFactory().newArrows(depth, addToWorld);
 		}
 	}
 	
 	public Item randomFood(int depth, int addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 5)) {
-		case 1: return itemFactory.newRations(depth, addToWorld);
-		case 2: return itemFactory.newRations(depth, addToWorld);
-		case 3: return itemFactory.newRations(depth, addToWorld);
-		case 4: return itemFactory.newRations(depth, addToWorld);
-		case 5: return itemFactory.newPasty(depth, addToWorld);
-		default: return itemFactory.newRations(depth, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newRations(depth, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newRations(depth, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newRations(depth, addToWorld);
+		case 4: return FactoryManager.getItemFactory().newRations(depth, addToWorld);
+		case 5: return FactoryManager.getItemFactory().newPasty(depth, addToWorld);
+		default: return FactoryManager.getItemFactory().newRations(depth, addToWorld);
 		}
 	}
 	
@@ -405,140 +408,140 @@ public class ObjectFactory {
 	
 	public Item randomEvocationWand(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
-		case 1: return itemFactory.newMagicMissileWand(depth, player, addToWorld);
-		case 2: return itemFactory.newForceBlastWand(depth, player, addToWorld);
-		case 3: return itemFactory.newFindTrapsWand(depth, player, addToWorld);
-		case 4: return itemFactory.newArchmagesAegisWand(depth, player, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newMagicMissileWand(depth, player, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newForceBlastWand(depth, player, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newFindTrapsWand(depth, player, addToWorld);
+		case 4: return FactoryManager.getItemFactory().newArchmagesAegisWand(depth, player, addToWorld);
 		
-		default: return itemFactory.newMagicMissileWand(depth, player, addToWorld);
+		default: return FactoryManager.getItemFactory().newMagicMissileWand(depth, player, addToWorld);
 		}
 	}
 	
 	public Item randomPyromancyWand(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
-		case 1: return itemFactory.newFireboltWand(depth, player, addToWorld);
-		case 2: return itemFactory.newFlashfireWand(depth, player, addToWorld);
-		case 3: return itemFactory.newBrazierBarrierWand(depth, player, addToWorld);
-		case 4: return itemFactory.newPyrotechnicsWand(depth, player, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newFireboltWand(depth, player, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newFlashfireWand(depth, player, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newBrazierBarrierWand(depth, player, addToWorld);
+		case 4: return FactoryManager.getItemFactory().newPyrotechnicsWand(depth, player, addToWorld);
 		
-		default: return itemFactory.newFireboltWand(depth, player, addToWorld);
+		default: return FactoryManager.getItemFactory().newFireboltWand(depth, player, addToWorld);
 		}
 	}
 	
 	public Item randomCryomancyWand(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
-		case 1: return itemFactory.newFlashFreezeWand(depth, player, addToWorld);
-		case 2: return itemFactory.newIceKnifeWand(depth, player, addToWorld);
-		case 3: return itemFactory.newIceWallWand(depth, player, addToWorld);
-		case 4: return itemFactory.newGlaciateWand(depth, player, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newFlashFreezeWand(depth, player, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newIceKnifeWand(depth, player, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newIceWallWand(depth, player, addToWorld);
+		case 4: return FactoryManager.getItemFactory().newGlaciateWand(depth, player, addToWorld);
 		
-		default: return itemFactory.newFlashFreezeWand(depth, player, addToWorld);
+		default: return FactoryManager.getItemFactory().newFlashFreezeWand(depth, player, addToWorld);
 		}
 	}
 	
 	public Item randomElectromancyWand(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
-		case 1: return itemFactory.newChainLightningWand(depth, player, addToWorld);
-		case 2: return itemFactory.newLightningLanceWand(depth, player, addToWorld);
-		case 3: return itemFactory.newHasteWand(depth, player, addToWorld);
-		case 4: return itemFactory.newStaticSurgeWand(depth, player, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newChainLightningWand(depth, player, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newLightningLanceWand(depth, player, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newHasteWand(depth, player, addToWorld);
+		case 4: return FactoryManager.getItemFactory().newStaticSurgeWand(depth, player, addToWorld);
 		
-		default: return itemFactory.newChainLightningWand(depth, player, addToWorld);
+		default: return FactoryManager.getItemFactory().newChainLightningWand(depth, player, addToWorld);
 		}
 	}
 	
 	public Item randomAlchemancyWand(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
-		case 1: return itemFactory.newAcidBlastWand(depth, player, addToWorld);
-		case 2: return itemFactory.newToxicTransfusionWand(depth, player, addToWorld);
-		case 3: return itemFactory.newRefluxBarrierWand(depth, player, addToWorld);
-		case 4: return itemFactory.newLifetapWand(depth, player, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newAcidBlastWand(depth, player, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newToxicTransfusionWand(depth, player, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newRefluxBarrierWand(depth, player, addToWorld);
+		case 4: return FactoryManager.getItemFactory().newLifetapWand(depth, player, addToWorld);
 		
-		default: return itemFactory.newAcidBlastWand(depth, player, addToWorld);
+		default: return FactoryManager.getItemFactory().newAcidBlastWand(depth, player, addToWorld);
 		}
 	}
 	
 	public Item randomFerromancyWand(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 4)) {
-		case 1: return itemFactory.newArmorStormWand(depth, player, addToWorld);
-		case 2: return itemFactory.newWeaponBoltWand(depth, player, addToWorld);
-		case 3: return itemFactory.newBladsWardWand(depth, player, addToWorld);
-		case 4: return itemFactory.newInfuseUpgradeWand(depth, player, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newArmorStormWand(depth, player, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newWeaponBoltWand(depth, player, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newBladsWardWand(depth, player, addToWorld);
+		case 4: return FactoryManager.getItemFactory().newInfuseUpgradeWand(depth, player, addToWorld);
 		
-		default: return itemFactory.newArmorStormWand(depth, player, addToWorld);
+		default: return FactoryManager.getItemFactory().newArmorStormWand(depth, player, addToWorld);
 		}
 	}
 	
 	public Item randomRing(int depth, boolean addToWorld, boolean canCurse) {
 		switch(ExtraMaths.diceRoll(1, 12)) {
-		case 1: return itemFactory.newStrengthRing(depth, addToWorld, canCurse);
-		case 2: return itemFactory.newDexterityRing(depth, addToWorld, canCurse);
-		case 3: return itemFactory.newIntelligenceRing(depth, addToWorld, canCurse);
-		case 4: return itemFactory.newArmorRing(depth, addToWorld, canCurse);
-		case 5: return itemFactory.newFireResistanceRing(depth, addToWorld, canCurse);
-		case 6: return itemFactory.newFrostResistanceRing(depth, addToWorld, canCurse);
-		case 7: return itemFactory.newShockResistanceRing(depth, addToWorld, canCurse);
-		case 8: return itemFactory.newPoisonResistanceRing(depth, addToWorld, canCurse);
-		case 9: return itemFactory.newAcidResistanceRing(depth, addToWorld, canCurse);
-		case 10: return itemFactory.newMagicResistanceRing(depth, addToWorld, canCurse);
-		case 11: return itemFactory.newChaosResistanceRing(depth, addToWorld, canCurse);
-		case 12: return itemFactory.newVisionRing(depth, addToWorld, canCurse);
-		default: return itemFactory.newStrengthRing(depth, addToWorld, canCurse);
+		case 1: return FactoryManager.getItemFactory().newStrengthRing(depth, addToWorld, canCurse);
+		case 2: return FactoryManager.getItemFactory().newDexterityRing(depth, addToWorld, canCurse);
+		case 3: return FactoryManager.getItemFactory().newIntelligenceRing(depth, addToWorld, canCurse);
+		case 4: return FactoryManager.getItemFactory().newArmorRing(depth, addToWorld, canCurse);
+		case 5: return FactoryManager.getItemFactory().newFireResistanceRing(depth, addToWorld, canCurse);
+		case 6: return FactoryManager.getItemFactory().newFrostResistanceRing(depth, addToWorld, canCurse);
+		case 7: return FactoryManager.getItemFactory().newShockResistanceRing(depth, addToWorld, canCurse);
+		case 8: return FactoryManager.getItemFactory().newPoisonResistanceRing(depth, addToWorld, canCurse);
+		case 9: return FactoryManager.getItemFactory().newAcidResistanceRing(depth, addToWorld, canCurse);
+		case 10: return FactoryManager.getItemFactory().newMagicResistanceRing(depth, addToWorld, canCurse);
+		case 11: return FactoryManager.getItemFactory().newChaosResistanceRing(depth, addToWorld, canCurse);
+		case 12: return FactoryManager.getItemFactory().newVisionRing(depth, addToWorld, canCurse);
+		default: return FactoryManager.getItemFactory().newStrengthRing(depth, addToWorld, canCurse);
 		}
 	}
 	
 	public Item randomScroll(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 7)) {
-		case 1: return itemFactory.newScrollOfIdentify(depth, player, addToWorld);
-		case 2: return itemFactory.newScrollOfMagicMapping(depth, player, addToWorld);
-		case 3: return itemFactory.newScrollOfSummonMonsters(depth, player, addToWorld);
-		case 4: return itemFactory.newScrollOfUpgrade(depth, player, addToWorld);
-		case 5: return itemFactory.newScrollOfRemoveCurse(depth, player, addToWorld);
-		case 6: return itemFactory.newScrollOfEnchantment(depth, player, addToWorld);
-		case 7: return itemFactory.newScrollOfConfusion(depth, player, addToWorld);
-		default: return itemFactory.newScrollOfIdentify(depth, player, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newScrollOfIdentify(depth, player, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newScrollOfMagicMapping(depth, player, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newScrollOfSummonMonsters(depth, player, addToWorld);
+		case 4: return FactoryManager.getItemFactory().newScrollOfUpgrade(depth, player, addToWorld);
+		case 5: return FactoryManager.getItemFactory().newScrollOfRemoveCurse(depth, player, addToWorld);
+		case 6: return FactoryManager.getItemFactory().newScrollOfEnchantment(depth, player, addToWorld);
+		case 7: return FactoryManager.getItemFactory().newScrollOfConfusion(depth, player, addToWorld);
+		default: return FactoryManager.getItemFactory().newScrollOfIdentify(depth, player, addToWorld);
 		}
 	}
 	
 	public Item randomPotion(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 12)) {
-		case 1: return itemFactory.newPotionOfPoison(depth, addToWorld);
-		case 2: return itemFactory.newPotionOfGiantStrength(depth, addToWorld);
-		case 3: return itemFactory.newPotionOfMana(depth, addToWorld);
-		case 4: return itemFactory.newPotionOfInvisibility(depth, addToWorld);
-		case 5: return itemFactory.newPotionOfParalysis(depth, addToWorld);
-		case 6: return itemFactory.newPotionOfCausticGas(depth, addToWorld);
-		case 7: return itemFactory.newPotionOfHealing(depth, addToWorld);
-		case 8: return itemFactory.newPotionOfRestoration(depth, addToWorld);
-		case 9: return itemFactory.newPotionOfMindVision(depth, addToWorld);
-		case 10: return itemFactory.newPotionOfOvergrowth(depth, addToWorld);
-		case 11: return itemFactory.newPotionOfCombustion(depth, addToWorld);
-		case 12: return itemFactory.newPotionOfLevitation(depth, addToWorld);
-		default: return itemFactory.newPotionOfHealing(depth, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newPotionOfPoison(depth, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newPotionOfGiantStrength(depth, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newPotionOfMana(depth, addToWorld);
+		case 4: return FactoryManager.getItemFactory().newPotionOfInvisibility(depth, addToWorld);
+		case 5: return FactoryManager.getItemFactory().newPotionOfParalysis(depth, addToWorld);
+		case 6: return FactoryManager.getItemFactory().newPotionOfCausticGas(depth, addToWorld);
+		case 7: return FactoryManager.getItemFactory().newPotionOfHealing(depth, addToWorld);
+		case 8: return FactoryManager.getItemFactory().newPotionOfRestoration(depth, addToWorld);
+		case 9: return FactoryManager.getItemFactory().newPotionOfMindVision(depth, addToWorld);
+		case 10: return FactoryManager.getItemFactory().newPotionOfOvergrowth(depth, addToWorld);
+		case 11: return FactoryManager.getItemFactory().newPotionOfCombustion(depth, addToWorld);
+		case 12: return FactoryManager.getItemFactory().newPotionOfLevitation(depth, addToWorld);
+		default: return FactoryManager.getItemFactory().newPotionOfHealing(depth, addToWorld);
 		}
 	}
 	
 	public Item randomPositivePotion(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 7)) {
-		case 1: return itemFactory.newPotionOfGiantStrength(depth, addToWorld);
-		case 2: return itemFactory.newPotionOfMana(depth, addToWorld);
-		case 3: return itemFactory.newPotionOfInvisibility(depth, addToWorld);
-		case 4: return itemFactory.newPotionOfHealing(depth, addToWorld);
-		case 5: return itemFactory.newPotionOfRestoration(depth, addToWorld);
-		case 6: return itemFactory.newPotionOfMindVision(depth, addToWorld);
-		case 7: return itemFactory.newPotionOfLevitation(depth, addToWorld);
-		default: return itemFactory.newPotionOfHealing(depth, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newPotionOfGiantStrength(depth, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newPotionOfMana(depth, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newPotionOfInvisibility(depth, addToWorld);
+		case 4: return FactoryManager.getItemFactory().newPotionOfHealing(depth, addToWorld);
+		case 5: return FactoryManager.getItemFactory().newPotionOfRestoration(depth, addToWorld);
+		case 6: return FactoryManager.getItemFactory().newPotionOfMindVision(depth, addToWorld);
+		case 7: return FactoryManager.getItemFactory().newPotionOfLevitation(depth, addToWorld);
+		default: return FactoryManager.getItemFactory().newPotionOfHealing(depth, addToWorld);
 		}
 	}
 	
 	public Item randomNegativePotion(int depth, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 5)) {
-		case 1: return itemFactory.newPotionOfPoison(depth, addToWorld);
-		case 2: return itemFactory.newPotionOfParalysis(depth, addToWorld);
-		case 3: return itemFactory.newPotionOfCausticGas(depth, addToWorld);
-		case 4: return itemFactory.newPotionOfOvergrowth(depth, addToWorld);
-		case 5: return itemFactory.newPotionOfCombustion(depth, addToWorld);
-		default: return itemFactory.newPotionOfPoison(depth, addToWorld);
+		case 1: return FactoryManager.getItemFactory().newPotionOfPoison(depth, addToWorld);
+		case 2: return FactoryManager.getItemFactory().newPotionOfParalysis(depth, addToWorld);
+		case 3: return FactoryManager.getItemFactory().newPotionOfCausticGas(depth, addToWorld);
+		case 4: return FactoryManager.getItemFactory().newPotionOfOvergrowth(depth, addToWorld);
+		case 5: return FactoryManager.getItemFactory().newPotionOfCombustion(depth, addToWorld);
+		default: return FactoryManager.getItemFactory().newPotionOfPoison(depth, addToWorld);
 		}
 	}
 	
@@ -550,35 +553,35 @@ public class ObjectFactory {
 		case 3: creature = randomFungus(depth, player, addToWorld); break;
 		case 4: creature = randomFungus(depth, player, addToWorld); break;
 		case 5: creature = randomSlime(depth, player, addToWorld); break;
-		case 6: creature = creatureFactory.newBat(depth, addToWorld); break;
-		case 7: creature = creatureFactory.newBat(depth, addToWorld); break;
-		case 8: creature = creatureFactory.newBat(depth, addToWorld); break;
+		case 6: creature = FactoryManager.getCreatureFactory().newBat(depth, addToWorld); break;
+		case 7: creature = FactoryManager.getCreatureFactory().newBat(depth, addToWorld); break;
+		case 8: creature = FactoryManager.getCreatureFactory().newBat(depth, addToWorld); break;
 		case 9: creature = randomSlime(depth, player, addToWorld); break;
 		case 10: creature = randomSlime(depth, player, addToWorld); break;
-		default: creature = creatureFactory.newFungus(depth, addToWorld); break;
+		default: creature = FactoryManager.getCreatureFactory().newFungus(depth, addToWorld); break;
 		}
 		if(ExtraMaths.diceRoll(1, 50) == 1) {
-			creature = creatureFactory.modifyCreatureDamageDealt(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+			creature = FactoryManager.getCreatureFactory().modifyCreatureDamageDealt(creature, FactoryManager.getModifierFactory().randomCreatureModifier());
 		}
 		if(ExtraMaths.diceRoll(1, 50) == 1) {
-			creature = creatureFactory.modifyCreatureResistsDamage(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+			creature = FactoryManager.getCreatureFactory().modifyCreatureResistsDamage(creature, FactoryManager.getModifierFactory().randomCreatureModifier());
 		}
 		return creature;
 	}
 	
 	public Creature randomFungus(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		case 1: return creatureFactory.newBloodFungus(depth, player, addToWorld);
-		default: return creatureFactory.newFungus(depth, addToWorld);
+		case 1: return FactoryManager.getCreatureFactory().newBloodFungus(depth, player, addToWorld);
+		default: return FactoryManager.getCreatureFactory().newFungus(depth, addToWorld);
 		}
 	}
 	
 	public Creature randomSlime(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 16)) {
-		case 1: return creatureFactory.newMagmaSlime(depth, player, addToWorld);
-		case 2: return creatureFactory.newMetalSlime(depth, player, addToWorld);
-		case 3: return creatureFactory.newThundercloudSlime(depth, player, addToWorld);
-		default: return creatureFactory.newPinkSlime(depth, player, addToWorld);
+		case 1: return FactoryManager.getCreatureFactory().newMagmaSlime(depth, player, addToWorld);
+		case 2: return FactoryManager.getCreatureFactory().newMetalSlime(depth, player, addToWorld);
+		case 3: return FactoryManager.getCreatureFactory().newThundercloudSlime(depth, player, addToWorld);
+		default: return FactoryManager.getCreatureFactory().newPinkSlime(depth, player, addToWorld);
 		}
 	}
 	
@@ -593,42 +596,42 @@ public class ObjectFactory {
 		case 6: creature = randomGremlin(depth, player, addToWorld); break;
 		case 7: creature = randomConstruct(depth, player, addToWorld); break;
 		case 8: creature = randomConstruct(depth, player, addToWorld); break;
-		case 9: creature = creatureFactory.newGremlinSkirmisher(depth, player, addToWorld); break;
-		case 10: creature = creatureFactory.newGremlinAlchemist(depth, player, addToWorld); break;
+		case 9: creature = FactoryManager.getCreatureFactory().newGremlinSkirmisher(depth, player, addToWorld); break;
+		case 10: creature = FactoryManager.getCreatureFactory().newGremlinAlchemist(depth, player, addToWorld); break;
 		default: creature = randomSkeleton(depth, player, addToWorld); break;
 		}
 		if(ExtraMaths.diceRoll(1, 50) == 1) {
-			creature = creatureFactory.modifyCreatureDamageDealt(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+			creature = FactoryManager.getCreatureFactory().modifyCreatureDamageDealt(creature, FactoryManager.getModifierFactory().randomCreatureModifier());
 		}
 		if(ExtraMaths.diceRoll(1, 50) == 1) {
-			creature = creatureFactory.modifyCreatureResistsDamage(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+			creature = FactoryManager.getCreatureFactory().modifyCreatureResistsDamage(creature, FactoryManager.getModifierFactory().randomCreatureModifier());
 		}
 		return creature;
 	}
 	
 	public Creature randomConstruct(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 2)) {
-		case 1: return creatureFactory.newAnimatedArmor(depth, player, addToWorld);
-		case 2: return creatureFactory.newAnimatedWeapon(depth, player, addToWorld);
-		default: return creatureFactory.newAnimatedWeapon(depth, player, addToWorld);
+		case 1: return FactoryManager.getCreatureFactory().newAnimatedArmor(depth, player, addToWorld);
+		case 2: return FactoryManager.getCreatureFactory().newAnimatedWeapon(depth, player, addToWorld);
+		default: return FactoryManager.getCreatureFactory().newAnimatedWeapon(depth, player, addToWorld);
 		}
 	}
 	
 	public Creature randomSkeleton(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 15)) {
-		case 1: return creatureFactory.newSkeletonCryomancer(depth, player, addToWorld);
-		case 2: return creatureFactory.newSkeletonPyromancer(depth, player, addToWorld);
-		case 3: return creatureFactory.newSkeletonElectromancer(depth, player, addToWorld);
-		default: return creatureFactory.newSkeleton(depth, player, addToWorld);
+		case 1: return FactoryManager.getCreatureFactory().newSkeletonCryomancer(depth, player, addToWorld);
+		case 2: return FactoryManager.getCreatureFactory().newSkeletonPyromancer(depth, player, addToWorld);
+		case 3: return FactoryManager.getCreatureFactory().newSkeletonElectromancer(depth, player, addToWorld);
+		default: return FactoryManager.getCreatureFactory().newSkeleton(depth, player, addToWorld);
 		}
 	}
 	
 	public Creature randomGremlin(int depth, Creature player, boolean addToWorld) {
 		switch(ExtraMaths.diceRoll(1, 10)) {
-		case 1: return creatureFactory.newGremlinSkirmisher(depth, player, addToWorld);
-		case 2: return creatureFactory.newGremlinSkirmisher(depth, player, addToWorld);
-		case 3: return creatureFactory.newGremlinAlchemist(depth, player, addToWorld);
-		default: return creatureFactory.newGremlin(depth, player, addToWorld);
+		case 1: return FactoryManager.getCreatureFactory().newGremlinSkirmisher(depth, player, addToWorld);
+		case 2: return FactoryManager.getCreatureFactory().newGremlinSkirmisher(depth, player, addToWorld);
+		case 3: return FactoryManager.getCreatureFactory().newGremlinAlchemist(depth, player, addToWorld);
+		default: return FactoryManager.getCreatureFactory().newGremlin(depth, player, addToWorld);
 		}
 	}
 	
@@ -642,25 +645,25 @@ public class ObjectFactory {
 		case 5: creature = randomGremlin(depth, player, addToWorld); break;
 		case 6: creature = randomConstruct(depth, player, addToWorld); break;
 		case 7: creature = randomConstruct(depth, player, addToWorld); break;
-		case 8: creature = creatureFactory.newMimic(depth, player, addToWorld); break;
-		case 9: creature = creatureFactory.newCloaker(depth, player, addToWorld); break;
-		case 10: creature = creatureFactory.newOgre(depth, player, addToWorld); break;
+		case 8: creature = FactoryManager.getCreatureFactory().newMimic(depth, player, addToWorld); break;
+		case 9: creature = FactoryManager.getCreatureFactory().newCloaker(depth, player, addToWorld); break;
+		case 10: creature = FactoryManager.getCreatureFactory().newOgre(depth, player, addToWorld); break;
 		default: creature = randomSkeleton(depth, player, addToWorld); break;
 		}
 		
 		if(ExtraMaths.diceRoll(1, 50) == 1) {
-			creature = creatureFactory.modifyCreatureDamageDealt(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+			creature = FactoryManager.getCreatureFactory().modifyCreatureDamageDealt(creature, FactoryManager.getModifierFactory().randomCreatureModifier());
 		}
 		if(ExtraMaths.diceRoll(1, 50) == 1) {
-			creature = creatureFactory.modifyCreatureResistsDamage(creature, creatureFactory.modifierFactory.randomCreatureModifier());
+			creature = FactoryManager.getCreatureFactory().modifyCreatureResistsDamage(creature, FactoryManager.getModifierFactory().randomCreatureModifier());
 		}
 		return creature;
 	}
 	
 	public Creature randomChest(int depth, Creature player, boolean addToWorld) {
 		switch(Dice.d20.roll()) {
-		case 1: return creatureFactory.newMimic(depth, player, addToWorld);
-		default: return creatureFactory.newChest(depth, player, addToWorld);
+		case 1: return FactoryManager.getCreatureFactory().newMimic(depth, player, addToWorld);
+		default: return FactoryManager.getCreatureFactory().newChest(depth, player, addToWorld);
 		}
 	}
 

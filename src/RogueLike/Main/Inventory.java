@@ -1,13 +1,15 @@
 package RogueLike.Main;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 import RogueLike.Main.Items.Item;
 
-public class Inventory {
+public class Inventory implements Serializable {
 	
+	private static final long serialVersionUID = -7856585278089868493L;
 	private ArrayList<Item> items;
 	public ArrayList<Item> getItems() {
 		return items;

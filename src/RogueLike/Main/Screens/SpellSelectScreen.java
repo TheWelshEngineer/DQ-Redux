@@ -1,6 +1,7 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import RogueLike.Main.ExtendedAsciiPanel;
@@ -8,41 +9,37 @@ import RogueLike.Main.Spell;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 
-public class SpellSelectScreen implements Screen{
+public class SpellSelectScreen implements Screen, Serializable{
 	
 	protected Creature player;
 	private String letters;
 	private Item item;
-	private int sx;
-	private int sy;
 	
-	public SpellSelectScreen(Creature player, int sx, int sy, Item item) {
+	public SpellSelectScreen(Creature player, Item item) {
 		this.player = player;
 		this.letters = "abcdefghijklmnopqrstuvwxyz";
 		this.item = item;
-		this.sx = sx;
-		this.sy = sy;
 	}
 
 	@Override
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		ArrayList<String> lines = getList();
 		
 		int y = 26;
 		int x = 4;
 		
 		if(lines.size() > 0) {
-			terminal.clear(' ', x, y, 20, lines.size());
+			ExtendedAsciiPanel.clear(' ', x, y, 20, lines.size());
 		}
 		
 		for(String line : lines) {
-			terminal.write(line, x, y++);
+			ExtendedAsciiPanel.write(line, x, y++);
 		}
 		
-		terminal.clear(' ', 0, 23, 80, 1);
-        terminal.write("What would you like to read?", 2, 24);
+		ExtendedAsciiPanel.clear(' ', 0, 23, 80, 1);
+		ExtendedAsciiPanel.write("What would you like to read?", 2, 24);
         
-        terminal.repaint();
+		ExtendedAsciiPanel.getInstance().repaint();
 		
 	}
 	

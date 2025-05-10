@@ -1,13 +1,14 @@
 package RogueLike.Main.Worldgen.Structures;
 
-import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.Utils.PointShapes.Rectangle;
+import java.util.stream.Stream;
+
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
+import RogueLike.Main.Factories.FactoryManager;
+import RogueLike.Main.Utils.PointShapes.Point;
+import RogueLike.Main.Utils.PointShapes.Rectangle;
 import RogueLike.Main.Worldgen.Structure;
 import RogueLike.Main.Worldgen.Structures.StructureUtils.LockedRoom;
-
-import java.util.stream.Stream;
 
 public class SmallCell extends Structure {
 	public static final int internalWidth = 1;
@@ -24,15 +25,15 @@ public class SmallCell extends Structure {
 	}
 
 	@Override
-	public void onBuildWorld(World world) {
+	public void onBuildWorld() {
 		// add a random magic item in the cell
-		world.addAtEmptySpace(world.factory().randomMagicItem(z, world.player(), false, false), x, y, z);
+		World.getInstance().addAtEmptySpace(FactoryManager.getObjectFactory().randomMagicItem(z, World.getInstance().player(), false, false), x, y, z);
 	}
 
 	@Override
-	public void onBuildWorldLate(World world) {
+	public void onBuildWorldLate() {
 		// add an iron key to this floor so the cell can be opened
-		world.factory().itemFactory.newIronKey(z, true);
+		FactoryManager.getItemFactory().newIronKey(z, true);
 	}
 
 	@Override

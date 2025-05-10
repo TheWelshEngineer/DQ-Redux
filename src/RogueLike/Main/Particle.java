@@ -1,9 +1,11 @@
 package RogueLike.Main;
 
 import java.awt.Color;
+import java.io.Serializable;
 
-public class Particle {
+public class Particle implements Serializable {
 	
+	private static final long serialVersionUID = -2575531540207827694L;
 	private String name;
 	public String name() {
 		return name;

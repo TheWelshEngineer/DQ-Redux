@@ -1,11 +1,10 @@
 package RogueLike.Main.Worldgen;
 
-import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.World;
-import RogueLike.Main.WorldBuilder;
-
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import RogueLike.Main.WorldBuilder;
+import RogueLike.Main.Utils.PointShapes.Point;
 
 public abstract class Structure {
 	protected final WorldBuilder builder;
@@ -37,8 +36,8 @@ public abstract class Structure {
 	}
 
 	public abstract void onBuildStructures();
-	public abstract void onBuildWorld(World world);
-	public abstract void onBuildWorldLate(World world);
+	public abstract void onBuildWorld();
+	public abstract void onBuildWorldLate();
 	protected abstract Stream<Point> getReservedArea();
 	protected abstract boolean isCenterAcceptable();
 

@@ -1,11 +1,13 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.List;
+
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 
-public class Zone2Screen implements Screen{
+public class Zone2Screen implements Screen, Serializable{
 	
 	public String playerClass;
 	public String playerName;
@@ -21,19 +23,19 @@ public class Zone2Screen implements Screen{
 		
 	}
 
-	public void displayOutput(ExtendedAsciiPanel terminal) {
-		terminal.clear();
+	public void displayOutput() {
+		ExtendedAsciiPanel.clear();
 		int y = 9;
-		terminal.writeCenter("+||+ The Caves of Chaos +||+", y++);
+		ExtendedAsciiPanel.writeCenter("+||+ The Caves of Chaos +||+", y++);
 		y++;
-		terminal.writeCenter("The monsters besieging the Abandoned Depths must have", y++);
-		terminal.writeCenter("originated here - the Caves of Chaos. Things are never quite", y++);
-		terminal.writeCenter("what they seem here, and danger lurks around every corner.", y++);
-		terminal.writeCenter("Are you dwarf enough to fight your way through the darkness, and", y++);
-		terminal.writeCenter("recover the Kingdom's most precious treasure?", y++);
+		ExtendedAsciiPanel.writeCenter("The monsters besieging the Abandoned Depths must have", y++);
+		ExtendedAsciiPanel.writeCenter("originated here - the Caves of Chaos. Things are never quite", y++);
+		ExtendedAsciiPanel.writeCenter("what they seem here, and danger lurks around every corner.", y++);
+		ExtendedAsciiPanel.writeCenter("Are you dwarf enough to fight your way through the darkness, and", y++);
+		ExtendedAsciiPanel.writeCenter("recover the Kingdom's most precious treasure?", y++);
 		y++;
-		terminal.writeCenter("Good luck, adventurer..", y++);
-		terminal.writeCenter("-- [ENTER]: Continue --", 40);
+		ExtendedAsciiPanel.writeCenter("Good luck, adventurer..", y++);
+		ExtendedAsciiPanel.writeCenter("-- [ENTER]: Continue --", 40);
 	}
 	
 	public Screen respondToUserInput(KeyEvent key) {

@@ -9,19 +9,20 @@ import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.Damage;
 import RogueLike.Main.Damage.DamageType;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Screens.TerminalText;
 
 public class PinkSlimeAI extends CreatureAI{
+	private static final long serialVersionUID = -1993435981962849642L;
 	private Creature player;
 	private int turnsWithoutPlayer = 0;
 
 	
-	public PinkSlimeAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public PinkSlimeAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
 		//this.factory = factory;
-		//this.world = world;
+		//this.World = World;
 	}
 	
 	public void selectAction() {
@@ -56,6 +57,7 @@ public class PinkSlimeAI extends CreatureAI{
 	
 	private void burst() {
 		if(creature.hp() < (creature.maxHP() / 2)) {
+			World world = World.getInstance();
             for (int ox = -1; ox < 2; ox++){
                 for (int oy = -1; oy < 2; oy++){
                     int nx = creature.x + ox;
@@ -64,7 +66,7 @@ public class PinkSlimeAI extends CreatureAI{
                         continue;
                     }
 
-                    Creature slimeling = factory.creatureFactory.newPinkSlimeling(0, player, false);
+                    Creature slimeling = FactoryManager.getCreatureFactory().newPinkSlimeling(0, player, false);
 
                     if (!slimeling.canEnter(nx, ny, creature.z)){
                         world.remove(slimeling);
@@ -90,7 +92,7 @@ public class PinkSlimeAI extends CreatureAI{
                 }
             }
             creature.doAction(new TerminalText("split into slimelings!"));
-            Damage damage = new Damage(creature.hp(), true, DamageType.TRUE, factory.effectFactory, false);
+            Damage damage = new Damage(creature.hp(), true, DamageType.TRUE, false);
             creature.damage(damage, "");
 		}
 	}

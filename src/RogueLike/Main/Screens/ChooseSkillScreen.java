@@ -1,20 +1,21 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.List;
 
-import RogueLike.Main.Enums.PlayerAncestry;
-import RogueLike.Main.Enums.PlayerClass;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Skill;
 import RogueLike.Main.Skillset;
 import RogueLike.Main.TextUtils;
+import RogueLike.Main.Enums.PlayerAncestry;
+import RogueLike.Main.Enums.PlayerClass;
+import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Utils.PlayerBuildDetails;
 
 
-public class ChooseSkillScreen implements Screen{
+public class ChooseSkillScreen implements Screen, Serializable{
 	private final PlayerClass playerClass;
 	private final String playerName;
 	private final PlayerAncestry playerAncestry;
@@ -72,48 +73,48 @@ public class ChooseSkillScreen implements Screen{
 		return ' ';
 	}
 
-    public void displayOutput(ExtendedAsciiPanel terminal) {
-        terminal.clear();
-        Screen.generateBorders(terminal);
-        terminal.writeCenter("== Select your starting Skills ==", 1);
+    public void displayOutput() {
+        ExtendedAsciiPanel.clear();
+        Screen.generateBorders();;
+        ExtendedAsciiPanel.writeCenter("== Select your starting Skills ==", 1);
         int y = 3;
 
         
-        terminal.write(String.format("%c%s%c", borderCornerNW, String.valueOf(borderHorizontal).repeat(29), borderCornerNE), 4, y++);
-        terminal.write(String.format("%c -- Choices remaining: %2d -- %c", borderVertical, skillPoints, borderVertical), 4, y++);
-        terminal.write(String.format("%c                             %c", borderVertical, borderVertical), 4, y++);
+        ExtendedAsciiPanel.write(String.format("%c%s%c", borderCornerNW, String.valueOf(borderHorizontal).repeat(29), borderCornerNE), 4, y++);
+        ExtendedAsciiPanel.write(String.format("%c -- Choices remaining: %2d -- %c", borderVertical, skillPoints, borderVertical), 4, y++);
+        ExtendedAsciiPanel.write(String.format("%c                             %c", borderVertical, borderVertical), 4, y++);
         
         for (Skill skill : Skill.values()) {
             char leftMarker = (skill == selectedSkill()) ? '>' : ' ';
             char rightMarker = (skill == selectedSkill()) ? '<' : ' ';
-            terminal.write(String.format( "%c %c %-17s ( %c ) %c %c", borderVertical, leftMarker, skill, booleanToChar( skillsChosen.contains(skill) || classSkills.contains(skill)), rightMarker, borderVertical), 4, y++);
+            ExtendedAsciiPanel.write(String.format( "%c %c %-17s ( %c ) %c %c", borderVertical, leftMarker, skill, booleanToChar( skillsChosen.contains(skill) || classSkills.contains(skill)), rightMarker, borderVertical), 4, y++);
         }
-        terminal.write(String.format("%c%s%c", borderCornerSW, String.valueOf(borderHorizontal).repeat(29), borderCornerSE), 4, y++);
+        ExtendedAsciiPanel.write(String.format("%c%s%c", borderCornerSW, String.valueOf(borderHorizontal).repeat(29), borderCornerSE), 4, y++);
 
         y = 4;
-        terminal.write(String.format("+||+ %s +||+", selectedSkill().toString()), 37, y++);
+        ExtendedAsciiPanel.write(String.format("+||+ %s +||+", selectedSkill().toString()), 37, y++);
         y++;
-        terminal.writeMultiline(TextUtils.wordWrap(selectedSkill().description, 66, 0), 41, y++);
+        ExtendedAsciiPanel.writeMultiline(TextUtils.wordWrap(selectedSkill().description, 66, 0), 41, y++);
         y+=4;
-        terminal.write(String.format("+||+ %s I +||+", selectedSkill().toString()), 37, y++);
+        ExtendedAsciiPanel.write(String.format("+||+ %s I +||+", selectedSkill().toString()), 37, y++);
         y++;
-        terminal.writeMultiline(TextUtils.wordWrap(selectedSkill().details_1, 66, 0), 41, y++);
+        ExtendedAsciiPanel.writeMultiline(TextUtils.wordWrap(selectedSkill().details_1, 66, 0), 41, y++);
         y+=3;
-        terminal.write(String.format("+||+ %s II +||+", selectedSkill().toString()), 37, y++);
+        ExtendedAsciiPanel.write(String.format("+||+ %s II +||+", selectedSkill().toString()), 37, y++);
         y++;
-        terminal.writeMultiline(TextUtils.wordWrap(selectedSkill().details_2, 66, 0), 41, y++);
+        ExtendedAsciiPanel.writeMultiline(TextUtils.wordWrap(selectedSkill().details_2, 66, 0), 41, y++);
         y+=3;
-        terminal.write(String.format("+||+ %s III +||+", selectedSkill().toString()), 37, y++);
+        ExtendedAsciiPanel.write(String.format("+||+ %s III +||+", selectedSkill().toString()), 37, y++);
         y++;
-        terminal.writeMultiline(TextUtils.wordWrap(selectedSkill().details_3, 66, 0), 41, y++);
+        ExtendedAsciiPanel.writeMultiline(TextUtils.wordWrap(selectedSkill().details_3, 66, 0), 41, y++);
 
         if (skillPoints < 1) {
-            terminal.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 38);
+            ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 38);
         } else {
-            terminal.writeCenter("-- Assign all skill points to continue --", 38);
+            ExtendedAsciiPanel.writeCenter("-- Assign all skill points to continue --", 38);
         }
-        terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Select/Deselect Skill --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 40);
-        terminal.writeCenter(String.format("-- [%s]: Return to Ability Score selection --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 42);
+        ExtendedAsciiPanel.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s / %s]: Select/Deselect Skill --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuLeft), KeybindManager.keybindText(KeybindManager.navigateMenuRight)), 40);
+        ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Return to Ability Score selection --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 42);
     }
 
     public Screen respondToUserInput(KeyEvent key) {

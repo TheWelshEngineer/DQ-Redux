@@ -1,13 +1,17 @@
 package RogueLike.Main.Enchantments;
 
+import java.io.Serializable;
+
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Items.Item;
 
-public class Enchantment {
+public class Enchantment implements Serializable {
 	
+	private static final long serialVersionUID = -5760750274958913763L;
+
 	private String name;
 	public String name() {
 		return name;

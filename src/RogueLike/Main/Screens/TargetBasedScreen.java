@@ -1,28 +1,29 @@
 package RogueLike.Main.Screens;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import RogueLike.Main.AoE.AoE;
-import RogueLike.Main.AoE.LineAoe;
-import RogueLike.Main.AoE.SinglePointAoE;
 import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.World;
+import RogueLike.Main.AoE.AoE;
+import RogueLike.Main.AoE.SinglePointAoE;
+import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
+import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Utils.PointShapes.Line;
 import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Managers.KeybindManager;
 
-public abstract class TargetBasedScreen implements Screen{
+public abstract class TargetBasedScreen implements Screen, Serializable{
 	
 	protected Creature player;
 	protected String caption;
-	/** world-space x-coordinate of selected point */
+	/** World-space x-coordinate of selected point */
 	protected int wx;
-	/** world-space y-coordinate of selected point */
+	/** World-space y-coordinate of selected point */
 	protected int wy;
 
 	protected AoE highlightArea;
@@ -39,10 +40,10 @@ public abstract class TargetBasedScreen implements Screen{
 		this(player, caption, null);
 	}
 	
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		// Draw the highlighted area
 		Set<Point> linePoints = Set.copyOf(new Line(player.x(), player.y(), wx, wy).points());
-		Set<Point> aoePoints = Set.copyOf(highlightArea.instantiate(player.location(), new Point(wx, wy, player.z()), player.world()).points());
+		Set<Point> aoePoints = Set.copyOf(highlightArea.instantiate(player.location(), new Point(wx, wy, player.z())).points());
 
 		Set<Point> highlightedPoints = new HashSet<>();
 		highlightedPoints.addAll(linePoints);
@@ -87,11 +88,11 @@ public abstract class TargetBasedScreen implements Screen{
 			int dy = player.gameplayScreen().getScrollY();
 
 			// Actually draw!
-			terminal.write(glyph, p.x - dx, p.y - dy, drawColor);
+			ExtendedAsciiPanel.write(glyph, p.x - dx, p.y - dy, drawColor);
 		}
 
-		terminal.clear(' ', 0, 24, 80, 1);
-		terminal.write(caption, 2, 24);
+		ExtendedAsciiPanel.clear(' ', 0, 24, 80, 1);
+		ExtendedAsciiPanel.write(caption, 2, 24);
 	}
 	
 	public Screen respondToUserInput(KeyEvent key) {
@@ -115,7 +116,7 @@ public abstract class TargetBasedScreen implements Screen{
 			case KeybindManager.navigateMenuBack: return null;
         }
 		
-		if(!isAcceptable(wx, wy) || !player.world().isInBounds(wx, wy)) {
+		if(!isAcceptable(wx, wy) || !World.getInstance().isInBounds(wx, wy)) {
 			wx = prevX;
 			wy = prevY;
 		}

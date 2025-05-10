@@ -4,6 +4,8 @@ import java.awt.Color;
 
 public class GoldKey extends BasicKey{
 
+	private static final long serialVersionUID = -7591668171125668329L;
+
 	public GoldKey(char glyph, Color color, String name, String appearance, int depth, int id) {
 		super(glyph, color, name, appearance, depth, id);
 		this.setIsGoldKey(true);

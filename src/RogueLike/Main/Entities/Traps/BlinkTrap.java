@@ -1,27 +1,26 @@
 package RogueLike.Main.Entities.Traps;
 
-import RogueLike.Main.Effect;
-import RogueLike.Main.Entities.Trap;
-import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Factories.EffectFactory;
-import RogueLike.Main.World;
+import java.awt.Color;
 
-import java.awt.*;
+import RogueLike.Main.Effect;
+import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.Entities.Trap;
+import RogueLike.Main.Factories.FactoryManager;
 
 public class BlinkTrap extends Trap {
 
-	public BlinkTrap(int x, int y, int z, World world) {
-		super(x, y, z, world);
+	public BlinkTrap(int x, int y, int z) {
+		super(x, y, z);
 	}
 
 	@Override
-	public Effect effect(EffectFactory factory) {
-		return factory.blink();
+	public Effect effect() {
+		return FactoryManager.getEffectFactory().blink();
 	}
 
 	@Override
-	public Effect exploitEffect(EffectFactory factory) {
-		return factory.bounce();
+	public Effect exploitEffect() {
+		return FactoryManager.getEffectFactory().bounce();
 	}
 
 	@Override

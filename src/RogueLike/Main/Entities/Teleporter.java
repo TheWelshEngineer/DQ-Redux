@@ -1,18 +1,18 @@
 package RogueLike.Main.Entities;
 
-import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Factories.ParticleFactory;
-import RogueLike.Main.World;
+import java.awt.Color;
 
-import java.awt.*;
+import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.World;
+import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Factories.FactoryManager;
 
 public class Teleporter extends Entity {
 	public final int targetX;
 	public final int targetY;
 
-	public Teleporter(World world, int x, int y, int z, int targetX, int targetY) {
-		super(world, x, y, z);
+	public Teleporter(int x, int y, int z, int targetX, int targetY) {
+		super(x, y, z);
 		this.targetX = targetX;
 		this.targetY = targetY;
 	}
@@ -38,11 +38,11 @@ public class Teleporter extends Entity {
 			int mx = targetX - other.x;
 			int my = targetY - other.y;
 			other.moveBy(mx, my, 0, false);
-			other.notify("The world warps around you as you are teleported!");
+			other.notify("The World warps around you as you are teleported!");
 
-			ParticleFactory factory = new ParticleFactory();
-			world.setParticleAtLocation(factory.vortex(ExtendedAsciiPanel.white, 2), x, y, z);
-			world.setParticleAtLocation(factory.vortex(ExtendedAsciiPanel.white, 2), targetX, targetY, z);
+			World world = World.getInstance();
+			world.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.white, 2), x, y, z);
+			world.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.white, 2), targetX, targetY, z);
 		}
 	}
 }

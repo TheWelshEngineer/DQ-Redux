@@ -4,19 +4,20 @@ import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
-import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Screens.TerminalText;
 
 public class SkeletonPyromancerAI extends CreatureAI{
+	private static final long serialVersionUID = -6766879922016966350L;
+
 	private Creature player;
 	
 	private int spellCooldown = 0;
 	
-	public SkeletonPyromancerAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public SkeletonPyromancerAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
 	}
 	
@@ -73,7 +74,7 @@ public class SkeletonPyromancerAI extends CreatureAI{
 	}
 	
 	public void castSpell() {
-		player.addEffect((Effect)factory.effectFactory.firebolt(creature).clone());
+		player.addEffect((Effect)FactoryManager.getEffectFactory().firebolt(creature).clone());
 	}
 	
 }

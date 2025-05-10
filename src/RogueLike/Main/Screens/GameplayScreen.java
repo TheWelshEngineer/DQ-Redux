@@ -2,30 +2,34 @@ package RogueLike.Main.Screens;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
-import RogueLike.Main.AI.PlayerAI;
-import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Effect;
-import RogueLike.Main.Entities.Entity;
-import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Factories.ItemFactory;
 import RogueLike.Main.FieldOfView;
+import RogueLike.Main.SaveState;
 import RogueLike.Main.Tile;
-import RogueLike.Main.Utils.NotificationHistory;
-import RogueLike.Main.Utils.PlayerBuildDetails;
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
+import RogueLike.Main.AI.PlayerAI;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Creatures.Player;
+import RogueLike.Main.Entities.Entity;
+import RogueLike.Main.Entities.Trap;
+import RogueLike.Main.Factories.FactoryManager;
+import RogueLike.Main.Factories.ItemFactory;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Screens.HelpScreens.HelpScreen;
+import RogueLike.Main.Utils.NotificationHistory;
+import RogueLike.Main.Utils.PlayerBuildDetails;
 import RogueLike.Main.Worldgen.WorldGenerationException;
 
-public class GameplayScreen implements Screen{
+public class GameplayScreen implements Screen, Serializable{
 	
+	private static final long serialVersionUID = -8150527838701924688L;
 	private boolean inputAccepted = false;
 	public void setInputAccepted(boolean value) {
 		inputAccepted = value;
@@ -36,54 +40,54 @@ public class GameplayScreen implements Screen{
 		toggleStatusToQuickslots = !toggleStatusToQuickslots;
 	}
 
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		
 		int left = getScrollX();
 		int top = getScrollY();
 		
-		displayTiles(terminal, left, top);
+		displayTiles(left, top);
 		playerNotifications.clearOldMessages(world.turnNumber());
-		displayMessages(terminal, playerNotifications.getNotificationsOnTurn(world.turnNumber()));
+		displayMessages(playerNotifications.getNotificationsOnTurn(world.turnNumber()));
 		
 		//health bar
-		terminal.writeCenter("====================================================================================================================", 21);
-		terminal.writeCenter("====================================================================================================================", 47);
+		ExtendedAsciiPanel.writeCenter("====================================================================================================================", 21);
+		ExtendedAsciiPanel.writeCenter("====================================================================================================================", 47);
 		//
 		String stats = "+||+                                                                                                          +||+";
-		terminal.writeCenter(stats, 22);
+		ExtendedAsciiPanel.writeCenter(stats, 22);
 		//
 		String depth = String.format("Depth: %d (%d,%d)", player.z()+1, player.x()+1, player.y()+1);
-		terminal.write(depth, 9, 22);
+		ExtendedAsciiPanel.write(depth, 9, 22);
 		String level = String.format(" Level: %d%s ", player.level(), canLevelUp());
 		if(player.attributePoints() > 0 || player.skillPoints() > 0) {
-			terminal.write(level, 29, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.green);
+			ExtendedAsciiPanel.write(level, 29, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.green);
 		}else {
-			terminal.write(level, 29, 22);
+			ExtendedAsciiPanel.write(level, 29, 22);
 		}
 		String xp = String.format("XP: %d/%d", player.xp(), player.xpToNextLevel());
-		terminal.write(xp, 45, 22);
+		ExtendedAsciiPanel.write(xp, 45, 22);
 		String health = String.format(" Health: %d/%d ", player.hp(), player.maxHP());
 		if(player.hp() <= player.maxHP()*0.2) {
-			terminal.write(health, 59, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.red);
+			ExtendedAsciiPanel.write(health, 59, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.red);
 		}else {
-			terminal.write(health, 59, 22);
+			ExtendedAsciiPanel.write(health, 59, 22);
 		}
 		String mana = String.format(" Mana: %d/%d ", player.mana(), player.maxMana());
 		if(player.mana() <= player.maxMana()*0.2) {
-			terminal.write(mana, 78, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.red);
+			ExtendedAsciiPanel.write(mana, 78, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.red);
 		}else {
-			terminal.write(mana, 78, 22);
+			ExtendedAsciiPanel.write(mana, 78, 22);
 		}
 		String hunger = String.format(" Hunger: %s ", player.hungerAsString());
 		if(player.food() <= player.maxFood()*0.1) {
-			terminal.write(hunger, 95, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.red);
+			ExtendedAsciiPanel.write(hunger, 95, 22, ExtendedAsciiPanel.white, ExtendedAsciiPanel.red);
 		}else {
-			terminal.write(hunger, 95, 22);
+			ExtendedAsciiPanel.write(hunger, 95, 22);
 		}
 		//
 		int y = 24;
 		if(!toggleStatusToQuickslots) {
-			terminal.write("== Status Effects ==", 95, y++);
+			ExtendedAsciiPanel.write("== Status Effects ==", 95, y++);
 			y++;
 			for(Effect effect : effects) {
 	        	if(effect.name() != null) {
@@ -98,22 +102,22 @@ public class GameplayScreen implements Screen{
 	        			effectTypeColor = ExtendedAsciiPanel.brightRed;
 	        		}
 	        		if(effect.showInMenu()) {
-	        			terminal.write(String.format("    %s (%d)", effect.name(), effect.duration()), 95, y2);
-	        			terminal.write(String.format("%c ", effect.glyph()), 95, y2, effect.color());
-	        			terminal.write(String.format(" %c", effectTypeIcon), 96, y2, effectTypeColor);
+	        			ExtendedAsciiPanel.write(String.format("    %s (%d)", effect.name(), effect.duration()), 95, y2);
+	        			ExtendedAsciiPanel.write(String.format("%c ", effect.glyph()), 95, y2, effect.color());
+	        			ExtendedAsciiPanel.write(String.format(" %c", effectTypeIcon), 96, y2, effectTypeColor);
 	        		}
 	        		y++;
 	        	}
 			}
 		}else {
-			terminal.write("== Quickslots ==", 95, y++);
+			ExtendedAsciiPanel.write("== Quickslots ==", 95, y++);
 			y++;
-			terminal.write(String.format("QS1: %s", player.quickslot_1() == null ? "Empty" : player.nameOf(player.quickslot_1())), 88, y++);
-			terminal.write(String.format("QS2: %s", player.quickslot_2() == null ? "Empty" : player.nameOf(player.quickslot_2())), 88, y++);
-			terminal.write(String.format("QS3: %s", player.quickslot_3() == null ? "Empty" : player.nameOf(player.quickslot_3())), 88, y++);
-			terminal.write(String.format("QS4: %s", player.quickslot_4() == null ? "Empty" : player.nameOf(player.quickslot_4())), 88, y++);
-			terminal.write(String.format("QS5: %s", player.quickslot_5() == null ? "Empty" : player.nameOf(player.quickslot_5())), 88, y++);
-			terminal.write(String.format("QS6: %s", player.quickslot_6() == null ? "Empty" : player.nameOf(player.quickslot_6())), 88, y++);
+			ExtendedAsciiPanel.write(String.format("QS1: %s", player.quickslot_1() == null ? "Empty" : player.nameOf(player.quickslot_1())), 88, y++);
+			ExtendedAsciiPanel.write(String.format("QS2: %s", player.quickslot_2() == null ? "Empty" : player.nameOf(player.quickslot_2())), 88, y++);
+			ExtendedAsciiPanel.write(String.format("QS3: %s", player.quickslot_3() == null ? "Empty" : player.nameOf(player.quickslot_3())), 88, y++);
+			ExtendedAsciiPanel.write(String.format("QS4: %s", player.quickslot_4() == null ? "Empty" : player.nameOf(player.quickslot_4())), 88, y++);
+			ExtendedAsciiPanel.write(String.format("QS5: %s", player.quickslot_5() == null ? "Empty" : player.nameOf(player.quickslot_5())), 88, y++);
+			ExtendedAsciiPanel.write(String.format("QS6: %s", player.quickslot_6() == null ? "Empty" : player.nameOf(player.quickslot_6())), 88, y++);
 		}
 		
 		//
@@ -121,11 +125,11 @@ public class GameplayScreen implements Screen{
 		
 		//floor
 		//String currentFloor = String.format(" Floor %3d", player.z+1);
-		//terminal.write(currentFloor, 1, 23);
+		//ExtendedAsciiPanel.write(currentFloor, 1, 23);
 		
 		//menus
 		if(subscreen != null) {
-			subscreen.displayOutput(terminal);
+			subscreen.displayOutput();
 		}
 		
 	}
@@ -189,7 +193,7 @@ public class GameplayScreen implements Screen{
 	        case KeybindManager.interactionPickUpItem: player.ai().playerAIGetItem(); break;
 	        case KeybindManager.interactionExamineItem: subscreen = new ExamineScreen(player); break;
 	        case KeybindManager.interactionLook: subscreen = new LookScreen(player, String.format("Use the movement controls to look around, or press [%s] to stop looking.", KeybindManager.keybindText(KeybindManager.navigateMenuBack))); break;
-	        case KeybindManager.interactionThrowItem: subscreen = new ThrowScreen(player, player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.interactionThrowItem: subscreen = new ThrowScreen(player); break;
 	        case KeybindManager.interactionDrinkPotion: subscreen = new QuaffScreen(player); break;
 	        case KeybindManager.interactionReadSpell: subscreen = new ReadScreen(player, player.x - getScrollX(), player.y - getScrollY()); break;
 	        case KeybindManager.interactionQuickslot_1: subscreen = player.useItemFromQuickslot(1, player.x - getScrollX(), player.y - getScrollY()); break;
@@ -225,8 +229,8 @@ public class GameplayScreen implements Screen{
 	        // Menu Controls
 	        case KeybindManager.menuHelp: subscreen = new HelpScreen(false); break;
 	        case KeybindManager.menuCharacterSheet: subscreen = new CharacterSheetScreen(player); break;
-	        case KeybindManager.menuIndex: subscreen = new IndexPotionScreen(player, player.factory()); break;
-	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player, player.x - getScrollX(), player.y - getScrollY()); break;
+	        case KeybindManager.menuIndex: subscreen = new IndexPotionScreen(player); break;
+	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player); break;
 			case KeybindManager.menuActionLog: subscreen = new ActionLogScreen(playerNotifications, world.turnNumber()); break;
 			case KeybindManager.menuPause: subscreen = new PauseScreen(); break;
 			case KeybindManager.interactionToggleStatusToQuickslots: this.toggleStatusToQuickslots(); inputAccepted = true; break;
@@ -254,7 +258,7 @@ public class GameplayScreen implements Screen{
 		}
 		
 		if (player.isReadingUpgrade()) {
-			subscreen = new UpgradeScreen(player, player.factory());
+			subscreen = new UpgradeScreen(player);
 			player.setIsReadingUpgrade(false);
 			inputAccepted = true;
 		}
@@ -266,7 +270,7 @@ public class GameplayScreen implements Screen{
 		}
 		
 		if (player.isReadingEnchantment()) {
-			subscreen = new EnchantScreen(player, player.factory());
+			subscreen = new EnchantScreen(player);
 			player.setIsReadingEnchantment(false);
 			inputAccepted = true;
 		}
@@ -289,22 +293,26 @@ public class GameplayScreen implements Screen{
 	}
 	
 	//variables
-	private World world;
-	private int screenWidth;
-	private int screenHeight;
+	private int screenWidth = 120;
+	private int screenHeight = 21;
 	public Player player;
 	public List<Effect> effects;
 	private NotificationHistory playerNotifications;
 	private final FieldOfView fov;
 	public Screen subscreen;
+	private World world;
 	
-	// #########
+	// Used to generate a new world
 	public GameplayScreen(PlayerBuildDetails playerDetails) {
-		this.screenWidth = 120; //80
-		this.screenHeight = 21; //21
+		this.world = World.getInstance();
 		// TODO: make the max notification history length configurable
 		this.playerNotifications = new NotificationHistory(100);
-		this.world = createWorld(this.playerNotifications, playerDetails);
+		createWorld(this.playerNotifications, playerDetails);
+		try {
+			SaveState.saveGame();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		for(Creature c : world.creatures) {
 			c.setGameplayScreen(this);
@@ -314,16 +322,41 @@ public class GameplayScreen implements Screen{
 		this.effects = player.effects();
 	}
 	
-	private World createWorld(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
-		// This is a bit of a hacky way of handling the "world fails to generate sometimes" issue - just keep trying
+	// Used when a world already exists, Ex: Loading a save file
+	public GameplayScreen() {
+		this.world = World.getInstance();
+		// TODO: make the max notification history length configurable
+		
+		// Currently the best way to get to the notifications is through the Player's AI
+		PlayerAI ai = (PlayerAI) this.world.player().ai();
+		this.playerNotifications = ai.getNotificationsHandle();
+		for(Creature c : world.creatures) {
+			c.setGameplayScreen(this);
+		}
+		this.player = world.player();
+		this.fov = ((PlayerAI) player.ai()).fov();
+		this.effects = player.effects();
+	}
+	
+	private void createWorld(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
+		// This is a bit of a hacky way of handling the "World fails to generate sometimes" issue - just keep trying
 		// until it generates successfully!
-		while (true) {
+		boolean success = false;
+		while (!success) {
 			System.out.println("Generating world...");
 			try {
 				//IMPORTANT: World Width // World Height // World Depth
-				return new WorldBuilder(120, 60, 22)
-						.generateWorld()
-						.build(playerNotifications, playerDetails);
+				new WorldBuilder(120, 60, 22)
+					.generateWorld()
+					.build(playerNotifications, playerDetails);
+
+				// Set up indexes - this is the earliest we can do this
+				FactoryManager.getObjectFactory().setUpPotionIndex();
+				FactoryManager.getObjectFactory().setUpWandIndex();
+				FactoryManager.getObjectFactory().setUpRingIndex();
+				FactoryManager.getObjectFactory().setUpScrollIndex();
+				
+				success = true;
 			}
 			catch (WorldGenerationException e) {
 				System.out.printf("!!! Error - Aborting generation due to %s%n", e);
@@ -345,6 +378,7 @@ public class GameplayScreen implements Screen{
 	
 	private Screen userExits() {
 		for(Item item : player.inventory().getItems()) {
+			FactoryManager.getItemFactory();
 			if(item != null && item.id() == ItemFactory.VICTORY_ITEM_ID) {
 				return new WinScreen(player);
 			}
@@ -353,7 +387,7 @@ public class GameplayScreen implements Screen{
 		return this;
 	}
 	
-	private void displayMessages(ExtendedAsciiPanel terminal, List<TerminalText> messages) {
+	private void displayMessages(List<TerminalText> messages) {
 		//screenHeight - messages.size();
 		int top = 24;
 		int messagesSize = messages.size();
@@ -365,13 +399,13 @@ public class GameplayScreen implements Screen{
 			if(y > 47) {
 				y = 47;
 			}
-			y = terminal.write(messages.get(i), 3, y);
+			y = ExtendedAsciiPanel.write(messages.get(i), 3, y);
 
 		}
 	}
 	
 	//player.x
-	private void displayTiles(ExtendedAsciiPanel terminal, int left, int top) {
+	private void displayTiles(int left, int top) {
 		if(player.isReadingMagicMapping()) {
 			fov.updateMagicMapping(player.x, player.y, player.z, 1000);
 		}else if(player.affectedBy(Effect.levitating)) {
@@ -404,9 +438,9 @@ public class GameplayScreen implements Screen{
 				//}
 				//
 				if (player.canSee(wx, wy, player.z))
-					terminal.write(world.glyph(wx, wy, player.z), x, y, world.color(wx, wy, player.z));
+					ExtendedAsciiPanel.write(world.glyph(wx, wy, player.z), x, y, world.color(wx, wy, player.z));
 				else
-					terminal.write(fov.tile(wx, wy, player.z).glyph(), x, y, Color.darkGray);
+					ExtendedAsciiPanel.write(fov.tile(wx, wy, player.z).glyph(), x, y, Color.darkGray);
 			}
 		}
 	}

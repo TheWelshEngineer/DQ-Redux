@@ -3,19 +3,18 @@ package RogueLike.Main.AI.GremlinAI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Effect;
-import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Screens.TerminalText;
 
 public class GremlinSkirmisherAI extends CreatureAI{
+	private static final long serialVersionUID = -337912727638047572L;
 	private Creature player;
 	private int comboAttackCooldown = 0;
 	private int turnsWithoutPlayer = 0;
 	
-	public GremlinSkirmisherAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public GremlinSkirmisherAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
 
 	}

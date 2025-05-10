@@ -1,28 +1,27 @@
 package RogueLike.Main.Entities.Traps;
 
+import java.awt.Color;
+
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
-import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Factories.EffectFactory;
-import RogueLike.Main.World;
-
-import java.awt.*;
+import RogueLike.Main.Entities.Trap;
+import RogueLike.Main.Factories.FactoryManager;
 
 public class AcidTrap extends Trap {
 
-	public AcidTrap(int x, int y, int z, World world) {
-		super(x, y, z, world);
+	public AcidTrap(int x, int y, int z) {
+		super(x, y, z);
 	}
 
 	@Override
-	public Effect effect(EffectFactory factory) {
-		return factory.causticVapor(3+z+ Dice.d6.roll());
+	public Effect effect() {
+		return FactoryManager.getEffectFactory().causticVapor(3+z+ Dice.d6.roll());
 	}
 
 	@Override
-	public Effect exploitEffect(EffectFactory factory) {
-		return factory.causticWard(10);
+	public Effect exploitEffect() {
+		return FactoryManager.getEffectFactory().causticWard(10);
 	}
 
 	@Override

@@ -4,19 +4,18 @@ import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
-import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Screens.TerminalText;
 
 public class GremlinAI extends CreatureAI{
+	private static final long serialVersionUID = 4970893466442762106L;
 	private Creature player;
 	private int arrowsLeft;
 	private int turnsWithoutPlayer = 0;
 	
-	public GremlinAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public GremlinAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
 		this.arrowsLeft = Dice.d10.roll()+3;
 

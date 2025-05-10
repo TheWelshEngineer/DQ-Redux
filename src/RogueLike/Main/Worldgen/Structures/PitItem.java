@@ -1,14 +1,15 @@
 package RogueLike.Main.Worldgen.Structures;
 
-import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.Items.Item;
+import java.util.stream.Stream;
+
 import RogueLike.Main.Tile;
-import RogueLike.Main.Utils.PointShapes.Rectangle;
 import RogueLike.Main.World;
 import RogueLike.Main.WorldBuilder;
+import RogueLike.Main.Factories.FactoryManager;
+import RogueLike.Main.Items.Item;
+import RogueLike.Main.Utils.PointShapes.Point;
+import RogueLike.Main.Utils.PointShapes.Rectangle;
 import RogueLike.Main.Worldgen.Structure;
-
-import java.util.stream.Stream;
 
 public class PitItem extends Structure {
 	public static final int pitRadius = 1;
@@ -31,16 +32,17 @@ public class PitItem extends Structure {
 	}
 
 	@Override
-	public void onBuildWorld(World world) {
+	public void onBuildWorld() {
+		World world = World.getInstance();
 		// Generate a random magic item to put on the pit's platform
-		Item item = world.factory().randomMagicItem(z, world.player(), false, false);
+		Item item = FactoryManager.getObjectFactory().randomMagicItem(z, world.player(), false, false);
 		world.addAtEmptySpace(item, x, y, z);
 	}
 
 	@Override
-	public void onBuildWorldLate(World world) {
+	public void onBuildWorldLate() {
 		// Add a potion of levitation somewhere this floor, so that the pit is traversable
-		world.factory().itemFactory.newPotionOfLevitation(z, true);
+		FactoryManager.getItemFactory().newPotionOfLevitation(z, true);
 	}
 
 	@Override

@@ -1,14 +1,15 @@
 package RogueLike.Main.Screens;
 
+import java.awt.event.KeyEvent;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Utils.NotificationHistory;
 
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
-
-public class ActionLogScreen implements Screen {
+public class ActionLogScreen implements Screen, Serializable {
     private final NotificationHistory notificationHistory;
     private final int currentTurn;
     private final List<TerminalText> logLines;
@@ -22,26 +23,26 @@ public class ActionLogScreen implements Screen {
         this.startLine = 0;
     }
 
-    public void displayOutput(ExtendedAsciiPanel terminal) {
-        terminal.clear();
-        Screen.generateBorders(terminal);
-        terminal.writeCenter("== Action Log ==", 1);
+    public void displayOutput() {
+        ExtendedAsciiPanel.clear();
+        Screen.generateBorders();;
+        ExtendedAsciiPanel.writeCenter("== Action Log ==", 1);
 
         int topY = 3;
         int bottomPadding = 3;
 
         if (logLines.isEmpty()) {
-            terminal.writeCenter(String.format("No actions in the past %d turns.", notificationHistory.getTurnLimit()), 3);
+            ExtendedAsciiPanel.writeCenter(String.format("No actions in the past %d turns.", notificationHistory.getTurnLimit()), 3);
         }
         else {
             int x = 8;
             int arrowsX = x + 12;
 
             if (startLine > 0) {
-                terminal.write('^', arrowsX, topY-1, ExtendedAsciiPanel.brightWhite);
+                ExtendedAsciiPanel.write('^', arrowsX, topY-1, ExtendedAsciiPanel.brightWhite);
             }
             if (startLine + MAX_LINES_TO_DISPLAY < logLines.size()) {
-                terminal.write('v', arrowsX, topY + MAX_LINES_TO_DISPLAY, ExtendedAsciiPanel.brightWhite);
+                ExtendedAsciiPanel.write('v', arrowsX, topY + MAX_LINES_TO_DISPLAY, ExtendedAsciiPanel.brightWhite);
             }
 
             // write out the log lines
@@ -49,11 +50,11 @@ public class ActionLogScreen implements Screen {
                 // index should never be negative as startLine should never be negative
                 int index = yOffset + startLine;
                 if (index >= logLines.size()) break;
-                terminal.write(logLines.get(index), x, topY+yOffset);
+                ExtendedAsciiPanel.write(logLines.get(index), x, topY+yOffset);
             }
         }
 
-        terminal.writeCenter("-- [ESCAPE]: Back --", topY + MAX_LINES_TO_DISPLAY + bottomPadding);
+        ExtendedAsciiPanel.writeCenter("-- [ESCAPE]: Back --", topY + MAX_LINES_TO_DISPLAY + bottomPadding);
     }
 
     private List<TerminalText> getLines() {

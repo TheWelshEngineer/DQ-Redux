@@ -3,18 +3,17 @@ package RogueLike.Main.AI.SlimeAI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Effect;
-import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Screens.TerminalText;
 
 public class SlimelingAI extends CreatureAI{
+	private static final long serialVersionUID = -6036524210545799988L;
 	private Creature player;
 	private int turnsWithoutPlayer = 0;
 	
-	public SlimelingAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public SlimelingAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
 
 	}

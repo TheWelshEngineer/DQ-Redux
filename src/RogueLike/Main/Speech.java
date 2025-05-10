@@ -1,7 +1,7 @@
 package RogueLike.Main;
 
-public class Speech {
-	
+public enum Speech {
+	INSTANCE;
 	public static String sentenceStarter() {
 		switch(ExtraMaths.d10()) {
 		case 1: return "G'varg";

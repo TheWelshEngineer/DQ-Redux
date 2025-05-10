@@ -1,9 +1,13 @@
 package RogueLike.Main;
 
+import java.io.Serializable;
+
 import RogueLike.Main.AoE.AoE;
 import RogueLike.Main.Creatures.Creature;
 
-public class Spell implements Cloneable{
+public class Spell implements Cloneable, Serializable {
+	
+	private static final long serialVersionUID = 642047748153231405L;
 	
 	private String name;
 	public String name() {

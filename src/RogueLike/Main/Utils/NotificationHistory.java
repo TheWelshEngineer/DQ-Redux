@@ -1,5 +1,6 @@
 package RogueLike.Main.Utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -8,8 +9,9 @@ import java.util.stream.Collectors;
 
 import RogueLike.Main.Screens.TerminalText;
 
-public class NotificationHistory {
-    private final HashMap<Integer, List<TerminalText>> messagesByTurn;
+public class NotificationHistory implements Serializable{
+    private static final long serialVersionUID = 477706614282475570L;
+	private final HashMap<Integer, List<TerminalText>> messagesByTurn;
     private int maxLength;
 
     public NotificationHistory(int maxLength) {

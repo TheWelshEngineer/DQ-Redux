@@ -6,6 +6,8 @@ import RogueLike.Main.Dice;
 
 public class BasicRangedWeapon extends Item{
 	
+	private static final long serialVersionUID = -7469377212848014122L;
+
 	/**
 	 * 
 	 * @param glyph A Code Page 437 char which visually represents the Weapon.

@@ -1,9 +1,8 @@
 package RogueLike.Main.AoE;
 
-import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.World;
-
 import java.util.List;
+
+import RogueLike.Main.Utils.PointShapes.Point;
 
 public class SinglePointAoE extends AoE {
 	public SinglePointAoE() {
@@ -16,7 +15,7 @@ public class SinglePointAoE extends AoE {
 	}
 
 	@Override
-	public InstantiatedAoE instantiate(Point source, Point target, World world) {
-		return new InstantiatedAoE(List.of(target), world);
+	public InstantiatedAoE instantiate(Point source, Point target ) {
+		return new InstantiatedAoE(List.of(target));
 	}
 }

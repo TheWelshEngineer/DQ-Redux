@@ -1,33 +1,47 @@
 package RogueLike.Main.Creatures;
 
 import java.awt.Color;
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Objects;
 
-import RogueLike.Main.*;
+import RogueLike.Main.Dice;
+import RogueLike.Main.Effect;
+import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.ExtraMaths;
+import RogueLike.Main.Inventory;
+import RogueLike.Main.Skillset;
+import RogueLike.Main.Spell;
+import RogueLike.Main.Spellbook;
+import RogueLike.Main.Tile;
+import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
-import RogueLike.Main.Utils.PointShapes.Line;
-import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.Damage.*;
+import RogueLike.Main.Damage.Damage;
+import RogueLike.Main.Damage.DamageType;
 import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.Entities.Trap;
 import RogueLike.Main.Enums.PlayerAncestry;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Items.Item;
-import RogueLike.Main.Screens.SpellTargetingScreen;
-import RogueLike.Main.Screens.TerminalChar;
-import RogueLike.Main.Screens.TerminalText;
-import RogueLike.Main.Screens.SpellSelectScreen;
 import RogueLike.Main.Screens.GameplayScreen;
 import RogueLike.Main.Screens.MerchantScreen;
 import RogueLike.Main.Screens.Screen;
+import RogueLike.Main.Screens.SpellSelectScreen;
+import RogueLike.Main.Screens.SpellTargetingScreen;
+import RogueLike.Main.Screens.TerminalChar;
+import RogueLike.Main.Screens.TerminalText;
 import RogueLike.Main.Screens.ThrowAtScreen;
+import RogueLike.Main.Utils.PointShapes.Line;
+import RogueLike.Main.Utils.PointShapes.Point;
 
-public class Creature implements Cloneable{
+public class Creature implements Cloneable, Serializable{
 
+	private static final long serialVersionUID = 2428477939773991921L;
+	
 	private World world;
-	public World world() {
-		return world;
-	}
 	
 	private GameplayScreen gameplayScreen;
 	public GameplayScreen gameplayScreen() {
@@ -50,11 +64,6 @@ public class Creature implements Cloneable{
 			speed = (int) Math.floor(speed/2);
 		}
 		return speed;
-	}
-
-	public ObjectFactory factory() {
-		return ai.factory;
-
 	}
 
 	private int id;
@@ -1212,7 +1221,7 @@ public class Creature implements Cloneable{
 	}
 
 	public void become(Creature other) {
-		this.world().replaceCreature(this, other);
+		world.replaceCreature(this, other);
 
 	}
 
@@ -1279,8 +1288,7 @@ public class Creature implements Cloneable{
 
 	//item id max
 
-	public Creature(World world, String name, char glyph, Color color, int maxHP, int maxMana, int armorclass, int strength, int dexterity, int intelligence, int visionRadius, int inventorySize) {
-		this.world = world;
+	public Creature(String name, char glyph, Color color, int maxHP, int maxMana, int armorclass, int strength, int dexterity, int intelligence, int visionRadius, int inventorySize) {
 		this.glyph = glyph;
 		this.defaultGlyph = glyph;
 		this.color = color;
@@ -1318,6 +1326,7 @@ public class Creature implements Cloneable{
 		this.resistances = EnumSet.noneOf(DamageType.class);
 		this.immunities = EnumSet.noneOf(DamageType.class);
 		saveBonuses = new EnumMap<>(DamageType.class);
+		this.world = World.getInstance();
 	}
 
 
@@ -1504,7 +1513,7 @@ public class Creature implements Cloneable{
 		if(this.weapon() != null) {
 			electroAmount += this.weapon().upgradeLevel();
 		}
-		Damage electroDamage = new Damage(electroAmount, false, DamageType.SHOCK, this.ai.factory.effectFactory, true);
+		Damage electroDamage = new Damage(electroAmount, false, DamageType.SHOCK, true);
 		
 		int attackRoll = 0;
 		if(weapon != null) {
@@ -1553,7 +1562,7 @@ public class Creature implements Cloneable{
 			// no weapon, use unarmed damage type
 			damageType = unarmedDamageType();
 		}
-		Damage damage = new Damage(amount, false, damageType, factory().effectFactory, true);
+		Damage damage = new Damage(amount, false, damageType, true);
 
 
 
@@ -1582,9 +1591,9 @@ public class Creature implements Cloneable{
 			if(weapon != null) {
 				other.damage(damage, String.format("Killed by a %s using a %s", this.name, this.weaponName()));
 				if(this.weapon.isSimple() && this.simpleWeaponsLevel() >= 3 && attackRoll >= 20) {
-					other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
+					other.addEffect((Effect)FactoryManager.getEffectFactory().paralysed(this.proficiencyBonus()).clone());
 				}else if(this.weapon.isFinesse() && this.finesseWeaponsLevel() >= 3 && attackRoll >= 20) {
-					other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
+					other.addEffect((Effect)FactoryManager.getEffectFactory().paralysed(this.proficiencyBonus()).clone());
 				}
 			}else {
 				other.damage(damage, String.format("Killed by a %s", this.name));
@@ -1719,7 +1728,7 @@ public class Creature implements Cloneable{
 			amount = 1;
 		}
 
-		Damage damage = new Damage(amount, false, item.effectiveDamageType(), factory().effectFactory, true);
+		Damage damage = new Damage(amount, false, item.effectiveDamageType(), true);
 
 		int attackRoll = 0;
 		if(item.isThrownWeapon()) {
@@ -1764,7 +1773,7 @@ public class Creature implements Cloneable{
 		if(item.upgradeLevel() > 0) {
 			electroAmount += item.upgradeLevel();
 		}
-		Damage electroDamage = new Damage(electroAmount, false, DamageType.SHOCK, this.ai.factory.effectFactory, true);
+		Damage electroDamage = new Damage(electroAmount, false, DamageType.SHOCK, true);
 
 		if(attackRoll >= other.armorClass() || attackRoll >= 20) {
 			//doAction("throw a %s at the %s for %d damage", nameOf(item), other.name, damage.amount());
@@ -1782,9 +1791,9 @@ public class Creature implements Cloneable{
 			other.addEffect(item.quaffEffect());
 			other.damage(damage, String.format("Killed by a %s using a %s", this.name, nameOf(item)));
 			if(item.isSimple() && this.simpleWeaponsLevel() >= 3 && attackRoll >= 20) {
-				other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
+				other.addEffect((Effect)FactoryManager.getEffectFactory().paralysed(this.proficiencyBonus()).clone());
 			}else if(item.isFinesse() && this.finesseWeaponsLevel() >= 3 && attackRoll >= 20) {
-				other.addEffect((Effect)this.ai().factory.effectFactory.paralysed(this.proficiencyBonus()).clone());
+				other.addEffect((Effect)FactoryManager.getEffectFactory().paralysed(this.proficiencyBonus()).clone());
 			}
 			if(this.affectedBy(Effect.electrocharged)) {
 				other.damage(electroDamage, String.format("Killed by a %s using a %s", this.name, nameOf(item)));
@@ -1882,7 +1891,7 @@ public class Creature implements Cloneable{
 		else {
 			damageType = this.unarmedDamageType();
 		}
-		Damage damage = new Damage(amount, false, damageType, factory().effectFactory, true);
+		Damage damage = new Damage(amount, false, damageType, true);
 
 
 		if(other.affectedBy(Effect.invisible) == true) {
@@ -1903,7 +1912,7 @@ public class Creature implements Cloneable{
 		if(this.weapon() != null) {
 			electroAmount += this.weapon().upgradeLevel();
 		}
-		Damage electroDamage = new Damage(electroAmount, false, DamageType.SHOCK, this.ai.factory.effectFactory, true);
+		Damage electroDamage = new Damage(electroAmount, false, DamageType.SHOCK, true);
 		
 		if(attackRoll >= other.armorClass() || attackRoll >= 20) {
 			//doAction("fire the %s at the %s for %d damage", weapon.name(), other.name, damage.amount());
@@ -1921,15 +1930,15 @@ public class Creature implements Cloneable{
 			if(weapon != null) {
 				if(this.rangedWeaponsLevel() >= 3 && attackRoll >= 20) {
 					if(weapon.usesArrowAmmunition()) {
-						Item arrows = this.factory().itemFactory.newArrows(0, 0);
+						Item arrows = FactoryManager.getItemFactory().newArrows(0, 0);
 						arrows.setStackAmount(1);
 						other.inventory().add(arrows);
 					}else if(weapon.usesBoltAmmunition()) {
-						Item bolts = this.factory().itemFactory.newBolts(0, 0);
+						Item bolts = FactoryManager.getItemFactory().newBolts(0, 0);
 						bolts.setStackAmount(1);
 						other.inventory().add(bolts);
 					}else if(weapon.usesPowderAmmunition()) {
-						Item powder = this.factory().itemFactory.newPowder(0, 0);
+						Item powder = FactoryManager.getItemFactory().newPowder(0, 0);
 						powder.setStackAmount(1);
 						other.inventory().add(powder);
 					}
@@ -2532,7 +2541,7 @@ public class Creature implements Cloneable{
 					this.ai().playerAICastSpell(quickslot_1(), quickslot_1().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new SpellSelectScreen(this, sx, sy, quickslot_1());
+					return new SpellSelectScreen(this, quickslot_1());
 				}
 			}else {
 				return null;
@@ -2559,7 +2568,7 @@ public class Creature implements Cloneable{
 					this.ai().playerAICastSpell(quickslot_2(), quickslot_2().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new SpellSelectScreen(this, sx, sy, quickslot_2());
+					return new SpellSelectScreen(this, quickslot_2());
 				}
 			}else {
 				return null;
@@ -2586,7 +2595,7 @@ public class Creature implements Cloneable{
 					this.ai().playerAICastSpell(quickslot_3(), quickslot_3().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new SpellSelectScreen(this, sx, sy, quickslot_3());
+					return new SpellSelectScreen(this, quickslot_3());
 				}
 			}else {
 				return null;
@@ -2613,7 +2622,7 @@ public class Creature implements Cloneable{
 					this.ai().playerAICastSpell(quickslot_4(), quickslot_4().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new SpellSelectScreen(this, sx, sy, quickslot_4());
+					return new SpellSelectScreen(this, quickslot_4());
 				}
 			}else {
 				return null;
@@ -2640,7 +2649,7 @@ public class Creature implements Cloneable{
 					this.ai().playerAICastSpell(quickslot_5(), quickslot_5().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new SpellSelectScreen(this, sx, sy, quickslot_5());
+					return new SpellSelectScreen(this, quickslot_5());
 				}
 			}else {
 				return null;
@@ -2666,7 +2675,7 @@ public class Creature implements Cloneable{
 					this.ai().playerAICastSpell(quickslot_6(), quickslot_6().writtenSpells().get(0), this.x(), this.y());
 					return null;
 				}else {
-					return new SpellSelectScreen(this, sx, sy, quickslot_6());
+					return new SpellSelectScreen(this, quickslot_6());
 				}
 			}else {
 				return null;
@@ -2770,7 +2779,7 @@ public class Creature implements Cloneable{
 			}
 			if(effectChance < 16) {
 				notify(new TerminalText("That food tasted.. strange"));
-				this.addEffect((Effect)this.ai().factory.effectFactory.corpseEffect().clone());
+				this.addEffect((Effect)FactoryManager.getEffectFactory().corpseEffect().clone());
 			}
 		}
 		item.modifyStackAmount(-1);
@@ -2870,7 +2879,7 @@ public class Creature implements Cloneable{
 			//maxFood = maxFood + food / 2;
 			food = maxFood;
 			notify(new TerminalText("You can't believe you can eat that much!"));
-			Damage overeatDamage = new Damage(2, false, DamageType.TRUE, factory().effectFactory, false);
+			Damage overeatDamage = new Damage(2, false, DamageType.TRUE, false);
 			damage(overeatDamage, "Killed by overeating");
 
 		}else if(food < 0 && isPlayer()) {
@@ -2881,7 +2890,7 @@ public class Creature implements Cloneable{
 				foodTimer = this.proficiencyBonus();
 				notify(new TerminalText("You are starving!"));
 				food = 0;
-				Damage starveDamage = new Damage((int)(maxHP / 10), false, DamageType.TRUE, factory().effectFactory, false);
+				Damage starveDamage = new Damage((int)(maxHP / 10), false, DamageType.TRUE, false);
 				damage(starveDamage, "Starved to death");
 			}
 			
@@ -2901,35 +2910,35 @@ public class Creature implements Cloneable{
 	
 	public void stepInPit() {
 		if(realTile(this.x(), this.y(), this.z()) == Tile.PIT && !this.isFlying() && !affectedBy(Effect.levitating)) {
-			Effect fall = this.ai.factory.effectFactory.pitFall();
+			Effect fall = FactoryManager.getEffectFactory().pitFall();
 			addEffect(fall);
 		}
 	}
 	
 	public void stepInFire() {
 		if(realSubtile(this.x(), this.y(), this.z()) == Tile.FIRE && !this.isFlying() && !affectedBy(Effect.levitating) && (ExtraMaths.d10() > 4)) {
-			Effect fire = this.ai.factory.effectFactory.ignited(5);
+			Effect fire = FactoryManager.getEffectFactory().ignited(5);
 			addEffect(fire);
 		}
 	}
 
 	public void stepInParalysis() {
 		if(realGastile(this.x(), this.y(), this.z()) == Tile.PARALYZE_GAS && (ExtraMaths.d10() > 4)) {
-			Effect paralysis = this.ai.factory.effectFactory.paralysed(5);
+			Effect paralysis = FactoryManager.getEffectFactory().paralysed(5);
 			addEffect(paralysis);
 		}
 	}
 
 	public void stepInCaustic() {
 		if(realGastile(this.x(), this.y(), this.z()) == Tile.ACID_GAS && (ExtraMaths.d10() > 4)) {
-			Effect caustic = this.ai.factory.effectFactory.corroded(5);
+			Effect caustic = FactoryManager.getEffectFactory().corroded(5);
 			addEffect(caustic);
 		}
 	}
 
 	public void stepInConfusion() {
 		if(realGastile(this.x(), this.y(), this.z()) == Tile.CONFUSE_GAS && (ExtraMaths.d10() > 4)) {
-			Effect confusion = this.ai.factory.effectFactory.confused(5);
+			Effect confusion = FactoryManager.getEffectFactory().confused(5);
 			addEffect(confusion);
 		}
 	}
@@ -3197,7 +3206,7 @@ public class Creature implements Cloneable{
 		}
 		//cast on creature
 		if(spell.castOnTile()) {
-			//Creature tileSpell = ai().factory.newTileSpell(this.z(), this, 0);
+			//Creature tileSpell = ai().FactoryManager.getObjectFactory().newTileSpell(this.z(), this, 0);
 			if(other != null) {
 				doAction(new TerminalText("point and mutter at nothing in particular..."));
 				if(spell.manaCost() > 0) {
@@ -3211,8 +3220,8 @@ public class Creature implements Cloneable{
 					return;
 				}
 			}
-			Creature tileSpell = ai().factory.creatureFactory.newTileSpell(this.z(), this, false);
-			ai().world.addCreatureAtLocation(tileSpell, x2, y2, z);
+			Creature tileSpell = FactoryManager.getCreatureFactory().newTileSpell(this.z(), this, false);
+			world.addCreatureAtLocation(tileSpell, x2, y2, z);
 			tileSpell.addEffect(spell.effect());
 			tileSpell.update();
 			//
@@ -3371,7 +3380,7 @@ public class Creature implements Cloneable{
 		}
 		if(this.stealthLevel() >= 2 && !passive) {
 			if(this.mana() >= (this.proficiencyBonus()*2)) {
-				Effect sneak = (Effect)this.ai().factory.effectFactory.invisible(this.proficiencyBonus()).clone();
+				Effect sneak = (Effect)FactoryManager.getEffectFactory().invisible(this.proficiencyBonus()).clone();
 				this.loseMana(this.proficiencyBonus()*2, false);
 				this.addEffect(sneak);
 				notify(new TerminalText("You blend into the shadows"));

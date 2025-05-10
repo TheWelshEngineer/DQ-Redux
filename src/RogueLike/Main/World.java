@@ -1,21 +1,40 @@
 package RogueLike.Main;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Entities.Entity;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.Utils.PlayerBuildDetails;
+import RogueLike.Main.Utils.PointShapes.Point;
 
-public class World {
+public class World implements Serializable {
+	
+	private static final long serialVersionUID = 7036408750422237155L;
+	private static World instance = null;
+	
+	
+    public static synchronized World getInstance(){
+        if (instance == null) {
+        instance = new World();         
+        } 
+        return instance;
+    }
+    
+    public static synchronized void loadInstance(World loadedWorld) {
+    	instance = loadedWorld;
+    }
+
+	private World() {};
+    
 	private Tile[][][] tiles;
 	//
 	private Tile[][][] subtiles;
@@ -47,23 +66,24 @@ public class World {
 	public Player player() {
 		if (player == null) {
 			// defensive programming! we don't want things to pick up a dead reference to the player.
-			// anything that needs a reference should only need to get one after worldgen is complete
+			// anything that needs a reference should only need to get one after Worldgen is complete
 			// and the player has been spawned.
 			throw new NullPointerException();
 		}
 		return player;
 	}
 
-	private final List<Integer> specialDepths;
+	private List<Integer> specialDepths;
 	public List<Integer> specialDepths() {return specialDepths;}
 
 	private int turnNumber;
 	public int turnNumber() {return turnNumber; }
 
-	private final ObjectFactory factory;
-	public ObjectFactory factory() {return factory;}
+	private final FactoryManager factory = FactoryManager.INSTANCE;
+	public FactoryManager factory() {return factory;}
 	
-	public World(Tile[][][] tiles, List<Integer> specialDepths) {
+	
+	public void setWorld(Tile[][][] tiles, List<Integer> specialDepths) {
 		this.tiles = tiles;
 		this.width = tiles.length;
 		this.height = tiles[0].length;
@@ -78,10 +98,7 @@ public class World {
 		//
 		this.particles = new Particle[width][height][depth];
 		this.specialDepths = specialDepths;
-
-		this.factory = new ObjectFactory(this);
 	}
-	
 	public Tile tile(int x, int y, int z) {
 		if(x < 0 || x >= width || y < 0 || y >= height || z < 0 || z >= depth)
 			return Tile.BOUNDS;
@@ -140,7 +157,7 @@ public class World {
 		return tile(x,y,z).glyph();
 	}
 	
-	public Color color(int x, int y, int z) {
+	public  Color color(int x, int y, int z) {
 		Creature creature = creature(x,y,z);
 		//
 		if(gastile(x,y,z) != null) {
@@ -296,21 +313,14 @@ public class World {
 		NotificationHistory notificationHandle,
 		PlayerBuildDetails playerDetails
 	) {
-		if (player != null) {
-			throw new IllegalStateException("Player already exists!");
-		}
-		player = factory.creatureFactory.newPlayer(new FieldOfView(this), notificationHandle, playerDetails);
+		player = FactoryManager.getCreatureFactory().newPlayer(new FieldOfView(), notificationHandle, playerDetails);
+
 		Point spawnpoint = getPlayerSpawnPoint();
 		player.x = spawnpoint.x;
 		player.y = spawnpoint.y;
 		player.z = spawnpoint.z;
+		
 		creatures.add(player);
-
-		// Set up indexes - this is the earliest we can do this
-		factory.setUpPotionIndex();
-		factory.setUpWandIndex(player);
-		factory.setUpRingIndex(player);
-		factory.setUpScrollIndex(player);
 
 		System.out.println("Player spawned");
 	}

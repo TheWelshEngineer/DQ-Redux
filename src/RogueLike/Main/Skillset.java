@@ -1,6 +1,10 @@
 package RogueLike.Main;
 
-public class Skillset {
+import java.io.Serializable;
+
+public class Skillset  implements Serializable {
+	private static final long serialVersionUID = -955072090899508974L;
+
     public final SkillInstance simpleWeapons;
     public final SkillInstance martialWeapons;
     public final SkillInstance armorTraining;

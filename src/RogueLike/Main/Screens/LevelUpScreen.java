@@ -1,13 +1,14 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.List;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.LevelUpController;
 import RogueLike.Main.Creatures.Creature;
 
-public class LevelUpScreen implements Screen{
+public class LevelUpScreen implements Screen, Serializable{
 	private LevelUpController controller;
 	private Creature player;
 	private int picks;
@@ -19,23 +20,23 @@ public class LevelUpScreen implements Screen{
 	}
 	
 	@Override
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		List<String> options = controller.getLevelUpOptions();
 		
 		int y = 24;
-		terminal.clear(' ', 1, y, 30, options.size()+2);
-		terminal.write("Choose a levelup bonus:", 1, y++);
-		terminal.write("------------------------------", 1, y++);
+		ExtendedAsciiPanel.clear(' ', 1, y, 30, options.size()+2);
+		ExtendedAsciiPanel.write("Choose a levelup bonus:", 1, y++);
+		ExtendedAsciiPanel.write("------------------------------", 1, y++);
 		
 		for(int i = 0; i < options.size(); i++) {
-			terminal.write(String.format("[%d] %s", i+1, options.get(i)), 1, y++);
+			ExtendedAsciiPanel.write(String.format("[%d] %s", i+1, options.get(i)), 1, y++);
 		}
 		y++;
 		String points = "point";
 		if(player.attributePoints() > 1) {
 			points = "points";
 		}
-		terminal.write(String.format("%d skill %s remaining", player.attributePoints(), points), 1, y++);
+		ExtendedAsciiPanel.write(String.format("%d skill %s remaining", player.attributePoints(), points), 1, y++);
 	}
 	
 	@Override

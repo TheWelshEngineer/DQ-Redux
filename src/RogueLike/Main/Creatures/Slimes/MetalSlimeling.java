@@ -5,10 +5,10 @@ import java.awt.Color;
 import RogueLike.Main.AI.SlimeAI.SlimelingAI;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Damage.DamageType;
-import RogueLike.Main.Factories.ObjectFactory;
 
 public class MetalSlimeling extends Creature{
 	
+	private static final long serialVersionUID = -1801634149168473138L;
 	private static int defaultMaxHP = 16;
 	private static int defaultMaxMana = 10;
 	private static int defaultAC = 13;
@@ -17,10 +17,10 @@ public class MetalSlimeling extends Creature{
 	private static int defaultIntelligence = 1;
 	private static int defaultVisionRadius = 6;
 
-	public MetalSlimeling(ObjectFactory factory, Creature player, String name, char glyph, Color color, int id, int depth) {
-		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
+	public MetalSlimeling( Creature player, String name, char glyph, Color color, int id, int depth) {
+		super( name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
-		new SlimelingAI(this, player, factory, factory.world);
+		new SlimelingAI(this, player);
 		this.creatureTypes.add("Ooze");
 		this.scaleHPWithDepth(depth);
 		this.scaleManaWithDepth(depth);	

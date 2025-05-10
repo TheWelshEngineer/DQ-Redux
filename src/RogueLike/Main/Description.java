@@ -1,9 +1,11 @@
 package RogueLike.Main;
 
 import java.awt.Color;
+import java.io.Serializable;
 
-public class Description {
+public class Description implements Serializable {
 	
+	private static final long serialVersionUID = -8313385821856228573L;
 	private Color color;
 	public Color getColor() {
 		return color;

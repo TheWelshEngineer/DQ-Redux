@@ -1,12 +1,14 @@
 package RogueLike.Main.Screens.HelpScreens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
-import RogueLike.Main.Screens.*;
+import RogueLike.Main.Screens.MainMenuScreen;
+import RogueLike.Main.Screens.Screen;
 
-public class HelpScreen implements Screen{
+public class HelpScreen implements Screen, Serializable{
 	
 	private boolean fromMenu;
 	
@@ -183,34 +185,34 @@ public class HelpScreen implements Screen{
 		this.fromMenu = fromMenu;
 	}
 
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		changeMarkers(check);
-		terminal.clear();
-		Screen.generateBorders(terminal);
-		terminal.writeCenter("== Help Menu ==", 1);
+		ExtendedAsciiPanel.clear();
+		Screen.generateBorders();;
+		ExtendedAsciiPanel.writeCenter("== Help Menu ==", 1);
 		
 		int y = 3;
 		int x = 42;
 		
-        terminal.write(String.format("%c Controls - Movement %c", moveLeft, moveRight), x, y++);
+        ExtendedAsciiPanel.write(String.format("%c Controls - Movement %c", moveLeft, moveRight), x, y++);
         y++;
-        terminal.write(String.format("%c Controls - Interactions %c", interactionLeft, interactionRight), x, y++);
+        ExtendedAsciiPanel.write(String.format("%c Controls - Interactions %c", interactionLeft, interactionRight), x, y++);
         y++;
-        terminal.write(String.format("%c Controls - Menus %c", menusLeft, menusRight), x, y++);
+        ExtendedAsciiPanel.write(String.format("%c Controls - Menus %c", menusLeft, menusRight), x, y++);
         y++;
-        terminal.write(String.format("%c Systems - Items %c", itemsLeft, itemsRight), x, y++);
+        ExtendedAsciiPanel.write(String.format("%c Systems - Items %c", itemsLeft, itemsRight), x, y++);
         y++;
-        terminal.write(String.format("%c Systems - Inventory and Equipment %c", inventoryLeft, inventoryRight), x, y++);
+        ExtendedAsciiPanel.write(String.format("%c Systems - Inventory and Equipment %c", inventoryLeft, inventoryRight), x, y++);
         y++;
-        terminal.write(String.format("%c Systems - Combat %c", combatLeft, combatRight), x, y++);
+        ExtendedAsciiPanel.write(String.format("%c Systems - Combat %c", combatLeft, combatRight), x, y++);
         y++;
-        terminal.write(String.format("%c Systems - Exploration %c", explorationLeft, explorationRight), x, y++);
+        ExtendedAsciiPanel.write(String.format("%c Systems - Exploration %c", explorationLeft, explorationRight), x, y++);
         y++;
-        terminal.write(String.format("%c Systems - Status Effects %c", statusLeft, statusRight), x, y++);
+        ExtendedAsciiPanel.write(String.format("%c Systems - Status Effects %c", statusLeft, statusRight), x, y++);
         
         
-        terminal.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Confirm --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 40);
-		terminal.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 42);
+        ExtendedAsciiPanel.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Confirm --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 40);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Back --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 42);
 
 	}
 	

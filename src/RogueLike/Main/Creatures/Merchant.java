@@ -1,17 +1,14 @@
 package RogueLike.Main.Creatures;
 
 import java.awt.Color;
-import java.util.Collections;
 
-import RogueLike.Main.Dice;
-import RogueLike.Main.World;
 import RogueLike.Main.AI.ChestAI;
-import RogueLike.Main.AI.MimicAI;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Items.Item;
 
 public class Merchant extends Creature {
 
+	private static final long serialVersionUID = 7268166820438872659L;
 	private static int defaultMaxHP = 50;
 	private static int defaultMaxMana = 10;
 	private static int defaultAC = 14;
@@ -20,61 +17,61 @@ public class Merchant extends Creature {
 	private static int defaultIntelligence = 10;
 	private static int defaultVisionRadius = 8;
 
-	public Merchant(ObjectFactory factory, Creature player, String name, char glyph, Color color, int id, int depth) {
-		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
+	public Merchant( Creature player, String name, char glyph, Color color, int id, int depth) {
+		super( name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
-		new ChestAI(this, factory, factory.world);
+		new ChestAI(this);
 		this.creatureTypes.add("Merchant");
 		
-		Item startItem = factory.randomSimpleWeapon(0, false, true, true, false);
+		Item startItem = FactoryManager.getObjectFactory().randomSimpleWeapon(0, false, true, true, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomMartialWeapon(0, false, true, true, false);
+		startItem = FactoryManager.getObjectFactory().randomMartialWeapon(0, false, true, true, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomFinesseWeapon(0, false, true, true, false);
+		startItem = FactoryManager.getObjectFactory().randomFinesseWeapon(0, false, true, true, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomRangedWeapon(0, false, true, true, false);
+		startItem = FactoryManager.getObjectFactory().randomRangedWeapon(0, false, true, true, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomArmor(0, false, true, true, false);
+		startItem = FactoryManager.getObjectFactory().randomArmor(0, false, true, true, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomAmmunition(0, 0);
+		startItem = FactoryManager.getObjectFactory().randomAmmunition(0, 0);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomFood(0, 0);
+		startItem = FactoryManager.getObjectFactory().randomFood(0, 0);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.itemFactory.newPotionOfHealing(0, false);
+		startItem = FactoryManager.getItemFactory().newPotionOfHealing(0, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.itemFactory.newPotionOfMana(0, false);
+		startItem = FactoryManager.getItemFactory().newPotionOfMana(0, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.itemFactory.newScrollOfIdentify(0, player, false);
+		startItem = FactoryManager.getItemFactory().newScrollOfIdentify(0, player, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.itemFactory.newScrollOfRemoveCurse(0, player, false);
+		startItem = FactoryManager.getItemFactory().newScrollOfRemoveCurse(0, player, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomMagicItem(0, player, false, false);
+		startItem = FactoryManager.getObjectFactory().randomMagicItem(0, player, false, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		
-		startItem = factory.randomMagicItem(0, player, false, false);
+		startItem = FactoryManager.getObjectFactory().randomMagicItem(0, player, false, false);
 		this.learnNameQuiet(startItem);
 		this.inventory().add(startItem);
 		

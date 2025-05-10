@@ -6,7 +6,7 @@ public enum Tile {
 	FLOOR((char)250, /*AsciiPanel.yellow*/ new Color(173, 146, 125), "A rocky cave floor."),
 	MERCHANT_FLOOR((char)250, /*AsciiPanel.yellow*/ new Color(173, 146, 125), "A rocky cave floor."),
 	WALL((char)177, /*AsciiPanel.yellow*/ new Color(173, 146, 125), "A rocky cave wall. Looks breakable."),
-	BOUNDS('x', ExtendedAsciiPanel.brightBlack, "Beyond the edge of the world."),
+	BOUNDS('x', ExtendedAsciiPanel.brightBlack, "Beyond the edge of the World."),
 	STAIRS_UP((char)30, ExtendedAsciiPanel.white, "A rough stone staircase that goes up."),
 	STAIRS_DOWN((char)31, ExtendedAsciiPanel.white, "A rough stone staircase that goes down."),
 	UNKNOWN(' ', ExtendedAsciiPanel.white, "You don't know what is there."),

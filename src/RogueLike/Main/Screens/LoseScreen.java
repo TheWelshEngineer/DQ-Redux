@@ -4,13 +4,13 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 
-import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.ExtendedAsciiPanel;
-import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Managers.KeybindManager;
 
-public class LoseScreen implements Screen {
+public class LoseScreen implements Screen, Serializable {
 	public Player player;
 	public String weaponName = "None";
 	public String armorName = "None";
@@ -23,8 +23,8 @@ public class LoseScreen implements Screen {
 		this.player = player;
 	}
 
-    public void displayOutput(ExtendedAsciiPanel terminal) {
-    	Screen.generateBorders(terminal);
+    public void displayOutput() {
+    	Screen.generateBorders();;
     	if(player.weapon() != null) {
     		weaponName = player.weapon().name();
     	}
@@ -47,18 +47,18 @@ public class LoseScreen implements Screen {
     		ammunitionName = player.ammunition().name();
     	}
     	
-    	terminal.writeCenter("You died...", 3);
-    	terminal.writeCenter(String.format("%s", player.playerName()), 5);
-		terminal.writeCenter(player.causeOfDeath() + String.format(" on depth %d.", player.z()+1), 7);
-		terminal.writeCenter(String.format("Level %d %s %s | Score: %d | Max Depth Reached: %d", player.level(), player.playerAncestry(), player.playerClass(), player.score(), player.maxDepth()+1), 9);
-		terminal.writeCenter("-- Equipment --", 11);
-		terminal.writeCenter("Weapon: "+weaponName, 13);
-		terminal.writeCenter("Armor: "+armorName, 15);
-		terminal.writeCenter("Shield: "+shieldName, 17);
-		terminal.writeCenter("Ring: "+ringName, 19);
-		terminal.writeCenter("Ammunition: "+ammunitionName, 21);
-		terminal.writeCenter(String.format("-- [%s]: Restart your Adventure | [%s]: Export Scores to Desktop --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm), KeybindManager.keybindText(KeybindManager.navigateMenuFunction_1)), 24);
-		terminal.writeCenter(exportCheck, 26);
+    	ExtendedAsciiPanel.writeCenter("You died...", 3);
+    	ExtendedAsciiPanel.writeCenter(String.format("%s", player.playerName()), 5);
+		ExtendedAsciiPanel.writeCenter(player.causeOfDeath() + String.format(" on depth %d.", player.z()+1), 7);
+		ExtendedAsciiPanel.writeCenter(String.format("Level %d %s %s | Score: %d | Max Depth Reached: %d", player.level(), player.playerAncestry(), player.playerClass(), player.score(), player.maxDepth()+1), 9);
+		ExtendedAsciiPanel.writeCenter("-- Equipment --", 11);
+		ExtendedAsciiPanel.writeCenter("Weapon: "+weaponName, 13);
+		ExtendedAsciiPanel.writeCenter("Armor: "+armorName, 15);
+		ExtendedAsciiPanel.writeCenter("Shield: "+shieldName, 17);
+		ExtendedAsciiPanel.writeCenter("Ring: "+ringName, 19);
+		ExtendedAsciiPanel.writeCenter("Ammunition: "+ammunitionName, 21);
+		ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Restart your Adventure | [%s]: Export Scores to Desktop --", KeybindManager.keybindText(KeybindManager.navigateMenuConfirm), KeybindManager.keybindText(KeybindManager.navigateMenuFunction_1)), 24);
+		ExtendedAsciiPanel.writeCenter(exportCheck, 26);
     }
 
     public Screen respondToUserInput(KeyEvent key) {

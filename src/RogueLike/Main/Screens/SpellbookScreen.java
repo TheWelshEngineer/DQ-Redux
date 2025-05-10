@@ -1,6 +1,7 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.List;
 
 import RogueLike.Main.Effect;
@@ -10,14 +11,12 @@ import RogueLike.Main.Spell;
 import RogueLike.Main.Spellbook;
 import RogueLike.Main.Creatures.Creature;
 
-public class SpellbookScreen implements Screen{
+public class SpellbookScreen implements Screen, Serializable{
 	
 	protected Creature player;
 	protected List<Effect> effects;
 	protected Spellbook spellbook;
 	protected boolean casting;
-	private int sx;
-	private int sy;
 	
 	public int check = 0;
 	public void setCheck(int value) {
@@ -27,13 +26,11 @@ public class SpellbookScreen implements Screen{
 	public int spellsPerPage = 30;
 	public int pageNumber = 1;
 	
-	public SpellbookScreen(Creature player, int sx, int sy, boolean casting) {
+	public SpellbookScreen(Creature player, boolean casting) {
 		this.player = player;
 		this.effects = player.effects();
 		this.spellbook = player.spellbook();
 		this.casting = casting;
-		this.sx = sx;
-		this.sy = sy;
 	}
 	
 	public boolean checkIfSelected(int index, int check) {
@@ -45,11 +42,11 @@ public class SpellbookScreen implements Screen{
 	}
 	
 	@Override
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		//
 		//
-		terminal.clear();
-		terminal.writeCenter("== Spells ==", 1);	
+		ExtendedAsciiPanel.clear();
+		ExtendedAsciiPanel.writeCenter("== Spells ==", 1);	
 		int y = 3;
 		//
 		pageNumber = ExtraMaths.scrollingScreenPageNumber(check);
@@ -58,9 +55,9 @@ public class SpellbookScreen implements Screen{
 			//System.out.println(String.format("i = %d", i));
 			if(i < spellbook.getSpells().size()) {//spellbook.get(0).name()
 				if(checkIfSelected(i, check)) {
-					terminal.writeCenter(String.format("> %s (%d mana) <", spellbook.get(i).name(), spellbook.get(i).manaCost(), check), y++);
+					ExtendedAsciiPanel.writeCenter(String.format("> %s (%d mana) <", spellbook.get(i).name(), spellbook.get(i).manaCost(), check), y++);
 				}else {
-					terminal.writeCenter(String.format("%s (%d mana)", spellbook.get(i).name(), spellbook.get(i).manaCost(), check), y++);
+					ExtendedAsciiPanel.writeCenter(String.format("%s (%d mana)", spellbook.get(i).name(), spellbook.get(i).manaCost(), check), y++);
 				}
 				
 			}
@@ -68,7 +65,7 @@ public class SpellbookScreen implements Screen{
 		//
 
     
-        terminal.writeCenter("-- [UP / DOWN]: Move Selection | [ENTER] Select Spell | [ESCAPE]: Cancel --", 38);
+        ExtendedAsciiPanel.writeCenter("-- [UP / DOWN]: Move Selection | [ENTER] Select Spell | [ESCAPE]: Cancel --", 38);
 		
 	}
 	

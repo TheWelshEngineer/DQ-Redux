@@ -1,7 +1,11 @@
 package RogueLike.Main;
 
-public class SkillInstance {
+import java.io.Serializable;
 
+public class SkillInstance implements Serializable {
+	
+	private static final long serialVersionUID = -4881377885496171643L;
+		
 	public final Skill type;
 
 	public String name() {

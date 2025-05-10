@@ -1,30 +1,28 @@
 package RogueLike.Main.AI;
 
-import java.util.*;
+import java.util.ArrayList;
 
-import RogueLike.Main.Creatures.Player;
-import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.FieldOfView;
 import RogueLike.Main.Tile;
-import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.World;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Creatures.Player;
+import RogueLike.Main.Entities.Entity;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Screens.TerminalText;
+import RogueLike.Main.Utils.NotificationHistory;
 
 public class PlayerAI extends CreatureAI{
 	
+	private static final long serialVersionUID = -7163734523165787052L;
 	private final FieldOfView fov;
 	private final NotificationHistory notificationsHandle;
-	
-	public PlayerAI(Player creature, NotificationHistory notificationsHandle, FieldOfView fov, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+
+	public PlayerAI(Player creature, NotificationHistory notificationsHandle, FieldOfView fov) {
+		super(creature);
 		actionQueue = new ArrayList<Integer>();
 		this.fov = fov;
 		this.notificationsHandle = notificationsHandle;
 	}
-	
-
 	
 	public void selectAction() {
 		
@@ -86,7 +84,7 @@ public class PlayerAI extends CreatureAI{
 				}
 			}
 			if(hasCorrectKey == true) {
-				creature.world().changeTile(x, y, z, Tile.FLOOR);
+				World.getInstance().changeTile(x, y, z, Tile.FLOOR);
 				creature.notify("The door opens!");
 				creature.getRidOf(correctKey, false);
 				creature.notify("The key snaps off in the lock...");
@@ -99,7 +97,7 @@ public class PlayerAI extends CreatureAI{
 			creature.y = y;
 			creature.z = z;
 
-			Entity entity = world.entity(x, y, z);
+			Entity entity = World.getInstance().entity(x, y, z);
 			if (entity != null) {
 				entity.onSteppedOnBy(creature);
 			}
@@ -112,7 +110,7 @@ public class PlayerAI extends CreatureAI{
 	}
 	
 	public void onNotify(TerminalText message) {
-		notificationsHandle.addNotification(message, world.turnNumber());
+		notificationsHandle.addNotification(message, World.getInstance().turnNumber());
 	}
 	
 	public boolean canSee(int wx, int wy, int wz) {
@@ -139,5 +137,9 @@ public class PlayerAI extends CreatureAI{
 
 	public FieldOfView fov() {
 		return fov;
+	}
+	
+	public NotificationHistory getNotificationsHandle() {
+		return notificationsHandle;
 	}
 }

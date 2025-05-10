@@ -7,23 +7,23 @@ import RogueLike.Main.Managers.MenuDecorationManager;
 
 public interface Screen {
 	
-	public void displayOutput(ExtendedAsciiPanel terminal);
+	public void displayOutput();
 	
 	public Screen respondToUserInput(KeyEvent key);
 	
-	public static void generateBorders(ExtendedAsciiPanel terminal) {
-		for(int i = 0; i < terminal.getWidthInCharacters(); i++) {
-			terminal.write(MenuDecorationManager.menuBorderHorizontal, i, 0);
-			terminal.write(MenuDecorationManager.menuBorderHorizontal, i, terminal.getHeightInCharacters()-1);
+	public static void generateBorders() {
+		for(int i = 0; i < ExtendedAsciiPanel.getWidthInCharacters(); i++) {
+			ExtendedAsciiPanel.write(MenuDecorationManager.menuBorderHorizontal, i, 0);
+			ExtendedAsciiPanel.write(MenuDecorationManager.menuBorderHorizontal, i, ExtendedAsciiPanel.getHeightInCharacters()-1);
 		}
-		for(int i = 0; i < terminal.getHeightInCharacters(); i++) {
-			terminal.write(MenuDecorationManager.menuBorderVertical, 0, i);
-			terminal.write(MenuDecorationManager.menuBorderVertical, terminal.getWidthInCharacters()-1, i);
+		for(int i = 0; i < ExtendedAsciiPanel.getHeightInCharacters(); i++) {
+			ExtendedAsciiPanel.write(MenuDecorationManager.menuBorderVertical, 0, i);
+			ExtendedAsciiPanel.write(MenuDecorationManager.menuBorderVertical, ExtendedAsciiPanel.getWidthInCharacters()-1, i);
 		}
-		terminal.write(MenuDecorationManager.menuBorderCornerNW, 0, 0);
-		terminal.write(MenuDecorationManager.menuBorderCornerNE, terminal.getWidthInCharacters()-1, 0);
-		terminal.write(MenuDecorationManager.menuBorderCornerSW, 0, terminal.getHeightInCharacters()-1);
-		terminal.write(MenuDecorationManager.menuBorderCornerSE, terminal.getWidthInCharacters()-1, terminal.getHeightInCharacters()-1);
+		ExtendedAsciiPanel.write(MenuDecorationManager.menuBorderCornerNW, 0, 0);
+		ExtendedAsciiPanel.write(MenuDecorationManager.menuBorderCornerNE, ExtendedAsciiPanel.getWidthInCharacters()-1, 0);
+		ExtendedAsciiPanel.write(MenuDecorationManager.menuBorderCornerSW, 0, ExtendedAsciiPanel.getHeightInCharacters()-1);
+		ExtendedAsciiPanel.write(MenuDecorationManager.menuBorderCornerSE, ExtendedAsciiPanel.getWidthInCharacters()-1, ExtendedAsciiPanel.getHeightInCharacters()-1);
 	}
 
 }

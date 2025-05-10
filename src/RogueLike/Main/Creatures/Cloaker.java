@@ -4,10 +4,10 @@ import java.awt.Color;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.AI.CloakerAI;
-import RogueLike.Main.Factories.ObjectFactory;
 
 public class Cloaker extends Creature{
 	
+	private static final long serialVersionUID = 4263134700956135756L;
 	private static int defaultMaxHP = 22;
 	private static int defaultMaxMana = 10;
 	private static int defaultAC = 11;
@@ -16,10 +16,10 @@ public class Cloaker extends Creature{
 	private static int defaultIntelligence = 8;
 	private static int defaultVisionRadius = 8;
 
-	public Cloaker(ObjectFactory factory, Creature player, String name, char glyph, Color color, int id, int depth) {
-		super(factory.world, name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
+	public Cloaker( Creature player, String name, char glyph, Color color, int id, int depth) {
+		super( name, glyph, color, defaultMaxHP, defaultMaxMana, defaultAC, defaultStrength, defaultDexterity, defaultIntelligence, defaultVisionRadius, 20);
 		this.setID(id);
-		CloakerAI ai = new CloakerAI(this, player, factory, factory.world);
+		CloakerAI ai = new CloakerAI(this, player);
 		ai.becomeInvisible();
 		this.changeColor(ExtendedAsciiPanel.invisible);
 		this.creatureTypes.add("Monstrosity");

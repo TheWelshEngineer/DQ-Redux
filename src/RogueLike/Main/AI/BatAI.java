@@ -4,15 +4,14 @@ import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
-import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Screens.TerminalText;
 
 public class BatAI extends CreatureAI{
+	private static final long serialVersionUID = -3681562090442266207L;
 
-	public BatAI(Creature creature, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public BatAI(Creature creature) {
+		super(creature);
 	}
 	
 	public void onUpdate() {

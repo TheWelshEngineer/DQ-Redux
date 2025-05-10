@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-import RogueLike.Main.Utils.PointShapes.Point;
 import RogueLike.Main.Creatures.Creature;
+import RogueLike.Main.Utils.PointShapes.Point;
 
 public class PathFinder {
 	private ArrayList<Point> open;

@@ -5,8 +5,8 @@ import RogueLike.Main.Screens.TerminalText;
 
 public abstract class CharacterSheetElement {
     protected abstract String header();
-    public TerminalText formattedHeader(ExtendedAsciiPanel terminal) {
-        return new TerminalText(header(), terminal.getDefaultForegroundColor(), terminal.getDefaultBackgroundColor());
+    public TerminalText formattedHeader() {
+        return new TerminalText(header(), ExtendedAsciiPanel.getDefaultForegroundColor(), ExtendedAsciiPanel.getDefaultBackgroundColor());
     };
 
     public abstract String details();

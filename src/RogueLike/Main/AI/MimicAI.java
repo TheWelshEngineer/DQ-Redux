@@ -3,17 +3,16 @@ package RogueLike.Main.AI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Effect;
-import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
 import RogueLike.Main.Screens.TerminalText;
 
 public class MimicAI extends CreatureAI{
+	private static final long serialVersionUID = -3046149665630131746L;
 	private Creature player;
 	private int turnsWithoutPlayer = 0;
 	
-	public MimicAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public MimicAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
 	}
 	

@@ -4,19 +4,20 @@ import java.util.ArrayList;
 
 import RogueLike.Main.Dice;
 import RogueLike.Main.Effect;
-import RogueLike.Main.World;
 import RogueLike.Main.AI.CreatureAI;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Screens.TerminalText;
 
 public class SkeletonCryomancerAI extends CreatureAI{
+	private static final long serialVersionUID = 5044834017168788137L;
+
 	private Creature player;
 	
 	private int spellCooldown = 0;
 	
-	public SkeletonCryomancerAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public SkeletonCryomancerAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
 	}
 	
@@ -73,7 +74,7 @@ public class SkeletonCryomancerAI extends CreatureAI{
 	}
 	
 	public void castSpell() {
-		player.addEffect((Effect)factory.effectFactory.iceKnife(creature).clone());
+		player.addEffect((Effect)FactoryManager.getEffectFactory().iceKnife(creature).clone());
 	}
 	
 }

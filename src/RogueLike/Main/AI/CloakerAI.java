@@ -3,17 +3,17 @@ package RogueLike.Main.AI;
 import java.util.ArrayList;
 
 import RogueLike.Main.Effect;
-import RogueLike.Main.World;
 import RogueLike.Main.Creatures.Creature;
-import RogueLike.Main.Factories.ObjectFactory;
+import RogueLike.Main.Factories.FactoryManager;
 import RogueLike.Main.Screens.TerminalText;
 
 public class CloakerAI extends CreatureAI{
+	private static final long serialVersionUID = -763251977847627203L;
 	private Creature player;
 	private int turnsWithoutPlayer = 0;
 	
-	public CloakerAI(Creature creature, Creature player, ObjectFactory factory, World world) {
-		super(creature, factory, world);
+	public CloakerAI(Creature creature, Creature player) {
+		super(creature);
 		this.player = player;
 
 	}
@@ -98,7 +98,7 @@ public class CloakerAI extends CreatureAI{
 	}
 	
 	public void becomeInvisible() {
-		Effect invisible = (Effect) this.factory.effectFactory.invisible(100000).clone();
+		Effect invisible = (Effect) FactoryManager.getEffectFactory().invisible(100000).clone();
 		creature.addEffect(invisible);
 	}
 

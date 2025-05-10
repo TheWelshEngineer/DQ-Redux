@@ -1,14 +1,16 @@
 package RogueLike.Main.Screens;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 
-public class TerminalText implements Iterable<TerminalChar>{
-    private final List<TerminalChar> terminalChars = new ArrayList<>();
+public class TerminalText implements Iterable<TerminalChar>, Serializable{
+    private static final long serialVersionUID = -2321814367717997651L;
+	private final List<TerminalChar> terminalChars = new ArrayList<>();
 
     public List<TerminalChar> terminalChars() {
         return terminalChars;

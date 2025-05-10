@@ -1,8 +1,8 @@
 package RogueLike.Main.Screens.CharacterSheet.Skills;
 
+import RogueLike.Main.SkillInstance;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Screens.CharacterSheet.SkillElement;
-import RogueLike.Main.SkillInstance;
 
 public class FerromancySkillElement extends SkillElement {
 

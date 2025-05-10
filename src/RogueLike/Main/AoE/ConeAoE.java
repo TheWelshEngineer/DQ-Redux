@@ -2,7 +2,6 @@ package RogueLike.Main.AoE;
 
 import RogueLike.Main.Utils.PointShapes.Cone;
 import RogueLike.Main.Utils.PointShapes.Point;
-import RogueLike.Main.World;
 
 public class ConeAoE extends AoE {
 	private final double angle;
@@ -26,7 +25,7 @@ public class ConeAoE extends AoE {
 	}
 
 	@Override
-	public InstantiatedAoE instantiate(Point source, Point target, World world) {
-		return new InstantiatedAoE(new Cone(source, target, size, angle), world);
+	public InstantiatedAoE instantiate(Point source, Point target) {
+		return new InstantiatedAoE(new Cone(source, target, size, angle));
 	}
 }

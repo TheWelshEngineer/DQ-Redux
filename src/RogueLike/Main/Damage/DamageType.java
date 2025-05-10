@@ -1,7 +1,6 @@
 package RogueLike.Main.Damage;
 
 import java.awt.Color;
-import java.util.List;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 

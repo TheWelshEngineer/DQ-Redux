@@ -1,6 +1,7 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import RogueLike.Main.ExtendedAsciiPanel;
@@ -8,7 +9,7 @@ import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 
 
-public abstract class InventoryBasedScreen implements Screen{
+public abstract class InventoryBasedScreen implements Screen, Serializable{
 	
 	protected Creature player;
 	public String letters;
@@ -23,23 +24,23 @@ public abstract class InventoryBasedScreen implements Screen{
 		
 	}
 	
-	public void displayOutput(ExtendedAsciiPanel terminal) {
+	public void displayOutput() {
 		ArrayList<String> lines = getList();
 		
 		int y = 26;
 		int x = 4;
 		
 		if(lines.size() > 0) {
-			terminal.clear(' ', x, y, 20, lines.size());
+			ExtendedAsciiPanel.clear(' ', x, y, 20, lines.size());
 		}
 		for(String line : lines) {
-			terminal.write(line, x, y++);
+			ExtendedAsciiPanel.write(line, x, y++);
 		}
 		
-		terminal.clear(' ', 0, 23, 80, 1);
-		terminal.write("What would you like to "+getVerb()+"?", 2, 24);
+		ExtendedAsciiPanel.clear(' ', 0, 23, 80, 1);
+		ExtendedAsciiPanel.write("What would you like to "+getVerb()+"?", 2, 24);
 		
-		terminal.repaint();
+		ExtendedAsciiPanel.getInstance().repaint();
 	}
 	
 	protected ArrayList<String> getList(){
