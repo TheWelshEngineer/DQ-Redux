@@ -1,8 +1,10 @@
 package RogueLike.Main.Screens;
 
 import java.awt.Color;
+import java.io.Serializable;
 
-public class TerminalChar {
+public class TerminalChar implements Serializable {
+	private static final long serialVersionUID = 7544679336954921330L;
 	public final char glyph;
 	public final Color foreground;
 	public final Color background;

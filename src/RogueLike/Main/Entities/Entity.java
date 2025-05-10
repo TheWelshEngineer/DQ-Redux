@@ -1,11 +1,13 @@
 package RogueLike.Main.Entities;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Utils.PointShapes.Point;
 
-public abstract class Entity {
+public abstract class Entity implements Serializable {
+	private static final long serialVersionUID = -5364806522055462437L;
 	// TODO: Should Creature extend this?
 	public int x; // TODO: make protected
 	public int y; // TODO: make protected

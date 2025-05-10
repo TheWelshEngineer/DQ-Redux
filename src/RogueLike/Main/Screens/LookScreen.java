@@ -27,7 +27,7 @@ public class LookScreen extends TargetBasedScreen{
 			return;
 		}
 
-		Entity entity = World.entity(x, y, player.z);
+		Entity entity = World.getInstance().entity(x, y, player.z);
 		if (entity != null) {
 			if (!(entity instanceof Trap) || ((Trap) entity).isRevealed()) {
 				caption = String.format("%c %s", entity.glyph(), entity.name());

@@ -1,10 +1,14 @@
 package RogueLike.Main;
 
+import java.io.Serializable;
+
 import RogueLike.Main.Utils.PointShapes.Line;
 import RogueLike.Main.Utils.PointShapes.Point;
 
-public class FieldOfView {
-    private int depth;
+public class FieldOfView implements Serializable {
+    private static final long serialVersionUID = 866806104250178972L;
+
+	private int depth;
 
     private boolean[][] visible;
     public boolean isVisible(int x, int y, int z){
@@ -19,22 +23,25 @@ public class FieldOfView {
     	if(y < 0) {
     		y = 0;
     	}
-    	if(x > World.width()-1) {
-    		x = World.width()-1;
+    	if(x > world.width()-1) {
+    		x = world.width()-1;
     	}
-    	if(y > World.height()-1) {
-    		y = World.height()-1;
+    	if(y > world.height()-1) {
+    		y = world.height()-1;
     	}
         return tiles[x][y][z];
     }
+    
+    private World world;
 
     public FieldOfView(){
-        this.visible = new boolean[World.width()][World.height()];
-        this.tiles = new Tile[World.width()][World.height()][World.depth()];
+    	this.world = World.getInstance();
+        this.visible = new boolean[world.width()][world.height()];
+        this.tiles = new Tile[world.width()][world.height()][world.depth()];
     
-        for (int x = 0; x < World.width(); x++){
-            for (int y = 0; y < World.height(); y++){
-                for (int z = 0; z < World.depth(); z++){
+        for (int x = 0; x < world.width(); x++){
+            for (int y = 0; y < world.height(); y++){
+                for (int z = 0; z < world.depth(); z++){
                     tiles[x][y][z] = Tile.UNKNOWN;
                 }
             }
@@ -43,18 +50,18 @@ public class FieldOfView {
 	
     public void update(int wx, int wy, int wz, int r){
 		depth = wz;
-		visible = new boolean[World.width()][World.height()];
+		visible = new boolean[world.width()][world.height()];
 		
 		for (int x = -r; x < r; x++){
 			for (int y = -r; y < r; y++){
 				if (x*x + y*y > r*r)
 					continue;
 				
-				if (wx + x < 0 || wx + x >= World.width() || wy + y < 0 || wy + y >= World.height())
+				if (wx + x < 0 || wx + x >= world.width() || wy + y < 0 || wy + y >= world.height())
 					continue;
 				
 				for (Point p : new Line(wx, wy, wx + x, wy + y)){
-					Tile tile = World.tile(p.x, p.y, wz);
+					Tile tile = world.tile(p.x, p.y, wz);
 					visible[p.x][p.y] = true;
 					tiles[p.x][p.y][wz] = tile; 
 					
@@ -67,18 +74,18 @@ public class FieldOfView {
     
     public void updateLevitating(int wx, int wy, int wz, int r){
 		depth = wz;
-		visible = new boolean[World.width()][World.height()];
+		visible = new boolean[world.width()][world.height()];
 		
 		for (int x = -r; x < r; x++){
 			for (int y = -r; y < r; y++){
 				if (x*x + y*y > r*r)
 					continue;
 				
-				if (wx + x < 0 || wx + x >= World.width() || wy + y < 0 || wy + y >= World.height())
+				if (wx + x < 0 || wx + x >= world.width() || wy + y < 0 || wy + y >= world.height())
 					continue;
 				
 				for (Point p : new Line(wx, wy, wx + x, wy + y)){
-					Tile tile = World.tile(p.x, p.y, wz);
+					Tile tile = world.tile(p.x, p.y, wz);
 					visible[p.x][p.y] = true;
 					tiles[p.x][p.y][wz] = tile; 
 					
@@ -91,18 +98,18 @@ public class FieldOfView {
     
     public void updateMagicMapping(int wx, int wy, int wz, int r){
 		depth = wz;
-		visible = new boolean[World.width()][World.height()];
+		visible = new boolean[world.width()][world.height()];
 		
 		for (int x = -r; x < r; x++){
 			for (int y = -r; y < r; y++){
 				if (x*x + y*y > r*r)
 					continue;
 				
-				if (wx + x < 0 || wx + x >= World.width() || wy + y < 0 || wy + y >= World.height())
+				if (wx + x < 0 || wx + x >= world.width() || wy + y < 0 || wy + y >= world.height())
 					continue;
 				
 				for (Point p : new Line(wx, wy, wx + x, wy + y)){
-					Tile tile = World.tile(p.x, p.y, wz);
+					Tile tile = world.tile(p.x, p.y, wz);
 					visible[p.x][p.y] = true;
 					tiles[p.x][p.y][wz] = tile; 
 					

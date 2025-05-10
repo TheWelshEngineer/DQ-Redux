@@ -1,6 +1,7 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Utils.NotificationHistory;
 
-public class ActionLogScreen implements Screen {
+public class ActionLogScreen implements Screen, Serializable {
     private final NotificationHistory notificationHistory;
     private final int currentTurn;
     private final List<TerminalText> logLines;

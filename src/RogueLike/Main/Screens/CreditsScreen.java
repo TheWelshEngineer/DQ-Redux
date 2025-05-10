@@ -1,11 +1,12 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 
-public class CreditsScreen implements Screen{
+public class CreditsScreen implements Screen, Serializable{
 
 	public void displayOutput() {
 		Screen.generateBorders();;

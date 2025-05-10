@@ -1,6 +1,7 @@
 package RogueLike.Main;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,38 +16,54 @@ import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.Utils.PlayerBuildDetails;
 import RogueLike.Main.Utils.PointShapes.Point;
 
-public enum World {
+public class World implements Serializable {
 	
-	INSTANCE;
-	private static Tile[][][] tiles;
-	//
-	private static Tile[][][] subtiles;
-	//
-	private static Tile[][][] gastiles;
-	//
-	private static Item[][][] items;
-	public static List<Creature> creatures;
-	public static List<Entity> entities;
-	//
-	private transient static Particle[][][] particles;
+	private static final long serialVersionUID = 7036408750422237155L;
+	private static World instance = null;
 	
-	private static int width;
-	public static int width() {
+	
+    public static synchronized World getInstance(){
+        if (instance == null) {
+        instance = new World();         
+        } 
+        return instance;
+    }
+    
+    public static synchronized void loadInstance(World loadedWorld) {
+    	instance = loadedWorld;
+    }
+
+	private World() {};
+    
+	private Tile[][][] tiles;
+	//
+	private Tile[][][] subtiles;
+	//
+	private Tile[][][] gastiles;
+	//
+	private Item[][][] items;
+	public List<Creature> creatures;
+	public List<Entity> entities;
+	//
+	private Particle[][][] particles;
+	
+	private int width;
+	public int width() {
 		return width;
 	}
 	
-	private static int height;
-	public static int height() {
+	private int height;
+	public int height() {
 		return height;
 	}
 	
-	private static int depth;
-	public static int depth() {
+	private int depth;
+	public int depth() {
 		return depth;
 	}
 
-	private static Player player;
-	public static Player player() {
+	private Player player;
+	public Player player() {
 		if (player == null) {
 			// defensive programming! we don't want things to pick up a dead reference to the player.
 			// anything that needs a reference should only need to get one after Worldgen is complete
@@ -56,34 +73,33 @@ public enum World {
 		return player;
 	}
 
-	private static List<Integer> specialDepths;
+	private List<Integer> specialDepths;
 	public List<Integer> specialDepths() {return specialDepths;}
 
-	private static int turnNumber;
-	public static int turnNumber() {return turnNumber; }
+	private int turnNumber;
+	public int turnNumber() {return turnNumber; }
 
-	private static final FactoryManager factory = FactoryManager.INSTANCE;
+	private final FactoryManager factory = FactoryManager.INSTANCE;
 	public FactoryManager factory() {return factory;}
 	
-	private World() {};
 	
-	public static void setWorld(Tile[][][] tiles, List<Integer> specialDepths) {
-		World.tiles = tiles;
-		World.width = tiles.length;
-		World.height = tiles[0].length;
-		World.depth = tiles[0][0].length;
-		World.creatures = new ArrayList<>();
-		World.entities = new ArrayList<>();
-		World.items = new Item[width][height][depth];
+	public void setWorld(Tile[][][] tiles, List<Integer> specialDepths) {
+		this.tiles = tiles;
+		this.width = tiles.length;
+		this.height = tiles[0].length;
+		this.depth = tiles[0][0].length;
+		this.creatures = new ArrayList<>();
+		this.entities = new ArrayList<>();
+		this.items = new Item[width][height][depth];
 		//
-		World.subtiles = new Tile[width][height][depth];
+		this.subtiles = new Tile[width][height][depth];
 		//
-		World.gastiles = new Tile[width][height][depth];
+		this.gastiles = new Tile[width][height][depth];
 		//
-		World.particles = new Particle[width][height][depth];
-		World.specialDepths = specialDepths;
+		this.particles = new Particle[width][height][depth];
+		this.specialDepths = specialDepths;
 	}
-	public static Tile tile(int x, int y, int z) {
+	public Tile tile(int x, int y, int z) {
 		if(x < 0 || x >= width || y < 0 || y >= height || z < 0 || z >= depth)
 			return Tile.BOUNDS;
 		else
@@ -91,7 +107,7 @@ public enum World {
 		
 	}
 	
-	public static Tile subtile(int x, int y, int z) {
+	public Tile subtile(int x, int y, int z) {
 		if(x < 0 || x >= width || y < 0 || y >= height || z < 0 || z >= depth)
 			return Tile.BOUNDS;
 		else
@@ -99,7 +115,7 @@ public enum World {
 		
 	}
 	
-	public static Tile gastile(int x, int y, int z) {
+	public Tile gastile(int x, int y, int z) {
 		if(x < 0 || x >= width || y < 0 || y >= height || z < 0 || z >= depth)
 			return Tile.BOUNDS;
 		else
@@ -107,15 +123,15 @@ public enum World {
 		
 	}
 	
-	public static Item item(int x, int y, int z) {
+	public Item item(int x, int y, int z) {
 		return items[x][y][z];
 	}
 	
-	public static Particle particle(int x, int y, int z) {
+	public Particle particle(int x, int y, int z) {
 		return particles[x][y][z];
 	}
 	
-	public static char glyph(int x, int y, int z) {
+	public char glyph(int x, int y, int z) {
 		if(particle(x,y,z) != null) {
 			return particle(x,y,z).glyph();
 		}
@@ -141,7 +157,7 @@ public enum World {
 		return tile(x,y,z).glyph();
 	}
 	
-	public  static Color color(int x, int y, int z) {
+	public  Color color(int x, int y, int z) {
 		Creature creature = creature(x,y,z);
 		//
 		if(gastile(x,y,z) != null) {
@@ -167,12 +183,12 @@ public enum World {
 		return tile(x,y,z).color();
 	}
 	
-	public static void dig(int x, int y, int z) {
+	public void dig(int x, int y, int z) {
 		if(tile(x,y,z).isDiggable())
 			tiles[x][y][z] = Tile.FLOOR;
 	}
 	
-	public static void changeTile(int x, int y, int z, Tile tile) {
+	public void changeTile(int x, int y, int z, Tile tile) {
 		if(y < 0) {
 			y = 0;
 		}
@@ -192,7 +208,7 @@ public enum World {
 		}
 	}
 	
-	public static void changeSubTile(int x, int y, int z, Tile tile) {
+	public void changeSubTile(int x, int y, int z, Tile tile) {
 		if(y < 0) {
 			y = 0;
 		}
@@ -219,7 +235,7 @@ public enum World {
 		}
 	}
 	
-	public static void changeGasTile(int x, int y, int z, Tile tile) {
+	public void changeGasTile(int x, int y, int z, Tile tile) {
 		if(y < 0) {
 			y = 0;
 		}
@@ -249,7 +265,7 @@ public enum World {
 		}
 	}
 
-	public static Creature creature(int x, int y, int z){
+	public Creature creature(int x, int y, int z){
 		for (Creature c : creatures){
 			if (c.x == x && c.y == y && c.z == z)
 				return c;
@@ -257,7 +273,7 @@ public enum World {
 		return null;
 	}
 
-	public static Entity entity(int x, int y, int z){
+	public Entity entity(int x, int y, int z){
 		for (Entity e : entities){
 			if (e.x == x && e.y == y && e.z == z)
 				return e;
@@ -265,7 +281,7 @@ public enum World {
 		return null;
 	}
 
-	public static void addAtEmptyLocation(Creature creature, int z){
+	public void addAtEmptyLocation(Creature creature, int z){
 		int x;
 		int y;
 		
@@ -282,7 +298,7 @@ public enum World {
 		creatures.add(creature);
 	}
 
-	private static Point getPlayerSpawnPoint() {
+	private Point getPlayerSpawnPoint() {
 		for (int x=0; x<width; x++) {
 			for (int y=0; y<height; y++) {
 				if (tiles[x][y][0].isStairsExit()) {
@@ -293,22 +309,23 @@ public enum World {
 		throw new IllegalStateException("Spawn point not found.");
 	}
 
-	public static void addPlayer(
+	public void addPlayer(
 		NotificationHistory notificationHandle,
 		PlayerBuildDetails playerDetails
 	) {
-		if (player == null) {
-			player = FactoryManager.getCreatureFactory().newPlayer(new FieldOfView(), notificationHandle, playerDetails);
-		} 
+		player = FactoryManager.getCreatureFactory().newPlayer(new FieldOfView(), notificationHandle, playerDetails);
+
 		Point spawnpoint = getPlayerSpawnPoint();
 		player.x = spawnpoint.x;
 		player.y = spawnpoint.y;
 		player.z = spawnpoint.z;
+		
+		creatures.add(player);
 
 		System.out.println("Player spawned");
 	}
 	
-	private static Point getMerchantSpawnPoint(int depth) {
+	private Point getMerchantSpawnPoint(int depth) {
 		for (int x=0; x<width; x++) {
 			for (int y=0; y<height; y++) {
 				if (tiles[x][y][depth] == Tile.MERCHANT_FLOOR) {
@@ -319,7 +336,7 @@ public enum World {
 		throw new IllegalStateException("Spawn point not found.");
 	}
 	
-	public static void addMerchant(Creature merchant, int depth){
+	public void addMerchant(Creature merchant, int depth){
 		Point spawnpoint = getMerchantSpawnPoint(depth);
 		merchant.x = spawnpoint.x;
 		merchant.y = spawnpoint.y;
@@ -328,7 +345,7 @@ public enum World {
 		System.out.println("Merchant spawned");
 	}
 	
-	public static void add(Creature pet) {
+	public void add(Creature pet) {
 		//temp
 		if(creature(pet.x, pet.y, pet.z) == null) {
 			creatures.add(pet);
@@ -338,7 +355,7 @@ public enum World {
 		//creatures.add(pet);
 	}
 
-	public static Point getEmptyLocationForTrap(int depth) {
+	public Point getEmptyLocationForTrap(int depth) {
 		int x;
 		int y;
 
@@ -351,7 +368,7 @@ public enum World {
 		return new Point(x, y, depth);
 	}
 
-	public static void addAtEmptyLocation(Item item, int depth){
+	public void addAtEmptyLocation(Item item, int depth){
 		int x;
 		int y;
 
@@ -365,7 +382,7 @@ public enum World {
 		items[x][y][depth] = item;
 	}
 	
-	public static void addCreatureAtLocation(Creature creature, int x, int y, int z){
+	public void addCreatureAtLocation(Creature creature, int x, int y, int z){
 		if(tile(x,y,z).isBars() || tile(x,y,z).isStairs() || creature(x,y,z) != null || tile(x,y,z).isWall()) {
 			
 		}else {
@@ -378,7 +395,7 @@ public enum World {
 		
 	}
 	
-	public static void replaceCreature(Creature target, Creature replacement) {
+	public void replaceCreature(Creature target, Creature replacement) {
 		int rx = target.x();
 		int ry = target.y();
 		int rz = target.z();
@@ -389,7 +406,7 @@ public enum World {
 		creatures.add(replacement);
 	}
 
-	public static boolean addAtEmptySpace(Item item, int x, int y, int z){
+	public boolean addAtEmptySpace(Item item, int x, int y, int z){
 		if (item == null)
 			return true;
 
@@ -411,7 +428,7 @@ public enum World {
 
 			if (items[p.x][p.y][p.z] == null && !tile(p.x, p.y, p.z).isStairs() && !tile(p.x, p.y, p.z).noItems()){
 				items[p.x][p.y][p.z] = item;
-				Creature c = World.creature(p.x, p.y, p.z);
+				Creature c = this.creature(p.x, p.y, p.z);
 				if (c != null)
 					c.notify("A %s lands between your feet.", c.nameOf(item));
 				return true;
@@ -424,19 +441,19 @@ public enum World {
 		return false;
 	}
 
-	public static void add(Entity entity) {
+	public void add(Entity entity) {
 		entities.add(entity);
 	}
 	
-	public static void setParticleAtLocation(Particle particle, int x, int y, int z) {
+	public void setParticleAtLocation(Particle particle, int x, int y, int z) {
 		particles[x][y][z] = particle;
 	}
 	
-	public static void removeParticleAtLocation(int x, int y, int z) {
+	public void removeParticleAtLocation(int x, int y, int z) {
 		particles[x][y][z] = null;
 	}
 	
-	public static void removeParticleByReference(Particle particle) {
+	public void removeParticleByReference(Particle particle) {
 		for (int x = 0; x < width; x++){
             for (int y = 0; y < height; y++){
                 for (int z = 0; z < depth; z++){
@@ -449,11 +466,11 @@ public enum World {
         }
 	}
 	
-	public static void remove(int x, int y, int z) {
+	public void remove(int x, int y, int z) {
 		items[x][y][z] = null;
 	}
 	
-	public static void remove(Item item) {
+	public void remove(Item item) {
         for (int x = 0; x < width; x++){
             for (int y = 0; y < height; y++){
                 for (int z = 0; z < depth; z++){
@@ -466,15 +483,15 @@ public enum World {
         }
 	}
 
-	public static void remove(Creature other) {
+	public void remove(Creature other) {
 		creatures.remove(other);
 	}
 
-	public static void remove(Entity other) {
+	public void remove(Entity other) {
 		entities.remove(other);
 	}
 	
-	public static void update() {
+	public void update() {
 		List<Creature> toUpdate = new ArrayList<Creature>(creatures);
 	    for (Creature creature : toUpdate){
 	        creature.update();
@@ -498,7 +515,7 @@ public enum World {
 	    //
 	}
 	
-	public static void generateActionsOnCurrentFloor(Creature player) {
+	public void generateActionsOnCurrentFloor(Creature player) {
 		List<Creature> toUpdate = new ArrayList<Creature>(creatures);
 	    for (Creature creature : toUpdate){
 	    	if(creature.z() == player.z()) {
@@ -508,7 +525,7 @@ public enum World {
 	    }
 	}
 	
-	public static void updateOnCurrentFloor(Creature player) {
+	public void updateOnCurrentFloor(Creature player) {
 		if(player.ai().actionQueue().isEmpty()) {
 			// the player isn't doing anything - don't update
 			return;
@@ -546,11 +563,11 @@ public enum World {
 	}
 
 
-	public static boolean isInBounds(int x, int y) {
+	public boolean isInBounds(int x, int y) {
 		return x >= 0 && x < width && y >= 0 && y < height;
 	}
 
-	public static boolean isInBounds(Point p) {
+	public boolean isInBounds(Point p) {
 		return p.x >= 0 && p.x < width && p.y >= 0 && p.y < height && p.z >= 0 && p.z < depth;
 	}
 }

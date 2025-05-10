@@ -62,7 +62,7 @@ public class BloodFungusAI extends CreatureAI{
 			
 		}
 		// Don't spread onto traps
-		if (World.entity(x, y, creature.z) instanceof Trap) {
+		if (World.getInstance().entity(x, y, creature.z) instanceof Trap) {
 			return;
 		}
 		creature.doAction(new TerminalText("spawn a child"));		

@@ -182,16 +182,17 @@ public class MerchantFloor extends Blueprint {
 	public void onPostTileGeneration() {}
 
 	public void onBuildWorld() {
+		World world = World.getInstance();
 		teleporters.forEach((source, target) -> {
 			System.out.printf("Adding teleporter from %s to %s%n", source, target);
-			World.add(
+			world.add(
 				new Teleporter(source.x, source.y, depth, target.x, target.y)
 			);
 		});
 
 		// add the merchant!
-		Creature merchant = FactoryManager.getCreatureFactory().newMerchant(depth, World.player(), false);
-		World.addMerchant(merchant, depth);
+		Creature merchant = FactoryManager.getCreatureFactory().newMerchant(depth, world.player(), false);
+		world.addMerchant(merchant, depth);
 	}
 
 }

@@ -57,6 +57,7 @@ public class MetalSlimeAI extends CreatureAI{
 	
 	private void burst() {
 		if(creature.hp() < (creature.maxHP() / 2)) {
+			World world = World.getInstance();
             for (int ox = -1; ox < 2; ox++){
                 for (int oy = -1; oy < 2; oy++){
                     int nx = creature.x + ox;
@@ -68,17 +69,17 @@ public class MetalSlimeAI extends CreatureAI{
                     Creature slimeling = FactoryManager.getCreatureFactory().newMetalSlimeling(0, player, false);
 
                     if (!slimeling.canEnter(nx, ny, creature.z)){
-                        World.remove(slimeling);
+                        world.remove(slimeling);
                         continue;
                     }
                     
                     if (creature.creature(nx, ny, creature.z) != null){
-                        World.remove(slimeling);
+                        world.remove(slimeling);
                         continue;
                     }
                     
                     if (Dice.d10.roll() <= 4){
-                        World.remove(slimeling);
+                        world.remove(slimeling);
                         continue;
                     }
                     

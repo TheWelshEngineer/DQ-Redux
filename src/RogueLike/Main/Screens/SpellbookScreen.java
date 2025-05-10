@@ -1,6 +1,7 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.List;
 
 import RogueLike.Main.Effect;
@@ -10,7 +11,7 @@ import RogueLike.Main.Spell;
 import RogueLike.Main.Spellbook;
 import RogueLike.Main.Creatures.Creature;
 
-public class SpellbookScreen implements Screen{
+public class SpellbookScreen implements Screen, Serializable{
 	
 	protected Creature player;
 	protected List<Effect> effects;

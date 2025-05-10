@@ -63,7 +63,7 @@ public class applicationMain extends JFrame implements KeyListener{
     public void repaint(){
     	ExtendedAsciiPanel.clear();
         screen.displayOutput();
-        super.repaint();
+        super.repaint(10);
     }
 
     public void keyPressed(KeyEvent e) {

@@ -1,12 +1,13 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.List;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 
-public class Zone2Screen implements Screen{
+public class Zone2Screen implements Screen, Serializable{
 	
 	public String playerClass;
 	public String playerName;

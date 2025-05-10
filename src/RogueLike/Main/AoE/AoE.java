@@ -1,8 +1,11 @@
 package RogueLike.Main.AoE;
 
+import java.io.Serializable;
+
 import RogueLike.Main.Utils.PointShapes.Point;
 
-public abstract class AoE {
+public abstract class AoE implements Serializable {
+	private static final long serialVersionUID = 7719063343166733151L;
 	protected int size;
 
 	public AoE(int size) {

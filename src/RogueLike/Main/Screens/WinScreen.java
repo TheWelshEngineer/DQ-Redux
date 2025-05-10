@@ -4,12 +4,13 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Creatures.Player;
 import RogueLike.Main.Managers.KeybindManager;
 
-public class WinScreen implements Screen {
+public class WinScreen implements Screen, Serializable {
 	private Player player;
 	public String weaponName = "None";
 	public String armorName = "None";

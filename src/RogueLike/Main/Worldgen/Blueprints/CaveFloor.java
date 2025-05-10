@@ -21,10 +21,12 @@ public class CaveFloor extends Blueprint {
 	private final int depth;
 	private final int numSmoothingIterations = 9;
 	private final int numStructuresToSpawn = 20;
+	private World world;
 
 	public CaveFloor(WorldBuilder builder, int depth) {
 		super(builder);
 		this.depth = depth;
+		this.world = World.getInstance();
 	}
 
 	@Override
@@ -102,30 +104,30 @@ public class CaveFloor extends Blueprint {
 
 	public void createCreatures() {
 		for(int i = 0; i < 18; i++) {
-			FactoryManager.getObjectFactory().randomChest(depth, World.player(), true);
+			FactoryManager.getObjectFactory().randomChest(depth, world.player(), true);
 		}
 
 		for(int i = 0; i < 85; i++) {
-			FactoryManager.getObjectFactory().randomLesserMonster(depth, World.player(), true);
+			FactoryManager.getObjectFactory().randomLesserMonster(depth, world.player(), true);
 		}
 		if(depth > 5) {
 			for(int i = 0; i < 50; i++) {
-				FactoryManager.getObjectFactory().randomMediumMonster(depth, World.player(), true);
+				FactoryManager.getObjectFactory().randomMediumMonster(depth, world.player(), true);
 			}
 		}
 		if(depth > 10) {
 			for(int i = 0; i < 30; i++) {
-				FactoryManager.getObjectFactory().randomGreaterMonster(depth, World.player(), true);
+				FactoryManager.getObjectFactory().randomGreaterMonster(depth, world.player(), true);
 			}
 		}
 	}
 
 	private void createItems() {
-		for(int i = 0; i < World.width() * World.height() / 25; i++) {
+		for(int i = 0; i < world.width() * world.height() / 25; i++) {
 			FactoryManager.getItemFactory().newRock(depth, 1);
 		}
 		for(int i = 0; i < 35; i++) {
-			Point where = World.getEmptyLocationForTrap(depth);
+			Point where = world.getEmptyLocationForTrap(depth);
 			FactoryManager.getObjectFactory().createRandomTrap(where);
 		}
 		for(int i = 0; i < 6; i++) {//6
@@ -147,7 +149,7 @@ public class CaveFloor extends Blueprint {
 			FactoryManager.getObjectFactory().randomRing(depth, true, true);
 		}
 		for(int l = 0; l < 2; l++) {
-			FactoryManager.getObjectFactory().randomScroll(depth, World.player(), true);
+			FactoryManager.getObjectFactory().randomScroll(depth, world.player(), true);
 		}
 	}
 

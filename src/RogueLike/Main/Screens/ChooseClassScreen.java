@@ -1,12 +1,13 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Enums.PlayerAncestry;
 import RogueLike.Main.Enums.PlayerClass;
 
-public class ChooseClassScreen implements Screen{
+public class ChooseClassScreen implements Screen, Serializable{
 	
 	public int check = 0;
 

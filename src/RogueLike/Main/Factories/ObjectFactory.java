@@ -46,8 +46,11 @@ public class ObjectFactory implements Serializable {
 	public Map<String, Color> scrollColors;
 	public List<String> scrollAppearances;
 	public List<Item> scrollIndex;
+	
+	private World world;
 
 	public ObjectFactory() {
+		this.world = World.getInstance();
 		setUpPotionAppearances();
 		//setUpPotionIndex();
 		setUpWandAppearances();
@@ -128,7 +131,7 @@ public class ObjectFactory implements Serializable {
 	}
 	
 	public void setUpWandIndex() {
-		Creature player = World.player();
+		Creature player = this.world.player();
 		wandIndex = new ArrayList<Item>();
 		wandIndex.add(FactoryManager.getItemFactory().newMagicMissileWand(0, player, false));
 		wandIndex.add(FactoryManager.getItemFactory().newForceBlastWand(0, player, false));
@@ -206,7 +209,7 @@ public class ObjectFactory implements Serializable {
 	
 	public void setUpScrollIndex() {
 
-		Creature player = World.player();
+		Creature player = this.world.player();
 		scrollIndex = new ArrayList<Item>();
 		scrollIndex.add(FactoryManager.getItemFactory().newScrollOfIdentify(0, player, false));
 		scrollIndex.add(FactoryManager.getItemFactory().newScrollOfMagicMapping(0, player, false));
@@ -357,7 +360,7 @@ public class ObjectFactory implements Serializable {
 			case 7: trap = new SmokeTrap(where.x, where.y, where.z); break;
 			default: trap = new FireTrap(where.x, where.y, where.z); break;
 		}
-		World.add(trap);
+		World.getInstance().add(trap);
 	}
 	
 	public Item randomAmmunition(int depth, int addToWorld) {

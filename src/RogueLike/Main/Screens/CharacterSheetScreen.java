@@ -1,6 +1,7 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +44,7 @@ import RogueLike.Main.Screens.CharacterSheet.Skills.RangedWeaponsSkillElement;
 import RogueLike.Main.Screens.CharacterSheet.Skills.SimpleWeaponsSkillElement;
 import RogueLike.Main.Screens.CharacterSheet.Skills.StealthSkillElement;
 
-public class CharacterSheetScreen implements Screen{
+public class CharacterSheetScreen implements Screen, Serializable{
 
 	protected Player player;
 

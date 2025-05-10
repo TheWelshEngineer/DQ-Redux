@@ -118,7 +118,7 @@ public class CreatureAI implements Serializable {
 				creature.y = y;
 				creature.z = z;
 
-				Entity entity = World.entity(x, y, z);
+				Entity entity = World.getInstance().entity(x, y, z);
 				if (entity != null) {
 					entity.onSteppedOnBy(creature);
 				}

@@ -1,6 +1,7 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import RogueLike.Main.ExtendedAsciiPanel;
@@ -8,7 +9,7 @@ import RogueLike.Main.Spell;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 
-public class SpellSelectScreen implements Screen{
+public class SpellSelectScreen implements Screen, Serializable{
 	
 	protected Creature player;
 	private String letters;

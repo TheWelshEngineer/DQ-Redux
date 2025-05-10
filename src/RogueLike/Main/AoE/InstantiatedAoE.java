@@ -14,7 +14,7 @@ public class InstantiatedAoE {
 	public final List<Point> points;
 
 	public InstantiatedAoE(List<Point> points) {
-		this.points = points.stream().filter(World::isInBounds).collect(Collectors.toList());
+		this.points = points.stream().filter(World.getInstance()::isInBounds).collect(Collectors.toList());
 	}
 
 	public InstantiatedAoE(PointShape shape) {
@@ -23,7 +23,7 @@ public class InstantiatedAoE {
 
 	public Stream<Creature> affectedCreatures() {
 		return points.stream()
-			.map(p -> World.creature(p.x, p.y, p.z))
+			.map(p -> World.getInstance().creature(p.x, p.y, p.z))
 			.filter(Objects::nonNull);
 	}
 

@@ -40,8 +40,9 @@ public class Teleporter extends Entity {
 			other.moveBy(mx, my, 0, false);
 			other.notify("The World warps around you as you are teleported!");
 
-			World.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.white, 2), x, y, z);
-			World.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.white, 2), targetX, targetY, z);
+			World world = World.getInstance();
+			world.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.white, 2), x, y, z);
+			world.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.white, 2), targetX, targetY, z);
 		}
 	}
 }

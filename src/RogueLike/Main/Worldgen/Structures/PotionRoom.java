@@ -26,10 +26,11 @@ public class PotionRoom extends Structure {
 
 	@Override
 	public void onBuildWorld() {
+		World world = World.getInstance();
 		// Add three potions into the cell, one of which is guaranteed positive
-		World.addAtEmptySpace(FactoryManager.getObjectFactory().randomPotion(z, false), x+1, y-1, z);
-		World.addAtEmptySpace(FactoryManager.getObjectFactory().randomPositivePotion(z, false), x, y-1, z);
-		World.addAtEmptySpace(FactoryManager.getObjectFactory().randomPotion(z, false), x-1, y-1, z);
+		world.addAtEmptySpace(FactoryManager.getObjectFactory().randomPotion(z, false), x+1, y-1, z);
+		world.addAtEmptySpace(FactoryManager.getObjectFactory().randomPositivePotion(z, false), x, y-1, z);
+		world.addAtEmptySpace(FactoryManager.getObjectFactory().randomPotion(z, false), x-1, y-1, z);
 	}
 
 	@Override

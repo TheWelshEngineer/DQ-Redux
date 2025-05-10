@@ -37,7 +37,9 @@ public class ItemFactory implements Serializable {
 
 	public static final int VICTORY_ITEM_ID = 200;
 	
+	private World world;
 	public ItemFactory() {
+		this.world = World.getInstance();
 	}
 
 
@@ -47,7 +49,7 @@ public class ItemFactory implements Serializable {
 		rock.setIsStackable(true);
 		rock.setID(0);
 		if(addToWorld > 0) {
-			World.addAtEmptyLocation(rock, depth);
+			world.addAtEmptyLocation(rock, depth);
 		}
 		return rock;
 	}
@@ -61,7 +63,7 @@ public class ItemFactory implements Serializable {
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(1);
 		if(addToWorld > 0) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -74,7 +76,7 @@ public class ItemFactory implements Serializable {
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(2);
 		if(addToWorld > 0) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -87,7 +89,7 @@ public class ItemFactory implements Serializable {
 		item.setCurrentGoldValue(item.baseGoldValue());
 		item.setID(3);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -96,7 +98,7 @@ public class ItemFactory implements Serializable {
 	public Item newIronKey(int depth, boolean addToWorld) {
 		Item key = new IronKey((char)157, ExtendedAsciiPanel.white, "Iron Key", null, depth, 100);
 		if(addToWorld) {
-			World.addAtEmptyLocation(key, depth);
+			world.addAtEmptyLocation(key, depth);
 		}
 		return key;
 	}
@@ -106,7 +108,7 @@ public class ItemFactory implements Serializable {
 		Item item = new Item('*', ExtendedAsciiPanel.brightWhite, "Eitak's Ancient Axe", "Eitak's Ancient Axe");
 		item.setID(VICTORY_ITEM_ID);
 		if(addToWorld > 0) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -123,7 +125,7 @@ public class ItemFactory implements Serializable {
 		item.setBaseGoldValue(1);
 		item.setID(300);
 		if(addToWorld > 0) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -139,7 +141,7 @@ public class ItemFactory implements Serializable {
 		item.setBaseGoldValue(3);
 		item.setID(301);
 		if(addToWorld > 0) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -155,7 +157,7 @@ public class ItemFactory implements Serializable {
 		item.setBaseGoldValue(5);
 		item.setID(302);
 		if(addToWorld > 0) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -182,7 +184,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -208,7 +210,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -236,7 +238,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -264,7 +266,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -292,7 +294,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -320,7 +322,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -348,7 +350,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -376,7 +378,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -403,7 +405,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -428,7 +430,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -455,7 +457,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -482,7 +484,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -509,7 +511,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -536,7 +538,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -563,7 +565,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -590,7 +592,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -617,7 +619,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -643,7 +645,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -667,7 +669,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -693,7 +695,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -719,7 +721,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -745,7 +747,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -771,7 +773,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -797,7 +799,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -823,7 +825,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -849,7 +851,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -875,7 +877,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -901,7 +903,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -928,7 +930,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -955,7 +957,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -981,7 +983,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1007,7 +1009,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1031,7 +1033,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1055,7 +1057,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1079,7 +1081,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1103,7 +1105,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1127,7 +1129,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1151,7 +1153,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1175,7 +1177,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1199,7 +1201,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1223,7 +1225,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1247,7 +1249,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1271,7 +1273,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1297,7 +1299,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1321,7 +1323,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1345,7 +1347,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1362,7 +1364,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1377,7 +1379,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1392,7 +1394,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1407,7 +1409,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1422,7 +1424,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1437,7 +1439,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1452,7 +1454,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1467,7 +1469,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1482,7 +1484,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1497,7 +1499,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1512,7 +1514,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1527,7 +1529,7 @@ public class ItemFactory implements Serializable {
 		}
 		//
 		if(addToWorld) { 
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1536,7 +1538,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfHealing(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Healing", 0, "Healing", FactoryManager.getEffectFactory().maxHealth(), false, 100, 1100);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1544,7 +1546,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfMana(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Mana", 1, "Mana Restoration", FactoryManager.getEffectFactory().maxMana(), false, 100, 1102);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1552,7 +1554,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfPoison(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Poison", 2, "Poison", FactoryManager.getEffectFactory().poisoned(3+depth+Dice.d6.roll()), true, 100, 1103);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1560,7 +1562,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfGiantStrength(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Giant Strength", 3, "Giant Strength", FactoryManager.getEffectFactory().giantStrength(10+depth+Dice.d4.roll()), false, 100, 1104);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1568,7 +1570,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfInvisibility(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Invisibility", 4, "Invisibility", FactoryManager.getEffectFactory().invisible(10+depth+Dice.d4.roll()), false, 100, 1105);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1576,7 +1578,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfParalysis(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Paralysis", 5, "Paralysis", FactoryManager.getEffectFactory().paralysed(3+depth+Dice.d6.roll()), true, 100, 1106);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1584,7 +1586,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfCausticGas(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Caustic Gas", 6, "Caustic Cloud", FactoryManager.getEffectFactory().causticVapor(3+depth+Dice.d6.roll()), true, 100, 1107);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1592,7 +1594,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfRestoration(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Restoration", 7, "Restoration", FactoryManager.getEffectFactory().restoration(), false, 100, 1108);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1600,7 +1602,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfMindVision(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Mind Vision", 8, "Mind Vision", FactoryManager.getEffectFactory().mindVision(10+depth+Dice.d4.roll()), false, 100, 1109);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1608,7 +1610,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfOvergrowth(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Overgrowth", 9, "Overgrowth", FactoryManager.getEffectFactory().overgrow(3+depth+Dice.d6.roll()), true, 100, 1110);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1616,7 +1618,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfCombustion(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Combustion", 10, "Combustion Cloud", FactoryManager.getEffectFactory().fireball(3+depth+Dice.d6.roll()), true, 100, 1111);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1624,7 +1626,7 @@ public class ItemFactory implements Serializable {
 	public Item newPotionOfLevitation(int depth, boolean addToWorld) {
 		Item item = new Potion( (char)13, "Potion of Levitation", 11, "Levitation", FactoryManager.getEffectFactory().levitating(10+depth+Dice.d4.roll()), false, 100, 1112);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1633,7 +1635,7 @@ public class ItemFactory implements Serializable {
 	public Item newScrollOfMagicMapping(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Scroll( (char)247, "Scroll of Magic Mapping", 0, FactoryManager.getSpellFactory().magicMappingScroll(reference), 150, 1200);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1641,7 +1643,7 @@ public class ItemFactory implements Serializable {
 	public Item newScrollOfIdentify(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Scroll( (char)247, "Scroll of Identify", 1, FactoryManager.getSpellFactory().identifyScroll(reference), 150, 1201);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1649,7 +1651,7 @@ public class ItemFactory implements Serializable {
 	public Item newScrollOfSummonMonsters(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Scroll( (char)247, "Scroll of Summon Monsters", 2, FactoryManager.getSpellFactory().summonMonstersScroll(reference), 150, 1202);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1657,7 +1659,7 @@ public class ItemFactory implements Serializable {
 	public Item newScrollOfUpgrade(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Scroll( (char)247, "Scroll of Upgrade", 3, FactoryManager.getSpellFactory().upgradeScroll(reference), 150, 1203);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1665,7 +1667,7 @@ public class ItemFactory implements Serializable {
 	public Item newScrollOfRemoveCurse(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Scroll( (char)247, "Scroll of Remove Curse", 4, FactoryManager.getSpellFactory().removeCurseScroll(reference), 150, 1204);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1673,7 +1675,7 @@ public class ItemFactory implements Serializable {
 	public Item newScrollOfEnchantment(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Scroll( (char)247, "Scroll of Enchantment", 5, FactoryManager.getSpellFactory().magicMappingScroll(reference), 150, 1205);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1681,7 +1683,7 @@ public class ItemFactory implements Serializable {
 	public Item newScrollOfConfusion(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Scroll( (char)247, "Scroll of Confusion", 6, FactoryManager.getSpellFactory().confuseScroll(reference), 150, 1206);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1691,28 +1693,28 @@ public class ItemFactory implements Serializable {
 	public Item newMagicMissileWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Magic Missile", 1, FactoryManager.getSpellFactory().magicMissile(reference), 500, 1300);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newForceBlastWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Force Blast", 2, FactoryManager.getSpellFactory().forceBlast(reference), 500, 1301);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newArchmagesAegisWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Archmage's Aegis", 3, FactoryManager.getSpellFactory().archmagesAegis(reference), 500, 1302);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newFindTrapsWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Find Traps", 4, FactoryManager.getSpellFactory().findTraps(reference), 500, 1303);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1721,14 +1723,14 @@ public class ItemFactory implements Serializable {
 	public Item newFireboltWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Firebolt", 5, FactoryManager.getSpellFactory().firebolt(reference), 500, 1400);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newBrazierBarrierWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Brazier Barrier", 6, FactoryManager.getSpellFactory().brazierBarrier(reference), 500, 1401);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1736,7 +1738,7 @@ public class ItemFactory implements Serializable {
 	public Item newPyrotechnicsWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Pyrotechnics", 7, FactoryManager.getSpellFactory().pyrotechnics(reference), 500, 1402);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1744,7 +1746,7 @@ public class ItemFactory implements Serializable {
 	public Item newFlashfireWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Flashfire", 8, FactoryManager.getSpellFactory().flashfire(reference), 500, 1403);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1752,7 +1754,7 @@ public class ItemFactory implements Serializable {
 	public Item newDragonsBreathWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Dragon's Breath", 9, FactoryManager.getSpellFactory().dragonsBreath(reference), 500, 1404);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1761,28 +1763,28 @@ public class ItemFactory implements Serializable {
 	public Item newFlashFreezeWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Flash Freeze", 10, FactoryManager.getSpellFactory().flashFreeze(reference), 500, 1500);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newIceWallWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Ice Wall", 11, FactoryManager.getSpellFactory().iceWall(reference), 500, 1501);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newIceKnifeWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Ice Knife", 12, FactoryManager.getSpellFactory().iceKnife(reference), 500, 1502);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newGlaciateWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Glaciate", 13, FactoryManager.getSpellFactory().glaciate(reference), 500, 1503);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1791,28 +1793,28 @@ public class ItemFactory implements Serializable {
 	public Item newChainLightningWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Chain Lightning", 14, FactoryManager.getSpellFactory().chainLightning(reference), 500, 1600);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLightningLanceWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Lightning Lance", 15, FactoryManager.getSpellFactory().lightningLance(reference), 500, 1601);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newStaticSurgeWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Static Surge", 16, FactoryManager.getSpellFactory().staticSurge(reference), 500, 1602);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newHasteWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Haste", 17, FactoryManager.getSpellFactory().haste(reference), 500, 1603);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1821,28 +1823,28 @@ public class ItemFactory implements Serializable {
 	public Item newAcidBlastWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Acid Blast", 18, FactoryManager.getSpellFactory().acidBlast(reference), 500, 1700);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newToxicTransfusionWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Toxic Transfusion", 19, FactoryManager.getSpellFactory().toxicTransfusion(reference), 500, 1701);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newRefluxBarrierWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Reflux Barrier", 20, FactoryManager.getSpellFactory().refluxBarrier(reference), 500, 1702);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newLifetapWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Lifetap", 21, FactoryManager.getSpellFactory().lifetap(reference), 500, 1703);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
@@ -1851,28 +1853,28 @@ public class ItemFactory implements Serializable {
 	public Item newArmorStormWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Armor Storm", 22, FactoryManager.getSpellFactory().armorStorm(reference), 500, 1800);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newBladsWardWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Blad's Ward", 23, FactoryManager.getSpellFactory().bladsWard(reference), 500, 1801);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newWeaponBoltWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Weapon Bolt", 24, FactoryManager.getSpellFactory().weaponBolt(reference), 500, 1802);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}
 	public Item newInfuseUpgradeWand(int depth, Creature reference, boolean addToWorld) {
 		Item item = new Wand( (char)33, "Wand of Infuse Upgrade", 25, FactoryManager.getSpellFactory().infuseUpgrade(reference), 500, 1803);
 		if(addToWorld) {
-			World.addAtEmptyLocation(item, depth);
+			world.addAtEmptyLocation(item, depth);
 		}
 		return item;
 	}

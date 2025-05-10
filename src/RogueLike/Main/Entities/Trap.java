@@ -9,9 +9,12 @@ import RogueLike.Main.Screens.TerminalText;
 
 public abstract class Trap extends Entity {
 	protected boolean isRevealed = false;
-
+	private World world;
+	
 	public Trap(int x, int y, int z) {
 		super(x, y, z);
+
+		this.world = World.getInstance();
 	}
 
 	@Override
@@ -20,7 +23,7 @@ public abstract class Trap extends Entity {
 			return '#';
 		}
 		else {
-			return World.tile(x, y, z).glyph();
+			return world.tile(x, y, z).glyph();
 		}
 	}
 
@@ -34,7 +37,7 @@ public abstract class Trap extends Entity {
 		if (isRevealed) {
 			return trueColor();
 		} else {
-			return World.tile(x, y, z).color().brighter();
+			return world.tile(x, y, z).color().brighter();
 		}
 	}
 
@@ -51,6 +54,6 @@ public abstract class Trap extends Entity {
 			other.doAction(new TerminalText("trigger a trap!"));
 			other.addEffect(effect());
 		}
-		World.remove(this);
+		world.remove(this);
 	}
 }

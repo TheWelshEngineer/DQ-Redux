@@ -3,6 +3,7 @@ package RogueLike.Main.Screens;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 import RogueLike.Main.Effect;
@@ -26,8 +27,9 @@ import RogueLike.Main.Utils.NotificationHistory;
 import RogueLike.Main.Utils.PlayerBuildDetails;
 import RogueLike.Main.Worldgen.WorldGenerationException;
 
-public class GameplayScreen implements Screen{
+public class GameplayScreen implements Screen, Serializable{
 	
+	private static final long serialVersionUID = -8150527838701924688L;
 	private boolean inputAccepted = false;
 	public void setInputAccepted(boolean value) {
 		inputAccepted = value;
@@ -44,8 +46,8 @@ public class GameplayScreen implements Screen{
 		int top = getScrollY();
 		
 		displayTiles(left, top);
-		playerNotifications.clearOldMessages(World.turnNumber());
-		displayMessages(playerNotifications.getNotificationsOnTurn(World.turnNumber()));
+		playerNotifications.clearOldMessages(world.turnNumber());
+		displayMessages(playerNotifications.getNotificationsOnTurn(world.turnNumber()));
 		
 		//health bar
 		ExtendedAsciiPanel.writeCenter("====================================================================================================================", 21);
@@ -229,7 +231,7 @@ public class GameplayScreen implements Screen{
 	        case KeybindManager.menuCharacterSheet: subscreen = new CharacterSheetScreen(player); break;
 	        case KeybindManager.menuIndex: subscreen = new IndexPotionScreen(player); break;
 	        case KeybindManager.menuInventory: subscreen = new InventoryScreen(this, player); break;
-			case KeybindManager.menuActionLog: subscreen = new ActionLogScreen(playerNotifications, World.turnNumber()); break;
+			case KeybindManager.menuActionLog: subscreen = new ActionLogScreen(playerNotifications, world.turnNumber()); break;
 			case KeybindManager.menuPause: subscreen = new PauseScreen(); break;
 			case KeybindManager.interactionToggleStatusToQuickslots: this.toggleStatusToQuickslots(); inputAccepted = true; break;
 			//
@@ -274,12 +276,12 @@ public class GameplayScreen implements Screen{
 		}
 		
 		if(subscreen == null && (inputAccepted || player.ai().actionQueue().isEmpty() == false)) {
-			//World.update();
-			World.generateActionsOnCurrentFloor(player);
-			World.updateOnCurrentFloor(player);
+			//world.update();
+			world.generateActionsOnCurrentFloor(player);
+			world.updateOnCurrentFloor(player);
 			//temp
 			//player.stackEffects();
-			for(Creature creature : World.creatures) {
+			for(Creature creature : world.creatures) {
 				creature.stackEffects();
 			}
 			inputAccepted = false;
@@ -291,18 +293,18 @@ public class GameplayScreen implements Screen{
 	}
 	
 	//variables
-	private int screenWidth;
-	private int screenHeight;
+	private int screenWidth = 120;
+	private int screenHeight = 21;
 	public Player player;
 	public List<Effect> effects;
 	private NotificationHistory playerNotifications;
 	private final FieldOfView fov;
 	public Screen subscreen;
+	private World world;
 	
-	// #########
+	// Used to generate a new world
 	public GameplayScreen(PlayerBuildDetails playerDetails) {
-		this.screenWidth = 120; //80
-		this.screenHeight = 21; //21
+		this.world = World.getInstance();
 		// TODO: make the max notification history length configurable
 		this.playerNotifications = new NotificationHistory(100);
 		createWorld(this.playerNotifications, playerDetails);
@@ -312,10 +314,26 @@ public class GameplayScreen implements Screen{
 			e.printStackTrace();
 		}
 
-		for(Creature c : World.creatures) {
+		for(Creature c : world.creatures) {
 			c.setGameplayScreen(this);
 		}
-		this.player = World.player();
+		this.player = world.player();
+		this.fov = ((PlayerAI) player.ai()).fov();
+		this.effects = player.effects();
+	}
+	
+	// Used when a world already exists, Ex: Loading a save file
+	public GameplayScreen() {
+		this.world = World.getInstance();
+		// TODO: make the max notification history length configurable
+		
+		// Currently the best way to get to the notifications is through the Player's AI
+		PlayerAI ai = (PlayerAI) this.world.player().ai();
+		this.playerNotifications = ai.getNotificationsHandle();
+		for(Creature c : world.creatures) {
+			c.setGameplayScreen(this);
+		}
+		this.player = world.player();
 		this.fov = ((PlayerAI) player.ai()).fov();
 		this.effects = player.effects();
 	}
@@ -325,16 +343,12 @@ public class GameplayScreen implements Screen{
 		// until it generates successfully!
 		boolean success = false;
 		while (!success) {
-			System.out.println("Generating World...");
+			System.out.println("Generating world...");
 			try {
 				//IMPORTANT: World Width // World Height // World Depth
 				new WorldBuilder(120, 60, 22)
 					.generateWorld()
 					.build(playerNotifications, playerDetails);
-				
-				//Now we have a successful world gen, add the player and indexes. 
-				//This avoids doing it multiple times in generation
-				World.creatures.add(World.player());
 
 				// Set up indexes - this is the earliest we can do this
 				FactoryManager.getObjectFactory().setUpPotionIndex();
@@ -351,15 +365,15 @@ public class GameplayScreen implements Screen{
 	}
 	
 	public int getScrollX() {
-		return Math.max(0, Math.min(player.x - screenWidth / 2, World.width() - screenWidth));
+		return Math.max(0, Math.min(player.x - screenWidth / 2, world.width() - screenWidth));
 	}
 	
 	public int getScrollY() {
-		return Math.max(0, Math.min(player.y - screenHeight / 2, World.height() - screenHeight));
+		return Math.max(0, Math.min(player.y - screenHeight / 2, world.height() - screenHeight));
 	}
 	
 	private boolean userIsTryingToExit() {
-		return player.z == 0 && World.tile(player.x, player.y, player.z) == Tile.STAIRS_EXIT;
+		return player.z == 0 && world.tile(player.x, player.y, player.z) == Tile.STAIRS_EXIT;
 	}
 	
 	private Screen userExits() {
@@ -401,9 +415,9 @@ public class GameplayScreen implements Screen{
 		}
 		
 		if(player.isReadingMagicMapping()) {
-			for(int x = 0; x < World.width(); x++) {
-				for(int y = 0; y < World.height(); y++) {
-					Entity entity = World.entity(x, y, player.z);
+			for(int x = 0; x < world.width(); x++) {
+				for(int y = 0; y < world.height(); y++) {
+					Entity entity = world.entity(x, y, player.z);
 					if (entity instanceof Trap) {
 						((Trap) entity).reveal();
 					}
@@ -424,7 +438,7 @@ public class GameplayScreen implements Screen{
 				//}
 				//
 				if (player.canSee(wx, wy, player.z))
-					ExtendedAsciiPanel.write(World.glyph(wx, wy, player.z), x, y, World.color(wx, wy, player.z));
+					ExtendedAsciiPanel.write(world.glyph(wx, wy, player.z), x, y, world.color(wx, wy, player.z));
 				else
 					ExtendedAsciiPanel.write(fov.tile(wx, wy, player.z).glyph(), x, y, Color.darkGray);
 			}

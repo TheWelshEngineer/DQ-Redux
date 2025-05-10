@@ -1,6 +1,7 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Items.Item;
 import RogueLike.Main.Managers.KeybindManager;
 
-public class InventoryScreen implements Screen{
+public class InventoryScreen implements Screen, Serializable{
 	
 	protected GameplayScreen playScreen;
 	protected Creature player;

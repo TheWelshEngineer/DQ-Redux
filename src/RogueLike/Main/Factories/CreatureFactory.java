@@ -45,7 +45,9 @@ import RogueLike.Main.Utils.PlayerBuildDetails;
 public class CreatureFactory implements Serializable {
 	private static final long serialVersionUID = 987053286733457992L;
 	
+	private World world;
 	public CreatureFactory() {
+		this.world = World.getInstance();
 	}
 
 	public Creature modifyCreatureDamageDealt(Creature creature, CreatureModifier modifier) {
@@ -270,14 +272,14 @@ public class CreatureFactory implements Serializable {
 	public Creature newFungus(int depth, boolean addToWorld) {
 		Creature fungus = new Fungus( "Fungus", 'f', ExtendedAsciiPanel.green, 100, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(fungus, depth);
+			world.addAtEmptyLocation(fungus, depth);
 		}
 		return fungus;
 	}
 	public Creature newBloodFungus(int depth, Creature player, boolean addToWorld) {
 		Creature fungus = new BloodFungus( player, "Blood Fungus", 'f', ExtendedAsciiPanel.red, 101, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(fungus, depth);
+			world.addAtEmptyLocation(fungus, depth);
 		}
 		return fungus;
 	}
@@ -286,7 +288,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newBat(int depth, boolean addToWorld) {
 		Creature bat = new Bat( "Bat", 'b', ExtendedAsciiPanel.magenta, 200, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(bat, depth);
+			world.addAtEmptyLocation(bat, depth);
 		}
 		return bat;
 		
@@ -296,7 +298,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newSkeleton(int depth, Creature player, boolean addToWorld) {
 		Creature skeleton = new Skeleton( player, "Skeleton", 'k', ExtendedAsciiPanel.white, 300, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(skeleton, depth);
+			world.addAtEmptyLocation(skeleton, depth);
 		}
 		return skeleton;
 	}
@@ -304,7 +306,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newSkeletonCryomancer(int depth, Creature player, boolean addToWorld) {
 		Creature skeleton = new SkeletonCryomancer( player, "Skeleton Cryomancer", 'k', ExtendedAsciiPanel.water, 301, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(skeleton, depth);
+			world.addAtEmptyLocation(skeleton, depth);
 		}
 		return skeleton;
 	}
@@ -312,7 +314,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newSkeletonPyromancer(int depth, Creature player, boolean addToWorld) {
 		Creature skeleton = new SkeletonPyromancer( player, "Skeleton Pyromancer", 'k', ExtendedAsciiPanel.orange, 302, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(skeleton, depth);
+			world.addAtEmptyLocation(skeleton, depth);
 		}
 		return skeleton;
 	}
@@ -320,7 +322,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newSkeletonElectromancer(int depth, Creature player, boolean addToWorld) {
 		Creature skeleton = new SkeletonElectromancer( player, "Skeleton Electromancer", 'k', ExtendedAsciiPanel.paralyzed, 303, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(skeleton, depth);
+			world.addAtEmptyLocation(skeleton, depth);
 		}
 		return skeleton;
 	}
@@ -329,7 +331,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newPinkSlime(int depth, Creature player, boolean addToWorld) {
 		Creature slime = new PinkSlime( player, "Pink Slime", 'S', ExtendedAsciiPanel.brightPink, 400, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(slime, depth);
+			world.addAtEmptyLocation(slime, depth);
 		}
 		return slime;		
 	}
@@ -337,7 +339,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newMetalSlime(int depth, Creature player, boolean addToWorld) {
 		Creature slime = new MetalSlime( player, "Metal Slime", 'S', ExtendedAsciiPanel.white, 401, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(slime, depth);
+			world.addAtEmptyLocation(slime, depth);
 		}
 		return slime;		
 	}
@@ -345,7 +347,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newMagmaSlime(int depth, Creature player, boolean addToWorld) {
 		Creature slime = new MagmaSlime( player, "Magma Slime", 'S', ExtendedAsciiPanel.orange, 402, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(slime, depth);
+			world.addAtEmptyLocation(slime, depth);
 		}
 		return slime;	
 	}
@@ -353,7 +355,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newThundercloudSlime(int depth, Creature player, boolean addToWorld) {
 		Creature slime = new ThundercloudSlime( player, "Thundercloud Slime", 'S', ExtendedAsciiPanel.paralyzed, 403, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(slime, depth);
+			world.addAtEmptyLocation(slime, depth);
 		}
 		return slime;	
 	}
@@ -362,7 +364,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newPinkSlimeling(int depth, Creature player, boolean addToWorld) {
 		Creature slimeling = new PinkSlimeling( player, "Pink Slimeling", 's', ExtendedAsciiPanel.brightPink, 500, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(slimeling, depth);
+			world.addAtEmptyLocation(slimeling, depth);
 		}
 		return slimeling;
 	}
@@ -370,7 +372,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newMetalSlimeling(int depth, Creature player, boolean addToWorld) {
 		Creature slimeling = new MetalSlimeling( player, "Metal Slimeling", 's', ExtendedAsciiPanel.white, 501, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(slimeling, depth);
+			world.addAtEmptyLocation(slimeling, depth);
 		}
 		return slimeling;
 	}
@@ -378,7 +380,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newMagmaSlimeling(int depth, Creature player, boolean addToWorld) {
 		Creature slimeling = new MagmaSlimeling( player, "Magma Slimeling", 's', ExtendedAsciiPanel.orange, 502, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(slimeling, depth);
+			world.addAtEmptyLocation(slimeling, depth);
 		}
 		return slimeling;
 	}
@@ -386,7 +388,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newThundercloudSlimeling(int depth, Creature player, boolean addToWorld) {
 		Creature slimeling = new ThundercloudSlimeling( player, "Thundercloud Slimeling", 's', ExtendedAsciiPanel.paralyzed, 503, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(slimeling, depth);
+			world.addAtEmptyLocation(slimeling, depth);
 		}
 		return slimeling;
 	}
@@ -395,7 +397,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newOgre(int depth, Creature player, boolean addToWorld) {
 		Creature ogre = new Ogre( player, "Ogre", 'O', ExtendedAsciiPanel.brightGreen, 600, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(ogre, depth);
+			world.addAtEmptyLocation(ogre, depth);
 		}
 		return ogre;
 	}
@@ -404,7 +406,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newGremlin(int depth, Creature player, boolean addToWorld) {
 		Creature gremlin = new Gremlin( player, "Gremlin", 'g', ExtendedAsciiPanel.cobalt, 700, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(gremlin, depth);
+			world.addAtEmptyLocation(gremlin, depth);
 		}
 		return gremlin;
 	}
@@ -412,7 +414,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newGremlinSkirmisher(int depth, Creature player, boolean addToWorld) {
 		Creature gremlin = new Gremlin( player, "Gremlin Skirmisher", 'g', ExtendedAsciiPanel.red, 701, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(gremlin, depth);
+			world.addAtEmptyLocation(gremlin, depth);
 		}
 		return gremlin;
 	}
@@ -420,7 +422,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newGremlinAlchemist(int depth, Creature player, boolean addToWorld) {
 		Creature alchemist = new GremlinAlchemist( player, "Gremlin Alchemist", 'g', ExtendedAsciiPanel.orange, 702, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(alchemist, depth);
+			world.addAtEmptyLocation(alchemist, depth);
 		}
 		return alchemist;
 	}
@@ -429,7 +431,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newCloaker(int depth, Creature player, boolean addToWorld) {
 		Creature cloaker = new Cloaker( player, "Cloaker", 'c', ExtendedAsciiPanel.brightBlack, 800, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(cloaker, depth);
+			world.addAtEmptyLocation(cloaker, depth);
 		}
 		return cloaker;	
 	}
@@ -438,7 +440,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newAnimatedArmor(int depth, Creature player, boolean addToWorld) {
 		Creature animatedArmor = new AnimatedArmor( player, "Animated Armor", (char)203, ExtendedAsciiPanel.lilac, 900, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(animatedArmor, depth);
+			world.addAtEmptyLocation(animatedArmor, depth);
 		}
 		return animatedArmor;
 	}
@@ -446,7 +448,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newAnimatedWeapon(int depth, Creature player, boolean addToWorld) {
 		Creature animatedWeapon = new AnimatedWeapon( player, "Animated Weapon", ')', ExtendedAsciiPanel.lilac, 901, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(animatedWeapon, depth);
+			world.addAtEmptyLocation(animatedWeapon, depth);
 		}
 		return animatedWeapon;
 	}
@@ -455,7 +457,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newMimic(int depth, Creature player, boolean addToWorld) {
 		Creature mimic = new Mimic( player, "Mimic", (char)127, ExtendedAsciiPanel.apple, 1000, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(mimic, depth);
+			world.addAtEmptyLocation(mimic, depth);
 		}
 		return mimic;
 	}
@@ -464,7 +466,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newMerchant(int depth, Creature player, boolean addToWorld) {
 		Creature merchant = new Merchant( player, "Merchant", (char)234, ExtendedAsciiPanel.lilac, 1100, depth);
 		if(addToWorld) {
-			World.addAtEmptyLocation(merchant, depth);
+			world.addAtEmptyLocation(merchant, depth);
 		}
 		return merchant;
 	}
@@ -473,7 +475,7 @@ public class CreatureFactory implements Serializable {
 	public Creature newChest(int depth, Creature player, boolean addToWorld) {
 		Creature chest = new BasicChest( player, "Chest", (char)127, ExtendedAsciiPanel.brown, depth, Dice.d12.roll());
 		if(addToWorld) {
-			World.addAtEmptyLocation(chest, depth);
+			world.addAtEmptyLocation(chest, depth);
 		}
 		return chest;
 	}
@@ -488,7 +490,7 @@ public class CreatureFactory implements Serializable {
 		icewall.setHasNoXP(true);
 		icewall.creatureTypes.add("Elemental");
 		if(addToWorld) {
-			World.addAtEmptyLocation(icewall, depth);
+			world.addAtEmptyLocation(icewall, depth);
 		}
 		return icewall;
 	}
@@ -502,7 +504,7 @@ public class CreatureFactory implements Serializable {
 		tileSpell.setHasNoCorpse(true);
 		tileSpell.setHasNoXP(true);
 		if(addToWorld) {
-			World.addAtEmptyLocation(tileSpell, depth);
+			world.addAtEmptyLocation(tileSpell, depth);
 		}
 		return tileSpell;
 	}

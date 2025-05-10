@@ -33,9 +33,10 @@ public class PitItem extends Structure {
 
 	@Override
 	public void onBuildWorld() {
+		World world = World.getInstance();
 		// Generate a random magic item to put on the pit's platform
-		Item item = FactoryManager.getObjectFactory().randomMagicItem(z, World.player(), false, false);
-		World.addAtEmptySpace(item, x, y, z);
+		Item item = FactoryManager.getObjectFactory().randomMagicItem(z, world.player(), false, false);
+		world.addAtEmptySpace(item, x, y, z);
 	}
 
 	@Override

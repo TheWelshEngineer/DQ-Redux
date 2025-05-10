@@ -47,8 +47,9 @@ public class WorldBuilder {
 	public void markDepthAsSpecial(int depth) {specialDepths.add(depth);}
 
 	public void build(NotificationHistory playerNotifications, PlayerBuildDetails playerDetails) {
-		World.setWorld(tiles, specialDepths);
-		World.addPlayer(playerNotifications, playerDetails);
+		World world = World.getInstance();
+		world.setWorld(tiles, specialDepths);
+		world.addPlayer(playerNotifications, playerDetails);
 		// Structures do their generation before blueprints, as structures are intended to have more specific
 		// generation, and we don't want that to be stepped on by the more generic generation from blueprints
 		structures.forEach(s -> s.onBuildWorld());
@@ -57,7 +58,7 @@ public class WorldBuilder {
 		
 
 		// TODO: move the victory item to a VictoryFloor blueprint? or make it drop from the final boss?
-		FactoryManager.getItemFactory().newVictoryItem(World.depth()-1, 1);
+		FactoryManager.getItemFactory().newVictoryItem(world.depth()-1, 1);
 	}
 
 	private void addBlueprint(Blueprint blueprint) {

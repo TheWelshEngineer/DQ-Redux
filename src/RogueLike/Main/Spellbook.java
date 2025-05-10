@@ -1,8 +1,11 @@
 package RogueLike.Main;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Spellbook {
+public class Spellbook implements Serializable {
+	
+	private static final long serialVersionUID = -3955240986407901223L;
 	
 	private ArrayList<Spell> spells;
 	public ArrayList<Spell> getSpells() {

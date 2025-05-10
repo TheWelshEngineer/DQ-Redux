@@ -1,12 +1,13 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Screens.HelpScreens.HelpScreen;
 
-public class MainMenuScreen implements Screen{
+public class MainMenuScreen implements Screen, Serializable{
 	
 	public int check = 0;
 	public void setCheck(int value) {
@@ -15,6 +16,8 @@ public class MainMenuScreen implements Screen{
 	
 	public char startLeft = '>';
 	public char startRight = '<';
+	public char loadRight = '<';
+	public char loadLeft = '<';
 	public char helpLeft = '>';
 	public char helpRight = '<';
 	public char creditsLeft = '>';
@@ -24,31 +27,46 @@ public class MainMenuScreen implements Screen{
 		if(check == 0) {
 			startLeft = '>';
 			startRight = '<';
+			loadLeft = ' ';
+			loadRight = ' ';
 			helpLeft = ' ';
 			helpRight = ' ';
 			creditsLeft = ' ';
 			creditsRight = ' ';
-		}else if(check == 1) {
+		}else if (check == 1) {
 			startLeft = ' ';
 			startRight = ' ';
-			helpLeft = '>';
-			helpRight = '<';
+			loadLeft = '>';
+			loadRight = '<';
+			helpLeft = ' ';
+			helpRight = ' ';
 			creditsLeft = ' ';
 			creditsRight = ' ';
 		}else if(check == 2) {
 			startLeft = ' ';
 			startRight = ' ';
+			loadLeft = ' ';
+			loadRight = ' ';
+			helpLeft = '>';
+			helpRight = '<';
+			creditsLeft = ' ';
+			creditsRight = ' ';
+		}else if(check == 3) {
+			startLeft = ' ';
+			startRight = ' ';
+			loadLeft = ' ';
+			loadRight = ' ';
 			helpLeft = ' ';
 			helpRight = ' ';
 			creditsLeft = '>';
 			creditsRight = '<';
-		}
+		} 
 	}
 
 	public void displayOutput() {
 		changeMarkers(check);
 		ExtendedAsciiPanel.clear();
-		Screen.generateBorders();;
+		Screen.generateBorders();
 		int y = 1;
 		ExtendedAsciiPanel.writeCenter(" _____                      __  ____                  _   ", y++);
 		ExtendedAsciiPanel.writeCenter("|  __ \\                    / _|/ __ \\                | |  ", y++);
@@ -60,6 +78,7 @@ public class MainMenuScreen implements Screen{
 		ExtendedAsciiPanel.writeCenter("+|=|+ Magic and Madness in the Caves of Chaos! +|=|+", y++);
 		ExtendedAsciiPanel.writeCenter("== Main Menu ==", y+=2);
 		ExtendedAsciiPanel.write(String.format("%c  New Game  %c", startLeft, startRight), 52, y+=2);
+		ExtendedAsciiPanel.write(String.format("%c  Load Game  %c", loadLeft, loadRight), 52, y+=2);
 		ExtendedAsciiPanel.write(String.format("%c  Help      %c", helpLeft, helpRight), 52, y+=2);
 		ExtendedAsciiPanel.write(String.format("%c  Credits   %c", creditsLeft, creditsRight), 52, y+=2);
 
@@ -71,22 +90,24 @@ public class MainMenuScreen implements Screen{
 		switch(key.getKeyCode()) {
 		case KeybindManager.navigateMenuUp:
 			if (check == 0) {
-				check = 2;
+				check = 3;
 			} else {
-				check = (check - 1) % 3;
+				check = (check - 1) % 4;
 			}
 			return this;
 			
 		case KeybindManager.navigateMenuDown:
-			check = (check + 1) % 3;
+			check = (check + 1) % 4;
 			return this;
 			
 		case KeybindManager.navigateMenuConfirm:
 			if(check == 0) {
 				return new ChooseAncestryScreen();
 			}else if(check == 1) {
-				return new HelpScreen(true);
+				return new LoadingScreen();
 			}else if(check == 2) {
+				return new HelpScreen(true);
+			}else if(check == 3) {
 				return new CreditsScreen();
 			}
 		case KeybindManager.navigateMenuBack: return new TitleScreen();

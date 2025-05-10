@@ -1,14 +1,18 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
+import RogueLike.Main.SaveState;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Screens.HelpScreens.HelpScreen;
 
-public class PauseScreen implements Screen{
+public class PauseScreen implements Screen, Serializable{
 	
 	public int check = 0;
+	public boolean gameSaved = false;
 	public void setCheck(int value) {
 		check = value;
 	}
@@ -65,6 +69,9 @@ public class PauseScreen implements Screen{
 
 		ExtendedAsciiPanel.writeCenter(String.format("-- [%s / %s]: Move Selection | [%s]: Confirm and Continue --", KeybindManager.keybindText(KeybindManager.navigateMenuUp), KeybindManager.keybindText(KeybindManager.navigateMenuDown), KeybindManager.keybindText(KeybindManager.navigateMenuConfirm)), 36);
 		ExtendedAsciiPanel.writeCenter(String.format("-- [%s]: Return to Game --", KeybindManager.keybindText(KeybindManager.navigateMenuBack)), 38);
+		if (gameSaved) {
+			ExtendedAsciiPanel.writeCenter("** Game Saved **", y+=3);
+		}
 	}
 
 	public Screen respondToUserInput(KeyEvent key) {
@@ -91,7 +98,13 @@ public class PauseScreen implements Screen{
 			
 		case KeybindManager.navigateMenuConfirm:
 			if(check == 0) {
-				System.out.println("Not yet implemented"); //TODO Save file generation and loading
+				try {
+					SaveState.saveGame();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				gameSaved = true;
 				return this;
 			}else if(check == 1) {
 				return new HelpScreen(false);

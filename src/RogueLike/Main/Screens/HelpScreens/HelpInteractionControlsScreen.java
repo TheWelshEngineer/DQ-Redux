@@ -1,12 +1,13 @@
 package RogueLike.Main.Screens.HelpScreens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Screens.Screen;
 
-public class HelpInteractionControlsScreen implements Screen{
+public class HelpInteractionControlsScreen implements Screen, Serializable{
 	
 	private boolean fromMenu;
 	

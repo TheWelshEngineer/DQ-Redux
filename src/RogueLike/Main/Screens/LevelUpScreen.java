@@ -1,13 +1,14 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.List;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.LevelUpController;
 import RogueLike.Main.Creatures.Creature;
 
-public class LevelUpScreen implements Screen{
+public class LevelUpScreen implements Screen, Serializable{
 	private LevelUpController controller;
 	private Creature player;
 	private int picks;

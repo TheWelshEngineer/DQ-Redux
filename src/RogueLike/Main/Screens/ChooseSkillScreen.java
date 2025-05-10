@@ -1,6 +1,7 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Utils.PlayerBuildDetails;
 
 
-public class ChooseSkillScreen implements Screen{
+public class ChooseSkillScreen implements Screen, Serializable{
 	private final PlayerClass playerClass;
 	private final String playerName;
 	private final PlayerAncestry playerAncestry;

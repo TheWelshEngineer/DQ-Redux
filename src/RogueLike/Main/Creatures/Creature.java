@@ -41,6 +41,8 @@ public class Creature implements Cloneable, Serializable{
 
 	private static final long serialVersionUID = 2428477939773991921L;
 	
+	private World world;
+	
 	private GameplayScreen gameplayScreen;
 	public GameplayScreen gameplayScreen() {
 		return gameplayScreen;
@@ -243,7 +245,7 @@ public class Creature implements Cloneable, Serializable{
 				lastHit.gainXP(this);
 			}
 			leaveCorpse();
-			World.remove(this);
+			world.remove(this);
 		}
 	}
 
@@ -1219,7 +1221,7 @@ public class Creature implements Cloneable, Serializable{
 	}
 
 	public void become(Creature other) {
-		World.replaceCreature(this, other);
+		world.replaceCreature(this, other);
 
 	}
 
@@ -1324,6 +1326,7 @@ public class Creature implements Cloneable, Serializable{
 		this.resistances = EnumSet.noneOf(DamageType.class);
 		this.immunities = EnumSet.noneOf(DamageType.class);
 		saveBonuses = new EnumMap<>(DamageType.class);
+		this.world = World.getInstance();
 	}
 
 
@@ -1351,7 +1354,7 @@ public class Creature implements Cloneable, Serializable{
 	public void dig(int wx, int wy, int wz) {
 		modifyFood(-10);
 		doAction(new TerminalText("dig through the wall"));
-		World.dig(wx, wy, wz);
+		world.dig(wx, wy, wz);
 
 	}
 
@@ -1383,7 +1386,7 @@ public class Creature implements Cloneable, Serializable{
 			my = ExtraMaths.diceRoll(-1, 1);
 		}
 
-		Tile tile = World.tile(x+mx, y+my, z+mz);
+		Tile tile = world.tile(x+mx, y+my, z+mz);
 
 		if(mz == -1) {
 			if(tile == Tile.STAIRS_DOWN) {
@@ -1413,7 +1416,7 @@ public class Creature implements Cloneable, Serializable{
 		}
 
 
-		Creature other = World.creature(x+mx, y+my, z+mz);
+		Creature other = world.creature(x+mx, y+my, z+mz);
 		modifyFood(-2);
 		if(other == null) {
 			ai.onEnter(x+mx, y+my, z+mz, tile);
@@ -1433,7 +1436,7 @@ public class Creature implements Cloneable, Serializable{
 
 	public void openContainer(Creature container) {
 		container.leaveCorpse();
-		World.remove(container);
+		world.remove(container);
 	}
 
 	public void reveal() {
@@ -1996,7 +1999,7 @@ public class Creature implements Cloneable, Serializable{
 	}
 
 	public void pickup() {
-		Item item = World.item(x, y, z);	
+		Item item = world.item(x, y, z);	
 		if((inventory.isFull() && !item.isGold()) || item == null) {
 			doAction(new TerminalText("grab fruitlessly at the ground"));
 		}else if(item.isGold()){
@@ -2005,7 +2008,7 @@ public class Creature implements Cloneable, Serializable{
 			newNotification.append("pick up ");
 			newNotification.append(item.currentGoldValue() + " gold", ExtendedAsciiPanel.gold);
 			doAction(newNotification);
-			World.remove(item);
+			world.remove(item);
 		}else {
 			item.setOwner(this);
 			TerminalText newNotification = new TerminalText();
@@ -2018,7 +2021,7 @@ public class Creature implements Cloneable, Serializable{
 			}else {
 				createItemNotification("pick up a ", item, true);
 			}
-			World.remove(x, y, z);
+			world.remove(x, y, z);
 			if(nameOf(item) == nameOf(item)) {
 				item.setIsIdentified(true);
 			}
@@ -2084,7 +2087,7 @@ public class Creature implements Cloneable, Serializable{
 	public void drop(Item item, boolean silent){
 		if((item == weapon || item == armor || item == shield || item == ring || item == ammunition || item == quickslot_1 || item == quickslot_2 || item == quickslot_3 || item == quickslot_4 || item == quickslot_5 || item == quickslot_6) && item.curse() != null) {
 			notify(new TerminalText("The "+nameOf(item)+" is cursed! You can't let go of it!"));
-		}else if (World.addAtEmptySpace(item, x, y, z)){
+		}else if (world.addAtEmptySpace(item, x, y, z)){
 			if(isDead) {
 				TerminalText newNotification = new TerminalText();
 				newNotification.append("drop a ");
@@ -2114,7 +2117,7 @@ public class Creature implements Cloneable, Serializable{
 	private void putAt(Item item, int wx, int wy, int wz, boolean silent) {
 		unequip(item, silent);
 		inventory.remove(item);
-		World.addAtEmptySpace(item, wx, wy, wz);
+		world.addAtEmptySpace(item, wx, wy, wz);
 	}
 
 	//TODO: Look into making items able to remove themselves as this would help with readability 
@@ -2685,7 +2688,7 @@ public class Creature implements Cloneable, Serializable{
 	}
 
 	public void summon(Creature other) {
-		World.add(other);
+		world.add(other);
 	}
 	//jump
 	public void gainXP(Creature other) {
@@ -2730,7 +2733,7 @@ public class Creature implements Cloneable, Serializable{
 			corpse.setIsStackable(true);
 			corpse.setID(5000+1+this.id());
 			corpse.setIsCorpse(true);
-			World.addAtEmptySpace(corpse, x, y, z);
+			world.addAtEmptySpace(corpse, x, y, z);
 		}
 		for(int i = 0; i < inventory.getItems().size(); i++) {
 			if(inventory.getItems().get(i) != null) {
@@ -2742,7 +2745,7 @@ public class Creature implements Cloneable, Serializable{
 	public void triggerTrap(Item item) {
 		doAction(new TerminalText("trigger a trap!"));
 		addEffect(item.quaffEffect());
-		World.remove(item);
+		world.remove(item);
 	}
 
 	public void quaff(Item item) {
@@ -3033,7 +3036,7 @@ public class Creature implements Cloneable, Serializable{
 		//lastHit.gainXP(this);
 		//}
 		//leaveCorpse();
-		//World.remove(this);
+		//world.remove(this);
 		//}
 		regenerateHealth();
 		regenerateMana();
@@ -3104,7 +3107,7 @@ public class Creature implements Cloneable, Serializable{
 
 	public boolean canEnter(int wx, int wy, int wz) {
 		//fixed
-		return World.tile(wx, wy, wz).isGround() && !World.tile(wx, wy, wz).isBars() && World.creature(wx, wy, wz) == null;
+		return world.tile(wx, wy, wz).isGround() && !world.tile(wx, wy, wz).isBars() && world.creature(wx, wy, wz) == null;
 	}
 
 	public void notify(TerminalText message, Object ... params) {
@@ -3181,7 +3184,7 @@ public class Creature implements Cloneable, Serializable{
 					continue;
 				}
 					
-				Creature other = World.creature(x+ox, y+oy, z);
+				Creature other = world.creature(x+ox, y+oy, z);
 
 				if (other == null) {
 					continue;
@@ -3218,11 +3221,11 @@ public class Creature implements Cloneable, Serializable{
 				}
 			}
 			Creature tileSpell = FactoryManager.getCreatureFactory().newTileSpell(this.z(), this, false);
-			World.addCreatureAtLocation(tileSpell, x2, y2, z);
+			world.addCreatureAtLocation(tileSpell, x2, y2, z);
 			tileSpell.addEffect(spell.effect());
 			tileSpell.update();
 			//
-			//ai().World.remove(tileSpell);
+			//ai().world.remove(tileSpell);
 			//
 			//other.setLastHit(this);
 			if(spell.manaCost() > 0) {
@@ -3389,7 +3392,7 @@ public class Creature implements Cloneable, Serializable{
 			for (int oy = -searchRadius; oy < searchRadius+1; oy++){
 				int nx = x + ox;
 				int ny = y + oy;
-				Entity entity = World.entity(nx, ny, z);
+				Entity entity = world.entity(nx, ny, z);
 
 				if (entity instanceof Trap) {
 					Trap trap = (Trap) entity;
@@ -3410,8 +3413,8 @@ public class Creature implements Cloneable, Serializable{
 	}
 
 	public boolean canSee(int wx, int wy, int wz) {
-		//return (mindVision > 0 && World.creature(wx, wy, wz) !=null || ai.canSee(wx, wy, wz));
-		if(affectedBy(Effect.mindVision) && World.creature(wx, wy, wz) !=null) {
+		//return (mindVision > 0 && world.creature(wx, wy, wz) !=null || ai.canSee(wx, wy, wz));
+		if(affectedBy(Effect.mindVision) && world.creature(wx, wy, wz) !=null) {
 			return true;
 		}
 		else {
@@ -3422,20 +3425,20 @@ public class Creature implements Cloneable, Serializable{
 	}								//creature
 
 	public Tile realTile(int wx, int wy, int wz) {
-		return World.tile(wx, wy, wz);
+		return world.tile(wx, wy, wz);
 	}
 
 	public Tile realSubtile(int wx, int wy, int wz) {
-		return World.subtile(wx, wy, wz);
+		return world.subtile(wx, wy, wz);
 	}
 
 	public Tile realGastile(int wx, int wy, int wz) {
-		return World.gastile(wx, wy, wz);
+		return world.gastile(wx, wy, wz);
 	}
 
 	public Tile tile(int wx, int wy, int wz) {
 		if(canSee(wx,wy,wz)) {
-			return World.tile(wx, wy, wz);
+			return world.tile(wx, wy, wz);
 		}else {
 			return ai.rememberedTile(wx,wy,wz);
 		}
@@ -3443,7 +3446,7 @@ public class Creature implements Cloneable, Serializable{
 
 	public Creature creature(int wx, int wy, int wz) {
 		if(canSee(wx,wy,wz)) {
-			return World.creature(wx, wy, wz);
+			return world.creature(wx, wy, wz);
 		}else {
 			return null;
 		}	
@@ -3452,7 +3455,7 @@ public class Creature implements Cloneable, Serializable{
 	public Item item(int wx, int wy, int wz) {
 		if(canSee(wx,wy,wz)) {
 			try {
-				return World.item(wx, wy, wz);
+				return world.item(wx, wy, wz);
 			} catch (Exception e) {
 				return null;
 				//e.printStackTrace();

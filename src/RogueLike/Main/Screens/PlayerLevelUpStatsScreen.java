@@ -1,13 +1,14 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.ExtraMaths;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Managers.KeybindManager;
 
-public class PlayerLevelUpStatsScreen implements Screen{
+public class PlayerLevelUpStatsScreen implements Screen, Serializable{
 	
 	protected Creature player;
 	

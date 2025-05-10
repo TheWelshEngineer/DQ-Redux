@@ -2,6 +2,7 @@ package RogueLike.Main.Screens;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -16,7 +17,7 @@ import RogueLike.Main.Managers.KeybindManager;
 import RogueLike.Main.Utils.PointShapes.Line;
 import RogueLike.Main.Utils.PointShapes.Point;
 
-public abstract class TargetBasedScreen implements Screen{
+public abstract class TargetBasedScreen implements Screen, Serializable{
 	
 	protected Creature player;
 	protected String caption;
@@ -115,7 +116,7 @@ public abstract class TargetBasedScreen implements Screen{
 			case KeybindManager.navigateMenuBack: return null;
         }
 		
-		if(!isAcceptable(wx, wy) || !World.isInBounds(wx, wy)) {
+		if(!isAcceptable(wx, wy) || !World.getInstance().isInBounds(wx, wy)) {
 			wx = prevX;
 			wy = prevY;
 		}

@@ -1,12 +1,13 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Languages.Language;
 import RogueLike.Main.Managers.KeybindManager;
 
-public class TitleScreen implements Screen{
+public class TitleScreen implements Screen, Serializable{
 	
 	private Language language = new Language("lang_EN.txt");
 

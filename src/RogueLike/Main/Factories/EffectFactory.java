@@ -24,9 +24,12 @@ import RogueLike.Main.Utils.PointShapes.Square;
 public class EffectFactory implements Serializable {
 	private static final long serialVersionUID = -9063997369371319410L;
 	
-	//Spell Effects
+	private World world;
 	
-	public EffectFactory() {}
+	//Spell Effects
+	public EffectFactory() {
+		this.world = World.getInstance();
+	}
 
 	//Evocation Spells
 	public Effect magicMissile(Creature reference) {
@@ -47,7 +50,7 @@ public class EffectFactory implements Serializable {
 					reference.gainMana(manaAmount, false);
 				}
 	        	Damage damage = new Damage(damageAmount, false, DamageType.MAGIC, true);
-	        	World.setParticleAtLocation(FactoryManager.getParticleFactory().sparkle(ExtendedAsciiPanel.lilac, 2), creature.x(), creature.y(), creature.z());
+	        	world.setParticleAtLocation(FactoryManager.getParticleFactory().sparkle(ExtendedAsciiPanel.lilac, 2), creature.x(), creature.y(), creature.z());
 				creature.damage(damage, String.format("Killed by %s using Magic Missile", reference.name()));
 			}
 		};
@@ -122,7 +125,7 @@ public class EffectFactory implements Serializable {
 						}
 						if(attackRoll >= creature.armorClass()) {
 							Damage damage = new Damage(amount, false, DamageType.MAGIC, false);
-							World.setParticleAtLocation(FactoryManager.getParticleFactory().blast(ExtendedAsciiPanel.lilac, 2), creature.x(), creature.y(), creature.z());
+							world.setParticleAtLocation(FactoryManager.getParticleFactory().blast(ExtendedAsciiPanel.lilac, 2), creature.x(), creature.y(), creature.z());
 							creature.damage(damage, "Killed by kinetic energy");
 						}
 					}
@@ -150,7 +153,7 @@ public class EffectFactory implements Serializable {
 					.affectedCreaturesExcept(reference)
 					.forEach(c -> {
 						c.addEffect((Effect) confused_.clone());
-						World.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.lilac, 2), c.x(), c.y(), c.z());
+						world.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.lilac, 2), c.x(), c.y(), c.z());
 					});
 			}
         };
@@ -163,10 +166,10 @@ public class EffectFactory implements Serializable {
 			public void start(Creature creature) {
 				int count = 0;
 				for(Point p : new Square(creature.x(), creature.y(), creature.z(), creature.visionRadius())) {
-					if(p.x < 0 || p.y < 0 || p.x > World.width() || p.y > World.height()) {
+					if(p.x < 0 || p.y < 0 || p.x > world.width() || p.y > world.height()) {
 						continue;
 					}
-					if (World.entity(p.x, p.y, p.z) instanceof Trap) {
+					if (world.entity(p.x, p.y, p.z) instanceof Trap) {
 						count++;
 					}
 				}
@@ -203,7 +206,7 @@ public class EffectFactory implements Serializable {
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction(new TerminalText("get hit with a bolt of fire!"));
 					creature.setLastHit(reference);
-					World.setParticleAtLocation(FactoryManager.getParticleFactory().fire(ExtendedAsciiPanel.orange, 2), creature.x(), creature.y(), creature.z());
+					world.setParticleAtLocation(FactoryManager.getParticleFactory().fire(ExtendedAsciiPanel.orange, 2), creature.x(), creature.y(), creature.z());
 					creature.damage(damage, String.format("Killed by %s using Firebolt", reference.name()));
 					if(attackRoll >= 20 && reference.pyromancyLevel() >= 3) {
 						creature.addEffect((Effect) FactoryManager.getEffectFactory().ignited(reference.proficiencyBonus()*2).clone());
@@ -251,7 +254,7 @@ public class EffectFactory implements Serializable {
 					if(creature.affectedBy(Effect.ignited)) {
 						creature.cureEffectOfType(Effect.ignited);
 					}
-					World.setParticleAtLocation(FactoryManager.getParticleFactory().fire(ExtendedAsciiPanel.orange, 2), creature.x(), creature.y(), creature.z());
+					world.setParticleAtLocation(FactoryManager.getParticleFactory().fire(ExtendedAsciiPanel.orange, 2), creature.x(), creature.y(), creature.z());
 					creature.damage(damage, String.format("Killed by %s using Flashfire", reference.name()));
 				}else {
 					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
@@ -288,7 +291,7 @@ public class EffectFactory implements Serializable {
 			public void start(Creature creature){
 				for(Point p : new Square(creature.x(), creature.y(), creature.z(), 3)) {
 					if(creature.tile(p.x, p.y, p.z).canHaveGas()) {
-                    	World.changeGasTile(p.x, p.y, p.z, Tile.SMOKE);
+                    	world.changeGasTile(p.x, p.y, p.z, Tile.SMOKE);
                     }
 				}
 				// Blind all creatures within radius 3, except the caster
@@ -307,7 +310,7 @@ public class EffectFactory implements Serializable {
 				player.notify("You breath a gout of roaring flames!");
 				Point source = player.location();
 				Point target = creature.location();
-				World.remove(creature); // Remove the temporary marker creature
+				world.remove(creature); // Remove the temporary marker creature
 
 				// Calculate damage
 				int damageAmount = Dice.d6x2.roll() + player.intelligenceModifier();
@@ -338,8 +341,8 @@ public class EffectFactory implements Serializable {
 				// Set fire to terrain in the area of effect
 				aoe.points.forEach(
 					p -> {
-						if (World.tile(p.x, p.y, p.z).canHaveSubtiles() && Dice.d6.roll() > 2) { // 2 in 3 chance to set tile on fire
-							World.changeSubTile(p.x, p.y, p.z, Tile.FIRE);
+						if (world.tile(p.x, p.y, p.z).canHaveSubtiles() && Dice.d6.roll() > 2) { // 2 in 3 chance to set tile on fire
+							world.changeSubTile(p.x, p.y, p.z, Tile.FIRE);
 						}
 					}
 				);
@@ -367,7 +370,7 @@ public class EffectFactory implements Serializable {
 				}
 				if(savingThrow < saveTarget) {
 					creature.doAction(new TerminalText("get blasted by freezing air!"));
-					World.setParticleAtLocation(FactoryManager.getParticleFactory().frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
+					world.setParticleAtLocation(FactoryManager.getParticleFactory().frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
 					Damage damage = new Damage(damageAmount, false, DamageType.FROST, false);
 					creature.damage(damage, "Killed by icy magic");
 					creature.addEffect(frozen(duration));
@@ -403,7 +406,7 @@ public class EffectFactory implements Serializable {
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction(new TerminalText("get hit with a blade of ice!"));
 					creature.setLastHit(reference);
-					World.setParticleAtLocation(FactoryManager.getParticleFactory().frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
+					world.setParticleAtLocation(FactoryManager.getParticleFactory().frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
 					creature.damage(hitDamage, String.format("Killed by %s using Ice Knife", reference.name()));
 					if(attackRoll >= 20 && reference.cryomancyLevel() >= 3) {
 						Effect cryoCrit = FactoryManager.getEffectFactory().frozen(reference.proficiencyBonus());
@@ -418,14 +421,14 @@ public class EffectFactory implements Serializable {
 					creature.notify("You feel a biting frost creep over you!");
 					reference.notify(String.format("The %s is frostbitten by your spell!", creature.name()));
 					creature.setLastHit(reference);
-					World.setParticleAtLocation(FactoryManager.getParticleFactory().frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
+					world.setParticleAtLocation(FactoryManager.getParticleFactory().frost(ExtendedAsciiPanel.water, 2), creature.x(), creature.y(), creature.z());
 
 					// Damage all adjacent creatures (including target) with splash damage
 					new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 3))
 						.affectedCreatures()
 						.forEach(c -> {
 							c.damage(splashDamage, String.format("Killed by %s using Ice Knife", reference.name()));
-							World.setParticleAtLocation(FactoryManager.getParticleFactory().frost(ExtendedAsciiPanel.water, 2), c.x(), c.y(), c.z());
+							world.setParticleAtLocation(FactoryManager.getParticleFactory().frost(ExtendedAsciiPanel.water, 2), c.x(), c.y(), c.z());
 						});
 				}else {
 					creature.notify(String.format("You dodge the %s's spell.", reference.name()));
@@ -453,7 +456,7 @@ public class EffectFactory implements Serializable {
 					for(int y = -1; y < 2; y++) {
 						if((creature.creature(creature.x()+x, creature.y()+y, creature.z()) == null)) {
 							Creature newWall = FactoryManager.getCreatureFactory().newIceWall(0, reference, false);
-							World.addCreatureAtLocation(newWall, creature.x()+x, creature.y()+y, creature.z());
+							world.addCreatureAtLocation(newWall, creature.x()+x, creature.y()+y, creature.z());
 						}
 					}
 				}
@@ -481,37 +484,37 @@ public class EffectFactory implements Serializable {
 					//creature.moveBy(1, 1, 0);
 					if((creature.creature(cx+1, cy, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
+						world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
 					}
 					if((creature.creature(cx+2, cy-1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+2, cy-1, creature.z());
+						world.addCreatureAtLocation(newWall, cx+2, cy-1, creature.z());
 					}
 					if((creature.creature(cx, cy+1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
+						world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
 					}
 					if((creature.creature(cx-1, cy+2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-1, cy+2, creature.z());
+						world.addCreatureAtLocation(newWall, cx-1, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy+1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
+						world.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
 					}
 					if((creature.creature(cx-2, cy+2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
+						world.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy-1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
+						world.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
 					}
 					if((creature.creature(cx+2, cy-2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
+						world.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
 					}
 				}
 
@@ -520,37 +523,37 @@ public class EffectFactory implements Serializable {
 					//creature.moveBy(-1, -1, 0);
 					if((creature.creature(cx-1, cy, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
+						world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
 					}
 					if((creature.creature(cx-2, cy+1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-2, cy+1, creature.z());
+						world.addCreatureAtLocation(newWall, cx-2, cy+1, creature.z());
 					}
 					if((creature.creature(cx, cy-1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
+						world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
 					}
 					if((creature.creature(cx+1, cy-2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+1, cy-2, creature.z());
+						world.addCreatureAtLocation(newWall, cx+1, cy-2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy+1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
+						world.addCreatureAtLocation(newWall, cx-1, cy+1, creature.z());
 					}
 					if((creature.creature(cx-2, cy+2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
+						world.addCreatureAtLocation(newWall, cx-2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy-1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
+						world.addCreatureAtLocation(newWall, cx+1, cy-1, creature.z());
 					}
 					if((creature.creature(cx+2, cy-2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
+						world.addCreatureAtLocation(newWall, cx+2, cy-2, creature.z());
 					}
 				}
 
@@ -559,37 +562,37 @@ public class EffectFactory implements Serializable {
 					//creature.moveBy(1, -1, 0);
 					if((creature.creature(cx+1, cy, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
+						world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
 					}
 					if((creature.creature(cx+2, cy+1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+2, cy+1, creature.z());
+						world.addCreatureAtLocation(newWall, cx+2, cy+1, creature.z());
 					}
 					if((creature.creature(cx, cy-1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
+						world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
 					}
 					if((creature.creature(cx-1, cy-2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-1, cy-2, creature.z());
+						world.addCreatureAtLocation(newWall, cx-1, cy-2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy+1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
+						world.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
 					}
 					if((creature.creature(cx+2, cy+2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
+						world.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy-1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
+						world.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
 					}
 					if((creature.creature(cx-2, cy-2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
+						world.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
 					}
 				}
 
@@ -598,37 +601,37 @@ public class EffectFactory implements Serializable {
 					//creature.moveBy(-1, 1, 0);
 					if((creature.creature(cx-1, cy, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
+						world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
 					}
 					if((creature.creature(cx-2, cy-1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-2, cy-1, creature.z());
+						world.addCreatureAtLocation(newWall, cx-2, cy-1, creature.z());
 					}
 					if((creature.creature(cx, cy+1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
+						world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
 					}
 					if((creature.creature(cx+1, cy+2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+1, cy+2, creature.z());
+						world.addCreatureAtLocation(newWall, cx+1, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx+1, cy+1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
+						world.addCreatureAtLocation(newWall, cx+1, cy+1, creature.z());
 					}
 					if((creature.creature(cx+2, cy+2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
+						world.addCreatureAtLocation(newWall, cx+2, cy+2, creature.z());
 					}
 
 					if((creature.creature(cx-1, cy-1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
+						world.addCreatureAtLocation(newWall, cx-1, cy-1, creature.z());
 					}
 					if((creature.creature(cx-2, cy-2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
+						world.addCreatureAtLocation(newWall, cx-2, cy-2, creature.z());
 					}
 				}
 
@@ -636,20 +639,20 @@ public class EffectFactory implements Serializable {
 					//creature.moveBy(1, 0, 0);
 					if((creature.creature(cx, cy+1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
+						world.addCreatureAtLocation(newWall, cx, cy+1, creature.z());
 					}
 					if((creature.creature(cx, cy-1, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
+						world.addCreatureAtLocation(newWall, cx, cy-1, creature.z());
 					}
 
 					if((creature.creature(cx, cy+2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx, cy+2, creature.z());
+						world.addCreatureAtLocation(newWall, cx, cy+2, creature.z());
 					}
 					if((creature.creature(cx, cy-2, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx, cy-2, creature.z());
+						world.addCreatureAtLocation(newWall, cx, cy-2, creature.z());
 					}
 				}
 
@@ -658,20 +661,20 @@ public class EffectFactory implements Serializable {
 					//creature.moveBy(0, -1, 0);
 					if((creature.creature(cx+1, cy, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
+						world.addCreatureAtLocation(newWall, cx+1, cy, creature.z());
 					}
 					if((creature.creature(cx-1, cy, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
+						world.addCreatureAtLocation(newWall, cx-1, cy, creature.z());
 					}
 
 					if((creature.creature(cx+2, cy, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx+2, cy, creature.z());
+						world.addCreatureAtLocation(newWall, cx+2, cy, creature.z());
 					}
 					if((creature.creature(cx-2, cy, creature.z()) == null)) {
 						Creature newWall =FactoryManager.getCreatureFactory().newIceWall(0, player, false);
-						World.addCreatureAtLocation(newWall, cx-2, cy, creature.z());
+						world.addCreatureAtLocation(newWall, cx-2, cy, creature.z());
 					}
 				}
 			}
@@ -700,7 +703,7 @@ public class EffectFactory implements Serializable {
 				}
 				creature.doAction(new TerminalText("get a shock!"));
 				creature.setLastHit(reference);
-				World.setParticleAtLocation(FactoryManager.getParticleFactory().shock(ExtendedAsciiPanel.paralyzed, 2), creature.x(), creature.y(), creature.z());
+				world.setParticleAtLocation(FactoryManager.getParticleFactory().shock(ExtendedAsciiPanel.paralyzed, 2), creature.x(), creature.y(), creature.z());
 				Damage damage = new Damage(damageAmount, false, DamageType.SHOCK, true);
 				creature.damage(damage, String.format("Killed by %s using Chain Lightning", reference.name()));
 				
@@ -709,7 +712,7 @@ public class EffectFactory implements Serializable {
 						.affectedCreaturesExcept(creature)
 						.forEach(c -> {
 							c.damage(damage, String.format("Killed by %s using Chain Lightning", reference.name()));
-							World.setParticleAtLocation(FactoryManager.getParticleFactory().shock(ExtendedAsciiPanel.paralyzed, 2), c.x(), c.y(), c.z());
+							world.setParticleAtLocation(FactoryManager.getParticleFactory().shock(ExtendedAsciiPanel.paralyzed, 2), c.x(), c.y(), c.z());
 						});
 				}
             }
@@ -726,10 +729,10 @@ public class EffectFactory implements Serializable {
         			//applicationMain.ExtendedAsciiPanel.write((char)15, p.x, p.y, ExtraColors.paralyzed);
         			if(creature.creature(p.x, p.y, creature.z()) != null && (p.x != reference.x() && p.y != reference.y())) {
         				targets.add(creature.creature(p.x, p.y, creature.z()));
-        				World.setParticleAtLocation(FactoryManager.getParticleFactory().shock(ExtendedAsciiPanel.paralyzed, 2), p.x, p.y, creature.z());
+        				world.setParticleAtLocation(FactoryManager.getParticleFactory().shock(ExtendedAsciiPanel.paralyzed, 2), p.x, p.y, creature.z());
         			}
         			if(creature.creature(p.x, p.y, creature.z()) == null) {
-        				World.setParticleAtLocation(FactoryManager.getParticleFactory().shock(ExtendedAsciiPanel.paralyzed, 2), p.x, p.y, creature.z());
+        				world.setParticleAtLocation(FactoryManager.getParticleFactory().shock(ExtendedAsciiPanel.paralyzed, 2), p.x, p.y, creature.z());
         			}
         			
         		}
@@ -819,7 +822,7 @@ public class EffectFactory implements Serializable {
 					if(creature.affectedBy(Effect.corroded)) {
 						creature.cureEffectOfType(Effect.corroded);
 					}
-					World.setParticleAtLocation(FactoryManager.getParticleFactory().crossbones(ExtendedAsciiPanel.lime, 2), creature.x(), creature.y(), creature.z());
+					world.setParticleAtLocation(FactoryManager.getParticleFactory().crossbones(ExtendedAsciiPanel.lime, 2), creature.x(), creature.y(), creature.z());
 					creature.damage(damage, String.format("Killed by %s using Acid Blast", reference.name()));
 					if(attackRoll >= 20 && reference.alchemancyLevel() >= 3) {
 						reference.addEffect(FactoryManager.getEffectFactory().restoration());
@@ -863,7 +866,7 @@ public class EffectFactory implements Serializable {
 				if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
 					creature.doAction(new TerminalText("get hit with a splash of poison!"));
 					creature.setLastHit(reference);
-					World.setParticleAtLocation(FactoryManager.getParticleFactory().crossbones(ExtendedAsciiPanel.magenta, 2), creature.x(), creature.y(), creature.z());
+					world.setParticleAtLocation(FactoryManager.getParticleFactory().crossbones(ExtendedAsciiPanel.magenta, 2), creature.x(), creature.y(), creature.z());
 					creature.damage(damage, String.format("Killed by %s using Toxic Transfusion", reference.name()));
 					if(attackRoll >= 20 && reference.alchemancyLevel() >= 3) {
 						reference.addEffect(FactoryManager.getEffectFactory().restoration());
@@ -877,7 +880,7 @@ public class EffectFactory implements Serializable {
 					creature.notify("You feel a searing toxin flood your veins!");
 					reference.notify(String.format("The %s is afflicted by your spell!", creature.name()));
 					creature.setLastHit(reference);
-					World.setParticleAtLocation(FactoryManager.getParticleFactory().crossbones(ExtendedAsciiPanel.magenta, 2), creature.x(), creature.y(), creature.z());
+					world.setParticleAtLocation(FactoryManager.getParticleFactory().crossbones(ExtendedAsciiPanel.magenta, 2), creature.x(), creature.y(), creature.z());
 					creature.addEffect((Effect) poisoned_.clone());
 					creature.addEffect((Effect) corroded_.clone());
 				}else {
@@ -954,7 +957,7 @@ public class EffectFactory implements Serializable {
         		
         		if(attackRoll >= creature.armorClass() || attackRoll >= 20) {
         			Damage damage = new Damage(damageAmount, false, DamageType.PHYSICAL, true);
-            		World.setParticleAtLocation(FactoryManager.getParticleFactory().blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
+            		world.setParticleAtLocation(FactoryManager.getParticleFactory().blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
             		creature.doAction(new TerminalText("get torn apart by metal shards!"));
             		creature.damage(damage, String.format("Killed by %s using Armor Storm", reference.name()));
             		creature.setLastHit(reference);
@@ -1010,7 +1013,7 @@ public class EffectFactory implements Serializable {
     				newNotification.append("!");
     				creature.doAction(newNotification);
 					creature.setLastHit(reference);
-					World.setParticleAtLocation(FactoryManager.getParticleFactory().blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
+					world.setParticleAtLocation(FactoryManager.getParticleFactory().blast(ExtendedAsciiPanel.white, 2), creature.x(), creature.y(), creature.z());
 					creature.damage(damage, String.format("Killed by %s using Weapon Bolt", reference.name()));
 					if(attackRoll >= 20 && reference.ferromancyLevel() >= 3) {
     					Effect giantStrength_ = FactoryManager.getEffectFactory().giantStrength(reference.proficiencyBonus());
@@ -1201,7 +1204,7 @@ public class EffectFactory implements Serializable {
                         int nx = creature.x + ox;
                         int ny = creature.y + oy;
                         if(creature.tile(nx, ny, creature.z()).canHaveGas()) {
-                        	World.changeGasTile(nx, ny, creature.z(), Tile.ACID_GAS);
+                        	world.changeGasTile(nx, ny, creature.z(), Tile.ACID_GAS);
                         }
                         if (creature.creature(nx, ny, creature.z) == null) {
                             continue;
@@ -1429,7 +1432,7 @@ public class EffectFactory implements Serializable {
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1))
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
-						World.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.lilac, 2), c.x(), c.y(), c.z());
+						world.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.lilac, 2), c.x(), c.y(), c.z());
 						c.addEffect(blink());
 					});
             }
@@ -1448,7 +1451,7 @@ public class EffectFactory implements Serializable {
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1))
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
-						World.setParticleAtLocation(FactoryManager.getParticleFactory().crossbones(ExtendedAsciiPanel.magenta, 2), c.x(), c.y(), c.z());
+						world.setParticleAtLocation(FactoryManager.getParticleFactory().crossbones(ExtendedAsciiPanel.magenta, 2), c.x(), c.y(), c.z());
 						c.addEffect(poisoned((int)duration/2));
 					});
             }
@@ -1474,7 +1477,7 @@ public class EffectFactory implements Serializable {
                         
                         
                         Creature target = creature.creature(nx, ny, creature.z);
-                        World.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.green, 2), target.x(), target.y(), target.z());
+                        world.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.green, 2), target.x(), target.y(), target.z());
                         Effect chaosBurst = devoured((int)duration/2);
                 		target.addEffect(chaosBurst);
 
@@ -1496,7 +1499,7 @@ public class EffectFactory implements Serializable {
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1))
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
-						World.setParticleAtLocation(FactoryManager.getParticleFactory().droplet(ExtendedAsciiPanel.red, 2), c.x(), c.y(), c.z());
+						world.setParticleAtLocation(FactoryManager.getParticleFactory().droplet(ExtendedAsciiPanel.red, 2), c.x(), c.y(), c.z());
 						c.addEffect(bleeding((int)duration/2));
 					});
             }
@@ -1515,7 +1518,7 @@ public class EffectFactory implements Serializable {
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1))
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
-						World.setParticleAtLocation(FactoryManager.getParticleFactory().crossbones(ExtendedAsciiPanel.lime, 2), c.x(), c.y(), c.z());
+						world.setParticleAtLocation(FactoryManager.getParticleFactory().crossbones(ExtendedAsciiPanel.lime, 2), c.x(), c.y(), c.z());
 						c.addEffect(corroded((int)duration/2));
 					});
             }
@@ -1534,7 +1537,7 @@ public class EffectFactory implements Serializable {
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 2))
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
-						World.setParticleAtLocation(FactoryManager.getParticleFactory().frost(ExtendedAsciiPanel.water, 2), c.x(), c.y(), c.z());
+						world.setParticleAtLocation(FactoryManager.getParticleFactory().frost(ExtendedAsciiPanel.water, 2), c.x(), c.y(), c.z());
 						c.addEffect(frozen((int)duration/2));
 					});
             }
@@ -1553,7 +1556,7 @@ public class EffectFactory implements Serializable {
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 2))
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
-						World.setParticleAtLocation(FactoryManager.getParticleFactory().fire(ExtendedAsciiPanel.orange, 2), c.x(), c.y(), c.z());
+						world.setParticleAtLocation(FactoryManager.getParticleFactory().fire(ExtendedAsciiPanel.orange, 2), c.x(), c.y(), c.z());
 						c.addEffect(ignited((int)duration/2));
 					});
             }
@@ -1574,7 +1577,7 @@ public class EffectFactory implements Serializable {
                         int ny = creature.y + oy;
                         if((creature.tile(nx, ny, creature.z()).canHaveSubtiles()) && creature.item(nx, ny, creature.z()) == null) {
                         	if(ExtraMaths.d10() > 5) {
-                        		World.changeSubTile(nx, ny, creature.z(), Tile.FIRE);
+                        		world.changeSubTile(nx, ny, creature.z(), Tile.FIRE);
                         		if(creature.creature(nx, ny, creature.z()) != null) {
                         			creature.creature(nx, ny, creature.z()).notify("Roaring flames ignite beneath you!");
                         		}
@@ -1604,7 +1607,7 @@ public class EffectFactory implements Serializable {
 
                         if(creature.tile(nx, ny, creature.z()) == Tile.FLOOR && creature.item(nx, ny, creature.z()) == null) {
                         	if(ExtraMaths.d10() > 4) {
-                        		World.changeTile(nx, ny, creature.z(), Tile.GRASS_TALL);
+                        		world.changeTile(nx, ny, creature.z(), Tile.GRASS_TALL);
                         		if(creature.creature(nx, ny, creature.z()) != null) {
                         			creature.creature(nx, ny, creature.z()).notify("Thick foliage springs up around you!");
                         			creature.creature(nx, ny, creature.z()).addEffect(paralysed(duration));
@@ -1625,7 +1628,7 @@ public class EffectFactory implements Serializable {
 				new InstantiatedAoE(new Square(creature.x(), creature.y(), creature.z(), 1))
 					.affectedCreaturesExcept(creature)
 					.forEach(c -> {
-						World.setParticleAtLocation(FactoryManager.getParticleFactory().shock(ExtendedAsciiPanel.paralyzed, 2), c.x(), c.y(), c.z());
+						world.setParticleAtLocation(FactoryManager.getParticleFactory().shock(ExtendedAsciiPanel.paralyzed, 2), c.x(), c.y(), c.z());
 						c.doAction(new TerminalText("get a shock!"));
 						c.setLastHit(creature);
 						c.damage(new Damage(Dice.d4.roll(), false, DamageType.SHOCK, true), "Killed by lightning magic");
@@ -1680,7 +1683,7 @@ public class EffectFactory implements Serializable {
 		Effect blink = new Effect(8, null, false, null, ' ', null) {
 			public void start(Creature creature){
 	            creature.doAction(new TerminalText("fade out"));
-	            World.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.pink, 2), creature.x(), creature.y(), creature.z());
+	            world.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.pink, 2), creature.x(), creature.y(), creature.z());
 	            int mx = 0;
 	            int my = 0;
 	            
@@ -1695,7 +1698,7 @@ public class EffectFactory implements Serializable {
 	            creature.moveBy(mx, my, 0, false);
 	            
 	            creature.doAction(new TerminalText("fade in"));
-	            World.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.pink, 2), creature.x(), creature.y(), creature.z());
+	            world.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.pink, 2), creature.x(), creature.y(), creature.z());
 	        }
 		};
 		return blink;
@@ -1711,8 +1714,8 @@ public class EffectFactory implements Serializable {
 	            
 	            do
 	            {
-	                mx = ExtraMaths.diceRoll(0, World.width());
-	                my = ExtraMaths.diceRoll(0, World.height());
+	                mx = ExtraMaths.diceRoll(0, world.width());
+	                my = ExtraMaths.diceRoll(0, world.height());
 	            }
 	            while (creature.realTile(mx, my, creature.z+1) != Tile.FLOOR
 	            		//&& (creature.creature(mx, my, creature.z+1) != null)
@@ -1853,17 +1856,17 @@ public class EffectFactory implements Serializable {
                         }
                         Creature bat = FactoryManager.getObjectFactory().randomLesserMonster(0, player, false);
                         if (!bat.canEnter(nx, ny, creature.z)){
-                        	World.remove(bat);
+                        	world.remove(bat);
                             continue;
                         }
                         
                         if (creature.creature(nx, ny, creature.z) != null){
-                        	World.remove(bat);
+                        	world.remove(bat);
                             continue;
                         }
                         
                         if (ExtraMaths.d10() < 4){
-                        	World.remove(bat);
+                        	world.remove(bat);
                             continue;
                         }
                         
@@ -1872,11 +1875,11 @@ public class EffectFactory implements Serializable {
                         bat.z = creature.z;
                         
                         creature.summon(bat);
-                        World.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.white, 2), bat.x(), bat.y(), bat.z());
+                        world.setParticleAtLocation(FactoryManager.getParticleFactory().vortex(ExtendedAsciiPanel.white, 2), bat.x(), bat.y(), bat.z());
                     }
                 }
                 if(creature.isTileSpell()) {
-                	World.remove(creature);
+                	world.remove(creature);
                 }
             }
 		};
@@ -1910,7 +1913,7 @@ public class EffectFactory implements Serializable {
 			public void start(Creature creature){
 				for(Point p : new Square(creature.x(), creature.y(), creature.z(), 3)) {
 					if(creature.tile(p.x, p.y, p.z).canHaveGas()) {
-                    	World.changeGasTile(p.x, p.y, p.z, Tile.SMOKE);
+                    	world.changeGasTile(p.x, p.y, p.z, Tile.SMOKE);
                     }
 				}
 				int duration_ = 10;
@@ -1938,7 +1941,7 @@ public class EffectFactory implements Serializable {
 		for(int x = centre.x()-radius; x <= centre.x()+radius; x++) {
 			for(int y = centre.y()-radius; y <= centre.y()+radius; y++) {
 				if(centre.creature(x, y, centre.z()) != null && (x != centre.x() && y != centre.y())) {
-					World.setParticleAtLocation(particle, x, y, centre.z());
+					world.setParticleAtLocation(particle, x, y, centre.z());
 					centre.creature(x, y, centre.z()).damage(damage, cause);
 				}
 			}

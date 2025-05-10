@@ -16,7 +16,7 @@ public class SummoningTrap extends Trap {
 
 	@Override
 	public Effect effect() {
-		return FactoryManager.getEffectFactory().summonMonstersScroll(World.player());
+		return FactoryManager.getEffectFactory().summonMonstersScroll(World.getInstance().player());
 	}
 
 	@Override

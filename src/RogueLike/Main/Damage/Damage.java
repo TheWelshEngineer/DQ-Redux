@@ -1,9 +1,12 @@
 package RogueLike.Main.Damage;
 
+import java.io.Serializable;
+
 import RogueLike.Main.Effect;
 import RogueLike.Main.Factories.FactoryManager;
 
-public class Damage {
+public class Damage implements Serializable {
+	private static final long serialVersionUID = 5277989059181068964L;
 	public final DamageType type;
 	private final Effect statusEffect;
 	public Effect statusEffect() {

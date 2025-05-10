@@ -1,12 +1,13 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Creatures.Creature;
 import RogueLike.Main.Factories.FactoryManager;
 
-public class IndexWandScreen implements Screen{
+public class IndexWandScreen implements Screen, Serializable{
 	
 	protected Creature player;
 	

@@ -1,12 +1,13 @@
 package RogueLike.Main.Screens;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 
 import RogueLike.Main.ExtendedAsciiPanel;
 import RogueLike.Main.Enums.PlayerAncestry;
 import RogueLike.Main.Managers.KeybindManager;
 
-public class ChooseAncestryScreen implements Screen{
+public class ChooseAncestryScreen implements Screen, Serializable{
 	
 	public int check = 0;
 	public void setCheck(int value) {

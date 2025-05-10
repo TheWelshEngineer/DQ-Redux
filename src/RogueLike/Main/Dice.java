@@ -1,7 +1,10 @@
 package RogueLike.Main;
 
-public class Dice {
+import java.io.Serializable;
+
+public class Dice implements Serializable {
 	
+	private static final long serialVersionUID = -9073823943053273301L;
 	private int lowerBound = 0;
 	public void setLowerBound(int value) {
 		lowerBound = value;
